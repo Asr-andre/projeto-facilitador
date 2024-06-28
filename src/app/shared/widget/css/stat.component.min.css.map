@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../stat/stat.component.scss"
+    ],
+    "names": [],
+    "file": "stat.component.min.css"
+}

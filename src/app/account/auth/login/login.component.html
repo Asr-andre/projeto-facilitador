@@ -1,0 +1,67 @@
+<div class="loading-overlay" *ngIf="loading">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
+
+<div class="container-fluid p-0">
+  <div class="row g-0">
+    <div class="col-lg-4">
+      <div class="authentication-page-content p-4 d-flex align-items-center min-vh-100">
+        <div class="w-100">
+          <div class="row justify-content-center">
+            <div class="col-lg-9">
+              <div>
+                <div class="text-center">
+                  <h4 class="font-size-18 mt-4">Bem-vindo</h4>
+                </div>
+
+                <div class="p-2 mt-5">
+                  <form (ngSubmit)="validarLogin($event)" [formGroup]="loginForm">
+                    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+                    <div class="form-group auth-form-group-custom mb-4">
+                      <label for="sigla">Sigla</label>
+                      <input type="text" formControlName="sigla" class="form-control" id="sigla" placeholder="Sigla" [ngClass]="{ 'is-invalid': submitted && f.sigla.errors }">
+                      <div *ngIf="submitted && f.sigla.errors" class="invalid-feedback">
+                        <div *ngIf="f.sigla.errors.required">Sigla é obrigatória</div>
+                      </div>
+                    </div>
+
+                    <div class="form-group auth-form-group-custom mb-4">
+                      <label for="login">Login</label>
+                      <input type="text" formControlName="login" class="form-control" id="login" placeholder="Login" [ngClass]="{ 'is-invalid': submitted && f.login.errors }">
+                      <div *ngIf="submitted && f.login.errors" class="invalid-feedback">
+                        <div *ngIf="f.login.errors.required">Login é obrigatório</div>
+                      </div>
+                    </div>
+
+                    <div class="form-group auth-form-group-custom mb-4">
+                      <label for="senha">Senha</label>
+                      <input type="password" formControlName="senha" class="form-control" id="senha" [ngClass]="{ 'is-invalid': submitted && f.senha.errors }" placeholder="Senha" />
+                      <div *ngIf="submitted && f.senha.errors" class="invalid-feedback">
+                        <div *ngIf="f.senha.errors.required">Senha é obrigatória</div>
+                      </div>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                      <button type="submit" class="btn btn-primary w-md waves-effect waves-light">Entrar</button>
+                    </div>
+
+                  </form>
+                </div>
+
+                <div class="mt-5 text-center">
+                  <p>© 2023 Portal Facilitador</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="authentication-bg">
+        <div class="bg-overlay"></div>
+      </div>
+    </div>
+  </div>
+</div>

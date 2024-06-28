@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../video/video.component.scss"
+    ],
+    "names": [],
+    "file": "video.component.min.css"
+}

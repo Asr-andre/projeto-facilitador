@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../page404/page404.component.scss"
+    ],
+    "names": [],
+    "file": "page404.component.min.css"
+}

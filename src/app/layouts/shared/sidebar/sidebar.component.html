@@ -1,0 +1,78 @@
+<!-- ========== Left Sidebar Start ========== -->
+<div class="vertical-menu">
+
+  <ngx-simplebar class="h-100" data-simplebar-track="light">
+    <!--- Sidemenu -->
+    <div id="sidebar-menu">
+      <!-- Left Menu Start -->
+      <ul class="metismenu list-unstyled" id="side-menu" #sideMenu>
+
+        @for(item of menuItems;track $index){
+        @if(item.isTitle){
+        <li class="menu-title">{{ item.label | translate }}</li>
+        }@else if(item.isLayout){
+        <!-- Layouts menu -->
+        <li>
+          <a href="javascript: void(0);" class="has-arrow">
+            <i class="ri-layout-3-line"></i>
+            <span>Layouts</span>
+          </a>
+          <ul class="sub-menu" aria-expanded="false">
+            <li><a (click)="changeLayout('horizontal')" href="javascript: void(0);">{{ 'MENUITEMS.LAYOUTS.LIST.HORIZONTAL' | translate}}</a></li>
+            <li><a (click)="lightSidebar()" href="javascript: void(0);">{{ 'MENUITEMS.LAYOUTS.LIST.LIGHTSIDEBAR' | translate}}</a></li>
+            <li><a (click)="compactSidebar()" href="javascript: void(0);">{{ 'MENUITEMS.LAYOUTS.LIST.COMPACTSIDEBAR' | translate}}</a></li>
+            <li><a (click)="iconSidebar()" href="javascript: void(0);">{{ 'MENUITEMS.LAYOUTS.LIST.ICONSIDEBAR' | translate}}</a></li>
+            <li><a (click)="boxedLayout()" href="javascript: void(0);">{{ 'MENUITEMS.LAYOUTS.LIST.BOXED' | translate}}</a></li>
+          </ul>
+        </li>
+        <!-- end Layout menu -->
+        }@else {
+        <li>
+          @if(hasItems(item)){
+          <a href="javascript:void(0);" class="is-parent" [ngClass]="{'has-arrow': !item.badge, 'has-dropdown': item.badge}">
+            @if(item.icon){<i class="bx {{item.icon}}"></i>}
+            <span> {{ item.label | translate }}</span>
+            @if(item.badge){<span class="badge  rounded-pill  bg-{{item.badge.variant}} float-end">{{item.badge.text | translate}}</span>}
+          </a>
+
+          <ul class="sub-menu" aria-expanded="false">
+            @for(subitem of item.subItems;track $index){
+            <li>
+              @if(hasItems(subitem)){
+              <a class="side-nav-link-a-ref has-arrow" href="javascript:void(0);" [attr.data-parent]="subitem.parentId">
+                {{ subitem.label | translate }}
+              </a>
+
+              <ul class="sub-menu mm-collapse" aria-expanded="false">
+                @for(subSubitem of subitem.subItems;track $index){
+                <li>
+                  <a [attr.data-parent]="subSubitem.parentId" [routerLink]="subSubitem.link" routerLinkActive="active" class="side-nav-link-ref">
+                    {{ subSubitem.label | translate }}
+                  </a>
+                </li>
+                }
+              </ul>
+              }@else {
+              <a [routerLink]="subitem.link" class="side-nav-link-ref" [attr.data-parent]="subitem.parentId" routerLinkActive="active">
+                {{ subitem.label | translate }}
+              </a>
+              }
+            </li>
+            }
+          </ul>
+          }@else {
+          <a [routerLink]="item.link" class="side-nav-link-ref" routerLinkActive="active">
+            @if(item.icon){<i class="bx {{item.icon}}"></i>}
+            <span> {{ item.label | translate }}</span>
+            @if(item.badge){<span class="badge  rounded-pill  bg-{{item.badge.variant}} float-end">{{item.badge.text | translate}}</span>}
+          </a>
+          }
+        </li>
+        }
+        }
+      </ul>
+    </div>
+    <!-- Sidebar -->
+  </ngx-simplebar>
+</div>
+<!-- Left Sidebar End -->

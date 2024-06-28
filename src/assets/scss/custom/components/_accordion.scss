@@ -1,0 +1,142 @@
+//
+// accordion.scss
+//
+
+.custom-accordion {
+    .card {
+        border: 1px solid var(--#{$prefix}border-color);
+        box-shadow: none;
+        +.card {
+            margin-top: 0.5rem;
+        }
+
+        &.accordion-item {
+            border-top: 1px solid var(--#{$prefix}border-color-translucent);
+            margin-bottom: 1.2rem;
+            border-radius: 0.25rem;
+            overflow: hidden;
+        }
+
+        .card-header{
+            background-color: var(--#{$prefix}tertiary-bg);
+            padding: 0.625rem 1.25rem;
+            position: relative;
+
+            &.accordion-button{ 
+                &.collapsed{
+                    &::after{
+                        content: "\f0415";
+                    }
+                }
+                &::after{
+                    background-image: none;
+                    content: "\f0374";
+                    font-family: "Material Design Icons";
+                }
+                &:focus{
+                    box-shadow: none ;
+                }
+            }
+        }
+
+    }
+
+    a {
+        &.collapsed {
+            i.accor-plus-icon {
+                &:before {
+                    content: "\F0415";
+                    position: absolute;
+                    right: 0;
+                }
+            }
+        }
+    }
+
+    .card-header {
+        border-radius: 7px;
+    }
+}
+.accordion {
+    .card {
+        border: 1px solid var(--#{$prefix}border-color);
+        box-shadow: none;
+    }
+
+    .accordion-item {
+        border-top: 1px solid var(--#{$prefix}border-color-translucent);
+        margin-bottom: 1.2rem;
+        border-radius: 0.25rem;
+        overflow: hidden;
+    }
+    
+    .card-header {
+        padding: 0;
+        background-color: transparent;
+        border-bottom: 0; 
+    }
+}
+
+.custom-accordion-arrow {
+    .card {
+        border: 1px solid var(--#{$prefix}border-color);
+        box-shadow: none  !important;
+        &.accordion-item {
+            border: 1px solid var(--#{$prefix}border-color);
+            margin-bottom: 1.2rem  !important;
+            border-radius: 0.25rem  !important;
+            overflow: hidden  !important;
+            box-shadow: none !important;
+
+        }
+        .card-header{
+            background-color: var(--#{$prefix}tertiary-bg);
+            padding: 0.625rem 1.25rem;
+            padding-left: 45px;
+            position: relative;
+        }
+    }
+
+
+    .accordion-button {
+        padding-left: 45px;
+
+        &:focus{
+            box-shadow: none !important;
+        }
+
+        &[aria-expanded="false"] {
+            i.accor-arrow-icon {
+                &:before {
+                    content: "\F0142";
+                }
+            }
+        }
+
+        &::after  {
+            display: none;
+        }
+    }
+
+    .card-header {
+        padding: 0;
+        background-color: transparent;
+        border-bottom: 0;
+
+        .accor-arrow-icon {
+            position: absolute;
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            font-size: 16px;
+            background-color: $primary;
+            color: $white;
+            border-radius: 50%;
+            text-align: center;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+}

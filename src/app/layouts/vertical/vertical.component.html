@@ -1,0 +1,17 @@
+<div id="layout-wrapper">
+  <app-topbar (mobileMenuButtonClicked)="onToggleMobileMenu()" (settingsButtonClicked)="onSettingsButtonClicked()">
+  </app-topbar>
+  <app-sidebar></app-sidebar>
+  <!-- ============================================================== -->
+  <!-- Start right Content here -->
+  <!-- ============================================================== -->
+  <div class="main-content">
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+  <app-rightsidebar></app-rightsidebar>
+</div>
+<!-- END layout-wrapper -->

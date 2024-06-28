@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../inbox/inbox.component.scss"
+    ],
+    "names": [],
+    "file": "inbox.component.css"
+}

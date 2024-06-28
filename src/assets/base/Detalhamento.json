@@ -1,0 +1,234 @@
+[
+  {
+    "id_cliente": 1,
+    "nome": "João Silva",
+    "cpf": "123.456.789-00",
+    "fantasia": "JS Comercio",
+    "valor_divida": 10000.00,
+    "telefone": "1234-5678",
+    "email": "joao@empresa.com",
+    "prestacoes": [
+      {
+        "prestacao": 1,
+        "plano": "Mensal",
+        "valor": 1000.00,
+        "juros": 50.00,
+        "multa": 10.00,
+        "taxa": 5.00,
+        "total": 1065.00
+      },
+      {
+        "prestacao": 2,
+        "plano": "Mensal",
+        "valor": 1000.00,
+        "juros": 45.00,
+        "multa": 10.00,
+        "taxa": 5.00,
+        "total": 1060.00
+      }
+    ]
+  },
+  {
+    "id_cliente": 2,
+    "nome": "Maria Oliveira",
+    "cpf": "987.654.321-00",
+    "fantasia": "MO Serviços",
+    "valor_divida": 8000.00,
+    "telefone": "8765-4321",
+    "email": "maria@servicos.com",
+    "prestacoes": [
+      {
+        "prestacao": 1,
+        "plano": "Mensal",
+        "valor": 800.00,
+        "juros": 40.00,
+        "multa": 8.00,
+        "taxa": 4.00,
+        "total": 852.00
+      },
+      {
+        "prestacao": 2,
+        "plano": "Mensal",
+        "valor": 800.00,
+        "juros": 35.00,
+        "multa": 8.00,
+        "taxa": 4.00,
+        "total": 847.00
+      }
+    ]
+  },
+  {
+    "id_cliente": 3,
+    "nome": "Carlos Pereira",
+    "cpf": "111.222.333-44",
+    "fantasia": "Indústria C Ltda",
+    "valor_divida": 15000.00,
+    "telefone": "5555-6666",
+    "email": "carlos@industria.com",
+    "prestacoes": [
+      {
+        "prestacao": 1,
+        "plano": "Mensal",
+        "valor": 1500.00,
+        "juros": 70.00,
+        "multa": 15.00,
+        "taxa": 6.00,
+        "total": 1591.00
+      },
+      {
+        "prestacao": 2,
+        "plano": "Mensal",
+        "valor": 1500.00,
+        "juros": 65.00,
+        "multa": 15.00,
+        "taxa": 6.00,
+        "total": 1586.00
+      }
+    ]
+  },
+  {
+    "id_cliente": 4,
+    "nome": "Ana Costa",
+    "cpf": "444.555.666-77",
+    "fantasia": "Serviços D Ltda",
+    "valor_divida": 7500.25,
+    "telefone": "9999-8888",
+    "email": "ana@servicos.com",
+    "prestacoes": [
+      {
+        "prestacao": 1,
+        "plano": "Mensal",
+        "valor": 750.25,
+        "juros": 35.00,
+        "multa": 7.50,
+        "taxa": 3.75,
+        "total": 796.50
+      },
+      {
+        "prestacao": 2,
+        "plano": "Mensal",
+        "valor": 750.25,
+        "juros": 30.00,
+        "multa": 7.50,
+        "taxa": 3.75,
+        "total": 793.50
+      }
+    ]
+  },
+  {
+    "id_cliente": 5,
+    "nome": "Ricardo Lima",
+    "cpf": "888.999.000-11",
+    "fantasia": "Tecnologia E Ltda",
+    "valor_divida": 20000.00,
+    "telefone": "7777-6666",
+    "email": "ricardo@tecnologia.com",
+    "prestacoes": [
+      {
+        "prestacao": 1,
+        "plano": "Mensal",
+        "valor": 2000.00,
+        "juros": 90.00,
+        "multa": 20.00,
+        "taxa": 8.00,
+        "total": 2118.00
+      },
+      {
+        "prestacao": 2,
+        "plano": "Mensal",
+        "valor": 2000.00,
+        "juros": 85.00,
+        "multa": 20.00,
+        "taxa": 8.00,
+        "total": 2113.00
+      }
+    ]
+  },
+  {
+    "id_cliente": 6,
+    "nome": "Fernanda Rocha",
+    "cpf": "222.333.444-55",
+    "fantasia": "Consultoria F Ltda",
+    "valor_divida": 8000.00,
+    "telefone": "1111-2222",
+    "email": "fernanda@consultoria.com",
+    "prestacoes": [
+      {
+        "prestacao": 1,
+        "plano": "Mensal",
+        "valor": 800.00,
+        "juros": 40.00,
+        "multa": 8.00,
+        "taxa": 4.00,
+        "total": 852.00
+      },
+      {
+        "prestacao": 2,
+        "plano": "Mensal",
+        "valor": 800.00,
+        "juros": 35.00,
+        "multa": 8.00,
+        "taxa": 4.00,
+        "total": 847.00
+      }
+    ]
+  },
+  {
+    "id_cliente": 7,
+    "nome": "Lucas Oliveira",
+    "cpf": "666.777.888-99",
+    "fantasia": "Importadora G Ltda",
+    "valor_divida": 12000.30,
+    "telefone": "3333-4444",
+    "email": "lucas@importadora.com",
+    "prestacoes": [
+      {
+        "prestacao": 1,
+        "plano": "Mensal",
+        "valor": 1200.30,
+        "juros": 60.00,
+        "multa": 12.00,
+        "taxa": 6.00,
+        "total": 1278.30
+      },
+      {
+        "prestacao": 2,
+        "plano": "Mensal",
+        "valor": 1200.30,
+        "juros": 55.00,
+        "multa": 12.00,
+        "taxa": 6.00,
+        "total": 1273.30
+      }
+    ]
+  },
+  {
+    "id_cliente": 8,
+    "nome": "Mariana Santos",
+    "cpf": "000.111.222-33",
+    "fantasia": "Exportadora H Ltda",
+    "valor_divida": 9500.50,
+    "telefone": "5555-4444",
+    "email": "mariana@exportadora.com",
+    "prestacoes": [
+      {
+        "prestacao": 1,
+        "plano": "Mensal",
+        "valor": 950.50,
+        "juros": 45.00,
+        "multa": 9.50,
+        "taxa": 4.75,
+        "total": 1009.75
+      },
+      {
+        "prestacao": 2,
+        "plano": "Mensal",
+        "valor": 950.50,
+        "juros": 40.00,
+        "multa": 9.50,
+        "taxa": 4.75,
+        "total": 1004.75
+      }
+    ]
+  }
+]

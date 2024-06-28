@@ -1,0 +1,45 @@
+
+    <div
+      style="display: flex; justify-content: space-between; align-items: center; background: #c9cbcf29; padding: 10px;">
+      <h5 style="font-family: 'helvetica'; margin: 0;">Acionamento</h5>
+      <button class="btn btn-success mb-1 btn-sm" style="text-align: right;" (click)="AbrirModalcadastrar(modalCadastrarAcionamento)">
+        <i class="icofont-ui-add"></i><strong> Incluir Acionamento</strong>
+      </button>
+    </div>
+    <table class="table">
+      <thead class="table-light">
+        <tr>
+          <th>Data</th>
+          <th>Hora</th>
+          <th>Operador</th>
+          <th>Ocorrência</th>
+          <th>Historico</th>
+          <th>Fone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let acionamento of AcionamentosDoDevedor">
+          <td>{{ acionamento.data | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ acionamento.hora }}</td>
+          <td>{{ acionamento.operador }}</td>
+          <td>{{ acionamento.ocorrencia }}</td>
+          <td>{{ acionamento.historico }}</td>
+          <td>{{ acionamento.fone }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #modalCadastrarAcionamento let-modal>
+      <div class="modal-header" style="padding-top: 5px; padding-bottom: 5px; background: #f8f9fa">
+        <h5 class="modal-title mt-0" style="color: #222121">Acionamento</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+      </div>
+      <div class="modal-body">
+        <textarea style="width: 100%; height: calc(1.5em * 5); resize: none; overflow: auto;"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success mb-1 btn-sm"><i class=" fas fa-check-circle"></i> Salvar</button>
+        <button type="button" class="btn btn-danger mb-1 btn-sm" (click)="modal.close('Close click')"><i class="fas fa-window-close"></i> Cancelar</button>
+      </div>
+    </ng-template>
+

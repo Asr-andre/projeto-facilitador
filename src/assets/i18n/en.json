@@ -1,0 +1,52 @@
+{
+  "HEADER": {
+    "LOGIN": {
+      "LOGOUT": "Logout"
+    }
+  },
+  "MENUITEMS": {
+    "MENU": {
+      "TEXT": "Menu"
+    },
+    "DASHBOARDS": {
+      "TEXT": "Pagina Inicial"
+    },
+    "CALENDAR": {
+      "TEXT": "Calendar"
+    },
+    "CHAT": {
+      "TEXT": "Chat",
+      "BADGE": "New"
+    },
+    "EMAIL": {
+      "TEXT": "Email",
+      "LIST": {
+        "INBOX": "Inbox",
+        "READEMAIL": "Read Email"
+      }
+    },
+    "CADASTRO": {
+      "TEXT": "Cadastro",
+      "LIST": {
+        "EMPRESA": "Empresa",
+        "CONTRATANTES": "Contratantes",
+        "USUARIOS": "Usúarios",
+        "CLIENTES": "Clientes",
+        "TITULOS": "Titulos"
+      }
+    },
+    "RELATORIOS": {
+      "TEXT": "Relatórios",
+      "LIST": {
+        "DASHBOARD": "Dashboard",
+        "FINANCEIRO": "Financeiro"
+      }
+    },
+    "PROCESSAMENTOS": {
+      "TEXT": "Processamentos",
+      "LIST": {
+        "IMPORTACAO": "Importação"
+      }
+    }
+  }
+}

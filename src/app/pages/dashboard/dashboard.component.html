@@ -1,0 +1,216 @@
+<div class="loading-overlay" *ngIf="loading">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body" style="padding-bottom: 8px;">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="text-truncate font-size-12 mb-2">Qtde Sms: 111 / Valor: R$ 15,20</p>
+            </div>
+            <div class="text-primary ms-auto">
+              <i class="fas fa-sms font-size-24"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body" style="padding-bottom: 8px;">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="text-truncate font-size-12 mb-2">Qtde Email: 253 / Valor: R$ 15,20</p>
+            </div>
+            <div class="text-primary ms-auto">
+              <i class="fas fa-envelope font-size-24"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body" style="padding-bottom: 8px;">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="text-truncate font-size-12 mb-2">Valor Total utilizado : R$ 30,70</p>
+            </div>
+            <div class="text-primary ms-auto">
+              <i class=" fas fa-money-check-alt font-size-24"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body" style="padding-bottom: 8px;">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="text-truncate font-size-12 mb-2">Saldo: R$ 358,15</p>
+            </div>
+            <div class="text-primary ms-auto">
+              <i class=" fas fa-money-check-alt font-size-24"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-5">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Lista de devedores cadastrados</h4>
+          <div class="row">
+            <div class="col-sm-12 col-md-12">
+              <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label class="d-inline-flex align-items-center">Pesquisar:
+                  <input type="text" class="form-control form-control-sm ms-2" [(ngModel)]="textoPequisa" (input)="filtraDevedor()" /></label>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover font-size-12">
+              <thead class="table-light">
+                <tr>
+                  <th>Credor</th>
+                  <th>Id</th>
+                  <th>Cpf</th>
+                  <th>Nome</th>
+                  <th>Valor Divida</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let devedor of devedoresFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }"
+                  [ngClass]="{'selected': devedorSelecionado === devedor, 'table-row': true}"
+                  (click)="selecionarDevedor(devedor)">
+                  <td>{{devedor.fantasia}}</td>
+                  <td>{{devedor.id_cliente}}</td>
+                  <td>{{devedor.cpf}}</td>
+                  <td>{{devedor.nome}}</td>
+                  <td>{{devedor.valor_divida | currency:'BRL'}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="d-flex justify-content-end mt-3">
+              <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Proximo"
+                [maxSize]="5" [autoHide]="true" [responsive]="true">
+              </pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <div class="card">
+        <div class="card-body font-size-12">
+          <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs">
+            <li [ngbNavItem]="1">
+              <a ngbNavLink>
+                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                <span class="d-none d-sm-block">Detalhe da Divida</span>
+              </a>
+              <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+              <a ngbNavLink>
+                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                <span class="d-none d-sm-block">Outras infomações</span>
+              </a>
+              <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="TabContent1"></ng-template>
+              </ng-template>
+            </li>
+          </ul>
+          <div [ngbNavOutlet]="nav"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #TabContent>
+  <div *ngIf="detalhamentoSelecionado" class="mt-3 font-size-12">
+
+    <div class="row brder">
+      <div class="col-md-5"><strong>Credor:</strong> <span> {{ detalhamentoSelecionado.fantasia }}</span></div>
+    </div>
+
+    <div class="row pt-1 brder">
+      <div class="col-md-6"><strong>Nome:</strong> {{ detalhamentoSelecionado.nome }}</div>
+      <div class="col-md-6"><strong>CPF:</strong> {{ detalhamentoSelecionado.cpf }}</div>
+    </div>
+    <div class="row pt-1 brder">
+      <div class="col-md-6">
+        <strong>Telefone:</strong> {{ detalhamentoSelecionado.telefone }}
+        <i class="fas fa-sms"></i>
+        <i class="fab fa-whatsapp whatsapp-icon" (click)="openWhatsappModal(detalhamentoSelecionado.telefone)"></i>
+      </div>
+    </div>
+
+    <app-whatsapp></app-whatsapp>
+
+    <div class="row pt-1 brder">
+      <div class="col-md-6"><strong>Email:</strong> {{ detalhamentoSelecionado.email }} <i class="fas fa-envelope"></i>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="table-responsive mt-3 font-size-12">
+    <table class="table">
+      <thead class="table-light">
+        <tr>
+          <th>Prestação</th>
+          <th>Plano</th>
+          <th>Valor</th>
+          <th>Juros</th>
+          <th>Multa</th>
+          <th>Taxa</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prestacao of detalhamentoSelecionado?.prestacoes">
+          <td>{{ prestacao.prestacao }}</td>
+          <td>{{ prestacao.plano }}</td>
+          <td>{{ prestacao.valor | currency:'BRL' }}</td>
+          <td>{{ prestacao.juros | currency:'BRL' }}</td>
+          <td>{{ prestacao.multa | currency:'BRL' }}</td>
+          <td>{{ prestacao.taxa | currency:'BRL' }}</td>
+          <td>{{ prestacao.total | currency:'BRL' }}</td>
+        <tr>
+          <td colspan="2"><strong>Total:</strong></td>
+          <td><strong>{{ calcularTotal('valor') | currency:'BRL' }}</strong></td>
+          <td><strong>{{ calcularTotal('juros') | currency:'BRL' }}</strong></td>
+          <td><strong>{{ calcularTotal('multa') | currency:'BRL' }}</strong></td>
+          <td><strong>{{ calcularTotal('taxa') | currency:'BRL' }}</strong></td>
+          <td><strong>{{ calcularTotal('total') | currency:'BRL' }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <app-acionamento *ngIf="devedorSelecionado?.id_cliente"
+                      [devedorId]="devedorSelecionado?.id_cliente">
+    </app-acionamento>
+  </div>
+</ng-template>
+
+<ng-template #TabContent1>
+  <p class="p-3 mb-0 font-size-12">
+    Em desenvolvimento
+  </p>
+</ng-template>

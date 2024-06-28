@@ -1,0 +1,95 @@
+<!-- <app-loader></app-loader> -->
+<div class="container-fluid">
+  <app-pagetitle title="Calendar" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="app-calendar">
+            <!-- calendar -->
+            <full-calendar [options]="calendarOptions"></full-calendar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Event Modal -->
+<ng-template #modalShow let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Add New Event</h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="closeEventModal()"></button>
+  </div>
+  <div class="modal-body p-3">
+    <form (ngSubmit)="saveEvent()" [formGroup]="formData">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label class="control-label">Event Name</label>
+            <input class="form-control" placeholder="Insert Event Name" type="text" name="title" formControlName="title" [ngClass]="{'is-invalid': submitted && form.title.errors}">
+            @if(submitted && form['title'].errors){
+            <div class="invalid-feedback">
+              @if(form['title'].errors['required']){
+              <span>This value is required.</span>
+              }
+            </div>
+          }
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group"><label class="control-label">Category</label>
+            <select class="form-control" name="category" formControlName="category" [ngClass]="{'is-invalid': submitted && form['category'].errors }" id="event-category">
+              @for(option of category;track $index){
+              <option value="{{ option.value }}"> {{ option.name }}
+              </option>
+            }
+            </select>
+            @if(submitted && form['category'].errors){
+            <div class="invalid-feedback">
+              @if(form['category'].errors['required']){
+              <div>This value is required</div>
+              }
+            </div>
+          }
+          </div>
+        </div>
+      </div>
+
+      <div class="text-end pt-4">
+        <button type="button" class="btn btn-light" (click)="closeEventModal()">Close</button>
+        <button type="submit" class="btn btn-success save-event ms-1">Save</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- Edit event modal -->
+<ng-template #editmodalShow let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Edit Event</h5>
+    <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
+  </div>
+  <div class="modal-body p-3">
+    <form [formGroup]="formEditData" (ngSubmit)="editEventSave()">
+      <label>Change event name</label>
+      <div class="input-group m-b-15">
+        <input class="form-control" type="text" formControlName="editTitle">
+      </div>
+      <label class="mt-2">Change event category</label>
+      <div class="input-group m-b-15">
+        <select class="form-control" name="ecategory" formControlName="editCategory">
+          @for(option of category;track $index){
+          <option value="{{ option.value }}"> {{ option.name }}
+          </option>
+        }
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="text-end p-3">
+    <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
+    <button type="button" class="btn btn-danger delete-event ms-1" (click)="confirm()">Delete</button>
+    <button type="button" class="btn btn-success ms-1" (click)="editEventSave()">Save</button>
+  </div>
+</ng-template>

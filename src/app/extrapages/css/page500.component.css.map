@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../page500/page500.component.scss"
+    ],
+    "names": [],
+    "file": "page500.component.css"
+}

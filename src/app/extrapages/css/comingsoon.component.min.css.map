@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../comingsoon/comingsoon.component.scss"
+    ],
+    "names": [],
+    "file": "comingsoon.component.min.css"
+}
