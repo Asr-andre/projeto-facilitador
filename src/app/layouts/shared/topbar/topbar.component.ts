@@ -49,10 +49,9 @@ export class TopbarComponent implements OnInit {
       this.flagvalue = val.map(element => element.flag);
     }
     // Obter o usuário atual do serviço de autenticação
-    this.currentUser = this.authService.getCurrentUser
+    this.currentUser = this.authService.getLogin();
 
-
-
+console.log(this.currentUser)
   }
 
   /**
