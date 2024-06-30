@@ -23,6 +23,7 @@ import { ContratantesComponent } from './contratantes/contratantes.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { TitulosComponent } from './titulos/titulos.component';
+import { EmpresaModule } from './empresa/empresa.module';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -47,7 +48,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     UiSwitchModule,
     ColorPickerModule,
     NgbDatepickerModule,
-    DropzoneModule
+    DropzoneModule,
+    EmpresaModule
   ],
   providers: [
     provideNgxMask(),
