@@ -55,11 +55,11 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.login(sigla, login, senha)
       .subscribe( data => {
-          if (data && data['success: '] === 'true') {
+          if (data && data['success'] === 'true') {
             this.router.navigate([this.returnUrl]);
             this.currentUser = this.authenticationService.getCurrentUser();
           } else {
-            this.error = data['msg: '] || 'Erro ao tentar autenticar.';
+            this.error = data['msg'] || 'Erro ao tentar autenticar.';
           }
         },
         error => {

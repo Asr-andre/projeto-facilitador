@@ -22,7 +22,7 @@ export class AuthenticationService {
 
     return this.http.post<any>(loginUrl, { sigla, login, senha }, { headers }).pipe(
       map(response => {
-        if (response['success: '] === 'true') {
+        if (response['success'] === 'true') {
           // Armazenar usuário, sigla e login no localStorage
           localStorage.setItem(this.currentUserKey, JSON.stringify(response));
           localStorage.setItem(this.siglaKey, sigla);

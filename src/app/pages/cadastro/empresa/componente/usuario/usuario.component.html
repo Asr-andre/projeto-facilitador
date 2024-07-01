@@ -6,7 +6,7 @@
           <hr style="margin-top: 5px;">
           <form [formGroup]="formUsuario">
             <div class="row">
-              <div class="col-md-6 form-group">
+              <div class="col-md-3 form-group">
                 <input class="form-control form-control-sm mb-3" formControlName="nome" type="text" placeholder="Nome" required>
               </div>
               <div class="col-md-3 form-group">
@@ -14,6 +14,9 @@
               </div>
               <div class="col-md-3 form-group">
                 <input class="form-control form-control-sm mb-3" formControlName="senha" type="password" placeholder="Senha" required>
+              </div>
+              <div class="col-md-3 form-group">
+                <input class="form-control form-control-sm mb-3" formControlName="email" type="email" placeholder="E-mail" required>
               </div>
             </div>
             <div class="mb-3 mb-0" style="text-align: end;">

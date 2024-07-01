@@ -55,7 +55,6 @@ export class ContratanteComponent implements OnInit, OnChanges {
 
   public cadastrarContratante() {
     if (this.formContratante.valid) {
-      console.log(this.formContratante.value);
       this._empresaService.cadastrarContratante(this.formContratante.value).subscribe((res: RetornoModel) => {
             if (res && res.success === "true") {
               this._alertService.success(res.msg);

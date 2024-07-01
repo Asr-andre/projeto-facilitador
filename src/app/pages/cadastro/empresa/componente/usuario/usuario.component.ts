@@ -32,7 +32,7 @@ export class UsuarioComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.idEmpresa && !changes.idEmpresa.firstChange) {
+    if (changes.sigla && !changes.sigla.firstChange) {
       this.formUsuario.patchValue({ sigla: this.sigla });
     }
   }
@@ -43,10 +43,10 @@ export class UsuarioComponent implements OnInit, OnChanges {
       login: ["", Validators.required],
       senha: ["", Validators.required],
       nome: ["", Validators.required],
-      cpf: ["43324343", Validators.required],
-      email: ["teste@teste.com", [Validators.required, Validators.email]],
-      tipo: ["s", Validators.required],
-      fone: ["323232", Validators.required],
+      cpf: [""],
+      email: ["", [Validators.required, Validators.email]],
+      tipo: [""],
+      fone: [""],
       user_login: [this._authenticationService.getLogin()],
     });
   }

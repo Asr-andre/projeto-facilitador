@@ -30,8 +30,8 @@ export class EmpresaComponent implements OnInit {
 
   inicializarformEmpresa() {
     this.formEmpresa = this._formBuilder.group({
-      razao_social: ['', Validators.required],
-      fantasia: ['', Validators.required],
+      razao_social: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
+      fantasia: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
       cnpj: ['', Validators.required],
       endereco: [''],
       numero: [''],
@@ -47,9 +47,15 @@ export class EmpresaComponent implements OnInit {
     });
   }
 
+  public somenteTexto(event: KeyboardEvent) {
+    const charCode = event.charCode;
+    if (charCode >= 48 && charCode <= 57) {
+      event.preventDefault();
+    }
+  }
+
   public cadastrarEmpresa() {
     if (this.formEmpresa.valid) {
-      console.log(this.formEmpresa.value);
       this._empresaService.cadastrarEmpresa(this.formEmpresa.value).subscribe((res: RetornoModel) => {
           if (res && res.success === 'true') {
             this._alertService.success(res.msg);
