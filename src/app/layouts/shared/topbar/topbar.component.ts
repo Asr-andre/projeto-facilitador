@@ -50,8 +50,6 @@ export class TopbarComponent implements OnInit {
     }
     // Obter o usuário atual do serviço de autenticação
     this.currentUser = this.authService.getLogin();
-
-console.log(this.currentUser)
   }
 
   /**

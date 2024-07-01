@@ -1,19 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EmpresaModel } from '../models/empresa.model';
+import { EmpresaModel } from '../models/cadastro/empresa.model';
 import { RetornoModel } from '../models/retorno.model';
 import { AppConfig } from './url.base.service';
+import { ContratanteModel } from '../models/cadastro/contratante.model';
+import { UsuarioModel } from '../models/cadastro/usuario.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmpresaService {
 
-  private apiUrl = AppConfig.apiUrl; 
+  private apiUrl = AppConfig.apiUrl;
 
   constructor(private _http: HttpClient) { }
 
-  public cadastrar(empresa: EmpresaModel) {
+  public cadastrarEmpresa(empresa: EmpresaModel) {
     return this._http.post<RetornoModel>(`${this.apiUrl}/empresa`, empresa);
+  }
+
+  public cadastrarContratante(contratante: ContratanteModel) {
+    return this._http.post<RetornoModel>(`${this.apiUrl}/contratante`, contratante);
+  }
+
+  public cadastrarUsuario(usuario: UsuarioModel) {
+    return this._http.post<RetornoModel>(`${this.apiUrl}/usuario`, usuario);
   }
 }

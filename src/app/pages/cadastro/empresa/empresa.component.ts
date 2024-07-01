@@ -12,7 +12,9 @@ import { EmpresaService } from 'src/app/core/services/empresa.service';
 })
 export class EmpresaComponent implements OnInit {
   @Output() idEmpresaEmit = new EventEmitter<string>();
-  idEmpresa: string;
+  @Output() siglaEmit = new EventEmitter<string>();
+  public idEmpresa: string;
+  public sigla: string
   public formEmpresa: FormGroup;
 
   constructor(
@@ -23,10 +25,10 @@ export class EmpresaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.inicializarformMembro();
+    this.inicializarformEmpresa();
   }
 
-  inicializarformMembro() {
+  inicializarformEmpresa() {
     this.formEmpresa = this._formBuilder.group({
       razao_social: ['', Validators.required],
       fantasia: ['', Validators.required],
@@ -48,19 +50,19 @@ export class EmpresaComponent implements OnInit {
   public cadastrarEmpresa() {
     if (this.formEmpresa.valid) {
       console.log(this.formEmpresa.value);
-      this._empresaService.cadastrar(this.formEmpresa.value).subscribe(
-        (res: RetornoModel) => {
+      this._empresaService.cadastrarEmpresa(this.formEmpresa.value).subscribe((res: RetornoModel) => {
           if (res && res.success === 'true') {
             this._alertService.success(res.msg);
             this.idEmpresaEmit.emit(res.id_empresa);
+            this.siglaEmit.emit(res.sigla);
             this.idEmpresa = res.id_empresa;
+            this.sigla = res.sigla;
           } else {
             this._alertService.warning(res.msg);
           }
         },
         (error) => {
           this._alertService.error('Ocorreu um erro ao tentar cadastrar a empresa.');
-          console.error(error);
         }
       );
     } else {
