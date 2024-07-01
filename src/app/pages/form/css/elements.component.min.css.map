@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "../elements/elements.component.scss"
-    ],
-    "names": [],
-    "file": "elements.component.min.css"
-}

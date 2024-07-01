@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "../modals/modals.component.scss"
-    ],
-    "names": [],
-    "file": "modals.component.min.css"
-}

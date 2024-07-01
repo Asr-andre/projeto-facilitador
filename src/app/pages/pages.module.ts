@@ -19,8 +19,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { ChatComponent } from './chat/chat.component';
 import { EmailModule } from './email/email.module';
-import { UIModule } from './ui/ui.module';
-import { FormModule } from './form/form.module';
+
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AcionamentoComponent } from './dashboard/componente/acionamento/acionamento.component';
 import { WhatsappComponent } from './dashboard/componente/whatsapp/whatsapp.component';
@@ -35,7 +34,6 @@ import { WhatsappComponent } from './dashboard/componente/whatsapp/whatsapp.comp
     ReactiveFormsModule,
     PagesRoutingModule,
     UiModule,
-    UIModule,
     NgPipesModule,
     NgbNavModule,
     NgbDropdownModule,
@@ -44,7 +42,6 @@ import { WhatsappComponent } from './dashboard/componente/whatsapp/whatsapp.comp
     DndModule,
     FullCalendarModule,
     EmailModule,
-    FormModule,
     LeafletModule,
     WidgetModule,
     SimplebarAngularModule,

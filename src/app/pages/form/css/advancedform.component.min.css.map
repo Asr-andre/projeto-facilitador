@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,WAAW,AAAC,CACV,UAAU,CAAE,MAAM,CAClB,OAAO,CAAE,gBAAgB,CACzB,OAAO,CAAE,YAAY,CACrB,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACZ,AAED,AAAA,WAAW,AAAA,QAAQ,AAAC,CAClB,gBAAgB,CAAE,OAAO,CAC1B,AAED,AAAA,WAAW,AAAA,MAAM,CACjB,WAAW,AAAA,MAAM,AAAC,CAChB,gBAAgB,CAAE,OAAO,CACzB,KAAK,CAAE,KAAK,CACb,AAED,AAAA,WAAW,AAAA,MAAM,AAAC,CAChB,gBAAgB,CAAE,OAAO,CAC1B",
-    "sources": [
-        "../advancedform/advancedform.component.scss"
-    ],
-    "names": [],
-    "file": "advancedform.component.min.css"
-}

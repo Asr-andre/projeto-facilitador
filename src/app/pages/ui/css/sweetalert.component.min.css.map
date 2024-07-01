@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "../sweetalert/sweetalert.component.scss"
-    ],
-    "names": [],
-    "file": "sweetalert.component.min.css"
-}

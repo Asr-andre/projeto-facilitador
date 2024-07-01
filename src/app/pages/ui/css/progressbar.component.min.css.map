@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "../progressbar/progressbar.component.scss"
-    ],
-    "names": [],
-    "file": "progressbar.component.min.css"
-}
