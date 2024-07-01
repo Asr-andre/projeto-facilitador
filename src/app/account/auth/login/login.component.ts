@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   error = '';
   returnUrl: string;
   currentUser: any;
-  public loading = true;
+  public loading: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,9 +33,6 @@ export class LoginComponent implements OnInit {
     // Obter o returnUrl dos queryParams
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
-    setTimeout(() => {
-      this.loading = false;
-    }, 3000);
   }
 
   get f() {
@@ -43,6 +40,7 @@ export class LoginComponent implements OnInit {
   }
 
   validarLogin(event: Event) {
+    this.loading = true;
     event.preventDefault();
     this.submitted = true;
     this.error = '';
@@ -53,16 +51,18 @@ export class LoginComponent implements OnInit {
 
     const { sigla, login, senha } = this.loginForm.value;
 
-    this.authenticationService.login(sigla, login, senha)
-      .subscribe( data => {
+    this.authenticationService.login(sigla, login, senha).subscribe( data => {
           if (data && data['success'] === 'true') {
+            this.loading = false;
             this.router.navigate([this.returnUrl]);
             this.currentUser = this.authenticationService.getCurrentUser();
           } else {
+            this.loading = false;
             this.error = data['msg'] || 'Erro ao tentar autenticar.';
           }
         },
         error => {
+          this.loading = false;
           this.error = error.message || 'Ocorreu um erro ao tentar autenticar. Por favor, tente novamente.';
         });
   }
