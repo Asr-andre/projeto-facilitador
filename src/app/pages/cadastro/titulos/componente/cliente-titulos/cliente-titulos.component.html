@@ -1,0 +1,31 @@
+<hr>
+
+<p class="card-title-desc" style="margin-bottom: 0px;">Cadastre os titulos do cliente: </p>
+
+<div class="table-container">
+  <table #tabelaClientes id="tabelaClientes">
+    <thead>
+      <tr>
+        <th>Parcela</th>
+        <th>Contrato</th>
+        <th>Documento</th>
+        <th>Produto</th>
+        <th>Vencimento</th>
+        <th>Valor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cliente of clientes; let i = index">
+        <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 0)">{{ cliente.id }}</td>
+        <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 1)">{{ cliente.nome }}</td>
+        <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 2)">{{ cliente.email }}</td>
+        <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 0)">{{ cliente.id }}</td>
+        <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 1)">{{ cliente.nome }}</td>
+        <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 2)">{{ cliente.email }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="mb-3 mb-0" style="text-align: end;">
+  <button type="submit" class="btn btn-success mb-1 btn-sm me-1" (click)="importarClientes()">Cadastrar Titulos</button>
+</div>

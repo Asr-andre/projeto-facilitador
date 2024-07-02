@@ -5,66 +5,36 @@
         <div class="card-body" style="padding-bottom: 8px;">
           <div class="d-flex">
             <div class="flex-1 overflow-hidden">
-              <h4>Tela de cadastro de títulos em desenvolvimento</h4>
-
-              <!-- importar-clientes.component.html -->
-              <div class="table-container">
-                <table id="clientesTable">
-                  <thead>
-                    <tr>
-                      <th>Cpf</th>
-                      <th>Nome</th>
-                      <th>Endereço</th>
-                      <th>Número</th>
-                      <th>Bairro</th>
-                      <th>Cidade</th>
-                      <th>Uf</th>
-                      <th>Cep</th>
-                      <th>Fone1</th>
-                      <th>Fone2</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td contenteditable="true"></td>
-                      <td contenteditable="true"></td>
-                      <td contenteditable="true"></td>
-                      <td contenteditable="true"></td>
-                      <td contenteditable="true"></td>
-                      <td contenteditable="true"></td>
-                      <td contenteditable="true"></td>
-                      <td contenteditable="true"></td>
-                      <td contenteditable="true"></td>
-                      <td contenteditable="true"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="mb-3 mb-0" style="text-align: end;">
-                <button type="submit" class="btn btn-success mb-1 btn-sm me-1" (click)="importarClientes()">Cadastrar Clientes</button>
+              <h4 class="card-title"><i class="fas fa-search me-2"></i> Pesquisa cliente/ Cadastro manual</h4>
+              <hr>
+              <div class="d-flex justify-content-left mb-3">
+                <input type="text" class="form-control form-control-sm me-2"
+                  placeholder="Pesquisar cliente existente..." style="width: 400px;">
+                <select class="form-control form-control-sm me-2" style="width: 200px;">
+                  <option value="1">Contratante 1</option>
+                  <option value="2">Contratante 2</option>
+                  <option value="3">Contratante 3</option>
+                </select>
+                <button type="button" class="btn btn-secondary btn-sm"><i class="fas fa-check"></i> Selecionar</button>
               </div>
 
-              <div class="table-container">
-                <table #tabelaClientes id="tabelaClientes">
-                  <thead>
-                    <tr>
-                      <th>Documento</th>
-                      <th>Vencimento</th>
-                      <th>Valor</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let cliente of clientes; let i = index">
-                      <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 0)">{{ cliente.id }}</td>
-                      <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 1)">{{ cliente.nome }}</td>
-                      <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 2)">{{ cliente.email }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="mb-3 mb-0" style="text-align: end;">
-                <button type="submit" class="btn btn-success mb-1 btn-sm me-1" (click)="importarClientes()">Cadastrar Titulos</button>
-              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body" style="padding-bottom: 8px;">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <app-cliente-contratante></app-cliente-contratante>
+              <app-cliente-titulos></app-cliente-titulos>
             </div>
           </div>
         </div>

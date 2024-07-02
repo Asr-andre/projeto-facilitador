@@ -1,0 +1,31 @@
+/* titulos.component.scss */
+
+.table-container {
+  margin: 20px 0;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3)!important;
+  padding: 4px 8px; /* Reduzindo o padding vertical */
+  text-align: left;
+  font-size: 12px; /* Reduzindo o tamanho da fonte */
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td[contenteditable="true"] {
+  background-color: #fff;
+}
+
+td[contenteditable="true"]:focus {
+  background-color: #e0e0e0;
+  outline: none;
+}
