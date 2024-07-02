@@ -12,6 +12,7 @@ export class TitulosComponent implements OnInit {
   public contratanteSelecionado: number;
   public idEmpresa: number;
   public idCliente: boolean = false;
+  public loading: boolean;
 
   constructor(
     private _contratanteService: ContratanteService
@@ -22,8 +23,10 @@ export class TitulosComponent implements OnInit {
   }
 
   public obterContratantes() {
+    this.loading = true;
     this._contratanteService.obterContratantes().subscribe((res) => {
       this.listarContratantes = res
+      this.loading = false;
     });
   }
 

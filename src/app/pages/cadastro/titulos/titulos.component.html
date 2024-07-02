@@ -1,3 +1,8 @@
+<div class="loading-overlay" *ngIf="loading">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
@@ -38,7 +43,7 @@
               <div *ngIf="idCliente">
                 <app-cliente-titulos></app-cliente-titulos>
               </div>
-              
+
             </div>
           </div>
         </div>
