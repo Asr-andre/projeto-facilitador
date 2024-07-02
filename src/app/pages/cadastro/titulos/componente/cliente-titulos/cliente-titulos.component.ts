@@ -7,7 +7,7 @@ import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
   styleUrl: './cliente-titulos.component.scss'
 })
 export class ClienteTitulosComponent {
-
+  public idCliente: boolean = false;
   public clientes: any[] = [];
 
   @ViewChild("tabelaClientes") tabelaClientes: ElementRef;

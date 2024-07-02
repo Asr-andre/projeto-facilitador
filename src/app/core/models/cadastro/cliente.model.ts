@@ -1,4 +1,4 @@
-export class ContratanteModel {
+export class ClienteModel {
   id_empresa: number;
   id_contratante: number;
   nome: string;

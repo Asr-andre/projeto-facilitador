@@ -11,6 +11,7 @@ export class TitulosComponent implements OnInit {
   public listarContratantes: ContratanteModel [] = [];
   public contratanteSelecionado: number;
   public idEmpresa: number;
+  public idCliente: boolean = false;
 
   constructor(
     private _contratanteService: ContratanteService

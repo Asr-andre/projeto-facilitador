@@ -1,23 +1,23 @@
-
-<p class="card-title-desc" style="margin-bottom: 0px;">Cadastre os cliente para o contratante: {{ idEmpresa }}</p>
+<p class="card-title-desc" style="margin-bottom: 0px;">Cadastre os clientes para o contratante: {{ idEmpresa }}</p>
 
 <div class="table-container">
-  <table id="clientesTable">
+  <table #tabelaClientes id="tabelaClientes" class="table" (paste)="colarDados($event)">
     <thead>
       <tr>
-        <th>Cpf</th>
+        <th>CNPJ/CPF</th>
         <th>Nome</th>
         <th>Endereço</th>
         <th>Número</th>
         <th>Bairro</th>
         <th>Cidade</th>
-        <th>Uf</th>
-        <th>Cep</th>
-        <th>Fone1</th>
-        <th>Fone2</th>
+        <th>UF</th>
+        <th>CEP</th>
+        <th>Fone Prioritário</th>
+        <th>Fone Residencial</th>
       </tr>
     </thead>
     <tbody>
+      <!-- Linha inicial para edição -->
       <tr>
         <td contenteditable="true"></td>
         <td contenteditable="true"></td>
@@ -33,7 +33,7 @@
     </tbody>
   </table>
 </div>
-<div class="mb-3 mb-0" style="text-align: end;">
-  <button type="submit" class="btn btn-success mb-1 btn-sm me-1" (click)="importarClientes()">Cadastrar
-    Clientes</button>
+
+<div style="text-align: end;">
+  <button type="submit" class="btn btn-success mb-1 btn-sm" (click)="importarClientes()">Cadastrar Clientes</button>
 </div>

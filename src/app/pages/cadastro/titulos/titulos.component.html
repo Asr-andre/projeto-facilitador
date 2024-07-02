@@ -35,8 +35,10 @@
           <div class="d-flex">
             <div class="flex-1 overflow-hidden">
               <app-cliente-contratante [idEmpresa]="idEmpresa"></app-cliente-contratante>
-
-              <app-cliente-titulos></app-cliente-titulos>
+              <div *ngIf="idCliente">
+                <app-cliente-titulos></app-cliente-titulos>
+              </div>
+              
             </div>
           </div>
         </div>
