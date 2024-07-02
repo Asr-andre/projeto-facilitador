@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { EmpresaService } from 'src/app/core/services/empresa.service';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
 
 @Component({
   selector: 'app-cliente-contratante',
@@ -8,6 +8,7 @@ import { EmpresaService } from 'src/app/core/services/empresa.service';
 })
 export class ClienteContratanteComponent {
 
+  @Input() idEmpresa: string;
   public clientes: any[] = [];
 
   @ViewChild("tabelaClientes") tabelaClientes: ElementRef;

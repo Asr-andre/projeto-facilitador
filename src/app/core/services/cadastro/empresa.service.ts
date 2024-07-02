@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EmpresaModel } from '../models/cadastro/empresa.model';
-import { RetornoModel } from '../models/retorno.model';
-import { AppConfig } from './url.base.service';
-import { ContratanteModel } from '../models/cadastro/contratante.model';
-import { UsuarioModel } from '../models/cadastro/usuario.model';
+import { EmpresaModel } from '../../models/cadastro/empresa.model';
+import { RetornoModel } from '../../models/retorno.model';
+import { AppConfig } from '../url.base.service';
+import { ContratanteModel } from '../../models/cadastro/contratante.model';
+import { UsuarioModel } from '../../models/cadastro/usuario.model';
 import { Observable } from 'rxjs';
 
 @Injectable({

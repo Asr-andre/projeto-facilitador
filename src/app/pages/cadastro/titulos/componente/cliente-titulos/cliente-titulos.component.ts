@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { EmpresaService } from 'src/app/core/services/empresa.service';
+import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
 
 @Component({
   selector: 'app-cliente-titulos',

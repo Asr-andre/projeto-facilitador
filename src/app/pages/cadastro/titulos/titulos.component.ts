@@ -1,46 +1,33 @@
-import { Component, ElementRef, ViewChild } from "@angular/core";
-import { Observable } from "rxjs";
-import { EmpresaService } from "src/app/core/services/empresa.service";
+import { Component, OnInit } from "@angular/core";
+import { ContratanteModel } from "src/app/core/models/cadastro/contratante.model";
+import { ContratanteService } from "src/app/core/services/cadastro/contratante.service";
 
 @Component({
   selector: "app-titulos",
   templateUrl: "./titulos.component.html",
   styleUrls: ["./titulos.component.scss"],
 })
-export class TitulosComponent {
-  public clientes: any[] = [];
+export class TitulosComponent implements OnInit {
+  public listarContratantes: ContratanteModel [] = [];
+  public contratanteSelecionado: number;
+  public idEmpresa: number;
 
-  @ViewChild("tabelaClientes") tabelaClientes: ElementRef;
+  constructor(
+    private _contratanteService: ContratanteService
+  ) {}
 
-  constructor(private servicoEmpresa: EmpresaService) {
-    this.clientes.push({ id: "", nome: "", email: "", telefone: "" });
+  ngOnInit(): void {
+    this.obterContratantes();
   }
 
-  public importarClientes() {
-    this.servicoEmpresa.importarClientes(this.clientes).subscribe(
-      (response) => {
-        console.log("Clientes importados com sucesso!", response);
-      },
-      (error) => {
-        console.error("Erro ao importar clientes", error);
-      }
-    );
+  public obterContratantes() {
+    this._contratanteService.obterContratantes().subscribe((res) => {
+      this.listarContratantes = res
+    });
   }
 
-  public aoPressionarEnter(evento: KeyboardEvent, indiceLinha: number, indiceColuna: number) {
-    if (evento.key === "Enter") {
-      if (indiceColuna === 3 && indiceLinha === this.clientes.length - 1) {
-
-        this.clientes.push({ id: "", nome: "", email: "", telefone: "" });
-
-        setTimeout(() => {
-          const elementoTabela = this.tabelaClientes.nativeElement as HTMLTableElement;
-          const linhas = elementoTabela.rows;
-          const novaLinha = linhas[linhas.length - 1];
-          const primeiraCelula = novaLinha.cells[0] as HTMLElement;
-          primeiraCelula.focus();
-        });
-      }
-    }
+  public selecionarContratante(): void {
+    this.idEmpresa = this.contratanteSelecionado;
   }
 }
+

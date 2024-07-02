@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RetornoModel } from 'src/app/core/models/retorno.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
-import { EmpresaService } from 'src/app/core/services/empresa.service';
+import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
 
 @Component({
   selector: 'app-empresa',

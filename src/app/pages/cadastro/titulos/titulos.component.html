@@ -10,14 +10,15 @@
               <div class="d-flex justify-content-left mb-3">
                 <input type="text" class="form-control form-control-sm me-2"
                   placeholder="Pesquisar cliente existente..." style="width: 400px;">
-                <select class="form-control form-control-sm me-2" style="width: 200px;">
-                  <option value="1">Contratante 1</option>
-                  <option value="2">Contratante 2</option>
-                  <option value="3">Contratante 3</option>
+                <select class="form-control form-control-sm me-2" [(ngModel)]="contratanteSelecionado"
+                  style="width: 200px;">
+                  <option value="">Selecione</option>
+                  <option *ngFor="let contratante of listarContratantes" [value]="contratante.id_empresa">{{
+                    contratante.fantasia }}</option>
                 </select>
-                <button type="button" class="btn btn-secondary btn-sm"><i class="fas fa-check"></i> Selecionar</button>
+                <button type="button" class="btn btn-secondary btn-sm" (click)="selecionarContratante()"><i
+                    class="fas fa-check"></i> Selecionar</button>
               </div>
-
             </div>
           </div>
         </div>
@@ -26,14 +27,15 @@
   </div>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="idEmpresa">
   <div class="row">
     <div class="col-md-12">
       <div class="card">
         <div class="card-body" style="padding-bottom: 8px;">
           <div class="d-flex">
             <div class="flex-1 overflow-hidden">
-              <app-cliente-contratante></app-cliente-contratante>
+              <app-cliente-contratante [idEmpresa]="idEmpresa"></app-cliente-contratante>
+
               <app-cliente-titulos></app-cliente-titulos>
             </div>
           </div>
