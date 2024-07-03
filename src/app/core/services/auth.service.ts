@@ -10,6 +10,7 @@ export class AuthenticationService {
   private currentUserKey = 'currentUser';
   private siglaKey = 'sigla';
   private loginKey = 'login';
+  private idEmpresaKey = 'id_empresa';
 
   constructor(private http: HttpClient) {}
 
@@ -27,6 +28,7 @@ export class AuthenticationService {
           localStorage.setItem(this.currentUserKey, JSON.stringify(response));
           localStorage.setItem(this.siglaKey, sigla);
           localStorage.setItem(this.loginKey, login);
+          localStorage.setItem(this.idEmpresaKey, response['id_empresa']);
           return response;
         } else {
           throw new Error(response['msg: '] || 'Erro ao tentar autenticar.');
@@ -43,6 +45,7 @@ export class AuthenticationService {
     localStorage.removeItem(this.currentUserKey);
     localStorage.removeItem(this.siglaKey);
     localStorage.removeItem(this.loginKey);
+    localStorage.removeItem(this.idEmpresaKey);
   }
 
   public getCurrentUser(): any {
@@ -57,5 +60,9 @@ export class AuthenticationService {
 
   public getLogin(): string {
     return localStorage.getItem(this.loginKey);
+  }
+
+  public getIdEmpresa(): string {
+    return localStorage.getItem(this.idEmpresaKey);
   }
 }

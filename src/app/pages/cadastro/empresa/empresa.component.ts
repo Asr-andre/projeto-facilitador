@@ -47,13 +47,6 @@ export class EmpresaComponent implements OnInit {
     });
   }
 
-  public somenteTexto(event: KeyboardEvent) {
-    const charCode = event.charCode;
-    if (charCode >= 48 && charCode <= 57) {
-      event.preventDefault();
-    }
-  }
-
   public cadastrarEmpresa() {
     if (this.formEmpresa.valid) {
       this._empresaService.cadastrarEmpresa(this.formEmpresa.value).subscribe((res: RetornoModel) => {
