@@ -11,17 +11,34 @@ export class ClienteContratanteComponent {
 
   @Input() idEmpresa: string;
   public clientes: ClienteModel[] = [];
-  public clienteTemporario: ClienteModel = new ClienteModel();
-
   @ViewChild("tabelaClientes") tabelaClientes: any;
 
   constructor(private servicoEmpresa: EmpresaService) {}
 
   public importarClientes(): void {
-    if (this.clientePreenchido()) {
-      this.clientes.push(this.clienteTemporario);
-      this.limparClienteTemporario();
-    }
+    const linhas = this.tabelaClientes.nativeElement.querySelectorAll('tbody tr');
+    this.clientes = [];
+
+    linhas.forEach((linha, index) => {
+      const cliente = new ClienteModel();
+      cliente.cnpj_cpf = linha.querySelector('.cnpj_cpf').textContent.trim();
+      cliente.nome = linha.querySelector('.nome').textContent.trim();
+      cliente.endereco = linha.querySelector('.endereco').textContent.trim();
+      cliente.numero = linha.querySelector('.numero').textContent.trim();
+      cliente.bairro = linha.querySelector('.bairro').textContent.trim();
+      cliente.cidade = linha.querySelector('.cidade').textContent.trim();
+      cliente.uf = linha.querySelector('.uf').textContent.trim();
+      cliente.cep = linha.querySelector('.cep').textContent.trim();
+      cliente.fone_prioritario = linha.querySelector('.fone_prioritario').textContent.trim();
+      cliente.fone_residencial = linha.querySelector('.fone_residencial').textContent.trim();
+
+
+      if (this.clientePreenchido(cliente)) {
+        this.clientes.push(cliente);
+      }
+    });
+
+    console.log('Array de clientes:', this.clientes);
 
     if (this.clientes.length > 0) {
       this.servicoEmpresa.importarClientes(this.clientes).subscribe(
@@ -38,35 +55,26 @@ export class ClienteContratanteComponent {
     }
   }
 
-  private clientePreenchido(): boolean {
-    console.log('Cliente temporário:', this.clienteTemporario);
+  private clientePreenchido(cliente: ClienteModel): boolean {
     return !!(
-      this.clienteTemporario.cnpj_cpf &&
-      this.clienteTemporario.nome &&
-      this.clienteTemporario.endereco &&
-      this.clienteTemporario.numero &&
-      this.clienteTemporario.bairro &&
-      this.clienteTemporario.cidade &&
-      this.clienteTemporario.uf &&
-      this.clienteTemporario.cep &&
-      this.clienteTemporario.fone_prioritario &&
-      this.clienteTemporario.fone_residencial
+      cliente.cnpj_cpf &&
+      cliente.nome &&
+      cliente.endereco &&
+      cliente.numero &&
+      cliente.bairro &&
+      cliente.cidade &&
+      cliente.uf &&
+      cliente.cep &&
+      cliente.fone_prioritario &&
+      cliente.fone_residencial
     );
   }
 
-  private limparClienteTemporario(): void {
-    this.clienteTemporario = new ClienteModel();
-  }
-
   public colarDados(evento: ClipboardEvent): void {
-    console.log('Evento de colar:', evento);
     evento.preventDefault();
     const dadosClipboard = evento.clipboardData;
     const textoColado = dadosClipboard.getData('text');
     const dadosLinha = textoColado.split('\t');
-
-    console.log('Texto colado:', textoColado);
-    console.log('Dados da linha:', dadosLinha);
 
     const linha = this.tabelaClientes.nativeElement.querySelector('tbody tr');
 

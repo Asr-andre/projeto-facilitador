@@ -3,28 +3,13 @@ export class ClienteModel {
   id_contratante: number;
   nome: string;
   cnpj_cpf: string;
-  identificador: string;
-  tipo_pessoa: string;
-  rg: string;
-  orgao_expedidor: string;
   endereco: string;
   numero: string;
-  complemento: string;
   bairro: string;
   cidade: string;
   uf: string;
   cep: string;
   fone_prioritario: string;
-  fone_trabalho: string;
   fone_residencial: string;
-  pai: string;
-  mae: string;
-  data_nascimento: string;
-  sexo: string;
-  conjugue: string;
-  trabalho: string;
-  cargo: string;
-  valor_renda: number;
-  melhor_canal_localizacao: string;
   user_login: string;
 }
