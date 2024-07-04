@@ -32,14 +32,14 @@
   </div>
 </div>
 
-<div class="container-fluid" *ngIf="idEmpresa">
+<div class="container-fluid" *ngIf="idContratante">
   <div class="row">
     <div class="col-md-12">
       <div class="card">
         <div class="card-body" style="padding-bottom: 8px;">
           <div class="d-flex">
             <div class="flex-1 overflow-hidden">
-              <app-cliente-contratante [idEmpresa]="idEmpresa"></app-cliente-contratante>
+              <app-cliente-contratante [idContratante]="idContratante"></app-cliente-contratante>
               <div *ngIf="idCliente">
                 <app-cliente-titulos></app-cliente-titulos>
               </div>

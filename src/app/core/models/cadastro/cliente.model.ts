@@ -9,7 +9,5 @@ export class ClienteModel {
   cidade: string;
   uf: string;
   cep: string;
-  fone_prioritario: string;
-  fone_residencial: string;
   user_login: string;
 }

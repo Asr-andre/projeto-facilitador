@@ -11,7 +11,7 @@ import { ContratanteService } from "src/app/core/services/cadastro/contratante.s
 export class TitulosComponent implements OnInit {
   public listarContratantes: ContratanteModel [] = [];
   public contratanteSelecionado: number;
-  public idEmpresa: number;
+  public idContratante: number;
   public idCliente: boolean = false;
   public loading: boolean;
 
@@ -38,7 +38,7 @@ export class TitulosComponent implements OnInit {
   }
 
   public selecionarContratante(): void {
-    this.idEmpresa = this.contratanteSelecionado;
+    this.idContratante = this.contratanteSelecionado;
   }
 }
 

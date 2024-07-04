@@ -1,4 +1,4 @@
-<p class="card-title-desc" style="margin-bottom: 0px;">Cadastrar cliente/ contratante_id: {{ idEmpresa }}</p>
+<p class="card-title-desc" style="margin-bottom: 0px;">Cadastrar cliente/ contratante_id: {{ idContratante }}</p>
 
 <div class="table-container">
   <table #tabelaClientes id="tabelaClientes" class="table" (paste)="colarDados($event)">
@@ -12,8 +12,6 @@
         <th>Cidade</th>
         <th>UF</th>
         <th>CEP</th>
-        <th>Fone Prioritário</th>
-        <th>Fone Residencial</th>
       </tr>
     </thead>
     <tbody>
@@ -26,8 +24,6 @@
         <td contenteditable="true" class="cidade"></td>
         <td contenteditable="true" class="uf"></td>
         <td contenteditable="true" class="cep"></td>
-        <td contenteditable="true" class="fone_prioritario"></td>
-        <td contenteditable="true" class="fone_residencial"></td>
       </tr>
     </tbody>
   </table>

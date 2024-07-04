@@ -1,5 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { ClienteModel } from 'src/app/core/models/cadastro/cliente.model';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
 
 @Component({
@@ -9,11 +10,13 @@ import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
 })
 export class ClienteContratanteComponent {
 
-  @Input() idEmpresa: string;
+  @Input() idContratante: string;
   public clientes: ClienteModel[] = [];
   @ViewChild("tabelaClientes") tabelaClientes: any;
 
-  constructor(private servicoEmpresa: EmpresaService) {}
+  constructor(
+    private servicoEmpresa: EmpresaService,
+    private _authService: AuthenticationService) {}
 
   public importarClientes(): void {
     const linhas = this.tabelaClientes.nativeElement.querySelectorAll('tbody tr');
@@ -21,6 +24,8 @@ export class ClienteContratanteComponent {
 
     linhas.forEach((linha, index) => {
       const cliente = new ClienteModel();
+      cliente.id_empresa = Number(this._authService.getIdEmpresa());
+      cliente.id_contratante = Number(this.idContratante);
       cliente.cnpj_cpf = linha.querySelector('.cnpj_cpf').textContent.trim();
       cliente.nome = linha.querySelector('.nome').textContent.trim();
       cliente.endereco = linha.querySelector('.endereco').textContent.trim();
@@ -29,9 +34,7 @@ export class ClienteContratanteComponent {
       cliente.cidade = linha.querySelector('.cidade').textContent.trim();
       cliente.uf = linha.querySelector('.uf').textContent.trim();
       cliente.cep = linha.querySelector('.cep').textContent.trim();
-      cliente.fone_prioritario = linha.querySelector('.fone_prioritario').textContent.trim();
-      cliente.fone_residencial = linha.querySelector('.fone_residencial').textContent.trim();
-
+      cliente.user_login = this._authService.getLogin();
 
       if (this.clientePreenchido(cliente)) {
         this.clientes.push(cliente);
@@ -57,6 +60,7 @@ export class ClienteContratanteComponent {
 
   private clientePreenchido(cliente: ClienteModel): boolean {
     return !!(
+
       cliente.cnpj_cpf &&
       cliente.nome &&
       cliente.endereco &&
@@ -64,9 +68,7 @@ export class ClienteContratanteComponent {
       cliente.bairro &&
       cliente.cidade &&
       cliente.uf &&
-      cliente.cep &&
-      cliente.fone_prioritario &&
-      cliente.fone_residencial
+      cliente.cep
     );
   }
 
