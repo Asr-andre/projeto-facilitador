@@ -41,6 +41,7 @@ export class ClienteContratanteComponent {
       if (this.clientePreenchido(this.cliente)) {
         this.servicoEmpresa.importarClientes(this.cliente).subscribe( (response) => {
             this._alertService.success(response.msg);
+
             if (response.data && response.data.id_cliente) {
               console.log('Emitindo idCliente:', response.data.id_cliente);
               this.idCliente.emit(response.data.id_cliente);

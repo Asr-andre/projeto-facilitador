@@ -32,19 +32,34 @@
   </div>
 </div>
 
-<div class="container-fluid" *ngIf="idContratante">
+<div class="container-fluid" *ngIf="exibirTelaCadastroCliente">
   <div class="row">
     <div class="col-md-12">
       <div class="card">
         <div class="card-body" style="padding-bottom: 8px;">
           <div class="d-flex">
             <div class="flex-1 overflow-hidden">
+              <div>
               <app-cliente-contratante [idContratante]="idContratante" (idCliente)="onClienteImportado($event)"></app-cliente-contratante>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-              <div *ngIf="idCliente">
+<div class="container-fluid" *ngIf="exibirTelaCadastroTitulos">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body" style="padding-bottom: 8px;">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <div>
                 <app-cliente-titulos [idCliente]="idCliente"></app-cliente-titulos>
               </div>
-
             </div>
           </div>
         </div>
