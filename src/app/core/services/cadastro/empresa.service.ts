@@ -6,6 +6,8 @@ import { AppConfig } from '../url.base.service';
 import { ContratanteModel } from '../../models/cadastro/contratante.model';
 import { UsuarioModel } from '../../models/cadastro/usuario.model';
 import { Observable } from 'rxjs';
+import { ClienteModel } from '../../models/cadastro/cliente.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +30,8 @@ export class EmpresaService {
     return this._http.post<RetornoModel>(`${this.apiUrl}/usuario`, usuario);
   }
 
-  importarClientes(clientes: any[]): Observable<any> {
+  importarClientes(clientes: ClienteModel): Observable<any> {
+    console.log(clientes)
     return this._http.post<RetornoModel>(`${this.apiUrl}/cliente`, clientes);
   }
 }

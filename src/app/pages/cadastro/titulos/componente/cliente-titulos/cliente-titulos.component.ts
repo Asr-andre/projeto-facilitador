@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
   styleUrl: './cliente-titulos.component.scss'
 })
 export class ClienteTitulosComponent {
-  public idCliente: boolean = false;
+  @Input() idCliente: number;
   public clientes: any[] = [];
 
   @ViewChild("tabelaClientes") tabelaClientes: ElementRef;
@@ -16,15 +16,10 @@ export class ClienteTitulosComponent {
     this.clientes.push({ id: "", nome: "", email: "", telefone: "" });
   }
 
-  public importarClientes() {
-    this.servicoEmpresa.importarClientes(this.clientes).subscribe(
-      (response) => {
-        console.log("Clientes importados com sucesso!", response);
-      },
-      (error) => {
-        console.error("Erro ao importar clientes", error);
-      }
-    );
+  ngOnChanges(): void {
+    if (this.idCliente) {
+      console.log('Recebido idCliente no ClienteTitulosComponent:', this.idCliente);
+    }
   }
 
   public aoPressionarEnter(evento: KeyboardEvent, indiceLinha: number, indiceColuna: number) {

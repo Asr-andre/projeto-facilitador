@@ -1,5 +1,6 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ClienteModel } from 'src/app/core/models/cadastro/cliente.model';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
 
@@ -11,56 +12,59 @@ import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
 export class ClienteContratanteComponent {
 
   @Input() idContratante: string;
-  public clientes: ClienteModel[] = [];
+  @Output() idCliente = new EventEmitter<number>();
+  public cliente: ClienteModel = new ClienteModel();
   @ViewChild("tabelaClientes") tabelaClientes: any;
 
   constructor(
     private servicoEmpresa: EmpresaService,
-    private _authService: AuthenticationService) {}
+    private _authService: AuthenticationService,
+    private _alertService: AlertService
+  ) {}
 
-  public importarClientes(): void {
-    const linhas = this.tabelaClientes.nativeElement.querySelectorAll('tbody tr');
-    this.clientes = [];
+  public importarCliente(): void {
+    const linha = this.tabelaClientes.nativeElement.querySelector('tbody tr');
 
-    linhas.forEach((linha, index) => {
-      const cliente = new ClienteModel();
-      cliente.id_empresa = Number(this._authService.getIdEmpresa());
-      cliente.id_contratante = Number(this.idContratante);
-      cliente.cnpj_cpf = linha.querySelector('.cnpj_cpf').textContent.trim();
-      cliente.nome = linha.querySelector('.nome').textContent.trim();
-      cliente.endereco = linha.querySelector('.endereco').textContent.trim();
-      cliente.numero = linha.querySelector('.numero').textContent.trim();
-      cliente.bairro = linha.querySelector('.bairro').textContent.trim();
-      cliente.cidade = linha.querySelector('.cidade').textContent.trim();
-      cliente.uf = linha.querySelector('.uf').textContent.trim();
-      cliente.cep = linha.querySelector('.cep').textContent.trim();
-      cliente.user_login = this._authService.getLogin();
+    if (linha) {
+      this.cliente.id_empresa = Number(this._authService.getIdEmpresa());
+      this.cliente.id_contratante = Number(this.idContratante);
+      this.cliente.cnpj_cpf = linha.querySelector('.cnpj_cpf').textContent.trim();
+      this.cliente.nome = linha.querySelector('.nome').textContent.trim();
+      this.cliente.endereco = linha.querySelector('.endereco').textContent.trim();
+      this.cliente.numero = linha.querySelector('.numero').textContent.trim();
+      this.cliente.bairro = linha.querySelector('.bairro').textContent.trim();
+      this.cliente.cidade = linha.querySelector('.cidade').textContent.trim();
+      this.cliente.uf = linha.querySelector('.uf').textContent.trim();
+      this.cliente.cep = linha.querySelector('.cep').textContent.trim();
+      this.cliente.user_login = this._authService.getLogin();
 
-      if (this.clientePreenchido(cliente)) {
-        this.clientes.push(cliente);
+      if (this.clientePreenchido(this.cliente)) {
+        this.servicoEmpresa.importarClientes(this.cliente).subscribe( (response) => {
+            this._alertService.success(response.msg);
+            if (response.data && response.data.id_cliente) {
+              console.log('Emitindo idCliente:', response.data.id_cliente);
+              this.idCliente.emit(response.data.id_cliente);
+            }
+          },
+          (error) => {
+            this._alertService.error("Erro ao importar cliente", error);
+            if (error.error && error.error.message) {
+              this._alertService.warning("Detalhes do erro:", error.error.message);
+            }
+          }
+        );
+      } else {
+        this._alertService.error("Cliente não está completamente preenchido.");
       }
-    });
-
-    console.log('Array de clientes:', this.clientes);
-
-    if (this.clientes.length > 0) {
-      this.servicoEmpresa.importarClientes(this.clientes).subscribe(
-        (response) => {
-          console.log("Clientes importados com sucesso!", response);
-          this.clientes = [];
-        },
-        (error) => {
-          console.error("Erro ao importar clientes", error);
-        }
-      );
     } else {
-      console.error("Nenhum cliente para importar.");
+      this._alertService.warning("Nenhuma linha encontrada na tabela.");
     }
   }
 
   private clientePreenchido(cliente: ClienteModel): boolean {
     return !!(
-
+      cliente.id_empresa &&
+      cliente.id_contratante &&
       cliente.cnpj_cpf &&
       cliente.nome &&
       cliente.endereco &&
@@ -68,7 +72,8 @@ export class ClienteContratanteComponent {
       cliente.bairro &&
       cliente.cidade &&
       cliente.uf &&
-      cliente.cep
+      cliente.cep &&
+      cliente.user_login
     );
   }
 

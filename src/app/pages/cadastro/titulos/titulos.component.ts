@@ -12,8 +12,9 @@ export class TitulosComponent implements OnInit {
   public listarContratantes: ContratanteModel [] = [];
   public contratanteSelecionado: number;
   public idContratante: number;
-  public idCliente: boolean = false;
+  public idCliente: number;
   public loading: boolean;
+
 
   constructor(
     private _contratanteService: ContratanteService,
@@ -39,6 +40,11 @@ export class TitulosComponent implements OnInit {
 
   public selecionarContratante(): void {
     this.idContratante = this.contratanteSelecionado;
+  }
+
+  onClienteImportado(idCliente: number): void {
+    console.log('Recebido idCliente:', idCliente); // Log para depuração
+    this.idCliente = idCliente;
   }
 }
 
