@@ -9,7 +9,7 @@ const chatData = [
     },
     {
         id: 2,
-        image: 'assets/images/users/avatar-3.jpg',
+        image: 'assets/images/users/avatar-2.jpg',
         name: 'Robert Winter',
         message: 'I\'ve finished it! See you so',
         time: '09 min',
@@ -24,7 +24,7 @@ const chatData = [
     },
     {
         id: 4,
-        image: 'assets/images/users/avatar-4.jpg',
+        image: 'assets/images/users/avatar-2.jpg',
         name: 'Kristen Steele',
         message: 'Nice to meet you',
         time: '1 hr',
@@ -39,7 +39,7 @@ const chatData = [
     },
     {
         id: 6,
-        image: 'assets/images/users/avatar-6.jpg',
+        image: 'assets/images/users/avatar-2.jpg',
         name: 'Stephen Hadley',
         message: 'I\'ve finished it! See you so',
         time: '5 hrs',
