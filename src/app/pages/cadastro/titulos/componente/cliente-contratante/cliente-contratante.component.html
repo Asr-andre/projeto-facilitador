@@ -16,14 +16,14 @@
     </thead>
     <tbody>
       <tr>
-        <td contenteditable="true" class="cnpj_cpf"></td>
+        <td contenteditable="true" class="cnpj_cpf" (input)="limitarCaracteres($event, 14)"></td>
         <td contenteditable="true" class="nome"></td>
         <td contenteditable="true" class="endereco"></td>
         <td contenteditable="true" class="numero"></td>
         <td contenteditable="true" class="bairro"></td>
         <td contenteditable="true" class="cidade"></td>
-        <td contenteditable="true" class="uf"></td>
-        <td contenteditable="true" class="cep"></td>
+        <td contenteditable="true" class="uf" (input)="limitarCaracteres($event, 2)"></td>
+        <td contenteditable="true" class="cep" (input)="limitarCaracteres($event, 8)"></td>
       </tr>
     </tbody>
   </table>

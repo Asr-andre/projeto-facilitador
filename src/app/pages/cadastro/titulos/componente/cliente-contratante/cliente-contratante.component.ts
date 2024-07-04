@@ -95,4 +95,11 @@ export class ClienteContratanteComponent {
       });
     }
   }
+
+  public limitarCaracteres(event: any, limite: number) {
+    const elemento = event.target;
+    if (elemento.textContent.length > limite) {
+      elemento.textContent = elemento.textContent.slice(0, limite);
+    }
+  }
 }

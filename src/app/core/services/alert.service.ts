@@ -12,9 +12,9 @@ export class AlertService {
       title: title,
       text: message,
       icon: 'success',
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: true
+      showConfirmButton: true,
+      timer: undefined,
+      timerProgressBar: false
     });
   }
 
@@ -23,9 +23,9 @@ export class AlertService {
       title: title,
       text: message,
       icon: 'error',
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: true
+      showConfirmButton: true,
+      timer: undefined,
+      timerProgressBar: false
     });
   }
 
@@ -34,9 +34,9 @@ export class AlertService {
       title: title,
       text: message,
       icon: 'warning',
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: true
+      showConfirmButton: true,
+      timer: undefined,
+      timerProgressBar: false
     });
   }
 }
