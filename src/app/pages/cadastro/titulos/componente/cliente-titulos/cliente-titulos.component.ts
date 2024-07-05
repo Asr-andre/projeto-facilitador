@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
   templateUrl: './cliente-titulos.component.html',
   styleUrl: './cliente-titulos.component.scss'
 })
-export class ClienteTitulosComponent {
+export class ClienteTitulosComponent implements OnChanges {
   @Input() idCliente: number;
   public clientes: any[] = [];
 
@@ -16,8 +16,8 @@ export class ClienteTitulosComponent {
     this.clientes.push({ id: "", nome: "", email: "", telefone: "" });
   }
 
-  ngOnChanges(): void {
-    if (this.idCliente) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['idCliente'] && changes['idCliente'].currentValue) {
       console.log('Recebido idCliente no ClienteTitulosComponent:', this.idCliente);
     }
   }

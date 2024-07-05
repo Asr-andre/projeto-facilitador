@@ -4,4 +4,9 @@ export class RetornoModel {
     id_empresa: string;
     sigla: string;
   }
-  
+
+  export class RetornoClienteModel {
+    success: string;
+    msg: string;
+    id_cliente: string;
+  }

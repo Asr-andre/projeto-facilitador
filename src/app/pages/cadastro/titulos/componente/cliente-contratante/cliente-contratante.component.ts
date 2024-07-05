@@ -23,6 +23,7 @@ export class ClienteContratanteComponent {
   ) {}
 
   public importarCliente(): void {
+    console.log('Método importarCliente chamado');
     const linha = this.tabelaClientes.nativeElement.querySelector('tbody tr');
 
     if (linha) {
@@ -39,12 +40,12 @@ export class ClienteContratanteComponent {
       this.cliente.user_login = this._authService.getLogin();
 
       if (this.clientePreenchido(this.cliente)) {
-        this.servicoEmpresa.importarClientes(this.cliente).subscribe( (response) => {
-            this._alertService.success(response.msg);
+        this.servicoEmpresa.importarClientes(this.cliente).subscribe( (res) => {
 
-            if (response.data && response.data.id_cliente) {
-              console.log('Emitindo idCliente:', response.data.id_cliente);
-              this.idCliente.emit(response.data.id_cliente);
+            if (res && res.success === 'true') {
+              console.log('Emitindo idCliente:', res.id_cliente);
+              this.idCliente.emit(Number(res.id_cliente));
+              this._alertService.success(res.msg);
             }
           },
           (error) => {

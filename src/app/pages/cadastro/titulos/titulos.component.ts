@@ -45,8 +45,8 @@ export class TitulosComponent implements OnInit {
     this.exibirTelaCadastroCliente = true;
   }
 
-  onClienteImportado(idCliente: number): void {
-    console.log('Recebido idCliente:', idCliente);
+  public onClienteImportado(idCliente: number): void {
+    console.log('Recebido idCliente no método:', idCliente);
     this.idCliente = idCliente;
     this.exibirTelaCadastroTitulos = true;
   }

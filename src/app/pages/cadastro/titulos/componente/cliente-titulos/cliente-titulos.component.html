@@ -5,6 +5,7 @@
     <thead>
       <tr>
         <th>Parcela</th>
+        <th>Plano</th>
         <th>Contrato</th>
         <th>Documento</th>
         <th>Produto</th>
@@ -16,6 +17,7 @@
       <tr *ngFor="let cliente of clientes; let i = index">
         <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 0)">{{ cliente.id }}</td>
         <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 1)">{{ cliente.nome }}</td>
+        <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 1)">{{ cliente.nome }}</td>
         <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 2)">{{ cliente.email }}</td>
         <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 0)">{{ cliente.id }}</td>
         <td contenteditable="true" (keydown)="aoPressionarEnter($event, i, 1)">{{ cliente.nome }}</td>
@@ -25,5 +27,5 @@
   </table>
 </div>
 <div class="mb-3 mb-0" style="text-align: end;">
-  <button type="submit" class="btn btn-success mb-1 btn-sm me-1" >Cadastrar Titulos</button>
+  <button type="submit" class="btn btn-success mb-1 btn-sm me-1" ><i class="fas fa-save me-1"></i> Cadastrar Titulos</button>
 </div>

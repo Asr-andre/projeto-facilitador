@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EmpresaModel } from '../../models/cadastro/empresa.model';
-import { RetornoModel } from '../../models/retorno.model';
+import { RetornoClienteModel, RetornoModel } from '../../models/retorno.model';
 import { AppConfig } from '../url.base.service';
 import { ContratanteModel } from '../../models/cadastro/contratante.model';
 import { UsuarioModel } from '../../models/cadastro/usuario.model';
@@ -31,6 +31,6 @@ export class EmpresaService {
   }
 
   importarClientes(clientes: ClienteModel): Observable<any> {
-    return this._http.post<RetornoModel>(`${this.apiUrl}/cliente`, clientes);
+    return this._http.post<RetornoClienteModel>(`${this.apiUrl}/cliente`, clientes);
   }
 }
