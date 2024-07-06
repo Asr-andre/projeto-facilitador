@@ -42,13 +42,13 @@ export class TitulosComponent implements OnInit {
 
   public selecionarContratante(): void {
     this.idContratante = this.contratanteSelecionado;
-
+    this.exibirTelaCadastroCliente = true;
   }
 
   public onClienteImportado(idCliente: number): void {
     console.log('Recebido idCliente no método:', idCliente);
     this.idCliente = idCliente;
-
+    this.exibirTelaCadastroTitulos = true;
   }
 }
 
