@@ -11,8 +11,8 @@ import { ContratanteService } from "src/app/core/services/cadastro/contratante.s
 export class TitulosComponent implements OnInit {
   public listarContratantes: ContratanteModel [] = [];
   public contratanteSelecionado: number;
-  public exibirTelaCadastroCliente: boolean = false;
-  public exibirTelaCadastroTitulos: boolean = false;
+  public exibirTelaCadastroCliente: boolean = true;
+  public exibirTelaCadastroTitulos: boolean = true;
   public idContratante: number;
   public idCliente: number;
   public loading: boolean;
@@ -42,13 +42,13 @@ export class TitulosComponent implements OnInit {
 
   public selecionarContratante(): void {
     this.idContratante = this.contratanteSelecionado;
-    this.exibirTelaCadastroCliente = true;
+
   }
 
   public onClienteImportado(idCliente: number): void {
     console.log('Recebido idCliente no método:', idCliente);
     this.idCliente = idCliente;
-    this.exibirTelaCadastroTitulos = true;
+
   }
 }
 

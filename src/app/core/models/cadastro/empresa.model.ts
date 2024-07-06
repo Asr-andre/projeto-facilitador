@@ -1,4 +1,4 @@
-export interface EmpresaModel {
+export class EmpresaModel {
     razao_social: string;
     fantasia: string;
     cnpj: string;
@@ -14,4 +14,3 @@ export interface EmpresaModel {
     nome_responsavel?: string;
     user_login: string;
   }
-  
