@@ -11,8 +11,8 @@ import { ContratanteService } from "src/app/core/services/cadastro/contratante.s
 export class TitulosComponent implements OnInit {
   public listarContratantes: ContratanteModel [] = [];
   public contratanteSelecionado: number;
-  public exibirTelaCadastroCliente: boolean = false;
-  public exibirTelaCadastroTitulos: boolean = false;
+  public exibirTelaCadastroCliente: boolean = true;
+  public exibirTelaCadastroTitulos: boolean = true;
   public idContratante: number;
   public idCliente: number;
   public loading: boolean;

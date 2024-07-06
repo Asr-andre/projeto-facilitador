@@ -41,8 +41,8 @@ export class ClienteTitulosComponent implements OnChanges {
           plano: linha.querySelector('.plano').textContent.trim(),
           numero_contrato: linha.querySelector('.numero_contrato').textContent.trim(),
           numero_documento: linha.querySelector('.numero_documento').textContent.trim(),
-          vencimento: linha.querySelector('.vencimento').textContent.trim(),
           tipo_produto: linha.querySelector('.tipo_produto').textContent.trim(),
+          vencimento: linha.querySelector('.vencimento').textContent.trim(),
           valor: linha.querySelector('.valor').textContent.trim(),
           id_empresa: Number(this._authService.getIdEmpresa()),
           id_contratante: Number(this._authService.getIdEmpresa()),
@@ -101,8 +101,8 @@ export class ClienteTitulosComponent implements OnChanges {
           plano: dadosLinha[1].trim(),
           numero_contrato: dadosLinha[2].trim(),
           numero_documento: dadosLinha[3].trim(),
-          vencimento: dadosLinha[4].trim(),
-          tipo_produto: dadosLinha[5].trim(),
+          tipo_produto: dadosLinha[4].trim(),
+          vencimento: dadosLinha[5].trim(),
           valor: dadosLinha[6].trim()
         };
       }
@@ -118,13 +118,37 @@ export class ClienteTitulosComponent implements OnChanges {
     }
 
     const ultimaParcela = this.titulos.length > 0 ? parseInt(this.titulos[this.titulos.length - 1].parcela, 10) : 0;
-    const vencimentoInicial = new Date(this.titulos[this.titulos.length - 1]?.vencimento ?? new Date());
+    let vencimentoInicial: Date;
+
+    if (this.titulos.length > 0 && this.titulos[this.titulos.length - 1]?.vencimento) {
+      // Parse da data no formato "dd/MM/yyyy"
+      const parts = this.titulos[this.titulos.length - 1].vencimento.split('/');
+      vencimentoInicial = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+    } else {
+      vencimentoInicial = new Date();
+    }
+
+    // Verifica se vencimentoInicial é uma data válida
+    if (isNaN(vencimentoInicial.getTime())) {
+      this._alertService.warning("Data de vencimento inicial inválida.");
+      return;
+    }
 
     for (let i = 1; i <= quantidadeParcelas; i++) {
       const novaParcela = ultimaParcela + i;
 
+      // Clona a data de vencimento inicial para não alterar a original
       const novoVencimento = new Date(vencimentoInicial);
       novoVencimento.setMonth(vencimentoInicial.getMonth() + i);
+
+      // Verifica se novoVencimento é uma data válida
+      if (isNaN(novoVencimento.getTime())) {
+        this._alertService.warning(`Data de vencimento da parcela ${novaParcela} inválida.`);
+        return;
+      }
+
+      // Formata a data de novoVencimento para o formato "dd/MM/yyyy"
+      const formattedDate = `${novoVencimento.getDate().toString().padStart(2, '0')}/${(novoVencimento.getMonth() + 1).toString().padStart(2, '0')}/${novoVencimento.getFullYear()}`;
 
       this.titulos.push({
         parcela: novaParcela.toString(),
@@ -132,7 +156,7 @@ export class ClienteTitulosComponent implements OnChanges {
         numero_contrato: this.titulos[this.titulos.length - 1]?.numero_contrato ?? "",
         numero_documento: this.titulos[this.titulos.length - 1]?.numero_documento ?? "",
         tipo_produto: this.titulos[this.titulos.length - 1]?.tipo_produto ?? "",
-        vencimento: novoVencimento.toLocaleDateString(),
+        vencimento: formattedDate,
         valor: this.titulos[this.titulos.length - 1]?.valor ?? ""
       });
     }
@@ -145,8 +169,8 @@ export class ClienteTitulosComponent implements OnChanges {
       plano: "",
       numero_contrato: "",
       numero_documento: "",
-      vencimento: "",
       tipo_produto: "",
+      vencimento: "",
       valor: ""
     });
   }

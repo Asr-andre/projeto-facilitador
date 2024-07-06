@@ -40,18 +40,21 @@ export class ClienteContratanteComponent {
       this.cliente.user_login = this._authService.getLogin();
 
       if (this.clientePreenchido(this.cliente)) {
-        this.servicoEmpresa.importarClientes(this.cliente).subscribe( (res) => {
-
+        this.servicoEmpresa.importarClientes(this.cliente).subscribe(
+          (res) => {
             if (res && res.success === 'true') {
               console.log('Emitindo idCliente:', res.id_cliente);
               this.idCliente.emit(Number(res.id_cliente));
               this._alertService.success(res.msg);
+            } else if (res && res.success === 'false') {
+              this._alertService.warning(res.msg);
             }
           },
           (error) => {
-            this._alertService.error("Erro ao importar cliente", error);
-            if (error.error && error.error.message) {
-              this._alertService.warning("Detalhes do erro:", error.error.message);
+            if (error.error && error.error.msg) {
+              this._alertService.error(error.error.msg);
+            } else {
+              this._alertService.error("Erro ao importar cliente.");
             }
           }
         );
