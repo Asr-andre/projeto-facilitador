@@ -1,4 +1,5 @@
 export class ClienteTitulosModel {
+  tipo_titulo: number;
   parcela: string;
   plano: string;
   numero_contrato: string;

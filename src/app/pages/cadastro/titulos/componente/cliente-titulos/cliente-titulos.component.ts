@@ -37,6 +37,7 @@ export class ClienteTitulosComponent implements OnChanges {
       const titulos = [];
       linhas.forEach(linha => {
         titulos.push({
+          tipo_titulo: linha.querySelector('.tipo_titulo').textContent.trim(),
           parcela: linha.querySelector('.parcela').textContent.trim(),
           plano: linha.querySelector('.plano').textContent.trim(),
           numero_contrato: linha.querySelector('.numero_contrato').textContent.trim(),
@@ -95,15 +96,16 @@ export class ClienteTitulosComponent implements OnChanges {
 
     for (let i = 0; i < linhasCopiadas.length; i++) {
       const dadosLinha = linhasCopiadas[i].split('\t');
-      if (dadosLinha.length === 7) {
+      if (dadosLinha.length === 8) {
         this.titulos[i] = {
-          parcela: dadosLinha[0].trim(),
-          plano: dadosLinha[1].trim(),
-          numero_contrato: dadosLinha[2].trim(),
-          numero_documento: dadosLinha[3].trim(),
-          tipo_produto: dadosLinha[4].trim(),
-          vencimento: dadosLinha[5].trim(),
-          valor: dadosLinha[6].trim()
+          tipo_titulo: dadosLinha[0].trim(),
+          parcela: dadosLinha[1].trim(),
+          plano: dadosLinha[2].trim(),
+          numero_contrato: dadosLinha[3].trim(),
+          numero_documento: dadosLinha[4].trim(),
+          tipo_produto: dadosLinha[5].trim(),
+          vencimento: dadosLinha[6].trim(),
+          valor: dadosLinha[7].trim()
         };
       }
     }
@@ -151,6 +153,7 @@ export class ClienteTitulosComponent implements OnChanges {
       const formattedDate = `${novoVencimento.getDate().toString().padStart(2, '0')}/${(novoVencimento.getMonth() + 1).toString().padStart(2, '0')}/${novoVencimento.getFullYear()}`;
 
       this.titulos.push({
+        tipo_titulo: this.titulos[this.titulos.length - 1]?.tipo_titulo ?? "",
         parcela: novaParcela.toString(),
         plano: this.titulos[this.titulos.length - 1]?.plano ?? "",
         numero_contrato: this.titulos[this.titulos.length - 1]?.numero_contrato ?? "",
@@ -162,9 +165,9 @@ export class ClienteTitulosComponent implements OnChanges {
     }
   }
 
-
   private adicionarNovaLinha() {
     this.titulos.push({
+      tipo_titulo: "",
       parcela: "",
       plano: "",
       numero_contrato: "",
