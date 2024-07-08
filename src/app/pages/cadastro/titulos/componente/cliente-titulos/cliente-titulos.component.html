@@ -1,13 +1,10 @@
-<p class="card-title-desc" style="margin-bottom: 0px;">Cadastrar titulos - cliente_id: {{ idCliente }}</p>
+<p class="card-title-desc" style="margin-bottom: 0px;">Cadastrar titulos</p>
 <hr>
 
 <div class="d-flex justify-content-end mb-3">
   <input id="quantidadeParcelas" class="form-control form-control-sm me-2" style="width: 100px;" type="text" placeholder="Qtde parcelas">
-
   <button id="btnGerarParcelas" type="button" class="btn btn-secondary btn-sm" (click)="gerarParcelas()"><i class="fas fa-check"></i> Gerar Parcelas</button>
 </div>
-
-
 
 <div class="table-container">
   <table #tabelaClienteTitulos id="tabelaClienteTitulos" (paste)="colarDados($event)">
@@ -37,6 +34,7 @@
     </tbody>
   </table>
 </div>
+
 <div class="mb-3 mb-0" style="text-align: end;">
   <button type="submit" class="btn btn-success mb-1 btn-sm me-1" (click)="importarTitulos()"><i class="fas fa-save me-1"></i> Cadastrar Titulos</button>
 </div>
