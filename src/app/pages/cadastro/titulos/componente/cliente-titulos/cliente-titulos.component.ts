@@ -10,6 +10,7 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 })
 export class ClienteTitulosComponent implements OnChanges {
   @Input() idCliente: number;
+  @Input() idContratante: number;
   public titulos: any[] = [];
 
   @ViewChild("tabelaClienteTitulos") tabelaClienteTitulos: ElementRef;
@@ -58,7 +59,7 @@ export class ClienteTitulosComponent implements OnChanges {
           vencimento: vencimento,
           valor: valor,
           id_empresa: Number(this._authService.getIdEmpresa()),
-          id_contratante: Number(this._authService.getIdEmpresa()),
+          id_contratante: Number(this.idContratante),
           id_cliente: Number(this.idCliente),
           user_login: this._authService.getLogin()
         });
@@ -125,7 +126,7 @@ export class ClienteTitulosComponent implements OnChanges {
           vencimento: dadosLinha[6].trim(),
           valor: dadosLinha[7].trim(),
           id_empresa: Number(this._authService.getIdEmpresa()),
-          id_contratante: Number(this._authService.getIdEmpresa()),
+          id_contratante: Number(this.idContratante),
           id_cliente: Number(this.idCliente),
           user_login: this._authService.getLogin()
         });
@@ -224,7 +225,7 @@ export class ClienteTitulosComponent implements OnChanges {
         vencimento: vencimento,
         valor: valor,
         id_empresa: Number(this._authService.getIdEmpresa()),
-        id_contratante: Number(this._authService.getIdEmpresa()),
+        id_contratante: Number(this.idContratante),
         id_cliente: Number(this.idCliente),
         user_login: this._authService.getLogin()
       });
@@ -242,7 +243,7 @@ export class ClienteTitulosComponent implements OnChanges {
       vencimento: '',
       valor: '',
       id_empresa: Number(this._authService.getIdEmpresa()),
-      id_contratante: Number(this._authService.getIdEmpresa()),
+      id_contratante: Number(this.idContratante),
       id_cliente: Number(this.idCliente),
       user_login: this._authService.getLogin()
     });
