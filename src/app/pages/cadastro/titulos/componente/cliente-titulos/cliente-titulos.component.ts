@@ -76,8 +76,7 @@ export class ClienteTitulosComponent implements OnChanges {
   }
 
   private salvarTitulos(titulos: any[]): void {
-    this._clienteTituloService.cadastrarTitulos(titulos).subscribe(
-      (res) => {
+    this._clienteTituloService.cadastrarTitulos(titulos).subscribe((res) => {
         if (res && res.success === 'true') {
           this._alertService.success(res.msg);
         }
