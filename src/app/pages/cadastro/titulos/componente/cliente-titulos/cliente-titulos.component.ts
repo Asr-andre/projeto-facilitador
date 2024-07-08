@@ -77,10 +77,10 @@ export class ClienteTitulosComponent implements OnChanges {
 
   private salvarTitulos(titulos: any[]): void {
     this._clienteTituloService.cadastrarTitulos(titulos).subscribe((res) => {
-        if (res && res.success === 'true') {
-          this._alertService.success(res.msg);
-        }
-      },
+      if (res && res.success === 'true') {
+        this._alertService.success(res.msg);
+      }
+    },
       (error) => {
         this._alertService.error("Erro ao cadastrar título", error);
         if (error.error && error.error.message) {
@@ -139,66 +139,66 @@ export class ClienteTitulosComponent implements OnChanges {
 
     // Verifica se há títulos e se todos os campos obrigatórios estão preenchidos
     if (this.titulos.length > 0 && this.titulos.every(titulo => this.camposPreenchidos(titulo))) {
-        const quantidadeParcelas = parseInt((document.getElementById('quantidadeParcelas') as HTMLInputElement).value, 10);
+      const quantidadeParcelas = parseInt((document.getElementById('quantidadeParcelas') as HTMLInputElement).value, 10);
 
-        if (isNaN(quantidadeParcelas) || quantidadeParcelas <= 0) {
-            this._alertService.warning("Insira um número válido de parcelas.");
-            return;
+      if (isNaN(quantidadeParcelas) || quantidadeParcelas <= 0) {
+        this._alertService.warning("Insira um número válido de parcelas.");
+        return;
+      }
+
+      const ultimaParcela = this.titulos.length > 0 ? parseInt(this.titulos[this.titulos.length - 1].parcela, 10) : 0;
+      let vencimentoInicial: Date;
+
+      if (this.titulos.length > 0 && this.titulos[this.titulos.length - 1]?.vencimento) {
+        // Parse da data no formato "dd/MM/yyyy"
+        const parts = this.titulos[this.titulos.length - 1].vencimento.split('/');
+        vencimentoInicial = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+      } else {
+        vencimentoInicial = new Date();
+      }
+
+      // Verifica se vencimentoInicial é uma data válida
+      if (isNaN(vencimentoInicial.getTime())) {
+        this._alertService.warning("Data de vencimento inicial inválida.");
+        return;
+      }
+
+      // Total value of the first entry
+      const valorInicial = parseFloat(this.titulos[this.titulos.length - 1]?.valor ?? "0");
+      // Valor de cada parcela
+      const valorParcela = valorInicial;
+
+      for (let i = 1; i <= quantidadeParcelas; i++) {
+        const novaParcela = ultimaParcela + i;
+
+        // Clona a data de vencimento inicial para não alterar a original
+        const novoVencimento = new Date(vencimentoInicial);
+        novoVencimento.setMonth(vencimentoInicial.getMonth() + i);
+
+        // Verifica se novoVencimento é uma data válida
+        if (isNaN(novoVencimento.getTime())) {
+          this._alertService.warning(`Data de vencimento da parcela ${novaParcela} inválida.`);
+          return;
         }
 
-        const ultimaParcela = this.titulos.length > 0 ? parseInt(this.titulos[this.titulos.length - 1].parcela, 10) : 0;
-        let vencimentoInicial: Date;
+        // Formata a data de novoVencimento para o formato "dd/MM/yyyy"
+        const formattedDate = `${novoVencimento.getDate().toString().padStart(2, '0')}/${(novoVencimento.getMonth() + 1).toString().padStart(2, '0')}/${novoVencimento.getFullYear()}`;
 
-        if (this.titulos.length > 0 && this.titulos[this.titulos.length - 1]?.vencimento) {
-            // Parse da data no formato "dd/MM/yyyy"
-            const parts = this.titulos[this.titulos.length - 1].vencimento.split('/');
-            vencimentoInicial = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
-        } else {
-            vencimentoInicial = new Date();
-        }
-
-        // Verifica se vencimentoInicial é uma data válida
-        if (isNaN(vencimentoInicial.getTime())) {
-            this._alertService.warning("Data de vencimento inicial inválida.");
-            return;
-        }
-
-        // Total value of the first entry
-        const valorInicial = parseFloat(this.titulos[this.titulos.length - 1]?.valor ?? "0");
-        // Valor de cada parcela
-        const valorParcela = valorInicial;
-
-        for (let i = 1; i <= quantidadeParcelas; i++) {
-            const novaParcela = ultimaParcela + i;
-
-            // Clona a data de vencimento inicial para não alterar a original
-            const novoVencimento = new Date(vencimentoInicial);
-            novoVencimento.setMonth(vencimentoInicial.getMonth() + i);
-
-            // Verifica se novoVencimento é uma data válida
-            if (isNaN(novoVencimento.getTime())) {
-                this._alertService.warning(`Data de vencimento da parcela ${novaParcela} inválida.`);
-                return;
-            }
-
-            // Formata a data de novoVencimento para o formato "dd/MM/yyyy"
-            const formattedDate = `${novoVencimento.getDate().toString().padStart(2, '0')}/${(novoVencimento.getMonth() + 1).toString().padStart(2, '0')}/${novoVencimento.getFullYear()}`;
-
-            this.titulos.push({
-                tipo_titulo: this.titulos[this.titulos.length - 1]?.tipo_titulo ?? "",
-                parcela: novaParcela.toString(),
-                plano: this.titulos[this.titulos.length - 1]?.plano ?? "",
-                numero_contrato: this.titulos[this.titulos.length - 1]?.numero_contrato ?? "",
-                numero_documento: this.titulos[this.titulos.length - 1]?.numero_documento ?? "",
-                tipo_produto: this.titulos[this.titulos.length - 1]?.tipo_produto ?? "",
-                vencimento: formattedDate,
-                valor: valorParcela.toFixed(2)
-            });
-        }
+        this.titulos.push({
+          tipo_titulo: this.titulos[this.titulos.length - 1]?.tipo_titulo ?? "",
+          parcela: novaParcela.toString(),
+          plano: this.titulos[this.titulos.length - 1]?.plano ?? "",
+          numero_contrato: this.titulos[this.titulos.length - 1]?.numero_contrato ?? "",
+          numero_documento: this.titulos[this.titulos.length - 1]?.numero_documento ?? "",
+          tipo_produto: this.titulos[this.titulos.length - 1]?.tipo_produto ?? "",
+          vencimento: formattedDate,
+          valor: valorParcela.toFixed(2)
+        });
+      }
     } else {
-        this._alertService.warning("Preencha corretamente todos os campos antes de gerar as parcelas.");
+      this._alertService.warning("Preencha corretamente todos os campos antes de gerar as parcelas.");
     }
-}
+  }
 
   private atualizarDadosDaTabela(): void {
     const linhas = this.tabelaClienteTitulos.nativeElement.querySelectorAll('tbody tr');
@@ -250,6 +250,6 @@ export class ClienteTitulosComponent implements OnChanges {
 
   private camposPreenchidos(titulo: any): boolean {
     return titulo.tipo_titulo && titulo.parcela && titulo.plano && titulo.numero_contrato &&
-           titulo.numero_documento && titulo.tipo_produto && titulo.vencimento && titulo.valor;
+      titulo.numero_documento && titulo.tipo_produto && titulo.vencimento && titulo.valor;
   }
 }
