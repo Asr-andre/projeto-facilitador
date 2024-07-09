@@ -5,66 +5,59 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-12">
       <div class="card">
-        <div class="card-body" style="padding-bottom: 8px;">
-          <div class="d-flex">
-            <div class="flex-1 overflow-hidden">
-              <p class="text-truncate font-size-12 mb-2">Qtde Sms: 111 / Valor: R$ 15,20</p>
+        <div class="card-body" style="padding-bottom: 10px; padding-top: 10px;">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="d-flex align-items-center">
+                <div class="text-primary ms-auto">
+                  <i class="fas fa-sms font-size-24" style="margin-right: 5px;"></i>
+                </div>
+                <div class="flex-1">
+                  <p class="text-truncate font-size-12 mb-0">Qtde Sms: 111 / Valor: R$ 15,20</p>
+                </div>
+              </div>
             </div>
-            <div class="text-primary ms-auto">
-              <i class="fas fa-sms font-size-24"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-md-3">
-      <div class="card">
-        <div class="card-body" style="padding-bottom: 8px;">
-          <div class="d-flex">
-            <div class="flex-1 overflow-hidden">
-              <p class="text-truncate font-size-12 mb-2">Qtde Email: 253 / Valor: R$ 15,20</p>
+            <div class="col-md-3">
+              <div class="d-flex align-items-center ">
+                <div class="text-primary ms-auto">
+                  <i class="fas fa-envelope font-size-24" style="margin-right: 5px;"></i>
+                </div>
+                <div class="flex-1">
+                  <p class="text-truncate font-size-12 mb-0">Qtde Email: 253 / Valor: R$ 15,20</p>
+                </div>
+              </div>
             </div>
-            <div class="text-primary ms-auto">
-              <i class="fas fa-envelope font-size-24"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-md-3">
-      <div class="card">
-        <div class="card-body" style="padding-bottom: 8px;">
-          <div class="d-flex">
-            <div class="flex-1 overflow-hidden">
-              <p class="text-truncate font-size-12 mb-2">Valor Total utilizado : R$ 30,70</p>
+            <div class="col-md-3">
+              <div class="d-flex align-items-center">
+                <div class="text-primary ms-auto">
+                  <i class="fas fa-money-check-alt font-size-24" style="margin-right: 5px;"></i>
+                </div>
+                <div class="flex-1">
+                  <p class="text-truncate font-size-12 mb-0">Valor Total utilizado : R$ 30,70</p>
+                </div>
+              </div>
             </div>
-            <div class="text-primary ms-auto">
-              <i class=" fas fa-money-check-alt font-size-24"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-md-3">
-      <div class="card">
-        <div class="card-body" style="padding-bottom: 8px;">
-          <div class="d-flex">
-            <div class="flex-1 overflow-hidden">
-              <p class="text-truncate font-size-12 mb-2">Saldo: R$ 358,15</p>
-            </div>
-            <div class="text-primary ms-auto">
-              <i class=" fas fa-money-check-alt font-size-24"></i>
+            <div class="col-md-3">
+              <div class="d-flex align-items-center">
+                <div class="text-primary ms-auto">
+                  <i class="fas fa-money-check-alt font-size-24" style="margin-right: 5px;"></i>
+                </div>
+                <div class="flex-1">
+                  <p class="text-truncate font-size-12 mb-0">Saldo: R$ 358,15</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 
   <div class="row">
     <div class="col-lg-5">
@@ -81,7 +74,7 @@
             </div>
           </div>
           <div class="table-responsive">
-            <table class="table table-hover font-size-12">
+            <table class="table table-sm table-hover font-size-12">
               <thead class="table-light">
                 <tr>
                   <th>Credor</th>
@@ -146,7 +139,6 @@
 
 <ng-template #TabContent>
   <div *ngIf="detalhamentoSelecionado" class="mt-3 font-size-12">
-
     <div class="row brder">
       <div class="col-md-5"><strong>Credor:</strong> <span> {{ detalhamentoSelecionado.credor }}</span></div>
     </div>
@@ -170,42 +162,44 @@
       </div>
     </div>
 
-  </div>
+    <div class="card-body"
+      style="height: 300px; overflow: auto; padding-top: 2px; padding-left: 0px; padding-right: 0px; padding-bottom: 0px;">
+      <div class="table-responsive mt-3 font-size-12">
+        <table class="table table-sm table-hover">
+          <thead class="table-light table-td-scroll">
+            <tr>
+              <th>Parcela</th>
+              <th>Plano</th>
+              <th>Valor</th>
+              <th>Juros</th>
+              <th>Multa</th>
+              <th>Taxa</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let prestacao of detalhamentoSelecionado?.parcelas">
+              <td>{{ prestacao.parcela }}</td>
+              <td>{{ prestacao.plano }}</td>
+              <td>{{ prestacao.valor | currency:'BRL' }}</td>
+              <td>{{ prestacao.juros | currency:'BRL' }}</td>
+              <td>{{ prestacao.multa | currency:'BRL' }}</td>
+              <td>{{ prestacao.taxa | currency:'BRL' }}</td>
+              <td>{{ prestacao.total | currency:'BRL' }}</td>
+            <tr>
+              <td colspan="2"><strong>Total:</strong></td>
+              <td><strong>{{ calcularTotal('valor') | currency:'BRL' }}</strong></td>
+              <td><strong>{{ calcularTotal('juros') | currency:'BRL' }}</strong></td>
+              <td><strong>{{ calcularTotal('multa') | currency:'BRL' }}</strong></td>
+              <td><strong>{{ calcularTotal('taxa') | currency:'BRL' }}</strong></td>
+              <td><strong>{{ calcularTotal('total') | currency:'BRL' }}</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="table-responsive mt-3 font-size-12">
-    <table class="table">
-      <thead class="table-light">
-        <tr>
-          <th>Parcela</th>
-          <th>Plano</th>
-          <th>Valor</th>
-          <th>Juros</th>
-          <th>Multa</th>
-          <th>Taxa</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let prestacao of detalhamentoSelecionado?.parcelas">
-          <td>{{ prestacao.parcela }}</td>
-          <td>{{ prestacao.plano }}</td>
-          <td>{{ prestacao.valor | currency:'BRL' }}</td>
-          <td>{{ prestacao.juros | currency:'BRL' }}</td>
-          <td>{{ prestacao.multa | currency:'BRL' }}</td>
-          <td>{{ prestacao.taxa | currency:'BRL' }}</td>
-          <td>{{ prestacao.total | currency:'BRL' }}</td>
-        <tr>
-          <td colspan="2"><strong>Total:</strong></td>
-          <td><strong>{{ calcularTotal('valor') | currency:'BRL' }}</strong></td>
-          <td><strong>{{ calcularTotal('juros') | currency:'BRL' }}</strong></td>
-          <td><strong>{{ calcularTotal('multa') | currency:'BRL' }}</strong></td>
-          <td><strong>{{ calcularTotal('taxa') | currency:'BRL' }}</strong></td>
-          <td><strong>{{ calcularTotal('total') | currency:'BRL' }}</strong></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- <app-acionamento *ngIf="devedorSelecionado?.id_cliente" [devedorId]="devedorSelecionado?.id_cliente"></app-acionamento> -->
+      <!-- <app-acionamento *ngIf="devedorSelecionado?.id_cliente" [devedorId]="devedorSelecionado?.id_cliente"></app-acionamento> -->
+    </div>
   </div>
 </ng-template>
 
