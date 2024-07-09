@@ -1,22 +1,21 @@
-// src/app/models/detalhamento.model.ts
-
 export class Prestacao {
-  prestacao: number;
-  plano: string;
-  valor: number;
-  juros: number;
-  multa: number;
-  taxa: number;
-  total: number;
+  public parcela: number;
+  public plano: number;
+  public vencimento: Date;
+  public valor: number;
+  public valor_juros: number | null;
+  public valor_multa: number | null;
+  public valor_taxa: number | null;
+  public saldo_devedor: number;
 }
 
 export class DetalhamentoModel {
-  id_cliente: number;
-  nome: string;
-  cpf: string;
-  fantasia: string;
-  valor_divida: number;
-  telefone: string;
-  email: string;
-  prestacoes: Prestacao[];
+  public success: boolean;
+  public msg: string;
+  public credor: string;
+  public nome: string;
+  public cpf: string;
+  public fone: string;
+  public email: string;
+  public parcelas: Prestacao[];
 }

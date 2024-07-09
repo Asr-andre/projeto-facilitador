@@ -1,21 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { DevedorModel } from 'src/app/core/models/devedor.model';
-import { DashboardService } from 'src/app/core/services/dashboard.service';
-import { DetalhamentoModel } from 'src/app/core/models/detalhamento.model';
-import Swal from 'sweetalert2';
-import { WhatsappComponent } from './componente/whatsapp/whatsapp.component';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { DevedorModel } from "src/app/core/models/devedor.model";
+import { DashboardService } from "src/app/core/services/dashboard.service";
+import { DetalhamentoModel } from "src/app/core/models/detalhamento.model";
+import { WhatsappComponent } from "./componente/whatsapp/whatsapp.component";
+import { AlertService } from "src/app/core/services/alert.service";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: "app-dashboard",
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ["./dashboard.component.scss"],
 })
-
 export class DashboardComponent implements OnInit {
   @ViewChild(WhatsappComponent) whatsappComponent: WhatsappComponent;
   public listarDevedores: DevedorModel[] = [];
   public devedoresFiltrados: DevedorModel[] = [];
-  public textoPequisa: string = '';
+  public textoPesquisa: string = "";
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
   public devedorSelecionado: DevedorModel | null = null;
@@ -23,81 +22,62 @@ export class DashboardComponent implements OnInit {
   public loading = true;
 
   constructor(
-    private _dashboard: DashboardService
+    private _dashboard: DashboardService,
+    private _alertService: AlertService
   ) { }
 
   ngOnInit(): void {
     this.obterDevedores();
-
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
   }
 
-  public obterDevedores() {
+  public obterDevedores(): void {
     this._dashboard.obterDevedores().subscribe((res) => {
       this.listarDevedores = res;
       this.devedoresFiltrados = res;
+      this.loading = false;
     });
   }
 
-  public obterDevedorPorId(id: number): void {
-    this._dashboard.obterDevedorPorId(id).subscribe((devedor) => {
-        this.devedorSelecionado = devedor;
-        this.obterDetalhamentoPorId(id);
+  public obterDetalhamentoPorId( id_cliente: number, id_contratante: number ): void {
+    this.loading = true;
+    this._dashboard.obterDevedorPorId(id_cliente, id_contratante).subscribe((detalhamento) => {
+        this.loading = false;
+        if (detalhamento && detalhamento.success) {
+          this.detalhamentoSelecionado = detalhamento;
+        }
       },
       (error) => {
-        Swal.fire({
-          title: 'Aviso!',
-          text: 'Não foi possivel pesquisar o devedor!',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#5438dc',
-          cancelButtonColor: '#ff3d60'
-        });
+        this._alertService.error("Não foi possível pesquisar o cliente!");
+        this.loading = false;
       }
     );
   }
 
   public selecionarDevedor(devedor: DevedorModel): void {
     this.devedorSelecionado = devedor;
-    this.obterDetalhamentoPorId(devedor.id_cliente);
-  }
-
-  public obterDetalhamentoPorId(id: number): void {
-    this._dashboard.obterDetalhamentoPorId(id).subscribe((detalhamento) => {
-      if (detalhamento) {
-        this.detalhamentoSelecionado = detalhamento;
-      }
-    },
-      (error) => {
-        Swal.fire({
-          title: 'Aviso!',
-          text: 'Não foi possivel selecionar o devedor!',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#5438dc',
-          cancelButtonColor: '#ff3d60'
-        });
-      }
-    );
+    this.obterDetalhamentoPorId(devedor.id_cliente, devedor.id_contratante);
   }
 
   public calcularTotal(coluna: string): number {
-    if (this.detalhamentoSelecionado?.prestacoes) {
-      return this.detalhamentoSelecionado.prestacoes.reduce((total, prestacao) => total + prestacao[coluna], 0);
-    }
-    return 0;
+    return (
+      this.detalhamentoSelecionado?.parcelas.reduce(
+        (total, prestacao) => total + prestacao[coluna],
+        0
+      ) || 0
+    );
   }
 
   public filtraDevedor(): void {
-    const pesquisa = this.textoPequisa.toLowerCase();
-    this.devedoresFiltrados = this.listarDevedores.filter(devedor =>
-      devedor.id_cliente.toString().toLowerCase().includes(pesquisa) ||
-      devedor.cnpj_cpf.toLowerCase().includes(pesquisa) ||
-      devedor.fantasia.toLowerCase().includes(pesquisa) ||
-      devedor.nome.toLowerCase().includes(pesquisa) ||
-      devedor.saldo_devedor.toString().toLowerCase().includes(pesquisa)
+    const pesquisa = this.textoPesquisa.toLowerCase();
+    this.devedoresFiltrados = this.listarDevedores.filter((devedor) =>
+      [
+        devedor.id_cliente.toString(),
+        devedor.id_contratante.toString(),
+        devedor.cnpj_cpf,
+        devedor.fantasia,
+        devedor.nome,
+        devedor.saldo_devedor.toString(),
+      ].some((field) => field.toLowerCase().includes(pesquisa))
     );
   }
 
