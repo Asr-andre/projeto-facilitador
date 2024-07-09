@@ -5,21 +5,26 @@ import { map } from 'rxjs/operators';
 import { DevedorModel } from '../models/devedor.model';
 import { DetalhamentoModel } from '../models/detalhamento.model';
 import { ClienteModel } from '../models/acionamento.model';
+import { AppConfig } from './url.base.service';
+import { AuthenticationService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
-  private apiUrl = 'assets/base/Devedores.json';
+  private apiUrl = AppConfig.apiUrl;
   private detalhamentoUrl  = 'assets/base/Detalhamento.json';
   private acionamentoUrl  = 'assets/base/Acionamento.json';
 
   constructor(
-    private _http: HttpClient
+    private _http: HttpClient,
+    private _authService: AuthenticationService
   ) { }
 
   public obterDevedores(): Observable<DevedorModel[]> {
-    return this._http.get<DevedorModel[]>(this.apiUrl);
+    const idEmpresa = parseInt(this._authService.getIdEmpresa(), 10);
+    const requestBody = { id_empresa: idEmpresa };
+    return this._http.post<DevedorModel[]>(`${this.apiUrl}/listarcliente`, requestBody);
   }
 
   public obterDevedorPorId(id: number): Observable<DevedorModel> {

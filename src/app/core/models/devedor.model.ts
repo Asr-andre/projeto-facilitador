@@ -1,7 +1,8 @@
 export class DevedorModel {
   id_cliente: number;
-  cpf: string;
-  fantasia: string;
+  cnpj_cpf: string;
   nome: string;
-  valor_divida: number;
+  id_contratante: number;
+  fantasia: string;
+  saldo_devedor: number;
 }

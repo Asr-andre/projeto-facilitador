@@ -96,9 +96,9 @@
                   (click)="selecionarDevedor(devedor)">
                   <td>{{devedor.fantasia}}</td>
                   <td>{{devedor.id_cliente}}</td>
-                  <td>{{devedor.cpf}}</td>
+                  <td>{{devedor.cnpj_cpf}}</td>
                   <td>{{devedor.nome}}</td>
-                  <td>{{devedor.valor_divida | currency:'BRL'}}</td>
+                  <td>{{devedor.saldo_devedor | currency:'BRL'}}</td>
                 </tr>
               </tbody>
             </table>

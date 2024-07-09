@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
   public devedoresFiltrados: DevedorModel[] = [];
   public textoPequisa: string = '';
   public paginaAtual: number = 1;
-  public itensPorPagina: number = 50;
+  public itensPorPagina: number = 10;
   public devedorSelecionado: DevedorModel | null = null;
   public detalhamentoSelecionado: DetalhamentoModel | null = null;
   public loading = true;
@@ -94,15 +94,14 @@ export class DashboardComponent implements OnInit {
     const pesquisa = this.textoPequisa.toLowerCase();
     this.devedoresFiltrados = this.listarDevedores.filter(devedor =>
       devedor.id_cliente.toString().toLowerCase().includes(pesquisa) ||
-      devedor.cpf.toLowerCase().includes(pesquisa) ||
+      devedor.cnpj_cpf.toLowerCase().includes(pesquisa) ||
       devedor.fantasia.toLowerCase().includes(pesquisa) ||
       devedor.nome.toLowerCase().includes(pesquisa) ||
-      devedor.valor_divida.toString().toLowerCase().includes(pesquisa)
+      devedor.saldo_devedor.toString().toLowerCase().includes(pesquisa)
     );
   }
 
   public openWhatsappModal(telefone: string): void {
     this.whatsappComponent.abrirModalWhatsapp(telefone);
   }
-
 }
