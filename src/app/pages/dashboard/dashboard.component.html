@@ -138,27 +138,27 @@
 </div>
 
 <ng-template #TabContent>
-  <div *ngIf="detalhamentoSelecionado" class="mt-3 font-size-12">
+  <div class="mt-3 font-size-12">
     <div class="row brder">
-      <div class="col-md-5"><strong>Credor:</strong> <span> {{ detalhamentoSelecionado.credor }}</span></div>
+      <div class="col-md-5"><strong>Credor:</strong> <span> {{ detalhamentoSelecionado?.credor }}</span></div>
     </div>
 
     <div class="row pt-1 brder">
-      <div class="col-md-6"><strong>Nome:</strong> {{ detalhamentoSelecionado.nome }}</div>
-      <div class="col-md-6"><strong>CPF:</strong> {{ detalhamentoSelecionado.cpf }}</div>
+      <div class="col-md-6"><strong>Nome:</strong> {{ detalhamentoSelecionado?.nome }}</div>
+      <div class="col-md-6"><strong>CPF:</strong> {{ detalhamentoSelecionado?.cpf }}</div>
     </div>
     <div class="row pt-1 brder">
       <div class="col-md-6">
-        <strong>Telefone:</strong> {{ detalhamentoSelecionado.fone }}
+        <strong>Telefone:</strong> {{ detalhamentoSelecionado?.fone }}
         <i class="fas fa-sms" style="margin-right: 5px;"></i>
-        <i class="fab fa-whatsapp whatsapp-icon" (click)="openWhatsappModal(detalhamentoSelecionado.fone)"></i>
+        <i class="fab fa-whatsapp whatsapp-icon" (click)="openWhatsappModal(detalhamentoSelecionado?.fone)"></i>
       </div>
     </div>
 
     <app-whatsapp></app-whatsapp>
 
     <div class="row pt-1 brder">
-      <div class="col-md-6"><strong>Email:</strong> {{ detalhamentoSelecionado.email }} <i class="fas fa-envelope"></i>
+      <div class="col-md-6"><strong>Email:</strong> {{ detalhamentoSelecionado?.email }} <i class="fas fa-envelope"></i>
       </div>
     </div>
 
