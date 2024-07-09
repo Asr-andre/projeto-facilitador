@@ -15,7 +15,6 @@ export class WhatsappComponent {
   public telefoneCliente: string;
 
   constructor(
-    private _dashboard: DashboardService,
     private _modalService: NgbModal
   ) { }
 
