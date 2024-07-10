@@ -1,14 +1,12 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DashboardService } from 'src/app/core/services/dashboard.service';
 
 @Component({
   selector: 'app-whatsapp',
   templateUrl: './whatsapp.component.html',
-  styleUrl: './whatsapp.component.scss'
+  styleUrls: ['./whatsapp.component.scss']
 })
 export class WhatsappComponent {
-
   @ViewChild('whatsappModal') whatsappModal: TemplateRef<any>;
   public abrirModal = false;
   public mensagem: string = '';
@@ -26,10 +24,12 @@ export class WhatsappComponent {
 
   public enviarMensagem(): void {
     if (this.telefoneCliente && this.mensagem) {
-      const telefone = encodeURIComponent(this.telefoneCliente);
-      const mensagem = encodeURIComponent(this.mensagem);
 
-      const url = `https://api.whatsapp.com/send?phone=${telefone}&text=${mensagem}`;
+      const telefone = this.limparNumero(this.telefoneCliente);
+      const telefoneEncoded = encodeURIComponent(telefone);
+      const mensagemEncoded = encodeURIComponent(this.mensagem);
+
+      const url = `https://api.whatsapp.com/send?phone=55${telefoneEncoded}&text=${mensagemEncoded}`;
 
       window.open(url, '_blank');
       this.fechaModal();
