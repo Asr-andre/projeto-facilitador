@@ -24,6 +24,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AcionamentoComponent } from './dashboard/componente/acionamento/acionamento.component';
 import { WhatsappComponent } from './dashboard/componente/whatsapp/whatsapp.component';
 import { TelefoneComponent } from './dashboard/componente/telefone/telefone.component';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 
 
@@ -47,9 +48,12 @@ import { TelefoneComponent } from './dashboard/componente/telefone/telefone.comp
     LeafletModule,
     WidgetModule,
     SimplebarAngularModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
   ],
   providers: [
+    provideNgxMask()
   ]
 })
 export class PagesModule { }

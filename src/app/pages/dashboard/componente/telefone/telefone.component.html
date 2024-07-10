@@ -41,23 +41,23 @@
 
 
 <ng-template #telefoneModal let-modal>
-  <div class="modal-header">
+  <div class="modal-header" style="padding-top: 5px; padding-bottom: 5px;">
     <h5 class="modal-title"><i class="fas fa-phone-alt"></i> Cadastrar Telefone</h5>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body" style="padding-top: 5px;padding-left: 10px;padding-right: 10px;padding-bottom: 10px;">
     <form [formGroup]="telefoneForm" (ngSubmit)="onSubmit(modal)">
       <div class="row">
         <div class="col-md-6">
-          <div class="mb-3">
+          <div class="mb-1">
             <label for="fone" class="form-label">Número</label>
-            <input type="text" id="fone" formControlName="fone" class="form-control form-control-sm" mask="(00) 00000-0000" max="11">
+            <input type="text" id="fone" formControlName="fone" class="form-control form-control-pad form-control-sm"  mask="(00) 00000-0000" max="11">
           </div>
         </div>
         <div class="col-md-6">
-          <div class="mb-3">
+          <div class="mb-1">
             <label for="tipo" class="form-label">Tipo</label>
-            <select id="tipo" formControlName="tipo" class="form-control form-control-sm">
+            <select id="tipo" formControlName="tipo" class="form-control form-control-pad form-control-sm">
               <option value="1">Fixo Residencial</option>
               <option value="2">Fixo Comercial</option>
               <option value="3">Fixo Trabalho</option>
@@ -78,18 +78,18 @@
       </div>
       <div class="row">
         <div class="col-md-4">
-          <div class="mb-3">
+          <div class="mb-1">
             <label for="prioritario" class="form-label">Prioritário</label>
-            <select id="prioritario" formControlName="prioritario" class="form-control form-control-sm">
+            <select id="prioritario" formControlName="prioritario" class="form-control form-control-pad form-control-sm">
               <option value="S">Sim</option>
               <option value="N">Não</option>
             </select>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="mb-3">
+          <div class="mb-1">
             <label for="status_fone" class="form-label">Status</label>
-            <select id="status_fone" formControlName="status_fone" class="form-control form-control-sm">
+            <select id="status_fone" formControlName="status_fone" class="form-control form-control-pad form-control-sm">
               <option value="A">Ativo</option>
               <option value="P">Positivo</option>
               <option value="N">Negativo</option>
@@ -97,16 +97,23 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="mb-3">
+          <div class="mb-1">
             <label for="whatsapp" class="form-label">Whatsapp</label>
-            <select id="whatsapp" formControlName="whatsapp" class="form-control form-control-sm">
+            <select id="whatsapp" formControlName="whatsapp" class="form-control form-control-pad form-control-sm">
               <option value="S">Sim</option>
               <option value="N">Não</option>
             </select>
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Salvar</button>
+      <div class="d-flex justify-content-end" style="padding-top: 5px;">
+        <button type="submit" class="btn btn-success btn-sm me-1">
+          <i class="fas fa-save"></i> Salvar
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
     </form>
   </div>
 </ng-template>
