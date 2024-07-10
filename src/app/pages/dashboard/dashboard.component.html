@@ -68,8 +68,7 @@
             <div class="col-sm-12 col-md-12">
               <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
                   class="d-inline-flex align-items-center">Pesquisar:
-                  <input type="text" class="form-control form-control-sm ms-2" [(ngModel)]="textoPesquisa"
-                    (input)="filtraDevedor()" /></label>
+                  <input type="text" class="form-control form-control-sm ms-2" [(ngModel)]="textoPesquisa" (input)="filtraDevedor()" /></label>
               </div>
             </div>
           </div>
@@ -117,16 +116,25 @@
                 <span class="d-none d-sm-block">Detalhe da Divida</span>
               </a>
               <ng-template ngbNavContent>
-                <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+                <ng-template [ngTemplateOutlet]="DetalheDaDivida"></ng-template>
               </ng-template>
             </li>
             <li [ngbNavItem]="2">
               <a ngbNavLink>
                 <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                <span class="d-none d-sm-block">Outras infomações</span>
+                <span class="d-none d-sm-block">Telefone</span>
               </a>
               <ng-template ngbNavContent>
-                <ng-template [ngTemplateOutlet]="TabContent1"></ng-template>
+                <ng-template [ngTemplateOutlet]="Telefone"></ng-template>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="3">
+              <a ngbNavLink>
+                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                <span class="d-none d-sm-block">Email</span>
+              </a>
+              <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="Email"></ng-template>
               </ng-template>
             </li>
           </ul>
@@ -137,7 +145,7 @@
   </div>
 </div>
 
-<ng-template #TabContent>
+<ng-template #DetalheDaDivida>
   <div class="mt-3 font-size-12">
     <div class="row brder">
       <div class="col-md-5"><strong>Credor:</strong> <span> {{ detalhamentoSelecionado?.credor }}</span></div>
@@ -170,6 +178,7 @@
             <tr>
               <th>Parcela</th>
               <th>Plano</th>
+              <th>Vencimento</th>
               <th>Valor</th>
               <th>Juros</th>
               <th>Multa</th>
@@ -181,13 +190,14 @@
             <tr *ngFor="let prestacao of detalhamentoSelecionado?.parcelas">
               <td>{{ prestacao.parcela }}</td>
               <td>{{ prestacao.plano }}</td>
+              <td>{{ prestacao.vencimento | date:'dd/MM/yyyy' }}</td>
               <td>{{ prestacao.valor | currency:'BRL' }}</td>
               <td>{{ prestacao.juros | currency:'BRL' }}</td>
               <td>{{ prestacao.multa | currency:'BRL' }}</td>
               <td>{{ prestacao.taxa | currency:'BRL' }}</td>
               <td>{{ prestacao.total | currency:'BRL' }}</td>
             <tr>
-              <td colspan="2"><strong>Total:</strong></td>
+              <td colspan="3" style="text-align: end;"><strong>Total:</strong></td>
               <td><strong>{{ calcularTotal('valor') | currency:'BRL' }}</strong></td>
               <td><strong>{{ calcularTotal('juros') | currency:'BRL' }}</strong></td>
               <td><strong>{{ calcularTotal('multa') | currency:'BRL' }}</strong></td>
@@ -203,7 +213,13 @@
   </div>
 </ng-template>
 
-<ng-template #TabContent1>
+<ng-template #Telefone>
+  <p class="p-3 mb-0 font-size-12">
+    Em desenvolvimento
+  </p>
+</ng-template>
+
+<ng-template #Email>
   <p class="p-3 mb-0 font-size-12">
     Em desenvolvimento
   </p>

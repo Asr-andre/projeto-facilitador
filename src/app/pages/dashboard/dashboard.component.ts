@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   public devedoresFiltrados: DevedorModel[] = [];
   public textoPesquisa: string = "";
   public paginaAtual: number = 1;
-  public itensPorPagina: number = 10;
+  public itensPorPagina: number = 20;
   public devedorSelecionado: DevedorModel | null = null;
   public detalhamentoSelecionado: DetalhamentoModel | null = null;
   public loading = true;
