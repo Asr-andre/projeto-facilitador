@@ -1,0 +1,113 @@
+<div class="loading-overlay" *ngIf="loading">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
+
+<div class="card-body" style="height: 300px; overflow: auto; padding: 2px 0;">
+  <div class="mb-1 text-start">
+    <button class="btn btn-success btn-sm" (click)="openModal(telefoneModal)" style="padding-top: 0px; padding-bottom: 0px; padding-right: 5px; padding-left: 5px;">
+      <i class="fas fa-plus fa-sm"></i>
+      <strong> Cadastrar </strong>
+    </button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-sm table-hover font-size-13">
+      <thead class="tabela-custom">
+        <tr>
+          <th scope="col" style="width: 10%">Número</th>
+          <th scope="col" style="width: 20%">Tipo</th>
+          <th scope="col" style="width: 5%">Prioritário</th>
+          <th scope="col" style="width: 10%">Status</th>
+          <th scope="col" style="width: 5%">Whatsapp</th>
+          <th scope="col" style="width: 40%">Obs</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let telefone of telefones">
+          <td>{{ telefone.fone }}</td>
+          <td><div class="editable-field">{{ tipoTelefone(telefone.tipo) }}</div></td>
+          <td> <div>{{ telefone.prioritario === 'S' ? 'Sim' : 'Não' }}</div> </td>
+          <td> <div class="editable-field">{{ statusTelefone(telefone.status_fone) }}</div> </td>
+          <td>{{ telefone.whatsapp === 'S' ? 'Sim' : 'Não' }}</td>
+          <td>{{ telefone.obs_fone }}</td>
+          <td><i class="fas fa-pencil-alt text-primary" style="cursor: pointer;"></i></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<ng-template #telefoneModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title"><i class="fas fa-phone-alt"></i> Cadastrar Telefone</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="telefoneForm" (ngSubmit)="onSubmit(modal)">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="fone" class="form-label">Número</label>
+            <input type="text" id="fone" formControlName="fone" class="form-control form-control-sm" mask="(00) 00000-0000" max="11">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="tipo" class="form-label">Tipo</label>
+            <select id="tipo" formControlName="tipo" class="form-control form-control-sm">
+              <option value="1">Fixo Residencial</option>
+              <option value="2">Fixo Comercial</option>
+              <option value="3">Fixo Trabalho</option>
+              <option value="4">Fixo Referencia</option>
+              <option value="5">Fixo Vizinho</option>
+              <option value="6">Fixo Avalista</option>
+              <option value="7">Celular Pessoal</option>
+              <option value="8">Celular Comercial</option>
+              <option value="9">Celular Trabalho</option>
+              <option value="10">Celular Referencia</option>
+              <option value="11">Celular Vizinho</option>
+              <option value="12">Celular Avalista</option>
+              <option value="13">Celular Conjuge</option>
+              <option value="14">Outros</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="prioritario" class="form-label">Prioritário</label>
+            <select id="prioritario" formControlName="prioritario" class="form-control form-control-sm">
+              <option value="S">Sim</option>
+              <option value="N">Não</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="status_fone" class="form-label">Status</label>
+            <select id="status_fone" formControlName="status_fone" class="form-control form-control-sm">
+              <option value="A">Ativo</option>
+              <option value="P">Positivo</option>
+              <option value="N">Negativo</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="whatsapp" class="form-label">Whatsapp</label>
+            <select id="whatsapp" formControlName="whatsapp" class="form-control form-control-sm">
+              <option value="S">Sim</option>
+              <option value="N">Não</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+  </div>
+</ng-template>
+

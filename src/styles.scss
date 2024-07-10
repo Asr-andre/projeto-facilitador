@@ -49,3 +49,29 @@
   width: 3rem;
   height: 3rem;
 }
+
+.tabela-custom {
+  background-color: #e6e6e6;
+  color: #929090;
+
+}
+
+
+.card table td {
+  font-size: 11px;
+}
+
+.table th {
+  font-weight: 800;
+  color: #555;
+}
+
+.nav-tabs .nav-link {
+  font-weight:800;
+  color: #555;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #f0f0f0;
+  color: #555;
+}

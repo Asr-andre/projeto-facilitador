@@ -41,9 +41,9 @@ export class DashboardComponent implements OnInit {
   public obterDetalhamentoPorId( id_cliente: number, id_contratante: number ): void {
     this.loading = true;
     this._dashboard.obterDevedorPorId(id_cliente, id_contratante).subscribe((detalhamento) => {
-        this.loading = false;
         if (detalhamento && detalhamento.success) {
           this.detalhamentoSelecionado = detalhamento;
+          this.loading = false;
         }
       },
       (error) => {

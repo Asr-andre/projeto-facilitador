@@ -37,10 +37,4 @@ export class DashboardService {
       map(devedores => devedores.find(devedor => devedor.id_cliente === id))
     );
   }
-
-  enviarMensagem(telefone: string, mensagem: string): void {
-    const mensagemEncoded = encodeURIComponent(mensagem);
-    const url = `https://api.whatsapp.com/send?phone=${telefone}&text=${mensagemEncoded}`;
-    window.open(url, '_blank');
-  }
 }

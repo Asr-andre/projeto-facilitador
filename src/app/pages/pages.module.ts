@@ -23,11 +23,13 @@ import { EmailModule } from './email/email.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AcionamentoComponent } from './dashboard/componente/acionamento/acionamento.component';
 import { WhatsappComponent } from './dashboard/componente/whatsapp/whatsapp.component';
+import { TelefoneComponent } from './dashboard/componente/telefone/telefone.component';
+
 
 
 
 @NgModule({
-  declarations: [DashboardComponent, AcionamentoComponent, WhatsappComponent, CalendarComponent, ChatComponent],
+  declarations: [DashboardComponent, AcionamentoComponent, WhatsappComponent, TelefoneComponent, CalendarComponent, ChatComponent],
   imports: [
     CommonModule,
     FormsModule,

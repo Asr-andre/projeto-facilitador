@@ -15,7 +15,7 @@
                   <i class="fas fa-sms font-size-24" style="margin-right: 5px;"></i>
                 </div>
                 <div class="flex-1">
-                  <p class="text-truncate font-size-12 mb-0">Qtde Sms: 111 / Valor: R$ 15,20</p>
+                  <p class="text-truncate font-size-13 mb-0">Qtde Sms: 111 / Valor: R$ 15,20</p>
                 </div>
               </div>
             </div>
@@ -26,7 +26,7 @@
                   <i class="fas fa-envelope font-size-24" style="margin-right: 5px;"></i>
                 </div>
                 <div class="flex-1">
-                  <p class="text-truncate font-size-12 mb-0">Qtde Email: 253 / Valor: R$ 15,20</p>
+                  <p class="text-truncate font-size-13 mb-0">Qtde Email: 253 / Valor: R$ 15,20</p>
                 </div>
               </div>
             </div>
@@ -37,7 +37,7 @@
                   <i class="fas fa-money-check-alt font-size-24" style="margin-right: 5px;"></i>
                 </div>
                 <div class="flex-1">
-                  <p class="text-truncate font-size-12 mb-0">Valor Total utilizado : R$ 30,70</p>
+                  <p class="text-truncate font-size-13 mb-0">Valor Total utilizado : R$ 30,70</p>
                 </div>
               </div>
             </div>
@@ -48,7 +48,7 @@
                   <i class="fas fa-money-check-alt font-size-24" style="margin-right: 5px;"></i>
                 </div>
                 <div class="flex-1">
-                  <p class="text-truncate font-size-12 mb-0">Saldo: R$ 358,15</p>
+                  <p class="text-truncate font-size-13 mb-0">Saldo: R$ 358,15</p>
                 </div>
               </div>
             </div>
@@ -73,8 +73,8 @@
             </div>
           </div>
           <div class="table-responsive">
-            <table class="table table-sm table-hover font-size-12">
-              <thead class="table-light">
+            <table class="table table-sm table-hover font-size-13">
+              <thead class="tabela-custom">
                 <tr>
                   <th>Credor</th>
                   <th>Id</th>
@@ -108,12 +108,11 @@
     </div>
     <div class="col-lg-7">
       <div class="card">
-        <div class="card-body font-size-12">
+        <div class="card-body font-size-13" style=" padding-top: 5px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px;">
           <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs">
             <li [ngbNavItem]="1">
               <a ngbNavLink>
-                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                <span class="d-none d-sm-block">Detalhe da Divida</span>
+                <span class="d-none d-sm-block"><i class="fas fa-money-check-alt"></i> Detalhe da Divida</span>
               </a>
               <ng-template ngbNavContent>
                 <ng-template [ngTemplateOutlet]="DetalheDaDivida"></ng-template>
@@ -121,8 +120,7 @@
             </li>
             <li [ngbNavItem]="2">
               <a ngbNavLink>
-                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                <span class="d-none d-sm-block">Telefone</span>
+                <span class="d-none d-sm-block"><i class="fas fa-phone"></i> Telefone</span>
               </a>
               <ng-template ngbNavContent>
                 <ng-template [ngTemplateOutlet]="Telefone"></ng-template>
@@ -130,8 +128,7 @@
             </li>
             <li [ngbNavItem]="3">
               <a ngbNavLink>
-                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                <span class="d-none d-sm-block">Email</span>
+                <span class="d-none d-sm-block"><i class="fas fa-at"></i> Email</span>
               </a>
               <ng-template ngbNavContent>
                 <ng-template [ngTemplateOutlet]="Email"></ng-template>
@@ -146,18 +143,18 @@
 </div>
 
 <ng-template #DetalheDaDivida>
-  <div class="mt-3 font-size-12">
+  <div class="mt-3 font-size-13">
     <div class="row brder">
       <div class="col-md-5"><strong>Credor:</strong> <span> {{ detalhamentoSelecionado?.credor }}</span></div>
     </div>
 
     <div class="row pt-1 brder">
-      <div class="col-md-6"><strong>Nome:</strong> {{ detalhamentoSelecionado?.nome }}</div>
-      <div class="col-md-6"><strong>CPF:</strong> {{ detalhamentoSelecionado?.cpf }}</div>
+      <div class="col-md-6"><b>Nome:</b> {{ detalhamentoSelecionado?.nome }}</div>
+      <div class="col-md-6"><b>CPF:</b> {{ detalhamentoSelecionado?.cpf }}</div>
     </div>
     <div class="row pt-1 brder">
       <div class="col-md-6">
-        <strong>Telefone:</strong> {{ detalhamentoSelecionado?.fone }}
+        <b>Telefone:</b> {{ detalhamentoSelecionado?.fone }}
         <i class="fas fa-sms" style="margin-right: 5px;"></i>
         <i class="fab fa-whatsapp whatsapp-icon" (click)="openWhatsappModal(detalhamentoSelecionado?.fone)"></i>
       </div>
@@ -166,7 +163,7 @@
     <app-whatsapp></app-whatsapp>
 
     <div class="row pt-1 brder">
-      <div class="col-md-6"><strong>Email:</strong> {{ detalhamentoSelecionado?.email }} <i class="fas fa-envelope"></i>
+      <div class="col-md-6"><b>Email:</b> {{ detalhamentoSelecionado?.email }} <i class="fas fa-envelope"></i>
       </div>
     </div>
 
@@ -174,7 +171,7 @@
       style="height: 300px; overflow: auto; padding-top: 2px; padding-left: 0px; padding-right: 0px; padding-bottom: 0px;">
       <div class="table-responsive mt-3 font-size-12">
         <table class="table table-sm table-hover">
-          <thead class="table-light table-td-scroll">
+          <thead class="tabela-custom table-td-scroll">
             <tr>
               <th>Parcela</th>
               <th>Plano</th>
@@ -196,7 +193,7 @@
               <td>{{ prestacao.multa | currency:'BRL' }}</td>
               <td>{{ prestacao.taxa | currency:'BRL' }}</td>
               <td>{{ prestacao.total | currency:'BRL' }}</td>
-            <tr>
+            <tr class="tabela-custom">
               <td colspan="3" style="text-align: end;"><strong>Total:</strong></td>
               <td><strong>{{ calcularTotal('valor') | currency:'BRL' }}</strong></td>
               <td><strong>{{ calcularTotal('juros') | currency:'BRL' }}</strong></td>
@@ -214,13 +211,13 @@
 </ng-template>
 
 <ng-template #Telefone>
-  <p class="p-3 mb-0 font-size-12">
-    Em desenvolvimento
-  </p>
+  <div class="mt-3 font-size-13">
+    <app-telefone [idCliente]="devedorSelecionado?.id_cliente"></app-telefone>
+  </div>
 </ng-template>
 
 <ng-template #Email>
-  <p class="p-3 mb-0 font-size-12">
+  <p class="p-3 mb-0 font-size-13">
     Em desenvolvimento
   </p>
 </ng-template>
