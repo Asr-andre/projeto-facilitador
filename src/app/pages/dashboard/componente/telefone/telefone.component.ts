@@ -2,6 +2,7 @@ import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TelefoneModel } from 'src/app/core/models/telefone.model';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { TelefoneService } from 'src/app/core/services/cadastro/telefone.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class TelefoneComponent implements OnInit {
   public telefoneForm: FormGroup;
 
   constructor(private _telefoneService: TelefoneService,
-    private fb: FormBuilder,
+    private _formBuilder: FormBuilder,
+    private _alertService: AlertService,
     private modalService: NgbModal
   ) { }
 
@@ -29,9 +31,9 @@ export class TelefoneComponent implements OnInit {
   }
 
   public inicializarTelefoneForm() {
-    this.telefoneForm = this.fb.group({
+    this.telefoneForm = this._formBuilder.group({
       id_cliente: this.idCliente,
-      fone: ['', Validators.required, Validators.pattern('[0-9]*')],
+      fone: ['', Validators.required],
       tipo: ['', Validators.required],
       prioritario: ['', Validators.required],
       status_fone: ['', Validators.required],
@@ -87,18 +89,25 @@ export class TelefoneComponent implements OnInit {
   }
 
   onSubmit(modal: any): void {
+    console.log(modal)
     if (this.telefoneForm.valid) {
       this.loading = true;
-      this._telefoneService.cadastrarTelefone(this.telefoneForm.value).subscribe(
-        (response) => {
+      this._telefoneService.cadastrarTelefone(this.telefoneForm.value).subscribe((res) => {
+        if (res.success === true) {
+          this._alertService.success(res.msg);
+          console.log(res)
           this.carregarTelefones(this.idCliente);
           modal.close();
-        },
-        (error) => {
-          console.error('Erro ao cadastrar telefone:', error);
-          this.loading = false;
+        } else {
+          this._alertService.warning(res.msg);
         }
-      );
-    }
+      },
+      (error) => {
+        this._alertService.error('Ocorreu um erro ao tentar cadastrar o telefone.');
+      }
+    );
+  } else {
+    this._alertService.warning("Preencha todos os campos obrigatórios");
   }
+}
 }
