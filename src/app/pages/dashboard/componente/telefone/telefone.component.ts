@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TelefoneModel } from 'src/app/core/models/telefone.model';
@@ -10,7 +10,7 @@ import { TelefoneService } from 'src/app/core/services/cadastro/telefone.service
   templateUrl: './telefone.component.html',
   styleUrl: './telefone.component.scss'
 })
-export class TelefoneComponent implements OnInit {
+export class TelefoneComponent implements OnInit, OnChanges {
 
   @Input() idCliente: number | undefined;
   public telefones: TelefoneModel[] = [];
@@ -24,10 +24,15 @@ export class TelefoneComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.idCliente) {
+    this.inicializarTelefoneForm();
+    this.carregarTelefones(this.idCliente);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.idCliente && !changes.idCliente.firstChange) {
+      // Se houve mudança no idCliente e não é a primeira mudança, recarrega os telefones
       this.carregarTelefones(this.idCliente);
     }
-    this.inicializarTelefoneForm();
   }
 
   public inicializarTelefoneForm() {
@@ -55,7 +60,7 @@ export class TelefoneComponent implements OnInit {
     );
   }
 
-  tipoTelefone(tipo: number): string {
+  public tipoTelefone(tipo: number): string {
     switch (tipo) {
       case 1: return 'Fixo Residencial';
       case 2: return 'Fixo Comercial';
@@ -75,7 +80,7 @@ export class TelefoneComponent implements OnInit {
     }
   }
 
-  statusTelefone(status: string): string {
+  public statusTelefone(status: string): string {
     switch (status) {
       case 'A': return 'Ativo';
       case 'P': return 'Positivo';
@@ -84,30 +89,31 @@ export class TelefoneComponent implements OnInit {
     }
   }
 
-  openModal(content: TemplateRef<any>): void {
+  public openModal(content: TemplateRef<any>): void {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  onSubmit(modal: any): void {
-    console.log(modal)
+  public onSubmit(modal: any): void {
     if (this.telefoneForm.valid) {
       this.loading = true;
       this._telefoneService.cadastrarTelefone(this.telefoneForm.value).subscribe((res) => {
         if (res.success === true) {
+          this.loading = false;
           this._alertService.success(res.msg);
-          console.log(res)
           this.carregarTelefones(this.idCliente);
           modal.close();
         } else {
+          this.loading = false;
           this._alertService.warning(res.msg);
         }
       },
-      (error) => {
-        this._alertService.error('Ocorreu um erro ao tentar cadastrar o telefone.');
-      }
-    );
-  } else {
-    this._alertService.warning("Preencha todos os campos obrigatórios");
+        (error) => {
+          this.loading = false;
+          this._alertService.error('Ocorreu um erro ao tentar cadastrar o telefone.');
+        }
+      );
+    } else {
+      this._alertService.warning("Preencha todos os campos obrigatórios");
+    }
   }
-}
 }

@@ -48,13 +48,13 @@
   <div class="modal-body" style="padding-top: 5px;padding-left: 10px;padding-right: 10px;padding-bottom: 10px;">
     <form [formGroup]="telefoneForm" (ngSubmit)="onSubmit(modal)">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6" style="padding-right: 3px;">
           <div class="mb-1">
             <label for="fone" class="form-label">Número</label>
             <input type="text" id="fone" formControlName="fone" class="form-control form-control-pad form-control-sm"  mask="(00) 00000-0000" max="11">
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" style="padding-left: 3px;">
           <div class="mb-1">
             <label for="tipo" class="form-label">Tipo</label>
             <select id="tipo" formControlName="tipo" class="form-control form-control-pad form-control-sm">
@@ -77,7 +77,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4" style="padding-right: 3px;">
           <div class="mb-1">
             <label for="prioritario" class="form-label">Prioritário</label>
             <select id="prioritario" formControlName="prioritario" class="form-control form-control-pad form-control-sm">
@@ -86,7 +86,7 @@
             </select>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" style="padding-left: 3px; padding-right: 3px;">
           <div class="mb-1">
             <label for="status_fone" class="form-label">Status</label>
             <select id="status_fone" formControlName="status_fone" class="form-control form-control-pad form-control-sm">
@@ -96,7 +96,7 @@
             </select>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" style="padding-left: 3px;">
           <div class="mb-1">
             <label for="whatsapp" class="form-label">Whatsapp</label>
             <select id="whatsapp" formControlName="whatsapp" class="form-control form-control-pad form-control-sm">
