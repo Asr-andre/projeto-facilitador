@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
   public itensPorPagina: number = 20;
   public devedorSelecionado: DevedorModel | null = null;
   public detalhamentoSelecionado: DetalhamentoModel | null = null;
-  public loading = true;
+  public loading: boolean = false;
 
   constructor(
     private _dashboard: DashboardService,

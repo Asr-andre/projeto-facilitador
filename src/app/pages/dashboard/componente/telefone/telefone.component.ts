@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TelefoneModel } from 'src/app/core/models/telefone.model';
+import { TelefoneModel, TelefoneRetornoModel } from 'src/app/core/models/telefone.model';
 import { AlertService } from 'src/app/core/services/alert.service';
-import { TelefoneService } from 'src/app/core/services/cadastro/telefone.service';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { TelefoneService } from 'src/app/core/services/telefone.service';
 
 @Component({
   selector: 'app-telefone',
@@ -11,14 +12,14 @@ import { TelefoneService } from 'src/app/core/services/cadastro/telefone.service
   styleUrl: './telefone.component.scss'
 })
 export class TelefoneComponent implements OnInit, OnChanges {
-
   @Input() idCliente: number | undefined;
-  public telefones: TelefoneModel[] = [];
+  public telefones: TelefoneRetornoModel;
   public loading: boolean = false;
   public telefoneForm: FormGroup;
 
   constructor(private _telefoneService: TelefoneService,
     private _formBuilder: FormBuilder,
+    private _authenticationService: AuthenticationService,
     private _alertService: AlertService,
     private modalService: NgbModal
   ) { }
@@ -43,11 +44,13 @@ export class TelefoneComponent implements OnInit, OnChanges {
       prioritario: ['', Validators.required],
       status_fone: ['', Validators.required],
       whatsapp: ['', Validators.required],
-      obs_fone: ['Cadastro']
+      obs_fone: ['Cadastro'],
+      user_login: [this._authenticationService.getLogin()]
     });
   }
 
   public carregarTelefones(idCliente: number): void {
+    console.log(idCliente)
     this.loading = true;
     this._telefoneService.obterTelefonesPorCliente(idCliente).subscribe((telefones) => {
       this.telefones = telefones;
@@ -97,11 +100,11 @@ export class TelefoneComponent implements OnInit, OnChanges {
     if (this.telefoneForm.valid) {
       this.loading = true;
       this._telefoneService.cadastrarTelefone(this.telefoneForm.value).subscribe((res) => {
-        if (res.success === true) {
-          this.loading = false;
-          this._alertService.success(res.msg);
+        if (res.success === 'true') {
           this.carregarTelefones(this.idCliente);
           modal.close();
+          this._alertService.success(res.msg);
+          this.loading = false;
         } else {
           this.loading = false;
           this._alertService.warning(res.msg);

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AppConfig } from '../url.base.service';
-import { TelefoneModel } from '../../models/telefone.model';
-import { RetornoModel } from '../../models/retorno.model';
+import { AppConfig } from './url.base.service';
+import { TelefoneModel, TelefoneRetornoModel } from '../models/telefone.model';
+import { RetornoModel } from '../models/retorno.model';
 
 
 
@@ -18,8 +18,8 @@ export class TelefoneService {
 
   ) { }
 
-  public obterTelefonesPorCliente(idCliente: number): Observable<TelefoneModel[]> {
-    return this._http.get<TelefoneModel[]>(`${this.apiUrl}/telefone/${idCliente}`);
+  public obterTelefonesPorCliente(idCliente: number): Observable<TelefoneRetornoModel> {
+    return this._http.post<TelefoneRetornoModel>(`${this.apiUrl}/listartelefones`, { id_cliente: idCliente });
   }
 
   public cadastrarTelefone(telefone: TelefoneModel): Observable<any> {

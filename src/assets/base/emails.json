@@ -1,0 +1,42 @@
+[
+  {
+    "id_cliente": 1,
+    "email": "cliente1@example.com",
+    "situacao": "A",
+    "origem": "Web",
+    "ativo": "S",
+    "user_Login": "user1"
+  },
+  {
+    "id_cliente": 2,
+    "email": "cliente2@example.com",
+    "situacao": "I",
+    "origem": "Mobile",
+    "ativo": "N",
+    "user_Login": "user2"
+  },
+  {
+    "id_cliente": 3,
+    "email": "cliente3@example.com",
+    "situacao": "A",
+    "origem": "Desktop",
+    "ativo": "S",
+    "user_Login": "user3"
+  },
+  {
+    "id_cliente": 4,
+    "email": "cliente4@example.com",
+    "situacao": "A",
+    "origem": "Tablet",
+    "ativo": "S",
+    "user_Login": "user4"
+  },
+  {
+    "id_cliente": 5,
+    "email": "cliente5@example.com",
+    "situacao": "I",
+    "origem": "Web",
+    "ativo": "N",
+    "user_Login": "user5"
+  }
+]

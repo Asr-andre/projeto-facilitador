@@ -25,12 +25,13 @@ import { AcionamentoComponent } from './dashboard/componente/acionamento/acionam
 import { WhatsappComponent } from './dashboard/componente/whatsapp/whatsapp.component';
 import { TelefoneComponent } from './dashboard/componente/telefone/telefone.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { EmailComponent } from './dashboard/componente/email/email.component';
 
 
 
 
 @NgModule({
-  declarations: [DashboardComponent, AcionamentoComponent, WhatsappComponent, TelefoneComponent, CalendarComponent, ChatComponent],
+  declarations: [DashboardComponent, AcionamentoComponent, WhatsappComponent, TelefoneComponent, EmailComponent, CalendarComponent, ChatComponent],
   imports: [
     CommonModule,
     FormsModule,
