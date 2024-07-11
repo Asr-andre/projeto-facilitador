@@ -17,3 +17,15 @@
   color: green;
   cursor: pointer;
 }
+
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}

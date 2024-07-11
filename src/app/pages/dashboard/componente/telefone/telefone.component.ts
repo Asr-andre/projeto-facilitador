@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TelefoneModel, TelefoneRetornoModel } from 'src/app/core/models/telefone.model';
+import { TelefoneRetornoModel } from 'src/app/core/models/telefone.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { TelefoneService } from 'src/app/core/services/telefone.service';
@@ -31,7 +31,6 @@ export class TelefoneComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.idCliente && !changes.idCliente.firstChange) {
-      // Se houve mudança no idCliente e não é a primeira mudança, recarrega os telefones
       this.carregarTelefones(this.idCliente);
     }
   }
@@ -50,7 +49,6 @@ export class TelefoneComponent implements OnInit, OnChanges {
   }
 
   public carregarTelefones(idCliente: number): void {
-    console.log(idCliente)
     this.loading = true;
     this._telefoneService.obterTelefonesPorCliente(idCliente).subscribe((telefones) => {
       this.telefones = telefones;

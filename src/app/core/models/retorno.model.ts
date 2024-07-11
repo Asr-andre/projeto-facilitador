@@ -10,3 +10,9 @@ export class RetornoModel {
     msg: string;
     id_cliente: string;
   }
+
+  export class RetornoGenericoModel {
+    success: string;
+    msg: string;
+    id_cliente: string;
+  }

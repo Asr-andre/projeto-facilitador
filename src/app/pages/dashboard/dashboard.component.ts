@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public obterDevedores(): void {
+    this.loading = true;
     this._dashboard.obterDevedores().subscribe((res) => {
       this.listarDevedores = res;
       this.devedoresFiltrados = res;
