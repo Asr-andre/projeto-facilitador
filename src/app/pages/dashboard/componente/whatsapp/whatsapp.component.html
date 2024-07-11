@@ -1,13 +1,20 @@
 <ng-template #whatsappModal let-modal>
-  <div class="modal-header" style="padding-top: 5px; padding-bottom: 5px; background: #128c7e; margin: 0">
-    <h5 class="modal-title" style="color: #ffffff"><i class="fab fa-whatsapp" ></i> Enviar mensagem para: {{ telefoneCliente }}</h5>
+  <div class="modal-header modal-header-custom" style="background: #128c7e; margin: 0">
+    <h5 class="modal-title" style="color: #ffffff"><i class="fab fa-whatsapp"></i> Enviar mensagem para: {{ telefoneCliente }}</h5>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechaModal()" style="color: #ffffff"></button>
   </div>
-  <div class="modal-body">
-    <textarea [(ngModel)]="mensagem" class="form-control" placeholder="Digite sua mensagem"></textarea>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-primary btn-sm" (click)="enviarMensagem()"><i class=" fas fa-check-circle"></i> Enviar</button>
-    <button type="button" class="btn btn-outline-danger btn-sm" (click)="fechaModal()"><i class="fas fa-window-close"></i> Fechar</button>
+  <div class="modal-body modal-padding">
+    <textarea [(ngModel)]="mensagem" (input)="contarCaracteres()" class="form-control" placeholder="Digite sua mensagem" rows="5"></textarea>
+    <div class="d-flex justify-content-between align-items-center" style="padding-top: 5px;">
+      <small>{{ mensagem.length }}/4096 caracteres</small>
+      <div>
+        <button type="button" class="btn btn-success btn-sm me-1" (click)="enviarMensagem()">
+          <i class="fas fa-paper-plane"></i> Enviar
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechaModal()">
+          <i class="fas fa-window-close"></i> Cancelar
+        </button>
+      </div>
+    </div>
   </div>
 </ng-template>

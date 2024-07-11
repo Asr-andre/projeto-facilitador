@@ -89,11 +89,11 @@ export class TelefoneComponent implements OnInit, OnChanges {
     }
   }
 
-  public openModal(content: TemplateRef<any>): void {
+  public abriModalTelefone(content: TemplateRef<any>): void {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  public onSubmit(modal: any): void {
+  public cadastrarTelefone(modal: any): void {
     if (this.telefoneForm.valid) {
       this.loading = true;
       this._telefoneService.cadastrarTelefone(this.telefoneForm.value).subscribe((res) => {

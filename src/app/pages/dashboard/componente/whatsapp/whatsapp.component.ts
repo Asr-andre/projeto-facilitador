@@ -1,5 +1,6 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-whatsapp',
@@ -13,13 +14,18 @@ export class WhatsappComponent {
   public telefoneCliente: string;
 
   constructor(
-    private _modalService: NgbModal
+    private _modalService: NgbModal,
+    private _alertService: AlertService,
   ) { }
 
   public abrirModalWhatsapp(telefone: string): void {
-    this.telefoneCliente = this.limparNumero(telefone);
-    this.abrirModal = true;
-    this._modalService.open(this.whatsappModal, { ariaLabelledBy: 'modal-basic-title' });
+    if (telefone) {
+      this.telefoneCliente = this.limparNumero(telefone);
+      this.abrirModal = true;
+      this._modalService.open(this.whatsappModal, { ariaLabelledBy: 'modal-basic-title' });
+    } else {
+      this._alertService.warning('Selecione o cliente  para obter o número de telefone.');
+    }
   }
 
   public enviarMensagem(): void {
@@ -34,7 +40,7 @@ export class WhatsappComponent {
       window.open(url, '_blank');
       this.fechaModal();
     } else {
-      console.error('Telefone ou mensagem não preenchidos.');
+      this._alertService.warning('Digite a mensagem que deseja enviar');
     }
   }
 
@@ -46,5 +52,11 @@ export class WhatsappComponent {
 
   private limparNumero(telefone: string): string {
     return telefone.replace(/[\(\)\s\-\.]/g, '');
+  }
+
+  public contarCaracteres(): void {
+    if (this.mensagem.length > 4096) {
+      this.mensagem = this.mensagem.substring(0, 4096);
+    }
   }
 }

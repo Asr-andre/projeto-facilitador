@@ -88,14 +88,23 @@
   border-bottom-width: 0px !important;
 }
 
+.modal-padding {
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+.modal-header-custom {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 .btn-close-white {
   filter: invert(1);
 }
 
 .btn-close-small {
-  transform: scale(0.75) !important; /* Método 1: Reduz o tamanho para 75% do original */
-  /* ou */
-  width: 0.75rem !important; /* Método 2: Ajusta diretamente a largura */
-  height: 0.75rem !important; /* Método 2: Ajusta diretamente a altura */
+  transform: scale(0.75) !important;
+  width: 0.75rem !important;
+  height: 0.75rem !important;
 }
 
