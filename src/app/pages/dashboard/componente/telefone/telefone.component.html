@@ -41,9 +41,9 @@
 
 
 <ng-template #telefoneModal let-modal>
-  <div class="modal-header" style="padding-top: 5px; padding-bottom: 5px;">
-    <h5 class="modal-title"><i class="fas fa-phone-alt"></i> Cadastrar Telefone</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  <div class="modal-header" style="padding-top: 5px; padding-bottom: 5px; background: #626464;">
+    <h5 class="modal-title" style="color: #ffffff"><i class="fas fa-phone-alt"></i> Cadastrar Telefone</h5>
+    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
   <div class="modal-body" style="padding-top: 5px;padding-left: 10px;padding-right: 10px;padding-bottom: 10px;">
     <form [formGroup]="telefoneForm" (ngSubmit)="onSubmit(modal)">

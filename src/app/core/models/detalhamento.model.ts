@@ -1,7 +1,10 @@
 export class Prestacao {
   public parcela: number;
   public plano: number;
+  public numero_contrato: string;
   public vencimento: Date;
+  public produto: string;
+  public atraso: number;
   public valor: number;
   public valor_juros: number | null;
   public valor_multa: number | null;

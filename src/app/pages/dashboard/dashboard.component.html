@@ -109,7 +109,7 @@
     <div class="col-lg-7">
       <div class="card">
         <div class="card-body font-size-13" style=" padding-top: 5px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px;">
-          <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs">
+          <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs" >
             <li [ngbNavItem]="1">
               <a ngbNavLink>
                 <span class="d-none d-sm-block"><i class="fas fa-money-check-alt"></i> Detalhe da Divida</span>
@@ -175,31 +175,40 @@
             <tr>
               <th>Parcela</th>
               <th>Plano</th>
+              <th>Contrato</th>
               <th>Vencimento</th>
+              <th>Produto</th>
+              <th>Atraso</th>
               <th>Valor</th>
               <th>Juros</th>
               <th>Multa</th>
               <th>Taxa</th>
               <th>Total</th>
+              <th>Total Atualizado</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let prestacao of detalhamentoSelecionado?.parcelas">
               <td>{{ prestacao.parcela }}</td>
               <td>{{ prestacao.plano }}</td>
+              <td>{{ prestacao.numero_contrato }}</td>
               <td>{{ prestacao.vencimento | date:'dd/MM/yyyy' }}</td>
+              <td>{{ prestacao.produto }}</td>
+              <td>{{ prestacao.atraso }}</td>
               <td>{{ prestacao.valor | currency:'BRL' }}</td>
-              <td>{{ prestacao.juros | currency:'BRL' }}</td>
-              <td>{{ prestacao.multa | currency:'BRL' }}</td>
-              <td>{{ prestacao.taxa | currency:'BRL' }}</td>
-              <td>{{ prestacao.total | currency:'BRL' }}</td>
+              <td>{{ prestacao.valor_juros | currency:'BRL' }}</td>
+              <td>{{ prestacao.valor_multa | currency:'BRL' }}</td>
+              <td>{{ prestacao.valor_taxa | currency:'BRL' }}</td>
+              <td>{{ prestacao.saldo_devedor | currency:'BRL' }}</td>
+              <td>{{ calcularTotalAtualizado(prestacao) | currency:'BRL' }}</td>
             <tr class="tabela-custom">
-              <td colspan="3" style="text-align: end;"><strong>Total:</strong></td>
+              <td colspan="6" style="text-align: end;"><strong>Total:</strong></td>
               <td><strong>{{ calcularTotal('valor') | currency:'BRL' }}</strong></td>
-              <td><strong>{{ calcularTotal('juros') | currency:'BRL' }}</strong></td>
-              <td><strong>{{ calcularTotal('multa') | currency:'BRL' }}</strong></td>
-              <td><strong>{{ calcularTotal('taxa') | currency:'BRL' }}</strong></td>
-              <td><strong>{{ calcularTotal('total') | currency:'BRL' }}</strong></td>
+              <td><strong>{{ calcularTotal('valor_juros') | currency:'BRL' }}</strong></td>
+              <td><strong>{{ calcularTotal('valor_multa') | currency:'BRL' }}</strong></td>
+              <td><strong>{{ calcularTotal('valor_taxa') | currency:'BRL' }}</strong></td>
+              <td><strong>{{ calcularTotal('saldo_devedor') | currency:'BRL' }}</strong></td>
+              <td><strong>{{ calcularTotal('valorTotalAtualizado') | currency:'BRL' }}</strong></td>
             </tr>
           </tbody>
         </table>

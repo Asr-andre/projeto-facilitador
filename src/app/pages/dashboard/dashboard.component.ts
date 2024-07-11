@@ -60,11 +60,19 @@ export class DashboardComponent implements OnInit {
 
   public calcularTotal(coluna: string): number {
     return (
-      this.detalhamentoSelecionado?.parcelas.reduce(
-        (total, prestacao) => total + prestacao[coluna],
+      this.detalhamentoSelecionado?.parcelas.reduce((total, prestacao) => {
+          if (coluna === 'valorTotalAtualizado') {
+            return total + this.calcularTotalAtualizado(prestacao);
+          }
+          return total + prestacao[coluna];
+        },
         0
       ) || 0
     );
+  }
+
+  public calcularTotalAtualizado(prestacao: any): number {
+    return prestacao.valor + prestacao.valor_juros + prestacao.valor_multa + prestacao.valor_taxa;
   }
 
   public filtraDevedor(): void {
