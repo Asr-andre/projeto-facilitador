@@ -1,4 +1,4 @@
-<div class="loading-overlay" *ngIf="loading">
+<div class="loading-overlay-pagina" *ngIf="loading">
   <div class="spinner-border text-primary m-1" role="status">
   </div>
 </div>
@@ -16,7 +16,7 @@
                 <input type="text" class="form-control form-control-sm me-2" placeholder="Pesquisar cliente existente..." style="width: 400px;">
                 <select class="form-control form-control-sm me-2" [(ngModel)]="contratanteSelecionado" style="width: 200px;">
                   <option value="">Selecione</option>
-                  <option *ngFor="let contratante of listarContratantes" [value]="contratante.id_empresa">{{ contratante.fantasia }}</option>
+                  <option *ngFor="let contratante of listarContratantes" [value]="contratante.id_contratante">{{ contratante.fantasia }}</option>
                 </select>
                 <button type="button" class="btn btn-secondary btn-sm" (click)="selecionarContratante()"><i class="fas fa-check"></i> Selecionar</button>
               </div>
