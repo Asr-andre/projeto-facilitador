@@ -35,11 +35,11 @@
                         <tr>
                           <th>Id</th>
                           <th>Fantasia</th>
-                          <th>CNPJ</th>
+                          <th>Cnpj</th>
                           <th>Endereço</th>
                           <th>Número</th>
                           <th>Bairro</th>
-                          <th>CEP</th>
+                          <th>Cep</th>
                           <th>Cidade</th>
                           <th>Uf</th>
                           <th>Id Fórmula</th>
@@ -80,21 +80,104 @@
           <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
         </div>
         <div class="modal-body modal-padding">
-          <form >
+          <form [formGroup]="formContratante">
             <div class="row">
-              <div class="col-md-8" style="padding-right: 3px;">
-                <div class="mb-1">
-                  <label for="email" class="form-label">Email</label>
-                  <input type="email" id="email"  class="form-control form-control-pad form-control-sm" required>
-                </div>
+              <div class="col-md-2 form-group">
+                <input class="form-control form-control-sm mb-3" formControlName="razao_social" type="text" placeholder="Razão Social" required>
               </div>
-              <div class="col-md-4" style="padding-left: 3px;">
-                <div class="mb-1">
-                  <label for="situacao" class="form-label">Situação</label>
-                  <select id="situacao"  class="form-control form-control-pad form-control-sm">
-                    <option value="A">Definir ainda</option>
-                  </select>
-                </div>
+              <div class="col-md-2 form-group">
+                <input class="form-control form-control-sm mb-3" formControlName="fantasia" type="text" placeholder="Fantasia" required>
+              </div>
+              <div class="col-md-2 form-group">
+                <input class="form-control form-control-sm mb-3" formControlName="cnpj" type="text" placeholder="CNPJ" mask="00.000.000/0000-00">
+              </div>
+              <div class="col-md-3 form-group">
+                <input class="form-control form-control-sm mb-3" type="text" placeholder="Inscrição municipal">
+              </div>
+              <div class="col-md-3 form-group">
+                <input class="form-control form-control-sm mb-3" type="text" placeholder="Inscrição estadual">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 form-group">
+                <input class="form-control form-control-sm mb-3" formControlName="endereco" type="text" placeholder="Rua">
+              </div>
+              <div class="col-md-1 form-group">
+                <input class="form-control form-control-sm mb-3" formControlName="numero" type="text" placeholder="Nº">
+              </div>
+              <div class="col-md-2 form-group">
+                <input class="form-control form-control-sm mb-3" formControlName="complemento" type="text" placeholder="Complemento">
+              </div>
+              <div class="col-md-3 form-group">
+                <input class="form-control form-control-sm mb-3" formControlName="bairro" type="text" placeholder="Bairro">
+              </div>
+
+              <div class="col-md-2 form-group">
+                <input class="form-control form-control-sm mb-3" formControlName="cidade" type="text" placeholder="Cidade">
+              </div>
+              <div class="col-md-1 form-group">
+                <select class="form-control form-control-sm mb-3" formControlName="uf" placeholder="UF">
+                  <option value="">--</option>
+                  <option value="AC">AC</option>
+                  <option value="AL">AL</option>
+                  <option value="AM">AM</option>
+                  <option value="AP">AP</option>
+                  <option value="BA">BA</option>
+                  <option value="CE">CE</option>
+                  <option value="DF">DF</option>
+                  <option value="ES">ES</option>
+                  <option value="GO">GO</option>
+                  <option value="MA">MA</option>
+                  <option value="MG">MG</option>
+                  <option value="MS">MS</option>
+                  <option value="MT">MT</option>
+                  <option value="PA">PA</option>
+                  <option value="PB">PB</option>
+                  <option value="PE">PE</option>
+                  <option value="PI">PI</option>
+                  <option value="PR">PR</option>
+                  <option value="RJ">RJ</option>
+                  <option value="RN">RN</option>
+                  <option value="RO">RO</option>
+                  <option value="RR">RR</option>
+                  <option value="RS">RS</option>
+                  <option value="SC">SC</option>
+                  <option value="SR">SE</option>
+                  <option value="SP">SP</option>
+                  <option value="TO">TO</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2 form-group">
+                <input class="form-control form-control-sm mb-3" type="text" placeholder="Site">
+              </div>
+              <div class="col-md-2 form-group">
+                <input class="form-control form-control-sm mb-3" type="text" placeholder="Email">
+              </div>
+              <div class="col-md-2 form-group">
+                <input class="form-control form-control-sm mb-3" type="text" placeholder="Fone Contato" mask="(00) 00000-0000">
+              </div>
+              <div class="col-md-2 form-group">
+                <input class="form-control form-control-sm mb-3" type="text" placeholder="Responsavel">
+              </div>
+              <div class="col-md-2 form-group">
+                <input class="form-control form-control-sm mb-3" type="text" placeholder="Cpf Responsavel" mask="000.000.000-00">
+              </div>
+              <div class="col-md-2 form-group">
+                <input class="form-control form-control-sm mb-3" type="text" placeholder="RG Responsavel">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 form-group">
+                <input class="form-control form-control-sm mb-3" type="text" placeholder="Expedidor">
+              </div>
+              <div class="col-md-4 form-group">
+                <input class="form-control form-control-sm mb-3" type="text" placeholder="Formula calculo">
+              </div>
+              <div class="col-md-4 form-group">
+                <input class="form-control form-control-sm mb-3" type="text" placeholder="logomarca">
               </div>
             </div>
             <div class="d-flex justify-content-end" style="padding-top: 5px;">
