@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Utils } from "src/app/core/helpers/utils";
 import { DevedorModel } from "src/app/core/models/devedor.model";
 import { DashboardService } from "src/app/core/services/dashboard.service";
 
@@ -52,12 +53,10 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  public formatarCPF(cpf: string): string {
-    if (!cpf) return '';
-
-    const cpfLimpo = cpf.replace(/\D/g, '');
-    if (cpfLimpo.length !== 11) return cpf;
-
-    return cpfLimpo.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  public mascararCpfCnpj(value: string): string {
+    if (value) {
+      return Utils.formatarDocumento(value);
+    }
+    return value;
   }
 }

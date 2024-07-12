@@ -91,7 +91,7 @@
                   (click)="selecionarDevedor(devedor)">
                   <td>{{ devedor.fantasia }}</td>
                   <td>{{ devedor.id_cliente }}</td>
-                  <td>{{ formatarCPF(devedor.cnpj_cpf) }}</td>
+                  <td>{{ mascararCpfCnpj(devedor.cnpj_cpf) }}</td>
                   <td>{{ devedor.nome}}</td>
                   <td>{{ devedor.saldo_devedor | currency:'BRL' }}</td>
                 </tr>
