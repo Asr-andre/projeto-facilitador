@@ -22,16 +22,17 @@ import { EmailModule } from './email/email.module';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AcionamentoComponent } from './dashboard/componente/acionamento/acionamento.component';
-import { WhatsappComponent } from './dashboard/componente/whatsapp/whatsapp.component';
+import { WhatsappComponent } from './dashboard/componente/detalhe-da-divida/whatsapp/whatsapp.component';
 import { TelefoneComponent } from './dashboard/componente/telefone/telefone.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { EmailComponent } from './dashboard/componente/email/email.component';
+import { DetalheDaDividaComponent } from './dashboard/componente/detalhe-da-divida/detalhe-da-divida.component';
 
 
 
 
 @NgModule({
-  declarations: [DashboardComponent, AcionamentoComponent, WhatsappComponent, TelefoneComponent, EmailComponent, CalendarComponent, ChatComponent],
+  declarations: [DashboardComponent, DetalheDaDividaComponent, AcionamentoComponent, WhatsappComponent, TelefoneComponent, EmailComponent, CalendarComponent, ChatComponent],
   imports: [
     CommonModule,
     FormsModule,

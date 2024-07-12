@@ -58,7 +58,6 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-lg-5">
       <div class="card">
@@ -68,7 +67,8 @@
             <div class="col-sm-12 col-md-12">
               <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
                   class="d-inline-flex align-items-center">Pesquisar:
-                  <input type="text" class="form-control form-control-sm ms-2" [(ngModel)]="textoPesquisa" (input)="filtraDevedor()" /></label>
+                  <input type="text" class="form-control form-control-sm ms-2" [(ngModel)]="textoPesquisa"
+                    (input)="filtraDevedor()" /></label>
               </div>
             </div>
           </div>
@@ -108,8 +108,9 @@
     </div>
     <div class="col-lg-7">
       <div class="card">
-        <div class="card-body font-size-13" style=" padding-top: 5px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px;">
-          <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs" >
+        <div class="card-body font-size-13"
+          style=" padding-top: 5px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px;">
+          <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs">
             <li [ngbNavItem]="1">
               <a ngbNavLink>
                 <span class="d-none d-sm-block"><i class="fas fa-money-check-alt"></i> Detalhe da Divida</span>
@@ -144,89 +145,18 @@
 
 <ng-template #DetalheDaDivida>
   <div class="mt-3 font-size-13">
-    <div class="row brder">
-      <div class="col-md-5"><strong>Credor:</strong> <span> {{ detalhamentoSelecionado?.credor }}</span></div>
-    </div>
-
-    <div class="row pt-1 brder">
-      <div class="col-md-6"><b>Nome:</b> {{ detalhamentoSelecionado?.nome }}</div>
-      <div class="col-md-6"><b>CPF:</b> {{ detalhamentoSelecionado?.cpf }}</div>
-    </div>
-    <div class="row pt-1 brder">
-      <div class="col-md-6">
-        <b>Telefone:</b> {{ detalhamentoSelecionado?.fone }}
-        <i class="fas fa-sms" style="margin-right: 5px;"></i>
-        <i class="fab fa-whatsapp whatsapp-icon" (click)="openWhatsappModal(detalhamentoSelecionado?.fone)"></i>
-      </div>
-    </div>
-
-    <app-whatsapp></app-whatsapp>
-
-    <div class="row pt-1 brder">
-      <div class="col-md-6"><b>Email:</b> {{ detalhamentoSelecionado?.email }} <i class="fas fa-at"></i>
-      </div>
-    </div>
-
-    <div class="card-body"
-      style="height: 300px; overflow: auto; padding-top: 2px; padding-left: 0px; padding-right: 0px; padding-bottom: 0px;">
-      <div class="table-responsive mt-3 font-size-12">
-        <table class="table table-sm table-hover">
-          <thead class="tabela-custom table-td-scroll">
-            <tr>
-              <th>Parcela</th>
-              <th>Plano</th>
-              <th>Contrato</th>
-              <th>Vencimento</th>
-              <th>Produto</th>
-              <th>Atraso</th>
-              <th>Valor</th>
-              <th>Juros</th>
-              <th>Multa</th>
-              <th>Taxa</th>
-              <th>Total</th>
-              <th>Total Atualizado</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let prestacao of detalhamentoSelecionado?.parcelas">
-              <td>{{ prestacao.parcela }}</td>
-              <td>{{ prestacao.plano }}</td>
-              <td>{{ prestacao.numero_contrato }}</td>
-              <td>{{ prestacao.vencimento | date:'dd/MM/yyyy' }}</td>
-              <td>{{ prestacao.produto }}</td>
-              <td>{{ prestacao.atraso }}</td>
-              <td>{{ prestacao.valor | currency:'BRL' }}</td>
-              <td>{{ prestacao.valor_juros | currency:'BRL' }}</td>
-              <td>{{ prestacao.valor_multa | currency:'BRL' }}</td>
-              <td>{{ prestacao.valor_taxa | currency:'BRL' }}</td>
-              <td>{{ prestacao.saldo_devedor | currency:'BRL' }}</td>
-              <td>{{ calcularTotalAtualizado(prestacao) | currency:'BRL' }}</td>
-            <tr class="tabela-custom">
-              <td colspan="6" style="text-align: end;"><strong>Total:</strong></td>
-              <td><strong>{{ calcularTotal('valor') | currency:'BRL' }}</strong></td>
-              <td><strong>{{ calcularTotal('valor_juros') | currency:'BRL' }}</strong></td>
-              <td><strong>{{ calcularTotal('valor_multa') | currency:'BRL' }}</strong></td>
-              <td><strong>{{ calcularTotal('valor_taxa') | currency:'BRL' }}</strong></td>
-              <td><strong>{{ calcularTotal('saldo_devedor') | currency:'BRL' }}</strong></td>
-              <td><strong>{{ calcularTotal('valorTotalAtualizado') | currency:'BRL' }}</strong></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- <app-acionamento *ngIf="devedorSelecionado?.id_cliente" [devedorId]="devedorSelecionado?.id_cliente"></app-acionamento> -->
-    </div>
+    <app-detalhe-da-divida [idCliente]="devedorSelecionado?.id_cliente" [idContratante]="devedorSelecionado?.id_contratante"></app-detalhe-da-divida>
   </div>
 </ng-template>
 
 <ng-template #Telefone>
   <div class="mt-3 font-size-13">
-    <app-telefone [idCliente]="devedorSelecionado?.id_cliente"></app-telefone>
+    <app-telefone [idCliente]="devedorSelecionado?.id_cliente" [idContratante]="devedorSelecionado?.id_contratante"></app-telefone>
   </div>
 </ng-template>
 
 <ng-template #Email>
   <div class="mt-3 font-size-13">
-    <app-email [idCliente]="devedorSelecionado?.id_cliente"></app-email>
+    <app-email [idCliente]="devedorSelecionado?.id_cliente" [idContratante]="devedorSelecionado?.id_contratante"></app-email>
   </div>
 </ng-template>

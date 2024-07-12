@@ -13,6 +13,7 @@ import { TelefoneService } from 'src/app/core/services/telefone.service';
 })
 export class TelefoneComponent implements OnInit, OnChanges {
   @Input() idCliente: number | undefined;
+  @Input() idContratante: number | undefined;
   public telefones: TelefoneRetornoModel;
   public loading: boolean = false;
   public telefoneForm: FormGroup;

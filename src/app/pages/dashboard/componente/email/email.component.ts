@@ -13,6 +13,7 @@ import { EmailService } from 'src/app/core/services/email.service';
 })
 export class EmailComponent implements OnInit, OnChanges{
   @Input() idCliente: number | undefined;
+  @Input() idContratante: number | undefined;
   public loading: boolean = false;
   public emails: EmailRetornoModel;
   public formEmail: FormGroup;
