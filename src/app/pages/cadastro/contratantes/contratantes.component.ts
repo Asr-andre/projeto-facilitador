@@ -36,6 +36,7 @@ export class ContratantesComponent implements OnInit {
       cnpj: ["", Validators.required],
       razao_social: ["", Validators.required],
       fantasia: ["", Validators.required],
+      cep: [""],
       endereco: [""],
       numero: [""],
       complemento: [""],
