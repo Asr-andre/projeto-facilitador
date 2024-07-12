@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { DetalhamentoModel } from 'src/app/core/models/detalhamento.model';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -64,7 +64,7 @@ export class DetalheDaDividaComponent implements OnChanges {
     return prestacao.valor + prestacao.valor_juros + prestacao.valor_multa + prestacao.valor_taxa;
   }
 
-   public openWhatsappModal(telefone: string): void {
+   public abrirWhatsappModal(telefone: string): void {
     this.whatsappComponent.abrirModalWhatsapp(telefone);
   }
 
@@ -76,5 +76,4 @@ export class DetalheDaDividaComponent implements OnChanges {
 
     return cpfLimpo.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
   }
-
 }

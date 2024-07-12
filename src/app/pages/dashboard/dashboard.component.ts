@@ -51,4 +51,13 @@ export class DashboardComponent implements OnInit {
       ].some((field) => field.toLowerCase().includes(pesquisa))
     );
   }
+
+  public formatarCPF(cpf: string): string {
+    if (!cpf) return '';
+
+    const cpfLimpo = cpf.replace(/\D/g, '');
+    if (cpfLimpo.length !== 11) return cpf;
+
+    return cpfLimpo.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  }
 }
