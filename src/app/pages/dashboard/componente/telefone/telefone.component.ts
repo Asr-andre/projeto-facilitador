@@ -15,7 +15,7 @@ export class TelefoneComponent implements OnInit, OnChanges {
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
   public telefones: TelefoneRetornoModel;
-  public loading: boolean = false;
+  public loadingMin: boolean = false;
   public telefoneForm: FormGroup;
 
   constructor(private _telefoneService: TelefoneService,
@@ -50,14 +50,14 @@ export class TelefoneComponent implements OnInit, OnChanges {
   }
 
   public carregarTelefones(idCliente: number): void {
-    this.loading = true;
+    this.loadingMin = true;
     this._telefoneService.obterTelefonesPorCliente(idCliente).subscribe((telefones) => {
       this.telefones = telefones;
-      this.loading = false;
+      this.loadingMin = false;
     },
       (error) => {
-        console.error('Erro ao carregar telefones:', error);
-        this.loading = false;
+        this._alertService.warning('Erro ao carregar telefones:', error);
+        this.loadingMin = false;
       }
     );
   }
@@ -97,20 +97,20 @@ export class TelefoneComponent implements OnInit, OnChanges {
 
   public cadastrarTelefone(modal: any): void {
     if (this.telefoneForm.valid) {
-      this.loading = true;
+      this.loadingMin = true;
       this._telefoneService.cadastrarTelefone(this.telefoneForm.value).subscribe((res) => {
         if (res.success === 'true') {
           this.carregarTelefones(this.idCliente);
           modal.close();
           this._alertService.success(res.msg);
-          this.loading = false;
+          this.loadingMin = false;
         } else {
-          this.loading = false;
+          this.loadingMin = false;
           this._alertService.warning(res.msg);
         }
       },
         (error) => {
-          this.loading = false;
+          this.loadingMin = false;
           this._alertService.error('Ocorreu um erro ao tentar cadastrar o telefone.');
         }
       );

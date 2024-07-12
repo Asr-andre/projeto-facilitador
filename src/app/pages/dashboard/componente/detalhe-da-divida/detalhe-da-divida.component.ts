@@ -14,7 +14,7 @@ export class DetalheDaDividaComponent implements OnChanges {
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
   public detalhamentoSelecionado: DetalhamentoModel | null = null;
-  public loading: boolean = false;
+  public loadingMin: boolean = false;
 
   constructor(
     private _dashboard: DashboardService,
@@ -32,17 +32,17 @@ export class DetalheDaDividaComponent implements OnChanges {
       return;
     }
 
-    this.loading = true;
+    this.loadingMin = true;
     this._dashboard.obterDevedorPorId(id_cliente, id_contratante).subscribe(
       (detalhamento) => {
         if (detalhamento && detalhamento.success) {
           this.detalhamentoSelecionado = detalhamento;
-          this.loading = false;
+          this.loadingMin = false;
         }
       },
       (error) => {
         this._alertService.error('Não foi possível pesquisar o cliente!');
-        this.loading = false;
+        this.loadingMin = false;
       }
     );
   }

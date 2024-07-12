@@ -14,7 +14,7 @@ import { EmailService } from 'src/app/core/services/email.service';
 export class EmailComponent implements OnInit, OnChanges{
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
-  public loading: boolean = false;
+  public loadingMin: boolean = false;
   public emails: EmailRetornoModel;
   public formEmail: FormGroup;
 
@@ -49,14 +49,14 @@ export class EmailComponent implements OnInit, OnChanges{
   }
 
   public carregarEmails(idCliente: number): void {
-    this.loading = true;
+    this.loadingMin = true;
     this._emailService.obterEmailPorCliente(idCliente).subscribe((res) => {
       this.emails = res;
-      this.loading = false;
+      this.loadingMin = false;
     },
       (error) => {
-        console.error('Erro ao carregar emails:', error);
-        this.loading = false;
+        this._alertService.warning('Erro ao carregar emails:', error);
+        this.loadingMin = false;
       }
     );
   }
@@ -67,20 +67,20 @@ export class EmailComponent implements OnInit, OnChanges{
 
   public cadastrarEmail(modal: any): void {
     if (this.formEmail.valid) {
-      this.loading = true;
+      this.loadingMin = true;
       this._emailService.cadastrarEmail(this.formEmail.value).subscribe((res) => {
         if (res.success === 'true') {
           this.carregarEmails(this.idCliente);
           modal.close();
           this._alertService.success(res.msg);
-          this.loading = false;
+          this.loadingMin = false;
         } else {
-          this.loading = false;
+          this.loadingMin = false;
           this._alertService.warning(res.msg);
         }
       },
         (error) => {
-          this.loading = false;
+          this.loadingMin = false;
           this._alertService.error('Ocorreu um erro ao tentar cadastrar o email.');
         }
       );
