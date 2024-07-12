@@ -42,7 +42,6 @@ export class TitulosComponent implements OnInit {
 
   public selecionarContratante(): void {
     this.idContratante = this.contratanteSelecionado;
-    console.log(this.idContratante)
     this.exibirTelaCadastroCliente = true;
   }
 

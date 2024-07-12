@@ -23,7 +23,6 @@ export class ClienteContratanteComponent {
   ) {}
 
   public importarCliente(): void {
-    console.log('Método importarCliente chamado');
     const linha = this.tabelaClientes.nativeElement.querySelector('tbody tr');
 
     if (linha) {
@@ -43,7 +42,6 @@ export class ClienteContratanteComponent {
         this.servicoEmpresa.importarClientes(this.cliente).subscribe(
           (res) => {
             if (res && res.success === 'true') {
-              console.log('Emitindo idCliente:', res.id_cliente);
               this.idCliente.emit(Number(res.id_cliente));
               this._alertService.success(res.msg);
             } else if (res && res.success === 'false') {
