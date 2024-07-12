@@ -42,7 +42,9 @@ export class ClienteTitulosComponent implements OnChanges {
         const numeroDocumento = linha.querySelector('.numero_documento').innerText.trim();
         const tipoProduto = linha.querySelector('.tipo_produto').innerText.trim();
         const vencimento = linha.querySelector('.vencimento').innerText.trim();
-        const valor = linha.querySelector('.valor').innerText.trim();
+        let valor = linha.querySelector('.valor').innerText.trim();
+
+        valor = parseFloat(valor.replace(',', '.'));
 
         if (!tipoTitulo || !parcela || !plano || !numeroContrato || !numeroDocumento || !tipoProduto || !vencimento || !valor) {
           dadosValidos = false;
@@ -57,7 +59,7 @@ export class ClienteTitulosComponent implements OnChanges {
           numero_documento: numeroDocumento,
           tipo_produto: tipoProduto,
           vencimento: vencimento,
-          valor: valor,
+          valor: valor.toFixed(2),
           id_empresa: Number(this._authService.getIdEmpresa()),
           id_contratante: Number(this.idContratante),
           id_cliente: Number(this.idCliente),
@@ -107,7 +109,7 @@ export class ClienteTitulosComponent implements OnChanges {
 
   public colarDados(evento: ClipboardEvent): void {
     evento.preventDefault();
-    this.titulos = []; // Limpa os dados existentes antes de colar novos
+    this.titulos = [];
 
     const dadosClipboard = evento.clipboardData;
     const linhasCopiadas = dadosClipboard.getData('text').split('\n');
@@ -134,10 +136,8 @@ export class ClienteTitulosComponent implements OnChanges {
   }
 
   public gerarParcelas(): void {
-    // Atualiza os dados da tabela antes de gerar as parcelas
     this.atualizarDadosDaTabela();
 
-    // Verifica se há títulos e se todos os campos obrigatórios estão preenchidos
     if (this.titulos.length > 0 && this.titulos.every(titulo => this.camposPreenchidos(titulo))) {
       const quantidadeParcelas = parseInt((document.getElementById('quantidadeParcelas') as HTMLInputElement).value, 10);
 
@@ -150,38 +150,30 @@ export class ClienteTitulosComponent implements OnChanges {
       let vencimentoInicial: Date;
 
       if (this.titulos.length > 0 && this.titulos[this.titulos.length - 1]?.vencimento) {
-        // Parse da data no formato "dd/MM/yyyy"
         const parts = this.titulos[this.titulos.length - 1].vencimento.split('/');
         vencimentoInicial = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
       } else {
         vencimentoInicial = new Date();
       }
 
-      // Verifica se vencimentoInicial é uma data válida
       if (isNaN(vencimentoInicial.getTime())) {
         this._alertService.warning("Data de vencimento inicial inválida.");
         return;
       }
 
-      // Total value of the first entry
       const valorInicial = parseFloat(this.titulos[this.titulos.length - 1]?.valor ?? "0");
-      // Valor de cada parcela
       const valorParcela = valorInicial;
 
       for (let i = 1; i <= quantidadeParcelas; i++) {
         const novaParcela = ultimaParcela + i;
-
-        // Clona a data de vencimento inicial para não alterar a original
         const novoVencimento = new Date(vencimentoInicial);
         novoVencimento.setMonth(vencimentoInicial.getMonth() + i);
 
-        // Verifica se novoVencimento é uma data válida
         if (isNaN(novoVencimento.getTime())) {
           this._alertService.warning(`Data de vencimento da parcela ${novaParcela} inválida.`);
           return;
         }
 
-        // Formata a data de novoVencimento para o formato "dd/MM/yyyy"
         const formattedDate = `${novoVencimento.getDate().toString().padStart(2, '0')}/${(novoVencimento.getMonth() + 1).toString().padStart(2, '0')}/${novoVencimento.getFullYear()}`;
 
         this.titulos.push({
