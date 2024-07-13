@@ -14,7 +14,8 @@ import { ContratanteService } from 'src/app/core/services/cadastro/contratante.s
   styleUrl: './contratantes.component.scss'
 })
 export class ContratantesComponent implements OnInit {
-  public contratantes: ContratanteModel[] = [];
+  public contratantes: ContratanteModel[];
+  public idEmpresa: number;
   public formContratante: FormGroup;
   public loading: boolean;
   public loadingMin: boolean = false;
@@ -28,7 +29,8 @@ export class ContratantesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.obterContratantes();
+    this.idEmpresa = Number(this._authenticationService.getIdEmpresa());
+    this.obterContratantes(this.idEmpresa);
     this.inicializarformContratante();
   }
 
@@ -49,10 +51,10 @@ export class ContratantesComponent implements OnInit {
     });
   }
 
-  public obterContratantes() {
+  public obterContratantes(idEmpresa: number) {
     this.loading = true;
-    this._contratanteService.obterContratantePorEmpresa().subscribe((res) => {
-      this.contratantes = res;
+    this._contratanteService.obterContratantePorEmpresa(idEmpresa).subscribe((res) => {
+      this.contratantes = res.contratantes;
       this.loading = false;
     },
       (error) => {
@@ -72,7 +74,7 @@ export class ContratantesComponent implements OnInit {
       this._contratanteService.cadastrarContratante(this.formContratante.value).subscribe((res: RetornoModel) => {
         if (res && res.success === "true") {
           this.loadingMin = false;
-          this.obterContratantes();
+          this.obterContratantes(this.idEmpresa);
           this._alertService.success(res.msg);
           this._modalService.dismissAll();
         } else {
