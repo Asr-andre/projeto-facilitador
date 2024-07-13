@@ -30,7 +30,7 @@ export class EmpresaService {
     return this._http.post<RetornoModel>(`${this.apiUrl}/usuario`, usuario);
   }
 
-  importarClientes(clientes: ClienteModel): Observable<any> {
+  public importarClientes(clientes: ClienteModel): Observable<any> {
     return this._http.post<RetornoClienteModel>(`${this.apiUrl}/cliente`, clientes);
   }
 }

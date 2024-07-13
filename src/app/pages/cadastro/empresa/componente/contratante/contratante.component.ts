@@ -28,7 +28,7 @@ export class ContratanteComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit() {
-    this.inicializarformEmpresa();
+    this.inicializarformContratante();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -37,7 +37,7 @@ export class ContratanteComponent implements OnInit, OnChanges {
     }
   }
 
-  inicializarformEmpresa() {
+  inicializarformContratante() {
     this.formContratante = this._formBuilder.group({
       id_empresa: [this.idEmpresa],
       cnpj: ["", Validators.required],

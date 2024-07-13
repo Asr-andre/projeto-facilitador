@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Utils } from 'src/app/core/helpers/utils';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
+import { RetornoModel } from 'src/app/core/models/retorno.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
@@ -16,6 +17,7 @@ export class ContratantesComponent implements OnInit {
   public contratantes: ContratanteModel[] = [];
   public formContratante: FormGroup;
   public loading: boolean;
+  public loadingMin: boolean = false;
 
   constructor(
     private _contratanteService: ContratanteService,
@@ -32,7 +34,7 @@ export class ContratantesComponent implements OnInit {
 
   public inicializarformContratante() {
     this.formContratante = this._formBuilder.group({
-      id_empresa: [''],
+      id_empresa: [this._authenticationService.getIdEmpresa()],
       cnpj: ["", Validators.required],
       razao_social: ["", Validators.required],
       fantasia: ["", Validators.required],
@@ -62,6 +64,31 @@ export class ContratantesComponent implements OnInit {
 
   public abriModalCadastro(content: TemplateRef<any>): void {
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  public cadastrarContratante(){
+    if (this.formContratante.valid) {
+      this.loadingMin = true;
+      this._contratanteService.cadastrarContratante(this.formContratante.value).subscribe((res: RetornoModel) => {
+        if (res && res.success === "true") {
+          this.loadingMin = false;
+          this.obterContratantes();
+          this._alertService.success(res.msg);
+          this._modalService.dismissAll();
+        } else {
+          this.loadingMin = false;
+          this._alertService.warning(res.msg);
+        }
+      },
+        (error) => {
+          this.loadingMin = false;
+          this._alertService.error("Ocorreu um erro ao tentar cadastrar a empresa.");
+        }
+      );
+    } else {
+      this.loadingMin = false;
+      this._alertService.warning("Preencha todos os campos obrigatórios");
+    }
   }
 
   public mascararCpfCnpj(value: string): string {
