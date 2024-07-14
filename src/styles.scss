@@ -114,3 +114,11 @@
   padding-top: 4px;
   padding-bottom: 4px;
 }
+
+.ngx-pagination .current {
+  padding: .1875rem .625rem;
+  background: #ccc !important;
+  color: #fefefe !important;
+  font-size: 0.875rem;
+}
+

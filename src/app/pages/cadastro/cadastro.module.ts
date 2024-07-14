@@ -25,6 +25,7 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { TitulosComponent } from './titulos/titulos.component';
 import { EmpresaModule } from './empresa/empresa.module';
 import { TitulosModule } from './titulos/titulos.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -51,6 +52,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     NgbDatepickerModule,
     DropzoneModule,
     EmpresaModule,
+    NgxPaginationModule,
     TitulosModule
   ],
   providers: [

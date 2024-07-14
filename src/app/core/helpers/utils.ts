@@ -1,3 +1,5 @@
+import { AbstractControl } from "@angular/forms";
+
 export class Utils {
 
   public static formatarDocumento(documento: string): string {
@@ -48,4 +50,62 @@ export class Utils {
     if (!numero) return '';
     return `Nº ${numero}`;
   }
+
+
+  public static dataBr(dataIso: string) {
+    if (!dataIso) {
+        return '';
+    }
+
+    const data = new Date(dataIso);
+    const ano = data.getFullYear();
+    const mes = data.getMonth() + 1;
+    const dia = data.getDate();
+    const hora = data.getHours();
+    const minuto = data.getMinutes();
+
+    // Formata a data no formato desejado (dd/MM/yyyy hh:mm)
+    const dataFormatada = `${this.addZeroEsquerda(dia)}/${this.addZeroEsquerda(mes)}/${ano} ${this.addZeroEsquerda(hora)}:${this.addZeroEsquerda(minuto)}`;
+
+    return dataFormatada;
+}
+
+private static addZeroEsquerda(num: number): string {
+    return num < 10 ? '0' + num : num.toString();
+}
+
+public static converterMaiuscula(campo: AbstractControl) {
+    if (campo && typeof campo.value === 'string') {
+        const novoValor = campo.value.replace(/\b\w/g, (letra: string) => letra.toUpperCase());
+        campo.setValue(novoValor);
+    }
+}
+
+public static converterMinuscula(campo: AbstractControl) {
+  if (campo && typeof campo.value === 'string') {
+    campo.setValue(campo.value.toLowerCase());
+  }
+}
+
+public static somenteNumero(campo: AbstractControl) {
+    if (campo && typeof campo.value === 'string') {
+        const novoValor = campo.value.replace(/\D/g, '');
+        campo.setValue(novoValor);
+    }
+}
+
+public static dataAtual() {
+    let today = new Date();
+    let data = today.toISOString().split('T')[0];
+    return data;
+}
+
+public static converterValorRealBrasil(valor) {
+    const formatoRealBrasil: string = valor.toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+
+    return formatoRealBrasil;
+}
 }

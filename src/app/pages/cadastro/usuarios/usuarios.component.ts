@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Utils } from 'src/app/core/helpers/utils';
 import { UsuarioModel } from 'src/app/core/models/cadastro/usuario.model';
@@ -19,6 +19,8 @@ export class UsuariosComponent implements OnInit {
   public formUsuario: FormGroup;
   public loading: boolean =false;
   public loadingMin: boolean = false;
+  public paginaAtual: number = 1;
+  public itensPorPagina: number = 20;
 
   constructor(
     private _usuarioService: UsuarioService,
@@ -100,6 +102,14 @@ export class UsuariosComponent implements OnInit {
       return Utils.formatarTelefone(numero);
     }
     return numero;
+  }
+
+  public convertMaisculo(campo: AbstractControl) {
+    return Utils.converterMaiuscula(campo);
+  }
+
+  public converterMinuscula(campo: AbstractControl) {
+    return Utils.converterMinuscula(campo);
   }
 
 }
