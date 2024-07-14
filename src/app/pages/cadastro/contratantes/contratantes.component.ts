@@ -17,7 +17,7 @@ export class ContratantesComponent implements OnInit {
   public contratantes: ContratanteModel[];
   public idEmpresa: number;
   public formContratante: FormGroup;
-  public loading: boolean;
+  public loading: boolean = false;
   public loadingMin: boolean = false;
 
   constructor(

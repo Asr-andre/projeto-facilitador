@@ -8,7 +8,7 @@ export class Utils {
     } else if (documentoLimpo.length === 14) {
       return this.formatarCNPJ(documentoLimpo);
     } else {
-      return documento; // Retorna o documento sem formatação se não corresponder a CPF ou CNPJ
+      return documento;
     }
   }
 
