@@ -39,6 +39,7 @@ export class UsuariosComponent implements OnInit {
   public inicializarFormUsuario() {
     this.formUsuario = this._formBuilder.group({
       id_empresa: [this.idEmpresa],
+      sigla: [this._authenticationService.getSigla()],
       login: ["", Validators.required],
       nome: ["", Validators.required],
       cpf: [""],
