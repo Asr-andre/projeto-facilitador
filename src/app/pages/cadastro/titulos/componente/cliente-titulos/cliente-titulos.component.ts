@@ -12,6 +12,7 @@ export class ClienteTitulosComponent implements OnChanges {
   @Input() idCliente: number;
   @Input() idContratante: number;
   public titulos: any[] = [];
+  public loading: boolean = false;
 
   @ViewChild("tabelaClienteTitulos") tabelaClienteTitulos: ElementRef;
 
@@ -78,14 +79,18 @@ export class ClienteTitulosComponent implements OnChanges {
   }
 
   private salvarTitulos(titulos: any[]): void {
+    this.loading = true;
     this._clienteTituloService.cadastrarTitulos(titulos).subscribe((res) => {
       if (res && res.success === 'true') {
+        this.loading = false
         this._alertService.success(res.msg);
       }
     },
       (error) => {
+        this.loading = false
         this._alertService.error("Erro ao cadastrar título", error);
         if (error.error && error.error.message) {
+          this.loading = false
           this._alertService.warning("Detalhes do erro:", error.error.message);
         }
       }

@@ -15,6 +15,7 @@ export class ClienteContratanteComponent {
   @Output() idCliente = new EventEmitter<number>();
   public cliente: ClienteModel = new ClienteModel();
   @ViewChild("tabelaClientes") tabelaClientes: any;
+  public loading: boolean = false;
 
   constructor(
     private servicoEmpresa: EmpresaService,
@@ -23,6 +24,7 @@ export class ClienteContratanteComponent {
   ) {}
 
   public importarCliente(): void {
+    this.loading = true;
     const linha = this.tabelaClientes.nativeElement.querySelector('tbody tr');
 
     if (linha) {
@@ -39,19 +41,22 @@ export class ClienteContratanteComponent {
       this.cliente.user_login = this._authService.getLogin();
 
       if (this.clientePreenchido(this.cliente)) {
-        this.servicoEmpresa.importarClientes(this.cliente).subscribe(
-          (res) => {
+        this.servicoEmpresa.importarClientes(this.cliente).subscribe((res) => {
             if (res && res.success === 'true') {
+              this.loading = false;
               this.idCliente.emit(Number(res.id_cliente));
               this._alertService.success(res.msg);
             } else if (res && res.success === 'false') {
+              this.loading = false;
               this._alertService.warning(res.msg);
             }
           },
           (error) => {
             if (error.error && error.error.msg) {
+              this.loading = false;
               this._alertService.error(error.error.msg);
             } else {
+              this.loading = false;
               this._alertService.error("Erro ao importar cliente.");
             }
           }

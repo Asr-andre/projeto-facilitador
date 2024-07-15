@@ -61,8 +61,8 @@
 
   <div class="row">
     <div class="col-lg-5">
-      <div class="card">
-        <div class="card-body">
+      <div class="card h-100">
+        <div class="card-body" style="overflow: auto;">
           <h4 class="card-title mb-4 custom-card-title">Lista de Clientes cadastrados</h4>
           <div class="row">
             <div class="col-sm-12 col-md-12">
@@ -75,7 +75,7 @@
           </div>
           <div class="table-responsive">
             <table class="table table-sm table-hover font-size-13">
-              <thead class="tabela-custom">
+              <thead class="tabela-custom table-td-scroll">
                 <tr>
                   <th>Credor</th>
                   <th>Id</th>
@@ -108,9 +108,8 @@
       </div>
     </div>
     <div class="col-lg-7">
-      <div class="card">
-        <div class="card-body font-size-13"
-          style=" padding-top: 5px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px;">
+      <div class="card h-100">
+        <div class="card-body font-size-13" style=" padding-top: 5px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px;">
           <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs">
             <li [ngbNavItem]="1">
               <a ngbNavLink class="nav-link custom-nav-link">
