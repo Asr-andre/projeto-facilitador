@@ -21,6 +21,8 @@ export class ContratantesComponent implements OnInit {
   public loadingMin: boolean = false;
   public paginaAtual: number = 1;
   public itensPorPagina: number = 20;
+  public contratantesFiltrados: ContratanteModel[] = [];
+  public textoPesquisa: string = '';
 
   constructor(
     private _contratanteService: ContratanteService,
@@ -57,6 +59,7 @@ export class ContratantesComponent implements OnInit {
     this.loading = true;
     this._contratanteService.obterContratantePorEmpresa(idEmpresa).subscribe((res) => {
       this.contratantes = res.contratantes;
+      this.contratantesFiltrados = res.contratantes;
       this.loading = false;
     },
       (error) => {
@@ -64,6 +67,10 @@ export class ContratantesComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  public filtrarContratantes(): void {
+    this.contratantesFiltrados = Utils.filtrar(this.contratantes, this.textoPesquisa);
   }
 
   public abriModalCadastro(content: TemplateRef<any>): void {

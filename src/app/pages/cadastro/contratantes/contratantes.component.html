@@ -31,7 +31,7 @@
                   <div class="col-sm-12 col-md-12">
                     <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
                         class="d-inline-flex align-items-center">Pesquisar:
-                        <input type="text" class="form-control form-control-sm ms-2" /></label>
+                        <input type="text" class="form-control form-control-sm ms-2" [(ngModel)]="textoPesquisa" (input)="filtrarContratantes()"/></label>
                     </div>
                   </div>
                 </div>
@@ -54,7 +54,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let contratante of contratantes">
+                      <tr *ngFor="let contratante of contratantesFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
                         <td>{{ contratante.id_contratante }}</td>
                         <td>{{ contratante.fantasia }}</td>
                         <td>{{ mascararCpfCnpj(contratante.cnpj) }}</td>

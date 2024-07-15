@@ -13,7 +13,6 @@ import { UsuarioService } from 'src/app/core/services/cadastro/usuario.service';
   styleUrl: './usuarios.component.scss'
 })
 export class UsuariosComponent implements OnInit {
-
   public usuarios: UsuarioModel[];
   public idEmpresa: number;
   public formUsuario: FormGroup;
@@ -21,8 +20,8 @@ export class UsuariosComponent implements OnInit {
   public loadingMin: boolean = false;
   public paginaAtual: number = 1;
   public itensPorPagina: number = 20;
-  public textoPesquisa: string = "";
   public usuariosFiltrados: UsuarioModel[] = [];
+  public textoPesquisa: string = '';
 
   constructor(
     private _usuarioService: UsuarioService,
@@ -68,17 +67,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   public filtrarUsuario(): void {
-    const pesquisa = this.textoPesquisa.toLowerCase();
-    this.usuariosFiltrados = this.usuarios.filter((usuario) => [
-      usuario.id_usuario.toString(),
-      usuario.sigla,
-      usuario.nome,
-      usuario.login,
-      usuario.cpf,
-      usuario.email,
-      usuario.fone
-    ].some((field) => field.toLowerCase().includes(pesquisa))
-  );
+    this.usuariosFiltrados = Utils.filtrar(this.usuarios, this.textoPesquisa);
   }
 
   public abrirModalCadastro(content: TemplateRef<any>): void {

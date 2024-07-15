@@ -54,7 +54,7 @@ export class Utils {
 
   public static dataBr(dataIso: string) {
     if (!dataIso) {
-        return '';
+      return '';
     }
 
     const data = new Date(dataIso);
@@ -64,48 +64,56 @@ export class Utils {
     const hora = data.getHours();
     const minuto = data.getMinutes();
 
-    // Formata a data no formato desejado (dd/MM/yyyy hh:mm)
     const dataFormatada = `${this.addZeroEsquerda(dia)}/${this.addZeroEsquerda(mes)}/${ano} ${this.addZeroEsquerda(hora)}:${this.addZeroEsquerda(minuto)}`;
 
     return dataFormatada;
-}
-
-private static addZeroEsquerda(num: number): string {
-    return num < 10 ? '0' + num : num.toString();
-}
-
-public static converterMaiuscula(campo: AbstractControl) {
-    if (campo && typeof campo.value === 'string') {
-        const novoValor = campo.value.replace(/\b\w/g, (letra: string) => letra.toUpperCase());
-        campo.setValue(novoValor);
-    }
-}
-
-public static converterMinuscula(campo: AbstractControl) {
-  if (campo && typeof campo.value === 'string') {
-    campo.setValue(campo.value.toLowerCase());
   }
-}
 
-public static somenteNumero(campo: AbstractControl) {
+  private static addZeroEsquerda(num: number): string {
+    return num < 10 ? '0' + num : num.toString();
+  }
+
+  public static converterMaiuscula(campo: AbstractControl) {
     if (campo && typeof campo.value === 'string') {
-        const novoValor = campo.value.replace(/\D/g, '');
-        campo.setValue(novoValor);
+      const novoValor = campo.value.replace(/\b\w/g, (letra: string) => letra.toUpperCase());
+      campo.setValue(novoValor);
     }
-}
+  }
 
-public static dataAtual() {
+  public static converterMinuscula(campo: AbstractControl) {
+    if (campo && typeof campo.value === 'string') {
+      campo.setValue(campo.value.toLowerCase());
+    }
+  }
+
+  public static somenteNumero(campo: AbstractControl) {
+    if (campo && typeof campo.value === 'string') {
+      const novoValor = campo.value.replace(/\D/g, '');
+      campo.setValue(novoValor);
+    }
+  }
+
+  public static dataAtual() {
     let today = new Date();
     let data = today.toISOString().split('T')[0];
     return data;
-}
+  }
 
-public static converterValorRealBrasil(valor) {
+  public static converterValorRealBrasil(valor) {
     const formatoRealBrasil: string = valor.toLocaleString('pt-BR', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     });
 
     return formatoRealBrasil;
-}
+  }
+
+  public static filtrar<T>(itens: T[], textoPesquisa: string): T[] {
+    const textoPesquisaMinusculo = textoPesquisa.toLowerCase();
+    return itens.filter(item =>
+      Object.values(item).some(valor =>
+        valor !== undefined && valor !== null && valor.toString().toLowerCase().includes(textoPesquisaMinusculo)
+      )
+    );
+  }
 }
