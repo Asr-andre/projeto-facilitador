@@ -19,6 +19,8 @@ export class ContratantesComponent implements OnInit {
   public formContratante: FormGroup;
   public loading: boolean = false;
   public loadingMin: boolean = false;
+  public paginaAtual: number = 1;
+  public itensPorPagina: number = 20;
 
   constructor(
     private _contratanteService: ContratanteService,

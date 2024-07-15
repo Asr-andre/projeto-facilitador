@@ -1,4 +1,3 @@
-
 <div class="loading-overlay-pagina" *ngIf="loading">
   <div class="spinner-border text-primary m-1" role="status">
   </div>
@@ -7,193 +6,207 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-        <div class="card-body" style="padding-bottom: 8px;">
-          <div class="d-flex">
-            <div class="flex-1 overflow-hidden">
-              <div class="card">
+      <div class="card-body" style="padding-bottom: 8px;">
+        <div class="d-flex">
+          <div class="flex-1 overflow-hidden">
+            <div class="card">
 
-                <div class="card-header pt-2 pb-2">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <h5 class="mb-0"><i class="fas fa-building"></i> Contratantes </h5>
-                    </div>
-                    <div class="col-md-6 text-end">
-                      <button class="btn btn-success btn-sm" (click)="abriModalCadastro(cadastraContratanteModal)" style="padding-top: 2px; padding-bottom: 2px;">
-                        <i class="fas fa-plus"></i>
-                        <strong> Contratante </strong>
-                      </button>
-                    </div>
+              <div class="card-header pt-2 pb-2">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5 class="mb-0"><i class="fas fa-building"></i> Contratantes </h5>
                   </div>
-                </div>
-
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-12 col-md-12">
-                      <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
-                          class="d-inline-flex align-items-center">Pesquisar:
-                          <input type="text" class="form-control form-control-sm ms-2" /></label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="table-responsive">
-                    <table class="table table-sm table-hover font-size-12">
-                      <thead class="table-light">
-                        <tr>
-                          <th>Id</th>
-                          <th>Fantasia</th>
-                          <th>Cnpj</th>
-                          <th>Endereço</th>
-                          <th>Número</th>
-                          <th>Bairro</th>
-                          <th>Cep</th>
-                          <th>Cidade</th>
-                          <th>Uf</th>
-                          <th>Id Fórmula</th>
-                          <th>Data Cadastro</th>
-                          <th>Ativo</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let contratante of contratantes">
-                          <td>{{ contratante.id_contratante }}</td>
-                          <td>{{ contratante.fantasia }}</td>
-                          <td>{{ mascararCpfCnpj(contratante.cnpj) }}</td>
-                          <td>{{ contratante.endereco }}</td>
-                          <td>{{ mascararNResidencia(contratante.numero) }}</td>
-                          <td>{{ contratante.bairro }}</td>
-                          <td>{{ mascararCep(contratante.cep) }}</td>
-                          <td>{{ contratante.cidade }}</td>
-                          <td>{{ contratante.uf }}</td>
-                          <td>{{ contratante.id_formula }}</td>
-                          <td>{{ contratante.data_cadastro | date:'dd/MM/yyyy' }}</td>
-                          <td>{{ contratante.ativo === 'S' ? 'Sim' : 'Não' }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <div class="col-md-6 text-end">
+                    <button class="btn btn-success btn-sm" (click)="abriModalCadastro(cadastraContratanteModal)"
+                      style="padding-top: 2px; padding-bottom: 2px;">
+                      <i class="fas fa-plus"></i>
+                      <strong> Contratante </strong>
+                    </button>
                   </div>
                 </div>
               </div>
-            </div>
+
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12">
+                    <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
+                        class="d-inline-flex align-items-center">Pesquisar:
+                        <input type="text" class="form-control form-control-sm ms-2" /></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-sm table-hover font-size-12">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Id</th>
+                        <th>Fantasia</th>
+                        <th>Cnpj</th>
+                        <th>Endereço</th>
+                        <th>Número</th>
+                        <th>Bairro</th>
+                        <th>Cep</th>
+                        <th>Cidade</th>
+                        <th>Uf</th>
+                        <th>Id Fórmula</th>
+                        <th>Data Cadastro</th>
+                        <th>Ativo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let contratante of contratantes">
+                        <td>{{ contratante.id_contratante }}</td>
+                        <td>{{ contratante.fantasia }}</td>
+                        <td>{{ mascararCpfCnpj(contratante.cnpj) }}</td>
+                        <td>{{ contratante.endereco }}</td>
+                        <td>{{ mascararNResidencia(contratante.numero) }}</td>
+                        <td>{{ contratante.bairro }}</td>
+                        <td>{{ mascararCep(contratante.cep) }}</td>
+                        <td>{{ contratante.cidade }}</td>
+                        <td>{{ contratante.uf }}</td>
+                        <td>{{ contratante.id_formula }}</td>
+                        <td>{{ contratante.data_cadastro | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ contratante.ativo === 'S' ? 'Sim' : 'Não' }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-end mt-3">
+                    <pagination-controls class="pagination-controls-custom" (pageChange)="paginaAtual = $event"
+                      previousLabel="Anterior" nextLabel="Proximo" [maxSize]="5" [autoHide]="false" [responsive]="true">
+                    </pagination-controls>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
 
-      <ng-template #cadastraContratanteModal let-modal>
-        <div class="loading-overlay-card" *ngIf="loadingMin">
-          <div class="spinner-border text-primary m-1" role="status">
+  <ng-template #cadastraContratanteModal let-modal>
+    <div class="loading-overlay-card" *ngIf="loadingMin">
+      <div class="spinner-border text-primary m-1" role="status">
+      </div>
+    </div>
+
+    <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
+      <h5 class="modal-title" style="color: #ffffff"><i class="fas fa-building"></i> Cadastrar Contratante</h5>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+        (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body modal-padding">
+      <form [formGroup]="formContratante">
+        <div class="row">
+          <div class="col-md-5 form-group" style="padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" formControlName="razao_social" type="text"
+              placeholder="Razão Social" required>
+          </div>
+          <div class="col-md-4 form-group" style="padding-left: 3px; padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" formControlName="fantasia" type="text"
+              placeholder="Fantasia" required>
+          </div>
+          <div class="col-md-3 form-group" style="padding-left: 3px;">
+            <input class="form-control form-control-sm mb-3" formControlName="cnpj" type="text" placeholder="CNPJ"
+              mask="00.000.000/0000-00">
+          </div>
+          <div class="col-md-3 form-group" style="padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" formControlName="cep" type="text" placeholder="Cep"
+              mask="00000-000">
+          </div>
+
+          <div class="col-md-5 form-group" style="padding-left: 3px; padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" formControlName="endereco" type="text" placeholder="Rua">
+          </div>
+          <div class="col-md-2 form-group" style="padding-left: 3px; padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" formControlName="numero" type="text" placeholder="Nº">
+          </div>
+          <div class="col-md-2 form-group" style="padding-left: 3px;">
+            <input class="form-control form-control-sm mb-3" formControlName="complemento" type="text"
+              placeholder="Complemento">
+          </div>
+          <div class="col-md-4 form-group" style="padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" formControlName="bairro" type="text" placeholder="Bairro">
+          </div>
+
+          <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" formControlName="cidade" type="text" placeholder="Cidade">
+          </div>
+          <div class="col-md-1 form-group" style="padding-left: 3px; padding-right: 3px;">
+            <select class="form-control form-control-sm mb-3" formControlName="uf" placeholder="UF">
+              <option value="">--</option>
+              <option value="AC">AC</option>
+              <option value="AL">AL</option>
+              <option value="AM">AM</option>
+              <option value="AP">AP</option>
+              <option value="BA">BA</option>
+              <option value="CE">CE</option>
+              <option value="DF">DF</option>
+              <option value="ES">ES</option>
+              <option value="GO">GO</option>
+              <option value="MA">MA</option>
+              <option value="MG">MG</option>
+              <option value="MS">MS</option>
+              <option value="MT">MT</option>
+              <option value="PA">PA</option>
+              <option value="PB">PB</option>
+              <option value="PE">PE</option>
+              <option value="PI">PI</option>
+              <option value="PR">PR</option>
+              <option value="RJ">RJ</option>
+              <option value="RN">RN</option>
+              <option value="RO">RO</option>
+              <option value="RR">RR</option>
+              <option value="RS">RS</option>
+              <option value="SC">SC</option>
+              <option value="SR">SE</option>
+              <option value="SP">SP</option>
+              <option value="TO">TO</option>
+            </select>
+          </div>
+          <div class="col-md-2 form-group" style="padding-left: 3px; padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Inscrição municipal">
+          </div>
+          <div class="col-md-2 form-group" style="padding-left: 3px;">
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Inscrição estadual">
+          </div>
+
+          <div class="col-md-5 form-group" style="padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Site">
+          </div>
+          <div class="col-md-5 form-group" style="padding-left: 3px; padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Email">
+          </div>
+          <div class="col-md-2 form-group" style="padding-left: 3px;">
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Formula calculo">
+          </div>
+          <div class="col-md-6 form-group" style="padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Responsavel">
+          </div>
+          <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Fone Contato"
+              mask="(00) 00000-0000">
+          </div>
+          <div class="col-md-3 form-group" style="padding-left: 3px;">
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Cpf Responsavel"
+              mask="000.000.000-00">
+          </div>
+          <div class="col-md-4 form-group" style="padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="RG Responsavel">
+          </div>
+          <div class="col-md-3 form-group" style="padding-left: 3px;">
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Expedidor">
           </div>
         </div>
-
-        <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
-          <h5 class="modal-title" style="color: #ffffff"><i class="fas fa-building"></i> Cadastrar Contratante</h5>
-          <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
+        <div class="d-flex justify-content-end" style="padding-top: 5px;">
+          <button type="submit" class="btn btn-success btn-sm me-1" (click)="cadastrarContratante()">
+            <i class="fas fa-save"></i> Salvar
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
         </div>
-        <div class="modal-body modal-padding">
-          <form [formGroup]="formContratante">
-            <div class="row">
-              <div class="col-md-5 form-group" style="padding-right: 3px;">
-                <input class="form-control form-control-sm mb-3" formControlName="razao_social" type="text" placeholder="Razão Social" required>
-              </div>
-              <div class="col-md-4 form-group" style="padding-left: 3px; padding-right: 3px;">
-                <input class="form-control form-control-sm mb-3" formControlName="fantasia" type="text" placeholder="Fantasia" required>
-              </div>
-              <div class="col-md-3 form-group" style="padding-left: 3px;">
-                <input class="form-control form-control-sm mb-3" formControlName="cnpj" type="text" placeholder="CNPJ" mask="00.000.000/0000-00">
-              </div>
-              <div class="col-md-3 form-group" style="padding-right: 3px;">
-                <input class="form-control form-control-sm mb-3" formControlName="cep" type="text" placeholder="Cep" mask="00000-000">
-              </div>
-
-              <div class="col-md-5 form-group" style="padding-left: 3px; padding-right: 3px;">
-                <input class="form-control form-control-sm mb-3" formControlName="endereco" type="text" placeholder="Rua">
-              </div>
-              <div class="col-md-2 form-group" style="padding-left: 3px; padding-right: 3px;">
-                <input class="form-control form-control-sm mb-3" formControlName="numero" type="text" placeholder="Nº">
-              </div>
-              <div class="col-md-2 form-group" style="padding-left: 3px;">
-                <input class="form-control form-control-sm mb-3" formControlName="complemento" type="text" placeholder="Complemento">
-              </div>
-              <div class="col-md-4 form-group" style="padding-right: 3px;">
-                <input class="form-control form-control-sm mb-3" formControlName="bairro" type="text" placeholder="Bairro">
-              </div>
-
-              <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
-                <input class="form-control form-control-sm mb-3" formControlName="cidade" type="text" placeholder="Cidade">
-              </div>
-              <div class="col-md-1 form-group" style="padding-left: 3px; padding-right: 3px;">
-                <select class="form-control form-control-sm mb-3" formControlName="uf" placeholder="UF">
-                  <option value="">--</option>
-                  <option value="AC">AC</option>
-                  <option value="AL">AL</option>
-                  <option value="AM">AM</option>
-                  <option value="AP">AP</option>
-                  <option value="BA">BA</option>
-                  <option value="CE">CE</option>
-                  <option value="DF">DF</option>
-                  <option value="ES">ES</option>
-                  <option value="GO">GO</option>
-                  <option value="MA">MA</option>
-                  <option value="MG">MG</option>
-                  <option value="MS">MS</option>
-                  <option value="MT">MT</option>
-                  <option value="PA">PA</option>
-                  <option value="PB">PB</option>
-                  <option value="PE">PE</option>
-                  <option value="PI">PI</option>
-                  <option value="PR">PR</option>
-                  <option value="RJ">RJ</option>
-                  <option value="RN">RN</option>
-                  <option value="RO">RO</option>
-                  <option value="RR">RR</option>
-                  <option value="RS">RS</option>
-                  <option value="SC">SC</option>
-                  <option value="SR">SE</option>
-                  <option value="SP">SP</option>
-                  <option value="TO">TO</option>
-                </select>
-              </div>
-              <div class="col-md-2 form-group" style="padding-left: 3px; padding-right: 3px;">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Inscrição municipal">
-              </div>
-              <div class="col-md-2 form-group" style="padding-left: 3px;">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Inscrição estadual">
-              </div>
-
-              <div class="col-md-5 form-group" style="padding-right: 3px;">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Site">
-              </div>
-              <div class="col-md-5 form-group" style="padding-left: 3px; padding-right: 3px;">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Email">
-              </div>
-              <div class="col-md-2 form-group" style="padding-left: 3px;">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Formula calculo">
-              </div>
-              <div class="col-md-6 form-group" style="padding-right: 3px;">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Responsavel">
-              </div>
-              <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Fone Contato" mask="(00) 00000-0000">
-              </div>
-              <div class="col-md-3 form-group" style="padding-left: 3px;">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Cpf Responsavel" mask="000.000.000-00">
-              </div>
-              <div class="col-md-4 form-group" style="padding-right: 3px;">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="RG Responsavel">
-              </div>
-              <div class="col-md-3 form-group" style="padding-left: 3px;">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Expedidor">
-              </div>
-            </div>
-            <div class="d-flex justify-content-end" style="padding-top: 5px;">
-              <button type="submit" class="btn btn-success btn-sm me-1" (click)="cadastrarContratante()">
-                <i class="fas fa-save"></i> Salvar
-              </button>
-              <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
-                <i class="fas fa-times"></i> Cancelar
-              </button>
-            </div>
-          </form>
-        </div>
-      </ng-template>
+      </form>
+    </div>
+  </ng-template>

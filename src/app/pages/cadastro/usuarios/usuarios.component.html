@@ -31,7 +31,7 @@
                   <div class="col-sm-12 col-md-12">
                     <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
                         class="d-inline-flex align-items-center">Pesquisar:
-                        <input type="text" class="form-control form-control-sm ms-2" /></label>
+                        <input type="text" class="form-control form-control-sm ms-2" [(ngModel)]="textoPesquisa" (input)="filtrarUsuario()" /></label>
                     </div>
                   </div>
                 </div>
@@ -51,7 +51,7 @@
                     </thead>
                     <tbody>
                       <tr
-                        *ngFor="let usuario of usuarios | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                        *ngFor="let usuario of usuariosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
                         <td>{{ usuario.id_usuario }}</td>
                         <td>{{ usuario.sigla }}</td>
                         <td>{{ usuario.nome }}</td>
@@ -64,8 +64,8 @@
                     </tbody>
                   </table>
                   <div class="d-flex justify-content-end mt-3">
-                    <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior"
-                      nextLabel="Proximo" [maxSize]="5" [autoHide]="true" [responsive]="true">
+                    <pagination-controls class="pagination-controls-custom" (pageChange)="paginaAtual = $event" previousLabel="Anterior"
+                      nextLabel="Proximo" [maxSize]="5" [autoHide]="false" [responsive]="true">
                     </pagination-controls>
                   </div>
                 </div>

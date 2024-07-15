@@ -21,6 +21,8 @@ export class UsuariosComponent implements OnInit {
   public loadingMin: boolean = false;
   public paginaAtual: number = 1;
   public itensPorPagina: number = 20;
+  public textoPesquisa: string = "";
+  public usuariosFiltrados: UsuarioModel[] = [];
 
   constructor(
     private _usuarioService: UsuarioService,
@@ -56,12 +58,27 @@ export class UsuariosComponent implements OnInit {
     this.loading = true;
     this._usuarioService.obterUsuariosPorEmpresa(idEmpresa).subscribe((res) => {
       this.usuarios = res.contratantes;
+      this.usuariosFiltrados = res.contratantes
       this.loading = false;
     },
     (error) => {
       this._alertService.error('Ocorreu um erro ao obter os usuários.');
       this.loading = false;
     });
+  }
+
+  public filtrarUsuario(): void {
+    const pesquisa = this.textoPesquisa.toLowerCase();
+    this.usuariosFiltrados = this.usuarios.filter((usuario) => [
+      usuario.id_usuario.toString(),
+      usuario.sigla,
+      usuario.nome,
+      usuario.login,
+      usuario.cpf,
+      usuario.email,
+      usuario.fone
+    ].some((field) => field.toLowerCase().includes(pesquisa))
+  );
   }
 
   public abrirModalCadastro(content: TemplateRef<any>): void {
