@@ -40,13 +40,13 @@ export class ClienteTitulosComponent implements OnChanges {
         const plano = linha.querySelector('.plano').innerText.trim();
         const numeroContrato = linha.querySelector('.numero_contrato').innerText.trim();
         const numeroDocumento = linha.querySelector('.numero_documento').innerText.trim();
-        const tipoProduto = linha.querySelector('.tipo_produto').innerText.trim();
+        const produto = linha.querySelector('.produto').innerText.trim();
         const vencimento = linha.querySelector('.vencimento').innerText.trim();
         let valor = linha.querySelector('.valor').innerText.trim();
 
         valor = parseFloat(valor.replace(',', '.'));
 
-        if (!tipoTitulo || !parcela || !plano || !numeroContrato || !numeroDocumento || !tipoProduto || !vencimento || !valor) {
+        if (!tipoTitulo || !parcela || !plano || !numeroContrato || !numeroDocumento || !produto || !vencimento || !valor) {
           dadosValidos = false;
           return;
         }
@@ -57,7 +57,7 @@ export class ClienteTitulosComponent implements OnChanges {
           plano: plano,
           numero_contrato: numeroContrato,
           numero_documento: numeroDocumento,
-          tipo_produto: tipoProduto,
+          produto: produto,
           vencimento: vencimento,
           valor: valor.toFixed(2),
           id_empresa: Number(this._authService.getIdEmpresa()),
@@ -123,7 +123,7 @@ export class ClienteTitulosComponent implements OnChanges {
           plano: dadosLinha[2].trim(),
           numero_contrato: dadosLinha[3].trim(),
           numero_documento: dadosLinha[4].trim(),
-          tipo_produto: dadosLinha[5].trim(),
+          produto: dadosLinha[5].trim(),
           vencimento: dadosLinha[6].trim(),
           valor: dadosLinha[7].trim(),
           id_empresa: Number(this._authService.getIdEmpresa()),
@@ -182,7 +182,7 @@ export class ClienteTitulosComponent implements OnChanges {
           plano: this.titulos[this.titulos.length - 1]?.plano ?? "",
           numero_contrato: this.titulos[this.titulos.length - 1]?.numero_contrato ?? "",
           numero_documento: this.titulos[this.titulos.length - 1]?.numero_documento ?? "",
-          tipo_produto: this.titulos[this.titulos.length - 1]?.tipo_produto ?? "",
+          produto: this.titulos[this.titulos.length - 1]?.produto ?? "",
           vencimento: formattedDate,
           valor: valorParcela.toFixed(2)
         });
@@ -202,7 +202,7 @@ export class ClienteTitulosComponent implements OnChanges {
       const plano = linha.querySelector('.plano').innerText.trim();
       const numeroContrato = linha.querySelector('.numero_contrato').innerText.trim();
       const numeroDocumento = linha.querySelector('.numero_documento').innerText.trim();
-      const tipoProduto = linha.querySelector('.tipo_produto').innerText.trim();
+      const produto = linha.querySelector('.produto').innerText.trim();
       const vencimento = linha.querySelector('.vencimento').innerText.trim();
       const valor = linha.querySelector('.valor').innerText.trim();
 
@@ -212,7 +212,7 @@ export class ClienteTitulosComponent implements OnChanges {
         plano: plano,
         numero_contrato: numeroContrato,
         numero_documento: numeroDocumento,
-        tipo_produto: tipoProduto,
+        produto: produto,
         vencimento: vencimento,
         valor: valor,
         id_empresa: Number(this._authService.getIdEmpresa()),
@@ -230,7 +230,7 @@ export class ClienteTitulosComponent implements OnChanges {
       plano: '',
       numero_contrato: '',
       numero_documento: '',
-      tipo_produto: '',
+      produto: '',
       vencimento: '',
       valor: '',
       id_empresa: Number(this._authService.getIdEmpresa()),
@@ -242,6 +242,6 @@ export class ClienteTitulosComponent implements OnChanges {
 
   private camposPreenchidos(titulo: any): boolean {
     return titulo.tipo_titulo && titulo.parcela && titulo.plano && titulo.numero_contrato &&
-      titulo.numero_documento && titulo.tipo_produto && titulo.vencimento && titulo.valor;
+      titulo.numero_documento && titulo.produto && titulo.vencimento && titulo.valor;
   }
 }
