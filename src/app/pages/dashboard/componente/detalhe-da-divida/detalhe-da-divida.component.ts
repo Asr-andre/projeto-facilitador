@@ -71,7 +71,7 @@ export class DetalheDaDividaComponent implements OnChanges {
   }
 
   public abrirEmailModal(email: string): void {
-    this.EnvioEmailComponent.abrirModalEmail(email)
+    this.EnvioEmailComponent.abrirModalEmail(email, this.idCliente, this.idContratante);
   }
 
   public formatarCPF(cpf: string): string {
