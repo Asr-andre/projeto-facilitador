@@ -16,7 +16,7 @@ export class EnvioEmailComponent {
 
   public abrirModalEmail(email: string): void {
     this.email = email;
-    const modalRef = this.modalService.open(this.emailModal); // Abre o modal
+    const modalRef = this.modalService.open(this.emailModal, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
   }
 
   public enviarEmail(): void {
