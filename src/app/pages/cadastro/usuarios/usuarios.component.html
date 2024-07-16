@@ -27,11 +27,19 @@
               </div>
 
               <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-12 col-md-12">
-                    <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
-                        class="d-inline-flex align-items-center">Pesquisar:
-                        <input type="text" class="form-control form-control-sm ms-2" [(ngModel)]="textoPesquisa" (input)="filtrarUsuario()" /></label>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <div>
+                    <select id="itensPorPagina"
+                    [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
+                    style="border-radius: 0.25rem; width: auto; font-size: 0.675rem;">
+                      <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina">{{ item }}</option>
+                    </select>
+                    <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
+                  </div>
+                  <div >
+                    <div class="dataTables_filter text-md-end"><label
+                        class="d-inline-flex align-items-center">Pesquisar
+                        <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" [(ngModel)]="textoPesquisa" (input)="filtrarUsuario()" /></label>
                     </div>
                   </div>
                 </div>
@@ -39,7 +47,7 @@
                   <table class="table table-sm table-hover font-size-12">
                     <thead class="table-light">
                       <tr>
-                        <th>Id</th>
+                        <th sortable="id_usuario" (sort)="ordenar($event)">Id</th>
                         <th>Sigla</th>
                         <th>Nome</th>
                         <th>Login</th>
@@ -63,9 +71,18 @@
                       </tr>
                     </tbody>
                   </table>
-                  <div class="d-flex justify-content-end mt-3">
-                    <pagination-controls class="pagination-controls-custom" (pageChange)="paginaAtual = $event" previousLabel="Anterior"
-                      nextLabel="Proximo" [maxSize]="5" [autoHide]="false" [responsive]="true">
+                  <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                      Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+                      {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+                    </div>
+                    <pagination-controls (pageChange)="paginaAtual = $event"
+                                          previousLabel="Anterior"
+                                          nextLabel="Próximo"
+                                          [maxSize]="5"
+                                          [autoHide]="false"
+                                          [responsive]="true"
+                                          class="pagination-controls-custom">
                     </pagination-controls>
                   </div>
                 </div>

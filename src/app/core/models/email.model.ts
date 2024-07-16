@@ -23,3 +23,19 @@ export class EmailRetornoModel {
   emails: EmailModel[];
 }
 
+export class EnvioEmailModel {
+  id_empresa: number;
+  id_contratante: number;
+  id_cliente: number;
+  destinatario: string;
+  assunto: string;
+  mensagem: string;
+  anexo: string;
+}
+
+
+export class RetornoEnvioModel {
+  success: string;
+  msg: string;
+  email: string;
+}

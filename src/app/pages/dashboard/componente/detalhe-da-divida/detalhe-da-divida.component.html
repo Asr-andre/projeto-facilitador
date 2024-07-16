@@ -22,9 +22,10 @@
 <app-whatsapp></app-whatsapp>
 
 <div class="row pt-1 brder">
-  <div class="col-md-6"><b>Email:</b> {{ detalhamentoSelecionado?.email }} <i class="fas fa-at"></i>
+  <div class="col-md-6"><b>Email:</b> {{ detalhamentoSelecionado?.email }} <i class="fas fa-at" (click)="abrirEmailModal(detalhamentoSelecionado?.email)"></i>
   </div>
 </div>
+<app-envio-email></app-envio-email>
 
 <div class="card-body"
   style="height: 300px; overflow: auto;">
