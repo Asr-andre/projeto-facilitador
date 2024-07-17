@@ -106,7 +106,20 @@ export class EnvioEmailComponent implements OnInit {
   public aoSelecionarArquivo(evento: Event): void {
     const input = evento.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.arquivoSelecionado = input.files[0];
+      const arquivo = input.files[0];
+      const extensao = this.obterExtensao(arquivo.name);
+
+      if (extensao.toLowerCase() === 'pdf') {
+        this.arquivoSelecionado = arquivo;
+      } else {
+        this.alertService.warning('Apenas arquivos PDF são permitidos.');
+        input.value = '';
+      }
     }
   }
+
+  private obterExtensao(nomeArquivo: string): string {
+    return nomeArquivo.split('.').pop()?.toLowerCase() || '';
+  }
+
 }
