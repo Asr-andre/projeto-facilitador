@@ -1,7 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EnvioEmailModel } from 'src/app/core/models/email.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { EmailService } from 'src/app/core/services/email.service';
@@ -21,11 +20,11 @@ export class EnvioEmailComponent implements OnInit {
   public carregandoEnvio: boolean = false;
 
   constructor(
-    private modalService: NgbModal,
-    private formBuilder: FormBuilder,
-    private emailService: EmailService,
-    private alertService: AlertService,
-    private authService: AuthenticationService,
+    private _modalService: NgbModal,
+    private _formBuilder: FormBuilder,
+    private _emailService: EmailService,
+    private _alertService: AlertService,
+    private _authService: AuthenticationService,
   ) { }
 
   ngOnInit(): void {
@@ -33,14 +32,15 @@ export class EnvioEmailComponent implements OnInit {
   }
 
   public inicializarFormularioEnvioEmail(): void {
-    this.formularioEnvioEmail = this.formBuilder.group({
-      id_empresa: [Number(this.authService.getIdEmpresa())],
+    this.formularioEnvioEmail = this._formBuilder.group({
+      id_empresa: [Number(this._authService.getIdEmpresa())],
       id_contratante: [''],
       id_cliente: [''],
       destinatario: [''],
       assunto: ['', Validators.required],
       mensagem: [''],
       anexo: [''],
+      user_login: [this._authService.getLogin()]
     });
   }
 
@@ -51,7 +51,7 @@ export class EnvioEmailComponent implements OnInit {
       id_contratante: idContratante,
       destinatario: email
     });
-    this.modalService.open(this.modalEmailRef, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
+    this._modalService.open(this.modalEmailRef, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
   }
 
   public enviarEmail(): void {
@@ -71,11 +71,11 @@ export class EnvioEmailComponent implements OnInit {
 
   private enviarEmailComAnexo(): void {
     if (this.formularioEnvioEmail.value) {
-      this.emailService.envioEmailUnitario(this.formularioEnvioEmail.value).subscribe((res) => {
+      this._emailService.envioEmailUnitario(this.formularioEnvioEmail.value).subscribe((res) => {
         if (res.success === 'true') {
           console.log(`Envio de e-mail bem-sucedido: ${res}`);
-          this.modalService.dismissAll();
-          this.alertService.success(res.msg);
+          this._modalService.dismissAll();
+          this._alertService.success(res.msg);
           this.formularioEnvioEmail.patchValue({
             assunto: '',
             mensagem: '',
@@ -83,11 +83,11 @@ export class EnvioEmailComponent implements OnInit {
           });
 
         } else {
-          this.alertService.warning(res.msg);
+          this._alertService.warning(res.msg);
         }
       })
     } else {
-      this.alertService.warning('O campo Assunto é obrigatório.');
+      this._alertService.warning('O campo Assunto é obrigatório.');
     }
   }
 
@@ -112,7 +112,7 @@ export class EnvioEmailComponent implements OnInit {
       if (extensao.toLowerCase() === 'pdf') {
         this.arquivoSelecionado = arquivo;
       } else {
-        this.alertService.warning('Apenas arquivos PDF são permitidos.');
+        this._alertService.warning('Apenas arquivos PDF são permitidos.');
         input.value = '';
       }
     }
@@ -121,5 +121,4 @@ export class EnvioEmailComponent implements OnInit {
   private obterExtensao(nomeArquivo: string): string {
     return nomeArquivo.split('.').pop()?.toLowerCase() || '';
   }
-
 }
