@@ -27,25 +27,27 @@
               </div>
 
               <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                  <div>
-                    <select id="itensPorPagina"
-                    [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
-                    style="border-radius: 0.25rem; width: auto; font-size: 0.675rem;">
-                      <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina">{{ item }}</option>
-                    </select>
-                    <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
+                <div class="d-flex justify-content-between align-items-center mt-3" style="font-size: 11px;">
+                  <div style="font-size: 11px;">
+                      <select id="itensPorPagina"
+                              [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
+                              style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
+                          <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina" style="font-size: 10px;" >{{ item }}</option>
+                      </select>
+                      <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
                   </div>
-                  <div >
-                    <div class="dataTables_filter text-md-end"><label
-                        class="d-inline-flex align-items-center">Pesquisar
-                        <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" [(ngModel)]="textoPesquisa" (input)="filtrarUsuario()" /></label>
-                    </div>
+                  <div style="font-size: 10px;">
+                      <div class="dataTables_filter text-md-end">
+                          <label class="d-inline-flex align-items-center">
+                              <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrarUsuario()" />
+                          </label>
+                      </div>
                   </div>
-                </div>
+              </div>
+
                 <div class="table-responsive">
                   <table class="table table-sm table-hover font-size-12">
-                    <thead class="table-light">
+                    <thead class="tabela-custom">
                       <tr>
                         <th sortable="id_usuario" (sort)="ordenar($event)">Id</th>
                         <th>Sigla</th>
@@ -71,7 +73,7 @@
                       </tr>
                     </tbody>
                   </table>
-                  <div class="d-flex justify-content-between align-items-center mt-3">
+                  <div class="d-flex justify-content-between align-items-center mt-3 text-small">
                     <div>
                       Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
                       {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
@@ -100,7 +102,7 @@
     </div>
 
     <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
-      <h5 class="modal-title" style="color: #ffffff"><i class="fas fa-user-plus"></i> Cadastrar Usuário</h5>
+      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-user-plus"></i> Cadastrar Usuário</h6>
       <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
         (click)="modal.dismiss()"></button>
     </div>
