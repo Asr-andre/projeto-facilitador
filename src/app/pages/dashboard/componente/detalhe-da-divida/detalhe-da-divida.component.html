@@ -14,15 +14,15 @@
 <div class="row pt-1 brder">
   <div class="col-md-6">
     <b>Telefone:</b> {{ detalhamentoSelecionado?.fone }}
-    <i class="fas fa-sms" style="margin-right: 5px;"></i>
+    <i class="fas fa-sms sms-icon" style="margin-right: 5px;" (click)="abrirSmsModal(detalhamentoSelecionado?.fone)"></i>
     <i class="fab fa-whatsapp whatsapp-icon" (click)="abrirWhatsappModal(detalhamentoSelecionado?.fone)"></i>
   </div>
 </div>
-
+<app-envio-sms></app-envio-sms>
 <app-whatsapp></app-whatsapp>
 
 <div class="row pt-1 brder">
-  <div class="col-md-6"><b>Email:</b> {{ detalhamentoSelecionado?.email }} <i class="fas fa-at" (click)="abrirEmailModal(detalhamentoSelecionado?.email)"></i>
+  <div class="col-md-6"><b>Email:</b> {{ detalhamentoSelecionado?.email }} <i class="fas fa-at at-icon" (click)="abrirEmailModal(detalhamentoSelecionado?.email)"></i>
   </div>
 </div>
 <app-envio-email></app-envio-email>

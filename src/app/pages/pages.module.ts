@@ -33,6 +33,7 @@ import { EmailComponent } from "./dashboard/componente/email/email.component";
 import { DetalheDaDividaComponent } from "./dashboard/componente/detalhe-da-divida/detalhe-da-divida.component";
 import { OrderTableModule } from "../core/helpers/conf-tabela/order-table.module";
 import { EnvioEmailComponent } from "./dashboard/componente/detalhe-da-divida/envio-email/envio-email.component";
+import { EnvioSmsComponent } from "./dashboard/componente/detalhe-da-divida/envio-sms/envio-sms.component";
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { EnvioEmailComponent } from "./dashboard/componente/detalhe-da-divida/en
     CalendarComponent,
     ChatComponent,
     EnvioEmailComponent,
+    EnvioSmsComponent
   ],
   imports: [
     CommonModule,

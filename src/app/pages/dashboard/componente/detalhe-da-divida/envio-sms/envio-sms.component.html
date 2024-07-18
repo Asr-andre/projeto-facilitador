@@ -1,0 +1,30 @@
+<div class="loading-overlay-pagina" *ngIf="loading">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
+
+<ng-template #smsModal let-modal>
+  <div class="modal-header modal-header-custom" style="background: #3e4988; margin: 0">
+    <h5 class="modal-title" style="color: #ffffff">
+      <i class="fas fa-sms"></i> Enviar Sms: {{ foneDestinatario }}
+    </h5>
+    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body modal-padding">
+    <form [formGroup]="formEnvioSms">
+      <textarea class="form-control" [(ngModel)]="mensagem" (input)="contarCaracteres()" formControlName="mensagem" placeholder="Digite sua mensagem" rows="4" required=""></textarea>
+
+      <div class="d-flex justify-content-between align-items-center" style="padding-top: 5px;">
+        <small>{{ mensagem.length }}/{{maxCaractere}} caracteres</small>
+        <div>
+          <button type="button" class="btn btn-success btn-sm me-1" (click)="enviarSms()">
+            <i class="fas fa-paper-plane"></i> Enviar
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
+            <i class="fas fa-window-close"></i> Cancelar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>

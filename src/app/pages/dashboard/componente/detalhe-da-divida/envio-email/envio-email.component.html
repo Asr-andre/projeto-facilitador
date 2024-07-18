@@ -14,15 +14,13 @@
       <div class="mb-3" style="margin-top: 15px;">
         <input type="file" class="form-control form-control-sm mb-3" (change)="aoSelecionarArquivo($event)">
       </div>
-      <div class="d-flex justify-content-between align-items-center" style="padding-top: 5px;">
-        <div>
-          <button type="button" class="btn btn-success btn-sm me-1" (click)="enviarEmail()">
-            <i class="fas fa-paper-plane"></i> Enviar
-          </button>
-          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
-            <i class="fas fa-window-close"></i> Cancelar
-          </button>
-        </div>
+      <div class="d-flex justify-content-end align-items-center" style="margin-top: 5px;">
+        <button type="button" class="btn btn-success btn-sm me-1" (click)="enviarEmail()">
+          <i class="fas fa-paper-plane"></i> Enviar
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
+          <i class="fas fa-window-close"></i> Cancelar
+        </button>
       </div>
     </form>
   </div>

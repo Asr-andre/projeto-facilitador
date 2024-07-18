@@ -4,6 +4,7 @@ import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { WhatsappComponent } from './whatsapp/whatsapp.component';
 import { EnvioEmailComponent } from './envio-email/envio-email.component';
+import { EnvioSmsComponent } from './envio-sms/envio-sms.component';
 
 @Component({
   selector: 'app-detalhe-da-divida',
@@ -13,6 +14,7 @@ import { EnvioEmailComponent } from './envio-email/envio-email.component';
 export class DetalheDaDividaComponent implements OnChanges {
   @ViewChild(WhatsappComponent) whatsappComponent: WhatsappComponent;
   @ViewChild(EnvioEmailComponent) EnvioEmailComponent: EnvioEmailComponent;
+  @ViewChild(EnvioSmsComponent) EnvioSmsComponent: EnvioSmsComponent;
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
   public detalhamentoSelecionado: DetalhamentoModel | null = null;
@@ -72,6 +74,10 @@ export class DetalheDaDividaComponent implements OnChanges {
 
   public abrirEmailModal(email: string): void {
     this.EnvioEmailComponent.abrirModalEmail(email, this.idCliente, this.idContratante);
+  }
+
+  public abrirSmsModal(sms: string): void {
+    this.EnvioSmsComponent.abrirModalSms(sms, this.idCliente, this.idContratante);
   }
 
   public formatarCPF(cpf: string): string {
