@@ -111,7 +111,7 @@
           <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs">
             <li [ngbNavItem]="1">
               <a ngbNavLink class="nav-link custom-nav-link">
-                <span class="d-none d-sm-block"><i class="fas fa-money-check-alt"></i> Detalhe da Divida</span>
+                <span class="d-none d-sm-block"><i class="fas fa-money-check-alt"></i> Detalhamento</span>
               </a>
               <ng-template ngbNavContent>
                 <ng-template [ngTemplateOutlet]="DetalheDaDivida"></ng-template>
@@ -138,8 +138,16 @@
         </div>
       </div>
     </div>
+      <div class="col-lg-12">
+        <div class="card h-100" style="
+        top: 30px;
+    ">
+          <app-acionamento [devedorId]="devedorSelecionado?.id_cliente"></app-acionamento>
+        </div>
+      </div>
   </div>
 </div>
+
 
 <ng-template #DetalheDaDivida>
   <div class="mt-3 font-size-13">

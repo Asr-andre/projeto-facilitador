@@ -55,6 +55,11 @@ export class EnvioEmailComponent implements OnInit {
   }
 
   public enviarEmail(): void {
+    if (this.formularioEnvioEmail.invalid) {
+      this._alertService.warning('O campo assunto é mensagem são obrigatório.');
+      return;
+    }
+
     if (this.arquivoSelecionado) {
       this.converterParaBase64(this.arquivoSelecionado).then(base64 => {
         this.formularioEnvioEmail.patchValue({
@@ -70,25 +75,24 @@ export class EnvioEmailComponent implements OnInit {
   }
 
   private enviarEmailComAnexo(): void {
-    if (this.formularioEnvioEmail.value) {
-      this._emailService.envioEmailUnitario(this.formularioEnvioEmail.value).subscribe((res) => {
-        if (res.success === 'true') {
-          console.log(`Envio de e-mail bem-sucedido: ${res}`);
-          this._modalService.dismissAll();
-          this._alertService.success(res.msg);
-          this.formularioEnvioEmail.patchValue({
-            assunto: '',
-            mensagem: '',
-            anexo: ''
-          });
+    this._emailService.envioEmailUnitario(this.formularioEnvioEmail.value).subscribe((res) => {
+      if (res.success === 'true') {
+        this._modalService.dismissAll();
+        this._alertService.success(res.msg);
+        this.resetarCampos();
+      } else {
+        this.resetarCampos();
+        this._alertService.warning(res.msg);
+      }
+    })
+  }
 
-        } else {
-          this._alertService.warning(res.msg);
-        }
-      })
-    } else {
-      this._alertService.warning('O campo Assunto é obrigatório.');
-    }
+  private resetarCampos() {
+    this.formularioEnvioEmail.patchValue({
+      assunto: '',
+      mensagem: '',
+      anexo: ''
+    });
   }
 
   private converterParaBase64(arquivo: File): Promise<string> {

@@ -1,13 +1,16 @@
 
     <div
-      style="display: flex; justify-content: space-between; align-items: center; background: #c9cbcf29; padding: 10px;">
-      <h5 style="font-family: 'helvetica'; margin: 0;">Acionamento</h5>
+      style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+      <h6 style="font-family: 'helvetica'; margin: 0;">Acionamentos</h6>
       <button class="btn btn-success mb-1 btn-sm" style="text-align: right;" (click)="AbrirModalcadastrar(modalCadastrarAcionamento)">
-        <i class="icofont-ui-add"></i><strong> Incluir Acionamento</strong>
+        <i class="fas fa-plus"></i><strong> Incluir Acionamento</strong>
       </button>
     </div>
-    <table class="table">
-      <thead class="table-light">
+    <hr style="margin-top: 0px; margin-bottom: 0px;">
+    <div style="height: 300px;overflow: auto;padding-left: 10px;padding-right: 10px;">
+      <div class="table-responsive mt-3 font-size-12">
+        <table class="table table-sm table-hover">
+          <thead class="tabela-custom table-td-scroll">
         <tr>
           <th>Data</th>
           <th>Hora</th>
@@ -28,7 +31,7 @@
         </tr>
       </tbody>
     </table>
-
+</div></div>
     <ng-template #modalCadastrarAcionamento let-modal>
       <div class="modal-header" style="padding-top: 5px; padding-bottom: 5px; background: #f8f9fa">
         <h5 class="modal-title mt-0" style="color: #222121">Acionamento</h5>
