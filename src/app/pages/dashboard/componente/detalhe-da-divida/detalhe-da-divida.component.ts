@@ -23,7 +23,7 @@ export class DetalheDaDividaComponent implements OnChanges {
   constructor(
     private _dashboard: DashboardService,
     private _alertService: AlertService
-  ) {}
+  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.idCliente || changes.idContratante) {
@@ -52,23 +52,25 @@ export class DetalheDaDividaComponent implements OnChanges {
   }
 
   public calcularTotal(coluna: string): number {
-    return (
-      this.detalhamentoSelecionado?.parcelas.reduce((total, prestacao) => {
-          if (coluna === 'valorTotalAtualizado') {
-            return total + this.calcularTotalAtualizado(prestacao);
-          }
-          return total + prestacao[coluna];
-        },
-        0
-      ) || 0
-    );
+    if (this.detalhamentoSelecionado?.parcelas) {
+      return this.detalhamentoSelecionado.parcelas.reduce((total, prestacao) => {
+        if (coluna === 'valorTotalAtualizado') {
+          return total + this.calcularTotalAtualizado(prestacao);
+        }
+        return total + (prestacao[coluna] || 0);
+      }, 0);
+    }
+    return 0;
   }
 
   public calcularTotalAtualizado(prestacao: any): number {
-    return prestacao.valor + prestacao.valor_juros + prestacao.valor_multa + prestacao.valor_taxa;
+    return (prestacao.valor || 0) +
+      (prestacao.valor_juros || 0) +
+      (prestacao.valor_multa || 0) +
+      (prestacao.valor_taxa || 0);
   }
 
-   public abrirWhatsappModal(telefone: string): void {
+  public abrirWhatsappModal(telefone: string): void {
     this.whatsappComponent.abrirModalWhatsapp(telefone);
   }
 
