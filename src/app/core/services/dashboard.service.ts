@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DevedorModel } from '../models/devedor.model';
 import { DetalhamentoModel } from '../models/detalhamento.model';
-import { ClienteModel } from '../models/acionamento.model';
 import { AppConfig } from './url.base.service';
 import { AuthenticationService } from './auth.service';
 
@@ -13,7 +12,6 @@ import { AuthenticationService } from './auth.service';
 })
 export class DashboardService {
   private apiUrl = AppConfig.apiUrl;
-  private acionamentoUrl  = 'assets/base/Acionamento.json';
 
   constructor(
     private _http: HttpClient,
@@ -30,11 +28,5 @@ export class DashboardService {
     const idEmpresa = parseInt(this._authService.getIdEmpresa(), 10);
     const requestBody = { id_empresa: idEmpresa, id_cliente, id_contratante };
     return this._http.post<DetalhamentoModel>(`${this.apiUrl}/tituloscliente`, requestBody);
-  }
-
-  public obterAcionamentosDoDevedor(id: number): Observable<ClienteModel | undefined> {
-    return this._http.get<ClienteModel[]>(this.acionamentoUrl).pipe(
-      map(devedores => devedores.find(devedor => devedor.id_cliente === id))
-    );
   }
 }

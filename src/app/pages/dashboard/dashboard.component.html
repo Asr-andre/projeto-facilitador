@@ -139,10 +139,8 @@
       </div>
     </div>
       <div class="col-lg-12">
-        <div class="card h-100" style="
-        top: 30px;
-    ">
-          <app-acionamento [devedorId]="devedorSelecionado?.id_cliente"></app-acionamento>
+        <div class="card h-100" style="top: 30px;">
+          <app-acionamento [idCliente]="devedorSelecionado?.id_cliente" [idContratante]="devedorSelecionado?.id_contratante"></app-acionamento>
         </div>
       </div>
   </div>

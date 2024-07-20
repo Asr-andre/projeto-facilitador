@@ -1,13 +1,22 @@
 export class AcionamentoModel {
-  data: string;
-  hora: string;
-  operador: string;
-  ocorrencia: string;
-  historico: string;
+  id_acionamento: number;
+  descricao: string;
+  data_acio: string;
+  mensagem: string;
   fone: string;
+  titulo: string;
 }
 
-export class ClienteModel {
-  id_cliente: number;
+export class RetornoAcionamentoModel {
+  success: string;
+  msg: string;
+  id_cliente: string;
+  id_contratante: string;
   acionamentos: AcionamentoModel[];
+}
+
+export class RequisicaoAcionamentoModel {
+  id_empresa: number;
+  id_contratante: number;
+  id_cliente: number;
 }

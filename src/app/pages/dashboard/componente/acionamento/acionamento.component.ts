@@ -1,53 +1,60 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AcionamentoModel, ClienteModel } from 'src/app/core/models/acionamento.model';
-import { DashboardService } from 'src/app/core/services/dashboard.service';
-import Swal from 'sweetalert2';
+import { AcionamentoModel, RequisicaoAcionamentoModel } from 'src/app/core/models/acionamento.model';
+import { AcionamentoService } from 'src/app/core/services/acionamento.service';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-acionamento',
   templateUrl: './acionamento.component.html',
   styleUrl: './acionamento.component.scss'
 })
-export class AcionamentoComponent {
-  @Input() devedorId: number | null = null;
-  public AcionamentosDoDevedor: AcionamentoModel[] = [];
+export class AcionamentoComponent implements OnChanges {
+  @Input() idCliente: number | undefined;
+  @Input() idContratante: number | undefined;
+  public idEmpresa: number = Number(this._authService.getIdEmpresa());
+  public acionamentos: AcionamentoModel[] = [];
+  public loadingMin: boolean = false;
+
 
   constructor(
-    private _dashboard: DashboardService,
-    private _modalService: NgbModal
+    private _alertService: AlertService,
+    private _modalService: NgbModal,
+    private _authService: AuthenticationService,
+    private _acionamentoService: AcionamentoService
   ) { }
 
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['devedorId'] && this.devedorId !== null) {
-      this.obterAcionamento(this.devedorId);
+    if (changes.idCliente || changes.idContratante) {
+      this.listarAcionamentos();
     }
   }
 
-  public obterAcionamento(devedorId: number): void {
-    this._dashboard.obterAcionamentosDoDevedor(devedorId).subscribe(
-      (devedor: ClienteModel) => {
-        this.AcionamentosDoDevedor = devedor.acionamentos;
-      },
-      (error) => {
-        Swal.fire({
-          title: 'Aviso!',
-          text: 'Não foi possível localizar os acionamentos!',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#5438dc',
-          cancelButtonColor: '#ff3d60'
-        });
-      }
-    );
-  }
+  public listarAcionamentos(): void {
+    if (this.idCliente && this.idContratante) {
+      this.loadingMin = true;
+      const requisicao: RequisicaoAcionamentoModel = {
+        id_empresa: this.idEmpresa,
+        id_contratante: this.idContratante,
+        id_cliente: this.idCliente
+      };
 
-  /**
-   * Open center modal
-   * @param acionamento
-   */
-  public AbrirModalcadastrar(acionamento: any) {
-    this._modalService.open(acionamento, { centered: false });
+      this._acionamentoService.listarAcionamentos(requisicao).subscribe((res) => {
+          if (res.success) {
+            this.acionamentos =res.acionamentos;
+            this.loadingMin = false;
+          } else {
+            this.loadingMin = false;
+            this._alertService.error(res.msg);
+          }
+        },
+        (error) => {
+          this.loadingMin = false;
+          this._alertService.error('Erro ao listar acionamentos');
+        }
+      );
+    }
   }
-
 }

@@ -1,48 +1,52 @@
+<div class="loading-overlay-card" *ngIf="loadingMin">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
 
-    <div
-      style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
-      <h6 style="font-family: 'helvetica'; margin: 0;">Acionamentos</h6>
-      <button class="btn btn-success mb-1 btn-sm" style="text-align: right;" (click)="AbrirModalcadastrar(modalCadastrarAcionamento)">
-        <i class="fas fa-plus"></i><strong> Incluir Acionamento</strong>
-      </button>
-    </div>
-    <hr style="margin-top: 0px; margin-bottom: 0px;">
-    <div style="height: 300px;overflow: auto;padding-left: 10px;padding-right: 10px;">
-      <div class="table-responsive mt-3 font-size-12">
-        <table class="table table-sm table-hover">
-          <thead class="tabela-custom table-td-scroll">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+  <h6 style="font-family: 'helvetica'; margin: 0;">Acionamentos</h6>
+  <button class="btn btn-success mb-1 btn-sm" style="text-align: right;">
+    <i class="fas fa-plus"></i><strong> Incluir Acionamento</strong>
+  </button>
+</div>
+<hr style="margin-top: 0px; margin-bottom: 0px;">
+<div style="height: 300px;overflow: auto;padding-left: 10px;padding-right: 10px;">
+  <div class="table-responsive mt-3 font-size-12">
+    <table class="table table-sm table-hover">
+      <thead class="tabela-custom table-td-scroll">
         <tr>
+          <th>Id</th>
+          <th>Descrição</th>
           <th>Data</th>
-          <th>Hora</th>
-          <th>Operador</th>
-          <th>Ocorrência</th>
-          <th>Historico</th>
+          <th>Mensagem</th>
           <th>Fone</th>
+          <th>Titulo</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let acionamento of AcionamentosDoDevedor">
-          <td>{{ acionamento.data | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ acionamento.hora }}</td>
-          <td>{{ acionamento.operador }}</td>
-          <td>{{ acionamento.ocorrencia }}</td>
-          <td>{{ acionamento.historico }}</td>
+        <tr *ngFor="let acionamento of acionamentos">
+          <td>{{ acionamento.id_acionamento }}</td>
+          <td>{{ acionamento.descricao }}</td>
+          <td>{{ acionamento.data_acio | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ acionamento.mensagem }}</td>
           <td>{{ acionamento.fone }}</td>
+          <td>{{ acionamento.titulo }}</td>
         </tr>
       </tbody>
     </table>
-</div></div>
-    <ng-template #modalCadastrarAcionamento let-modal>
-      <div class="modal-header" style="padding-top: 5px; padding-bottom: 5px; background: #f8f9fa">
-        <h5 class="modal-title mt-0" style="color: #222121">Acionamento</h5>
-        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
-      </div>
-      <div class="modal-body">
-        <textarea style="width: 100%; height: calc(1.5em * 5); resize: none; overflow: auto;"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success mb-1 btn-sm"><i class=" fas fa-check-circle"></i> Salvar</button>
-        <button type="button" class="btn btn-danger mb-1 btn-sm" (click)="modal.close('Close click')"><i class="fas fa-window-close"></i> Cancelar</button>
-      </div>
-    </ng-template>
-
+  </div>
+</div>
+<ng-template #modalCadastrarAcionamento let-modal>
+  <div class="modal-header" style="padding-top: 5px; padding-bottom: 5px; background: #f8f9fa">
+    <h5 class="modal-title mt-0" style="color: #222121">Acionamento</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+  </div>
+  <div class="modal-body">
+    <textarea style="width: 100%; height: calc(1.5em * 5); resize: none; overflow: auto;"></textarea>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success mb-1 btn-sm"><i class=" fas fa-check-circle"></i> Salvar</button>
+    <button type="button" class="btn btn-danger mb-1 btn-sm" (click)="modal.close('Close click')"><i
+        class="fas fa-window-close"></i> Cancelar</button>
+  </div>
+</ng-template>
