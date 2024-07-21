@@ -34,7 +34,6 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     private _acionamentoService: AcionamentoService,
     private _acaoCobrancaService: AcaoCobrancaService,
     private _formBuilder: FormBuilder,
-    private _calendar: NgbCalendar,
     private _authenticationService: AuthenticationService,
   ) {
     this.updateSubject.pipe(debounceTime(500)).subscribe(() => this.listarAcionamentos());
@@ -57,7 +56,6 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       id_contratante: [this.idContratante],
       id_cliente: [this.idCliente],
       id_acao: [],
-      data_acio: [],
       mensagem: [""],
       user_login: [this._authenticationService.getLogin()],
     });
@@ -90,10 +88,9 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   }
 
   public listarAcoesCobranca(): void {
-    if (this.idEmpresa && this.idContratante) {
+    if (this.idEmpresa ) {
       const requisicao: RequisicaoAcaoCobrancaModel = {
         id_empresa: this.idEmpresa,
-        id_contratante: this.idContratante
       };
 
       this._acaoCobrancaService.listarAcoesCobranca(requisicao).subscribe((res) => {
@@ -121,8 +118,6 @@ export class AcionamentoComponent implements OnChanges, OnInit {
 
   public enviarAcionamento(): void {
     const acionamento = this.formAcionamento.value;
-
-    console.log(acionamento)
     this._acionamentoService.inserirAcionamento(acionamento).subscribe((res) => {
       if (res.success) {
         this._alertService.success('Acionamento inserido com sucesso');
@@ -137,5 +132,4 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       }
     );
   }
-
 }

@@ -50,9 +50,6 @@
           <option *ngFor="let acao of acoesCobranca" [value]="acao.id_acao">{{ acao.descricao }}</option>
         </select>
       </div>
-      <div class="col-md-12 form-group" style="padding-left: 3px; padding-right: 3px;">
-        <input type="text" class="form-control form-control-sm mb-3" formControlName="data_acio" placeholder="dd/mm/yyy hh:mm:ss">
-      </div>
       <textarea class="form-control" formControlName="mensagem" placeholder="Digite sua mensagem" rows="5"></textarea>
       <div class="d-flex justify-content-end align-items-center" style="margin-top: 5px;">
         <button type="button" class="btn btn-success btn-sm me-1" (click)="enviarAcionamento()">

@@ -1,6 +1,5 @@
 export class RequisicaoAcaoCobrancaModel {
   id_empresa: number;
-  id_contratante: number;
 }
 
 
