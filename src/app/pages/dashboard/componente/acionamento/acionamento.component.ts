@@ -111,11 +111,18 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   }
 
   public abriracaoDeCobrancaModal(modal): void {
+    this.formAcionamento.patchValue({
+      id_cliente: this.idCliente,
+      id_contratante: this.idContratante
+    });
+
     this._modalService.open(this.modalEmailRef, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
   }
 
   public enviarAcionamento(): void {
     const acionamento = this.formAcionamento.value;
+
+    console.log(acionamento)
     this._acionamentoService.inserirAcionamento(acionamento).subscribe((res) => {
       if (res.success) {
         this._alertService.success('Acionamento inserido com sucesso');
