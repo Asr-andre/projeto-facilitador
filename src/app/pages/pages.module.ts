@@ -12,6 +12,8 @@ import {
   NgbNavModule,
   NgbDropdownModule,
   NgbTooltipModule,
+  NgbDatepickerModule,
+  NgbTimepickerModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { NgPipesModule } from "ngx-pipes";
@@ -69,6 +71,8 @@ import { EnvioSmsComponent } from "./dashboard/componente/detalhe-da-divida/envi
     NgxMaskDirective,
     OrderTableModule,
     NgxMaskPipe,
+    NgbTimepickerModule,
+    NgbDatepickerModule,
   ],
   providers: [provideNgxMask()],
 })

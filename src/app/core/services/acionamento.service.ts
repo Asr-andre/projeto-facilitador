@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConfig } from './url.base.service';
-import { RequisicaoAcionamentoModel, RetornoAcionamentoModel } from '../models/acionamento.model';
+import { AcionamentoResponseModel, InserirAcionamentoModel, RequisicaoAcionamentoModel, RetornoAcionamentoModel } from '../models/acionamento.model';
 
 
 @Injectable({
@@ -15,5 +15,9 @@ export class AcionamentoService {
 
   public listarAcionamentos(dados: RequisicaoAcionamentoModel): Observable<RetornoAcionamentoModel> {
     return this._http.post<RetornoAcionamentoModel>(`${this.apiUrl}/acionamentos`, dados);
+  }
+
+  public inserirAcionamento(acionamento: InserirAcionamentoModel): Observable<AcionamentoResponseModel> {
+    return this._http.post<AcionamentoResponseModel>(`${this.apiUrl}/inseriracionamentos`, acionamento);
   }
 }

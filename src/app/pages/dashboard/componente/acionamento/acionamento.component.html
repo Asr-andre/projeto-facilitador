@@ -5,7 +5,7 @@
 
 <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
   <h6 style="font-family: 'helvetica'; margin: 0;">Acionamentos</h6>
-  <button class="btn btn-success mb-1 btn-sm" style="text-align: right;">
+  <button class="btn btn-success mb-1 btn-sm" style="text-align: right;" (click)="abriracaoDeCobrancaModal(acaoDeCobrancaModal)">
     <i class="fas fa-plus"></i><strong> Incluir Acionamento</strong>
   </button>
 </div>
@@ -36,17 +36,33 @@
     </table>
   </div>
 </div>
-<ng-template #modalCadastrarAcionamento let-modal>
-  <div class="modal-header" style="padding-top: 5px; padding-bottom: 5px; background: #f8f9fa">
-    <h5 class="modal-title mt-0" style="color: #222121">Acionamento</h5>
-    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+<ng-template #acaoDeCobrancaModal let-modal>
+  <div class="modal-header modal-header-custom" style="background: #3e4988; margin: 0">
+    <h6 class="modal-title" style="color: #ffffff">
+      <i class="fas fa-sms"></i> Incluir acionamento
+    </h6>
+    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
-  <div class="modal-body">
-    <textarea style="width: 100%; height: calc(1.5em * 5); resize: none; overflow: auto;"></textarea>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-success mb-1 btn-sm"><i class=" fas fa-check-circle"></i> Salvar</button>
-    <button type="button" class="btn btn-danger mb-1 btn-sm" (click)="modal.close('Close click')"><i
-        class="fas fa-window-close"></i> Cancelar</button>
+  <div class="modal-body modal-padding">
+    <form [formGroup]="formAcionamento">
+      <div class="col-md-12 form-group" style="padding-left: 3px; padding-right: 3px;">
+        <select class="form-control form-control-sm mb-3" formControlName="id_acao">
+          <option *ngFor="let acao of acoesCobranca" [value]="acao.id_acao">{{ acao.descricao }}</option>
+        </select>
+      </div>
+      <div class="col-md-12 form-group" style="padding-left: 3px; padding-right: 3px;">
+        <input type="text" class="form-control form-control-sm mb-3" formControlName="data_acio" placeholder="dd/mm/yyy hh:mm:ss">
+      </div>
+      <textarea class="form-control" formControlName="mensagem" placeholder="Digite sua mensagem" rows="5"></textarea>
+      <div class="d-flex justify-content-end align-items-center" style="margin-top: 5px;">
+        <button type="button" class="btn btn-success btn-sm me-1" (click)="enviarAcionamento()">
+          <i class="fas fa-paper-plane"></i> Salvar
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
+          <i class="fas fa-window-close"></i> Cancelar
+        </button>
+      </div>
+    </form>
   </div>
 </ng-template>
+

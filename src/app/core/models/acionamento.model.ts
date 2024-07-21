@@ -20,3 +20,21 @@ export class RequisicaoAcionamentoModel {
   id_contratante: number;
   id_cliente: number;
 }
+
+export class InserirAcionamentoModel {
+  id_empresa: number;
+  id_contratante: number;
+  id_cliente: number;
+  id_acao: number;
+  data_acio: string;
+  mensagem: string;
+  user_login: string;
+}
+
+
+export class AcionamentoResponseModel {
+  id_acionamento: string;
+  id_cliente: string;
+  msg: string;
+  success: string;
+}
