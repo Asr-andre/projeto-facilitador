@@ -116,4 +116,24 @@ export class Utils {
       )
     );
   }
+
+  public static alternarVisibilidadeSenha(campoId: string, iconeId: string): void {
+    const campo = document.getElementById(campoId) as HTMLInputElement;
+    const icone = document.getElementById(iconeId) as HTMLElement;
+
+    if (campo && icone) {
+      if (campo.type === 'password') {
+        campo.type = 'text';
+        icone.classList.remove('fa-eye-slash');
+        icone.classList.add('fa-eye');
+      } else {
+        campo.type = 'password';
+        icone.classList.remove('fa-eye');
+        icone.classList.add('fa-eye-slash');
+      }
+    } else {
+      console.error('Elementos não encontrados:', campoId, iconeId);
+    }
+  }
+
 }

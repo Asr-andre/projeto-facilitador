@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../../../core/services/auth.service';
+import { Utils } from 'src/app/core/helpers/utils';
 
 @Component({
   selector: 'app-login',
@@ -46,6 +47,7 @@ export class LoginComponent implements OnInit {
     this.error = '';
 
     if (this.loginForm.invalid) {
+      this.loading = false;
       return;
     }
 
@@ -65,5 +67,9 @@ export class LoginComponent implements OnInit {
           this.loading = false;
           this.error = error.message || 'Ocorreu um erro ao tentar autenticar. Por favor, tente novamente.';
         });
+  }
+
+  public mostrarSenha(campoId: string, iconeId: string): void {
+    Utils.alternarVisibilidadeSenha(campoId, iconeId);
   }
 }

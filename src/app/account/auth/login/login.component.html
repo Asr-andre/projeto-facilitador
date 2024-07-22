@@ -36,9 +36,12 @@
 
                     <div class="form-group auth-form-group-custom mb-4">
                       <label for="senha">Senha</label>
-                      <input type="password" formControlName="senha" class="form-control" id="senha" [ngClass]="{ 'is-invalid': submitted && f.senha.errors }" placeholder="Senha" />
-                      <div *ngIf="submitted && f.senha.errors" class="invalid-feedback">
-                        <div *ngIf="f.senha.errors.required">Senha é obrigatória</div>
+                      <div class="input-wrapper">
+                        <input type="password" formControlName="senha" class="form-control" id="senha" [ngClass]="{ 'is-invalid': submitted && f.senha.errors }" placeholder="Senha" />
+                        <div *ngIf="submitted && f.senha.errors" class="invalid-feedback">
+                          <div *ngIf="f.senha.errors.required">Senha é obrigatória</div>
+                        </div>
+                        <i class="fas fa-eye-slash" id="iconeOlhoIcon" *ngIf="!submitted || !f.senha.errors" (click)="mostrarSenha('senha', 'iconeOlhoIcon')"></i>
                       </div>
                     </div>
 
