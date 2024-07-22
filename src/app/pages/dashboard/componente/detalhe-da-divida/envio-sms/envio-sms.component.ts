@@ -61,6 +61,7 @@ export class EnvioSmsComponent implements OnInit {
         this.loading = false;
         if (res.success === 'true') {
           this._modalService.dismissAll();
+          this.resetarCampos();
           this._alertService.success(res.msg);
         } else {
           this._alertService.warning(res.msg);
@@ -80,5 +81,11 @@ export class EnvioSmsComponent implements OnInit {
       this.mensagem = this.mensagem.substring(0, this.maxCaractere);
       this.formEnvioSms.get('mensagem')?.setValue(this.mensagem);
     }
+  }
+
+  private resetarCampos() {
+    this.formEnvioSms.patchValue({
+      mensagem: '',
+    });
   }
 }

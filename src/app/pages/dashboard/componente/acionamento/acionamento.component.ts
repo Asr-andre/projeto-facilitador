@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { NgbCalendar, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, debounceTime } from 'rxjs';
 import { AcionamentoModel, RequisicaoAcionamentoModel } from 'src/app/core/models/acionamento.model';
 import { AcaoCobrancaModel, RequisicaoAcaoCobrancaModel } from 'src/app/core/models/acoes.cobranca.model';
@@ -122,6 +122,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       if (res.success) {
         this._alertService.success('Acionamento inserido com sucesso');
         this.listarAcionamentos();
+        this.resetarCampos();
         this._modalService.dismissAll();
       } else {
         this._alertService.error(res.msg);
@@ -131,5 +132,11 @@ export class AcionamentoComponent implements OnChanges, OnInit {
         this._alertService.error('Erro ao inserir acionamento');
       }
     );
+  }
+
+  private resetarCampos() {
+    this.formAcionamento.patchValue({
+      mensagem: '',
+    });
   }
 }
