@@ -16,7 +16,7 @@
                   <i class="fas fa-sms font-size-24" style="margin-right: 5px;"></i>
                 </div>
                 <div class="flex-1">
-                  <p class="text-truncate font-size-13 mb-0">Qtde Sms: 111 / Valor: R$ 15,20</p>
+                  <p class="text-truncate font-size-13 mb-0">Qtde Sms: {{ dadosCards?.qtde_sms }} / Valor: {{ dadosCards?.total_sms | currency:'BRL'}}</p>
                 </div>
               </div>
             </div>
@@ -27,7 +27,7 @@
                   <i class="fas fa-envelope font-size-24" style="margin-right: 5px;"></i>
                 </div>
                 <div class="flex-1">
-                  <p class="text-truncate font-size-13 mb-0">Qtde Email: 253 / Valor: R$ 15,20</p>
+                  <p class="text-truncate font-size-13 mb-0">Qtde Email: {{ dadosCards?.qtde_email }} / Valor: {{ dadosCards?.total_email | currency:'BRL' }}</p>
                 </div>
               </div>
             </div>
@@ -38,7 +38,7 @@
                   <i class="fas fa-money-check-alt font-size-24" style="margin-right: 5px;"></i>
                 </div>
                 <div class="flex-1">
-                  <p class="text-truncate font-size-13 mb-0">Valor Total utilizado : R$ 30,70</p>
+                  <p class="text-truncate font-size-13 mb-0">Valor Total utilizado : {{ dadosCards?.total_utilizado | currency:'BRL' }}</p>
                 </div>
               </div>
             </div>
@@ -49,7 +49,7 @@
                   <i class="fas fa-money-check-alt font-size-24" style="margin-right: 5px;"></i>
                 </div>
                 <div class="flex-1">
-                  <p class="text-truncate font-size-13 mb-0">Saldo: R$ 358,15</p>
+                  <p class="text-truncate font-size-13 mb-0">Saldo: {{ dadosCards?.saldo | currency:'BRL' }}</p>
                 </div>
               </div>
             </div>
@@ -58,6 +58,7 @@
       </div>
     </div>
   </div>
+
 
   <div class="row">
     <div class="col-lg-5">

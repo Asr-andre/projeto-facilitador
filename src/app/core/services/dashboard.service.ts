@@ -6,6 +6,7 @@ import { DevedorModel } from '../models/devedor.model';
 import { DetalhamentoModel } from '../models/detalhamento.model';
 import { AppConfig } from './url.base.service';
 import { AuthenticationService } from './auth.service';
+import { RequisicaoCardsModel, RespostaCardsModel } from '../models/cards.dashboard.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,4 +30,13 @@ export class DashboardService {
     const requestBody = { id_empresa: idEmpresa, id_cliente, id_contratante };
     return this._http.post<DetalhamentoModel>(`${this.apiUrl}/tituloscliente`, requestBody);
   }
+
+  public obterCards(): Observable<RespostaCardsModel> {
+    const idEmpresa = parseInt(this._authService.getIdEmpresa(), 10);
+    const requestBody: RequisicaoCardsModel = { id_empresa: idEmpresa };
+    console.log('Enviando requisição com:', requestBody);
+    return this._http.post<RespostaCardsModel>(`${this.apiUrl}/envioscards`, requestBody);
+  }
+
 }
+
