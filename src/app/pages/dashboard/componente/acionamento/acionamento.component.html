@@ -46,7 +46,7 @@
   <div class="modal-body modal-padding">
     <form [formGroup]="formAcionamento">
       <div class="col-md-12 form-group" style="padding-left: 3px; padding-right: 3px;">
-        <select class="form-control form-control-sm mb-3" formControlName="id_acao">
+        <select class="form-control form-control-sm mb-3" formControlName="id_acao" (click)="this.listarAcoesCobranca()">
           <option *ngFor="let acao of acoesCobranca" [value]="acao.id_acao">{{ acao.descricao }}</option>
         </select>
       </div>

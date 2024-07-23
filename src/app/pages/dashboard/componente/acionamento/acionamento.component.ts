@@ -41,12 +41,12 @@ export class AcionamentoComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
     this.inicializarformAcionamentos();
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['idCliente'] || changes['idContratante']) {
       this.updateSubject.next();
-      this.listarAcoesCobranca();
     }
   }
 
