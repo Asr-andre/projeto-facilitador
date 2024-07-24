@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.obterDevedores();
-    this.obterDadosDosCards();
+
   }
 
   public obterDevedores(): void {
@@ -44,6 +44,7 @@ export class DashboardComponent implements OnInit {
     this._dashboard.obterDevedores().subscribe((res) => {
       this.listarDevedores = res;
       this.devedoresFiltrados = res;
+      this.obterDadosDosCards();
       this.loading = false;
     });
   }
