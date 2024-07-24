@@ -35,8 +35,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     private _authService: AuthenticationService,
     private _acionamentoService: AcionamentoService,
     private _acaoCobrancaService: AcaoCobrancaService,
-    private _formBuilder: FormBuilder,
-    private _authenticationService: AuthenticationService,
+    private _formBuilder: FormBuilder
   ) {
     this.updateSubject.pipe(debounceTime(500)).subscribe(() => this.listarAcionamentos());
   }
@@ -59,7 +58,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       id_cliente: [this.idCliente],
       id_acao: [],
       mensagem: [""],
-      user_login: [this._authenticationService.getLogin()],
+      user_login: [this._authService.getLogin()],
     });
   }
 

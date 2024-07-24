@@ -64,7 +64,7 @@ export class UsuariosComponent implements OnInit {
     this.loading = true;
     this._usuarioService.obterUsuariosPorEmpresa(idEmpresa).subscribe((res) => {
       this.usuarios = res.contratantes;
-      this.dadosFiltrados = res.contratantes
+      this.dadosFiltrados = res.contratantes;
       this.totalRegistros = res.contratantes.length;
       this.atualizarQuantidadeExibida();
       this.loading = false;

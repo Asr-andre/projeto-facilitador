@@ -2,7 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { CdkStepperModule } from '@angular/cdk/stepper';
@@ -20,6 +20,7 @@ import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
 import { ImportacaoRoutingModule } from './processamentos-routing.module';
 import { ImportacaoComponent } from './importacao/importacao.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -44,7 +45,9 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     UiSwitchModule,
     ColorPickerModule,
     NgbDatepickerModule,
-    DropzoneModule
+    DropzoneModule,
+    NgxPaginationModule,
+    NgbModule
   ],
   providers: [
     provideNgxMask(),

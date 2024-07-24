@@ -16,6 +16,4 @@ export class AcaoCobrancaService {
   public listarAcoesCobranca(requisicao: RequisicaoAcaoCobrancaModel): Observable<RespostaAcaoCobrancaModel> {
     return this._http.post<RespostaAcaoCobrancaModel>(`${this.apiUrl}/acoes`, requisicao);
   }
-
-
 }

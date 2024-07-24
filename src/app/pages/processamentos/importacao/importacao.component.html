@@ -1,5 +1,10 @@
 
 
+<div class="loading-overlay-pagina" *ngIf="loading">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
@@ -14,95 +19,82 @@
                     <h5 class="mb-0"><i class="fas fa-file-import"></i> Importações realizadas </h5>
                   </div>
                   <div class="col-md-6 text-end">
-                    <button class="btn btn-secondary btn-sm" style="padding-top: 2px; padding-bottom: 2px;">
+                    <button class="btn btn-secondary btn-sm me-2" style="padding-top: 2px; padding-bottom: 2px;" ngbTooltip="Importação manual">
+                      <i class="fas fa-file-alt"></i>
+                    </button>
+                    <button class="btn btn-secondary btn-sm me-2" style="padding-top: 2px; padding-bottom: 2px;" ngbTooltip="Importar Arquivo" (click)="importacaoArquivoModal(importacaArquivoModal)">
                       <i class="fas fa-database"></i>
-                      <strong> Importar dados </strong>
+                    </button>
+                    <button class="btn btn-primary btn-sm" style="padding-top: 2px; padding-bottom: 2px;" (click)="downloadModelo()" ngbTooltip="Baixar planilha padrão de importação">
+                      <i class="fas fa-download"></i>
                     </button>
                   </div>
                 </div>
               </div>
 
               <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mt-3" style="font-size: 11px;">
+                  <div style="font-size: 11px;">
+                      <select id="itensPorPagina"
+                              [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
+                              style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
+                          <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina" style="font-size: 10px;" >{{ item }}</option>
+                      </select>
+                      <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
+                  </div>
+                  <div style="font-size: 10px;">
+                      <div class="dataTables_filter text-md-end">
+                          <label class="d-inline-flex align-items-center">
+                              <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
+                          </label>
+                      </div>
+                  </div>
+              </div>
 
                 <div class="table-responsive">
-                  <table class="table table-sm table-hover font-size-12">
+                  <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
                     <thead class="tabela-custom">
                       <tr>
-                        <th>Id Empresa</th>
+                        <th>Id Remessa</th>
                         <th>Id Contratante</th>
-                        <th>Id Remesa</th>
-                        <th>Data Importação</th>
-                        <th>User Login</th>
-                        <th>Qtde Clientes</th>
+                        <th>Id Clientes</th>
+                        <th>Arquivo</th>
                         <th>Qtde Emails</th>
                         <th>Qtde Fones</th>
                         <th>Qtde Títulos</th>
-                        <th>Total Títulos</th>
+                        <th>Valor</th>
+                        <th>Data Importação</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2024-07-23 22:12:00</td>
-                        <td>Pedro</td>
-                        <td>2</td>
-                        <td>0</td>
-                        <td>6</td>
-                        <td>2</td>
-                        <td>1033.50</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>2024-07-23 22:15:00</td>
-                        <td>Pedro</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>4</td>
-                        <td>3</td>
-                        <td>1500.00</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>3</td>
-                        <td>2024-07-23 22:18:00</td>
-                        <td>Pedro</td>
-                        <td>1</td>
-                        <td>0</td>
-                        <td>5</td>
-                        <td>1</td>
-                        <td>500.00</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>4</td>
-                        <td>2024-07-23 22:20:00</td>
-                        <td>Pedro</td>
-                        <td>4</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>2000.00</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>5</td>
-                        <td>2024-07-23 22:25:00</td>
-                        <td>Pedro</td>
-                        <td>2</td>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>1200.00</td>
+                      <tr
+                        *ngFor="let item of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                        <td>{{ item.id_remessa }}</td>
+                        <td>{{ item.id_contratante }}</td>
+                        <td>{{ item.qtde_clientes }}</td>
+                        <td>{{ item.arquivo }}</td>
+                        <td>{{ item.qtde_emails }}</td>
+                        <td>{{ item.qtde_fones }}</td>
+                        <td>{{ item.qtde_titulos }}</td>
+                        <td>{{ item.total_titulos  | currency:'BRL' }}</td>
+                        <td>{{ data(item.data_importacao) }}</td>
                       </tr>
                     </tbody>
                   </table>
+                  <div class="d-flex justify-content-between align-items-center mt-3 text-small">
+                    <div>
+                      Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+                      {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+                    </div>
+                    <pagination-controls (pageChange)="paginaAtual = $event"
+                                          previousLabel="Anterior"
+                                          nextLabel="Próximo"
+                                          [maxSize]="5"
+                                          [autoHide]="false"
+                                          [responsive]="true">
+                    </pagination-controls>
+                  </div>
+                </div>
                 </div>
               </div>
             </div>
@@ -111,4 +103,40 @@
       </div>
     </div>
   </div>
+
+  <ng-template #importacaArquivoModal let-modal>
+    <div class="modal-header modal-header-custom" style="background: #1cbb8c; margin: 0">
+      <h6 class="modal-title" style="color: #ffffff">
+        <i class="fas fa-upload"></i> Importa Arquivo
+      </h6>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body modal-padding">
+      <form [formGroup]="formImportacaoArquivo" >
+        <div class="form-group">
+          <label for="id_contratante">Contratante:</label>
+          <select id="id_contratante" class="form-control form-control-sm mb-3" formControlName="id_contratante">
+            <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">
+              {{ contratante.fantasia }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="arquivo">Selecione o arquivo:</label>
+          <input type="file" id="arquivo" class="form-control form-control-sm mb-3"  />
+        </div>
+
+        <div class="d-flex justify-content-end align-items-center mt-3">
+          <button type="submit" class="btn btn-success btn-sm me-1">
+            <i class="fas fa-database"></i> Importar
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
+            <i class="fas fa-window-close"></i> Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
 
