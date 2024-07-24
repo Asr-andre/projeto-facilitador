@@ -1,6 +1,7 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, QueryList, TemplateRef, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
 import { RetornoModel } from 'src/app/core/models/retorno.model';
@@ -19,10 +20,16 @@ export class ContratantesComponent implements OnInit {
   public formContratante: FormGroup;
   public loading: boolean = false;
   public loadingMin: boolean = false;
+
   public paginaAtual: number = 1;
   public itensPorPagina: number = 20;
-  public contratantesFiltrados: ContratanteModel[] = [];
+  public dadosFiltrados: ContratanteModel[] = [];
   public textoPesquisa: string = '';
+  public totalRegistros: number = 0;
+  public totalRegistrosExibidos: number = 0;
+  public qtdRegistrosPorPagina = [10, 25, 50, 100];
+  public direcaoOrdenacao: { [key: string]: string } = {};
+  @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<ContratanteModel>>;
 
   constructor(
     private _contratanteService: ContratanteService,
@@ -59,7 +66,9 @@ export class ContratantesComponent implements OnInit {
     this.loading = true;
     this._contratanteService.obterContratantePorEmpresa(idEmpresa).subscribe((res) => {
       this.contratantes = res.contratantes;
-      this.contratantesFiltrados = res.contratantes;
+      this.dadosFiltrados = res.contratantes
+      this.totalRegistros = res.contratantes.length;
+      this.atualizarQuantidadeExibida();
       this.loading = false;
     },
       (error) => {
@@ -69,8 +78,29 @@ export class ContratantesComponent implements OnInit {
     );
   }
 
-  public filtrarContratantes(): void {
-    this.contratantesFiltrados = Utils.filtrar(this.contratantes, this.textoPesquisa);
+  public filtrar(): void {
+    this.dadosFiltrados = Utils.filtrar(this.contratantes, this.textoPesquisa);
+  }
+
+  public atualizarQuantidadeExibida() {
+    this.totalRegistrosExibidos = Math.min(this.paginaAtual * this.itensPorPagina, this.totalRegistros);
+  }
+
+  public ordenar({ column, direction }: SortEvent<ContratanteModel>) {
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
+    if (direction === '' || column === '') {
+      this.dadosFiltrados = this.contratantes;
+    } else {
+      this.dadosFiltrados = [...this.dadosFiltrados].sort((a, b) => {
+        const res = compararParaOrdenar(a[column], b[column]);
+        return direction === 'asc' ? res : -res;
+      });
+    }
   }
 
   public abriModalCadastro(content: TemplateRef<any>): void {

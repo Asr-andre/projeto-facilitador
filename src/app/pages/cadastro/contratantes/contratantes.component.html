@@ -27,14 +27,23 @@
               </div>
 
               <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-12 col-md-12">
-                    <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
-                        class="d-inline-flex align-items-center">Pesquisar:
-                        <input type="text" class="form-control form-control-sm ms-2" [(ngModel)]="textoPesquisa" (input)="filtrarContratantes()"/></label>
-                    </div>
+                <div class="d-flex justify-content-between align-items-center mt-3" style="font-size: 11px;">
+                  <div style="font-size: 11px;">
+                      <select id="itensPorPagina"
+                              [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
+                              style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
+                          <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina" style="font-size: 10px;" >{{ item }}</option>
+                      </select>
+                      <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
                   </div>
-                </div>
+                  <div style="font-size: 10px;">
+                      <div class="dataTables_filter text-md-end">
+                          <label class="d-inline-flex align-items-center">
+                              <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
+                          </label>
+                      </div>
+                  </div>
+              </div>
                 <div class="table-responsive">
                   <table class="table table-sm table-hover font-size-12">
                     <thead class="tabela-custom">
@@ -54,7 +63,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let contratante of contratantesFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                      <tr *ngFor="let contratante of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
                         <td>{{ contratante.id_contratante }}</td>
                         <td>{{ contratante.fantasia }}</td>
                         <td>{{ mascararCpfCnpj(contratante.cnpj) }}</td>
@@ -70,9 +79,17 @@
                       </tr>
                     </tbody>
                   </table>
-                  <div class="d-flex justify-content-end mt-3">
-                    <pagination-controls class="pagination-controls-custom" (pageChange)="paginaAtual = $event"
-                      previousLabel="Anterior" nextLabel="Proximo" [maxSize]="5" [autoHide]="false" [responsive]="true">
+                  <div class="d-flex justify-content-between align-items-center mt-3 text-small">
+                    <div>
+                      Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+                      {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+                    </div>
+                    <pagination-controls (pageChange)="paginaAtual = $event"
+                                          previousLabel="Anterior"
+                                          nextLabel="Próximo"
+                                          [maxSize]="5"
+                                          [autoHide]="false"
+                                          [responsive]="true">
                     </pagination-controls>
                   </div>
                 </div>

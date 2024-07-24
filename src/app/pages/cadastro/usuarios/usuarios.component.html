@@ -39,7 +39,7 @@
                   <div style="font-size: 10px;">
                       <div class="dataTables_filter text-md-end">
                           <label class="d-inline-flex align-items-center">
-                              <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrarUsuario()" />
+                              <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
                           </label>
                       </div>
                   </div>
@@ -61,7 +61,7 @@
                     </thead>
                     <tbody>
                       <tr
-                        *ngFor="let usuario of usuariosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                        *ngFor="let usuario of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
                         <td>{{ usuario.id_usuario }}</td>
                         <td>{{ usuario.sigla }}</td>
                         <td>{{ usuario.nome }}</td>
@@ -83,8 +83,7 @@
                                           nextLabel="Próximo"
                                           [maxSize]="5"
                                           [autoHide]="false"
-                                          [responsive]="true"
-                                          class="pagination-controls-custom">
+                                          [responsive]="true">
                     </pagination-controls>
                   </div>
                 </div>

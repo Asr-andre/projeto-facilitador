@@ -22,7 +22,7 @@ export class UsuariosComponent implements OnInit {
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 20;
-  public usuariosFiltrados: UsuarioModel[] = [];
+  public dadosFiltrados: UsuarioModel[] = [];
   public textoPesquisa: string = '';
   public totalRegistros: number = 0;
   public totalRegistrosExibidos: number = 0;
@@ -64,7 +64,7 @@ export class UsuariosComponent implements OnInit {
     this.loading = true;
     this._usuarioService.obterUsuariosPorEmpresa(idEmpresa).subscribe((res) => {
       this.usuarios = res.contratantes;
-      this.usuariosFiltrados = res.contratantes
+      this.dadosFiltrados = res.contratantes
       this.totalRegistros = res.contratantes.length;
       this.atualizarQuantidadeExibida();
       this.loading = false;
@@ -75,8 +75,8 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  public filtrarUsuario(): void {
-    this.usuariosFiltrados = Utils.filtrar(this.usuarios, this.textoPesquisa);
+  public filtrar(): void {
+    this.dadosFiltrados = Utils.filtrar(this.usuarios, this.textoPesquisa);
   }
 
   public atualizarQuantidadeExibida() {
@@ -91,9 +91,9 @@ export class UsuariosComponent implements OnInit {
     });
 
     if (direction === '' || column === '') {
-      this.usuariosFiltrados = this.usuarios;
+      this.dadosFiltrados = this.usuarios;
     } else {
-      this.usuariosFiltrados = [...this.usuariosFiltrados].sort((a, b) => {
+      this.dadosFiltrados = [...this.dadosFiltrados].sort((a, b) => {
         const res = compararParaOrdenar(a[column], b[column]);
         return direction === 'asc' ? res : -res;
       });
