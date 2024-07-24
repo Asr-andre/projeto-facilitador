@@ -53,14 +53,10 @@ export class Utils {
 
   public static formatarDataParaExibicao(dataIso: string): string {
     if (!dataIso) return '';
-
-    // Cria um objeto Date com a data ISO
     const data = new Date(dataIso);
 
-    // Adiciona 4 horas à data
     data.setHours(data.getHours() + 3);
 
-    // Obtém partes da data e hora no horário local
     const ano = data.getFullYear();
     const mes = (data.getMonth() + 1).toString().padStart(2, '0');
     const dia = data.getDate().toString().padStart(2, '0');
@@ -68,7 +64,6 @@ export class Utils {
     const minuto = data.getMinutes().toString().padStart(2, '0');
     const segundo = data.getSeconds().toString().padStart(2, '0');
 
-    // Formata a data e hora conforme desejado
     return `${dia}/${mes}/${ano} ${hora}:${minuto}`;
   }
 

@@ -66,8 +66,10 @@
           <h4 class="card-title mb-4 custom-card-title">Lista de Clientes cadastrados</h4>
           <div class="row">
             <div class="col-sm-12 col-md-12">
-              <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label class="d-inline-flex align-items-center">
-                  <input type="text" class="form-control form-control-sm ms-2" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtraDevedor()" /></label>
+              <div id="tickets-table_filter" class="dataTables_filter text-md-end">
+                <label class="d-inline-flex align-items-center">
+                  <input type="text" class="form-control form-control-sm ms-2" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
+                </label>
               </div>
             </div>
           </div>
@@ -84,7 +86,7 @@
               </thead>
               <tbody>
                 <tr
-                  *ngFor="let devedor of devedoresFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }"
+                  *ngFor="let devedor of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }"
                   [ngClass]="{'selected': devedorSelecionado === devedor, 'table-row': true}"
                   (click)="selecionarDevedor(devedor)">
                   <td>{{ devedor.fantasia }}</td>
@@ -96,9 +98,17 @@
               </tbody>
             </table>
 
-            <div class="d-flex justify-content-end mt-3">
-              <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Proximo"
-                [maxSize]="5" [autoHide]="true" [responsive]="true">
+            <div class="d-flex justify-content-between align-items-center mt-3 text-small">
+              <div>
+                Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+                {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+              </div>
+              <pagination-controls (pageChange)="paginaAtual = $event"
+                                    previousLabel="Anterior"
+                                    nextLabel="Próximo"
+                                    [maxSize]="5"
+                                    [autoHide]="false"
+                                    [responsive]="true">
               </pagination-controls>
             </div>
           </div>
