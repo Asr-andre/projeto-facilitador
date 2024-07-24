@@ -45,21 +45,21 @@
                   </div>
               </div>
                 <div class="table-responsive">
-                  <table class="table table-sm table-hover font-size-12">
+                  <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
                     <thead class="tabela-custom">
                       <tr>
-                        <th>Id</th>
-                        <th>Fantasia</th>
-                        <th>Cnpj</th>
-                        <th>Endereço</th>
-                        <th>Número</th>
-                        <th>Bairro</th>
-                        <th>Cep</th>
-                        <th>Cidade</th>
-                        <th>Uf</th>
-                        <th>Id Fórmula</th>
-                        <th>Data Cadastro</th>
-                        <th>Ativo</th>
+                        <th sortable="id_contratante" (sort)="ordenar($event)">Id</th>
+                        <th sortable="fantasia" (sort)="ordenar($event)">Fantasia</th>
+                        <th sortable="cnpj" (sort)="ordenar($event)">Cnpj</th>
+                        <th sortable="endereco" (sort)="ordenar($event)">Endereço</th>
+                        <th sortable="numero" (sort)="ordenar($event)">Número</th>
+                        <th sortable="bairro" (sort)="ordenar($event)">Bairro</th>
+                        <th sortable="cep" (sort)="ordenar($event)">Cep</th>
+                        <th sortable="cidade" (sort)="ordenar($event)">Cidade</th>
+                        <th sortable="uf" (sort)="ordenar($event)">Uf</th>
+                        <th sortable="id_formula" (sort)="ordenar($event)">Id Fórmula</th>
+                        <th sortable="data_cadastro" (sort)="ordenar($event)">Data Cadastro</th>
+                        <th sortable="ativo" (sort)="ordenar($event)">Ativo</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -74,7 +74,7 @@
                         <td>{{ contratante.cidade }}</td>
                         <td>{{ contratante.uf }}</td>
                         <td>{{ contratante.id_formula }}</td>
-                        <td>{{ contratante.data_cadastro | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ data(contratante.data_cadastro) }}</td>
                         <td>{{ contratante.ativo === 'S' ? 'Sim' : 'Não' }}</td>
                       </tr>
                     </tbody>

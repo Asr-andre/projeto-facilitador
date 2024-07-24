@@ -46,17 +46,17 @@
               </div>
 
                 <div class="table-responsive">
-                  <table class="table table-sm table-hover font-size-12">
+                  <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
                     <thead class="tabela-custom">
                       <tr>
                         <th sortable="id_usuario" (sort)="ordenar($event)">Id</th>
-                        <th>Sigla</th>
-                        <th>Nome</th>
-                        <th>Login</th>
-                        <th>Cpf</th>
-                        <th>Email</th>
-                        <th>Fone</th>
-                        <th>Ativo</th>
+                        <th sortable="sigla" (sort)="ordenar($event)">Sigla</th>
+                        <th sortable="nome" (sort)="ordenar($event)">Nome</th>
+                        <th sortable="login" (sort)="ordenar($event)">Login</th>
+                        <th sortable="cpf" (sort)="ordenar($event)">Cpf</th>
+                        <th sortable="email" (sort)="ordenar($event)">Email</th>
+                        <th sortable="fone" (sort)="ordenar($event)">Fone</th>
+                        <th sortable="ativo" (sort)="ordenar($event)">Ativo</th>
                       </tr>
                     </thead>
                     <tbody>

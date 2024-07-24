@@ -26,6 +26,7 @@ import { TitulosComponent } from './titulos/titulos.component';
 import { EmpresaModule } from './empresa/empresa.module';
 import { TitulosModule } from './titulos/titulos.module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { OrderTableModule } from 'src/app/core/helpers/conf-tabela/order-table.module';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -53,6 +54,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     DropzoneModule,
     EmpresaModule,
     NgxPaginationModule,
+    OrderTableModule,
     TitulosModule
   ],
   providers: [

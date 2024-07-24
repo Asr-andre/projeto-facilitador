@@ -152,4 +152,8 @@ export class ContratantesComponent implements OnInit {
     }
     return numero;
   }
+
+  public data(data) {
+    return Utils.formatarDataParaExibicao(data);
+  }
 }
