@@ -1,7 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { utils } from 'protractor';
 import { Subject, debounceTime } from 'rxjs';
+import { Utils } from 'src/app/core/helpers/utils';
 import { AcionamentoModel, RequisicaoAcionamentoModel } from 'src/app/core/models/acionamento.model';
 import { AcaoCobrancaModel, RequisicaoAcaoCobrancaModel } from 'src/app/core/models/acoes.cobranca.model';
 import { AcaoCobrancaService } from 'src/app/core/services/acao.cobranca.service';
@@ -105,6 +107,10 @@ export class AcionamentoComponent implements OnChanges, OnInit {
         }
       );
     }
+  }
+
+  public data(data) {
+    return Utils.formatarDataParaExibicao(data);
   }
 
   public abriracaoDeCobrancaModal(modal): void {

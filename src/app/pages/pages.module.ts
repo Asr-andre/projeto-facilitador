@@ -1,5 +1,5 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { LOCALE_ID, NgModule } from "@angular/core";
+import { CommonModule, registerLocaleData } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { UiModule } from "../shared/ui/ui.module";
@@ -36,7 +36,9 @@ import { DetalheDaDividaComponent } from "./dashboard/componente/detalhe-da-divi
 import { OrderTableModule } from "../core/helpers/conf-tabela/order-table.module";
 import { EnvioEmailComponent } from "./dashboard/componente/detalhe-da-divida/envio-email/envio-email.component";
 import { EnvioSmsComponent } from "./dashboard/componente/detalhe-da-divida/envio-sms/envio-sms.component";
+import localePt from '@angular/common/locales/pt';
 
+registerLocaleData(localePt);
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -74,6 +76,8 @@ import { EnvioSmsComponent } from "./dashboard/componente/detalhe-da-divida/envi
     NgbTimepickerModule,
     NgbDatepickerModule,
   ],
-  providers: [provideNgxMask()],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+    provideNgxMask()],
 })
 export class PagesModule {}

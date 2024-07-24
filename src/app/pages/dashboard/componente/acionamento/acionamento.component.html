@@ -27,7 +27,7 @@
         <tr *ngFor="let acionamento of acionamentos">
           <td>{{ acionamento.id_acionamento }}</td>
           <td>{{ acionamento.descricao }}</td>
-          <td>{{ acionamento.data_acio | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ data(acionamento.data_acio) }}</td>
           <td>{{ acionamento.mensagem }}</td>
           <td>{{ acionamento.fone }}</td>
           <td>{{ acionamento.titulo }}</td>

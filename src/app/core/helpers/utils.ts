@@ -51,22 +51,49 @@ export class Utils {
     return `Nº ${numero}`;
   }
 
+  public static formatarDataParaExibicao(dataIso: string): string {
+    if (!dataIso) return '';
 
-  public static dataBr(dataIso: string) {
+    // Cria um objeto Date com a data ISO
+    const data = new Date(dataIso);
+
+    // Adiciona 4 horas à data
+    data.setHours(data.getHours() + 3);
+
+    // Obtém partes da data e hora no horário local
+    const ano = data.getFullYear();
+    const mes = (data.getMonth() + 1).toString().padStart(2, '0');
+    const dia = data.getDate().toString().padStart(2, '0');
+    const hora = data.getHours().toString().padStart(2, '0');
+    const minuto = data.getMinutes().toString().padStart(2, '0');
+    const segundo = data.getSeconds().toString().padStart(2, '0');
+
+    // Formata a data e hora conforme desejado
+    return `${dia}/${mes}/${ano} ${hora}:${minuto}`;
+  }
+
+
+  public static dataBr(dataIso: string): string {
     if (!dataIso) {
       return '';
     }
 
+    // Cria um objeto Date com a data ISO
     const data = new Date(dataIso);
-    const ano = data.getFullYear();
-    const mes = data.getMonth() + 1;
-    const dia = data.getDate();
-    const hora = data.getHours();
-    const minuto = data.getMinutes();
 
-    const dataFormatada = `${this.addZeroEsquerda(dia)}/${this.addZeroEsquerda(mes)}/${ano} ${this.addZeroEsquerda(hora)}:${this.addZeroEsquerda(minuto)}`;
+    // Obtém o fuso horário local
+    const offset = data.getTimezoneOffset() * 60000;
 
-    return dataFormatada;
+    // Ajusta a data para o horário local
+    const dataLocal = new Date(data.getTime() - offset);
+
+    const ano = dataLocal.getFullYear();
+    const mes = dataLocal.getMonth() + 1;
+    const dia = dataLocal.getDate();
+    const hora = dataLocal.getHours();
+    const minuto = dataLocal.getMinutes();
+
+    return `${this.addZeroEsquerda(dia)}/${this.addZeroEsquerda(mes)}/${ano} ${this.addZeroEsquerda(hora)}:${this.addZeroEsquerda(minuto)}`;
   }
 
   private static addZeroEsquerda(num: number): string {
