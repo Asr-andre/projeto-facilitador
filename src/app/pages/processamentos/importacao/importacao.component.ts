@@ -111,7 +111,6 @@ export class ImportacaoComponent implements OnInit {
   public importManualModal(modal): void {
     this.obterContratantes();
     this.inicializarForm();
-    this.carregarImportacoesManual();
     this._modalService.open(this.importManual, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
   }
 
