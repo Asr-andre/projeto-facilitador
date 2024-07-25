@@ -15,4 +15,8 @@ export class ImportacaoService {
   public listarImportacoesRealizada(idEmpresa: number): Observable<ImportacaoRetornoModel> {
     return this._http.post<ImportacaoRetornoModel>(`${this.apiUrl}/listarimportacao`, { id_empresa: idEmpresa });
   }
+
+  uploadFile(formData: FormData): Observable<any> {
+    return this._http.post(`${this.apiUrl}/importacao`, formData);
+  }
 }

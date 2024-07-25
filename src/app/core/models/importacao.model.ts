@@ -1,3 +1,10 @@
+export interface ImportacaoFormData {
+  id_empresa: number;
+  id_contratante: number;
+  arquivo: File;
+  user_login: string;
+}
+
 export class ImportacaoRetornoModel {
   success: string;
   msg: string;

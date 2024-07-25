@@ -19,10 +19,10 @@
                     <h5 class="mb-0"><i class="fas fa-file-import"></i> Importações realizadas </h5>
                   </div>
                   <div class="col-md-6 text-end">
-                    <button class="btn btn-secondary btn-sm me-2" style="padding-top: 2px; padding-bottom: 2px;" ngbTooltip="Importação manual">
+                    <button class="btn btn-secondary btn-sm me-2" style="padding-top: 2px; padding-bottom: 2px;" ngbTooltip="Importação manual" (click)="importManualModal(importacaoManualModal)">
                       <i class="fas fa-file-alt"></i>
                     </button>
-                    <button class="btn btn-secondary btn-sm me-2" style="padding-top: 2px; padding-bottom: 2px;" ngbTooltip="Importar Arquivo" (click)="importacaoArquivoModal(importacaArquivoModal)">
+                    <button class="btn btn-secondary btn-sm me-2" style="padding-top: 2px; padding-bottom: 2px;" ngbTooltip="Importar Arquivo" (click)="importArquivoModal(importacaoArquivoModal)">
                       <i class="fas fa-database"></i>
                     </button>
                     <button class="btn btn-primary btn-sm" style="padding-top: 2px; padding-bottom: 2px;" (click)="downloadModelo()" ngbTooltip="Baixar planilha padrão de importação">
@@ -104,7 +104,77 @@
     </div>
   </div>
 
-  <ng-template #importacaArquivoModal let-modal>
+  <ng-template #importacaoManualModal let-modal>
+    <div class="modal-header modal-header-custom" style="background: #1cbb8c; margin: 0">
+      <h6 class="modal-title" style="color: #ffffff">
+        <i class="fas fa-file-alt"></i> Importação manual
+      </h6>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body modal-padding">
+      <form [formGroup]="formImportacaoManual" >
+        <div class="form-group">
+          <label for="id_contratante">Contratante:</label>
+          <select id="id_contratante" class="form-control form-control-sm mb-3" formControlName="id_contratante">
+            <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">
+              {{ contratante.fantasia }}
+            </option>
+          </select>
+        </div>
+
+        <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+          <thead>
+            <tr>
+              <th>CNPJ</th>
+              <th>Nome Fantasia</th>
+              <th>Endereço</th>
+              <th>Número</th>
+              <th>Bairro</th>
+              <th>Cidade</th>
+              <th>Estado</th>
+              <th>CEP</th>
+              <th>Tipo Título</th>
+              <th>Parcela</th>
+              <th>Plano</th>
+              <th>Títulos</th>
+              <th>Serasa</th>
+              <th>Vencimento</th>
+              <th>Valor</th>
+              <th>Celular WhatsApp</th>
+              <th>Fone Comercial</th>
+              <th>Fone Residencial</th>
+              <th>Fone Outros</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of importacoesManual">
+              <td>{{ item.cnpj }}</td>
+              <td>{{ item.nomeFantasia }}</td>
+              <td>{{ item.endereco }}</td>
+              <td>{{ item.numero }}</td>
+              <td>{{ item.bairro }}</td>
+              <td>{{ item.cidade }}</td>
+              <td>{{ item.estado }}</td>
+              <td>{{ item.cep }}</td>
+              <td>{{ item.tipoTitulo }}</td>
+              <td>{{ item.parcela }}</td>
+              <td>{{ item.plano }}</td>
+              <td>{{ item.titulos }}</td>
+              <td>{{ item.serasa }}</td>
+              <td>{{ item.vencimento | date }}</td>
+              <td>{{ item.valor | currency:'BRL' }}</td>
+              <td>{{ item.celularWhatsapp }}</td>
+              <td>{{ item.foneComercial }}</td>
+              <td>{{ item.foneResidencial }}</td>
+              <td>{{ item.foneOutros }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </ng-template>
+
+  <ng-template #importacaoArquivoModal let-modal>
     <div class="modal-header modal-header-custom" style="background: #1cbb8c; margin: 0">
       <h6 class="modal-title" style="color: #ffffff">
         <i class="fas fa-upload"></i> Importa Arquivo
@@ -112,7 +182,7 @@
       <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
     </div>
     <div class="modal-body modal-padding">
-      <form [formGroup]="formImportacaoArquivo" >
+      <form [formGroup]="formImportacaoArquivo" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="id_contratante">Contratante:</label>
           <select id="id_contratante" class="form-control form-control-sm mb-3" formControlName="id_contratante">
@@ -124,11 +194,11 @@
 
         <div class="form-group mt-3">
           <label for="arquivo">Selecione o arquivo:</label>
-          <input type="file" id="arquivo" class="form-control form-control-sm mb-3"  />
+          <input type="file" id="arquivo" class="form-control form-control-sm mb-3" (change)="onFileChange($event)" />
         </div>
 
         <div class="d-flex justify-content-end align-items-center mt-3">
-          <button type="submit" class="btn btn-success btn-sm me-1">
+          <button type="submit" class="btn btn-success btn-sm me-1" [disabled]="formImportacaoArquivo.invalid">
             <i class="fas fa-database"></i> Importar
           </button>
           <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
@@ -138,5 +208,12 @@
       </form>
     </div>
   </ng-template>
+
+
+
+
+
+
+
 
 
