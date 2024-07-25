@@ -9,8 +9,6 @@ import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app
 import { Utils } from 'src/app/core/helpers/utils';
 import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
-import * as XLSX from 'xlsx';
-
 
 @Component({
   selector: 'app-importacao',
