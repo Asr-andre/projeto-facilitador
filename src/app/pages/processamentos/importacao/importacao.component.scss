@@ -8,3 +8,25 @@
 .text-small {
   font-size: 11px;
 }
+
+.btnHover:hover {
+  color: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  border-top-width: 0px;
+}
+
+.rodape {
+  position: sticky;
+  bottom: 0;
+  border-top-width: 0px;
+  background: #eee;
+}

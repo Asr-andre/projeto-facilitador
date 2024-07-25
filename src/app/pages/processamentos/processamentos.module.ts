@@ -12,24 +12,17 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { DropzoneModule } from 'ngx-dropzone-wrapper';
 
 import { UiModule } from '../../shared/ui/ui.module';
-import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
-import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
 import { ImportacaoRoutingModule } from './processamentos-routing.module';
 import { ImportacaoComponent } from './importacao/importacao.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ImportacaoManualComponent } from './importacao/componente/importacao-manual/importacao-manual.component';
 
-const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
-  // Change this to your upload POST address:
-  url: 'https://httpbin.org/post',
-  maxFilesize: 50
-};
 @NgModule({
 
-  declarations: [ImportacaoComponent],
+  declarations: [ImportacaoComponent, ImportacaoManualComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -45,16 +38,11 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     UiSwitchModule,
     ColorPickerModule,
     NgbDatepickerModule,
-    DropzoneModule,
     NgxPaginationModule,
     NgbModule
   ],
   providers: [
-    provideNgxMask(),
-    {
-      provide: DROPZONE_CONFIG,
-      useValue: DEFAULT_DROPZONE_CONFIG
-    }
+    provideNgxMask()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
