@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { DetalhamentoModel } from 'src/app/core/models/detalhamento.model';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -19,6 +19,7 @@ export class DetalheDaDividaComponent implements OnChanges {
   @Input() idContratante: number | undefined;
   public detalhamentoSelecionado: DetalhamentoModel | null = null;
   public loadingMin: boolean = false;
+  @Output() dadosEnviado: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
     private _dashboard: DashboardService,
@@ -28,6 +29,20 @@ export class DetalheDaDividaComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.idCliente || changes.idContratante) {
       this.obterDetalhamentoPorId(this.idCliente, this.idContratante);
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.EnvioEmailComponent) {
+      this.EnvioEmailComponent.dadosEnviado.subscribe(() => {
+        this.dadosEnviado.emit();
+      });
+    }
+
+    if (this.EnvioSmsComponent) {
+      this.EnvioSmsComponent.dadosEnviado.subscribe(() => {
+        this.dadosEnviado.emit();
+      });
     }
   }
 

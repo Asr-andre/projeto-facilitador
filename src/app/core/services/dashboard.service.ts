@@ -34,7 +34,6 @@ export class DashboardService {
   public obterCards(): Observable<RespostaCardsModel> {
     const idEmpresa = parseInt(this._authService.getIdEmpresa(), 10);
     const requestBody: RequisicaoCardsModel = { id_empresa: idEmpresa };
-    console.log('Enviando requisição com:', requestBody);
     return this._http.post<RespostaCardsModel>(`${this.apiUrl}/envioscards`, requestBody);
   }
 

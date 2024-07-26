@@ -66,8 +66,7 @@ export class ContratantesComponent implements OnInit {
     this.loading = true;
     this._contratanteService.obterContratantePorEmpresa(idEmpresa).subscribe((res) => {
       this.contratantes = res.contratantes;
-      this.dadosFiltrados = res.contratantes
-      this.totalRegistros = res.contratantes.length;
+      this.filtrar();
       this.atualizarQuantidadeExibida();
       this.loading = false;
     },
@@ -80,6 +79,7 @@ export class ContratantesComponent implements OnInit {
 
   public filtrar(): void {
     this.dadosFiltrados = Utils.filtrar(this.contratantes, this.textoPesquisa);
+    this.totalRegistros = this.dadosFiltrados.length;
   }
 
   public atualizarQuantidadeExibida() {

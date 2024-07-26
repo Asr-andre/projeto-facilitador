@@ -64,8 +64,7 @@ export class UsuariosComponent implements OnInit {
     this.loading = true;
     this._usuarioService.obterUsuariosPorEmpresa(idEmpresa).subscribe((res) => {
       this.usuarios = res.contratantes;
-      this.dadosFiltrados = res.contratantes;
-      this.totalRegistros = res.contratantes.length;
+      this.filtrar();
       this.atualizarQuantidadeExibida();
       this.loading = false;
     },
@@ -77,6 +76,7 @@ export class UsuariosComponent implements OnInit {
 
   public filtrar(): void {
     this.dadosFiltrados = Utils.filtrar(this.usuarios, this.textoPesquisa);
+    this.totalRegistros = this.dadosFiltrados.length;
   }
 
   public atualizarQuantidadeExibida() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -11,6 +11,7 @@ import { EmailService } from 'src/app/core/services/email.service';
   styleUrls: ['./envio-email.component.scss']
 })
 export class EnvioEmailComponent implements OnInit {
+  @Output() dadosEnviado = new EventEmitter<void>();
   @ViewChild('emailModal') modalEmailRef: TemplateRef<any>;
   public destinatarioEmail: string = '';
   public formularioEnvioEmail: FormGroup;
@@ -80,6 +81,7 @@ export class EnvioEmailComponent implements OnInit {
         this._modalService.dismissAll();
         this._alertService.success(res.msg);
         this.resetarCampos();
+        this.dadosEnviado.emit();
       } else {
         this.resetarCampos();
         this._alertService.warning(res.msg);

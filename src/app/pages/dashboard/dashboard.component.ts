@@ -15,7 +15,6 @@ export class DashboardComponent implements OnInit {
 
   public listarDevedores: DevedorModel[] = [];
   public devedoresFiltrados: DevedorModel[] = [];
-  public dadosCards: RespostaCardsModel;
   public devedorSelecionado: DevedorModel | null = null;
   public loading: boolean = false;
 
@@ -43,15 +42,13 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.obterDevedores();
-
   }
 
   public obterDevedores(): void {
     this.loading = true;
     this._dashboard.obterDevedores().subscribe((res) => {
       this.listarDevedores = res;
-      this.dadosFiltrados = res;
-      this.totalRegistros = res.length;
+      this.filtrar();
       this.atualizarQuantidadeExibida();
       this.obterDadosDosCards();
       this.loading = false;
@@ -67,12 +64,8 @@ export class DashboardComponent implements OnInit {
             this.totalEmail = response.total_email || 0;
             this.qtdeSms = response.qtde_sms || 0;
             this.totalSms = response.total_sms || 0;
-            this.qtdeWhatsapp = response.qtde_whatsapp || 0;
-            this.totalWhatsapp = response.total_whatsapp || 0;
             this.totalUtilizado = response.total_utilizado || 0;
             this.saldo = response.saldo || 0;
-
-            this.dadosCards = response;
           } else {
             console.error('Erro na resposta da API:', response.msg || 'Mensagem não disponível');
           }
@@ -92,6 +85,7 @@ export class DashboardComponent implements OnInit {
 
   public filtrar(): void {
     this.dadosFiltrados = Utils.filtrar(this.listarDevedores, this.textoPesquisa);
+    this.totalRegistros = this.dadosFiltrados.length;
   }
 
   public atualizarQuantidadeExibida() {
@@ -120,5 +114,9 @@ export class DashboardComponent implements OnInit {
       return Utils.formatarDocumento(value);
     }
     return value;
+  }
+
+  public atualizarCards(): void {
+    this.obterDadosDosCards();
   }
 }

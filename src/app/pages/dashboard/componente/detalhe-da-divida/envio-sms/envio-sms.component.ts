@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -11,6 +11,7 @@ import { SmsService } from 'src/app/core/services/sms.service';
   styleUrl: './envio-sms.component.scss'
 })
 export class EnvioSmsComponent implements OnInit {
+  @Output() dadosEnviado = new EventEmitter<void>();
   @ViewChild('smsModal') modalEmailRef: TemplateRef<any>;
   public foneDestinatario: string = '';
   public formEnvioSms: FormGroup;
@@ -60,6 +61,7 @@ export class EnvioSmsComponent implements OnInit {
       this._smsService.envioSmsUnitario(this.formEnvioSms.value).subscribe((res) => {
         this.loading = false;
         if (res.success === 'true') {
+          this.dadosEnviado.emit();
           this._modalService.dismissAll();
           this.resetarCampos();
           this._alertService.success(res.msg);
