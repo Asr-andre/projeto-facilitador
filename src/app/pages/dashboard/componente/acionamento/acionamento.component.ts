@@ -37,7 +37,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     private _acaoCobrancaService: AcaoCobrancaService,
     private _formBuilder: FormBuilder
   ) {
-    this.updateSubject.pipe(debounceTime(500)).subscribe(() => this.listarAcionamentos());
+    this.updateSubject.pipe(debounceTime(300)).subscribe(() => this.listarAcionamentos());
   }
 
   ngOnInit(): void {
