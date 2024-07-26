@@ -112,7 +112,7 @@
       <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
     </div>
     <div class="modal-body modal-padding">
-      <form [formGroup]="formImportacaoArquivo" (ngSubmit)="onSubmit()">
+      <form [formGroup]="formImportacaoArquivo" (ngSubmit)="submitForm()">
         <div class="form-group">
           <label for="id_contratante">Contratante:</label>
           <select id="id_contratante" class="form-control form-control-sm mb-3" formControlName="id_contratante">

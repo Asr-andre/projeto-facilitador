@@ -57,8 +57,8 @@ export class ImportacaoComponent implements OnInit {
     this.formImportacaoArquivo = this._formBuilder.group({
       id_empresa: [this.idEmpresa, Validators.required],
       id_contratante: [1, Validators.required],
-      arquivo: ['', Validators.required],
-      user_login: [this.login]
+      user_login: [this.login],
+      arquivo: [null, Validators.required] // Adicionado para controle do arquivo
     });
   }
 
@@ -149,9 +149,10 @@ export class ImportacaoComponent implements OnInit {
     event.stopPropagation();
   }
 
-  public uploadFile(formData: FormData) {
-    this._importacaoService.uploadFile(formData).subscribe(
-      (response) => {
+  public uploadFile(file: File) {
+    this._importacaoService.uploadFile(file).subscribe(
+      () => {
+        this.enviarDadosFormulario();
         this._alertService.success('Arquivo enviado com sucesso');
       },
       (error) => {
@@ -160,26 +161,34 @@ export class ImportacaoComponent implements OnInit {
     );
   }
 
-
-  public onSubmit() {
+  public submitForm() {
     if (this.formImportacaoArquivo.valid) {
-      const file = this.formImportacaoArquivo.get('arquivo').value;
-
-      const fileBlob = new Blob([file], { type: 'application/octet-stream' });
-
-      const formDataToSend = new FormData();
-      formDataToSend.append('id_empresa', this.formImportacaoArquivo.get('id_empresa').value.toString());
-      formDataToSend.append('id_contratante', this.formImportacaoArquivo.get('id_contratante').value.toString());
-      formDataToSend.append('arquivo', fileBlob, file.name);
-      formDataToSend.append('user_login', this.formImportacaoArquivo.get('user_login').value);
-
-      console.log('Form Data:', formDataToSend);
-
-      this.uploadFile(formDataToSend);
+      const arquivo = this.formImportacaoArquivo.get('arquivo').value;
+      if (arquivo) {
+        this.uploadFile(arquivo);
+      } else {
+        this._alertService.warning('Nenhum arquivo selecionado');
+      }
     } else {
-      this._alertService.error('Por favor, preencha todos os campos obrigatórios.');
+      this._alertService.warning('Preencha todos os campos obrigatórios');
     }
   }
+
+  public enviarDadosFormulario() {
+    const idContratante = this.formImportacaoArquivo.get('id_contratante').value;
+    const userLogin = this.formImportacaoArquivo.get('user_login').value;
+
+    this._importacaoService.enviarDadosFormulario(this.idEmpresa, idContratante, userLogin).subscribe(
+      () => {
+        this._alertService.success('Dados do formulário enviados com sucesso');
+        // Aqui você pode querer fechar o modal ou fazer outras ações
+      },
+      (error) => {
+        this._alertService.error('Erro ao enviar os dados do formulário');
+      }
+    );
+  }
+
 
   public navegarParaImportacaoManual() {
     this._router.navigate(['/processamentos/importacao/importacao-manual']);

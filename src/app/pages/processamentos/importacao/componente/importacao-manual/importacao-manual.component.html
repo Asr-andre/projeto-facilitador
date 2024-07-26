@@ -1,4 +1,3 @@
-
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
@@ -6,19 +5,9 @@
         <div class="d-flex">
           <div class="flex-1 overflow-hidden">
             <div class="card">
-
-              <div class="card-header pt-2 pb-2">
-                <div class="row">
-                  <div class="col-md-6">
-                    <h5 class="mb-0"><i class="fas fa-file-alt"></i> Importação manual </h5>
-                  </div>
-
-                </div>
-              </div>
-
-              <div class="card-body">
-
-                <div class="col-md-6 text-end">
+              <div class="card-header pt-2 pb-2 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-file-import"></i> Importação manual</h5>
+                <div class="btn-group">
                   <button class="btn btn-success btn-sm me-2" style="padding-top: 2px; padding-bottom: 2px;">
                     <i class="fas fa-save"></i> Salvar
                   </button>
@@ -26,19 +15,67 @@
                     <i class="fas fa-arrow-left"></i> Cancelar
                   </button>
                 </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-sm table-hover font-size-12 tabelaOrdenada" style="table-layout: auto;">
+                  <thead class="tabela-custom">
+                    <tr>
+                      <th class="col-cnpj">CNPJ</th>
+                      <th class="col-nome-fantasia">NOME FANTASIA</th>
+                      <th class="col-endereco">ENDERECO</th>
+                      <th class="col-numero">NUMERO</th>
+                      <th class="col-bairro">BAIRRO</th>
+                      <th class="col-cidade">CIDADE</th>
+                      <th class="col-estado">ESTADO</th>
+                      <th class="col-cep">CEP</th>
+                      <th class="col-tipo-titulo">TIPO TITULO</th>
+                      <th class="col-parcela">PARCELA</th>
+                      <th class="col-plano">PLANO</th>
+                      <th class="col-titulos">TITULOS</th>
+                      <th class="col-documento">DOCUMENTO</th>
+                      <th class="col-produto">PRODUTO</th>
+                      <th class="col-vencimento">VENCIMENTO</th>
+                      <th class="col-valor">VALOR</th>
+                      <th class="col-celular-whatsapp">CELULAR WHATSAPP</th>
+                      <th class="col-fone-comercial">FONE COMERCIAL</th>
+                      <th class="col-fone-residencial">FONE RESIDENCIAL</th>
+                      <th class="col-fone-outros">FONE OUTROS</th>
+                      <th class="col-email-1">EMAIL 1</th>
+                      <th class="col-email-2">EMAIL 2</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let cadastro of base">
+                      <td>{{ cadastro.CNPJ }}</td>
+                      <td>{{ cadastro.NOME_FANTASIA }}</td>
+                      <td>{{ cadastro.ENDERECO }}</td>
+                      <td>{{ cadastro.NUMERO }}</td>
+                      <td>{{ cadastro.BAIRRO }}</td>
+                      <td>{{ cadastro.CIDADE }}</td>
+                      <td>{{ cadastro.ESTADO }}</td>
+                      <td>{{ cadastro.CEP }}</td>
+                      <td>{{ cadastro.TIPO_TITULO }}</td>
+                      <td>{{ cadastro.PARCELA }}</td>
+                      <td>{{ cadastro.PLANO }}</td>
+                      <td>{{ cadastro.TITULOS }}</td>
+                      <td>{{ cadastro.DOCUMENTO }}</td>
+                      <td>{{ cadastro.PRODUTO }}</td>
+                      <td>{{ cadastro.VENCIMENTO }}</td>
+                      <td>{{ cadastro.VALOR }}</td>
+                      <td>{{ cadastro.CELULAR_WHATSAPP }}</td>
+                      <td>{{ cadastro.FONE_COMERCIAL }}</td>
+                      <td>{{ cadastro.FONE_RESIDENCIAL }}</td>
+                      <td>{{ cadastro.FONE_OUTROS }}</td>
+                      <td>{{ cadastro.EMAIL_1 }}</td>
+                      <td>{{ cadastro.EMAIL_2 }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
+</div>
