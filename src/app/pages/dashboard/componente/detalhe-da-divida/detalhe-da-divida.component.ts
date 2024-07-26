@@ -5,6 +5,7 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { WhatsappComponent } from './whatsapp/whatsapp.component';
 import { EnvioEmailComponent } from './envio-email/envio-email.component';
 import { EnvioSmsComponent } from './envio-sms/envio-sms.component';
+import { Utils } from 'src/app/core/helpers/utils';
 
 @Component({
   selector: 'app-detalhe-da-divida',
@@ -104,5 +105,9 @@ export class DetalheDaDividaComponent implements OnChanges {
     if (cpfLimpo.length !== 11) return cpf;
 
     return cpfLimpo.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  }
+
+  public dataBrasil(data) {
+    return Utils.dataBrasil(data);
   }
 }
