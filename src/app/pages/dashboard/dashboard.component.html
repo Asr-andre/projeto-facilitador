@@ -63,16 +63,27 @@
     <div class="col-lg-5">
       <div class="card h-100">
         <div class="card-body" style="overflow: auto;">
-          <h4 class="card-title mb-4 custom-card-title">Lista de Clientes cadastrados</h4>
-          <div class="row">
-            <div class="col-sm-12 col-md-12">
-              <div id="tickets-table_filter" class="dataTables_filter text-md-end">
-                <label class="d-inline-flex align-items-center">
-                  <input type="text" class="form-control form-control-sm ms-2" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
-                </label>
+          <div class="row mb-3">
+            <div class="col-md-3">
+                <label for="contratanteSelect">Tipo</label>
+                <select id="contratanteSelect" class="form-control form-control-sm" [(ngModel)]="tipoPesquisa">
+                    <option value="nome">Nome</option>
+                    <option value="cpf">CPF</option>
+                </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <input type="text" class="form-control form-control-sm" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" />
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+              <div class="d-flex align-items-center">
+                <input type="checkbox" id="mostrarSemDivida" [(ngModel)]="mostrarSemDivida" ngbTooltip="Mostrar clientes sem dívidas" />
+                <button class="btn btn-primary btn-sm ms-2" (click)="filtrar()">
+                  <i class="fas fa-search"></i> Pesquisar
+                </button>
               </div>
             </div>
-          </div>
+        </div>
+
           <div class="table-responsive">
             <table class="table table-sm table-hover font-size-13 tabelaOrdenada">
               <thead class="tabela-custom table-td-scroll">
@@ -150,7 +161,7 @@
     </div>
       <div class="col-lg-12">
         <div class="card h-100" style="top: 30px;">
-<app-acionamento [idCliente]="devedorSelecionado?.id_cliente" [idContratante]="devedorSelecionado?.id_contratante"></app-acionamento>
+        <app-acionamento [idCliente]="devedorSelecionado?.id_cliente" [idContratante]="devedorSelecionado?.id_contratante"></app-acionamento>
         </div>
       </div>
   </div>

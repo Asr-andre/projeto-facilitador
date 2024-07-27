@@ -3,7 +3,8 @@ import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from "src/app/core/helpers/conf-tabela/ordenacao-tabela";
 import { Utils } from "src/app/core/helpers/utils";
 import { RespostaCardsModel } from "src/app/core/models/cards.dashboard.model";
-import { DevedorModel } from "src/app/core/models/devedor.model";
+import { DevedorModel, RequisicaoDevedorModel, RespostaDevedorModel } from "src/app/core/models/devedor.model";
+import { AuthenticationService } from "src/app/core/services/auth.service";
 import { DashboardService } from "src/app/core/services/dashboard.service";
 
 @Component({
@@ -12,7 +13,7 @@ import { DashboardService } from "src/app/core/services/dashboard.service";
   styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
-
+  public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public listarDevedores: DevedorModel[] = [];
   public devedoresFiltrados: DevedorModel[] = [];
   public devedorSelecionado: DevedorModel | null = null;
@@ -36,8 +37,12 @@ export class DashboardComponent implements OnInit {
   public totalUtilizado: number = 0;
   public saldo: number = 0;
 
+  public tipoPesquisa: string = 'nome'; // 'nome' ou 'cpf'
+  public mostrarSemDivida: boolean = false;
+
   constructor(
     private _dashboard: DashboardService,
+    private _authService: AuthenticationService,
   ) { }
 
   ngOnInit(): void {
@@ -46,8 +51,8 @@ export class DashboardComponent implements OnInit {
 
   public obterDevedores(): void {
     this.loading = true;
-    this._dashboard.obterDevedores().subscribe((res) => {
-      this.listarDevedores = res;
+    this._dashboard.obterDevedores({ id_empresa: this.idEmpresa }).subscribe((res: RespostaDevedorModel) => {
+      this.listarDevedores = res.clientes;
       this.filtrar();
       this.atualizarQuantidadeExibida();
       this.obterDadosDosCards();
@@ -84,8 +89,22 @@ export class DashboardComponent implements OnInit {
   }
 
   public filtrar(): void {
-    this.dadosFiltrados = Utils.filtrar(this.listarDevedores, this.textoPesquisa);
-    this.totalRegistros = this.dadosFiltrados.length;
+    const filtro: RequisicaoDevedorModel = {
+      id_empresa: this.idEmpresa,
+      mostrar_cliente_sem_divida: this.mostrarSemDivida ? "S" : "N"
+    };
+
+    if (this.tipoPesquisa === 'cpf') {
+      filtro.cnpj_cpf = this.textoPesquisa;
+    } else {
+      filtro.nome = this.textoPesquisa;
+    }
+
+    this._dashboard.obterDevedores(filtro).subscribe((res) => {
+      this.dadosFiltrados = res.clientes;
+      this.totalRegistros = this.dadosFiltrados.length;
+      this.atualizarQuantidadeExibida();
+    });
   }
 
   public atualizarQuantidadeExibida() {
