@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
   public totalUtilizado: number = 0;
   public saldo: number = 0;
 
-  public tipoPesquisa: string = 'nome'; // 'nome' ou 'cpf'
+  public tipoPesquisa: string = 'nome';
   public mostrarSemDivida: boolean = false;
 
   constructor(
