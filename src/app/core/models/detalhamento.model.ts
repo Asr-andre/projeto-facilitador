@@ -10,6 +10,7 @@ export class Prestacao {
   public valor_multa: number | null;
   public valor_taxa: number | null;
   public saldo_devedor: number;
+  selecionado?: boolean;
 }
 
 export class DetalhamentoModel {

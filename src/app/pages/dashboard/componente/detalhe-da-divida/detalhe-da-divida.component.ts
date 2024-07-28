@@ -21,6 +21,7 @@ export class DetalheDaDividaComponent implements OnChanges {
   public detalhamentoSelecionado: DetalhamentoModel | null = null;
   public loadingMin: boolean = false;
   @Output() dadosEnviado: EventEmitter<void> = new EventEmitter<void>();
+  public selecionarTodos: boolean = false;
 
   constructor(
     private _dashboard: DashboardService,
@@ -109,5 +110,21 @@ export class DetalheDaDividaComponent implements OnChanges {
 
   public dataBrasil(data) {
     return Utils.dataBrasil(data);
+  }
+
+  public marcaTodos(event: any) {
+    this.selecionarTodos = event.target.checked;
+    if (this.detalhamentoSelecionado && this.detalhamentoSelecionado.parcelas) {
+      this.detalhamentoSelecionado.parcelas.forEach(parcela => {
+        parcela.selecionado = this.selecionarTodos;
+      });
+    }
+    this.verificarSelecao();
+  }
+
+  public verificarSelecao() {
+    if (this.detalhamentoSelecionado && this.detalhamentoSelecionado.parcelas) {
+      this.selecionarTodos = this.detalhamentoSelecionado.parcelas.every(parcela => parcela.selecionado);
+    }
   }
 }

@@ -32,6 +32,9 @@
     <table class="table table-sm table-hover">
       <thead class="tabela-custom table-td-scroll">
         <tr>
+          <th>
+            <input type="checkbox" (change)="marcaTodos($event)">
+          </th>
           <th>Parcela</th>
           <th>Plano</th>
           <th>Contrato</th>
@@ -48,6 +51,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let prestacao of detalhamentoSelecionado?.parcelas">
+          <td>
+            <input type="checkbox" [(ngModel)]="prestacao.selecionado" (change)="verificarSelecao()">
+          </td>
           <td>{{ prestacao.parcela }}</td>
           <td>{{ prestacao.plano }}</td>
           <td>{{ prestacao.numero_contrato }}</td>
@@ -61,7 +67,7 @@
           <td>{{ prestacao.saldo_devedor | currency:'BRL' }}</td>
           <td>{{ calcularTotalAtualizado(prestacao) | currency:'BRL' }}</td>
         <tr class="tabela-custom">
-          <td colspan="6" style="text-align: end;"><strong>Total:</strong></td>
+          <td colspan="7" style="text-align: end;"><strong>Total:</strong></td>
           <td><strong>{{ calcularTotal('valor') | currency:'BRL' }}</strong></td>
           <td><strong>{{ calcularTotal('valor_juros') | currency:'BRL' }}</strong></td>
           <td><strong>{{ calcularTotal('valor_multa') | currency:'BRL' }}</strong></td>
