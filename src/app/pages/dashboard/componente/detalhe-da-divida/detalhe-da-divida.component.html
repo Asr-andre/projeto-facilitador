@@ -46,7 +46,6 @@
           <th>Multa</th>
           <th>Taxa</th>
           <th>Total</th>
-          <th>Total Atualizado</th>
         </tr>
       </thead>
       <tbody>
@@ -65,7 +64,7 @@
           <td>{{ prestacao.valor_multa | currency:'BRL' }}</td>
           <td>{{ prestacao.valor_taxa | currency:'BRL' }}</td>
           <td>{{ prestacao.saldo_devedor | currency:'BRL' }}</td>
-          <td>{{ calcularTotalAtualizado(prestacao) | currency:'BRL' }}</td>
+          <!-- <td>{{ calcularTotalAtualizado(prestacao) | currency:'BRL' }}</td> -->
         <tr class="tabela-custom">
           <td colspan="7" style="text-align: end;"><strong>Total:</strong></td>
           <td><strong>{{ calcularTotal('valor') | currency:'BRL' }}</strong></td>
@@ -73,7 +72,7 @@
           <td><strong>{{ calcularTotal('valor_multa') | currency:'BRL' }}</strong></td>
           <td><strong>{{ calcularTotal('valor_taxa') | currency:'BRL' }}</strong></td>
           <td><strong>{{ calcularTotal('saldo_devedor') | currency:'BRL' }}</strong></td>
-          <td><strong>{{ calcularTotal('valorTotalAtualizado') | currency:'BRL' }}</strong></td>
+          <!-- <td><strong>{{ calcularTotal('valorTotalAtualizado') | currency:'BRL' }}</strong></td> -->
         </tr>
       </tbody>
     </table>
