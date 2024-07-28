@@ -21,7 +21,7 @@ export class DetalheDaDividaComponent implements OnChanges {
   public detalhamentoSelecionado: DetalhamentoModel | null = null;
   public loadingMin: boolean = false;
   @Output() dadosEnviado: EventEmitter<void> = new EventEmitter<void>();
-  public selecionarTodos: boolean = false;
+  public selecionarTodos: boolean = true;
 
   constructor(
     private _dashboard: DashboardService,
@@ -58,6 +58,11 @@ export class DetalheDaDividaComponent implements OnChanges {
       (detalhamento) => {
         if (detalhamento && detalhamento.success) {
           this.detalhamentoSelecionado = detalhamento;
+          if (this.detalhamentoSelecionado.parcelas) {
+            this.detalhamentoSelecionado.parcelas.forEach(parcela => {
+              parcela.selecionado = true;
+            });
+          }
           this.loadingMin = false;
         }
       },
