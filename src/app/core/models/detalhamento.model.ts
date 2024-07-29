@@ -1,6 +1,7 @@
 export class Prestacao {
   public parcela: number;
   public plano: number;
+  public id_titulo: number;
   public numero_contrato: string;
   public vencimento: Date;
   public produto: string;
