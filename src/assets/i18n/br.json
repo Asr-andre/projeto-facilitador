@@ -11,20 +11,6 @@
     "DASHBOARDS": {
       "TEXT": "Pagina Inicial"
     },
-    "CALENDAR": {
-      "TEXT": "Calendar"
-    },
-    "CHAT": {
-      "TEXT": "Chat",
-      "BADGE": "New"
-    },
-    "EMAIL": {
-      "TEXT": "Email",
-      "LIST": {
-        "INBOX": "Inbox",
-        "READEMAIL": "Read Email"
-      }
-    },
     "CADASTRO": {
       "TEXT": "Cadastro",
       "LIST": {

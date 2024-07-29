@@ -20,12 +20,7 @@ import { NgPipesModule } from "ngx-pipes";
 import { FullCalendarModule } from "@fullcalendar/angular";
 import { DndModule } from "ngx-drag-drop";
 import { LeafletModule } from "@asymmetrik/ngx-leaflet";
-
 import { DashboardComponent } from "./dashboard/dashboard.component";
-import { CalendarComponent } from "./calendar/calendar.component";
-import { ChatComponent } from "./chat/chat.component";
-import { EmailModule } from "./email/email.module";
-
 import { NgxPaginationModule } from "ngx-pagination";
 import { AcionamentoComponent } from "./dashboard/componente/acionamento/acionamento.component";
 import { WhatsappComponent } from "./dashboard/componente/detalhe-da-divida/whatsapp/whatsapp.component";
@@ -47,8 +42,6 @@ registerLocaleData(localePt);
     WhatsappComponent,
     TelefoneComponent,
     EmailComponent,
-    CalendarComponent,
-    ChatComponent,
     EnvioEmailComponent,
     EnvioSmsComponent
   ],
@@ -65,7 +58,6 @@ registerLocaleData(localePt);
     NgApexchartsModule,
     DndModule,
     FullCalendarModule,
-    EmailModule,
     LeafletModule,
     WidgetModule,
     SimplebarAngularModule,

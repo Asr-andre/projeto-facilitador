@@ -13,37 +13,6 @@ export const MENU: MenuItem[] = [
     link: "/",
   },
   {
-    id: 3,
-    label: "MENUITEMS.CALENDAR.TEXT",
-    icon: "ri-calendar-2-line",
-    link: "/calendar",
-  },
-  {
-    id: 4,
-    label: "MENUITEMS.CHAT.TEXT",
-    icon: "ri-chat-1-line",
-    link: "/chat",
-  },
-  {
-    id: 5,
-    label: "MENUITEMS.EMAIL.TEXT",
-    icon: "ri-mail-send-line",
-    subItems: [
-      {
-        id: 6,
-        label: "MENUITEMS.EMAIL.LIST.INBOX",
-        link: "/email/inbox",
-        parentId: 5,
-      },
-      {
-        id: 7,
-        label: "MENUITEMS.EMAIL.LIST.READEMAIL",
-        link: "/email/read/1",
-        parentId: 5,
-      },
-    ],
-  },
-  {
     id: 8,
     label: "MENUITEMS.CADASTRO.TEXT",
     icon: "ri-user-add-line",

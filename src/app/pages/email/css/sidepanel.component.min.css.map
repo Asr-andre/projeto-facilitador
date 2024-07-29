@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "../sidepanel/sidepanel.component.scss"
-    ],
-    "names": [],
-    "file": "sidepanel.component.min.css"
-}

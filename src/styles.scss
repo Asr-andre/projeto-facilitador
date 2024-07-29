@@ -22,6 +22,12 @@
   padding-left: 10px;
 }
 
+.main-content {
+  position: relative;
+  z-index: 1;
+}
+
+
 .loading-overlay-pagina {
   position: fixed;
   top: 0;
