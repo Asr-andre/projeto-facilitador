@@ -111,7 +111,7 @@ export class ImportacaoComponent implements OnInit {
   public importArquivoModal(modal): void {
     this.obterContratantes();
     this.inicializarForm();
-    this._modalService.open(this.importArquivo, { size: 'ms', ariaLabelledBy: 'modal-basic-title' });
+    this._modalService.open(this.importArquivo, { size: 'ms', ariaLabelledBy: 'modal-basic-title' , backdrop: 'static', keyboard: false });
   }
 
   public obterContratantes() {
