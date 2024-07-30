@@ -3,64 +3,142 @@
     <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-calculator" style="margin-right: 5px;"></i> Simulação de Negociação</h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
-  <div class="modal-body">
-    <form [formGroup]="form" class="form-container">
-      <div class="form-group">
-        <label for="dataNova">Selecione uma nova data</label>
-        <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="dataNova">
+  <div class="modal-body" style="padding-top: 2px;padding-bottom: 2px;">
+    <div class="row mt-2">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12 text-right">
+            <h6 style="font-family: Century Gothic!important"><strong>Descontos Permitidos</strong></h6>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">Principal</div>
+          <div class="col-md-6">
+            <input type="text" class="form-control form-control-sm" disabled value="{{ (data.desconto_principal / 100) | percent:'1.0-0' }}">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">Multa</div>
+          <div class="col-md-6">
+            <input type="text" class="form-control form-control-sm" disabled value="{{ (data.desconto_multa / 100) | percent:'1.0-0' }}">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">Juros</div>
+          <div class="col-md-6">
+            <input type="text" class="form-control form-control-sm" disabled value="{{ (data.desconto_juros / 100) | percent:'1.0-0' }}">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">Taxa</div>
+          <div class="col-md-6">
+            <input type="text" class="form-control form-control-sm" disabled value="{{ (data.desconto_taxa / 100) | percent:'1.0-0' }}">
+          </div>
+        </div>
       </div>
-      <button type="button" class="btn btn-primary btn-sm btn-recalcular" (click)="recalcular()" style="padding-top: 2px; padding-bottom: 2px; padding-right: 6px; padding-left: 6px;">
-        <i class="fas fa-calculator" style="margin-right: 5px;"></i>
-        Recalcular
-      </button>
-    </form>
-    <hr class="divider">
-    <div class="mt-3">
-      <h6 class="desconto-title">Desconto Máximo Permitido</h6>
-      <div class="desconto-info">
-        <p><strong>Desconto Principal:</strong> {{ data.desconto_principal | currency:'BRL' }}</p>
-        <p><strong>Desconto Multa:</strong> {{ data.desconto_multa | currency:'BRL' }}</p>
-        <p><strong>Desconto Juros:</strong> {{ data.desconto_juros | currency:'BRL' }}</p>
-        <p><strong>Desconto Taxa:</strong> {{ data.desconto_taxa | currency:'BRL' }}</p>
+
+      <div class="col-md-6" style="border-left: 1px solid #404040">
+        <div class="row">
+          <div class="col-md-6">
+            <h6 style="font-family: Century Gothic!important"><strong>Aplicar Descontos</strong></h6>
+          </div>
+          <div class="col-md-6">
+          <form [formGroup]="form" class="form-container">
+            <div class="form-group">
+              <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="dataNova">
+            </div>
+          </form>
+        </div>
+        </div>
+        <form >
+          <div class="row mt-2">
+            <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">
+              Principal <small style="color: #466eb0"> 0</small>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group" placement="top">
+                <input type="text" class="form-control form-control-sm">
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">
+              Juros <small style="color: #466eb0" > 0</small>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group" placement="top">
+                <input type="text" class="form-control form-control-sm">
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">
+              Multa <small style="color: #466eb0" > 0</small>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group" placement="top">
+                <input type="text" class="form-control form-control-sm">
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">
+              Taxa <small style="color: #466eb0" > 0</small>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group" placement="top">
+                <input type="text" class="form-control form-control-sm">
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="row mt-2">
+          <div class="col-md-6">
+            <button type="button" class="btn btn-primary btn-sm btn-recalcular" (click)="recalcular()" style="padding-top: 2px; padding-bottom: 2px; padding-right: 6px; padding-left: 6px;">
+              <i class="fas fa-calculator"></i>
+              Recalcular
+            </button>
+          </div>
+        </div>
+
+      </div>
       </div>
       <hr class="divider">
-
-      <table class="table table-sm table-hover">
-        <thead class="tabela-custom table-td-scroll">
+      <div style="overflow: auto; height: 150px;">
+        <table class="table table-sm">
+          <thead class="tabela-custom table-td-scroll">
           <tr>
             <th>Vencimento</th>
             <th>Atraso</th>
             <th>Principal</th>
-            <th>Juros</th>
-            <th>Multa</th>
+            <th scope="col" class="text-right">Juros</th>
+            <th scope="col" class="text-right">Multa</th>
             <th>Taxa</th>
-            <th>Valor Atualizado</th>
+            <th scope="col" class="text-right">Valor Atualizado</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let titulo of data.titulos">
             <td>{{ dataBrasil(titulo.vencimento) }}</td>
             <td>{{ titulo.atraso }}</td>
-            <td>{{ titulo.valor | currency:'BRL' }}</td>
-            <td>{{ titulo.valor_juros | currency:'BRL' }}</td>
-            <td>{{ titulo.valor_multa | currency:'BRL' }}</td>
-            <td>{{ titulo.valor_taxa | currency:'BRL' }}</td>
-            <td>{{ titulo.valor_atualizado | currency:'BRL' }}</td>
+            <td scope="col" class="text-right">{{ titulo.valor | currency:'BRL' }}</td>
+            <td scope="col" class="text-right">{{ titulo.valor_juros | currency:'BRL' }}</td>
+            <td scope="col" class="text-right">{{ titulo.valor_multa | currency:'BRL' }}</td>
+            <td scope="col" class="text-right">{{ titulo.valor_taxa | currency:'BRL' }}</td>
+            <td scope="col" class="text-right">{{ titulo.valor_atualizado | currency:'BRL' }}</td>
 
           </tr>
           <tr *ngIf="data.titulos.length > 0" class="tabela-custom">
             <td colspan="2" style="text-align: center;"><strong>Total:</strong></td>
-            <td>{{ totalValor | currency:'BRL' }}</td>
-            <td>{{ totalJuros | currency:'BRL' }}</td>
-            <td>{{ totalMulta | currency:'BRL' }}</td>
-            <td>{{ totalTaxa | currency:'BRL' }}</td>
-            <td>{{ totalGeral | currency:'BRL' }}</td>
+            <td cope="col" class="text-right">{{ totalValor | currency:'BRL' }}</td>
+            <td cope="col" class="text-right">{{ totalJuros | currency:'BRL' }}</td>
+            <td cope="col" class="text-right">{{ totalMulta | currency:'BRL' }}</td>
+            <td cope="col" class="text-right">{{ totalTaxa | currency:'BRL' }}</td>
+            <td cope="col" class="text-right">{{ totalGeral | currency:'BRL' }}</td>
           </tr>
         </tbody>
       </table>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary btn-sm ms-2" (click)="fechar()">Fechar</button>
   </div>
 </ng-template>

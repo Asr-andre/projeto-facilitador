@@ -1,10 +1,7 @@
-.brder {
-  border-bottom: 1px ridge;
-  padding: 2px;
-  margin-left: 5px;
-  margin-right: 5px;
+/* Estilo para todos os textos com tamanho de fonte 12px */
+.text-small {
+  font-size: 12px;
 }
-
 
 .form-container {
   display: flex;
@@ -17,15 +14,8 @@
   padding-bottom: 2px;
   padding-right: 6px;
   padding-left: 6px;
-}
-
-.btn-recalcular {
-  align-self: flex-end; /* Alinha o botão à direita */
+  align-self: flex-end;
   margin-top: 5px;
-}
-
-.form-label {
-  font-size: 12px;
 }
 
 .modal-body p {
@@ -35,7 +25,6 @@
 .table th, .table td {
   font-size: 12px;
 }
-
 
 /* Estilo para a linha horizontal */
 .divider {
@@ -56,3 +45,20 @@
   font-size: 12px;
   margin: 5px 0;
 }
+
+/* Estilo para campos desabilitados com cor cinza suave */
+.form-control[disabled] {
+  background-color: #f0f0f0; /* Cor de fundo cinza suave */
+  color: #6c757d; /* Cor do texto cinza suave */
+}
+
+/* Estilo para todos os campos de entrada */
+.form-control, .input-group-text {
+  font-size: 12px; /* Tamanho da fonte */
+}
+
+/* Estilo para todos os botões */
+.btn {
+  font-size: 12px; /* Tamanho da fonte */
+}
+
