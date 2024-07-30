@@ -62,7 +62,7 @@ export class EmailComponent implements OnInit, OnChanges{
   }
 
   public abriModalEmail(content: TemplateRef<any>): void {
-    this._modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this._modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastrarEmail(modal: any): void {

@@ -52,7 +52,7 @@ export class EnvioEmailComponent implements OnInit {
       id_contratante: idContratante,
       destinatario: email
     });
-    this._modalService.open(this.modalEmailRef, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
+    this._modalService.open(this.modalEmailRef, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public enviarEmail(): void {

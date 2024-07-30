@@ -92,7 +92,7 @@ export class TelefoneComponent implements OnInit, OnChanges {
   }
 
   public abriModalTelefone(content: TemplateRef<any>): void {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastrarTelefone(modal: any): void {

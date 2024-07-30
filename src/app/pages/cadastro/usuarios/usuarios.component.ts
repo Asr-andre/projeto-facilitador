@@ -101,7 +101,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   public abrirModalCadastro(content: TemplateRef<any>): void {
-    this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title' });
+    this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastrarUsuario() {

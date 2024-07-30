@@ -104,7 +104,7 @@ export class ContratantesComponent implements OnInit {
   }
 
   public abriModalCadastro(content: TemplateRef<any>): void {
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
+    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastrarContratante(){

@@ -22,7 +22,7 @@ export class WhatsappComponent {
     if (telefone) {
       this.telefoneCliente = this.limparNumero(telefone);
       this.abrirModal = true;
-      this._modalService.open(this.whatsappModal, { ariaLabelledBy: 'modal-basic-title' });
+      this._modalService.open(this.whatsappModal, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
     } else {
       this._alertService.warning('Selecione o cliente  para obter o número de telefone.');
     }

@@ -52,7 +52,7 @@ export class EnvioSmsComponent implements OnInit {
       id_contratante: idContratante,
       fone: fone
     });
-    this._modalService.open(this.modalEmailRef, { size: 'ms', ariaLabelledBy: 'modal-basic-title' });
+    this._modalService.open(this.modalEmailRef, { size: 'ms', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public enviarSms(): void {

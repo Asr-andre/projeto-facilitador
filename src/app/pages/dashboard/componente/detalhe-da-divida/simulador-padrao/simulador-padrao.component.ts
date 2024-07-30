@@ -31,7 +31,7 @@ export class SimuladorPadraoComponent implements OnInit {
   public abrirModalSimulado(data: any): void {
     this.data = data;
     this.calcularTotais();
-    this.modalRef = this.modalService.open(this.modalTemplate, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
+    this.modalRef = this.modalService.open(this.modalTemplate, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public fechar(): void {
