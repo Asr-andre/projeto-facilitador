@@ -40,7 +40,6 @@ export class SimuladorPadraoComponent implements OnInit {
 
   public recalcular(): void {
     const novaData = this.form.value.dataNova;
-    // Aqui você pode adicionar a lógica para recalcular os valores com base na nova data
     console.log('Nova Data:', novaData);
   }
 
@@ -56,7 +55,7 @@ export class SimuladorPadraoComponent implements OnInit {
     return Utils.dataBrasil(data);
   }
 
-
+  /*
   public vencidos(vencimento: string): boolean {
     const hoje = new Date();
     const dataVencimento = new Date(vencimento);
@@ -66,4 +65,5 @@ export class SimuladorPadraoComponent implements OnInit {
   public formatarAtraso(atraso: number, vencido: boolean): string {
     return vencido ? `-${atraso}` : atraso.toString();
   }
+    */
 }

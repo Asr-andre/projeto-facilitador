@@ -40,7 +40,7 @@
         <tbody>
           <tr *ngFor="let titulo of data.titulos">
             <td>{{ dataBrasil(titulo.vencimento) }}</td>
-            <td>{{ formatarAtraso(titulo.atraso, vencidos(titulo.vencimento)) }}</td>
+            <td>{{ titulo.atraso }}</td>
             <td>{{ titulo.valor | currency:'BRL' }}</td>
             <td>{{ titulo.valor_juros | currency:'BRL' }}</td>
             <td>{{ titulo.valor_multa | currency:'BRL' }}</td>
