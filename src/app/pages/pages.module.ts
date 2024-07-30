@@ -14,6 +14,7 @@ import {
   NgbTooltipModule,
   NgbDatepickerModule,
   NgbTimepickerModule,
+  NgbModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { NgPipesModule } from "ngx-pipes";
@@ -32,6 +33,7 @@ import { OrderTableModule } from "../core/helpers/conf-tabela/order-table.module
 import { EnvioEmailComponent } from "./dashboard/componente/detalhe-da-divida/envio-email/envio-email.component";
 import { EnvioSmsComponent } from "./dashboard/componente/detalhe-da-divida/envio-sms/envio-sms.component";
 import localePt from '@angular/common/locales/pt';
+import { SimuladorPadraoComponent } from "./dashboard/componente/detalhe-da-divida/simulador-padrao/simulador-padrao.component";
 
 registerLocaleData(localePt);
 @NgModule({
@@ -43,7 +45,8 @@ registerLocaleData(localePt);
     TelefoneComponent,
     EmailComponent,
     EnvioEmailComponent,
-    EnvioSmsComponent
+    EnvioSmsComponent,
+    SimuladorPadraoComponent
   ],
   imports: [
     CommonModule,
@@ -67,6 +70,7 @@ registerLocaleData(localePt);
     NgxMaskPipe,
     NgbTimepickerModule,
     NgbDatepickerModule,
+    NgbModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },

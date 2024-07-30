@@ -1,0 +1,58 @@
+.brder {
+  border-bottom: 1px ridge;
+  padding: 2px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-recalcular {
+  font-size: 12px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-right: 6px;
+  padding-left: 6px;
+}
+
+.btn-recalcular {
+  align-self: flex-end; /* Alinha o botão à direita */
+  margin-top: 5px;
+}
+
+.form-label {
+  font-size: 12px;
+}
+
+.modal-body p {
+  font-size: 12px;
+}
+
+.table th, .table td {
+  font-size: 12px;
+}
+
+
+/* Estilo para a linha horizontal */
+.divider {
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
+}
+
+/* Estilo para o título da seção de desconto */
+.desconto-title {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Estilo para as informações de desconto */
+.desconto-info p {
+  font-size: 12px;
+  margin: 5px 0;
+}

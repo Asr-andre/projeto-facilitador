@@ -6,6 +6,10 @@ import { WhatsappComponent } from './whatsapp/whatsapp.component';
 import { EnvioEmailComponent } from './envio-email/envio-email.component';
 import { EnvioSmsComponent } from './envio-sms/envio-sms.component';
 import { Utils } from 'src/app/core/helpers/utils';
+import { SimulacaoRequisicaoModel, SimulacaoRetornoModel } from 'src/app/core/models/simulador.padrao.model';
+import { SimuladorPadraoService } from 'src/app/core/services/simulador.padrao.sevice';
+import { SimuladorPadraoComponent } from './simulador-padrao/simulador-padrao.component';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-detalhe-da-divida',
@@ -16,16 +20,21 @@ export class DetalheDaDividaComponent implements OnChanges {
   @ViewChild(WhatsappComponent) whatsappComponent: WhatsappComponent;
   @ViewChild(EnvioEmailComponent) EnvioEmailComponent: EnvioEmailComponent;
   @ViewChild(EnvioSmsComponent) EnvioSmsComponent: EnvioSmsComponent;
+  @ViewChild(SimuladorPadraoComponent) SimuladorPadraoComponent: SimuladorPadraoComponent;
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
   public detalhamentoSelecionado: DetalhamentoModel | null = null;
   public loadingMin: boolean = false;
   @Output() dadosEnviado: EventEmitter<void> = new EventEmitter<void>();
   public selecionarTodos: boolean = true;
+  public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
+  public login = this._authService.getLogin();
 
   constructor(
     private _dashboard: DashboardService,
-    private _alertService: AlertService
+    private _alertService: AlertService,
+    private _simuladorPadraoService: SimuladorPadraoService,
+    private _authService: AuthenticationService,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -131,5 +140,34 @@ export class DetalheDaDividaComponent implements OnChanges {
     if (this.detalhamentoSelecionado && this.detalhamentoSelecionado.parcelas) {
       this.selecionarTodos = this.detalhamentoSelecionado.parcelas.every(parcela => parcela.selecionado);
     }
+  }
+
+  public simularNegociacao(): void {
+    if (!this.idCliente || !this.idContratante || !this.detalhamentoSelecionado) {
+      return;
+    }
+
+    const titulosSelecionados = this.detalhamentoSelecionado.parcelas
+      .filter(parcela => parcela.selecionado)
+      .map(parcela => parcela.id_titulo)
+      .join(',');
+
+    const requisicao: SimulacaoRequisicaoModel = {
+      id_empresa: this.idEmpresa,
+      id_contratante: this.idContratante,
+      id_cliente: this.idCliente,
+      user_login: this.login,
+      data_atualizacao: new Date().toLocaleDateString('pt-BR'),
+      titulos: titulosSelecionados
+    };
+
+    this._simuladorPadraoService.simularNegociacao(requisicao).subscribe(
+      (retorno: SimulacaoRetornoModel) => {
+        this.SimuladorPadraoComponent.abrirModalSimulado(retorno);
+      },
+      (error) => {
+        this._alertService.error('Erro ao simular negociação.');
+      }
+    );
   }
 }
