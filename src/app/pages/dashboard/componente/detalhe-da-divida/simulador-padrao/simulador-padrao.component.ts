@@ -117,18 +117,6 @@ export class SimuladorPadraoComponent implements OnInit {
     return Utils.dataBrasil(data);
   }
 
-  /*
-  public vencidos(vencimento: string): boolean {
-    const hoje = new Date();
-    const dataVencimento = new Date(vencimento);
-    return dataVencimento > hoje;
-  }
-
-  public formatarAtraso(atraso: number, vencido: boolean): string {
-    return vencido ? `-${atraso}` : atraso.toString();
-  }
-    */
-
   public validarDesconto(event: any, tipo: string): void {
     const input = event.target;
     const valorMaximo = this[`original${tipo}`];
