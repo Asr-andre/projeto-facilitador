@@ -54,7 +54,10 @@ export class SimuladorPadraoComponent implements OnInit {
 
   public abrirModalSimulado(data: any): void {
     this.data = data;
-    const dataAtualizacao = this.datePipe.transform(data.data_atualizacao, 'yyyy-MM-dd');
+    const dataAtualizacao = data.data_atualizacao
+    ? this.datePipe.transform(data.data_atualizacao, 'yyyy-MM-dd')
+    : this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+
     this.form.patchValue({
       id_empresa: this.idEmpresa,
       id_contratante: this.idContratante,
