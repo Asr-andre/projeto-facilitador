@@ -4,73 +4,77 @@
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
   <div class="modal-body" style="padding-top: 2px; padding-bottom: 2px;">
-    <div class="row mt-2">
-      <div class="col-md-12">
-        <div class="row align-items-center">
-          <div class="col-md-2" style="font-size: 12px;">
-            Principal: {{ (data.desconto_principal / 100) | percent:'1.0-0' }}
-            <input type="text" class="form-control form-control-sm" formControlName="descontoPrincipal">
-          </div>
-          <div class="col-md-2" style="font-size: 12px;">
-            Multa: {{ (data.desconto_multa / 100) | percent:'1.0-0' }}
-            <input type="text" class="form-control form-control-sm" formControlName="descontoMulta">
-          </div>
-          <div class="col-md-2" style="font-size: 12px;">
-            Juros: {{ (data.desconto_juros / 100) | percent:'1.0-0' }}
-            <input type="text" class="form-control form-control-sm" formControlName="descontoJuros">
-          </div>
-          <div class="col-md-2" style="font-size: 12px;">
-            Taxa: {{ (data.desconto_taxa / 100) | percent:'1.0-0' }}
-            <input type="text" class="form-control form-control-sm" formControlName="descontoTaxa">
-          </div>
-          <div class="col-md-2" style="font-size: 12px;">
-            Data Negociação
-            <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="dataNova">
-          </div>
-          <div class="col-md-2 mt-auto text-left" style="font-size: 12px;">
-            <button type="button" class="btn btn-primary btn-sm btn-recalcular" (click)="recalcular()" style="padding-top: 2px; padding-bottom: 2px; padding-right: 6px; padding-left: 6px;">
-              <i class="fas fa-calculator"></i>
-              Recalcular
-            </button>
+    <form [formGroup]="form" (ngSubmit)="recalcular()">
+      <div class="row mt-2">
+        <!-- Campos de desconto e data -->
+        <div class="col-md-12">
+          <div class="row align-items-center">
+            <!-- Campos de desconto e data -->
+            <div class="col-md-2" style="font-size: 12px;">
+              Principal: {{ (data.desconto_principal / 100) | percent:'1.0-0' }}
+              <input type="number" class="form-control form-control-sm" formControlName="desconto_principal" min="0">
+            </div>
+            <div class="col-md-2" style="font-size: 12px;">
+              Multa: {{ (data.desconto_multa / 100) | percent:'1.0-0' }}
+              <input type="number" class="form-control form-control-sm" formControlName="desconto_multa" min="0">
+            </div>
+            <div class="col-md-2" style="font-size: 12px;">
+              Juros: {{ (data.desconto_juros / 100) | percent:'1.0-0' }}
+              <input type="number" class="form-control form-control-sm" formControlName="desconto_juros" min="0">
+            </div>
+            <div class="col-md-2" style="font-size: 12px;">
+              Taxa: {{ (data.desconto_taxa / 100) | percent:'1.0-0' }}
+              <input type="number" class="form-control form-control-sm" formControlName="desconto_taxa" min="0">
+            </div>
+            <div class="col-md-2" style="font-size: 12px;">
+              Data Negociação
+              <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="data_atualizacao">
+            </div>
+            <div class="col-md-2 mt-auto text-right" style="font-size: 12px;">
+              <button type="submit" class="btn btn-primary btn-sm btn-recalcular" style="padding-top: 2px; padding-bottom: 2px; padding-right: 6px; padding-left: 6px;">
+                <i class="fas fa-calculator"></i>
+                Recalcular
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
       <div style="overflow: auto; height: 150px; margin-top: 5px;">
         <table class="table table-sm">
           <thead class="tabela-custom table-td-scroll">
-          <tr>
-            <th>Vencimento</th>
-            <th>Atraso</th>
-            <th>Principal</th>
-            <th scope="col" class="text-right">Juros</th>
-            <th scope="col" class="text-right">Multa</th>
-            <th>Taxa</th>
-            <th scope="col" class="text-right">Valor Atualizado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let titulo of data.titulos">
-            <td>{{ dataBrasil(titulo.vencimento) }}</td>
-            <td>{{ titulo.atraso }}</td>
-            <td scope="col" class="text-right">{{ titulo.valor | currency:'BRL' }}</td>
-            <td scope="col" class="text-right">{{ titulo.valor_juros | currency:'BRL' }}</td>
-            <td scope="col" class="text-right">{{ titulo.valor_multa | currency:'BRL' }}</td>
-            <td scope="col" class="text-right">{{ titulo.valor_taxa | currency:'BRL' }}</td>
-            <td scope="col" class="text-right">{{ titulo.valor_atualizado | currency:'BRL' }}</td>
-
-          </tr>
-          <tr *ngIf="data.titulos.length > 0" class="tabela-custom">
-            <td colspan="2" style="text-align: center;"><strong>Total:</strong></td>
-            <td cope="col" class="text-right">{{ totalValor | currency:'BRL' }}</td>
-            <td cope="col" class="text-right">{{ totalJuros | currency:'BRL' }}</td>
-            <td cope="col" class="text-right">{{ totalMulta | currency:'BRL' }}</td>
-            <td cope="col" class="text-right">{{ totalTaxa | currency:'BRL' }}</td>
-            <td cope="col" class="text-right">{{ totalGeral | currency:'BRL' }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+            <tr>
+              <th>Vencimento</th>
+              <th>Atraso</th>
+              <th>Principal</th>
+              <th scope="col" class="text-right">Juros</th>
+              <th scope="col" class="text-right">Multa</th>
+              <th>Taxa</th>
+              <th scope="col" class="text-right">Valor Atualizado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let titulo of data.titulos">
+              <td>{{ dataBrasil(titulo.vencimento) }}</td>
+              <td>{{ titulo.atraso }}</td>
+              <td scope="col" class="text-right">{{ titulo.valor | currency:'BRL' }}</td>
+              <td scope="col" class="text-right">{{ titulo.valor_juros | currency:'BRL' }}</td>
+              <td scope="col" class="text-right">{{ titulo.valor_multa | currency:'BRL' }}</td>
+              <td scope="col" class="text-right">{{ titulo.valor_taxa | currency:'BRL' }}</td>
+              <td scope="col" class="text-right">{{ titulo.valor_atualizado | currency:'BRL' }}</td>
+            </tr>
+            <tr *ngIf="data.titulos.length > 0" class="tabela-custom">
+              <td colspan="2" style="text-align: center;"><strong>Total:</strong></td>
+              <td scope="col" class="text-right">{{ totalValor | currency:'BRL' }}</td>
+              <td scope="col" class="text-right">{{ totalJuros | currency:'BRL' }}</td>
+              <td scope="col" class="text-right">{{ totalMulta | currency:'BRL' }}</td>
+              <td scope="col" class="text-right">{{ totalTaxa | currency:'BRL' }}</td>
+              <td scope="col" class="text-right">{{ totalGeral | currency:'BRL' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Campo oculto para IDs dos títulos -->
+      <input type="hidden" formControlName="titulos">
+    </form>
   </div>
 </ng-template>

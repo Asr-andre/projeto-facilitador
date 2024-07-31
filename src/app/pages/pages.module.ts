@@ -1,5 +1,5 @@
 import { LOCALE_ID, NgModule } from "@angular/core";
-import { CommonModule, registerLocaleData } from "@angular/common";
+import { CommonModule, DatePipe, registerLocaleData } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { UiModule } from "../shared/ui/ui.module";
@@ -74,6 +74,7 @@ registerLocaleData(localePt);
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
-    provideNgxMask()],
+    provideNgxMask(),
+    DatePipe],
 })
 export class PagesModule {}

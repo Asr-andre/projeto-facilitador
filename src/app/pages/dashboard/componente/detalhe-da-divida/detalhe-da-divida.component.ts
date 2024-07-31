@@ -55,6 +55,11 @@ export class DetalheDaDividaComponent implements OnChanges {
         this.dadosEnviado.emit();
       });
     }
+
+    if (this.SimuladorPadraoComponent) {
+      this.SimuladorPadraoComponent.idCliente = this.idCliente;
+      this.SimuladorPadraoComponent.idContratante = this.idContratante;
+    }
   }
 
   public obterDetalhamentoPorId(id_cliente: number | undefined, id_contratante: number | undefined): void {
