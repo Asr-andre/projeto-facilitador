@@ -18,6 +18,7 @@ export class SimuladorPadraoComponent implements OnInit {
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
   private modalRef: NgbModalRef;
+  public descontoMaximo: any;
   public data: any;
   public form: FormGroup;
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
@@ -28,6 +29,11 @@ export class SimuladorPadraoComponent implements OnInit {
   public totalTaxa: number = 0;
   public totalGeral: number = 0;
   public totalValor: number = 0;
+
+  public originalPrincipal: number = 0;
+  public originalMulta: number = 0;
+  public originalJuros: number = 0;
+  public originalTaxa: number = 0;
 
   constructor(
     private modalService: NgbModal,
@@ -54,6 +60,12 @@ export class SimuladorPadraoComponent implements OnInit {
 
   public abrirModalSimulado(data: any): void {
     this.data = data;
+
+    this.originalPrincipal = data.desconto_principal;
+    this.originalMulta = data.desconto_multa;
+    this.originalJuros = data.desconto_juros;
+    this.originalTaxa = data.desconto_taxa;
+
     const dataAtualizacao = data.data_atualizacao
     ? this.datePipe.transform(data.data_atualizacao, 'yyyy-MM-dd')
     : this.datePipe.transform(new Date(), 'yyyy-MM-dd');
@@ -116,4 +128,5 @@ export class SimuladorPadraoComponent implements OnInit {
     return vencido ? `-${atraso}` : atraso.toString();
   }
     */
+
 }

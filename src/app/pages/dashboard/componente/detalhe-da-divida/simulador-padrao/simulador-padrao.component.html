@@ -7,24 +7,22 @@
   <div class="modal-body" style="padding-top: 2px; padding-bottom: 2px;">
     <form [formGroup]="form" (ngSubmit)="recalcular()">
       <div class="row mt-2">
-        <!-- Campos de desconto e data -->
         <div class="col-md-12">
           <div class="row align-items-center">
-            <!-- Campos de desconto e data -->
             <div class="col-md-2" style="font-size: 12px;">
-              Principal: {{ (data.desconto_principal / 100) | percent:'1.0-0' }}
+              Principal: {{ (originalPrincipal / 100) | percent:'1.0-0' }}
               <input type="number" class="form-control form-control-sm" formControlName="desconto_principal" min="0">
             </div>
             <div class="col-md-2" style="font-size: 12px;">
-              Multa: {{ (data.desconto_multa / 100) | percent:'1.0-0' }}
+              Multa: {{ (originalMulta / 100) | percent:'1.0-0' }}
               <input type="number" class="form-control form-control-sm" formControlName="desconto_multa" min="0">
             </div>
             <div class="col-md-2" style="font-size: 12px;">
-              Juros: {{ (data.desconto_juros / 100) | percent:'1.0-0' }}
+              Juros: {{ (originalJuros / 100) | percent:'1.0-0' }}
               <input type="number" class="form-control form-control-sm" formControlName="desconto_juros" min="0">
             </div>
             <div class="col-md-2" style="font-size: 12px;">
-              Taxa: {{ (data.desconto_taxa / 100) | percent:'1.0-0' }}
+              Taxa: {{ (originalTaxa / 100) | percent:'1.0-0' }}
               <input type="number" class="form-control form-control-sm" formControlName="desconto_taxa" min="0">
             </div>
             <div class="col-md-2" style="font-size: 12px;">
@@ -40,16 +38,16 @@
           </div>
         </div>
       </div>
-      <div style="overflow: auto; height: 150px; margin-top: 5px;">
+      <div style="overflow: auto; height: 400px; margin-top: 5px;">
         <table class="table table-sm">
           <thead class="tabela-custom table-td-scroll">
             <tr>
               <th>Vencimento</th>
               <th>Atraso</th>
-              <th>Principal</th>
-              <th scope="col" class="text-right">Juros</th>
-              <th scope="col" class="text-right">Multa</th>
-              <th>Taxa</th>
+              <th>Desc Principal</th>
+              <th scope="col" class="text-right">Desc Juros</th>
+              <th scope="col" class="text-right">Desc Multa</th>
+              <th>Desc Taxa</th>
               <th scope="col" class="text-right">Valor Atualizado</th>
             </tr>
           </thead>
