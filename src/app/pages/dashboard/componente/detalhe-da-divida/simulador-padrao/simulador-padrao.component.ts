@@ -129,4 +129,13 @@ export class SimuladorPadraoComponent implements OnInit {
   }
     */
 
+  public validarDesconto(event: any, tipo: string): void {
+    const input = event.target;
+    const valorMaximo = this[`original${tipo}`];
+    const valorAtual = Number(input.value);
+
+    if (valorAtual > valorMaximo) {
+      input.value = valorMaximo;
+    }
+  }
 }
