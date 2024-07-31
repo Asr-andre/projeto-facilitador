@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Utils } from 'src/app/core/helpers/utils';
+import { SimuladorPadraoService } from 'src/app/core/services/simulador.padrao.sevice';
 
 @Component({
   selector: 'app-simulador-padrao',
@@ -20,8 +21,15 @@ export class SimuladorPadraoComponent implements OnInit {
   public totalGeral: number = 0;
   public totalValor: number = 0;
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder) {
+  constructor(
+    private modalService: NgbModal,
+    private fb: FormBuilder,
+    private simuladorService: SimuladorPadraoService) {
     this.form = this.fb.group({
+      descontoPrincipal: [''],
+      descontoMulta: [''],
+      descontoJuros: [''],
+      descontoTaxa: [''],
       dataNova: ['']
     });
   }

@@ -3,109 +3,41 @@
     <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-calculator" style="margin-right: 5px;"></i> Simulação de Negociação</h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
-  <div class="modal-body" style="padding-top: 2px;padding-bottom: 2px;">
+  <div class="modal-body" style="padding-top: 2px; padding-bottom: 2px;">
     <div class="row mt-2">
-      <div class="col-md-6">
-        <div class="row">
-          <div class="col-md-12 text-right">
-            <h6 style="font-family: Century Gothic!important"><strong>Descontos Permitidos</strong></h6>
+      <div class="col-md-12">
+        <div class="row align-items-center">
+          <div class="col-md-2" style="font-size: 12px;">
+            Principal: {{ (data.desconto_principal / 100) | percent:'1.0-0' }}
+            <input type="text" class="form-control form-control-sm" formControlName="descontoPrincipal">
           </div>
-
-        </div>
-        <div class="row">
-          <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">Principal</div>
-          <div class="col-md-6">
-            <input type="text" class="form-control form-control-sm" disabled value="{{ (data.desconto_principal / 100) | percent:'1.0-0' }}">
+          <div class="col-md-2" style="font-size: 12px;">
+            Multa: {{ (data.desconto_multa / 100) | percent:'1.0-0' }}
+            <input type="text" class="form-control form-control-sm" formControlName="descontoMulta">
           </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">Multa</div>
-          <div class="col-md-6">
-            <input type="text" class="form-control form-control-sm" disabled value="{{ (data.desconto_multa / 100) | percent:'1.0-0' }}">
+          <div class="col-md-2" style="font-size: 12px;">
+            Juros: {{ (data.desconto_juros / 100) | percent:'1.0-0' }}
+            <input type="text" class="form-control form-control-sm" formControlName="descontoJuros">
           </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">Juros</div>
-          <div class="col-md-6">
-            <input type="text" class="form-control form-control-sm" disabled value="{{ (data.desconto_juros / 100) | percent:'1.0-0' }}">
+          <div class="col-md-2" style="font-size: 12px;">
+            Taxa: {{ (data.desconto_taxa / 100) | percent:'1.0-0' }}
+            <input type="text" class="form-control form-control-sm" formControlName="descontoTaxa">
           </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">Taxa</div>
-          <div class="col-md-6">
-            <input type="text" class="form-control form-control-sm" disabled value="{{ (data.desconto_taxa / 100) | percent:'1.0-0' }}">
+          <div class="col-md-2" style="font-size: 12px;">
+            Data Negociação
+            <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="dataNova">
           </div>
-        </div>
-      </div>
-
-      <div class="col-md-6" style="border-left: 1px solid #404040">
-        <div class="row">
-          <div class="col-md-6">
-            <h6 style="font-family: Century Gothic!important"><strong>Aplicar Descontos</strong></h6>
-          </div>
-          <div class="col-md-6">
-          <form [formGroup]="form" class="form-container">
-            <div class="form-group">
-              <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="dataNova">
-            </div>
-          </form>
-        </div>
-        </div>
-        <form >
-          <div class="row mt-2">
-            <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">
-              Principal <small style="color: #466eb0"> 0</small>
-            </div>
-            <div class="col-md-6">
-              <div class="input-group" placement="top">
-                <input type="text" class="form-control form-control-sm">
-              </div>
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">
-              Juros <small style="color: #466eb0" > 0</small>
-            </div>
-            <div class="col-md-6">
-              <div class="input-group" placement="top">
-                <input type="text" class="form-control form-control-sm">
-              </div>
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">
-              Multa <small style="color: #466eb0" > 0</small>
-            </div>
-            <div class="col-md-6">
-              <div class="input-group" placement="top">
-                <input type="text" class="form-control form-control-sm">
-              </div>
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-md-6" style="margin-top: 10px; font-size: 12px;">
-              Taxa <small style="color: #466eb0" > 0</small>
-            </div>
-            <div class="col-md-6">
-              <div class="input-group" placement="top">
-                <input type="text" class="form-control form-control-sm">
-              </div>
-            </div>
-          </div>
-        </form>
-        <div class="row mt-2">
-          <div class="col-md-6">
+          <div class="col-md-2 mt-auto text-left" style="font-size: 12px;">
             <button type="button" class="btn btn-primary btn-sm btn-recalcular" (click)="recalcular()" style="padding-top: 2px; padding-bottom: 2px; padding-right: 6px; padding-left: 6px;">
               <i class="fas fa-calculator"></i>
               Recalcular
             </button>
           </div>
         </div>
+      </div>
+    </div>
 
-      </div>
-      </div>
-      <hr class="divider">
-      <div style="overflow: auto; height: 150px;">
+      <div style="overflow: auto; height: 150px; margin-top: 5px;">
         <table class="table table-sm">
           <thead class="tabela-custom table-td-scroll">
           <tr>
