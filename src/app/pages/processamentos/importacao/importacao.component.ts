@@ -29,7 +29,7 @@ export class ImportacaoComponent implements OnInit {
   public importacoesManual: any[] = [];
 
   public paginaAtual: number = 1;
-  public itensPorPagina: number = 20;
+  public itensPorPagina: number = 10;
   public dadosFiltrados: ImportacaoDetalhesModel[] = [];
   public textoPesquisa: string = '';
   public totalRegistros: number = 0;

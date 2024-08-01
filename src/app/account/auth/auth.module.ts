@@ -8,9 +8,10 @@ import { UiModule } from '../../shared/ui/ui.module';
 import { AuthRoutingModule } from './auth-routing';
 
 import { LoginComponent } from './login/login.component';
+import { PasswordresetComponent } from './passwordreset/passwordreset.component';
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, PasswordresetComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

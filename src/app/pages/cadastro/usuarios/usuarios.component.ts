@@ -21,7 +21,7 @@ export class UsuariosComponent implements OnInit {
   public loadingMin: boolean = false;
 
   public paginaAtual: number = 1;
-  public itensPorPagina: number = 20;
+  public itensPorPagina: number = 10;
   public dadosFiltrados: UsuarioModel[] = [];
   public textoPesquisa: string = '';
   public totalRegistros: number = 0;
