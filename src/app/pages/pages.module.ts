@@ -30,7 +30,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from "ngx-mask";
 import { EmailComponent } from "./dashboard/componente/email/email.component";
 import { DetalheDaDividaComponent } from "./dashboard/componente/detalhe-da-divida/detalhe-da-divida.component";
 import { OrderTableModule } from "../core/helpers/conf-tabela/order-table.module";
-import { EnvioEmailComponent } from "./dashboard/componente/detalhe-da-divida/envio-email/envio-email.component";
+import { EnvioEmailComponent } from "./dashboard/componente/email/envio-email/envio-email.component";
 import { EnvioSmsComponent } from "./dashboard/componente/detalhe-da-divida/envio-sms/envio-sms.component";
 import localePt from '@angular/common/locales/pt';
 import { SimuladorPadraoComponent } from "./dashboard/componente/detalhe-da-divida/simulador-padrao/simulador-padrao.component";

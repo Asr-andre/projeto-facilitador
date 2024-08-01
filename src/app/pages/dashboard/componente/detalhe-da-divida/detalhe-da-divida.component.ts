@@ -3,7 +3,7 @@ import { DetalhamentoModel } from 'src/app/core/models/detalhamento.model';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { WhatsappComponent } from './whatsapp/whatsapp.component';
-import { EnvioEmailComponent } from './envio-email/envio-email.component';
+import { EnvioEmailComponent } from '../email/envio-email/envio-email.component';
 import { EnvioSmsComponent } from './envio-sms/envio-sms.component';
 import { Utils } from 'src/app/core/helpers/utils';
 import { SimulacaoRequisicaoModel, SimulacaoRetornoModel } from 'src/app/core/models/simulador.padrao.model';
@@ -18,7 +18,6 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 })
 export class DetalheDaDividaComponent implements OnChanges {
   @ViewChild(WhatsappComponent) whatsappComponent: WhatsappComponent;
-  @ViewChild(EnvioEmailComponent) EnvioEmailComponent: EnvioEmailComponent;
   @ViewChild(EnvioSmsComponent) EnvioSmsComponent: EnvioSmsComponent;
   @ViewChild(SimuladorPadraoComponent) SimuladorPadraoComponent: SimuladorPadraoComponent;
   @Input() idCliente: number | undefined;
@@ -44,12 +43,6 @@ export class DetalheDaDividaComponent implements OnChanges {
   }
 
   ngAfterViewInit() {
-    if (this.EnvioEmailComponent) {
-      this.EnvioEmailComponent.dadosEnviado.subscribe(() => {
-        this.dadosEnviado.emit();
-      });
-    }
-
     if (this.EnvioSmsComponent) {
       this.EnvioSmsComponent.dadosEnviado.subscribe(() => {
         this.dadosEnviado.emit();
@@ -110,9 +103,7 @@ export class DetalheDaDividaComponent implements OnChanges {
     this.whatsappComponent.abrirModalWhatsapp(telefone);
   }
 
-  public abrirEmailModal(email: string): void {
-    this.EnvioEmailComponent.abrirModalEmail(email, this.idCliente, this.idContratante);
-  }
+
 
   public abrirSmsModal(sms: string): void {
     this.EnvioSmsComponent.abrirModalSms(sms, this.idCliente, this.idContratante);

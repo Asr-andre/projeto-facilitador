@@ -1,10 +1,11 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmailRetornoModel } from 'src/app/core/models/email.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { EmailService } from 'src/app/core/services/email.service';
+import { EnvioEmailComponent } from './envio-email/envio-email.component';
 
 @Component({
   selector: 'app-email',
@@ -12,6 +13,8 @@ import { EmailService } from 'src/app/core/services/email.service';
   styleUrl: './email.component.scss'
 })
 export class EmailComponent implements OnInit, OnChanges{
+  @ViewChild(EnvioEmailComponent) EnvioEmailComponent: EnvioEmailComponent;
+  @Output() dadosEnviado: EventEmitter<void> = new EventEmitter<void>();
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
   public loadingMin: boolean = false;
@@ -29,6 +32,14 @@ export class EmailComponent implements OnInit, OnChanges{
   ngOnInit(): void {
     this.inicializarEmailForm();
     this.carregarEmails(this.idCliente);
+  }
+
+  ngAfterViewInit() {
+    if (this.EnvioEmailComponent) {
+      this.EnvioEmailComponent.dadosEnviado.subscribe(() => {
+        this.dadosEnviado.emit();
+      });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -59,6 +70,10 @@ export class EmailComponent implements OnInit, OnChanges{
         this.loadingMin = false;
       }
     );
+  }
+
+  public abrirEmailModal(email: string): void {
+    this.EnvioEmailComponent.abrirModalEmail(email, this.idCliente, this.idContratante);
   }
 
   public abriModalEmail(content: TemplateRef<any>): void {
