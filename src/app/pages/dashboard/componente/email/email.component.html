@@ -24,7 +24,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let email of emails?.emails">
-          <td><i *ngIf="email.situacao === 'A'" class="fas fa-envelope envelope-icon" (click)="abrirEmailModal(email.email)"></i></td>
+          <td><i *ngIf="email.situacao === 'A'" class="fas fa-envelope envelope-icon" (click)="abrirEmailModal(email.email)" ngbTooltip="Enviar Email"></i></td>
           <td>{{ email.email }}</td>
           <td>{{ email.situacao === 'A' ? 'Ativo' : 'Inativo' }}</td>
           <td>{{ email.origem }}  </td>

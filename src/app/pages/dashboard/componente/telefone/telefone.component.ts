@@ -1,10 +1,12 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TelefoneRetornoModel } from 'src/app/core/models/telefone.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { TelefoneService } from 'src/app/core/services/telefone.service';
+import { EnvioSmsComponent } from './envio-sms/envio-sms.component';
+import { WhatsappComponent } from './whatsapp/whatsapp.component';
 
 @Component({
   selector: 'app-telefone',
@@ -12,6 +14,9 @@ import { TelefoneService } from 'src/app/core/services/telefone.service';
   styleUrl: './telefone.component.scss'
 })
 export class TelefoneComponent implements OnInit, OnChanges {
+  @ViewChild(WhatsappComponent) whatsappComponent: WhatsappComponent;
+  @ViewChild(EnvioSmsComponent) EnvioSmsComponent: EnvioSmsComponent;
+  @Output() dadosEnviado: EventEmitter<void> = new EventEmitter<void>();
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
   public telefones: TelefoneRetornoModel;
@@ -28,6 +33,14 @@ export class TelefoneComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.inicializarTelefoneForm();
     this.carregarTelefones(this.idCliente);
+  }
+
+  ngAfterViewInit() {
+    if (this.EnvioSmsComponent) {
+      this.EnvioSmsComponent.dadosEnviado.subscribe(() => {
+        this.dadosEnviado.emit();
+      });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -117,5 +130,13 @@ export class TelefoneComponent implements OnInit, OnChanges {
     } else {
       this._alertService.warning("Preencha todos os campos obrigatórios");
     }
+  }
+
+  public abrirWhatsappModal(telefone: string): void {
+    this.whatsappComponent.abrirModalWhatsapp(telefone);
+  }
+
+  public abrirSmsModal(sms: string): void {
+    this.EnvioSmsComponent.abrirModalSms(sms, this.idCliente, this.idContratante);
   }
 }

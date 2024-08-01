@@ -24,14 +24,14 @@ import { LeafletModule } from "@asymmetrik/ngx-leaflet";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { AcionamentoComponent } from "./dashboard/componente/acionamento/acionamento.component";
-import { WhatsappComponent } from "./dashboard/componente/detalhe-da-divida/whatsapp/whatsapp.component";
+import { WhatsappComponent } from "./dashboard/componente/telefone/whatsapp/whatsapp.component";
 import { TelefoneComponent } from "./dashboard/componente/telefone/telefone.component";
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from "ngx-mask";
 import { EmailComponent } from "./dashboard/componente/email/email.component";
 import { DetalheDaDividaComponent } from "./dashboard/componente/detalhe-da-divida/detalhe-da-divida.component";
 import { OrderTableModule } from "../core/helpers/conf-tabela/order-table.module";
 import { EnvioEmailComponent } from "./dashboard/componente/email/envio-email/envio-email.component";
-import { EnvioSmsComponent } from "./dashboard/componente/detalhe-da-divida/envio-sms/envio-sms.component";
+import { EnvioSmsComponent } from "./dashboard/componente/telefone/envio-sms/envio-sms.component";
 import localePt from '@angular/common/locales/pt';
 import { SimuladorPadraoComponent } from "./dashboard/componente/detalhe-da-divida/simulador-padrao/simulador-padrao.component";
 

@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewC
 import { DetalhamentoModel } from 'src/app/core/models/detalhamento.model';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { AlertService } from 'src/app/core/services/alert.service';
-import { WhatsappComponent } from './whatsapp/whatsapp.component';
+import { WhatsappComponent } from '../telefone/whatsapp/whatsapp.component';
 import { EnvioEmailComponent } from '../email/envio-email/envio-email.component';
-import { EnvioSmsComponent } from './envio-sms/envio-sms.component';
+import { EnvioSmsComponent } from '../telefone/envio-sms/envio-sms.component';
 import { Utils } from 'src/app/core/helpers/utils';
 import { SimulacaoRequisicaoModel, SimulacaoRetornoModel } from 'src/app/core/models/simulador.padrao.model';
 import { SimuladorPadraoService } from 'src/app/core/services/simulador.padrao.sevice';
@@ -17,14 +17,11 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
   styleUrls: ['./detalhe-da-divida.component.scss']
 })
 export class DetalheDaDividaComponent implements OnChanges {
-  @ViewChild(WhatsappComponent) whatsappComponent: WhatsappComponent;
-  @ViewChild(EnvioSmsComponent) EnvioSmsComponent: EnvioSmsComponent;
   @ViewChild(SimuladorPadraoComponent) SimuladorPadraoComponent: SimuladorPadraoComponent;
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
   public detalhamentoSelecionado: DetalhamentoModel | null = null;
   public loadingMin: boolean = false;
-  @Output() dadosEnviado: EventEmitter<void> = new EventEmitter<void>();
   public selecionarTodos: boolean = true;
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public login = this._authService.getLogin();
@@ -43,12 +40,6 @@ export class DetalheDaDividaComponent implements OnChanges {
   }
 
   ngAfterViewInit() {
-    if (this.EnvioSmsComponent) {
-      this.EnvioSmsComponent.dadosEnviado.subscribe(() => {
-        this.dadosEnviado.emit();
-      });
-    }
-
     if (this.SimuladorPadraoComponent) {
       this.SimuladorPadraoComponent.idCliente = this.idCliente;
       this.SimuladorPadraoComponent.idContratante = this.idContratante;
@@ -97,16 +88,6 @@ export class DetalheDaDividaComponent implements OnChanges {
       (prestacao.valor_juros || 0) +
       (prestacao.valor_multa || 0) +
       (prestacao.valor_taxa || 0);
-  }
-
-  public abrirWhatsappModal(telefone: string): void {
-    this.whatsappComponent.abrirModalWhatsapp(telefone);
-  }
-
-
-
-  public abrirSmsModal(sms: string): void {
-    this.EnvioSmsComponent.abrirModalSms(sms, this.idCliente, this.idContratante);
   }
 
   public formatarCPF(cpf: string): string {

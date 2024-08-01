@@ -13,24 +13,21 @@
 </div>
 <div class="row pt-1 brder">
   <div class="col-md-6">
-    <b>Telefone:</b> {{ detalhamentoSelecionado?.fone }}
-    <i class="fas fa-sms sms-icon" style="margin-right: 5px;" (click)="abrirSmsModal(detalhamentoSelecionado?.fone)"></i>
-    <i class="fab fa-whatsapp whatsapp-icon" (click)="abrirWhatsappModal(detalhamentoSelecionado?.fone)"></i>
+    <b>outras infomações:</b>
+
   </div>
 </div>
-<app-envio-sms></app-envio-sms>
-<app-whatsapp></app-whatsapp>
 
 <div class="row pt-1 brder">
-  <div class="col-md-6"><b>outras infomações</b>
+  <div class="col-md-6"><b>outras infomações:</b>
   </div>
 </div>
-
 
 <div style="height: 300px;overflow: auto;padding-left: 0px;padding-right: 0px;">
   <div class="table-responsive mt-2 font-size-12">
     <div class="d-flex justify-content-end mb-2">
-      <button class="btn btn-secondary  btn-sm" style="padding-top: 2px; padding-bottom: 2px;" (click)="simularNegociacao()">
+      <button class="btn btn-secondary  btn-sm" style="padding-top: 2px; padding-bottom: 2px;"
+        (click)="simularNegociacao()">
         <i class="fas fa-calculator"></i> Simulador
       </button>
     </div>
