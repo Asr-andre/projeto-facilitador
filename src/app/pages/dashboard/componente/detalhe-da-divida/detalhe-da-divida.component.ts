@@ -1,10 +1,7 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { DetalhamentoModel } from 'src/app/core/models/detalhamento.model';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { AlertService } from 'src/app/core/services/alert.service';
-import { WhatsappComponent } from '../telefone/whatsapp/whatsapp.component';
-import { EnvioEmailComponent } from '../email/envio-email/envio-email.component';
-import { EnvioSmsComponent } from '../telefone/envio-sms/envio-sms.component';
 import { Utils } from 'src/app/core/helpers/utils';
 import { SimulacaoRequisicaoModel, SimulacaoRetornoModel } from 'src/app/core/models/simulador.padrao.model';
 import { SimuladorPadraoService } from 'src/app/core/services/simulador.padrao.sevice';
