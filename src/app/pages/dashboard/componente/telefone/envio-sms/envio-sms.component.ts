@@ -58,6 +58,10 @@ export class EnvioSmsComponent implements OnInit {
   public enviarSms(): void {
     if (this.formEnvioSms.valid) {
       this.loading = true;
+
+      const mensagemSemQuebraLinha = this.formEnvioSms.get('mensagem')?.value.replace(/\n/g, '');
+      this.formEnvioSms.patchValue({ mensagem: mensagemSemQuebraLinha });
+
       this._smsService.envioSmsUnitario(this.formEnvioSms.value).subscribe((res) => {
         this.loading = false;
         if (res.success === 'true') {
