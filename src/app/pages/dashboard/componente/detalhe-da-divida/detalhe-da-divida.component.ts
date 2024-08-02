@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { DetalhamentoModel } from 'src/app/core/models/detalhamento.model';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -23,6 +23,8 @@ export class DetalheDaDividaComponent implements OnChanges {
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public login = this._authService.getLogin();
 
+  @Output() clienteAtualizado = new EventEmitter<void>();
+
   constructor(
     private _dashboard: DashboardService,
     private _alertService: AlertService,
@@ -41,6 +43,11 @@ export class DetalheDaDividaComponent implements OnChanges {
       this.SimuladorPadraoComponent.idCliente = this.idCliente;
       this.SimuladorPadraoComponent.idContratante = this.idContratante;
     }
+  }
+
+  public atualizarDetalhamento(): void {
+    this.obterDetalhamentoPorId(this.idCliente, this.idContratante);
+    this.clienteAtualizado.emit();
   }
 
   public obterDetalhamentoPorId(id_cliente: number | undefined, id_contratante: number | undefined): void {

@@ -1,11 +1,12 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Utils } from 'src/app/core/helpers/utils';
 import { SimuladorPadraoService } from 'src/app/core/services/simulador.padrao.sevice';
-import { RecalculoRetornoModel } from 'src/app/core/models/simulador.padrao.model';
+import { BaixaPagamentoRequisicaoModel, RecalculoRetornoModel } from 'src/app/core/models/simulador.padrao.model';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { DatePipe } from '@angular/common';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 
 @Component({
@@ -24,6 +25,8 @@ export class SimuladorPadraoComponent implements OnInit {
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public login = this._authService.getLogin();
 
+  @Output() clienteAtualizado = new EventEmitter<void>();
+
   public totalJuros: number = 0;
   public totalMulta: number = 0;
   public totalTaxa: number = 0;
@@ -40,7 +43,8 @@ export class SimuladorPadraoComponent implements OnInit {
     private fb: FormBuilder,
     private simuladorService: SimuladorPadraoService,
     private _authService: AuthenticationService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private _alertService: AlertService,
   ) {
     this.form = this.fb.group({
       id_empresa: [this.idEmpresa],
@@ -125,5 +129,38 @@ export class SimuladorPadraoComponent implements OnInit {
     if (valorAtual > valorMaximo) {
       input.value = valorMaximo;
     }
+  }
+
+  public baixarPagamentos(): void {
+    const titulos = this.data.titulos.map(titulo => ({
+      id_titulo: titulo.id_titulo,
+      valor: titulo.valor,
+      valor_multa: titulo.valor_multa,
+      valor_juros: titulo.valor_juros,
+      valor_taxa: titulo.valor_taxa,
+      valor_atualizado: titulo.valor_atualizado
+    }));
+
+    const dadosParaEnvio: BaixaPagamentoRequisicaoModel = {
+      id_empresa: this.idEmpresa,
+      id_contratante: this.idContratante,
+      id_cliente: this.idCliente,
+      data_negociacao: this.datePipe.transform(this.form.get('data_atualizacao').value, 'dd/MM/yyyy')!,
+      tipo_baixa: 'P',
+      user_login: this.login,
+      titulos: titulos
+    };
+
+    this.simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe(
+      (res) => {
+        this._alertService.success(res.msg);
+        this.clienteAtualizado.emit();
+        this.fechar();
+      },
+      error => {
+        console.error('Erro ao realizar a baixa:', error);
+        alert('Ocorreu um erro ao realizar a baixa.');
+      }
+    );
   }
 }

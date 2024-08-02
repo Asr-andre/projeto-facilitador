@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConfig } from './url.base.service';
-import { RecalculoRequisicaoModel, RecalculoRetornoModel, SimulacaoRequisicaoModel, SimulacaoRetornoModel } from '../models/simulador.padrao.model';
+import { BaixaPagamentoRequisicaoModel, BaixaPagamentoRetorno, RecalculoRequisicaoModel, RecalculoRetornoModel, SimulacaoRequisicaoModel, SimulacaoRetornoModel } from '../models/simulador.padrao.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +21,9 @@ export class SimuladorPadraoService {
 
   public recalcularNegociacao(requisicao: RecalculoRequisicaoModel): Observable<RecalculoRetornoModel> {
     return this._http.post<RecalculoRetornoModel>(`${this.apiUrl}/descontopadrao`, requisicao);
+  }
+
+  public baixarTitulosPago(pagos: BaixaPagamentoRequisicaoModel): Observable<BaixaPagamentoRetorno> {
+    return this._http.post<BaixaPagamentoRetorno>(`${this.apiUrl}/baixapagamento`, pagos);
   }
 }

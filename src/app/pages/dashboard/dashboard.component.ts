@@ -60,6 +60,10 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  public atualizar(): void {
+    this.obterDevedores();
+  }
+
   public obterDadosDosCards(): void {
     this._dashboard.obterCards().subscribe(
       (response: RespostaCardsModel) => {

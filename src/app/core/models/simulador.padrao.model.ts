@@ -73,3 +73,35 @@ export class RecalculoRetornoModel {
   desconto_taxa: string;
   titulos: TituloRecalculoModel[];
 }
+
+
+// baixar de pagamentos
+export class TitulosPagoModel {
+  id_titulo: number;
+  valor: number;
+  valor_multa: number;
+  valor_juros: number;
+  valor_taxa: number;
+  valor_atualizado: number;
+}
+
+export class BaixaPagamentoRequisicaoModel {
+  id_empresa: number;
+  id_contratante: number;
+  id_cliente: number;
+  data_negociacao: string;
+  tipo_baixa: string;
+  user_login: string;
+  titulos: TitulosPagoModel[];
+}
+
+
+export class BaixaPagamentoRetorno {
+  success: string;
+  msg: string;
+  id_empresa: string;
+  id_contratante: string;
+  id_cliente: string;
+}
+
+// fim do metodos de baixar pagamento
