@@ -36,14 +36,8 @@
             </div>
           </div>
           <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px;">
-            <button type="submit" class="btn btn-primary btn-sm me-2" style="padding-bottom: 2px; padding-top: 2px;">
+            <button type="submit" class="btn btn-primary btn-sm" style="padding-bottom: 2px; padding-top: 2px;">
               <i class="fas fa-redo-alt"></i> Recalcular
-            </button>
-            <button type="button" class="btn btn-success btn-sm me-2" style="padding-bottom: 2px; padding-top: 2px;" ngbTooltip="Baixar Pagamentos">
-              <i class="fas fa-download"></i>
-            </button>
-            <button type="button" class="btn btn-danger btn-sm" style="padding-bottom: 2px; padding-top: 2px;" ngbTooltip="Retirada">
-              <i class="fas fa-undo"></i>
             </button>
           </div>
         </div>
@@ -84,6 +78,12 @@
       </div>
       <!-- Campo oculto para IDs dos títulos -->
       <input type="hidden" formControlName="titulos">
+      <hr style="margin-top: 5px; margin-bottom: 5px;">
+      <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px; margin-left: 0px !important;">
+        <button type="button" class="btn btn-success btn-sm" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;">
+          <i class="fas fa-money-bill-wave"></i> Baixar Pagamentos
+        </button>
+      </div>
     </form>
   </div>
 </ng-template>
