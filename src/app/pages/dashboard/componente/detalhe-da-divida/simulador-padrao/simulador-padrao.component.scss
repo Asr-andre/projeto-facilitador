@@ -35,3 +35,10 @@
   font-size: 12px; /* Tamanho da fonte */
 }
 
+.button-group .btn {
+  margin-right: 10px; /* Ajuste a margem conforme necessário */
+}
+
+.button-group .btn:last-child {
+  margin-right: 0; /* Remove a margem direita do último botão */
+}
