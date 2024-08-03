@@ -24,6 +24,7 @@ export class SimuladorPadraoComponent implements OnInit {
   public form: FormGroup;
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public login = this._authService.getLogin();
+  public habilitarAcordo: boolean = false;
 
   @Output() clienteAtualizado = new EventEmitter<void>();
 
@@ -161,5 +162,14 @@ export class SimuladorPadraoComponent implements OnInit {
         alert('Ocorreu um erro ao realizar a baixa.');
       }
     );
+  }
+
+  public habilitaBotao() {
+    this.habilitarAcordo = true;
+  }
+
+  public fechaModal() {
+    this.habilitarAcordo = false;
+    this.modalRef.dismiss();
   }
 }

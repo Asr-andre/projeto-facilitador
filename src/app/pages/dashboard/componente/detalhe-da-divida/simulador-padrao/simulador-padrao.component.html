@@ -36,13 +36,16 @@
             </div>
           </div>
           <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px;">
-            <button type="submit" class="btn btn-primary btn-sm" style="padding-bottom: 2px; padding-top: 2px;">
+            <button type="submit" class="btn btn-primary btn-sm me-1" style="padding-bottom: 2px; padding-top: 2px;">
               <i class="fas fa-redo-alt"></i> Recalcular
+            </button>
+            <button type="submit" class="btn btn-secondary btn-sm" style="padding-bottom: 2px; padding-top: 2px;" (click)="habilitaBotao()">
+              <i class="fas fa-handshake"></i> Acordo
             </button>
           </div>
         </div>
       </div>
-      <div style="overflow: auto; height: 400px; margin-top: 5px;">
+      <div style="overflow: auto; height: 300px; margin-top: 5px;">
         <table class="table table-sm">
           <thead class="tabela-custom table-td-scroll">
             <tr>
@@ -80,8 +83,14 @@
       <input type="hidden" formControlName="titulos">
       <hr style="margin-top: 5px; margin-bottom: 5px;">
       <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px; margin-left: 0px !important;">
-        <button type="button" class="btn btn-success btn-sm" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" (click)="baixarPagamentos()">
+        <button type="button" class="btn btn-success btn-sm me-1" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" *ngIf="!habilitarAcordo" (click)="baixarPagamentos()">
           <i class="fas fa-money-bill-wave"></i> Baixar Pagamentos
+        </button>
+        <button type="button" class="btn btn-success btn-sm me-1" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" *ngIf="habilitarAcordo">
+          <i class="fas fa-handshake"></i> Salvar Acordo
+        </button>
+        <button type="button" class="btn btn-danger btn-sm" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" (click)="fechaModal()">
+          <i class="fas fa-window-close"></i> Cancelar
         </button>
       </div>
     </form>
