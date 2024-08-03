@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
   providedIn: 'root'
 })
 export class AlertService {
+  private timerInterval: any;
+
   constructor() {}
 
   success(message: string, title: string = 'Sucesso!') {
@@ -38,5 +40,39 @@ export class AlertService {
       timer: undefined,
       timerProgressBar: false
     });
+  }
+
+  timer(show: boolean, timer: number = 2000) {
+    if (show) {
+      Swal.fire({
+        timer: timer,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          this.timerInterval = setInterval(() => {
+            const htmlContainer = Swal.getHtmlContainer();
+            if (htmlContainer) {
+              const strongElement = htmlContainer.querySelector('strong');
+              if (strongElement) {
+                strongElement.textContent = Swal.getTimerLeft() + '';
+              }
+            }
+          }, 100);
+        },
+        willClose: () => {
+          clearInterval(this.timerInterval);
+        },
+        customClass: {
+          timerProgressBar: 'custom-timer'
+        }
+      }).then((result) => {
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log('I was closed by the timer');
+        }
+      });
+    } else {
+      Swal.close();
+      clearInterval(this.timerInterval);
+    }
   }
 }

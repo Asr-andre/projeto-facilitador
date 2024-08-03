@@ -23,7 +23,6 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public acionamentos: AcionamentoModel[] = [];
   public acoesCobranca: AcaoCobrancaModel[] = [];
-  public loadingMin: boolean = false;
   public formAcionamento: FormGroup;
 
   private updateSubject: Subject<void> = new Subject<void>();
@@ -64,7 +63,6 @@ export class AcionamentoComponent implements OnChanges, OnInit {
 
   public listarAcionamentos(): void {
     if (this.idCliente && this.idContratante) {
-      this.loadingMin = true;
       const requisicao: RequisicaoAcionamentoModel = {
         id_empresa: this.idEmpresa,
         id_contratante: this.idContratante,
@@ -74,14 +72,11 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       this._acionamentoService.listarAcionamentos(requisicao).subscribe((res) => {
         if (res.success) {
           this.acionamentos = res.acionamentos;
-          this.loadingMin = false;
         } else {
-          this.loadingMin = false;
           this._alertService.error(res.msg);
         }
       },
         (error) => {
-          this.loadingMin = false;
           this._alertService.error('Erro ao listar acionamentos');
         }
       );

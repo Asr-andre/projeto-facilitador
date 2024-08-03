@@ -1,8 +1,3 @@
-<div class="loading-overlay-card" *ngIf="loadingMin">
-  <div class="spinner-border text-primary m-1" role="status">
-  </div>
-</div>
-
 <div class="row brder">
   <div class="col-md-5"><strong>Credor:</strong> <span> {{ detalhamentoSelecionado?.credor }}</span></div>
 </div>
@@ -29,7 +24,7 @@
       <button class="btn btn-secondary  btn-sm me-1" style="padding-top: 2px; padding-bottom: 2px;" (click)="simularNegociacao()">
         <i class="fas fa-calculator"></i> Simulador
       </button>
-      <button type="button" class="btn btn-danger btn-sm" style="padding-bottom: 2px; padding-top: 2px;" ngbTooltip="Retirada">
+      <button type="button" class="btn btn-danger btn-sm" style="padding-bottom: 2px; padding-top: 2px;" ngbTooltip="Retirada" (click)="retiradas()">
         <i class="fas fa-exclamation-triangle"></i>
       </button>
     </div>

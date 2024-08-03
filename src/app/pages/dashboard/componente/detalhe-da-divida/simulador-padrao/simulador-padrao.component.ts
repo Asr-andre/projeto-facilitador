@@ -151,8 +151,7 @@ export class SimuladorPadraoComponent implements OnInit {
       titulos: titulos
     };
 
-    this.simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe(
-      (res) => {
+    this.simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe((res) => {
         this._alertService.success(res.msg);
         this.clienteAtualizado.emit();
         this.fechar();

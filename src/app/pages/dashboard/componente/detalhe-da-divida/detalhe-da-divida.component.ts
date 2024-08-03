@@ -3,10 +3,11 @@ import { DetalhamentoModel } from 'src/app/core/models/detalhamento.model';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { Utils } from 'src/app/core/helpers/utils';
-import { SimulacaoRequisicaoModel, SimulacaoRetornoModel } from 'src/app/core/models/simulador.padrao.model';
+import { BaixaPagamentoRequisicaoModel, SimulacaoRequisicaoModel, SimulacaoRetornoModel } from 'src/app/core/models/simulador.padrao.model';
 import { SimuladorPadraoService } from 'src/app/core/services/simulador.padrao.sevice';
 import { SimuladorPadraoComponent } from './simulador-padrao/simulador-padrao.component';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-detalhe-da-divida',
@@ -30,6 +31,8 @@ export class DetalheDaDividaComponent implements OnChanges {
     private _alertService: AlertService,
     private _simuladorPadraoService: SimuladorPadraoService,
     private _authService: AuthenticationService,
+    private _simuladorService: SimuladorPadraoService,
+    private _datePipe: DatePipe,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -55,7 +58,7 @@ export class DetalheDaDividaComponent implements OnChanges {
       return;
     }
 
-    this.loadingMin = true;
+    this._alertService.timer(true);
     this._dashboard.obterDevedorPorId(id_cliente, id_contratante).subscribe(
       (detalhamento) => {
         if (detalhamento && detalhamento.success) {
@@ -63,14 +66,15 @@ export class DetalheDaDividaComponent implements OnChanges {
           if (this.detalhamentoSelecionado.parcelas) {
             this.detalhamentoSelecionado.parcelas.forEach(parcela => {
               parcela.selecionado = true;
+              this._alertService.timer(false);
             });
           }
-          this.loadingMin = false;
+          this._alertService.timer(false);
         }
       },
       (error) => {
         this._alertService.error('Não foi possível pesquisar o cliente!');
-        this.loadingMin = false;
+        this._alertService.timer(false);
       }
     );
   }
@@ -148,6 +152,41 @@ export class DetalheDaDividaComponent implements OnChanges {
       },
       (error) => {
         this._alertService.error('Erro ao simular negociação.');
+      }
+    );
+  }
+
+  public retiradas(): void {
+    this._alertService.timer(true);
+    const titulos = this.detalhamentoSelecionado.parcelas.map(titulo => ({
+      id_titulo: titulo.id_titulo,
+      valor: titulo.valor,
+      valor_multa: titulo.valor_multa = 0,
+      valor_juros: titulo.valor_juros = 0,
+      valor_taxa: titulo.valor_taxa = 0,
+      valor_atualizado: titulo.valor
+    }));
+
+    const dataAtual = new Date();
+    const dataNegociacao = this._datePipe.transform(dataAtual, 'dd/MM/yyyy')!;
+    const dadosParaEnvio: BaixaPagamentoRequisicaoModel = {
+      id_empresa: this.idEmpresa,
+      id_contratante: this.idContratante,
+      id_cliente: this.idCliente,
+      data_negociacao: dataNegociacao,
+      tipo_baixa: 'R',
+      user_login: this.login,
+      titulos: titulos
+    };
+
+    this._simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe((res) => {
+      this._alertService.timer(false);
+        this._alertService.success(res.msg);
+        this.obterDetalhamentoPorId(this.idCliente, this.idContratante);
+      },
+      error => {
+        this._alertService.timer(false);
+        this._alertService.error('Ocorreu um erro ao realizar a retirada.');
       }
     );
   }

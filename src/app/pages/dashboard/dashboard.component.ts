@@ -93,6 +93,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public filtrar(): void {
+    this.loading = true;
     const filtro: RequisicaoDevedorModel = {
       id_empresa: this.idEmpresa,
       mostrar_cliente_sem_divida: this.mostrarSemDivida ? "S" : "N"
@@ -108,7 +109,9 @@ export class DashboardComponent implements OnInit {
       this.dadosFiltrados = res.clientes;
       this.totalRegistros = this.dadosFiltrados.length;
       this.atualizarQuantidadeExibida();
+      this.loading = false;
     });
+    this.loading = false;
   }
 
   public atualizarQuantidadeExibida() {
