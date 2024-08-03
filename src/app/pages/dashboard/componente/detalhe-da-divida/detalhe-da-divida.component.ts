@@ -157,15 +157,26 @@ export class DetalheDaDividaComponent implements OnChanges {
   }
 
   public retiradas(): void {
-    this._alertService.timer(true);
-    const titulos = this.detalhamentoSelecionado.parcelas.map(titulo => ({
-      id_titulo: titulo.id_titulo,
-      valor: titulo.valor,
-      valor_multa: titulo.valor_multa = 0,
-      valor_juros: titulo.valor_juros = 0,
-      valor_taxa: titulo.valor_taxa = 0,
-      valor_atualizado: titulo.valor
-    }));
+    if (!this.detalhamentoSelecionado?.parcelas) {
+      this._alertService.error('Nenhum título selecionado para retirada.');
+      return;
+    }
+
+    const titulos = this.detalhamentoSelecionado.parcelas
+      .filter(parcela => parcela.selecionado) // Apenas títulos selecionados
+      .map(titulo => ({
+        id_titulo: titulo.id_titulo,
+        valor: titulo.valor,
+        valor_multa: titulo.valor_multa = 0,
+        valor_juros: titulo.valor_juros = 0,
+        valor_taxa: titulo.valor_taxa = 0,
+        valor_atualizado: titulo.valor
+      }));
+
+    if (titulos.length === 0) {
+      this._alertService.error('Nenhum título selecionado para retirada.');
+      return;
+    }
 
     const dataAtual = new Date();
     const dataNegociacao = this._datePipe.transform(dataAtual, 'dd/MM/yyyy')!;
@@ -179,8 +190,10 @@ export class DetalheDaDividaComponent implements OnChanges {
       titulos: titulos
     };
 
+    this._alertService.timer(true);
+
     this._simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe((res) => {
-      this._alertService.timer(false);
+        this._alertService.timer(false);
         this._alertService.success(res.msg);
         this.obterDetalhamentoPorId(this.idCliente, this.idContratante);
       },
@@ -190,4 +203,5 @@ export class DetalheDaDividaComponent implements OnChanges {
       }
     );
   }
+
 }
