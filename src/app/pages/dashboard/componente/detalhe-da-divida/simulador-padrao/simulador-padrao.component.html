@@ -3,7 +3,7 @@
     <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-calculator" style="margin-right: 5px;"></i>
       Simulação de Negociação</h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
-      (click)="modal.dismiss()"></button>
+      (click)="fechaModal()"></button>
   </div>
   <div class="modal-body" style="padding-top: 2px; padding-bottom: 2px;">
     <form [formGroup]="form" (ngSubmit)="recalcular()">
@@ -82,17 +82,87 @@
       <!-- Campo oculto para IDs dos títulos -->
       <input type="hidden" formControlName="titulos">
       <hr style="margin-top: 5px; margin-bottom: 5px;">
-      <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px; margin-left: 0px !important;">
-        <button type="button" class="btn btn-success btn-sm me-1" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" *ngIf="!habilitarAcordo" (click)="baixarPagamentos()">
-          <i class="fas fa-money-bill-wave"></i> Baixar Pagamentos
-        </button>
-        <button type="button" class="btn btn-success btn-sm me-1" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" *ngIf="habilitarAcordo">
-          <i class="fas fa-handshake"></i> Salvar Acordo
-        </button>
-        <button type="button" class="btn btn-danger btn-sm" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" (click)="fechaModal()">
-          <i class="fas fa-window-close"></i> Cancelar
-        </button>
-      </div>
     </form>
+
+    <div *ngIf="habilitarAcordo">
+    <h4 style="text-align: center;">Simular Acordo</h4>
+    <form>
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <div class="row align-items-center">
+            <div class="col-md-3" style="font-size: 12px;">
+              <small>Valor da entrada</small>
+              <input type="number" class="form-control form-control-sm" placeholder="0">
+            </div>
+            <div class="col-md-2" style="font-size: 12px;">
+              <small>Qtde Parcelas</small>
+              <input type="number" class="form-control form-control-sm" placeholder="1">
+            </div>
+            <div class="col-md-3 form-group" style="font-size: 12px;">
+              <small>Tipo</small>
+              <select class="form-control form-control-sm" placeholder="Tipo">
+                <option value="1">Quitação</option>
+                <option value="M">Mensal</option>
+                <option value="Q">Quinzenal</option>
+                <option value="S">Semanal</option>
+                <option value="D">Diário</option>
+              </select>
+            </div>
+            <div class="col-md-4" style="font-size: 12px;">
+              <small>Data Vencimento</small>
+              <input type="date" class="form-control form-control-sm" id="dataNova">
+            </div>
+          </div>
+          <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px;">
+            <button type="submit" class="btn btn-secondary btn-sm" style="padding-bottom: 2px; padding-top: 2px;" (click)="habilitaBotaoSimulaAcordo()">
+              <i class="fas fa-handshake"></i> Simular Acordo
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="simulaAcordo">
+      <h4 style="text-align: center;">Detalhamento do Acordo</h4>
+      <div style="overflow: auto; margin-top: 5px;">
+        <table class="table table-sm">
+          <thead class="tabela-custom table-td-scroll">
+            <tr>
+              <th>Vencimento</th>
+              <th>Valor</th>
+              <th>Parcela</th>
+              <th >Plano</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>04/08/2024</td>
+              <td>R$ 100</td>
+              <td>1</td>
+              <td>2</td>
+            </tr>
+            <tr class="tabela-custom">
+              <td colspan="1" style="text-align: center;"><strong>Total:</strong></td>
+              <td >100</td>
+              <td scope="col" class="text-right"></td>
+              <td scope="col" class="text-right"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+      <hr style="margin-top: 5px; margin-bottom: 5px;">
+    </form>
+  </div>
+
+    <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px; margin-left: 0px !important;">
+      <button type="button" class="btn btn-success btn-sm me-1" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" *ngIf="!habilitarAcordo" (click)="baixarPagamentos()">
+        <i class="fas fa-money-bill-wave"></i> Baixar Pagamentos
+      </button>
+      <button type="button" class="btn btn-success btn-sm me-1" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" *ngIf="simulaAcordo">
+        <i class="fas fa-handshake"></i> Salvar Acordo
+      </button>
+      <button type="button" class="btn btn-danger btn-sm" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" (click)="fechaModal()">
+        <i class="fas fa-window-close"></i> Cancelar
+      </button>
+    </div>
   </div>
 </ng-template>

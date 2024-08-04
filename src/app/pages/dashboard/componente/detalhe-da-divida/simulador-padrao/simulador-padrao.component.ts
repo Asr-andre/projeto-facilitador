@@ -25,6 +25,7 @@ export class SimuladorPadraoComponent implements OnInit {
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public login = this._authService.getLogin();
   public habilitarAcordo: boolean = false;
+  public simulaAcordo: boolean = false;
 
   @Output() clienteAtualizado = new EventEmitter<void>();
 
@@ -166,10 +167,15 @@ export class SimuladorPadraoComponent implements OnInit {
 
   public habilitaBotao() {
     this.habilitarAcordo = true;
+    this.simulaAcordo = false;
+  }
+  public habilitaBotaoSimulaAcordo() {
+    this.simulaAcordo = true;
   }
 
   public fechaModal() {
     this.habilitarAcordo = false;
+    this.simulaAcordo = false;
     this.modalRef.dismiss();
   }
 }

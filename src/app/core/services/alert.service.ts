@@ -75,4 +75,37 @@ export class AlertService {
       clearInterval(this.timerInterval);
     }
   }
+
+  cancel() {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger ml-2'
+      },
+      buttonsStyling: false
+    });
+
+    return swalWithBootstrapButtons.fire({
+      title: 'Você tem certeza?',
+      text: 'Você não poderá reverter isso!',
+      icon: 'warning',
+      confirmButtonText: 'Sim, exclua!',
+      cancelButtonText: 'Não, cancelar!',
+      showCancelButton: true
+    }).then(result => {
+      if (result.value) {
+        swalWithBootstrapButtons.fire(
+          'Deletado!',
+          'Seu título foi excluído.',
+          'success'
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire(
+          'Cancelado',
+          'Seu título está seguro :)',
+          'error'
+        );
+      }
+    });
+  }
 }
