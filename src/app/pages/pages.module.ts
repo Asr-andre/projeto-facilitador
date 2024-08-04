@@ -34,6 +34,8 @@ import { EnvioEmailComponent } from "./dashboard/componente/email/envio-email/en
 import { EnvioSmsComponent } from "./dashboard/componente/telefone/envio-sms/envio-sms.component";
 import localePt from '@angular/common/locales/pt';
 import { SimuladorPadraoComponent } from "./dashboard/componente/detalhe-da-divida/simulador-padrao/simulador-padrao.component";
+import { TitulosPgRetComponent } from "./dashboard/componente/titulos-pg-ret/titulos-pg-ret/titulos-pg-ret.component";
+import { EnderecoComponent } from "./dashboard/componente/endereco/endereco.component";
 
 registerLocaleData(localePt);
 @NgModule({
@@ -46,7 +48,9 @@ registerLocaleData(localePt);
     EmailComponent,
     EnvioEmailComponent,
     EnvioSmsComponent,
-    SimuladorPadraoComponent
+    SimuladorPadraoComponent,
+    TitulosPgRetComponent,
+    EnderecoComponent
   ],
   imports: [
     CommonModule,

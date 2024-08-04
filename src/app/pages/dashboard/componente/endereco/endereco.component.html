@@ -1,0 +1,29 @@
+<!-- src/app/components/endereco/endereco.component.html -->
+
+<div class="container mt-3">
+  <div *ngIf="enderecos.length > 0; else semEnderecos">
+    <div *ngFor="let endereco of enderecos" class="address-card mb-3 p-3 border rounded">
+      <div class="d-flex flex-wrap">
+        <div class="col-md-6 mb-2">
+          <p><strong>Endereço:</strong> {{ endereco.endereco }}</p>
+          <p><strong>Complemento:</strong> {{ endereco.complemento }}</p>
+          <p><strong>Bairro:</strong> {{ endereco.bairro }}</p>
+        </div>
+        <div class="col-md-6 mb-2">
+          <p><strong>Número:</strong> {{ endereco.numero }}</p>
+          <p><strong>Cidade:</strong> {{ endereco.cidade }}</p>
+          <p><strong>UF:</strong> {{ endereco.uf }}</p>
+          <p><strong>CEP:</strong> {{ endereco.cep }}</p>
+        </div>
+        <div class="col-md-12 mb-2">
+          <p><strong>Tipo:</strong> {{ endereco.tipo }}</p>
+          <p><strong>Origem:</strong> {{ endereco.origem }}</p>
+          <p><strong>Situação:</strong> {{ endereco.situacao }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #semEnderecos>
+    <p class="text-center">Nenhum endereço cadastrado.</p>
+  </ng-template>
+</div>

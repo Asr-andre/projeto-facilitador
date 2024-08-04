@@ -1,0 +1,50 @@
+<div class="loading-overlay-card" *ngIf="loadingMin">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
+
+<div class="card-body" style="height: 300px; overflow: auto; padding: 2px 0;">
+  <div class="table-responsive">
+    <table class="table table-sm table-hover font-size-13">
+      <thead class="tabela-custom">
+        <tr>
+          <th>Id</th>
+          <th>Contrato</th>
+          <th>Vencimento</th>
+          <th>Pagamento</th>
+          <th>Tipo</th>
+          <th>Valor</th>
+          <th>Multa</th>
+          <th>Juros</th>
+          <th>Taxa</th>
+          <th>Desc. Principal</th>
+          <th>Desc. Multa</th>
+          <th>Desc. Juros</th>
+          <th>Desc. Taxa</th>
+          <th>Valor Pago</th>
+          <th>Usuário</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let titulo of tituloPgRet">
+          <td>{{ titulo.id_titulo }}</td>
+          <td>{{ titulo.numero_contrato }}</td>
+          <td>{{ titulo.vencimento | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ data(titulo.pagamento) }}</td>
+          <td>{{ titulo.tipo_baixa }}</td>
+          <td>{{ titulo.valor | currency: 'BRL' }}</td>
+          <td>{{ titulo.valor_multa | currency: 'BRL' }}</td>
+          <td>{{ titulo.valor_juros | currency: 'BRL' }}</td>
+          <td>{{ titulo.valor_taxa | currency: 'BRL' }}</td>
+          <td>{{ titulo.desc_principal | currency: 'BRL' }}</td>
+          <td>{{ titulo.desc_multa | currency: 'BRL' }}</td>
+          <td>{{ titulo.desc_juros | currency: 'BRL' }}</td>
+          <td>{{ titulo.desc_taxa | currency: 'BRL' }}</td>
+          <td>{{ titulo.valor_pago | currency: 'BRL' }}</td>
+          <td>{{ titulo.user_baixa }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
