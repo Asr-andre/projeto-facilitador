@@ -256,10 +256,10 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       dadosParaEnvio.vencimento = this.datePipe.transform(dadosParaEnvio.vencimento, "dd/MM/yyyy");
 
       this.simuladorService.fecharAcordo(dadosParaEnvio).subscribe((res) => {
-          if (res.success) {
+          if (res.success === 'true') {
             this._alertService.success(res.msg);
-            this.fechaModal();
             this.clienteAtualizado.emit();
+            this.fechaModal();
           } else {
             this._alertService.error(res.msg);
           }

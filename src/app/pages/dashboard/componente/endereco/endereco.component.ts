@@ -30,17 +30,17 @@ export class EnderecoComponent implements OnInit, OnChanges {
   }
 
   public obterEnderecos(): void {
-
     const request = { id_cliente: this.idCliente! };
 
+    this.loadingMin = true;
     this._enderecoService.obterEnderecos(request).subscribe(
       (res: EnderecoResponseModel) => {
         this.enderecos = res.enderecos;
-
+        this.loadingMin = false;
       },
       (error) => {
+        this.loadingMin = false;
         this._alertService.error('Erro ao buscar endereços.');
-        console.error(error);
 
       }
     );

@@ -36,6 +36,7 @@ import localePt from '@angular/common/locales/pt';
 import { SimuladorPadraoComponent } from "./dashboard/componente/detalhe-da-divida/simulador-padrao/simulador-padrao.component";
 import { TitulosPgRetComponent } from "./dashboard/componente/titulos-pg-ret/titulos-pg-ret/titulos-pg-ret.component";
 import { EnderecoComponent } from "./dashboard/componente/endereco/endereco.component";
+import { AcordoComponent } from "./dashboard/componente/acordo/acordo.component";
 
 registerLocaleData(localePt);
 @NgModule({
@@ -50,7 +51,8 @@ registerLocaleData(localePt);
     EnvioSmsComponent,
     SimuladorPadraoComponent,
     TitulosPgRetComponent,
-    EnderecoComponent
+    EnderecoComponent,
+    AcordoComponent
   ],
   imports: [
     CommonModule,

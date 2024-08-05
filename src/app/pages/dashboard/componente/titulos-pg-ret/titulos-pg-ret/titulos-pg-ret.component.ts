@@ -35,7 +35,6 @@ export class TitulosPgRetComponent implements OnInit, OnChanges {
   }
 
   public obterTitulosPagos() {
-    this._alertService.timer(true);
     const request = {
       id_empresa: this.idEmpresa,
       id_contratante: this.idContratante!,
@@ -43,14 +42,14 @@ export class TitulosPgRetComponent implements OnInit, OnChanges {
       user_login: this.login
     };
 
+    this.loadingMin = true;
     this._titulosPgRetService.obterTitulosPagosRet(request).subscribe((res) => {
         this.tituloPgRet = res.titulos;
-        this._alertService.timer(false);
+        this.loadingMin = false;
       },
       (error) => {
-        this._alertService.timer(false);
+        this.loadingMin = false;
         this._alertService.error('Erro ao buscar títulos pagos/retirados.');
-        console.error(error);
       }
     );
   }

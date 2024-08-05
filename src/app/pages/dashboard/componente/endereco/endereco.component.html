@@ -1,4 +1,7 @@
-<!-- src/app/components/endereco/endereco.component.html -->
+<div class="loading-overlay-card" *ngIf="loadingMin">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
 
 <div class="container mt-3">
   <div *ngIf="enderecos.length > 0; else semEnderecos">
