@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Utils } from 'src/app/core/helpers/utils';
@@ -7,6 +7,7 @@ import { BaixaPagamentoRequisicaoModel, RecalculoRetornoModel } from 'src/app/co
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { DatePipe } from '@angular/common';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { TituloSimulacao } from 'src/app/core/models/simular-acordo.model';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { AlertService } from 'src/app/core/services/alert.service';
   templateUrl: './simulador-padrao.component.html',
   styleUrls: ['./simulador-padrao.component.scss']
 })
-export class SimuladorPadraoComponent implements OnInit {
+export class SimuladorPadraoComponent implements OnInit, OnChanges {
   @ViewChild('modalTemplate') modalTemplate: any;
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
@@ -22,10 +23,13 @@ export class SimuladorPadraoComponent implements OnInit {
   public descontoMaximo: any;
   public data: any;
   public form: FormGroup;
+  public formAcordo: FormGroup;
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public login = this._authService.getLogin();
   public habilitarAcordo: boolean = false;
   public simulaAcordo: boolean = false;
+  public dadosSimulacao: any;
+
 
   @Output() clienteAtualizado = new EventEmitter<void>();
 
@@ -34,6 +38,8 @@ export class SimuladorPadraoComponent implements OnInit {
   public totalTaxa: number = 0;
   public totalGeral: number = 0;
   public totalValor: number = 0;
+
+  public totalAcordo: number = 0;
 
   public originalPrincipal: number = 0;
   public originalMulta: number = 0;
@@ -48,6 +54,25 @@ export class SimuladorPadraoComponent implements OnInit {
     private datePipe: DatePipe,
     private _alertService: AlertService,
   ) {
+
+    this.idEmpresa = Number(this._authService.getIdEmpresa()) || 0;
+    this.idCliente = this.idCliente || null;
+    this.idContratante = this.idContratante || null;
+  }
+
+
+  ngOnInit(): void {
+    this.formSimulador();
+    this.formsimuladorAcordo();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['idCliente'] || changes['idContratante']) {
+      this.formsimuladorAcordo();
+    }
+  }
+
+  public formSimulador() {
     this.form = this.fb.group({
       id_empresa: [this.idEmpresa],
       id_contratante: [this.idContratante],
@@ -62,7 +87,20 @@ export class SimuladorPadraoComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  public formsimuladorAcordo() {
+    this.formAcordo = this.fb.group({
+      id_empresa: [this.idEmpresa],
+      id_contratante: [this.idContratante || null],
+      id_cliente: [this.idCliente],
+      data_acordo: [this.datePipe.transform(new Date(), 'dd/MM/yyyy'),],
+      valor_acordo: [this.totalGeral],
+      qtde_parcelas: [1, Validators.required],
+      periodicidade: ['M'],
+      valor_entrada: [0, Validators.required],
+      vencimento: [''],
+      user_login: [this.login]
+    });
+  }
 
   public abrirModalSimulado(data: any): void {
     this.data = data;
@@ -99,6 +137,9 @@ export class SimuladorPadraoComponent implements OnInit {
 
   public recalcular(): void {
     const dadosParaEnvio = { ...this.form.value };
+    this.formAcordo.patchValue({
+      valor_acordo: this.data.valor_atualizado
+    });
 
   // Formatar a data para yyyy-MM-dd
   dadosParaEnvio.data_atualizacao = this.datePipe.transform(dadosParaEnvio.data_atualizacao, 'dd/MM/yyyy');
@@ -117,6 +158,10 @@ export class SimuladorPadraoComponent implements OnInit {
     this.totalMulta = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_multa, 0);
     this.totalTaxa = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_taxa, 0);
     this.totalGeral = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_atualizado, 0);
+
+    this.formAcordo.patchValue({
+      valor_acordo: this.totalGeral
+    });
   }
 
   public dataBrasil(data) {
@@ -169,6 +214,7 @@ export class SimuladorPadraoComponent implements OnInit {
     this.habilitarAcordo = true;
     this.simulaAcordo = false;
   }
+
   public habilitaBotaoSimulaAcordo() {
     this.simulaAcordo = true;
   }
@@ -178,4 +224,24 @@ export class SimuladorPadraoComponent implements OnInit {
     this.simulaAcordo = false;
     this.modalRef.dismiss();
   }
+
+  public simularAcordo() {
+    if (this.formAcordo.valid) {
+      const dadosParaEnvio = { ...this.formAcordo.value };
+      dadosParaEnvio.vencimento = this.datePipe.transform(dadosParaEnvio.vencimento, 'dd/MM/yyyy');
+
+      this.simuladorService.simularAcordo(dadosParaEnvio).subscribe(response => {
+        if (response.success) {
+          this.dadosSimulacao = response;
+          this.totalAcordo = this.dadosSimulacao.titulos.reduce((acc: number, item: any) => acc + item.valor, 0);
+          this.simulaAcordo = true;
+        } else {
+          this._alertService.error(response.msg);
+        }
+      }, error => {
+        this._alertService.error('Ocorreu um erro ao simular o acordo.');
+      });
+    }
+  }
+
 }

@@ -85,73 +85,73 @@
     </form>
 
     <div *ngIf="habilitarAcordo">
-    <h4 style="text-align: center;">Simular Acordo</h4>
-    <form>
-      <div class="row mt-2">
-        <div class="col-md-12">
-          <div class="row align-items-center">
-            <div class="col-md-3" style="font-size: 12px;">
-              <small>Valor da entrada</small>
-              <input type="number" class="form-control form-control-sm" placeholder="0">
+      <h4 style="text-align: center;">Simular Acordo</h4>
+      <form [formGroup]="formAcordo" (ngSubmit)="simularAcordo()">
+        <div class="row mt-2">
+          <div class="col-md-12">
+            <div class="row align-items-center">
+              <div class="col-md-3" style="font-size: 12px;">
+                <small>Valor da entrada</small>
+                <input type="number" class="form-control form-control-sm" formControlName="valor_entrada">
+              </div>
+              <div class="col-md-2" style="font-size: 12px;">
+                <small>Qtde Parcelas</small>
+                <input type="number" class="form-control form-control-sm" formControlName="qtde_parcelas">
+              </div>
+              <div class="col-md-3 form-group" style="font-size: 12px;">
+                <small>Tipo</small>
+                <select class="form-control form-control-sm" formControlName="periodicidade">
+                  <option value="M">Mensal</option>
+                  <option value="Q">Quinzenal</option>
+                  <option value="S">Semanal</option>
+                  <option value="D">Diário</option>
+                </select>
+              </div>
+              <div class="col-md-4" style="font-size: 12px;">
+                <small>Data Vencimento</small>
+                <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="vencimento">
+              </div>
             </div>
-            <div class="col-md-2" style="font-size: 12px;">
-              <small>Qtde Parcelas</small>
-              <input type="number" class="form-control form-control-sm" placeholder="1">
+            <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px;">
+              <button type="submit" class="btn btn-secondary btn-sm" style="padding-bottom: 2px; padding-top: 2px;">
+                <i class="fas fa-handshake"></i> Simular Acordo
+              </button>
             </div>
-            <div class="col-md-3 form-group" style="font-size: 12px;">
-              <small>Tipo</small>
-              <select class="form-control form-control-sm" placeholder="Tipo">
-                <option value="1">Quitação</option>
-                <option value="M">Mensal</option>
-                <option value="Q">Quinzenal</option>
-                <option value="S">Semanal</option>
-                <option value="D">Diário</option>
-              </select>
-            </div>
-            <div class="col-md-4" style="font-size: 12px;">
-              <small>Data Vencimento</small>
-              <input type="date" class="form-control form-control-sm" id="dataNova">
-            </div>
-          </div>
-          <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px;">
-            <button type="submit" class="btn btn-secondary btn-sm" style="padding-bottom: 2px; padding-top: 2px;" (click)="habilitaBotaoSimulaAcordo()">
-              <i class="fas fa-handshake"></i> Simular Acordo
-            </button>
           </div>
         </div>
-      </div>
-      <div *ngIf="simulaAcordo">
-      <h4 style="text-align: center;">Detalhamento do Acordo</h4>
-      <div style="overflow: auto; margin-top: 5px;">
-        <table class="table table-sm">
-          <thead class="tabela-custom table-td-scroll">
-            <tr>
-              <th>Vencimento</th>
-              <th>Valor</th>
-              <th>Parcela</th>
-              <th >Plano</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>04/08/2024</td>
-              <td>R$ 100</td>
-              <td>1</td>
-              <td>2</td>
-            </tr>
-            <tr class="tabela-custom">
-              <td colspan="1" style="text-align: center;"><strong>Total:</strong></td>
-              <td >100</td>
-              <td scope="col" class="text-right"></td>
-              <td scope="col" class="text-right"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div *ngIf="simulaAcordo && data">
+          <h4 style="text-align: center;">Detalhamento do Acordo</h4>
+          <div style="overflow: auto; margin-top: 5px;">
+            <table class="table table-sm">
+              <thead class="tabela-custom table-td-scroll">
+                <tr>
+                  <th>Vencimento</th>
+                  <th>Valor</th>
+                  <th>Parcela</th>
+                  <th>Plano</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let titulo of dadosSimulacao.titulos">
+                  <td>{{ titulo.vencimento | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ titulo.valor | currency:'BRL':'symbol':'1.2-2' }}</td>
+                  <td>{{ titulo.parcela }}</td>
+                  <td>{{ titulo.plano }}</td>
+                </tr>
+                <tr class="tabela-custom">
+                  <td colspan="1" style="text-align: center;"><strong>Total:</strong></td>
+                  <td>{{ totalAcordo | currency:'BRL':'symbol':'1.2-2' }}</td>
+                  <td colspan="2" style="text-align: right;"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <input type="hidden" formControlName="valor_acordo">
+          <hr style="margin-top: 5px; margin-bottom: 5px;">
+        </div>
+      </form>
     </div>
-      <hr style="margin-top: 5px; margin-bottom: 5px;">
-    </form>
-  </div>
+
 
     <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px; margin-left: 0px !important;">
       <button type="button" class="btn btn-success btn-sm me-1" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" *ngIf="!habilitarAcordo" (click)="baixarPagamentos()">

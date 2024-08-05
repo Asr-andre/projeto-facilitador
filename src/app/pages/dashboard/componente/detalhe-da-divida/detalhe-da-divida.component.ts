@@ -178,30 +178,38 @@ export class DetalheDaDividaComponent implements OnChanges {
       return;
     }
 
-    const dataAtual = new Date();
-    const dataNegociacao = this._datePipe.transform(dataAtual, 'dd/MM/yyyy')!;
-    const dadosParaEnvio: BaixaPagamentoRequisicaoModel = {
-      id_empresa: this.idEmpresa,
-      id_contratante: this.idContratante,
-      id_cliente: this.idCliente,
-      data_negociacao: dataNegociacao,
-      tipo_baixa: 'R',
-      user_login: this.login,
-      titulos: titulos
-    };
-
-    this._alertService.timer(true);
-
-    this._simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe((res) => {
-        this._alertService.timer(false);
-        this._alertService.success(res.msg);
-        this.obterDetalhamentoPorId(this.idCliente, this.idContratante);
-      },
-      error => {
-        this._alertService.timer(false);
-        this._alertService.error('Ocorreu um erro ao realizar a retirada.');
+    this._alertService.cancel().then(confirmarRetirada => {
+      if (!confirmarRetirada) {
+        // Se o usuário cancelar a ação, simplesmente retorna e não faz nada
+        return;
       }
-    );
+
+      const dataAtual = new Date();
+      const dataNegociacao = this._datePipe.transform(dataAtual, 'dd/MM/yyyy')!;
+      const dadosParaEnvio: BaixaPagamentoRequisicaoModel = {
+        id_empresa: this.idEmpresa,
+        id_contratante: this.idContratante,
+        id_cliente: this.idCliente,
+        data_negociacao: dataNegociacao,
+        tipo_baixa: 'R',
+        user_login: this.login,
+        titulos: titulos
+      };
+
+      this._alertService.timer(true);
+
+      this._simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe(
+        (res) => {
+          this._alertService.timer(false);
+          this._alertService.success(res.msg);
+          this.obterDetalhamentoPorId(this.idCliente, this.idContratante);
+        },
+        error => {
+          this._alertService.timer(false);
+          this._alertService.error('Ocorreu um erro ao realizar a retirada.');
+        }
+      );
+    });
   }
 
 }

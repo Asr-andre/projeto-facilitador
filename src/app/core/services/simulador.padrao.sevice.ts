@@ -26,4 +26,8 @@ export class SimuladorPadraoService {
   public baixarTitulosPago(pagos: BaixaPagamentoRequisicaoModel): Observable<BaixaPagamentoRetorno> {
     return this._http.post<BaixaPagamentoRetorno>(`${this.apiUrl}/baixapagamento`, pagos);
   }
+
+  public simularAcordo(requisicao: SimulacaoRequisicaoModel): Observable<SimulacaoRetornoModel> {
+    return this._http.post<SimulacaoRetornoModel>(`${this.apiUrl}/simularacordo`, requisicao);
+  }
 }

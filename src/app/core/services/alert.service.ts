@@ -9,36 +9,39 @@ export class AlertService {
 
   constructor() {}
 
+  private swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success btn-sm me-1',
+      cancelButton: 'btn btn-danger btn-sm ml-2',
+      title: 'text-center'  // Opcional, para centralizar o título
+    },
+    buttonsStyling: false
+  });
+
   success(message: string, title: string = 'Sucesso!') {
-    Swal.fire({
+    this.swalWithBootstrapButtons.fire({
       title: title,
       text: message,
       icon: 'success',
-      showConfirmButton: true,
-      timer: undefined,
-      timerProgressBar: false
+      showConfirmButton: true
     });
   }
 
   error(message: string, title: string = 'Erro!') {
-    Swal.fire({
+    this.swalWithBootstrapButtons.fire({
       title: title,
       text: message,
       icon: 'error',
-      showConfirmButton: true,
-      timer: undefined,
-      timerProgressBar: false
+      showConfirmButton: true
     });
   }
 
   warning(message: string, title: string = 'Atenção!') {
-    Swal.fire({
+    this.swalWithBootstrapButtons.fire({
       title: title,
       text: message,
       icon: 'warning',
-      showConfirmButton: true,
-      timer: undefined,
-      timerProgressBar: false
+      showConfirmButton: true
     });
   }
 
@@ -76,36 +79,21 @@ export class AlertService {
     }
   }
 
-  cancel() {
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger ml-2'
-      },
-      buttonsStyling: false
-    });
-
-    return swalWithBootstrapButtons.fire({
-      title: 'Você tem certeza?',
-      text: 'Você não poderá reverter isso!',
+  cancel(): Promise<boolean> {
+    return this.swalWithBootstrapButtons.fire({
+      title: 'Você deseja excluir todos os titulos selecionados?',
       icon: 'warning',
-      confirmButtonText: 'Sim, exclua!',
-      cancelButtonText: 'Não, cancelar!',
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Cancelar',
       showCancelButton: true
     }).then(result => {
-      if (result.value) {
-        swalWithBootstrapButtons.fire(
-          'Deletado!',
-          'Seu título foi excluído.',
-          'success'
-        );
+      if (result.isConfirmed) {
+        this.swalWithBootstrapButtons.fire('Titulos excluido com sucesso!');
+        return true;
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        swalWithBootstrapButtons.fire(
-          'Cancelado',
-          'Seu título está seguro :)',
-          'error'
-        );
+        return false;
       }
+      return false;
     });
   }
 }
