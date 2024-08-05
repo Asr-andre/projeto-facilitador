@@ -146,18 +146,16 @@
               </tbody>
             </table>
           </div>
-          <input type="hidden" formControlName="valor_acordo">
           <hr style="margin-top: 5px; margin-bottom: 5px;">
         </div>
       </form>
     </div>
 
-
     <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px; margin-left: 0px !important;">
       <button type="button" class="btn btn-success btn-sm me-1" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" *ngIf="!habilitarAcordo" (click)="baixarPagamentos()">
         <i class="fas fa-money-bill-wave"></i> Baixar Pagamentos
       </button>
-      <button type="button" class="btn btn-success btn-sm me-1" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" *ngIf="simulaAcordo">
+      <button type="button" class="btn btn-success btn-sm me-1" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" *ngIf="simulaAcordo" (click)="fecharAcordo()">
         <i class="fas fa-handshake"></i> Salvar Acordo
       </button>
       <button type="button" class="btn btn-danger btn-sm" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" (click)="fechaModal()">

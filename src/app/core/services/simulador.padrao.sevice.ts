@@ -30,4 +30,8 @@ export class SimuladorPadraoService {
   public simularAcordo(requisicao: SimulacaoRequisicaoModel): Observable<SimulacaoRetornoModel> {
     return this._http.post<SimulacaoRetornoModel>(`${this.apiUrl}/simularacordo`, requisicao);
   }
+
+  public fecharAcordo(requisicao: SimulacaoRequisicaoModel): Observable<SimulacaoRetornoModel> {
+    return this._http.post<SimulacaoRetornoModel>(`${this.apiUrl}/geraracordo`, requisicao);
+  }
 }
