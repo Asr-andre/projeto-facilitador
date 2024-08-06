@@ -3,30 +3,45 @@
   </div>
 </div>
 
-<div class="container mt-3">
+<div class="card-body" style="height: 300px; overflow: auto; padding: 2px 0;">
   <div *ngIf="enderecos.length > 0; else semEnderecos">
-    <div *ngFor="let endereco of enderecos" class="address-card mb-3 p-3 border rounded">
-      <div class="d-flex flex-wrap">
-        <div class="col-md-6 mb-2">
-          <p><strong>Endereço:</strong> {{ endereco.endereco }}</p>
-          <p><strong>Complemento:</strong> {{ endereco.complemento }}</p>
-          <p><strong>Bairro:</strong> {{ endereco.bairro }}</p>
-        </div>
-        <div class="col-md-6 mb-2">
-          <p><strong>Número:</strong> {{ endereco.numero }}</p>
-          <p><strong>Cidade:</strong> {{ endereco.cidade }}</p>
-          <p><strong>UF:</strong> {{ endereco.uf }}</p>
-          <p><strong>CEP:</strong> {{ endereco.cep }}</p>
-        </div>
-        <div class="col-md-12 mb-2">
-          <p><strong>Tipo:</strong> {{ endereco.tipo }}</p>
-          <p><strong>Origem:</strong> {{ endereco.origem }}</p>
-          <p><strong>Situação:</strong> {{ endereco.situacao }}</p>
-        </div>
-      </div>
-    </div>
+  <div class="table-responsive">
+    <table class="table table-sm table-hover font-size-13">
+      <thead class="tabela-custom">
+        <tr>
+          <th scope="col">endereço</th>
+          <th scope="col">Nº</th>
+          <th scope="col">Complemento</th>
+          <th scope="col">Bairro</th>
+          <th scope="col">Cep</th>
+          <th scope="col">Cidade</th>
+          <th scope="col">Uf</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Origem</th>
+          <th scope="col">Situação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let endereco of enderecos">
+          <td> {{ endereco.endereco }} </td>
+          <td> {{ endereco.numero }} </td>
+          <td> {{ endereco.complemento }} </td>
+          <td> {{ endereco.bairro }} </td>
+          <td> {{ mascararCep(endereco.cep) }} </td>
+          <td> {{ endereco.cidade }} </td>
+          <td> {{ endereco.uf }} </td>
+          <td> {{ endereco.tipo }} </td>
+          <td> {{ endereco.origem }} </td>
+          <td> {{ endereco.situacao }} </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <ng-template #semEnderecos>
-    <p class="text-center">Nenhum endereço cadastrado.</p>
-  </ng-template>
 </div>
+<ng-template #semEnderecos>
+  <p class="text-center">Nenhum endereço cadastrado.</p>
+</ng-template>
+</div>
+
+
+

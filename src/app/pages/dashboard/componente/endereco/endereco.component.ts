@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Utils } from 'src/app/core/helpers/utils';
 import { EnderecoModel, EnderecoResponseModel } from 'src/app/core/models/endereco.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
@@ -44,5 +45,12 @@ export class EnderecoComponent implements OnInit, OnChanges {
 
       }
     );
+  }
+
+  public mascararCep(cep: string): string {
+    if (cep) {
+      return Utils.formatarCEP(cep);
+    }
+    return cep;
   }
 }
