@@ -14,6 +14,12 @@ export const MENU: MenuItem[] = [
   },
   {
     id: 2,
+    label: "MENUITEMS.CARTEIRADECLIENTES.TEXT",
+    icon: "fas fa-list-alt",
+    link: "/carteira-de-clientes",
+  },
+  {
+    id: 2,
     label: "MENUITEMS.FILA.TEXT",
     icon: "fas fa-tasks",
     link: "/fila",

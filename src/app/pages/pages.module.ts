@@ -38,6 +38,7 @@ import { TitulosPgRetComponent } from "./dashboard/componente/titulos-pg-ret/tit
 import { EnderecoComponent } from "./dashboard/componente/endereco/endereco.component";
 import { AcordoComponent } from "./dashboard/componente/acordo/acordo.component";
 import { FilaComponent } from "./fila/fila.component";
+import { CarteiraDeClientesComponent } from "./carteira-de-clientes/carteira-de-clientes.component";
 
 registerLocaleData(localePt);
 @NgModule({
@@ -54,7 +55,8 @@ registerLocaleData(localePt);
     TitulosPgRetComponent,
     EnderecoComponent,
     AcordoComponent,
-    FilaComponent
+    FilaComponent,
+    CarteiraDeClientesComponent
   ],
   imports: [
     CommonModule,
