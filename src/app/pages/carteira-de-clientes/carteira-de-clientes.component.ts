@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './carteira-de-clientes.component.scss'
 })
 export class CarteiraDeClientesComponent {
-
+  public filtros: boolean = false;
 }

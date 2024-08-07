@@ -81,5 +81,4 @@ export class FilaComponent implements OnInit {
   public data(data) {
     return Utils.formatarDataParaExibicao(data);
   }
-
 }

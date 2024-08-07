@@ -1,15 +1,819 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-      <div class="card">
-        <div class="card-body" style="padding-bottom: 8px;">
-          <div class="d-flex">
-            <div class="flex-1 overflow-hidden">
-              <h4>Tela de carteira de clientes em desenvolvimento</h4>
+      <div class="card-body" style="padding-bottom: 8px;">
+        <div class="d-flex">
+          <div class="flex-1 overflow-hidden">
+            <div class="card">
+
+              <div class="card-header pt-2 pb-2">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5 class="mb-0"><i class="fas fa-list-alt"></i> Carteira de Clientes </h5>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                  <li [ngbNavItem]="1">
+                    <a ngbNavLink>
+                      <b><i class="fas fa-filter"></i> Filtros</b>
+                    </a>
+                    <ng-template ngbNavContent>
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6 form-group">
+                            <select class="form-control">
+                              <option value="C">Selecione o contratante</option>
+                              <option value="T">Título</option>
+                            </select>
+                          </div>
+
+                          <div class="col-md-2 form-group d-flex align-items-end">
+                            <button class="btn btn-secondary w-100">
+                              <i class="fas fa-search"></i> Pesquisar
+                            </button>
+                          </div>
+                        </div>
+<hr>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="row mt-2"
+                              style=" padding: 5px; border: 1px solid #d0d0d0; border-radius: 5px; margin: 5px;"
+                              *ngIf="filtros">
+                              <div class="mt-2 mb-2 col-md-12 text-center" style="display: none;">
+                                <h5> <span style="border-bottom: 2px solid #afaaaa;">FILTROS</span> </h5>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Atualizar Data Minima</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="" style="color: red;">Execultar quebra de acordo</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes com acionamento Prositivo</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes com acionamento Improdutivo</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes sem acionamentos</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes sem fila</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes com pagamento</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes que já tiveram acordo 1 dia</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes com fone</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes sem fone</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes com fone positivo</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes com fone negativo</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes com fone inconsistênte</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes com fone celular</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes com acordo</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes não acordo</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes com boleto vencido</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes com titulos não inibidos</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes com titulos inibidos</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer somente clientes com TDC em atraso</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer somente clientes FPD</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer somente titulos juridico</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes com titulos novos</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Não trazer clientes c/ boletos a vencer</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Não trazer clientes c/ pré acordo/boletagem</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes em campanha de boletagem </span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes da BlackList</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                              <div class="col-md-4 form-group">
+                                <label class="checkbox checkbox-outline-primary ml-2"
+                                  style="display: inline!important;">
+                                  <input _ngcontent-c8="" checked="" type="checkbox" style="display: inline!important;">
+                                  <span _ngcontent-c8="">Trazer clientes com acionamento para hoje</span>
+                                  <span _ngcontent-c8="" class="checkmark"
+                                    style="width: 18px!important; height: 18px!important;"></span>
+                                </label>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-12" >
+                                <h5>Dados dos Títulos</h5>
+                              </div>
+                              <div class="col-md-3" style="padding-right: 5px;">
+                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
+                                  <h6 style="text-align: center; font-weight: bold;">Periodo de Importação</h6>
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <input type="text" class="form-control" placeholder="inical">
+                                    </div>
+                                    <div class="col-md-6">
+                                      <input type="text" class="form-control" placeholder="Final">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3" style="padding-left: 5px; padding-right: 5px;">
+                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
+                                  <h6 style="text-align: center; font-weight: bold;">Dias de Atraso</h6>
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <input type="text" class="form-control" placeholder="Inicial">
+                                    </div>
+                                    <div class="col-md-6">
+                                      <input type="text" class="form-control" placeholder="Final">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3" style="padding-left: 5px; padding-right: 5px;">
+                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
+                                  <h6 style="text-align: center; font-weight: bold;">Vencimento</h6>
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <input type="data" class="form-control" placeholder="Inicial">
+                                    </div>
+                                    <div class="col-md-6">
+                                      <input type="text" class="form-control" placeholder="Final">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3" style="padding-left: 5px;">
+                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
+                                  <h6 style="text-align: center; font-weight: bold;">Dias sem Acionamentos</h6>
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <input type="text" class="form-control" placeholder="Inicial">
+                                    </div>
+                                    <div class="col-md-6">
+                                      <input type="text" class="form-control" placeholder="Final">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-2" style="padding-right: 5px; margin-top: 10px;">
+                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
+                                  <h6 style="text-align: center; font-weight: bold;">Sem Fila</h6>
+                                  <select class="form-control">
+                                    <option value="S"> Sim </option>
+                                    <option value="N"> Não </option>
+                                  </select>
+                                </div>
+
+                              </div>
+                              <div class="col-md-2" style="padding-left: 5px; margin-top: 10px;">
+                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
+                                  <h6 style="text-align: center; font-weight: bold;">Acordo</h6>
+                                  <select class="form-control">
+                                    <option value="S"> Sim </option>
+                                    <option value="N"> Não </option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top: 15px;">
+                                  <h5>Dados do Cliente</h5>
+                                </div>
+                              <div class="col-md-3" style="padding-right: 5px;">
+                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
+                                  <h6 style="text-align: center; font-weight: bold;">Cidade
+                                  </h6>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <input type="text" class="form-control" placeholder="Cidade">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-1" style="padding-left: 5px; padding-right: 5px;">
+                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
+                                  <h6 style="text-align: center; font-weight: bold;">Uf</h6>
+                                  <select class="form-control">
+                                    <option value="S"> Ce </option>
+                                    <option value="N"> Goi </option>
+                                  </select>
+                                </div>
+                              </div>
+
+                              <div class="col-md-4" style="padding-right: 5px; padding-left: 5px;">
+                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
+                                  <h6 style="text-align: center; font-weight: bold;">Email
+                                  </h6>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <input type="text" class="form-control" placeholder="Email">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-2" style="padding-right: 5px; padding-left: 5px;">
+                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
+                                  <h6 style="text-align: center; font-weight: bold;">Celular
+                                  </h6>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <input type="text" class="form-control" placeholder="Celular">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                              <div class="col-md-2" style="padding-left: 5px;">
+                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
+                                  <h6 style="text-align: center; font-weight: bold;">Com Fone
+                                  </h6>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <input type="text" class="form-control" placeholder="Fone">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- LISTAR OS CAMPOS -->
+                          <div class="col-md-3" style="display: none;">
+                            <div class="row mt-2"
+                              style=" padding: 5px; border: 1px solid #d0d0d0; border-radius: 5px; margin: 5px;">
+                              <div class="mt-2 mb-2 col-md-12 text-center">
+                                <h5> <span style="border-bottom: 2px solid #afaaaa;">LISTAR OS CAMPOS</span> </h5>
+                              </div>
+
+                              <ul ngbNav #navFiltrosCompletos="ngbNav" class="nav-tabs">
+                                <li [ngbNavItem]="1">
+                                  <a ngbNavLink>
+                                    <b><i class="icofont-filter"></i> Titulo 1 </b>
+                                  </a>
+                                  <ng-template ngbNavContent>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Data Limite do Titulo</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Data de Vencimento do Cartão</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Data de Vencimento mais antigo do devedor/titulo</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Listar saldo devedor</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Nome do Ultimo Acionamento</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Nome do Cobrador</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Nome da Fila</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Nome/Número da Loja</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Nome da Marcação Especial</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Nome do Segmento/Tipo Produto/Terceirização</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Nome da Situação de Cobrança</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Nome da Situação de Cobrança Auxiliar</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Nome do Produto</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Número do Contrato</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Número do Documento</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Número da Pestação</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Qtde de Prestações</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Valor da Prestação</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Valor Total da Dívida(Vencidas)</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                      <label class="checkbox checkbox-outline-primary ml-2"
+                                        style="display: inline!important;">
+                                        <input _ngcontent-c8="" checked="" type="checkbox"
+                                          style="display: inline!important;">
+                                        <span _ngcontent-c8="">Valor Total da Dívida(Vencidas/Vincendas)</span>
+                                        <span _ngcontent-c8="" class="checkmark"
+                                          style="width: 18px!important; height: 18px!important;"></span>
+                                      </label>
+                                    </div>
+                                  </ng-template>
+                                </li>
+                                <li [ngbNavItem]="2">
+                                  <a ngbNavLink>
+                                    <b> <i class="icofont-filter"></i> Titulo 2 </b>
+                                  </a>
+                                  <ng-template ngbNavContent>
+                                    <div class="row">
+                                      <div class="col-md-12 form-group">
+                                        <label class="checkbox checkbox-outline-primary ml-2"
+                                          style="display: inline!important;">
+                                          <input _ngcontent-c8="" checked="" type="checkbox"
+                                            style="display: inline!important;">
+                                          <span _ngcontent-c8="">Base INCOBRAVEIS</span>
+                                          <span _ngcontent-c8="" class="checkmark"
+                                            style="width: 18px!important; height: 18px!important;"></span>
+                                        </label>
+                                      </div>
+                                      <div class="col-md-12 form-group">
+                                        <label class="checkbox checkbox-outline-primary ml-2"
+                                          style="display: inline!important;">
+                                          <input _ngcontent-c8="" checked="" type="checkbox"
+                                            style="display: inline!important;">
+                                          <span _ngcontent-c8="">Degrau</span>
+                                          <span _ngcontent-c8="" class="checkmark"
+                                            style="width: 18px!important; height: 18px!important;"></span>
+                                        </label>
+                                      </div>
+                                      <div class="col-md-12 form-group">
+                                        <label class="checkbox checkbox-outline-primary ml-2"
+                                          style="display: inline!important;">
+                                          <input _ngcontent-c8="" checked="" type="checkbox"
+                                            style="display: inline!important;">
+                                          <span _ngcontent-c8="">Valor de Risco</span>
+                                          <span _ngcontent-c8="" class="checkmark"
+                                            style="width: 18px!important; height: 18px!important;"></span>
+                                        </label>
+                                      </div>
+                                      <div class="col-md-12 form-group">
+                                        <label class="checkbox checkbox-outline-primary ml-2"
+                                          style="display: inline!important;">
+                                          <input _ngcontent-c8="" checked="" type="checkbox"
+                                            style="display: inline!important;">
+                                          <span _ngcontent-c8="">Nome da Assessoria</span>
+                                          <span _ngcontent-c8="" class="checkmark"
+                                            style="width: 18px!important; height: 18px!important;"></span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-12 form-group">
+                                        <label class="checkbox checkbox-outline-primary ml-2"
+                                          style="display: inline!important;">
+                                          <input _ngcontent-c8="" checked="" type="checkbox"
+                                            style="display: inline!important;">
+                                          <span _ngcontent-c8="">Trazer titulos c/ data de inclusão no período</span>
+                                          <span _ngcontent-c8="" class="checkmark"
+                                            style="width: 18px!important; height: 18px!important;"></span>
+                                        </label>
+                                      </div>
+                                      <div class="col-md-6 form-group">
+                                        <label>Periodo</label>
+                                        <input type="date" class="form-control">
+                                      </div>
+                                      <div class="col-md-6 form-group">
+                                        <label>Periodo</label>
+                                        <input type="date" class="form-control">
+                                      </div>
+                                    </div>
+                                  </ng-template>
+                                </li>
+
+                                <li [ngbNavItem]="3">
+                                  <a ngbNavLink>
+                                    <b><i class="icofont-filter"></i> Devedor </b>
+                                  </a>
+                                  <ng-template ngbNavContent>
+                                    <div class="row">
+                                      <div class="col-md-12 form-group">
+                                        <label class="checkbox checkbox-outline-primary ml-2"
+                                          style="display: inline!important;">
+                                          <input _ngcontent-c8="" checked="" type="checkbox"
+                                            style="display: inline!important;">
+                                          <span _ngcontent-c8="">Email</span>
+                                          <span _ngcontent-c8="" class="checkmark"
+                                            style="width: 18px!important; height: 18px!important;"></span>
+                                        </label>
+                                      </div>
+                                      <div class="col-md-12 form-group">
+                                        <label class="checkbox checkbox-outline-primary ml-2"
+                                          style="display: inline!important;">
+                                          <input _ngcontent-c8="" checked="" type="checkbox"
+                                            style="display: inline!important;">
+                                          <span _ngcontent-c8="">Higienizado</span>
+                                          <span _ngcontent-c8="" class="checkmark"
+                                            style="width: 18px!important; height: 18px!important;"></span>
+                                        </label>
+                                      </div>
+                                      <div class="col-md-12 form-group">
+                                        <label class="checkbox checkbox-outline-primary ml-2"
+                                          style="display: inline!important;">
+                                          <input _ngcontent-c8="" checked="" type="checkbox"
+                                            style="display: inline!important;">
+                                          <span _ngcontent-c8="">Número do Cep Residencial</span>
+                                          <span _ngcontent-c8="" class="checkmark"
+                                            style="width: 18px!important; height: 18px!important;"></span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </ng-template>
+                                </li>
+
+                                <li [ngbNavItem]="4">
+                                  <a ngbNavLink>
+                                    <b><i class="icofont-filter"></i> Fones </b>
+                                  </a>
+                                  <ng-template ngbNavContent>
+                                    <div class="row">
+                                      <div class="col-md-12 form-group">
+                                        <label class="checkbox checkbox-outline-primary ml-2"
+                                          style="display: inline!important;">
+                                          <input _ngcontent-c8="" checked="" type="checkbox"
+                                            style="display: inline!important;">
+                                          <span _ngcontent-c8="">Listar Fones</span>
+                                          <span _ngcontent-c8="" class="checkmark"
+                                            style="width: 18px!important; height: 18px!important;"></span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </ng-template>
+                                </li>
+                              </ul>
+                              <div [ngbNavOutlet]="navFiltrosCompletos" class="mt-2"></div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </form>
+                    </ng-template>
+                  </li>
+                  <li [ngbNavItem]="2">
+                    <a ngbNavLink>
+                      <b><i class="fas fa-file-alt"></i> Resultado</b>
+                    </a>
+                    <ng-template ngbNavContent>
+                      <section style="height: 70vh; white-space: nowrap; overflow: auto;">
+                        <div class="content">
+
+                        </div>
+                      </section>
+                    </ng-template>
+                  </li>
+                </ul>
+                <div [ngbNavOutlet]="nav" class="mt-2"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
