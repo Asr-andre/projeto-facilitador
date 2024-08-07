@@ -16,13 +16,6 @@
                   <div class="col-md-6">
                     <h5 class="mb-0"><i class="fas fa-tasks"></i> Fila de clientes </h5>
                   </div>
-                  <div class="col-md-6 text-end">
-                    <button class="btn btn-success btn-sm"
-                      style="padding-top: 2px; padding-bottom: 2px;">
-                      <i class="fas fa-plus"></i>
-                      <strong> Criar Fila </strong>
-                    </button>
-                  </div>
                 </div>
               </div>
 
@@ -39,7 +32,7 @@
                   <div style="font-size: 10px;">
                       <div class="dataTables_filter text-md-end">
                           <label class="d-inline-flex align-items-center">
-                              <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" />
+                              <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()"/>
                           </label>
                       </div>
                   </div>
@@ -49,17 +42,27 @@
                   <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
                     <thead class="tabela-custom">
                       <tr>
-                        <th sortable="id_usuario" (sort)="ordenar($event)">Id</th>
-                        <th sortable="sigla" (sort)="ordenar($event)">Fila</th>
-                        <th sortable="nome" (sort)="ordenar($event)">Nome</th>
-                        <th sortable="login" (sort)="ordenar($event)">Login</th>
-                        <th sortable="ativo" (sort)="ordenar($event)">Ativo</th>
+                        <th sortable="id_fila" (sort)="ordenar($event)">Id</th>
+                        <th sortable="id_empresa" (sort)="ordenar($event)">Empresa</th>
+                        <th sortable="id_contratante" (sort)="ordenar($event)">Contratante</th>
+                        <th sortable="data" (sort)="ordenar($event)">Data cadastro</th>
+                        <th sortable="descricao" (sort)="ordenar($event)">Descição</th>
+                        <th sortable="situacao" (sort)="ordenar($event)">Situação</th>
+                        <th sortable="qtde_registros" (sort)="ordenar($event)">Qtde Registros</th>
+                        <th sortable="resta_registro" (sort)="ordenar($event)">Registros Restantes</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr
-                        *ngFor="let usuario of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
-                        <td>teste</td>
+                        *ngFor="let fila of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                        <td> {{ fila.id_fila }} </td>
+                        <td> {{ fila.id_empresa }} </td>
+                        <td> {{ fila.id_contratante }} </td>
+                        <td> {{ data(fila.data) }} </td>
+                        <td> {{ fila.descricao }} </td>
+                        <td> {{ fila.situacao }} </td>
+                        <td> {{ fila.qtde_registros }} </td>
+                        <td> {{ fila.resta_registro }} </td>
                       </tr>
                     </tbody>
                   </table>
