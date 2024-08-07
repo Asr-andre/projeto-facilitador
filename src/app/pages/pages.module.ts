@@ -37,6 +37,7 @@ import { SimuladorPadraoComponent } from "./dashboard/componente/detalhe-da-divi
 import { TitulosPgRetComponent } from "./dashboard/componente/titulos-pg-ret/titulos-pg-ret/titulos-pg-ret.component";
 import { EnderecoComponent } from "./dashboard/componente/endereco/endereco.component";
 import { AcordoComponent } from "./dashboard/componente/acordo/acordo.component";
+import { FilaComponent } from "./fila/fila.component";
 
 registerLocaleData(localePt);
 @NgModule({
@@ -52,7 +53,8 @@ registerLocaleData(localePt);
     SimuladorPadraoComponent,
     TitulosPgRetComponent,
     EnderecoComponent,
-    AcordoComponent
+    AcordoComponent,
+    FilaComponent
   ],
   imports: [
     CommonModule,

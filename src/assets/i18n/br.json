@@ -11,6 +11,9 @@
     "DASHBOARDS": {
       "TEXT": "Pagina Inicial"
     },
+    "FILA": {
+      "TEXT": "Fila"
+    },
     "CADASTRO": {
       "TEXT": "Cadastro",
       "LIST": {

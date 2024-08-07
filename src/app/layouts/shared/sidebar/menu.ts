@@ -13,6 +13,12 @@ export const MENU: MenuItem[] = [
     link: "/",
   },
   {
+    id: 2,
+    label: "MENUITEMS.FILA.TEXT",
+    icon: "fas fa-tasks",
+    link: "/fila",
+  },
+  {
     id: 8,
     label: "MENUITEMS.CADASTRO.TEXT",
     icon: "ri-user-add-line",
