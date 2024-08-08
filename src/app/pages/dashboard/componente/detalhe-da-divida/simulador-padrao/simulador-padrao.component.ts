@@ -188,7 +188,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       valor_multa: titulo.valor_multa,
       valor_juros: titulo.valor_juros,
       valor_taxa: titulo.valor_taxa,
-      valor_atualizado: titulo.valor_atualizado,
+      valor_atualizado: titulo.valor_atualizado === 0 ? titulo.valor : titulo.valor_atualizado
     }));
 
     const dadosParaEnvio: BaixaPagamentoRequisicaoModel = {
