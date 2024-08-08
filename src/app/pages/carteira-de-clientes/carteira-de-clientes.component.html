@@ -24,14 +24,14 @@
                       <form>
                         <div class="row">
                           <div class="col-md-6 form-group">
-                            <select class="form-control">
-                              <option value="C">Selecione o contratante</option>
-                              <option value="T">Título</option>
+                            <select class="form-control form-control-sm">
+                              <option value="">Selecione o Contratante</option>
+                              <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">{{ contratante.fantasia }}</option>
                             </select>
                           </div>
 
                           <div class="col-md-2 form-group d-flex align-items-end">
-                            <button class="btn btn-secondary w-100">
+                            <button class="btn btn-secondary btn-sm w-100">
                               <i class="fas fa-search"></i> Pesquisar
                             </button>
                           </div>
@@ -308,10 +308,10 @@
                                   <h6 style="text-align: center; font-weight: bold;">Periodo de Importação</h6>
                                   <div class="row">
                                     <div class="col-md-6">
-                                      <input type="text" class="form-control" placeholder="inical">
+                                      <input type="date" class="form-control form-control-sm" placeholder="Inical">
                                     </div>
                                     <div class="col-md-6">
-                                      <input type="text" class="form-control" placeholder="Final">
+                                      <input type="date" class="form-control form-control-sm" placeholder="Final">
                                     </div>
                                   </div>
                                 </div>
@@ -321,10 +321,10 @@
                                   <h6 style="text-align: center; font-weight: bold;">Dias de Atraso</h6>
                                   <div class="row">
                                     <div class="col-md-6">
-                                      <input type="text" class="form-control" placeholder="Inicial">
+                                      <input type="number" class="form-control form-control-sm" placeholder="Inicial">
                                     </div>
                                     <div class="col-md-6">
-                                      <input type="text" class="form-control" placeholder="Final">
+                                      <input type="number" class="form-control form-control-sm" placeholder="Final">
                                     </div>
                                   </div>
                                 </div>
@@ -334,10 +334,10 @@
                                   <h6 style="text-align: center; font-weight: bold;">Vencimento</h6>
                                   <div class="row">
                                     <div class="col-md-6">
-                                      <input type="data" class="form-control" placeholder="Inicial">
+                                      <input type="date" class="form-control form-control-sm" placeholder="Inicial">
                                     </div>
                                     <div class="col-md-6">
-                                      <input type="text" class="form-control" placeholder="Final">
+                                      <input type="date" class="form-control form-control-sm" placeholder="Final">
                                     </div>
                                   </div>
                                 </div>
@@ -347,10 +347,10 @@
                                   <h6 style="text-align: center; font-weight: bold;">Dias sem Acionamentos</h6>
                                   <div class="row">
                                     <div class="col-md-6">
-                                      <input type="text" class="form-control" placeholder="Inicial">
+                                      <input type="number" class="form-control form-control-sm" placeholder="Inicial">
                                     </div>
                                     <div class="col-md-6">
-                                      <input type="text" class="form-control" placeholder="Final">
+                                      <input type="number" class="form-control form-control-sm" placeholder="Final">
                                     </div>
                                   </div>
                                 </div>
@@ -359,7 +359,7 @@
                               <div class="col-md-2" style="padding-right: 5px; margin-top: 10px;">
                                 <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
                                   <h6 style="text-align: center; font-weight: bold;">Sem Fila</h6>
-                                  <select class="form-control">
+                                  <select class="form-control form-control-sm">
                                     <option value="S"> Sim </option>
                                     <option value="N"> Não </option>
                                   </select>
@@ -369,7 +369,7 @@
                               <div class="col-md-2" style="padding-left: 5px; margin-top: 10px;">
                                 <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
                                   <h6 style="text-align: center; font-weight: bold;">Acordo</h6>
-                                  <select class="form-control">
+                                  <select class="form-control form-control-sm">
                                     <option value="S"> Sim </option>
                                     <option value="N"> Não </option>
                                   </select>
@@ -387,31 +387,56 @@
                                   </h6>
                                   <div class="row">
                                     <div class="col-md-12">
-                                      <input type="text" class="form-control" placeholder="Cidade">
+                                      <input type="text" class="form-control form-control-sm" placeholder="Cidade">
                                     </div>
                                   </div>
                                 </div>
                               </div>
 
-                              <div class="col-md-1" style="padding-left: 5px; padding-right: 5px;">
+                              <div class="col-md-2" style="padding-left: 5px; padding-right: 5px;">
                                 <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
                                   <h6 style="text-align: center; font-weight: bold;">Uf</h6>
-                                  <select class="form-control">
-                                    <option value="S"> Ce </option>
-                                    <option value="N"> Goi </option>
+                                  <select class="form-control form-control-sm">
+                                    <option value="">--</option>
+                                    <option value="AC">AC</option>
+                                    <option value="AL">AL</option>
+                                    <option value="AM">AM</option>
+                                    <option value="AP">AP</option>
+                                    <option value="BA">BA</option>
+                                    <option value="CE">CE</option>
+                                    <option value="DF">DF</option>
+                                    <option value="ES">ES</option>
+                                    <option value="GO">GO</option>
+                                    <option value="MA">MA</option>
+                                    <option value="MG">MG</option>
+                                    <option value="MS">MS</option>
+                                    <option value="MT">MT</option>
+                                    <option value="PA">PA</option>
+                                    <option value="PB">PB</option>
+                                    <option value="PE">PE</option>
+                                    <option value="PI">PI</option>
+                                    <option value="PR">PR</option>
+                                    <option value="RJ">RJ</option>
+                                    <option value="RN">RN</option>
+                                    <option value="RO">RO</option>
+                                    <option value="RR">RR</option>
+                                    <option value="RS">RS</option>
+                                    <option value="SC">SC</option>
+                                    <option value="SR">SE</option>
+                                    <option value="SP">SP</option>
+                                    <option value="TO">TO</option>
                                   </select>
                                 </div>
                               </div>
 
-                              <div class="col-md-4" style="padding-right: 5px; padding-left: 5px;">
+                              <div class="col-md-2" style="padding-right: 5px; padding-left: 5px;">
                                 <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
                                   <h6 style="text-align: center; font-weight: bold;">Email
                                   </h6>
-                                  <div class="row">
-                                    <div class="col-md-12">
-                                      <input type="text" class="form-control" placeholder="Email">
-                                    </div>
-                                  </div>
+                                  <select class="form-control form-control-sm">
+                                    <option value="S">Sim </option>
+                                    <option value="N">Não </option>
+                                  </select>
                                 </div>
                               </div>
 
@@ -419,24 +444,21 @@
                                 <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
                                   <h6 style="text-align: center; font-weight: bold;">Celular
                                   </h6>
-                                  <div class="row">
-                                    <div class="col-md-12">
-                                      <input type="text" class="form-control" placeholder="Celular">
-                                    </div>
-                                  </div>
+                                  <select class="form-control form-control-sm">
+                                    <option value="S">Sim </option>
+                                    <option value="N">Não </option>
+                                  </select>
                                 </div>
                               </div>
-
 
                               <div class="col-md-2" style="padding-left: 5px;">
                                 <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
                                   <h6 style="text-align: center; font-weight: bold;">Com Fone
                                   </h6>
-                                  <div class="row">
-                                    <div class="col-md-12">
-                                      <input type="text" class="form-control" placeholder="Fone">
-                                    </div>
-                                  </div>
+                                  <select class="form-control form-control-sm">
+                                    <option value="S">Sim </option>
+                                    <option value="N">Não </option>
+                                  </select>
                                 </div>
                               </div>
                             </div>
