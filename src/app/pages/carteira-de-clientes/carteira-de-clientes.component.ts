@@ -84,6 +84,10 @@ export class CarteiraDeClientesComponent implements OnInit {
     );
   }
 
+  public ativarAba(aba: number): void {
+    this.ativaAba = aba;
+  }
+
   public obterCarteiradeCliente(): void {
     if (this.formCarteiraCliente.valid) {
       this.loading = true;

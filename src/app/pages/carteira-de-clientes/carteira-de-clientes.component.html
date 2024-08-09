@@ -44,115 +44,19 @@
                         </div>
                         <hr>
                         <div class="row">
-                          <div class="col-md-12">
+                          <div class="col-md-6">
+                            <h5>Dados do Cliente</h5>
                             <div class="row">
-                              <div class="col-md-12">
-                                <h5>Dados dos Títulos</h5>
-                              </div>
-                              <div class="col-md-3" style="padding-right: 5px;">
-                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
-                                  <h6 style="text-align: center; font-weight: bold;">Periodo de Importação</h6>
-                                  <div class="row">
-                                    <div class="col-md-6">
-                                      <input type="date" class="form-control form-control-sm"
-                                        formControlName="periodo_importacao_inicial" placeholder="Inical">
-                                    </div>
-                                    <div class="col-md-6">
-                                      <input type="date" class="form-control form-control-sm"
-                                        formControlName="periodo_importacao_final" placeholder="Final">
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-3" style="padding-left: 5px; padding-right: 5px;">
-                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
-                                  <h6 style="text-align: center; font-weight: bold;">Dias de Atraso</h6>
-                                  <div class="row">
-                                    <div class="col-md-6">
-                                      <input type="number" class="form-control form-control-sm"
-                                        formControlName="dias_atraso_inicial" placeholder="Inicial">
-                                    </div>
-                                    <div class="col-md-6">
-                                      <input type="number" class="form-control form-control-sm"
-                                        formControlName="dias_atraso_final" placeholder="Final">
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-3" style="padding-left: 5px; padding-right: 5px;">
-                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
-                                  <h6 style="text-align: center; font-weight: bold;">Vencimento</h6>
-                                  <div class="row">
-                                    <div class="col-md-6">
-                                      <input type="date" class="form-control form-control-sm"
-                                        formControlName="periodo_vencimento_inicial" placeholder="Inicial">
-                                    </div>
-                                    <div class="col-md-6">
-                                      <input type="date" class="form-control form-control-sm"
-                                        formControlName="periodo_vencimento_final" placeholder="Final">
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-3" style="padding-left: 5px;">
-                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
-                                  <h6 style="text-align: center; font-weight: bold;">Dias sem Acionamentos</h6>
-                                  <div class="row">
-                                    <div class="col-md-6">
-                                      <input type="number" class="form-control form-control-sm"
-                                        formControlName="dias_sem_acionamento_inicial" placeholder="Inicial">
-                                    </div>
-                                    <div class="col-md-6">
-                                      <input type="number" class="form-control form-control-sm"
-                                        formControlName="dias_sem_acionamento_final" placeholder="Final">
-                                    </div>
-                                  </div>
+                              <div class="col-md-6">
+                                <div class="card mb-3" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+                                  <h6 style="text-align: center; font-weight: bold;">Cidade</h6>
+                                  <input type="text" class="form-control form-control-sm" formControlName="cidade" placeholder="Cidade">
                                 </div>
                               </div>
 
-                              <div class="col-md-2" style="padding-right: 5px; margin-top: 10px;">
-                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
-                                  <h6 style="text-align: center; font-weight: bold;">Sem Fila</h6>
-                                  <select class="form-control form-control-sm">
-                                    <option value=""> Selecione </option>
-                                    <option value="S"> Sim </option>
-                                    <option value="N"> Não </option>
-                                  </select>
-                                </div>
-
-                              </div>
-                              <div class="col-md-2" style="padding-left: 5px; margin-top: 10px;">
-                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
-                                  <h6 style="text-align: center; font-weight: bold;">Acordo</h6>
-                                  <select class="form-control form-control-sm" formControlName="sem_fila">
-                                    <option value=""> Selecione </option>
-                                    <option value="S"> Sim </option>
-                                    <option value="N"> Não </option>
-                                  </select>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="row">
-                              <div class="col-md-12" style="margin-top: 15px;">
-                                <h5>Dados do Cliente</h5>
-                              </div>
-                              <div class="col-md-3" style="padding-right: 5px;">
-                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
-                                  <h6 style="text-align: center; font-weight: bold;">Cidade
-                                  </h6>
-                                  <div class="row">
-                                    <div class="col-md-12">
-                                      <input type="text" class="form-control form-control-sm" formControlName="cidade"
-                                        placeholder="Cidade">
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="col-md-2" style="padding-left: 5px; padding-right: 5px;">
-                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
-                                  <h6 style="text-align: center; font-weight: bold;">Uf</h6>
+                              <div class="col-md-6">
+                                <div class="card mb-3" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+                                  <h6 style="text-align: center; font-weight: bold;">UF</h6>
                                   <select class="form-control form-control-sm" formControlName="uf">
                                     <option value="">--</option>
                                     <option value="AC">AC</option>
@@ -186,46 +90,124 @@
                                 </div>
                               </div>
 
-                              <div class="col-md-2" style="padding-right: 5px; padding-left: 5px;">
-                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
-                                  <h6 style="text-align: center; font-weight: bold;">Email
-                                  </h6>
+                              <div class="col-md-6">
+                                <div class="card mb-3" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+                                  <h6 style="text-align: center; font-weight: bold;">Email</h6>
                                   <select class="form-control form-control-sm" formControlName="email">
-                                    <option value=""> Selecione </option>
-                                    <option value="S">Sim </option>
-                                    <option value="N">Não </option>
+                                    <option value="">Selecione</option>
+                                    <option value="S">Sim</option>
+                                    <option value="N">Não</option>
                                   </select>
                                 </div>
                               </div>
 
-                              <div class="col-md-2" style="padding-right: 5px; padding-left: 5px;">
-                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
-                                  <h6 style="text-align: center; font-weight: bold;">Celular
-                                  </h6>
+                              <div class="col-md-6">
+                                <div class="card mb-3" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+                                  <h6 style="text-align: center; font-weight: bold;">Celular</h6>
                                   <select class="form-control form-control-sm" formControlName="celular">
-                                    <option value=""> Selecione </option>
-                                    <option value="S">Sim </option>
-                                    <option value="N">Não </option>
+                                    <option value="">Selecione</option>
+                                    <option value="S">Sim</option>
+                                    <option value="N">Não</option>
                                   </select>
                                 </div>
                               </div>
 
-                              <div class="col-md-2" style="padding-left: 5px;">
-                                <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px">
-                                  <h6 style="text-align: center; font-weight: bold;">Com Fone
-                                  </h6>
+                              <div class="col-md-6">
+                                <div class="card mb-3" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+                                  <h6 style="text-align: center; font-weight: bold;">Com Fone</h6>
                                   <select class="form-control form-control-sm" formControlName="fone">
-                                    <option value=""> Selecione </option>
-                                    <option value="S">Sim </option>
-                                    <option value="N">Não </option>
+                                    <option value="">Selecione</option>
+                                    <option value="S">Sim</option>
+                                    <option value="N">Não</option>
                                   </select>
                                 </div>
                               </div>
                             </div>
                           </div>
 
-                        </div>
+                          <div class="col-md-6">
+                            <h5>Dados dos Títulos</h5>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="card mb-2" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+                                  <h6 style="text-align: center; font-weight: bold;">Periodo de Importação</h6>
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <input type="date" class="form-control form-control-sm" formControlName="periodo_importacao_inicial" placeholder="Inicial">
+                                    </div>
+                                    <div class="col-md-6">
+                                      <input type="date" class="form-control form-control-sm" formControlName="periodo_importacao_final" placeholder="Final">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
 
+                              <div class="col-md-6">
+                                <div class="card mb-2" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+                                  <h6 style="text-align: center; font-weight: bold;">Dias de Atraso</h6>
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <input type="number" class="form-control form-control-sm" formControlName="dias_atraso_inicial" placeholder="Inicial">
+                                    </div>
+                                    <div class="col-md-6">
+                                      <input type="number" class="form-control form-control-sm" formControlName="dias_atraso_final" placeholder="Final">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <div class="card mb-3" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+                                  <h6 style="text-align: center; font-weight: bold;">Vencimento</h6>
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <input type="date" class="form-control form-control-sm" formControlName="periodo_vencimento_inicial" placeholder="Inicial">
+                                    </div>
+                                    <div class="col-md-6">
+                                      <input type="date" class="form-control form-control-sm" formControlName="periodo_vencimento_final" placeholder="Final">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <div class="card mb-3" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+                                  <h6 style="text-align: center; font-weight: bold;">Dias sem Acionamentos</h6>
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <input type="number" class="form-control form-control-sm" formControlName="dias_sem_acionamento_inicial" placeholder="Inicial">
+                                    </div>
+                                    <div class="col-md-6">
+                                      <input type="number" class="form-control form-control-sm" formControlName="dias_sem_acionamento_final" placeholder="Final">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <div class="card mb-3" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+                                  <h6 style="text-align: center; font-weight: bold;">Sem Fila</h6>
+                                  <select class="form-control form-control-sm" formControlName="sem_fila">
+                                    <option value="">Selecione</option>
+                                    <option value="S">Sim</option>
+                                    <option value="N">Não</option>
+                                  </select>
+                                </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <div class="card mb-3" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+                                  <h6 style="text-align: center; font-weight: bold;">Acordo</h6>
+                                  <select class="form-control form-control-sm" formControlName="com_acordo">
+                                    <option value="">Selecione</option>
+                                    <option value="S">Sim</option>
+                                    <option value="N">Não</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </form>
                     </ng-template>
                   </li>
@@ -252,6 +234,7 @@
                             <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
                               <thead class="tabela-custom">
                                 <tr>
+                                  <th><input type="checkbox"></th>
                                   <th>Fantasia</th>
                                   <th>Id Cliente</th>
                                   <th>CNPJ/CPF</th>
@@ -268,6 +251,7 @@
                               <tbody>
                                 <tr
                                   *ngFor="let cliente of dadosFiltrados">
+                                  <td><input type="checkbox"></td>
                                   <td>{{ cliente.fantasia }}</td>
                                   <td>{{ cliente.id_cliente }}</td>
                                   <td>{{ cliente.cnpj_cpf }}</td>
