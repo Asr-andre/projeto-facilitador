@@ -235,19 +235,10 @@
                     </a>
                     <ng-template ngbNavContent>
                       <section style="height: 70vh; white-space: nowrap; overflow: auto;">
-                        <div class="card-body" style="padding-top: 0px;padding-right: 0px;padding-left: 0px;">
-                          <div class="d-flex justify-content-between align-items-center mt-1" style="font-size: 11px;">
-                            <div style="font-size: 11px;">
-                              <select id="itensPorPagina" [(ngModel)]="itensPorPagina"
-                                (change)="atualizarQuantidadeExibida()"
-                                style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
-                                <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina"
-                                  style="font-size: 10px;">{{ item }}</option>
-                              </select>
-                              <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
-                            </div>
+                        <div class="card-body" style="padding-top: 0; padding-right: 0; padding-left: 0;">
+                          <div class="d-flex justify-content-end align-items-end mt-1" style="font-size: 11px;">
                             <div style="font-size: 10px;">
-                              <div class="dataTables_filter text-md-end">
+                              <div class="dataTables_filter text-end">
                                 <label class="d-inline-flex align-items-center">
                                   <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;"
                                     placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
@@ -255,6 +246,7 @@
                               </div>
                             </div>
                           </div>
+
 
                           <div class="table-responsive">
                             <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
@@ -275,7 +267,7 @@
                               </thead>
                               <tbody>
                                 <tr
-                                  *ngFor="let cliente of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                                  *ngFor="let cliente of dadosFiltrados">
                                   <td>{{ cliente.fantasia }}</td>
                                   <td>{{ cliente.id_cliente }}</td>
                                   <td>{{ cliente.cnpj_cpf }}</td>
@@ -290,17 +282,6 @@
                                 </tr>
                               </tbody>
                             </table>
-
-                            <div class="d-flex justify-content-between align-items-center mt-3 text-small">
-                              <div>
-                                Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
-                                {{ (paginaAtual - 1) * itensPorPagina + dadosFiltrados.length }} de {{ totalRegistros }}
-                                registros
-                              </div>
-                              <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior"
-                                nextLabel="Próximo" [maxSize]="5" [autoHide]="false" [responsive]="true">
-                              </pagination-controls>
-                            </div>
                           </div>
                         </div>
                       </section>

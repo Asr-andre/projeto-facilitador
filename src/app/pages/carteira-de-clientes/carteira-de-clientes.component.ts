@@ -30,15 +30,9 @@ export class CarteiraDeClientesComponent implements OnInit {
   public loading: boolean =false;
   public ativaAba: number = 1;
 
-  public paginaAtual: number = 1;
-  public itensPorPagina: number = 10;
   public dadosFiltrados: CarteiraClienteModel[] = [];
   public textoPesquisa: string = "";
   public totalRegistros: number = 0;
-  public totalRegistrosExibidos: number = 0;
-  public qtdRegistrosPorPagina = [10, 25, 50, 100];
-  public direcaoOrdenacao: { [key: string]: string } = {};
-  @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<CarteiraClienteModel>>;
 
   constructor(
     private _contratanteService: ContratanteService,
@@ -105,7 +99,6 @@ export class CarteiraDeClientesComponent implements OnInit {
         if (res.success === "true") {
           this.carteiraDeClientes = res.clientes;
           this.filtrar();
-          this.atualizarQuantidadeExibida();
           this.ativaAba = 2;
           this.loading = false;
         } else {
@@ -131,34 +124,6 @@ export class CarteiraDeClientesComponent implements OnInit {
   }
 
   public filtrar(): void {
-    this.dadosFiltrados = Utils.filtrar(
-      this.carteiraDeClientes,
-      this.textoPesquisa
-    );
-    this.totalRegistros = this.dadosFiltrados.length;
-  }
-
-  public atualizarQuantidadeExibida() {
-    this.totalRegistrosExibidos = Math.min(
-      this.paginaAtual * this.itensPorPagina,
-      this.totalRegistros
-    );
-  }
-
-  public ordenar({ column, direction }: SortEvent<CarteiraClienteModel>) {
-    this.headers.forEach((header) => {
-      if (header.sortable !== column) {
-        header.direction = "";
-      }
-    });
-
-    if (direction === "" || column === "") {
-      this.dadosFiltrados = this.carteiraDeClientes;
-    } else {
-      this.dadosFiltrados = [...this.dadosFiltrados].sort((a, b) => {
-        const res = compararParaOrdenar(a[column], b[column]);
-        return direction === "asc" ? res : -res;
-      });
-    }
+    this.dadosFiltrados = Utils.filtrar(this.carteiraDeClientes, this.textoPesquisa);
   }
 }
