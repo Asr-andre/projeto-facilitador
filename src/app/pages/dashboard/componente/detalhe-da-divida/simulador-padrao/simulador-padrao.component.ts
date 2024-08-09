@@ -201,16 +201,22 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       titulos: titulos,
     };
 
-    this.simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe(
-      (res) => {
-        this._alertService.success(res.msg);
-        this.clienteAtualizado.emit();
-        this.fechaModal();
-      },
-      (error) => {
-        this._alertService.error("Ocorreu um erro ao realizar a baixa.", error);
+    this._alertService.baixarPg().then(confirmarPg => {
+      if (!confirmarPg) {
+        return;
       }
-    );
+
+      this.simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe(
+        (res) => {
+          this._alertService.success(res.msg);
+          this.clienteAtualizado.emit();
+          this.fechaModal();
+        },
+        (error) => {
+          this._alertService.error("Ocorreu um erro ao realizar a baixa.", error);
+        }
+      );
+    });
   }
 
   public habilitaBotao() {

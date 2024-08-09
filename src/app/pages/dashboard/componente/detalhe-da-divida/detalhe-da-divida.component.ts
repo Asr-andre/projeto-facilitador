@@ -178,7 +178,7 @@ export class DetalheDaDividaComponent implements OnChanges {
       return;
     }
 
-    this._alertService.cancel().then(confirmarRetirada => {
+    this._alertService.retirada().then(confirmarRetirada => {
       if (!confirmarRetirada) {
         // Se o usuário cancelar a ação, simplesmente retorna e não faz nada
         return;
@@ -211,5 +211,4 @@ export class DetalheDaDividaComponent implements OnChanges {
       );
     });
   }
-
 }

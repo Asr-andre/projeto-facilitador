@@ -79,16 +79,34 @@ export class AlertService {
     }
   }
 
-  cancel(): Promise<boolean> {
+  retirada(): Promise<boolean> {
     return this.swalWithBootstrapButtons.fire({
-      title: 'Você deseja excluir todos os titulos selecionados?',
+      title: 'Você deseja retirar todos os titulos selecionados?',
       icon: 'warning',
       confirmButtonText: 'Sim',
       cancelButtonText: 'Cancelar',
       showCancelButton: true
     }).then(result => {
       if (result.isConfirmed) {
-        this.swalWithBootstrapButtons.fire('Titulos excluido com sucesso!');
+        this.swalWithBootstrapButtons.fire('Titulos retirados com sucesso!');
+        return true;
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        return false;
+      }
+      return false;
+    });
+  }
+
+  baixarPg(): Promise<boolean> {
+    return this.swalWithBootstrapButtons.fire({
+      title: 'Você deseja baixar todos os titulos selecionados?',
+      icon: 'warning',
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.swalWithBootstrapButtons.fire('Baixa efetuada com sucesso!');
         return true;
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         return false;
