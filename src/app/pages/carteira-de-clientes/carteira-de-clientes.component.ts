@@ -117,6 +117,14 @@ export class CarteiraDeClientesComponent implements OnInit {
 
   }
 
+  public dataBrasil(data) {
+    return Utils.dataBrasil(data);
+  }
+
+  public data(data) {
+    return Utils.formatarDataParaExibicao(data);
+  }
+
   public filtrar(): void {
     this.dadosFiltrados = Utils.filtrar(
       this.carteiraDeClientes,

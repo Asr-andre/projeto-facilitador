@@ -280,11 +280,11 @@
                                   <td>{{ cliente.id_cliente }}</td>
                                   <td>{{ cliente.cnpj_cpf }}</td>
                                   <td>{{ cliente.nome }}</td>
-                                  <td>{{ cliente.vencimento_mais_antigo | date: 'dd/MM/yyyy' }}</td>
+                                  <td>{{ dataBrasil(cliente.vencimento_mais_antigo) }}</td>
                                   <td>{{ cliente.dias_em_atraso }}</td>
                                   <td>{{ cliente.valor_total_divida | currency: 'BRL' }}</td>
                                   <td>{{ cliente.produto || 'N/A' }}</td>
-                                  <td>{{ cliente.data_ultimo_acionamento | date: 'dd/MM/yyyy HH:mm' }}</td>
+                                  <td>{{ data(cliente.data_ultimo_acionamento) }}</td>
                                   <td>{{ cliente.acao }}</td>
                                   <td>{{ cliente.dias_sem_acionamento }}</td>
                                 </tr>
