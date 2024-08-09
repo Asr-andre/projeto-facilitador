@@ -102,19 +102,24 @@ export class CarteiraDeClientesComponent implements OnInit {
       dadosParaEnvio.periodo_importacao_final = this._datePipe.transform(dadosParaEnvio.periodo_importacao_final, "dd/MM/yyyy") || "";
 
       this._carteiraDeClienteService.obterCarteiradeCliente(dadosParaEnvio).subscribe((res) => {
+        if (res.success === "true") {
           this.carteiraDeClientes = res.clientes;
           this.filtrar();
           this.atualizarQuantidadeExibida();
+          this.ativaAba = 2;
           this.loading = false;
-          if (this.carteiraDeClientes && this.carteiraDeClientes.length > 0) {
-            this.ativaAba = 2;
-            this.loading = false;
-          }
+        } else {
+          this.loading = false;
+          this._alertService.warning(res.msg);
+        }
+      },
+        (error) => {
+          this.loading = false;
+          this._alertService.error("Ocorreu um erro ao filtra os clientes.", error);
         });
     } else {
       this._alertService.warning("O campo 'Contratante' é obrigatório.");
     }
-
   }
 
   public dataBrasil(data) {
