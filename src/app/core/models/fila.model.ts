@@ -10,6 +10,7 @@ export class FilaModel {
   data: Date;
   descricao: string;
   situacao: string;
+  id_usuario: number;
   qtde_registros: number;
   resta_registro: number;
 }
@@ -18,4 +19,12 @@ export class FilaRetornoModel {
   success: string;
   msg: string;
   filas: FilaModel[]
+}
+
+
+export interface FilaAtualizadaResponse {
+  success: string;
+  msg: string;
+  id_empresa: string;
+  id_fila: string;
 }

@@ -30,7 +30,7 @@
                         <div class="row">
                           <div class="col-md-6 form-group">
                             <select class="form-control form-control-sm" formControlName="id_contratante">
-                              <option value="">Selecione o Contratante</option>
+                              <option value="0">Selecione o Contratante</option>
                               <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">{{
                                 contratante.fantasia }}</option>
                             </select>
@@ -218,7 +218,18 @@
                     <ng-template ngbNavContent>
                       <section style="height: 70vh; white-space: nowrap; overflow: auto;">
                         <div class="card-body" style="padding-top: 0; padding-right: 0; padding-left: 0;">
-                          <div class="d-flex justify-content-end align-items-end mt-1" style="font-size: 11px;">
+                          <div class="d-flex justify-content-between align-items-center mt-1" style="font-size: 11px;">
+                            <div class="btn-group" role="group" ngbDropdown>
+                              <button id="btnGroupVerticalDrop1" type="button" class="btn btn-secondary btn-sm dropdown-toggle" ngbDropdownToggle style="margin-bottom: 6px;">
+                                <i class="fas fa-file-alt"></i> Ações <i class="mdi mdi-chevron-down"></i>
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" ngbDropdownMenu>
+                                <a class="dropdown-item" href="javascript: void(0);" (click)="abrirModalFila(filaModal)">Fila</a>
+                                <a class="dropdown-item" href="javascript: void(0);">Email em lote</a>
+                                <a class="dropdown-item" href="javascript: void(0);">Sms em lote</a>
+                              </div>
+                            </div>
+
                             <div style="font-size: 10px;">
                               <div class="dataTables_filter text-end">
                                 <label class="d-inline-flex align-items-center">
@@ -228,13 +239,11 @@
                               </div>
                             </div>
                           </div>
-
-
                           <div class="table-responsive">
                             <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
                               <thead class="tabela-custom">
                                 <tr>
-                                  <th><input type="checkbox"></th>
+                                  <th><input type="checkbox" [checked]="selecionarTodos" (change)="marcaTodos($event)"></th>
                                   <th>Fantasia</th>
                                   <th>Id Cliente</th>
                                   <th>CNPJ/CPF</th>
@@ -243,6 +252,9 @@
                                   <th>Dias em Atraso</th>
                                   <th>Valor Total Dívida</th>
                                   <th>Produto</th>
+                                  <th>Cidade</th>
+                                  <th>Uf</th>
+                                  <th>Fila</th>
                                   <th>Data Último Acionamento</th>
                                   <th>Ação</th>
                                   <th>Dias Sem Acionamento</th>
@@ -251,7 +263,7 @@
                               <tbody>
                                 <tr
                                   *ngFor="let cliente of dadosFiltrados">
-                                  <td><input type="checkbox"></td>
+                                  <td><input type="checkbox" [(ngModel)]="cliente.selecionado" (change)="verificarSelecao()"></td>
                                   <td>{{ cliente.fantasia }}</td>
                                   <td>{{ cliente.id_cliente }}</td>
                                   <td>{{ cliente.cnpj_cpf }}</td>
@@ -259,7 +271,10 @@
                                   <td>{{ dataBrasil(cliente.vencimento_mais_antigo) }}</td>
                                   <td>{{ cliente.dias_em_atraso }}</td>
                                   <td>{{ cliente.valor_total_divida | currency: 'BRL' }}</td>
-                                  <td>{{ cliente.produto || 'N/A' }}</td>
+                                  <td>{{ cliente.produto }}</td>
+                                  <td>{{ cliente.cidade }}</td>
+                                  <td>{{ cliente.uf }}</td>
+                                  <td>{{ cliente.id_fila }}</td>
                                   <td>{{ data(cliente.data_ultimo_acionamento) }}</td>
                                   <td>{{ cliente.acao }}</td>
                                   <td>{{ cliente.dias_sem_acionamento }}</td>
@@ -280,3 +295,33 @@
       </div>
     </div>
   </div>
+
+  <ng-template #filaModal let-modal>
+    <div class="modal-header modal-header-custom" style="background: #6d706f;">
+      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-user-plus"></i> Enviar clientes para fila! </h6>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+        (click)="modal.dismiss()"></button>
+    </div>
+
+    <div class="modal-body modal-padding">
+      <form [formGroup]="formFila">
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <select class="form-control form-control-sm" formControlName="id_fila" (change)="selecionarFila($event.target.value)">
+              <option value="">Selecione a fila</option>
+              <option *ngFor="let fila of filas" [value]="fila.id_fila">{{ fila.descricao }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end" style="padding-top: 10px;">
+          <button type="submit" class="btn btn-success btn-sm me-2" (click)="enviarClienteParaFila()" [disabled]="!this.formFila.valid">
+            <i class="fas fa-save"></i> Salvar
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
