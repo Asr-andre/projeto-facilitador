@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConfig } from './url.base.service';
 import { CarteiraClienteRequisicao, CarteiraClientesResponse } from '../models/carteira.de.cliente.model';
+import { FilaAtualizadaResponse } from '../models/fila.model';
 
 
 
@@ -19,5 +20,9 @@ export class CarteiraDeClienteService {
 
   public obterCarteiradeCliente(carteira: CarteiraClienteRequisicao): Observable<CarteiraClientesResponse> {
     return this._http.post<CarteiraClientesResponse>(`${this.apiUrl}/gerarcarteira`, carteira);
+  }
+
+  public enviarClienteParaFila(carteira: CarteiraClienteRequisicao): Observable<FilaAtualizadaResponse> {
+    return this._http.post<FilaAtualizadaResponse>(`${this.apiUrl}/criarfilas`, carteira);
   }
 }

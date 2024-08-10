@@ -30,7 +30,11 @@ export class CarteiraClienteModel {
   produto: string;
   data_ultimo_acionamento: string;
   acao: string;
+  cidade: string;
+  uf: string;
+  id_fila: number;
   dias_sem_acionamento: number;
+  public selecionado?: boolean;
 }
 
 export class CarteiraClientesResponse {
@@ -39,4 +43,15 @@ export class CarteiraClientesResponse {
   id_empresa: string;
   id_contratantes: string;
   clientes: CarteiraClienteModel[];
+}
+
+
+// src/app/models/carteira-cliente.model.ts
+
+export interface CarteiraClienteFilaRequisicao {
+  id_empresa: number;
+  id_fila: number;
+  id_usuario: number;
+  user_login: string;
+  clientes: string;
 }

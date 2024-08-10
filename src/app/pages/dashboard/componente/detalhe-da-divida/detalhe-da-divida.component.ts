@@ -211,5 +211,4 @@ export class DetalheDaDividaComponent implements OnChanges {
       );
     });
   }
-
 }
