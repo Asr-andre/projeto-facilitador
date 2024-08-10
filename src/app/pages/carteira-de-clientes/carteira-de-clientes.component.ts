@@ -42,6 +42,12 @@ export class CarteiraDeClientesComponent implements OnInit {
   public textoPesquisa: string = "";
   public totalRegistros: number = 0;
 
+  public totalClientes: number = 0;
+  public valorTotal: number = 0;
+
+  totalClientesSelecionados: number = 0;
+  valorTotalSelecionado: number = 0;
+
   constructor(
     private _contratanteService: ContratanteService,
     private _carteiraDeClienteService: CarteiraDeClienteService,
@@ -117,15 +123,19 @@ export class CarteiraDeClientesComponent implements OnInit {
     });
   }
 
-  marcaTodos(event: any) {
-    this.selecionarTodos = event.target.checked;
-    this.dadosFiltrados.forEach(cliente => {
-      cliente.selecionado = this.selecionarTodos;
-    });
+  public verificarSelecao(): void {
+    this.totalClientesSelecionados = this.dadosFiltrados.filter(cliente => cliente.selecionado).length;
+    this.valorTotalSelecionado = this.dadosFiltrados
+      .filter(cliente => cliente.selecionado)
+      .reduce((total, cliente) => total + cliente.valor_total_divida, 0);
   }
 
-  verificarSelecao() {
-    this.selecionarTodos = this.dadosFiltrados.every(cliente => cliente.selecionado);
+  public marcaTodos(event: Event): void {
+    const checked = (event.target as HTMLInputElement).checked;
+    this.dadosFiltrados.forEach(cliente => {
+      cliente.selecionado = checked;
+    });
+    this.verificarSelecao(); // Recalcula os totais ao marcar todos
   }
 
 
@@ -149,14 +159,13 @@ export class CarteiraDeClientesComponent implements OnInit {
   public selecionarFila(idFila: string): void {
     const filaSelecionada = this.filas.find(fila => fila.id_fila === Number(idFila));
     if (filaSelecionada) {
-        this.formFila.patchValue({
-            id_fila: filaSelecionada.id_fila,
-            id_usuario: filaSelecionada.id_usuario
-        });
-        this.idUsuario = filaSelecionada.id_usuario; // Atualiza o idUsuario com base na fila selecionada
+      this.formFila.patchValue({
+        id_fila: filaSelecionada.id_fila,
+        id_usuario: filaSelecionada.id_usuario
+      });
+      this.idUsuario = filaSelecionada.id_usuario; // Atualiza o idUsuario com base na fila selecionada
     }
-}
-
+  }
 
   public enviarClienteParaFila() {
     if (this.formFila.valid) {
@@ -169,6 +178,15 @@ export class CarteiraDeClientesComponent implements OnInit {
     } else {
       this._alertService.warning("Preencha todos os campos obrigatórios.");
     }
+  }
+
+  public calcularTotalClientes(): void {
+    const idsUnicos = new Set(this.carteiraDeClientes.map(cliente => cliente.id_cliente));
+    this.totalClientes = idsUnicos.size;
+  }
+
+  public calcularValorTotal(): void {
+    this.valorTotal = this.carteiraDeClientes.reduce((total, cliente) => total + (cliente.valor_total_divida || 0), 0);
   }
 
   public obterCarteiradeCliente(): void {
@@ -185,6 +203,8 @@ export class CarteiraDeClientesComponent implements OnInit {
       this._carteiraDeClienteService.obterCarteiradeCliente(dadosParaEnvio).subscribe((res) => {
         if (res.success === "true") {
           this.carteiraDeClientes = res.clientes;
+          this.calcularTotalClientes(); // Calcula o total de IDs de clientes
+          this.calcularValorTotal(); // Calcula o valor total
           this.filtrar();
           this.ativaAba = 2;
           this.obterFilas();
@@ -203,15 +223,15 @@ export class CarteiraDeClientesComponent implements OnInit {
     }
   }
 
+  public filtrar(): void {
+    this.dadosFiltrados = Utils.filtrar(this.carteiraDeClientes, this.textoPesquisa);
+  }
+
   public dataBrasil(data) {
     return Utils.dataBrasil(data);
   }
 
   public data(data) {
     return Utils.formatarDataParaExibicao(data);
-  }
-
-  public filtrar(): void {
-    this.dadosFiltrados = Utils.filtrar(this.carteiraDeClientes, this.textoPesquisa);
   }
 }

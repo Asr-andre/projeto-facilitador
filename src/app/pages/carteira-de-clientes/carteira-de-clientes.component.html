@@ -186,7 +186,7 @@
 
                               <div class="col-md-6">
                                 <div class="card mb-3" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
-                                  <h6 style="text-align: center; font-weight: bold;">Sem Fila</h6>
+                                  <h6 style="text-align: center; font-weight: bold;">Com Fila</h6>
                                   <select class="form-control form-control-sm" formControlName="sem_fila">
                                     <option value="">Selecione</option>
                                     <option value="S">Sim</option>
@@ -243,7 +243,7 @@
                             <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
                               <thead class="tabela-custom">
                                 <tr>
-                                  <th><input type="checkbox" [checked]="selecionarTodos" (change)="marcaTodos($event)"></th>
+                                  <th><input type="checkbox" [checked]="totalClientesSelecionados === dadosFiltrados.length" (change)="marcaTodos($event)"></th>
                                   <th>Fantasia</th>
                                   <th>Id Cliente</th>
                                   <th>CNPJ/CPF</th>
@@ -278,6 +278,20 @@
                                   <td>{{ data(cliente.data_ultimo_acionamento) }}</td>
                                   <td>{{ cliente.acao }}</td>
                                   <td>{{ cliente.dias_sem_acionamento }}</td>
+                                </tr>
+                                <tr class="tabela-custom">
+                                  <td colspan="5"><strong>Total de Clientes: {{ totalClientes }}</strong></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td>{{ valorTotal | currency:'BRL':'symbol':'1.2-2' }}</td>
+                                  <td colspan="7"></td>
+                                </tr>
+                                <tr class="tabela-custom">
+                                  <td colspan="5"><strong>Total de Clientes Selecionados: {{ totalClientesSelecionados }}</strong></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td>{{ valorTotalSelecionado | currency:'BRL':'symbol':'1.2-2' }}</td>
+                                  <td colspan="7"></td>
                                 </tr>
                               </tbody>
                             </table>
