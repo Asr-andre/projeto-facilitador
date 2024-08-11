@@ -90,10 +90,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  public atualizar(): void {
-    this.obterDevedores();
-  }
-
   public obterFilas() {
     this.loading = true;
     const requisicao = {
@@ -152,6 +148,10 @@ export class DashboardComponent implements OnInit {
       return Utils.formatarDocumento(value);
     }
     return value;
+  }
+
+  public atualizar(): void {
+    this.obterDevedores();
   }
 
   public atualizarCards(): void {

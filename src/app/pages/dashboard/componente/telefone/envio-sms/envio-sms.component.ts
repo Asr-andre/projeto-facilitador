@@ -19,8 +19,6 @@ export class EnvioSmsComponent implements OnInit {
   public mensagem: string = '';
   public loading: boolean = false;
 
-
-
   constructor(
     private _modalService: NgbModal,
     private _formBuilder: FormBuilder,
