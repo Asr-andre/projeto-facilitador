@@ -1,5 +1,6 @@
 export class RequisicaoDevedorModel {
   id_empresa: number;
+  id_fila?: number;
   cnpj_cpf?: string;
   nome?: string;
   mostrar_cliente_sem_divida?: string;
