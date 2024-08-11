@@ -1,5 +1,6 @@
 export class FilaRequisicaoModel {
   id_empresa: number;
+  id_usuario?: number;
   user_login: string;
 }
 

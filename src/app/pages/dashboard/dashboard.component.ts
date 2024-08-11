@@ -17,6 +17,7 @@ import { FilaService } from "src/app/core/services/fila.service";
 })
 export class DashboardComponent implements OnInit {
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
+  public idUsuario: number = Number(this._authService.getCurrentUser() || 0);
   public login = this._authService.getLogin();
   public listarDevedores: DevedorModel[] = [];
   public devedoresFiltrados: DevedorModel[] = [];
@@ -96,6 +97,7 @@ export class DashboardComponent implements OnInit {
   public obterFilas() {
     this.loading = true;
     const requisicao = {
+      id_usuario: this.idUsuario,
       id_empresa: this.idEmpresa,
       user_login: this.login,
     };
@@ -104,6 +106,7 @@ export class DashboardComponent implements OnInit {
       this.filas = res.filas;
       this.loading = false;
     });
+    this.loading = false;
   }
 
   public obterDadosDosCards(): void {

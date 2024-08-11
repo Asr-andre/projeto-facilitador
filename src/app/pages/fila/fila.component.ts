@@ -40,6 +40,7 @@ export class FilaComponent implements OnInit {
   public obterFilas() {
     this.loading = true;
     const requisicao = {
+     id_usuario: 0,
      id_empresa: this.id_empresa,
      user_login: this.user_login
     }
