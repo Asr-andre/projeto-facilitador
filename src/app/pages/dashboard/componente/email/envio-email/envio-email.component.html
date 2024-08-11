@@ -3,7 +3,7 @@
     <h6 class="modal-title" style="color: #ffffff">
       <i class="fas fa-at"></i> Envio de Email - {{ destinatarioEmail }}
     </h6>
-    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
+    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
   </div>
   <div class="modal-body modal-padding">
     <form [formGroup]="formularioEnvioEmail">
@@ -18,7 +18,7 @@
         <button type="button" class="btn btn-success btn-sm me-1" (click)="enviarEmail()">
           <i class="fas fa-paper-plane"></i> Enviar
         </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
           <i class="fas fa-window-close"></i> Cancelar
         </button>
       </div>

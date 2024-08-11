@@ -29,11 +29,8 @@ export class DashboardService {
     return this._http.post<DetalhamentoModel>(`${this.apiUrl}/tituloscliente`, requestBody);
   }
 
-  public obterCards(): Observable<RespostaCardsModel> {
-    const idEmpresa = parseInt(this._authService.getIdEmpresa(), 10);
-    const requestBody: RequisicaoCardsModel = { id_empresa: idEmpresa };
-    return this._http.post<RespostaCardsModel>(`${this.apiUrl}/envioscards`, requestBody);
+  public obterCards(empresa: RequisicaoCardsModel): Observable<RespostaCardsModel> {
+    return this._http.post<RespostaCardsModel>(`${this.apiUrl}/envioscards`, empresa);
   }
-
 }
 
