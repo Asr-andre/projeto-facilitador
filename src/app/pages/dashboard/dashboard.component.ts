@@ -1,11 +1,14 @@
 
-import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
-import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from "src/app/core/helpers/conf-tabela/ordenacao-tabela";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { Utils } from "src/app/core/helpers/utils";
 import { RespostaCardsModel } from "src/app/core/models/cards.dashboard.model";
-import { DevedorModel, RequisicaoDevedorModel, RespostaDevedorModel } from "src/app/core/models/devedor.model";
+import { DevedorModel, RespostaDevedorModel } from "src/app/core/models/devedor.model";
+import { FilaModel } from "src/app/core/models/fila.model";
+import { AlertService } from "src/app/core/services/alert.service";
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { DashboardService } from "src/app/core/services/dashboard.service";
+import { FilaService } from "src/app/core/services/fila.service";
 
 @Component({
   selector: "app-dashboard",
@@ -14,19 +17,20 @@ import { DashboardService } from "src/app/core/services/dashboard.service";
 })
 export class DashboardComponent implements OnInit {
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
+  public login = this._authService.getLogin();
   public listarDevedores: DevedorModel[] = [];
   public devedoresFiltrados: DevedorModel[] = [];
+  public filas: FilaModel[] = [];
   public devedorSelecionado: DevedorModel | null = null;
   public loading: boolean = false;
+  public formFila: FormGroup;
 
   public paginaAtual: number = 1;
-  public itensPorPagina: number = 10;
+  public itensPorPagina: number = 12;
   public dadosFiltrados: DevedorModel[] = [];
-  public textoPesquisa: string = '';
+  public textoPesquisa: string = "";
   public totalRegistros: number = 0;
   public totalRegistrosExibidos: number = 0;
-  public direcaoOrdenacao: { [key: string]: string } = {};
-  @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<DevedorModel>>;
 
   public qtdeEmail: number = 0;
   public totalEmail: number = 0;
@@ -37,26 +41,54 @@ export class DashboardComponent implements OnInit {
   public totalUtilizado: number = 0;
   public saldo: number = 0;
 
-  public tipoPesquisa: string = 'nome';
+  public tipoPesquisa: string = "nome";
   public mostrarSemDivida: boolean = false;
 
   constructor(
     private _dashboard: DashboardService,
     private _authService: AuthenticationService,
-  ) { }
+    private _formBuilder: FormBuilder,
+    private _filaService: FilaService,
+    private _alertService: AlertService
+  ) {}
 
   ngOnInit(): void {
+    this.formFila = this._formBuilder.group({
+      id_fila: [0],
+    });
+
     this.obterDevedores();
+  }
+
+  public inicializarFormFila() {
+    this.formFila = this._formBuilder.group({
+      id_fila: [0],
+    });
   }
 
   public obterDevedores(): void {
     this.loading = true;
-    this._dashboard.obterDevedores({ id_empresa: this.idEmpresa }).subscribe((res: RespostaDevedorModel) => {
-      this.listarDevedores = res.clientes;
-      this.filtrar();
-      this.atualizarQuantidadeExibida();
-      this.obterDadosDosCards();
-      this.loading = false;
+    const filtros = {
+      id_empresa: this.idEmpresa,
+      id_fila: this.formFila.get("id_fila")?.value || 0,
+      nome: this.tipoPesquisa === "nome" ? this.textoPesquisa : "",
+      cnpj_cpf: this.tipoPesquisa === "cpf" ? this.textoPesquisa : "",
+      mostrar_cliente_sem_dividas: this.mostrarSemDivida ? "S" : "N",
+    };
+
+    this._dashboard.obterDevedores(filtros).subscribe((res: RespostaDevedorModel) => {
+      if (res && res.success === "true") {
+        this.listarDevedores = res.clientes;
+        this.dadosFiltrados = res.clientes;
+        this.totalRegistros = this.dadosFiltrados.length;
+        this.atualizarQuantidadeExibida();
+        this.obterDadosDosCards();
+        this.obterFilas();
+        this.loading = false;
+      } else {
+        this.loading = false;
+        this._alertService.warning(res.msg);
+      }
     });
   }
 
@@ -64,26 +96,38 @@ export class DashboardComponent implements OnInit {
     this.obterDevedores();
   }
 
+  public obterFilas() {
+    this.loading = true;
+    const requisicao = {
+      id_empresa: this.idEmpresa,
+      user_login: this.login,
+    };
+
+    this._filaService.obterFilas(requisicao).subscribe((res) => {
+      this.filas = res.filas;
+      this.loading = false;
+    });
+  }
+
   public obterDadosDosCards(): void {
-    this._dashboard.obterCards().subscribe(
-      (response: RespostaCardsModel) => {
-        if (response && response.success !== undefined) {
-          if (response.success === 'true' || response.success) {
-            this.qtdeEmail = response.qtde_email || 0;
-            this.totalEmail = response.total_email || 0;
-            this.qtdeSms = response.qtde_sms || 0;
-            this.totalSms = response.total_sms || 0;
-            this.totalUtilizado = response.total_utilizado || 0;
-            this.saldo = response.saldo || 0;
-          } else {
-            console.error('Erro na resposta da API:', response.msg || 'Mensagem não disponível');
-          }
+    this._dashboard.obterCards().subscribe((response: RespostaCardsModel) => {
+      if (response && response.success !== undefined) {
+        if (response.success === "true" || response.success) {
+          this.qtdeEmail = response.qtde_email || 0;
+          this.totalEmail = response.total_email || 0;
+          this.qtdeSms = response.qtde_sms || 0;
+          this.totalSms = response.total_sms || 0;
+          this.totalUtilizado = response.total_utilizado || 0;
+          this.saldo = response.saldo || 0;
         } else {
-          console.error('Resposta inválida da API:', response);
+          console.error("Erro na resposta da API:",response.msg || "Mensagem não disponível");
         }
-      },
+      } else {
+        console.error("Resposta inválida da API:", response);
+      }
+    },
       (error) => {
-        console.error('Erro ao obter os cards:', error);
+        console.error("Erro ao obter os cards:", error);
       }
     );
   }
@@ -92,47 +136,11 @@ export class DashboardComponent implements OnInit {
     this.devedorSelecionado = devedor;
   }
 
-  public filtrar(): void {
-    this.loading = true;
-    const filtro: RequisicaoDevedorModel = {
-      id_empresa: this.idEmpresa,
-      mostrar_cliente_sem_divida: this.mostrarSemDivida ? "S" : "N"
-    };
-
-    if (this.tipoPesquisa === 'cpf') {
-      filtro.cnpj_cpf = this.textoPesquisa;
-    } else {
-      filtro.nome = this.textoPesquisa;
-    }
-
-    this._dashboard.obterDevedores(filtro).subscribe((res) => {
-      this.dadosFiltrados = res.clientes;
-      this.totalRegistros = this.dadosFiltrados.length;
-      this.atualizarQuantidadeExibida();
-      this.loading = false;
-    });
-    this.loading = false;
-  }
-
   public atualizarQuantidadeExibida() {
-    this.totalRegistrosExibidos = Math.min(this.paginaAtual * this.itensPorPagina, this.totalRegistros);
-  }
-
-  public ordenar({ column, direction }: SortEvent<DevedorModel>) {
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
-
-    if (direction === '' || column === '') {
-      this.dadosFiltrados = this.listarDevedores;
-    } else {
-      this.dadosFiltrados = [...this.dadosFiltrados].sort((a, b) => {
-        const res = compararParaOrdenar(a[column], b[column]);
-        return direction === 'asc' ? res : -res;
-      });
-    }
+    this.totalRegistrosExibidos = Math.min(
+      this.paginaAtual * this.itensPorPagina,
+      this.totalRegistros
+    );
   }
 
   public mascararCpfCnpj(value: string): string {
