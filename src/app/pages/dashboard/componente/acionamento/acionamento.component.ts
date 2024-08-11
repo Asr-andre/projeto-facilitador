@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { utils } from 'protractor';
@@ -20,6 +20,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   @ViewChild('acaoDeCobrancaModal') modalEmailRef: TemplateRef<any>;
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
+  @Output() clienteAcionado = new EventEmitter<void>();
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public acionamentos: AcionamentoModel[] = [];
   public acoesCobranca: AcaoCobrancaModel[] = [];
@@ -41,7 +42,6 @@ export class AcionamentoComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
     this.inicializarformAcionamentos();
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -122,6 +122,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       if (res.success) {
         this._alertService.success('Acionamento inserido com sucesso');
         this.listarAcionamentos();
+        this.clienteAcionado.emit();
         this.resetarCampos();
         this._modalService.dismissAll();
       } else {
