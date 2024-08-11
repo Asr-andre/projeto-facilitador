@@ -2,7 +2,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Utils } from "src/app/core/helpers/utils";
-import { RespostaCardsModel } from "src/app/core/models/cards.dashboard.model";
+import { RequisicaoCardsModel, RespostaCardsModel } from "src/app/core/models/cards.dashboard.model";
 import { DevedorModel, RespostaDevedorModel } from "src/app/core/models/devedor.model";
 import { FilaModel } from "src/app/core/models/fila.model";
 import { AlertService } from "src/app/core/services/alert.service";
@@ -53,10 +53,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.formFila = this._formBuilder.group({
-      id_fila: [0],
-    });
-
+    this.inicializarFormFila()
     this.obterDevedores();
   }
 
@@ -110,7 +107,11 @@ export class DashboardComponent implements OnInit {
   }
 
   public obterDadosDosCards(): void {
-    this._dashboard.obterCards().subscribe((response: RespostaCardsModel) => {
+    const requisicao: RequisicaoCardsModel = {
+      id_empresa: this.idEmpresa,
+    }
+
+    this._dashboard.obterCards(requisicao).subscribe((response: RespostaCardsModel) => {
       if (response && response.success !== undefined) {
         if (response.success === "true" || response.success) {
           this.qtdeEmail = response.qtde_email || 0;

@@ -52,7 +52,7 @@ export class EmailComponent implements OnInit, OnChanges{
     this.formEmail = this._formBuilder.group({
       id_cliente: [this.idCliente],
       email: ['', [Validators.required, Validators.email]],
-      situacao: [''],
+      situacao: ['A'],
       origem: ['Cadastro'],
       ativo: ['S'],
       user_login: [this._authenticationService.getLogin()]
@@ -96,7 +96,7 @@ export class EmailComponent implements OnInit, OnChanges{
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error('Ocorreu um erro ao tentar cadastrar o email.');
+          this._alertService.error('Ocorreu um erro ao tentar cadastrar o email.', error);
         }
       );
     } else {

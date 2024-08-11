@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { AppConfig } from './url.base.service';
 import { CadastrarEmailModel, EmailRetornoModel, EnvioEmailModel, RetornoEnvioModel } from '../models/email.model';
 import { RetornoGenericoModel } from '../models/retorno.model';
@@ -24,8 +24,24 @@ export class EmailService {
     return this._http.post<RetornoGenericoModel>(`${this.apiUrl}/email`, email);
   }
 
-  public envioEmailUnitario(email: EnvioEmailModel): Observable<any> {
-    return this._http.post<RetornoEnvioModel>(`${this.apiUrl}/sendemail`, email);
+  public envioEmailUnitario(email: EnvioEmailModel): Observable<RetornoEnvioModel> {
+    return this._http.post<RetornoEnvioModel>(`${this.apiUrl}/sendemail`, email).pipe(catchError(this.handleError));
   }
 
+  private handleError(error: HttpErrorResponse) {
+    let errorMsg = 'Ocorreu um erro inesperado.';
+
+    if (error.error instanceof ErrorEvent) {
+      errorMsg = `Erro: ${error.error.message}`;
+    } else {
+      if (error.error && error.error.msg) {
+        errorMsg = error.error.msg;
+      } else {
+        errorMsg = `Código: ${error.status}\nMensagem: ${error.message}`;
+      }
+    }
+
+    console.error(errorMsg);
+    return throwError(() => new Error(errorMsg));
+  }
 }

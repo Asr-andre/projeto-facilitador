@@ -76,17 +76,27 @@ export class EnvioEmailComponent implements OnInit {
   }
 
   private enviarEmailComAnexo(): void {
-    this._emailService.envioEmailUnitario(this.formularioEnvioEmail.value).subscribe((res) => {
-      if (res.success === 'true') {
-        this._modalService.dismissAll();
-        this._alertService.success(res.msg);
-        this.resetarCampos();
-        this.dadosEnviado.emit();
-      } else {
-        this.resetarCampos();
-        this._alertService.warning(res.msg);
+    this._emailService.envioEmailUnitario(this.formularioEnvioEmail.value).subscribe({
+      next: (res) => {
+        if (res.success === 'true') {
+          this._modalService.dismissAll();
+          this._alertService.success(res.msg);
+          this.resetarCampos();
+          this.dadosEnviado.emit();
+        } else {
+          this.resetarCampos();
+          this._alertService.warning(res.msg);
+        }
+      },
+      error: (error) => {
+        this._alertService.warning("Voce Não Tem Créditos Suficiente Para Esse Envio, Contate o Administrador do Sistema!", error.msg);
       }
-    })
+    });
+  }
+
+  public fechar() {
+    this.resetarCampos();
+    this._modalService.dismissAll();
   }
 
   private resetarCampos() {

@@ -43,18 +43,10 @@
   <div class="modal-body modal-padding">
     <form [formGroup]="formEmail" (ngSubmit)="cadastrarEmail(modal)">
       <div class="row">
-        <div class="col-md-8" style="padding-right: 3px;">
+        <div class="col-md-12" style="padding-right: 3px;">
           <div class="mb-1">
             <label for="email" class="form-label">Email</label>
             <input type="email" id="email" formControlName="email" class="form-control form-control-pad form-control-sm" required>
-          </div>
-        </div>
-        <div class="col-md-4" style="padding-left: 3px;">
-          <div class="mb-1">
-            <label for="situacao" class="form-label">Situação</label>
-            <select id="situacao" formControlName="situacao" class="form-control form-control-pad form-control-sm">
-              <option value="A">Definir ainda</option>
-            </select>
           </div>
         </div>
       </div>
