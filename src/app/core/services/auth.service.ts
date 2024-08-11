@@ -7,7 +7,7 @@ import { AppConfig } from './url.base.service';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private apiUrl = AppConfig.apiUrl;
-  private currentUserKey = 'currentUser';
+  private id_usuario = 'id_usuario';
   private siglaKey = 'sigla';
   private loginKey = 'login';
   private idEmpresaKey = 'id_empresa';
@@ -25,7 +25,7 @@ export class AuthenticationService {
       map(response => {
         if (response['success'] === 'true') {
           // Armazenar usuário, sigla e login no localStorage
-          localStorage.setItem(this.currentUserKey, JSON.stringify(response));
+          localStorage.setItem(this.id_usuario, JSON.stringify(response.id_usuario));
           localStorage.setItem(this.siglaKey, sigla);
           localStorage.setItem(this.loginKey, login);
           localStorage.setItem(this.idEmpresaKey, response['id_empresa']);
@@ -42,7 +42,7 @@ export class AuthenticationService {
 
   public logout(): void {
     // Limpar usuário, sigla e login do localStorage ao fazer logout
-    localStorage.removeItem(this.currentUserKey);
+    localStorage.removeItem(this.id_usuario);
     localStorage.removeItem(this.siglaKey);
     localStorage.removeItem(this.loginKey);
     localStorage.removeItem(this.idEmpresaKey);
@@ -50,7 +50,7 @@ export class AuthenticationService {
 
   public getCurrentUser(): any {
     // Obter usuário do localStorage
-    const user = localStorage.getItem(this.currentUserKey);
+    const user = localStorage.getItem(this.id_usuario);
     return user ? JSON.parse(user) : null;
   }
 
