@@ -57,14 +57,19 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.inicializarFormFila()
-    this.obterDadosDosCards();
-    this.obterFilas();
+    this.atualizarCards();
   }
 
   public inicializarFormFila() {
     this.formFila = this._formBuilder.group({
       id_fila: [0],
     });
+  }
+
+  public carregarFilas() {
+    if (!this.filas.length) {
+      this.obterFilas();
+    }
   }
 
   public obterDevedores(): void {
@@ -92,18 +97,22 @@ export class DashboardComponent implements OnInit {
   }
 
   public obterFilas() {
-    this.loading = true;
     const requisicao = {
       id_usuario: this.idUsuario,
       id_empresa: this.idEmpresa,
       user_login: this.login,
     };
 
+    this.loading = true;
     this._filaService.obterFilas(requisicao).subscribe((res) => {
-      this.filas = res.filas;
-      this.loading = false;
-    });
-    this.loading = false;
+      if (res && res.success === "true") {
+        this.filas = res.filas;
+        this.loading = false;
+      }else {
+        this._alertService.warning(res.msg);
+        this.loading = false;
+      }
+    }, () => this.loading = false);
   }
 
   public obterDadosDosCards(): void {
@@ -156,7 +165,10 @@ export class DashboardComponent implements OnInit {
   }
 
   public atualizarCards(): void {
-    this.obterDadosDosCards();
+    if(this.idEmpresa > 0) {
+      console.log(this.idEmpresa)
+      this.obterDadosDosCards();
+    }
   }
 
   public ordenar({ column, direction }: SortEvent<DevedorModel>) {
