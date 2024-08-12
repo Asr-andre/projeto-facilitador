@@ -107,11 +107,11 @@
             <table class="table table-sm table-hover font-size-13 tabelaOrdenada">
               <thead class="tabela-custom table-td-scroll">
                 <tr>
-                  <th>Credor</th>
-                  <th>Id</th>
-                  <th>Cpf</th>
-                  <th>Nome</th>
-                  <th>Valor Divida</th>
+                  <th sortable="fantasia" (sort)="ordenar($event)" scope="col">Credor</th>
+                  <th sortable="id_cliente" (sort)="ordenar($event)" scope="col">Id</th>
+                  <th sortable="cnpj_cpf" (sort)="ordenar($event)" scope="col">Cpf</th>
+                  <th sortable="nome" (sort)="ordenar($event)" scope="col">Nome</th>
+                  <th sortable="saldo_devedor" (sort)="ordenar($event)" scope="col">Valor Divida</th>
                 </tr>
               </thead>
               <tbody>

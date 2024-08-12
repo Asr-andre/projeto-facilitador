@@ -1,6 +1,7 @@
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from "src/app/core/helpers/conf-tabela/ordenacao-tabela";
 import { Utils } from "src/app/core/helpers/utils";
 import { RequisicaoCardsModel, RespostaCardsModel } from "src/app/core/models/cards.dashboard.model";
 import { DevedorModel, RespostaDevedorModel } from "src/app/core/models/devedor.model";
@@ -20,7 +21,6 @@ export class DashboardComponent implements OnInit {
   public idUsuario: number = Number(this._authService.getCurrentUser() || 0);
   public login = this._authService.getLogin();
   public listarDevedores: DevedorModel[] = [];
-  public devedoresFiltrados: DevedorModel[] = [];
   public filas: FilaModel[] = [];
   public devedorSelecionado: DevedorModel | null = null;
   public loading: boolean = false;
@@ -32,6 +32,8 @@ export class DashboardComponent implements OnInit {
   public textoPesquisa: string = "";
   public totalRegistros: number = 0;
   public totalRegistrosExibidos: number = 0;
+  public direcaoOrdenacao: { [key: string]: string } = {};
+  @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<DevedorModel>>;
 
   public qtdeEmail: number = 0;
   public totalEmail: number = 0;
@@ -156,5 +158,22 @@ export class DashboardComponent implements OnInit {
 
   public atualizarCards(): void {
     this.obterDadosDosCards();
+  }
+
+  public ordenar({ column, direction }: SortEvent<DevedorModel>) {
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
+    if (direction === '' || column === '') {
+      this.dadosFiltrados = this.listarDevedores;
+    } else {
+      this.dadosFiltrados = [...this.dadosFiltrados].sort((a, b) => {
+        const res = compararParaOrdenar(a[column], b[column]);
+        return direction === 'asc' ? res : -res;
+      });
+    }
   }
 }
