@@ -127,7 +127,7 @@
                   <td>{{ devedor.nome}}</td>
                   <td>{{ devedor.soma_titulos_nao_pagos | currency:'BRL' }}</td>
                   <td>{{ devedor.descricao_acao }}</td>
-                  <td>{{ devedor.data_acionamento }}</td>
+                  <td>{{ data(devedor.data_acionamento) }}</td>
                 </tr>
               </tbody>
             </table>

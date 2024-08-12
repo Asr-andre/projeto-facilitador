@@ -57,7 +57,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.inicializarFormFila()
-    this.obterDevedores();
+    this.obterDadosDosCards();
+    this.obterFilas();
   }
 
   public inicializarFormFila() {
@@ -82,8 +83,6 @@ export class DashboardComponent implements OnInit {
         this.dadosFiltrados = res.clientes;
         this.totalRegistros = this.dadosFiltrados.length;
         this.atualizarQuantidadeExibida();
-        this.obterDadosDosCards();
-        this.obterFilas();
         this.loading = false;
       } else {
         this.loading = false;
@@ -175,5 +174,9 @@ export class DashboardComponent implements OnInit {
         return direction === 'asc' ? res : -res;
       });
     }
+  }
+
+  public data(data) {
+    return Utils.formatarDataParaExibicao(data);
   }
 }
