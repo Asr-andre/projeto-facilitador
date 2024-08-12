@@ -215,21 +215,21 @@
 <ng-template #DetalheDaDivida>
   <div class="mt-3 font-size-13">
     <app-detalhe-da-divida [idCliente]="devedorSelecionado?.id_cliente"
-      [idContratante]="devedorSelecionado?.id_contratante" (dadosEnviado)="atualizarCards()"></app-detalhe-da-divida>
+      [idContratante]="devedorSelecionado?.id_contratante"></app-detalhe-da-divida>
   </div>
 </ng-template>
 
 <ng-template #Telefone>
   <div class="mt-3 font-size-13">
     <app-telefone [idCliente]="devedorSelecionado?.id_cliente"
-      [idContratante]="devedorSelecionado?.id_contratante"></app-telefone>
+      [idContratante]="devedorSelecionado?.id_contratante" (dadosEnviado)="atualizarCards()"></app-telefone>
   </div>
 </ng-template>
 
 <ng-template #Email>
   <div class="mt-3 font-size-13">
     <app-email [idCliente]="devedorSelecionado?.id_cliente"
-      [idContratante]="devedorSelecionado?.id_contratante"></app-email>
+      [idContratante]="devedorSelecionado?.id_contratante" (dadosEnviado)="atualizarCards()"></app-email>
   </div>
 </ng-template>
 
