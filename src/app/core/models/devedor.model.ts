@@ -20,5 +20,5 @@ export class DevedorModel {
   nome: string;
   id_contratante: number;
   fantasia: string;
-  saldo_devedor: number | null;
+  soma_titulos_nao_pagos: number | null;
 }
