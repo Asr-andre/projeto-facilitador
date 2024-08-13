@@ -179,7 +179,6 @@ export class DashboardComponent implements OnInit {
 
   public atualizarCards(): void {
     if(this.idEmpresa > 0) {
-      console.log(this.idEmpresa)
       this.obterDadosDosCards();
     }
   }
