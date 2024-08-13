@@ -8,79 +8,54 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-body" style="padding-bottom: 10px; padding-top: 10px;">
-          <div class="row">
-            <div class="col-md-2">
+          <div class="row align-items-center justify-content-center">
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
               <div class="d-flex align-items-center">
-                <div class="text-primary ms-auto">
-                  <i class="fas fa-sms font-size-24" style="color: #1DA1F2; margin-right: 5px;"></i>
-                </div>
-                <div class="flex-1">
-                  <p class="text-truncate font-size-13 mb-0"><strong>Qtde Sms:</strong> {{ qtdeSms }} / <strong>Valor:</strong> {{ totalSms |
-                    currency:'BRL'}}</p>
-                </div>
+                <i class="fas fa-sms font-size-24" style="color: #1DA1F2; margin-right: 5px;"></i>
+                <p class="text-truncate font-size-13 mb-0"><strong>Sms:</strong> {{ qtdeSms }} / {{ totalSms | currency:'BRL'}}</p>
               </div>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
               <div class="d-flex align-items-center">
-                <div class="text-primary ms-auto">
-                  <i class="fab fa-whatsapp whatsapp-icon font-size-24" style="color: #25D366; margin-right: 5px;"></i>
-                </div>
-                <div class="flex-1">
-                  <p class="text-truncate font-size-13 mb-0"><strong>Qtde Whatsapp:</strong> {{ qtdeWhatsapp }} / <strong>Valor:</strong> {{ totalWhatsapp |
-                    currency:'BRL'}}</p>
-                </div>
+                <i class="fab fa-whatsapp whatsapp-icon font-size-24" style="color: #25D366; margin-right: 5px;"></i>
+                <p class="text-truncate font-size-13 mb-0"><strong>Whatsapp:</strong> {{ qtdeWhatsapp }} / {{ totalWhatsapp | currency:'BRL'}}</p>
               </div>
             </div>
 
-            <div class="col-md-2">
-              <div class="d-flex align-items-center ">
-                <div class="text-primary ms-auto">
-                  <i class="fas fa-envelope font-size-24" style="color: #FFA500; margin-right: 5px;"></i>
-                </div>
-                <div class="flex-1">
-                  <p class="text-truncate font-size-13 mb-0"><strong>Qtde Email:</strong> {{ qtdeEmail }} / <strong>Valor:</strong> {{ totalEmail |
-                    currency:'BRL' }}</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-2">
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
               <div class="d-flex align-items-center">
-                <div class="text-primary ms-auto">
-                  <i class="fas fa-credit-card font-size-24" style="margin-right: 5px;"></i>
-                </div>
-                <div class="flex-1">
-                  <p class="text-truncate font-size-13 mb-0"><strong>Total utilizado:</strong>  {{ totalUtilizado | currency:'BRL'
-                    }}</p>
-                </div>
+                <i class="fas fa-envelope font-size-24" style="color: #FFA500; margin-right: 5px;"></i>
+                <p class="text-truncate font-size-13 mb-0"><strong>Email:</strong> {{ qtdeEmail }} / {{ totalEmail | currency:'BRL' }}</p>
               </div>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
               <div class="d-flex align-items-center">
-                <div class="text-primary ms-auto">
-                  <i class="fas fa-university font-size-24" style="margin-right: 5px;"></i>
-                </div>
-                <div class="flex-1">
-                  <p class="text-truncate font-size-13 mb-0"><strong>Saldo:</strong> {{ saldo | currency:'BRL' }}</p>
-                </div>
+                <i class="fas fa-credit-card font-size-24" style="color: #5664d2; margin-right: 5px;"></i>
+                <p class="text-truncate font-size-13 mb-0"><strong>Utilizado:</strong> {{ totalUtilizado | currency:'BRL' }}</p>
               </div>
             </div>
 
-            <div class="col-md-2" style="padding-right: 0px;">
-              <div class="d-flex align-items-center justify-content-end">
-                <button type="button" class="btn btn-warning btn-sm d-flex align-items-center">
-                  <i class="fas fa-money-bill-wave" style="margin-right: 5px;"></i>
-                  Solicitar Saldo
-                </button>
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
+              <div class="d-flex align-items-center">
+                <i class="fas fa-university font-size-24" style="color: #5664d2; margin-right: 5px;"></i>
+                <p class="text-truncate font-size-13 mb-0"><strong>Saldo:</strong> {{ saldo | currency:'BRL' }}</p>
               </div>
+            </div>
+
+            <div class="col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
+              <button type="button" class="btn btn-warning btn-sm d-flex align-items-center">
+                <i class="fas fa-money-bill-wave" style="margin-right: 5px;"></i>
+                Solicitar Saldo
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 
   <div class="row">
     <div class="col-lg-5">
