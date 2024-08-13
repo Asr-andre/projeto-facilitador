@@ -73,7 +73,7 @@
                     <option value="0">Selecione a Fila</option>
                     <option *ngFor="let fila of filas" [value]="fila.id_fila">{{ fila.descricao }}</option>
                   </select>
-                  <button class="btn btn-secondary btn-sm" (click)="filaCliente()">
+                  <button class="btn btn-secondary btn-sm" (click)="filaCliente()" [disabled]="formFila.get('id_fila')?.value <= 0">
                     <i class=" fas fa-check-circle"></i>
                   </button>
                 </div>
