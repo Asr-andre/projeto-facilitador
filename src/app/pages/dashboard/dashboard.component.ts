@@ -72,15 +72,28 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  public obterDevedores(): void {
-    this.loading = true;
-    const filtros = {
-      id_empresa: this.idEmpresa,
-      id_fila: this.formFila.get("id_fila")?.value || 0,
-      nome: this.tipoPesquisa === "nome" ? this.textoPesquisa : "",
-      cnpj_cpf: this.tipoPesquisa === "cpf" ? this.textoPesquisa : "",
-      mostrar_cliente_sem_dividas: this.mostrarSemDivida ? "S" : "N",
+  public filaCliente(): void {
+    const filtros = this.construirFiltros(this.formFila.get("id_fila")?.value || 0);
+    this.obterDevedores(filtros);
+  }
+
+  public pesquisaCliente(): void {
+    const filtros = this.construirFiltros(0);
+    this.obterDevedores(filtros);
+  }
+
+  private construirFiltros(idFila: number): any {
+    return {
+        id_empresa: this.idEmpresa,
+        id_fila: idFila,
+        nome: this.tipoPesquisa === "nome" ? this.textoPesquisa : "",
+        cnpj_cpf: this.tipoPesquisa === "cpf" ? this.textoPesquisa : "",
+        mostrar_cliente_sem_dividas: this.mostrarSemDivida ? "S" : "N",
     };
+  }
+
+  public obterDevedores(filtros: any): void {
+    this.loading = true;
 
     this._dashboard.obterDevedores(filtros).subscribe((res: RespostaDevedorModel) => {
       if (res && res.success === "true") {
@@ -161,7 +174,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public atualizar(): void {
-    this.obterDevedores();
+    this.filaCliente();
   }
 
   public atualizarCards(): void {

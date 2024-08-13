@@ -73,7 +73,7 @@
                     <option value="0">Selecione a Fila</option>
                     <option *ngFor="let fila of filas" [value]="fila.id_fila">{{ fila.descricao }}</option>
                   </select>
-                  <button class="btn btn-secondary btn-sm" (click)="obterDevedores()">
+                  <button class="btn btn-secondary btn-sm" (click)="filaCliente()">
                     <i class=" fas fa-check-circle"></i>
                   </button>
                 </div>
@@ -96,7 +96,7 @@
               <div class="d-flex align-items-center">
                 <input type="checkbox" id="mostrarSemDivida" [(ngModel)]="mostrarSemDivida"
                   ngbTooltip="Mostrar clientes sem dívidas" />
-                <button class="btn btn-primary btn-sm ms-2" (click)="obterDevedores()">
+                <button class="btn btn-primary btn-sm ms-2" (click)="pesquisaCliente()">
                   <i class="fas fa-search"></i> Pesquisar
                 </button>
               </div>
