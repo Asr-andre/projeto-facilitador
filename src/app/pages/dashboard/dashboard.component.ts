@@ -140,6 +140,8 @@ export class DashboardComponent implements OnInit {
           this.totalEmail = response.total_email || 0;
           this.qtdeSms = response.qtde_sms || 0;
           this.totalSms = response.total_sms || 0;
+          this.qtdeWhatsapp = response.qtde_whatsapp || 0;
+          this.totalWhatsapp = response.total_whatsapp || 0;
           this.totalUtilizado = response.total_utilizado || 0;
           this.saldo = response.saldo || 0;
         } else {
