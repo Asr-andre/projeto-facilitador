@@ -136,7 +136,7 @@
         </div>
 
         <div class="d-flex justify-content-end" style="padding-top: 10px;">
-          <button type="submit" class="btn btn-success btn-sm me-2" (click)="cadastrarUsuario()">
+          <button type="submit" class="btn btn-success btn-sm me-2" (click)="cadastrarUsuario()" [disabled]="!this.formUsuario.valid">
             <i class="fas fa-save"></i> Salvar
           </button>
           <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">

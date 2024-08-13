@@ -8,34 +8,26 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { NgStepperModule } from 'angular-ng-stepper';
 
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 
 import { UiModule } from '../../shared/ui/ui.module';
-import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
-import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { EmpresaComponent } from './empresa/empresa.component';
 import { CadastroRoutingModule } from './cadastro-routing.module';
 import { ContratantesComponent } from './contratantes/contratantes.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
-import { ClientesComponent } from './clientes/clientes.component';
 import { TitulosComponent } from './titulos/titulos.component';
 import { EmpresaModule } from './empresa/empresa.module';
 import { TitulosModule } from './titulos/titulos.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { OrderTableModule } from 'src/app/core/helpers/conf-tabela/order-table.module';
 
-const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
-  // Change this to your upload POST address:
-  url: 'https://httpbin.org/post',
-  maxFilesize: 50
-};
 @NgModule({
 
-  declarations: [EmpresaComponent, ContratantesComponent, UsuariosComponent, ClientesComponent, TitulosComponent],
+  declarations: [EmpresaComponent, ContratantesComponent, UsuariosComponent, TitulosComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -58,11 +50,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     TitulosModule
   ],
   providers: [
-    provideNgxMask(),
-    {
-      provide: DROPZONE_CONFIG,
-      useValue: DEFAULT_DROPZONE_CONFIG
-    }
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

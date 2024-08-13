@@ -17,7 +17,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
 
   menu: any;
 
-  menuItems = [];
+  menuItems: MenuItem[] = [];
 
   @ViewChild('sideMenu') sideMenu: ElementRef;
 
@@ -32,6 +32,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.initialize();
     this.iconSidebar()
+    this.menuItems = MENU;
   }
 
   ngAfterViewInit() {
