@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { EmailService } from 'src/app/core/services/email.service';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-envio-email',
@@ -19,6 +20,8 @@ export class EnvioEmailComponent implements OnInit {
   public mensagemEmail: string = '';
   private arquivoSelecionado: File | null = null;
   public carregandoEnvio: boolean = false;
+
+  public Editor = ClassicEditor;
 
   constructor(
     private _modalService: NgbModal,

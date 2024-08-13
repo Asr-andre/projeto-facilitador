@@ -10,7 +10,8 @@
       <div class="mb-3">
         <input type="text" class="form-control form-control-sm mb-3" formControlName="assunto" placeholder="Digite o assunto">
       </div>
-      <textarea class="form-control" formControlName="mensagem" placeholder="Digite sua mensagem" rows="5"></textarea>
+      <ckeditor [editor]="Editor" placeholder="Digite sua mensagem" formControlName="mensagem"></ckeditor>
+
       <div class="mb-3" style="margin-top: 15px;">
         <input type="file" class="form-control form-control-sm mb-3" (change)="aoSelecionarArquivo($event)">
       </div>

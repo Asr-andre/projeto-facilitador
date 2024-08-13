@@ -39,6 +39,7 @@ import { EnderecoComponent } from "./dashboard/componente/endereco/endereco.comp
 import { AcordoComponent } from "./dashboard/componente/acordo/acordo.component";
 import { FilaComponent } from "./fila/fila.component";
 import { CarteiraDeClientesComponent } from "./carteira-de-clientes/carteira-de-clientes.component";
+import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 
 registerLocaleData(localePt);
 @NgModule({
@@ -80,7 +81,8 @@ registerLocaleData(localePt);
     NgxMaskPipe,
     NgbTimepickerModule,
     NgbDatepickerModule,
-    NgbModule
+    NgbModule,
+    CKEditorModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
