@@ -91,7 +91,7 @@
               <div class="d-flex align-items-center">
                 <input type="checkbox" id="mostrarSemDivida" [(ngModel)]="mostrarSemDivida"
                   ngbTooltip="Mostrar clientes sem dívidas" />
-                <button class="btn btn-primary btn-sm ms-2" (click)="pesquisaCliente()">
+                <button class="btn btn-primary btn-sm ms-2" (click)="pesquisaCliente()" [disabled]="formFila.get('id_fila')?.value > 0" ngbTooltip="Carregar Fila">
                   <i class="fas fa-search"></i> Pesquisar
                 </button>
               </div>
