@@ -101,6 +101,12 @@ export class DashboardComponent implements OnInit {
         this.dadosFiltrados = res.clientes;
         this.totalRegistros = this.dadosFiltrados.length;
         this.atualizarQuantidadeExibida();
+
+        // Seleciona automaticamente o primeiro devedor, da fila
+        if (this.listarDevedores.length > 0) {
+          this.selecionarDevedor(this.listarDevedores[0]);
+      }
+
         this.loading = false;
       } else {
         this.loading = false;

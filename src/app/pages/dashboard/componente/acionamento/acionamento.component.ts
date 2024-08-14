@@ -137,6 +137,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
 
   private resetarCampos() {
     this.formAcionamento.patchValue({
+      id_acao: '',
       mensagem: '',
     });
   }
