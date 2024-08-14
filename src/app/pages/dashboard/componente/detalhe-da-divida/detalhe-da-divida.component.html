@@ -18,16 +18,23 @@
   </div>
 </div>
 
+<div class="d-flex justify-content-end">
+  <div  style="font-size: 11px;">
+    <div class="btn-group" role="group" ngbDropdown>
+      <button id="btnGroupVerticalDrop1" type="button" class="btn btn-success btn-sm dropdown-toggle" ngbDropdownToggle style="margin-top: 6px;">
+        <i class="fas fa-calculator"></i> Ações <i class="mdi mdi-chevron-down"></i>
+      </button>
+      <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" ngbDropdownMenu>
+        <a class="dropdown-item" href="javascript: void(0);" (click)="simularNegociacao()"><i class="fas fa-calculator"></i> Simulador</a>
+        <a class="dropdown-item" href="javascript: void(0);"><img src="assets/images/pix.svg" style="width: 16px; height: 16px;"> Pagamento Pix</a>
+        <a class="dropdown-item" href="javascript: void(0);" (click)="retiradas()"><i class="fas fa-exclamation-triangle" style="color: #ec0b0b;"></i> Retirada</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div style="height: 300px;overflow: auto;padding-left: 0px;padding-right: 0px;">
   <div class="table-responsive mt-2 font-size-12">
-    <div class="d-flex justify-content-end mb-2">
-      <button class="btn btn-secondary  btn-sm me-1" style="padding-top: 2px; padding-bottom: 2px;" (click)="simularNegociacao()">
-        <i class="fas fa-calculator"></i> Simulador
-      </button>
-      <button type="button" class="btn btn-danger btn-sm" style="padding-bottom: 2px; padding-top: 2px;" ngbTooltip="Retirada" (click)="retiradas()">
-        <i class="fas fa-exclamation-triangle"></i>
-      </button>
-    </div>
     <table class="table table-sm table-hover">
       <thead class="tabela-custom table-td-scroll">
         <tr>
