@@ -22,6 +22,7 @@ export class SolicitarCreditosComponent implements OnInit {
   public dadosPixGerado: PixDetails;
   public mostraQrCode: Boolean = false;
   public loading: boolean = false;
+  public desabilitarBotaoPix: boolean = true;
 
   constructor(
     private _solicitarCreditosService: SolicitarCreditosService,
@@ -52,7 +53,8 @@ export class SolicitarCreditosComponent implements OnInit {
       this._solicitarCreditosService.gerarPix(this.formCreditos.value).subscribe((res) => {
         if (res.success === "true")  {
           this.dadosPixGerado = res.pix;
-          this.mostraQrCode = true
+          this.mostraQrCode = true;
+          this.desabilitarBotaoPix = false;
           this.loading = false;
         }else {
           this.loading = false;
