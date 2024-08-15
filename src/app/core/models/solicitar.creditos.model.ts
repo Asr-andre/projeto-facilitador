@@ -49,3 +49,30 @@ export class Loc {
 export class Valor {
   original: string;
 }
+
+// Solicitação de hostorico do pix enviado
+
+export class HistoricoRequest {
+  id_empresa: number;
+  data_inicio: string;
+  data_fim: string;
+  user_login: string;
+}
+
+export interface HistoricoResponse {
+  success: string;
+  msg: string;
+  id_empresa: string;
+  data: HistoricoItem[];
+}
+
+export interface HistoricoItem {
+  data_local: string | null;
+  descricao: string;
+  valor: number;
+  situacao: string;
+  txid: string;
+  pixcopiacola: string;
+  imgpix: string;
+  user_login: string;
+}

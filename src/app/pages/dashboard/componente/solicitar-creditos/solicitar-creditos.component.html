@@ -73,14 +73,79 @@
         </div>
       </div>
 
-      <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-success btn-sm me-1" (click)="comprarCreditos()" [disabled]="!this.formCreditos.valid" *ngIf="desabilitarBotaoPix">
-          <i class="fas fa-check-circle"></i> Solicitar
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-light btn-sm" (click)="botaoHistorico()" style="padding: 1px 5px; font-size: 12px;">
+          <i class="fas fa-history" style="font-size: 10px;"></i> Histórico
         </button>
+        <div class="d-flex">
+          <button type="button" class="btn btn-success btn-sm me-1" (click)="comprarCreditos()" [disabled]="!this.formCreditos.valid" *ngIf="desabilitarBotaoPix">
+            <i class="fas fa-check-circle"></i> Solicitar
+          </button>
+          <button type="button" class="btn btn-outline-danger btn-sm" (click)="fechaModal()" *ngIf="ocultarBotaoCredito">
+            <i class="fas fa-window-close"></i> Fechar
+          </button>
+        </div>
+      </div>
+    </form>
+
+  <div style="padding-top: 2px;" *ngIf="historico">
+    <hr>
+    <form [formGroup]="historicoForm">
+      <div class="row">
+        <div class="col-md-12">
+            <h6 style="text-align: center; font-weight: bold;">Periodo de Consulta</h6>
+            <div class="row">
+              <div class="col-md-6">
+                <input type="date" class="form-control form-control-sm" formControlName="data_inicio">
+              </div>
+              <div class="col-md-6">
+                <input type="date" class="form-control form-control-sm" formControlName="data_fim">
+              </div>
+            </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="table-responsive font-size-12" style="margin-top: 10px;">
+      <table class="table table-sm table-hover">
+        <thead class="tabela-custom table-td-scroll">
+          <tr>
+            <th>Data</th>
+            <th>Valor</th>
+            <th>status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of retornoHistorico">
+            <td> {{ data(item.data_local) }} </td>
+            <td>{{ item.valor | currency: 'BRL' }}</td>
+            <td>
+              <div class="badge font-size-12"
+                [ngClass]="{
+                      'bg-success-subtle text-success': item.situacao !== 'ATIVA',
+                      'bg-warning-subtle text-warning':item.situacao === 'ATIVA'}">
+                      {{item.situacao}}
+                </div>
+            <td>
+              <a href="javascript:void(0);" class="me-3 text-primary" ngbTooltip="Visualizar" (click)="atualizarDadosPix(item.pixcopiacola, item.imgpix)"><i class="mdi mdi-pencil font-size-15"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <div class="d-flex">
+        <button type="button" class="btn btn-light btn-sm me-1" (click)="obterHistorico()" [disabled]="!this.historicoForm.valid">
+          <i class="fas fa-check-circle"></i> Consultar Histórico
+        </button>
+
         <button type="button" class="btn btn-outline-danger btn-sm" (click)="fechaModal()">
           <i class="fas fa-window-close"></i> Fechar
         </button>
       </div>
-    </form>
+    </div>
   </div>
+</div>
 </ng-template>

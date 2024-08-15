@@ -152,6 +152,9 @@
     </div>
 
     <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px; margin-left: 0px !important;">
+      <button type="button" class="btn btn-light btn-sm me-1" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" *ngIf="!habilitarAcordo" (click)="baixarPagamentos()">
+        <img src="assets/images/pix.svg" style="width: 16px; height: 16px;"> Pagamento Pix
+      </button>
       <button type="button" class="btn btn-success btn-sm me-1" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" *ngIf="!habilitarAcordo" (click)="baixarPagamentos()">
         <i class="fas fa-money-bill-wave"></i> Baixar Pagamentos
       </button>
