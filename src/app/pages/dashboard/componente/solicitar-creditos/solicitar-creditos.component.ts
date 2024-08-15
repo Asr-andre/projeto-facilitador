@@ -72,6 +72,7 @@ export class SolicitarCreditosComponent implements OnInit {
   }
 
   public fechaModal() {
+    this.formCreditos.reset();
     this._modalService.dismissAll();
   }
 
