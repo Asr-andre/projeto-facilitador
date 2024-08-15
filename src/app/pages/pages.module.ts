@@ -40,6 +40,7 @@ import { AcordoComponent } from "./dashboard/componente/acordo/acordo.component"
 import { FilaComponent } from "./fila/fila.component";
 import { CarteiraDeClientesComponent } from "./carteira-de-clientes/carteira-de-clientes.component";
 import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
+import { SolicitarCreditosComponent } from "./dashboard/componente/solicitar-creditos/solicitar-creditos.component";
 
 registerLocaleData(localePt);
 @NgModule({
@@ -57,7 +58,8 @@ registerLocaleData(localePt);
     EnderecoComponent,
     AcordoComponent,
     FilaComponent,
-    CarteiraDeClientesComponent
+    CarteiraDeClientesComponent,
+    SolicitarCreditosComponent
   ],
   imports: [
     CommonModule,

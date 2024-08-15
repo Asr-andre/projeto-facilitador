@@ -45,7 +45,7 @@
             </div>
 
             <div class="col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-              <button type="button" class="btn btn-warning btn-sm d-flex align-items-center">
+              <button type="button" class="btn btn-warning btn-sm d-flex align-items-center" (click)="this.abrirCreditoModal()">
                 <i class="fas fa-money-bill-wave" style="margin-right: 5px;"></i>
                 Solicitar Saldo
               </button>
@@ -55,6 +55,8 @@
       </div>
     </div>
   </div>
+
+  <app-solicitar-creditos></app-solicitar-creditos>
 
   <div class="row">
     <div class="col-lg-5">

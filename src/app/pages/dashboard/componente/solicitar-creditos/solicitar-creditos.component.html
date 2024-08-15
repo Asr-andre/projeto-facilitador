@@ -1,0 +1,84 @@
+
+<ng-template #creditosModal let-modal>
+  <div class="modal-header modal-header-custom" style="margin: 0">
+    <h6 class="modal-title" style="color: #000000">
+      <img src="assets/images/pix.svg" style="width: 16px; height: 16px;"> Créditos
+    </h6>
+    <button type="button" class="btn-close btn-close-black btn-close-small" aria-label="Close" (click)="fechaModal()" style="color: #000000"></button>
+  </div>
+
+  <div class="loading-overlay-pagina" *ngIf="loading">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
+
+
+  <div class="modal-body modal-padding" style="padding-top: 2px;">
+    <form [formGroup]="formCreditos">
+      <div class="row mb-3">
+        <div class="col">
+          <label for="tipoCredito" class="form-label">Tipo de Crédito</label>
+          <select id="tipoCredito" class="form-control form-control-sm" formControlName="servico">
+            <option value="">Selecione</option>
+            <option value="facilitador">Crédito Facilitador</option>
+            <option value="mensalidade">Mensalidade</option>
+          </select>
+        </div>
+
+        <div class="col">
+          <label for="valorCredito" class="form-label">Valor</label>
+          <select id="valorCredito" class="form-control form-control-sm" formControlName="valor">
+            <option value="">Selecione</option>
+            <option value="5">R$5,00</option>
+            <option value="10">R$10,00</option>
+            <option value="15">R$15,00</option>
+          </select>
+        </div>
+      </div>
+
+      <div *ngIf="mostraQrCode">
+        <div class="mb-3">
+          <label for="qrCode" class="form-label">QR Code</label>
+          <div class="row">
+            <div class="col-6 text-center">
+              <div id="qrCode" class="border p-3">
+                <img [src]="dadosPixGerado?.urlImagemQrCode" alt="QR Code" class="img-fluid" style="width: 120px;">
+              </div>
+            </div>
+            <div class="col-6 text-center">
+              <div id="qrCode" class="border p-3">
+                <img src="assets/images/pagseguro.png" alt="QR Code" class="img-fluid" style="width: 150px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="pixCopiaCola" class="form-label">Pix Copia e Cola <button class="btn btn-outline-secondary btn-sm" (click)="copiarPix()">
+            <i class="fas fa-copy"></i>
+          </button></label>
+          <div class="d-flex align-items-center">
+            <span id="pixCopiaCola" class="me-2"
+                  style="flex-grow: 1;
+                         white-space: normal;
+                         font-size: 0.85rem;
+                         max-width: 100%;
+                         word-wrap: break-word;
+                         overflow-wrap: break-word;">
+              {{ dadosPixGerado?.pixCopiaECola }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-success btn-sm me-1" (click)="comprarCreditos()" [disabled]="!this.formCreditos.valid">
+          <i class="fas fa-check-circle"></i> Solicitar
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechaModal()">
+          <i class="fas fa-window-close"></i> Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

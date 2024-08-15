@@ -1,5 +1,5 @@
 
-import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from "src/app/core/helpers/conf-tabela/ordenacao-tabela";
 import { Utils } from "src/app/core/helpers/utils";
@@ -10,6 +10,7 @@ import { AlertService } from "src/app/core/services/alert.service";
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { DashboardService } from "src/app/core/services/dashboard.service";
 import { FilaService } from "src/app/core/services/fila.service";
+import { SolicitarCreditosComponent } from "./componente/solicitar-creditos/solicitar-creditos.component";
 
 @Component({
   selector: "app-dashboard",
@@ -17,6 +18,7 @@ import { FilaService } from "src/app/core/services/fila.service";
   styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild(SolicitarCreditosComponent) SolicitarCreditosComponent: SolicitarCreditosComponent;
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public idUsuario: number = Number(this._authService.getCurrentUser() || 0);
   public login = this._authService.getLogin();
@@ -210,5 +212,9 @@ export class DashboardComponent implements OnInit {
 
   public data(data) {
     return Utils.formatarDataParaExibicao(data);
+  }
+
+  public abrirCreditoModal(): void {
+    this.SolicitarCreditosComponent.abrirModaSolicitarCredito();
   }
 }
