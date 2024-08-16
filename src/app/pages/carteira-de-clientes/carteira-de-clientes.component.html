@@ -216,8 +216,8 @@
                       <b><i class="fas fa-file-alt"></i> Resultado</b>
                     </a>
                     <ng-template ngbNavContent>
-                      <section style="height: 70vh; white-space: nowrap; overflow: auto;">
-                        <div class="card-body" style="padding-top: 0; padding-right: 0; padding-left: 0;">
+                      <section style="white-space: nowrap; overflow: auto;">
+                        <div class="card-body" style="padding-top: 0; padding-bottom: 0px; padding-right: 0; padding-left: 0;">
                           <div class="d-flex justify-content-between align-items-center mt-1" style="font-size: 11px;">
                             <div class="btn-group" role="group" ngbDropdown>
                               <button id="btnGroupVerticalDrop1" type="button" class="btn btn-secondary btn-sm dropdown-toggle" ngbDropdownToggle style="margin-bottom: 6px;">
@@ -239,9 +239,9 @@
                               </div>
                             </div>
                           </div>
-                          <div class="table-responsive">
+                          <div class="table-responsive font-size-12" style="margin-top: 10px; max-height: 550px; overflow-y: auto;">
                             <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
-                              <thead class="tabela-custom">
+                              <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
                                 <tr>
                                   <th><input type="checkbox" [checked]="totalClientesSelecionados === dadosFiltrados.length" (change)="marcaTodos($event)"></th>
                                   <th>Fantasia</th>
