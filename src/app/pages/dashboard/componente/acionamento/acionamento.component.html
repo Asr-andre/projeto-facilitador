@@ -5,10 +5,9 @@
   </button>
 </div>
 <hr style="margin-top: 0px; margin-bottom: 0px;">
-<div style="height: 300px;overflow: auto;padding-left: 10px;padding-right: 10px;">
-  <div class="table-responsive mt-3 font-size-12">
+<div class="table-responsive font-size-12" style="margin-top: 10px; max-height: 300px; white-space: nowrap; overflow: auto; padding-left: 10px;padding-right: 2px;">
     <table class="table table-sm table-hover">
-      <thead class="tabela-custom table-td-scroll">
+      <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
         <tr>
           <th>Id</th>
           <th>Descrição</th>
@@ -29,7 +28,6 @@
         </tr>
       </tbody>
     </table>
-  </div>
 </div>
 <ng-template #acaoDeCobrancaModal let-modal>
   <div class="modal-header modal-header-custom" style="background: #3e4988; margin: 0">
