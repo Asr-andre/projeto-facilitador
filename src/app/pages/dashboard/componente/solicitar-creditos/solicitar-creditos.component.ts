@@ -72,6 +72,7 @@ export class SolicitarCreditosComponent implements OnInit {
           this.dadosPixGerado = res.pix;
           this.mostraQrCode = true;
           this.desabilitarBotaoPix = false;
+          this.historico = false;
           this.loading = false;
         }else {
           this.loading = false;
@@ -139,9 +140,7 @@ export class SolicitarCreditosComponent implements OnInit {
     };
 
     this.mostraQrCode = true;
-    console.log(this.dadosPixGerado)
   }
-
 
   public botaoHistorico() {
     this.historico = true;
