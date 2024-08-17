@@ -1,15 +1,73 @@
+<div class="loading-overlay-pagina" *ngIf="loading">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-      <div class="card">
-        <div class="card-body" style="padding-bottom: 8px;">
-          <div class="d-flex">
-            <div class="flex-1 overflow-hidden">
-              <h4>Tela financeiro em desenvolvimento</h4>
+      <div class="card-body" style="padding-bottom: 8px;">
+        <div class="d-flex">
+          <div class="flex-1 overflow-hidden">
+            <div class="card">
+
+              <div class="card-header pt-2 pb-2">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5 class="mb-0"><i class="fas fa-calculator"></i> Relatório Financeiro </h5>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <ul ngbNav #nav="ngbNav" class="nav-tabs" [activeId]="ativaAba">
+                  <li [ngbNavItem]="1">
+                    <a ngbNavLink>
+                      <b><i class="fas fa-filter"></i> Filtros</b>
+                    </a>
+                    <ng-template ngbNavContent>
+                      <div class="col-md-6">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="card mb-2" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+                              <h6 style="text-align: center; font-weight: bold;">Periodo de Pagamento</h6>
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <input type="date" class="form-control form-control-sm"  placeholder="Inicial">
+                                </div>
+                                <div class="col-md-6">
+                                  <input type="date" class="form-control form-control-sm"  placeholder="Final">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-12 d-flex justify-content-end align-items-end">
+                        <button type="submit" class="btn btn-secondary btn-sm">
+                          <i class="fas fa-search"></i> Filtrar Pagamentos
+                        </button>
+                      </div>
+                    </ng-template>
+                  </li>
+                  <li [ngbNavItem]="2">
+                    <a ngbNavLink>
+                      <b><i class="fas fa-file-alt"></i> Resultado</b>
+                    </a>
+                    <ng-template ngbNavContent>
+                      <section style="white-space: nowrap; overflow: auto;">
+
+                      </section>
+                    </ng-template>
+                  </li>
+                </ul>
+                <div [ngbNavOutlet]="nav" class="mt-2"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+
