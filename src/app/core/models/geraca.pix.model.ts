@@ -1,4 +1,4 @@
-export class TituloPixModel {
+export class Titulo {
   id_titulo: number;
   numero_contrato: string;
   data_vencimento: string;
@@ -10,7 +10,7 @@ export class TituloPixModel {
   atraso: number;
 }
 
-export class GeracaoPixRequest {
+export class GerarPixRequest {
   id_empresa: number;
   id_contratante: number;
   id_cliente: number;
@@ -18,5 +18,16 @@ export class GeracaoPixRequest {
   user_login: string;
   valor_boleto: number;
   servico: string;
-  titulos: TituloPixModel[];
+  titulos: Titulo[];
+}
+
+export class GerarPixResponse {
+  success: string;
+  msg: string;
+  id_cliente: string;
+  id_boleto: string;
+  valor: string;
+  vencimento: string;
+  pixCopiaECola: string;
+  urlImagemQrCode: string;
 }

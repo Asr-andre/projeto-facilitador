@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Utils } from 'src/app/core/helpers/utils';
-import { HistoricoItem, HistoricoResponse, PixDetails } from 'src/app/core/models/solicitar.creditos.model';
+import { HistoricoItem, PixDetails } from 'src/app/core/models/solicitar.creditos.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { SolicitarCreditosService } from 'src/app/core/services/solicitar.creditos.service';

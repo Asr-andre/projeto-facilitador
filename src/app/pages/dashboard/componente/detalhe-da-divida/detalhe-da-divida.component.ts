@@ -18,6 +18,7 @@ export class DetalheDaDividaComponent implements OnChanges {
   @ViewChild(SimuladorPadraoComponent) SimuladorPadraoComponent: SimuladorPadraoComponent;
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
+  @Input() numeroContrato: number | undefined;
   public detalhamentoSelecionado: DetalhamentoModel | null = null;
   public loadingMin: boolean = false;
   public selecionarTodos: boolean = true;
@@ -45,6 +46,7 @@ export class DetalheDaDividaComponent implements OnChanges {
     if (this.SimuladorPadraoComponent) {
       this.SimuladorPadraoComponent.idCliente = this.idCliente;
       this.SimuladorPadraoComponent.idContratante = this.idContratante;
+      this.SimuladorPadraoComponent.numeroContrato = this.numeroContrato;
     }
   }
 

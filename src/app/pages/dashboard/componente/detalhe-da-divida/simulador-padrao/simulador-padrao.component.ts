@@ -1,23 +1,15 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  ViewChild,
-} from "@angular/core";
+import { Titulo } from './../../../../../core/models/geraca.pix.model';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from "@angular/core";
 import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Utils } from "src/app/core/helpers/utils";
 import { SimuladorPadraoService } from "src/app/core/services/simulador.padrao.sevice";
 import { BaixaPagamentoRequisicaoModel, RecalculoRetornoModel } from "src/app/core/models/simulador.padrao.model";
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { DatePipe } from "@angular/common";
 import { AlertService } from "src/app/core/services/alert.service";
-import { PixDetails } from "src/app/core/models/solicitar.creditos.model";
-import { SolicitarCreditosService } from "src/app/core/services/solicitar.creditos.service";
+import { GeracaoPixService } from "src/app/core/services/geraca.pix.service";
+import { GerarPixResponse } from "src/app/core/models/geraca.pix.model";
 
 @Component({
   selector: "app-simulador-padrao",
@@ -29,19 +21,21 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   @ViewChild("pixTitulosModal") pixTitulos: SimuladorPadraoComponent;
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
+  @Input() numeroContrato: number | undefined;
   private modalRef: NgbModalRef;
   public descontoMaximo: any;
   public data: any;
   public form: FormGroup;
   public formAcordo: FormGroup;
-  public formCreditos: FormGroup;
+  public formGerarPixBoleto: FormGroup;
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public sigla = this._authService.getSigla()
   public login = this._authService.getLogin();
   public habilitarAcordo: boolean = false;
   public simulaAcordo: boolean = false;
+  public ocultaBotaoPix: boolean = true;
   public dadosSimulacao: any;
-  public dadosPixGerado: PixDetails;
+  public dadosPixGerado: GerarPixResponse;
 
   @Output() clienteAtualizado = new EventEmitter<void>();
 
@@ -62,8 +56,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public valor_atualizado_simulador = 0;
 
   constructor(
-    private _solicitarCreditosService: SolicitarCreditosService,
-    private modalService: NgbModal,
+    private _geracaoPixService: GeracaoPixService,
     private fb: FormBuilder,
     private simuladorService: SimuladorPadraoService,
     private _authService: AuthenticationService,
@@ -79,7 +72,8 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.formSimulador();
     this.formsimuladorAcordo();
-    this.iniciarFormCreditos();
+    this.iniciarFormgerarPixBoleto();
+    console.log('Número do contrato recebido:', this.numeroContrato);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -119,14 +113,35 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     });
   }
 
-  public iniciarFormCreditos() {
-    this.formCreditos = this.fb.group({
-      id_empresa: [this.idEmpresa],
-      nome: [this.sigla, Validators.required],
-      cpf: ['46419730325', Validators.required],
-      valor: [this.valor_atualizado_simulador.toFixed(2), Validators.required],
+  public iniciarFormgerarPixBoleto() {
+    // Inicializando o formulário
+    this.formGerarPixBoleto = this.fb.group({
+      id_empresa: [this.idEmpresa, Validators.required],
+      id_contratante: [this.idContratante, Validators.required],
+      id_cliente: [this.idCliente, Validators.required],
+      id_usuario: [this._authService.getCurrentUser(), Validators.required], // ID do usuário logado
+      user_login: [this.login, Validators.required],
+      valor_boleto: [this.valor_atualizado_simulador.toFixed(2), Validators.required],
       servico: ['Pagamento Titulos Via Pix', Validators.required],
-      user_login: [this.login]
+      titulos: this.fb.array([], Validators.required) // Array de títulos
+    });
+
+    // Referenciando o FormArray de títulos
+    const titulosArray = this.formGerarPixBoleto.get('titulos') as FormArray;
+
+    // Adicionando os títulos ao FormArray baseado nos dados da simulação
+    this.data?.titulos.forEach((titulo) => {
+      titulosArray.push(this.fb.group({
+        id_titulo: [titulo.id_titulo, Validators.required],
+        numero_contrato: [this.numeroContrato || '', Validators.required],
+        data_vencimento: [this.datePipe.transform(titulo.vencimento, 'dd/MM/yyyy')!, Validators.required],
+        valor: [titulo.valor.toFixed(2), Validators.required],
+        valor_multa: [titulo.valor_multa.toFixed(2), Validators.required],
+        valor_juros: [titulo.valor_juros.toFixed(2), Validators.required],
+        valor_taxa: [titulo.valor_taxa.toFixed(2), Validators.required],
+        valor_atualizado: [titulo.valor_atualizado.toFixed(2), Validators.required],
+        atraso: [titulo.atraso, Validators.required]
+      }));
     });
   }
 
@@ -160,8 +175,8 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     });
 
     this.calcularTotais();  // Calcula os totais para atualizar valor_atualizado_simulador
-    this.iniciarFormCreditos();  // Reinicia o form de créditos após calcular os totais
-    this.modalRef = this.modalService.open(this.modalTemplate, { size: "lg", ariaLabelledBy: "modal-basic-title", backdrop: "static", keyboard: false, });
+    this.iniciarFormgerarPixBoleto();  // Reinicia o form de créditos após calcular os totais
+    this.modalRef = this._modalService.open(this.modalTemplate, { size: "lg", ariaLabelledBy: "modal-basic-title", backdrop: "static", keyboard: false, });
   }
 
   public recalcular(): void {
@@ -172,7 +187,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       (response: RecalculoRetornoModel) => {
         this.data = response;
         this.calcularTotais();
-        this.iniciarFormCreditos();  // Reinicia o formulário de créditos com os valores atualizados
+        this.iniciarFormgerarPixBoleto();  // Reinicia o formulário de créditos com os valores atualizados
       },
       (error) => {
         this._alertService.error("Erro ao recalcular:", error);
@@ -249,16 +264,11 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public habilitaBotao() {
     this.habilitarAcordo = true;
     this.simulaAcordo = false;
+    this.ocultaBotaoPix = false;
   }
 
   public habilitaBotaoSimulaAcordo() {
     this.simulaAcordo = true;
-  }
-
-  public fechaModal() {
-    this.habilitarAcordo = false;
-    this.simulaAcordo = false;
-    this.modalRef.dismiss();
   }
 
   public simularAcordo() {
@@ -306,23 +316,20 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     }
   }
 
-  public comprarCreditos() {
-    if (this.formCreditos.valid) {
-      const confirmar = confirm(`Você deseja gerar um PIX com o valor total atualizado de R$ ${this.formCreditos.get('valor')?.value}?`);
+  public gerarPixBoleto() {
+      const confirmar = confirm(`Você deseja gerar um PIX com o valor total atualizado de R$ ${this.formGerarPixBoleto.get('valor_boleto')?.value}?`);
 
       if (confirmar) {
-        this._solicitarCreditosService.gerarPix(this.formCreditos.value).subscribe((res) => {
+        this._geracaoPixService.gerarPixBoleto(this.formGerarPixBoleto.value).subscribe((res) => {
           if (res.success === "true") {
-            this.dadosPixGerado = res.pix;
+            this.dadosPixGerado = res;
             this.abrirModalPixTitulos();
+            this.modalRef.dismiss();
           } else {
             this._alertService.warning("Erro na resposta da API:", res.msg || "Mensagem não disponível");
           }
         });
       }
-    } else {
-      this._alertService.warning("Todos os campos são obrigatórios:");
-    }
   }
 
 
@@ -341,5 +348,11 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
 
   public closeModal() {
     this._modalService.dismissAll();
+  }
+
+  public fechaModal() {
+    this.habilitarAcordo = false;
+    this.simulaAcordo = false;
+    this.modalRef.dismiss();
   }
 }

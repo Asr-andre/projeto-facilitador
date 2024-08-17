@@ -78,4 +78,9 @@
       </tbody>
     </table>
 </div>
-<app-simulador-padrao [idCliente]="idCliente" [idContratante]="idContratante" (clienteAtualizado)="atualizarDetalhamento()"></app-simulador-padrao>
+          <app-simulador-padrao
+              [idCliente]="idCliente"
+              [idContratante]="idContratante"
+              [numeroContrato]="numeroContrato">
+              (clienteAtualizado)="atualizarDetalhamento()">
+          </app-simulador-padrao>
