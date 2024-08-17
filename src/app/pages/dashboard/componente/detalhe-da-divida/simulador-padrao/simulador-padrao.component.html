@@ -151,10 +151,18 @@
       </form>
     </div>
 
-    <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px; margin-left: 0px !important;">
-      <button type="button" class="btn btn-light btn-sm me-1" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" *ngIf="!habilitarAcordo" (click)="baixarPagamentos()">
-        <img src="assets/images/pix.svg" style="width: 16px; height: 16px;"> Pagamento Pix
-      </button>
+    <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 11px; margin-top: 5px; margin-left: 0px !important;">
+        <div  style="font-size: 11px;">
+          <div class="btn-group" role="group" ngbDropdown>
+            <button id="btnGroupVerticalDrop1" type="button" class="btn btn-light btn-sm me-1 dropdown-toggle" ngbDropdownToggle style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;">
+              <img src="assets/images/pix.svg" style="width: 16px; height: 16px;"> Pix <i class="mdi mdi-chevron-down"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" ngbDropdownMenu style="font-size: 12px;">
+              <a class="dropdown-item" href="javascript: void(0);" (click)="comprarCreditos()"><img src="assets/images/pix.svg" style="width: 12px; height: 12px;"> Gerar Pix Titulos</a>
+              <a class="dropdown-item" href="javascript: void(0);" ><i class="fas fa-receipt"></i> Boletos Pix</a>
+            </div>
+          </div>
+      </div>
       <button type="button" class="btn btn-success btn-sm me-1" style="padding-bottom: 2px;padding-top: 2px;margin-bottom: 5px;" *ngIf="!habilitarAcordo" (click)="baixarPagamentos()">
         <i class="fas fa-money-bill-wave"></i> Baixar Pagamentos
       </button>
@@ -166,4 +174,55 @@
       </button>
     </div>
   </div>
+</ng-template>
+
+
+
+<ng-template #pixTitulosModal let-modal>
+  <div class="modal-header modal-header-custom" style="margin: 0">
+    <h6 class="modal-title" style="color: #000000">
+      <img src="assets/images/pix.svg" style="width: 16px; height: 16px;"> Pix Gerado
+    </h6>
+    <button type="button" class="btn-close btn-close-black btn-close-small" aria-label="Close" (click)="closeModal()" style="color: #000000"></button>
+  </div>
+
+  <div class="modal-body modal-padding" style="padding-top: 2px;">
+      <div>
+        <div class="mb-3">
+          <label for="qrCode" class="form-label">QR Code</label>
+          <div class="row">
+            <div class="col-6 text-center">
+              <div id="qrCode" class="border p-3">
+                <img [src]="dadosPixGerado?.urlImagemQrCode" alt="QR Code" class="img-fluid" style="width: 120px;">
+              </div>
+            </div>
+            <div class="col-6 text-center">
+              <div id="qrCode" class="border p-3">
+                <img src="assets/images/pagseguro.png" alt="QR Code" class="img-fluid" style="width: 150px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="pixCopiaCola" class="form-label" style="display: inline-flex; align-items: center;">
+            Pix Copia e Cola
+            <button class="btn btn-outline-secondary btn-sm" (click)="copiarPix()" style="border: 0; padding: 0; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; margin-left: 5px;">
+              <i class="fas fa-copy" style="font-size: 12px;"></i>
+            </button>
+          </label>
+          <div class="d-flex align-items-center">
+            <span id="pixCopiaCola" class="me-2"
+                  style="flex-grow: 1;
+                         white-space: normal;
+                         font-size: 8px;
+                         max-width: 100%;
+                         word-wrap: break-word;
+                         overflow-wrap: break-word;">
+              {{ dadosPixGerado?.pixCopiaECola }}
+            </span>
+          </div>
+        </div>
+      </div>
+</div>
 </ng-template>

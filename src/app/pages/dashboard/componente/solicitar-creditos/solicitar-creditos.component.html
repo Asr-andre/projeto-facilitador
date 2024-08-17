@@ -67,7 +67,7 @@
                          max-width: 100%;
                          word-wrap: break-word;
                          overflow-wrap: break-word;">
-              {{ dadosPixGerado?.pixCopiaECola }} 00020101021226830014br.gov.bcb.pix2561api.pagseguro.com/pix/v2/2F260CE5-A97B-460D-8D47-BB644646401427600016BR.COM.PAGSEGURO01362F260CE5-A97B-460D-8D47-BB644646401452047372530398654045.005802BR5922FACILITADOR SISTEMAS L6009Fortaleza62070503***6304A275
+              {{ dadosPixGerado?.pixCopiaECola }}
             </span>
           </div>
         </div>
@@ -123,7 +123,8 @@
             <td>
               <div class="badge font-size-10"
                 [ngClass]="{
-                      'bg-success-subtle text-success': item.situacao !== 'ATIVA',
+                      'bg-success-subtle text-success': item.situacao === 'CONCLUIDA',
+                      'bg-danger-subtle text-danger': item.situacao === 'EXPIRADO',
                       'bg-warning-subtle text-warning':item.situacao === 'ATIVA'}">
                       {{item.situacao}}
                 </div>

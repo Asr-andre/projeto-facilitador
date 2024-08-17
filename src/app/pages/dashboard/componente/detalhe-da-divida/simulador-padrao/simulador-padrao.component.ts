@@ -16,6 +16,8 @@ import { BaixaPagamentoRequisicaoModel, RecalculoRetornoModel } from "src/app/co
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { DatePipe } from "@angular/common";
 import { AlertService } from "src/app/core/services/alert.service";
+import { PixDetails } from "src/app/core/models/solicitar.creditos.model";
+import { SolicitarCreditosService } from "src/app/core/services/solicitar.creditos.service";
 
 @Component({
   selector: "app-simulador-padrao",
@@ -24,6 +26,7 @@ import { AlertService } from "src/app/core/services/alert.service";
 })
 export class SimuladorPadraoComponent implements OnInit, OnChanges {
   @ViewChild("modalTemplate") modalTemplate: any;
+  @ViewChild("pixTitulosModal") pixTitulos: SimuladorPadraoComponent;
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
   private modalRef: NgbModalRef;
@@ -31,11 +34,14 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public data: any;
   public form: FormGroup;
   public formAcordo: FormGroup;
+  public formCreditos: FormGroup;
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
+  public sigla = this._authService.getSigla()
   public login = this._authService.getLogin();
   public habilitarAcordo: boolean = false;
   public simulaAcordo: boolean = false;
   public dadosSimulacao: any;
+  public dadosPixGerado: PixDetails;
 
   @Output() clienteAtualizado = new EventEmitter<void>();
 
@@ -52,13 +58,18 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public originalJuros: number = 0;
   public originalTaxa: number = 0;
 
+  //essa variavel e responsavel por armazenar o valor atualziado sera suada apenas par ao metodo gerar pix do titulo, solicitação do pedro
+  public valor_atualizado_simulador = 0;
+
   constructor(
+    private _solicitarCreditosService: SolicitarCreditosService,
     private modalService: NgbModal,
     private fb: FormBuilder,
     private simuladorService: SimuladorPadraoService,
     private _authService: AuthenticationService,
     private datePipe: DatePipe,
-    private _alertService: AlertService
+    private _alertService: AlertService,
+    private _modalService: NgbModal,
   ) {
     this.idEmpresa = Number(this._authService.getIdEmpresa()) || 0;
     this.idCliente = this.idCliente || null;
@@ -68,6 +79,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.formSimulador();
     this.formsimuladorAcordo();
+    this.iniciarFormCreditos();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -107,6 +119,17 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     });
   }
 
+  public iniciarFormCreditos() {
+    this.formCreditos = this.fb.group({
+      id_empresa: [this.idEmpresa],
+      nome: [this.sigla, Validators.required],
+      cpf: ['46419730325', Validators.required],
+      valor: [this.valor_atualizado_simulador.toFixed(2), Validators.required],
+      servico: ['Pagamento Titulos Via Pix', Validators.required],
+      user_login: [this.login]
+    });
+  }
+
   public abrirModalSimulado(data: any): void {
     this.data = data;
 
@@ -136,7 +159,8 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       titulos: data.titulos.map((titulo) => titulo.id_titulo).join(","),
     });
 
-    this.calcularTotais();
+    this.calcularTotais();  // Calcula os totais para atualizar valor_atualizado_simulador
+    this.iniciarFormCreditos();  // Reinicia o form de créditos após calcular os totais
     this.modalRef = this.modalService.open(this.modalTemplate, { size: "lg", ariaLabelledBy: "modal-basic-title", backdrop: "static", keyboard: false, });
   }
 
@@ -162,6 +186,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     this.totalTaxa = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_taxa, 0);
     this.totalGeral = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_atualizado,0);
 
+    this.valor_atualizado_simulador = this.totalGeral;
     this.formAcordo.patchValue({
       valor_acordo: this.totalGeral,
     });
@@ -277,5 +302,42 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     } else {
       this._alertService.error("Formulário inválido. Por favor, verifique os campos e tente novamente.");
     }
+  }
+
+  public comprarCreditos() {
+    if (this.formCreditos.valid) {
+      const confirmar = confirm(`Você deseja gerar um PIX com o valor total atualizado de R$ ${this.formCreditos.get('valor')?.value}?`);
+
+      if (confirmar) {
+        this._solicitarCreditosService.gerarPix(this.formCreditos.value).subscribe((res) => {
+          if (res.success === "true") {
+            this.dadosPixGerado = res.pix;
+            this.abrirModalPixTitulos();
+          } else {
+            this._alertService.warning("Erro na resposta da API:", res.msg || "Mensagem não disponível");
+          }
+        });
+      }
+    } else {
+      this._alertService.warning("Todos os campos são obrigatórios:");
+    }
+  }
+
+
+  public copiarPix() {
+    const pixCopiaCola = document.getElementById('pixCopiaCola')?.textContent || '';
+    navigator.clipboard.writeText(pixCopiaCola).then(() => {
+      this._alertService.success('Código Pix copiado com sucesso!');
+    }, (err) => {
+      this._alertService.error('Erro ao copiar o código Pix: ', err);
+    });
+  }
+
+  public abrirModalPixTitulos(): void {
+    this._modalService.open(this.pixTitulos, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' });
+  }
+
+  public closeModal() {
+    this._modalService.dismissAll();
   }
 }
