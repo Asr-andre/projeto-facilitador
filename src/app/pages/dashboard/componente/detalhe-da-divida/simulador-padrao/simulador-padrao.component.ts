@@ -172,6 +172,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       (response: RecalculoRetornoModel) => {
         this.data = response;
         this.calcularTotais();
+        this.iniciarFormCreditos();  // Reinicia o formulário de créditos com os valores atualizados
       },
       (error) => {
         this._alertService.error("Erro ao recalcular:", error);
@@ -186,7 +187,8 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     this.totalTaxa = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_taxa, 0);
     this.totalGeral = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_atualizado,0);
 
-    this.valor_atualizado_simulador = this.totalGeral;
+    this.valor_atualizado_simulador = this.totalGeral !== 0 ? this.totalGeral : this.totalValor;
+
     this.formAcordo.patchValue({
       valor_acordo: this.totalGeral,
     });
