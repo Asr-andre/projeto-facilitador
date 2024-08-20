@@ -1,12 +1,9 @@
 import { LOCALE_ID, NgModule } from "@angular/core";
 import { CommonModule, DatePipe, registerLocaleData } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-
 import { UiModule } from "../shared/ui/ui.module";
 import { WidgetModule } from "../shared/widget/widget.module";
-
 import { PagesRoutingModule } from "./pages-routing.module";
-
 import { SimplebarAngularModule } from "simplebar-angular";
 import {
   NgbNavModule,
@@ -41,6 +38,7 @@ import { FilaComponent } from "./fila/fila.component";
 import { CarteiraDeClientesComponent } from "./carteira-de-clientes/carteira-de-clientes.component";
 import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 import { SolicitarCreditosComponent } from "./dashboard/componente/solicitar-creditos/solicitar-creditos.component";
+import { BoletoPixComponent } from "./dashboard/componente/boleto-pix/boleto-pix.component";
 
 registerLocaleData(localePt);
 @NgModule({
@@ -59,7 +57,8 @@ registerLocaleData(localePt);
     AcordoComponent,
     FilaComponent,
     CarteiraDeClientesComponent,
-    SolicitarCreditosComponent
+    SolicitarCreditosComponent,
+    BoletoPixComponent
   ],
   imports: [
     CommonModule,

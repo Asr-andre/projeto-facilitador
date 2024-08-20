@@ -195,6 +195,14 @@
                 <ng-template [ngTemplateOutlet]="TitilosPr"></ng-template>
               </ng-template>
             </li>
+            <li [ngbNavItem]="7">
+              <a ngbNavLink class="nav-link custom-nav-link">
+                <span class="d-none d-sm-block"><i class="fas fa-qrcode"></i> Boletos/ Pix</span>
+              </a>
+              <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="BoletosPix"></ng-template>
+              </ng-template>
+            </li>
           </ul>
           <div [ngbNavOutlet]="nav"></div>
         </div>
@@ -247,5 +255,12 @@
   <div class="mt-3 font-size-13">
     <app-titulos-pg-ret [idCliente]="devedorSelecionado?.id_cliente"
       [idContratante]="devedorSelecionado?.id_contratante"></app-titulos-pg-ret>
+  </div>
+</ng-template>
+
+<ng-template #BoletosPix>
+  <div class="mt-3 font-size-13">
+    <app-boleto-pix [idCliente]="devedorSelecionado?.id_cliente"
+      [idContratante]="devedorSelecionado?.id_contratante"></app-boleto-pix>
   </div>
 </ng-template>

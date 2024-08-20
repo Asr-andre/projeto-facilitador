@@ -26,26 +26,39 @@
                       <b><i class="fas fa-filter"></i> Filtros</b>
                     </a>
                     <ng-template ngbNavContent>
-                      <div class="col-md-6">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="card mb-2" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
-                              <h6 style="text-align: center; font-weight: bold;">Periodo de Pagamento</h6>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <input type="date" class="form-control form-control-sm"  placeholder="Inicial">
-                                </div>
-                                <div class="col-md-6">
-                                  <input type="date" class="form-control form-control-sm"  placeholder="Final">
+                      <form [formGroup]="formFiltros">
+                        <div class="col-md-6">
+                          <div class="row" style="margin-bottom: 10px;">
+                            <div class="col-md-6 form-group">
+                              <select class="form-control form-control-sm" formControlName="id_contratante">
+                                <option value="0">Selecione o Contratante</option>
+                                <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">
+                                  {{ contratante.fantasia }}</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="card mb-2" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+                                <h6 style="text-align: center; font-weight: bold;">Período de Pagamento</h6>
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <input type="date" class="form-control form-control-sm" formControlName="data_inicio"
+                                      placeholder="Inicial">
+                                  </div>
+                                  <div class="col-md-6">
+                                    <input type="date" class="form-control form-control-sm" formControlName="data_fim"
+                                      placeholder="Final">
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </form>
 
                       <div class="col-md-12 d-flex justify-content-end align-items-end">
-                        <button type="submit" class="btn btn-secondary btn-sm">
+                        <button type="submit" class="btn btn-secondary btn-sm" (click)="obterFiltros()" [disabled]="!this.formFiltros.valid">
                           <i class="fas fa-search"></i> Filtrar Pagamentos
                         </button>
                       </div>
@@ -57,7 +70,49 @@
                     </a>
                     <ng-template ngbNavContent>
                       <section style="white-space: nowrap; overflow: auto;">
-
+                        <div style="font-size: 10px;">
+                          <div class="dataTables_filter text-md-end">
+                              <label class="d-inline-flex align-items-center" style="margin-bottom: 0px;">
+                                  <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
+                              </label>
+                          </div>
+                      </div>
+                        <div class="card-body" style="padding-top: 0; padding-bottom: 0px; padding-right: 0; padding-left: 0;">
+                          <div class="table-responsive" style="margin-top: 10px; max-height: 550px; overflow-y: auto;">
+                            <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+                              <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
+                                <tr>
+                                  <th sortable="fantasia" (sort)="ordenar($event)" scope="col">Fantasia</th>
+                                  <th sortable="cnpj_cpf" (sort)="ordenar($event)" scope="col">CNPJ/CPF</th>
+                                  <th sortable="numero_contrato" (sort)="ordenar($event)" scope="col">Contrato</th>
+                                  <th sortable="produto" (sort)="ordenar($event)" scope="col">Produto</th>
+                                  <th sortable="numero_documento" (sort)="ordenar($event)" scope="col">Número Documento</th>
+                                  <th sortable="pagamento" (sort)="ordenar($event)" scope="col">Data Pagamento</th>
+                                  <th sortable="valor_pago" (sort)="ordenar($event)" scope="col">Valor Pago</th>
+                                  <th sortable="valor_original" (sort)="ordenar($event)" scope="col">Valor Original</th>
+                                  <th sortable="valor_juros" (sort)="ordenar($event)" scope="col">Valor Juros</th>
+                                  <th sortable="valor_multa" (sort)="ordenar($event)" scope="col">Valor Multa</th>
+                                  <th sortable="valor_taxa" (sort)="ordenar($event)" scope="col">Valor Taxa</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of dadosFiltrados">
+                                  <td>{{ item.fantasia }}</td>
+                                  <td>{{ item.cnpj_cpf }}</td>
+                                  <td>{{ item.numero_contrato }}</td>
+                                  <td>{{ item.produto }}</td>
+                                  <td>{{ item.numero_documento }}</td>
+                                  <td>{{ item.pagamento | date: 'dd/MM/yyyy' }}</td>
+                                  <td>{{ item.valor_pago | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td>{{ item.valor_original | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td>{{ item.valor_juros | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td>{{ item.valor_multa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td>{{ item.valor_taxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
                       </section>
                     </ng-template>
                   </li>
