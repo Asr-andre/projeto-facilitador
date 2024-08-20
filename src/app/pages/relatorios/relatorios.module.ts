@@ -5,6 +5,7 @@ import { NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RelatoriosRoutingModule } from './relatorios.routing.module';
 import { FinanceiroComponent } from './financeiro/financeiro.component';
+import { OrderTableModule } from 'src/app/core/helpers/conf-tabela/order-table.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { FinanceiroComponent } from './financeiro/financeiro.component';
     RelatoriosRoutingModule,
     NgbDatepickerModule,
     NgbModule,
-    NgbModule
+    NgbModule,
+    OrderTableModule,
   ],
   providers: [
 
