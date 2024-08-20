@@ -8,6 +8,10 @@ export class Titulo {
   valor_taxa: number;
   valor_atualizado: number;
   atraso: number;
+  desc_principal: number;
+  desc_multa: number;
+  desc_juros: number;
+  desc_taxa: number;
 }
 
 export class GerarPixRequest {

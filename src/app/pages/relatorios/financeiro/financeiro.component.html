@@ -83,6 +83,7 @@
                               <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
                                 <tr>
                                   <th sortable="fantasia" (sort)="ordenar($event)" scope="col">Fantasia</th>
+                                  <th sortable="nome" (sort)="ordenar($event)" scope="col">Nome</th>
                                   <th sortable="cnpj_cpf" (sort)="ordenar($event)" scope="col">CNPJ/CPF</th>
                                   <th sortable="numero_contrato" (sort)="ordenar($event)" scope="col">Contrato</th>
                                   <th sortable="produto" (sort)="ordenar($event)" scope="col">Produto</th>
@@ -98,6 +99,7 @@
                               <tbody>
                                 <tr *ngFor="let item of dadosFiltrados">
                                   <td>{{ item.fantasia }}</td>
+                                  <td>{{ item.nome }}</td>
                                   <td>{{ item.cnpj_cpf }}</td>
                                   <td>{{ item.numero_contrato }}</td>
                                   <td>{{ item.produto }}</td>

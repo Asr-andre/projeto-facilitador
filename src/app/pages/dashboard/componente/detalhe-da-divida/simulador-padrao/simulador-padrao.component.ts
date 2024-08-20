@@ -140,7 +140,11 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
         valor_juros: [titulo.valor_juros.toFixed(2), Validators.required],
         valor_taxa: [titulo.valor_taxa.toFixed(2), Validators.required],
         valor_atualizado: [titulo.valor_atualizado.toFixed(2), Validators.required],
-        atraso: [titulo.atraso, Validators.required]
+        atraso: [titulo.atraso, Validators.required],
+        desc_principal: [this.originalPrincipal, Validators.required],
+        desc_multa: [this.originalMulta, Validators.required],
+        desc_juros: [this.originalJuros, Validators.required],
+        desc_taxa: [this.originalTaxa, Validators.required]
       }));
     });
   }
