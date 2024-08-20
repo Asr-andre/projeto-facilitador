@@ -125,4 +125,8 @@ export class FinanceiroComponent {
   public filtrar(): void {
     this.dadosFiltrados = Utils.filtrar(this.resultFiltros, this.textoPesquisa);
   }
+
+  public ativarAba() {
+    this.ativaAba = 1;
+  }
 }

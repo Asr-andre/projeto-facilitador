@@ -139,8 +139,8 @@ export class CarteiraDeClientesComponent implements OnInit {
   }
 
 
-  public ativarAba(aba: number): void {
-    this.ativaAba = aba;
+  public ativarAba() {
+    this.ativaAba = 1;
   }
 
   public abrirModalFila(content: TemplateRef<any>): void {
@@ -234,4 +234,5 @@ export class CarteiraDeClientesComponent implements OnInit {
   public data(data) {
     return Utils.formatarDataParaExibicao(data);
   }
+
 }
