@@ -336,7 +336,6 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       }
   }
 
-
   public copiarPix() {
     const pixCopiaCola = document.getElementById('pixCopiaCola')?.textContent || '';
     navigator.clipboard.writeText(pixCopiaCola).then(() => {

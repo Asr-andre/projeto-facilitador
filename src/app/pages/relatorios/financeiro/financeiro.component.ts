@@ -31,11 +31,12 @@ export class FinanceiroComponent {
   public direcaoOrdenacao: { [key: string]: string } = {};
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<TituloLiquidado>>;
 
-  public totalClientes: number = 0;
-  public valorTotal: number = 0;
-
-  totalClientesSelecionados: number = 0;
-  valorTotalSelecionado: number = 0;
+  public totalPagamentos: number = 0;
+  public valorTotalPago: number = 0;
+  public valorTotalOriginal: number = 0;
+  public valorTotalJuros: number = 0;
+  public valorTotalMulta: number = 0;
+  public valorTotalTaxa: number = 0;
 
   constructor(
     private _financeiroService: FinanceiroService,
@@ -77,6 +78,7 @@ export class FinanceiroComponent {
           if (res.success === 'true') {
             this.resultFiltros = res.titulos;
             this.dadosFiltrados = res.titulos;
+            this.calcularTotais();
             this.ativaAba = 2;
           } else {
             this._alertService.error('Nenhum resultado encontrado.');
@@ -90,6 +92,15 @@ export class FinanceiroComponent {
     } else {
       this._alertService.error('Formulário inválido. Por favor, preencha todos os campos obrigatórios.');
     }
+  }
+
+  public calcularTotais(): void {
+    this.totalPagamentos = this.dadosFiltrados.length;
+    this.valorTotalPago = this.dadosFiltrados.reduce((sum, item) => sum + (item.valor_pago || 0), 0);
+    this.valorTotalOriginal = this.dadosFiltrados.reduce((sum, item) => sum + (item.valor_original || 0), 0);
+    this.valorTotalJuros = this.dadosFiltrados.reduce((sum, item) => sum + (item.valor_juros || 0), 0);
+    this.valorTotalMulta = this.dadosFiltrados.reduce((sum, item) => sum + (item.valor_multa || 0), 0);
+    this.valorTotalTaxa = this.dadosFiltrados.reduce((sum, item) => sum + (item.valor_taxa || 0), 0);
   }
 
   public obterContratantes() {

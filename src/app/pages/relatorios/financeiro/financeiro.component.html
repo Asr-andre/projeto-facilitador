@@ -111,6 +111,15 @@
                                   <td>{{ item.valor_multa | currency: 'BRL':'symbol':'1.2-2' }}</td>
                                   <td>{{ item.valor_taxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
                                 </tr>
+                                <tr class="tabela-custom">
+                                  <td colspan="6" style="text-align: right; font-weight: bold;">Total Pagamentos:</td>
+                                  <td style="font-weight: bold;">{{ totalPagamentos }}</td>
+                                  <td style="font-weight: bold;">{{ valorTotalPago | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td style="font-weight: bold;">{{ valorTotalOriginal | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td style="font-weight: bold;">{{ valorTotalJuros | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td style="font-weight: bold;">{{ valorTotalMulta | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td style="font-weight: bold;">{{ valorTotalTaxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                </tr>
                               </tbody>
                             </table>
                           </div>
