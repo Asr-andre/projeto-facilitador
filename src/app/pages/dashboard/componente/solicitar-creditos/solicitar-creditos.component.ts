@@ -1,5 +1,4 @@
 import { DatePipe } from '@angular/common';
-import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -123,13 +122,9 @@ export class SolicitarCreditosComponent implements OnInit {
     });
   }
 
-  public copiarPix() {
-    const pixCopiaCola = document.getElementById('pixCopiaCola')?.textContent || '';
-    navigator.clipboard.writeText(pixCopiaCola).then(() => {
-      this._alertService.success('Código Pix copiado com sucesso!');
-    }, (err) => {
-      this._alertService.error('Erro ao copiar o código Pix: ', err);
-    });
+  public copiarParaAreasTransferencia(valor) {
+    Utils.CopyAreaTransfer(valor);
+    this._alertService.success('Código Pix copiado com sucesso!');
   }
 
   public atualizarDadosPix(pixCopiaCola: string, imgPix: string) {

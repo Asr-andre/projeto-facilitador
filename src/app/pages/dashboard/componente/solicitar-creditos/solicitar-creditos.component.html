@@ -55,7 +55,7 @@
         <div class="mb-3">
           <label for="pixCopiaCola" class="form-label" style="display: inline-flex; align-items: center;">
             Pix Copia e Cola
-            <button class="btn btn-outline-secondary btn-sm" (click)="copiarPix()" style="border: 0; padding: 0; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; margin-left: 5px;">
+            <button class="btn btn-outline-secondary btn-sm" (click)="copiarParaAreasTransferencia(dadosPixGerado?.pixCopiaECola)" style="border: 0; padding: 0; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; margin-left: 5px;">
               <i class="fas fa-copy" style="font-size: 12px;"></i>
             </button>
           </label>
@@ -112,7 +112,7 @@
           <tr>
             <th>Data</th>
             <th>Valor</th>
-            <th>status</th>
+            <th>Status</th>
             <th>Ações</th>
           </tr>
         </thead>

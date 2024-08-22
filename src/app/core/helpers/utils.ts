@@ -76,7 +76,7 @@ export class Utils {
     const dia = data.getUTCDate().toString().padStart(2, '0');
 
     return `${dia}/${mes}/${ano}`;
-}
+  }
 
 
 
@@ -168,5 +168,21 @@ export class Utils {
     } else {
       console.error('Elementos não encontrados:', campoId, iconeId);
     }
+  }
+
+  public static CopyAreaTransfer(value) {
+    const texto = value;
+    //Cria um elemento input (pode ser um textarea)
+    let inputTest = document.createElement("input");
+    inputTest.value = texto;
+    //Anexa o elemento ao body
+    document.body.appendChild(inputTest);
+    //seleciona todo o texto do elemento
+    inputTest.select();
+    //executa o comando copy
+    //aqui é feito o ato de copiar para a area de trabalho com base na seleção
+    document.execCommand('copy');
+    //remove o elemento
+    document.body.removeChild(inputTest);
   }
 }

@@ -336,13 +336,9 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       }
   }
 
-  public copiarPix() {
-    const pixCopiaCola = document.getElementById('pixCopiaCola')?.textContent || '';
-    navigator.clipboard.writeText(pixCopiaCola).then(() => {
-      this._alertService.success('Código Pix copiado com sucesso!');
-    }, (err) => {
-      this._alertService.error('Erro ao copiar o código Pix: ', err);
-    });
+  public copiarParaAreasTransferencia(valor) {
+    Utils.CopyAreaTransfer(valor);
+    this._alertService.success('Código Pix copiado com sucesso!');
   }
 
   public abrirModalPixTitulos(): void {
