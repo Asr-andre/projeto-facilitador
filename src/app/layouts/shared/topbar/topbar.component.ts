@@ -7,6 +7,7 @@ import { AuthenticationService } from '../../../core/services/auth.service';
 import { AuthfakeauthenticationService } from '../../../core/services/authfake.service';
 import { LanguageService } from '../../../core/services/language.service';
 import { environment } from '../../../../environments/environment';
+import { ChatVisibilidadeService } from 'src/app/core/services/chat.flutuante.service';
 
 @Component({
   selector: 'app-topbar',
@@ -28,7 +29,15 @@ export class TopbarComponent implements OnInit {
   ];
 
   // tslint:disable-next-line: max-line-length
-  constructor(@Inject(DOCUMENT) private document: any, private router: Router, private authService: AuthenticationService, private authFackservice: AuthfakeauthenticationService, public languageService: LanguageService, public cookiesService: CookieService) { }
+  constructor(@Inject(DOCUMENT)
+  private document: any,
+  private router: Router,
+  private authService: AuthenticationService,
+  private authFackservice: AuthfakeauthenticationService,
+  public languageService: LanguageService,
+  public cookiesService: CookieService,
+  private chatVisibilidadeService: ChatVisibilidadeService
+) { }
 
   @Output() mobileMenuButtonClicked = new EventEmitter();
   @Output() settingsButtonClicked = new EventEmitter();
@@ -124,5 +133,10 @@ export class TopbarComponent implements OnInit {
       this.authFackservice.logout();
     }
     this.router.navigate(['/account/login']);
+  }
+
+  abrirChat(): void {
+    this.chatVisibilidadeService.mostrarChat();
+    console.log("clicado")
   }
 }

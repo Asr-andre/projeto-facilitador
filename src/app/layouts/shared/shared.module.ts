@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Simplebar
 import { SimplebarAngularModule } from 'simplebar-angular';
 
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslateModule } from '@ngx-translate/core';
@@ -27,8 +26,7 @@ import { HorizontalnavbarComponent } from './horizontalnavbar/horizontalnavbar.c
     NgbDropdownModule,
     ClickOutsideModule,
     RouterModule,
-    FormsModule,
-    ReactiveFormsModule
+    NgbNavModule,
   ],
   exports: [TopbarComponent, FooterComponent, SidebarComponent, HorizontaltopbarComponent, HorizontalnavbarComponent],
   providers: [LanguageService]

@@ -1,0 +1,120 @@
+.chat-flutuante {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 350px;
+  height: 500px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;
+
+  &.minimizado {
+    height: 50px;
+    .chat-corpo, .chat-rodape {
+      display: none;
+    }
+    .chat-cabecalho {
+      justify-content: center;
+    }
+  }
+
+  .chat-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background-color: #0056b3;
+    color: #fff;
+    border-radius: 8px 8px 0 0;
+    h5 {
+      margin: 0;
+      font-size: 16px;
+    }
+    button {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      &:first-of-type {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .chat-corpo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #f9f9f9;
+
+    .mensagem {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      .mensagem-conteudo {
+        max-width: 80%;
+        padding: 10px;
+        border-radius: 10px;
+        position: relative;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        p {
+          margin: 0;
+        }
+        .mensagem-hora {
+          position: absolute;
+          bottom: 5px;
+          right: 10px;
+          font-size: 12px;
+          color: #6c757d;
+        }
+      }
+      &.mensagem-enviada {
+        justify-content: flex-end;
+        .mensagem-conteudo {
+          background-color: #0056b3;
+          color: #fff;
+        }
+      }
+      &.mensagem-recebida {
+        .mensagem-conteudo {
+          background-color: #e9ecef;
+          color: #000;
+        }
+      }
+    }
+  }
+
+  .chat-rodape {
+    padding: 10px;
+    background-color: #fff;
+    border-top: 0px solid #ddd;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+    input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+    button {
+      background-color: #0056b3;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  }
+}

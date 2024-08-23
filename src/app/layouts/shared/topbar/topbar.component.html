@@ -51,7 +51,7 @@
                 <h6 class="m-0">Notificações</h6>
               </div>
               <div class="col-auto">
-                <a href="javascript: void(0);" class="small">Ver Todas</a>
+                <a href="javascript: void(0);" class="small" (click)="abrirChat()">Ver Todas</a>
               </div>
             </div>
           </div>
@@ -108,8 +108,6 @@
           </div>
         </div>
       </div>
-
-
 
       <div class="dropdown d-inline-block user-dropdown" ngbDropdown>
         <button type="button" ngbDropdownToggle class="btn header-item waves-effect" id="page-header-user-dropdown"
