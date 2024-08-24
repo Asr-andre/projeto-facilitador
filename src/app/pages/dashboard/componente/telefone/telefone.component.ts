@@ -19,6 +19,7 @@ export class TelefoneComponent implements OnInit, OnChanges {
   @Output() dadosEnviado: EventEmitter<void> = new EventEmitter<void>();
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
+  @Input() nomeCliente: string | undefined;
   public telefones: TelefoneRetornoModel;
   public loadingMin: boolean = false;
   public telefoneForm: FormGroup;

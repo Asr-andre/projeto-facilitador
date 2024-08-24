@@ -1,20 +1,28 @@
 <ng-template #whatsappModal let-modal>
   <div class="modal-header modal-header-custom" style="background: #128c7e; margin: 0">
-    <h6 class="modal-title" style="color: #ffffff"><i class="fab fa-whatsapp"></i> Envio de WhatsApp - {{ telefoneCliente }}</h6>
+    <h6 class="modal-title" style="color: #ffffff">
+      <i class="fab fa-whatsapp"></i> Envio WhatsApp - {{ telefoneCliente }}
+    </h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechaModal()" style="color: #ffffff"></button>
   </div>
   <div class="modal-body modal-padding">
-    <textarea [(ngModel)]="mensagem" (input)="contarCaracteres()" class="form-control" placeholder="Digite sua mensagem" rows="5"></textarea>
-    <div class="d-flex justify-content-between align-items-center" style="padding-top: 5px;">
-      <small>{{ mensagem.length }}/4096 caracteres</small>
-      <div>
-        <button type="button" class="btn btn-success btn-sm me-1" (click)="enviarMensagem()">
-          <i class="fas fa-paper-plane"></i> Enviar
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechaModal()">
-          <i class="fas fa-window-close"></i> Cancelar
-        </button>
+    <form [formGroup]="whatsappForm">
+      <div formArrayName="whats">
+        <div [formGroupName]="0">
+          <textarea formControlName="mensagem" (input)="contarCaracteres()" class="form-control" placeholder="Digite sua mensagem" rows="10"></textarea>
+          <div class="d-flex justify-content-between align-items-center" style="padding-top: 5px;">
+            <small>{{ whatsappForm.get('whats.0.mensagem')?.value.length }}/4096 caracteres</small>
+            <div>
+              <button type="button" class="btn btn-success btn-sm me-1" (click)="enviarMensagem()">
+                <i class="fas fa-paper-plane"></i> Enviar
+              </button>
+              <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechaModal()">
+                <i class="fas fa-window-close"></i> Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 </ng-template>

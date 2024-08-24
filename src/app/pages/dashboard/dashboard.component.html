@@ -227,7 +227,7 @@
 <ng-template #Telefone>
   <div class="mt-3 font-size-13">
     <app-telefone [idCliente]="devedorSelecionado?.id_cliente"
-      [idContratante]="devedorSelecionado?.id_contratante" (dadosEnviado)="atualizarCards()"></app-telefone>
+      [idContratante]="devedorSelecionado?.id_contratante" [nomeCliente]="devedorSelecionado.nome" (dadosEnviado)="atualizarCards()"></app-telefone>
   </div>
 </ng-template>
 
