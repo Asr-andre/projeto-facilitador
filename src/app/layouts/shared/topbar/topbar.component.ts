@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Inject, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
@@ -8,13 +8,21 @@ import { AuthfakeauthenticationService } from '../../../core/services/authfake.s
 import { LanguageService } from '../../../core/services/language.service';
 import { environment } from '../../../../environments/environment';
 import { ChatVisibilidadeService } from 'src/app/core/services/chat.flutuante.service';
+import { interval, Subscription } from 'rxjs';
+import { SininhoService } from 'src/app/core/services/sininho.service';
+import { AlertaModel } from 'src/app/core/models/sininho.model';
 
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
   styleUrls: ['./topbar.component.scss']
 })
-export class TopbarComponent implements OnInit {
+export class TopbarComponent implements OnInit, OnDestroy {
+
+  private pollingInterval = 30000; // 30 segundos
+  private pollingSubscription: Subscription;
+  public idEmpresa: number = Number(this.authService.getIdEmpresa() || 0);
+  public resMsg: AlertaModel [] = [];
 
   element: any;
   configData: any;
@@ -36,7 +44,8 @@ export class TopbarComponent implements OnInit {
   private authFackservice: AuthfakeauthenticationService,
   public languageService: LanguageService,
   public cookiesService: CookieService,
-  private chatVisibilidadeService: ChatVisibilidadeService
+  private chatVisibilidadeService: ChatVisibilidadeService,
+  private _sininhoService:SininhoService,
 ) { }
 
   @Output() mobileMenuButtonClicked = new EventEmitter();
@@ -59,6 +68,25 @@ export class TopbarComponent implements OnInit {
     }
     // Obter o usuário atual do serviço de autenticação
     this.currentUser = this.authService.getLogin();
+    this.monitorarMsg();
+  }
+
+  ngOnDestroy(): void {
+    if (this.pollingSubscription) {
+      this.pollingSubscription.unsubscribe();
+    }
+  }
+
+  public monitorarMsg(): void {
+      const requestBody = {
+      id_empresa: this.idEmpresa // Ajuste aqui se precisar de um formato diferente
+    };
+
+    this.pollingSubscription = interval(this.pollingInterval).subscribe(() => {
+      this._sininhoService.monitorarMsg(requestBody).subscribe(res => {
+        this.resMsg = res.alertas;
+      });
+    });
   }
 
   /**

@@ -17,6 +17,7 @@ export class WhatsappComponent implements OnInit {
   public whatsappForm: FormGroup;
   @Input() idCliente: number | undefined;
   @Input() nomeCliente: string | undefined;
+  public maxCaractere: number = 4096;
 
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
   public login = this._auth.getLogin();
@@ -86,10 +87,15 @@ export class WhatsappComponent implements OnInit {
     return telefone.replace(/[\(\)\s\-\.]/g, '');
   }
 
-  public contarCaracteres(): void {
+  public contarCaracteres(event: Event): void {
+    const input = event.target as HTMLTextAreaElement;
     const mensagemControl = this.whatsappForm.get('whats.0.mensagem');
-    if (mensagemControl && mensagemControl.value.length > 4096) {
-      mensagemControl.setValue(mensagemControl.value.substring(0, 4096));
+
+    if (mensagemControl) {
+      if (input.value.length > this.maxCaractere) {
+        mensagemControl.setValue(input.value.substring(0, this.maxCaractere));
+      }
     }
   }
+
 }
