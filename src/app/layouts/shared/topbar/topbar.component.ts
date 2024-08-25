@@ -79,10 +79,16 @@ export class TopbarComponent implements OnInit, OnDestroy {
   }
 
   public monitorarMsg(): void {
-      const requestBody = {
-      id_empresa: this.idEmpresa // Ajuste aqui se precisar de um formato diferente
+    const requestBody = {
+      id_empresa: this.idEmpresa
     };
 
+    // Fazer a chamada inicial imediatamente
+    this._sininhoService.monitorarMsg(requestBody).subscribe(res => {
+      this.resMsg = res.alertas;
+    });
+
+    // Iniciar o polling
     this.pollingSubscription = interval(this.pollingInterval).subscribe(() => {
       this._sininhoService.monitorarMsg(requestBody).subscribe(res => {
         this.resMsg = res.alertas;
@@ -168,7 +174,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/account/login']);
   }
 
-  abrirChat(): void {
-    this.chatVisibilidadeService.mostrarChat();
+  abrirChat(id: string): void {
+    this.chatVisibilidadeService.mostrarChat(id);
   }
 }

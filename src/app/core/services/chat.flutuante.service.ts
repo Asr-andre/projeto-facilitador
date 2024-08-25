@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -5,15 +6,17 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class ChatVisibilidadeService {
-  private chatVisivelSubject = new BehaviorSubject<boolean>(false);
+  private chatVisivelSubject = new BehaviorSubject<{ visivel: boolean, id?: string }>({ visivel: false });
 
   chatVisivel = this.chatVisivelSubject.asObservable();
 
-  mostrarChat(): void {
-    this.chatVisivelSubject.next(true);
+  constructor(private http: HttpClient) { }
+
+  mostrarChat(id: string): void {
+    this.chatVisivelSubject.next({ visivel: true, id });
   }
 
   esconderChat(): void {
-    this.chatVisivelSubject.next(false);
+    this.chatVisivelSubject.next({ visivel: false });
   }
 }

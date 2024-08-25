@@ -11,18 +11,28 @@ import { ChatMessage, ChatUser } from './chat.model';
 export class ChatFlutuanteComponent {
   chatVisivel: boolean = false;
   minimizado: boolean = false;
+  mensagemId: string;
 
   constructor(
     private chatVisibilidadeService: ChatVisibilidadeService,
     public formBuilder: UntypedFormBuilder
   ) {
-    this.chatVisibilidadeService.chatVisivel.subscribe(visivel => {
+    this.chatVisibilidadeService.chatVisivel.subscribe(({ visivel, id }) => {
       this.chatVisivel = visivel;
+      if (id) {
+        this.mensagemId = id;
+        this.carregarMensagens(id); // Função que carrega as mensagens ou prepara o chat
+      }
     });
   }
 
   ngOnInit(): void {
 
+  }
+
+  carregarMensagens(id: string): void {
+    // Logica para carregar mensagens ou preparar o chat com base no id da mensagem
+    console.log(`Carregando mensagens para o ID: ${id}`);
   }
 
   fecharChat(): void {
