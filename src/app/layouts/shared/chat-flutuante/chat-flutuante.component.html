@@ -1,6 +1,6 @@
 <div class="chat-flutuante" *ngIf="chatVisivel" [ngClass]="{'minimizado': minimizado}">
   <div class="chat-cabecalho">
-    <h5>Chat</h5>
+    <i class="fab fa-whatsapp whatsapp-icon font-size-24" style="color: #25D366;"></i>
     <button (click)="minimizado ? restaurarChat() : minimizarChat()">
       {{ minimizado ? 'Restaurar' : 'Minimizar' }}
     </button>

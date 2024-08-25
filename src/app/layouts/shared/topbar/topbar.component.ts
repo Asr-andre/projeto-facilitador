@@ -11,6 +11,7 @@ import { ChatVisibilidadeService } from 'src/app/core/services/chat.flutuante.se
 import { interval, Subscription } from 'rxjs';
 import { SininhoService } from 'src/app/core/services/sininho.service';
 import { AlertaModel } from 'src/app/core/models/sininho.model';
+import { Utils } from 'src/app/core/helpers/utils';
 
 @Component({
   selector: 'app-topbar',
@@ -89,6 +90,10 @@ export class TopbarComponent implements OnInit, OnDestroy {
     });
   }
 
+  public data(data) {
+    return Utils.formatarDataParaExibicao(data);
+  }
+
   /**
    * Toggle the menu bar when having mobile screen
    */
@@ -165,6 +170,5 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   abrirChat(): void {
     this.chatVisibilidadeService.mostrarChat();
-    console.log("clicado")
   }
 }

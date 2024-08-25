@@ -51,27 +51,24 @@
               <div class="col">
                 <h6 class="m-0">Notificações</h6>
               </div>
-              <div class="col-auto">
-                <a href="javascript: void(0);" class="small" (click)="abrirChat()">Ver Todas</a>
-              </div>
             </div>
           </div>
           <ngx-simplebar style="position: relative; height: 230px;">
+            <a href="javascript: void(0);" class="text-reset notification-item" (click)="abrirChat()">
               <div class="d-flex" *ngFor="let item of resMsg">
+                <div class="avatar-xs">
+                  <i class="fab fa-whatsapp whatsapp-icon font-size-24" style="color: #25D366;"></i>
+                </div>
                 <div class="flex-1">
-                  <h6 class="mt-0 mb-1">{{ item.cpf}}</h6>
+                  <h6 class="mt-0 mb-1">{{ item.cpf }}</h6>
                   <div class="font-size-12 text-muted">
                     <p class="mb-1">{{ item.mensagem }}</p>
-                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> {{ item.data_men }}</p>
+                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> {{ data(item.data_men) }}</p>
                   </div>
                 </div>
               </div>
-          </ngx-simplebar>
-          <div class="p-2 border-top">
-            <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
-              <i class="mdi mdi-arrow-right-circle me-1"></i> Carregar Mais
             </a>
-          </div>
+          </ngx-simplebar>
         </div>
       </div>
 
