@@ -59,4 +59,9 @@ export class ChatFlutuanteComponent {
   public data(data) {
     return Utils.formatarDataParaExibicao(data);
   }
+
+  formatarHora(dataString: string): string {
+    const data = new Date(dataString);
+    return `${data.getHours()}:${data.getMinutes().toString().padStart(2, '0')}`;
+  }
 }
