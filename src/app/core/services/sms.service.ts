@@ -18,5 +18,4 @@ export class SmsService {
   public envioSmsUnitario(sms: SmsModel): Observable<any> {
     return this._http.post<RetornoSmsEnvio>(`${this.apiUrl}/enviosms`, sms);
   }
-
 }

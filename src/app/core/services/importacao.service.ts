@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConfig } from './url.base.service';
-import { ImportacaoRequisicaoModel, ImportacaoRetornoModel } from '../models/importacao.model';
+import { ImportacaoRetornoModel } from '../models/importacao.model';
 import { Cadastro } from '../models/cadastro.model';
 
 @Injectable({
@@ -23,8 +23,6 @@ export class ImportacaoService {
       'Accept': 'application/json'
     });
 
-
-
     return this._http.post(`${this.apiUrl}/arquivo`, file, { headers: headers, reportProgress: true, observe: 'events' });
   }
 
@@ -38,9 +36,7 @@ export class ImportacaoService {
     return this._http.post(`${this.apiUrl}/importacao`, body);
   }
 
-
   public loadImportacaoManual(): Observable<Cadastro[]> {
     return this._http.get<Cadastro[]>('assets/base/importacao-manual.json');
   }
-
 }

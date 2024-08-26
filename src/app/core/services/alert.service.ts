@@ -45,6 +45,24 @@ export class AlertService {
     });
   }
 
+  info(message: string, title: string = 'Info!') {
+    this.swalWithBootstrapButtons.fire({
+      title: title,
+      text: message,
+      icon: 'info',
+      showConfirmButton: true
+    });
+  }
+
+  question(message: string, title: string = 'Tem certesa que deseja proceguir com a ação?') {
+    this.swalWithBootstrapButtons.fire({
+      title: title,
+      text: message,
+      icon: 'question',
+      showConfirmButton: true
+    });
+  }
+
   timer(show: boolean, timer: number = 2000) {
     if (show) {
       Swal.fire({
