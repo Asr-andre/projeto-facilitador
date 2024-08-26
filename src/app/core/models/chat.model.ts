@@ -1,15 +1,17 @@
 export class RequisicaoChatModel {
-  id: string;
+  numero: string;
 }
 
-export interface Mensagem {
-  mensagem: string;
-  data_local: string;
-}
-
-export interface ChatResponseModel {
+export class HistoricoChat {
   success: string;
   msg: string;
-  id: string;
-  mensagens: Mensagem[];
+  nome: string;
+  telefone: string;
+  historico: HistoricoItem[];
+}
+
+export class HistoricoItem {
+  envio: string;
+  mensagem: string;
+  data: string;
 }

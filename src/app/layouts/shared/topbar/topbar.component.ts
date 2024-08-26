@@ -20,7 +20,7 @@ import { Utils } from 'src/app/core/helpers/utils';
 })
 export class TopbarComponent implements OnInit, OnDestroy {
 
-  private pollingInterval = 30000; // 30 segundos
+  private pollingInterval = 60000; // 30 segundos
   private pollingSubscription: Subscription;
   public idEmpresa: number = Number(this.authService.getIdEmpresa() || 0);
   public resMsg: AlertaModel [] = [];
@@ -174,7 +174,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/account/login']);
   }
 
-  abrirChat(id: string): void {
-    this.chatVisibilidadeService.mostrarChat(id);
+  public abrirChat(telefone: string): void {
+    this.chatVisibilidadeService.mostrarChat(telefone); // Passa o telefone para o serviço
   }
 }

@@ -7,20 +7,14 @@
     <button (click)="fecharChat()">X</button>
   </div>
   <div class="chat-corpo">
-    <!-- Exemplo de mensagens -->
-    <div class="mensagem mensagem-enviada">
+    <div *ngFor="let msg of mensagens"
+         class="mensagem"
+         [ngClass]="msg.envio.includes('Operador') ? 'mensagem-enviada' : 'mensagem-recebida'">
       <div class="mensagem-conteudo">
-        <p>Olá, como posso ajudar?</p>
-        <span class="mensagem-hora">14:30</span>
+        <p>{{ msg.mensagem }}</p>
+        <span class="mensagem-hora">{{ data(msg.data) }}</span>
       </div>
     </div>
-    <div class="mensagem mensagem-recebida">
-      <div class="mensagem-conteudo">
-        <p>Preciso de informações sobre o produto X.</p>
-        <span class="mensagem-hora">14:31</span>
-      </div>
-    </div>
-    <!-- Adicionar mais mensagens aqui -->
   </div>
   <div class="chat-rodape">
     <input type="text" placeholder="Digite sua mensagem...">
