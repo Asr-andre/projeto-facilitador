@@ -15,6 +15,7 @@ export class ChatFlutuanteComponent {
   mensagemId: string;
   mensagens: HistoricoItem [] = [];
   envioMensagemForm: FormGroup;
+  public loadingMin: boolean = false;
 
   centro_custo = '66bba84b2e0f90a2984941c6';
 
@@ -52,30 +53,41 @@ export class ChatFlutuanteComponent {
   }
 
   carregarMensagens(telefone: string): void {
+    this.loadingMin = true;
     this.chatVisibilidadeService.obterHistoricoChat(telefone).subscribe(
       (response) => {
-        this.mensagens = response.historico; // Atualiza as mensagens recebidas
-        this.telefone = response.telefone
-        this.envioMensagemForm.patchValue({ telefone: this.telefone });
-        setTimeout(() => this.scrollToBottom(), 100);
+        if (response.success === 'true') {
+          this.loadingMin = false;
+          this.mensagens = response.historico; // Atualiza as mensagens recebidas
+          this.telefone = response.telefone;
+          this.envioMensagemForm.patchValue({ telefone: this.telefone });
+          setTimeout(() => this.scrollToBottom(), 100); // Desce para a última mensagem
+        } else {
+          this.loadingMin = false;
+        }
       },
       (error) => {
+        this.loadingMin = false;
         console.error('Erro ao carregar mensagens', error);
       }
     );
   }
 
   enviarMensagem() {
+    this.loadingMin = true;
     this.chatVisibilidadeService.chat(this.envioMensagemForm.value).subscribe(response => {
       if (response.success === 'true') {
+        this.loadingMin = false;
         this.carregarMensagens(this.telefone);
         this.envioMensagemForm.patchValue({ mensagem: '' }); // Limpa o campo mensagem
         setTimeout(() => this.scrollToBottom(), 100);
       } else {
+        this.loadingMin = false;
         console.error('Falha no envio da mensagem:', response);
       }
     },
       (error) => {
+        this.loadingMin = false;
         console.error('Erro ao carregar mensagens:', error);
       }
     );
