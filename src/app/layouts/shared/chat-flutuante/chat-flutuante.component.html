@@ -7,7 +7,7 @@
       </button>
       <button (click)="fecharChat()">X</button>
     </div>
-    <div class="chat-corpo">
+    <div class="chat-corpo" #chatCorpo>
       <div *ngFor="let msg of mensagens"
            class="mensagem"
            [ngClass]="msg.envio.includes('Operador') ? 'mensagem-enviada' : 'mensagem-recebida'">

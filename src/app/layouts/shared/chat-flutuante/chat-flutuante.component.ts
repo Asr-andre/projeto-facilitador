@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ChatVisibilidadeService } from 'src/app/core/services/chat.flutuante.service';
 import { HistoricoItem } from 'src/app/core/models/chat.model';
@@ -18,6 +18,8 @@ export class ChatFlutuanteComponent {
 
   telefone: string = '';
   id: string =  '';
+
+  @ViewChild('chatCorpo') private chatCorpo: ElementRef;
 
   constructor(
     private chatVisibilidadeService: ChatVisibilidadeService,
@@ -53,6 +55,9 @@ export class ChatFlutuanteComponent {
         this.mensagens = response.historico; // Atualiza as mensagens recebidas
         this.telefone = response.telefone;
         this.id = response.telefone;
+
+        this.envioMensagemForm.patchValue({ telefone: this.telefone });
+        setTimeout(() => this.scrollToBottom(), 100);
       },
       (error) => {
         console.error('Erro ao carregar mensagens', error);
@@ -62,9 +67,26 @@ export class ChatFlutuanteComponent {
 
   enviarMensagem() {
     this.chatVisibilidadeService.chat(this.envioMensagemForm.value).subscribe(response => {
-      this.carregarMensagens(this.telefone);
-      this.inicializarForChat();
-    });
+      if (response.success === 'true') {
+        this.carregarMensagens(this.telefone);
+        this.envioMensagemForm.patchValue({ mensagem: '' }); // Limpa o campo mensagem
+        setTimeout(() => this.scrollToBottom(), 100);
+      } else {
+        console.error('Falha no envio da mensagem:', response);
+      }
+    },
+      (error) => {
+        console.error('Erro ao carregar mensagens:', error);
+      }
+    );
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.chatCorpo.nativeElement.scrollTop = this.chatCorpo.nativeElement.scrollHeight;
+    } catch (err) {
+      console.error('Erro ao rolar para a última mensagem:', err);
+    }
   }
 
   fecharChat(): void {
