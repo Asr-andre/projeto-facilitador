@@ -39,7 +39,7 @@
 
       <div class="dropdown d-inline-block" ngbDropdown>
         <button type="button" ngbDropdownToggle class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="ri-notification-3-line"></i>
+          <i class="ri-notification-3-line" (click)="monitorarMsg()"></i>
           <div *ngIf="resMsg">
             <span class="noti-dot"></span>
           </div>

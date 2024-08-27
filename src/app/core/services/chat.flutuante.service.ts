@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HistoricoChat, HistoricoItem, RequisicaoChatModel } from '../models/chat.model';
+import { HistoricoChat, HistoricoItem, MensagemRequestModel, MensagemResponseModel, RequisicaoChatModel } from '../models/chat.model';
 import { AppConfig } from './url.base.service';
 
 @Injectable({
@@ -24,6 +24,9 @@ export class ChatVisibilidadeService {
     return this.http.post<HistoricoChat>(`${this.apiUrl}/consultamensagemhistorico`, requisicao);
   }
 
+  chat(chat: MensagemRequestModel): Observable<MensagemResponseModel> {
+    return this.http.post<MensagemResponseModel>(`${this.apiUrl}/enviomensagemoperador`, chat);
+  }
 
   esconderChat(): void {
     this.chatVisivelSubject.next({ visivel: false });

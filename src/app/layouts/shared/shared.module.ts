@@ -26,7 +26,7 @@ import { HorizontalnavbarComponent } from './horizontalnavbar/horizontalnavbar.c
     NgbDropdownModule,
     ClickOutsideModule,
     RouterModule,
-    NgbNavModule,
+    NgbNavModule
   ],
   exports: [TopbarComponent, FooterComponent, SidebarComponent, HorizontaltopbarComponent, HorizontalnavbarComponent],
   providers: [LanguageService]

@@ -10,6 +10,8 @@ import { VerticalComponent } from './vertical/vertical.component';
 import { HorizontalComponent } from './horizontal/horizontal.component';
 import { LayoutComponent } from './layout/layout.component';
 import { ChatFlutuanteComponent } from './shared/chat-flutuante/chat-flutuante.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [VerticalComponent, HorizontalComponent, LayoutComponent, ChatFlutuanteComponent],
@@ -18,6 +20,8 @@ import { ChatFlutuanteComponent } from './shared/chat-flutuante/chat-flutuante.c
     SharedModule,
     RouterModule,
     SimplebarAngularModule,
+    ReactiveFormsModule,
+    NgbTooltipModule,
   ],
   exports: [VerticalComponent, HorizontalComponent, ChatFlutuanteComponent]
 })
