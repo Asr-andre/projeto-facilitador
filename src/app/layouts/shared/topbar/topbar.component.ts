@@ -24,6 +24,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
   private pollingSubscription: Subscription;
   public idEmpresa: number = Number(this.authService.getIdEmpresa() || 0);
   public resMsg: AlertaModel [] = [];
+  public centro_custo = 'centro_custo';
 
   element: any;
   configData: any;

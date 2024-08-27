@@ -16,6 +16,8 @@ export class ChatFlutuanteComponent {
   mensagens: HistoricoItem [] = [];
   envioMensagemForm: FormGroup;
 
+  centro_custo = '66bba84b2e0f90a2984941c6';
+
   telefone: string = '';
   id: string =  '';
 
@@ -43,7 +45,7 @@ export class ChatFlutuanteComponent {
 
   inicializarForChat() {
     this.envioMensagemForm = this.fb.group({
-      centro_custo: ['', Validators.required],
+      centro_custo: [this.centro_custo, Validators.required],
       telefone: [this.telefone, [Validators.required, Validators.pattern(/^\d{10,11}$/)]], // Valida números com 10-11 dígitos
       mensagem: ['', Validators.required]
     });
@@ -53,9 +55,7 @@ export class ChatFlutuanteComponent {
     this.chatVisibilidadeService.obterHistoricoChat(telefone).subscribe(
       (response) => {
         this.mensagens = response.historico; // Atualiza as mensagens recebidas
-        this.telefone = response.telefone;
-        this.id = response.telefone;
-
+        this.telefone = response.telefone
         this.envioMensagemForm.patchValue({ telefone: this.telefone });
         setTimeout(() => this.scrollToBottom(), 100);
       },
