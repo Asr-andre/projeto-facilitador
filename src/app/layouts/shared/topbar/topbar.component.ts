@@ -23,7 +23,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
   private pollingInterval = 60000; // 30 segundos
   private pollingSubscription: Subscription;
   public idEmpresa: number = Number(this.authService.getIdEmpresa() || 0);
-  public resMsg: AlertaModel [] = [];
+  public resMsg: AlertaModel[] = [];
   private canal = 'canal';
 
   element: any;
@@ -41,36 +41,24 @@ export class TopbarComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line: max-line-length
   constructor(@Inject(DOCUMENT)
   private document: any,
-  private router: Router,
-  private authService: AuthenticationService,
-  private authFackservice: AuthfakeauthenticationService,
-  public languageService: LanguageService,
-  public cookiesService: CookieService,
-  private chatVisibilidadeService: ChatVisibilidadeService,
-  private _sininhoService:SininhoService,
-) { }
+    private router: Router,
+    private authService: AuthenticationService,
+    private authFackservice: AuthfakeauthenticationService,
+    public languageService: LanguageService,
+    public cookiesService: CookieService,
+    private chatVisibilidadeService: ChatVisibilidadeService,
+    private _sininhoService: SininhoService,
+  ) { }
 
   @Output() mobileMenuButtonClicked = new EventEmitter();
   @Output() settingsButtonClicked = new EventEmitter();
 
   ngOnInit(): void {
-    this.element = document.documentElement;
-    this.configData = {
-      suppressScrollX: true,
-      wheelSpeed: 0.3
-    };
-
-    this.cookieValue = this.cookiesService.get('lang');
-    const val = this.listLang.filter(x => x.lang === this.cookieValue);
-    this.countryName = val.map(element => element.text);
-    if (val.length === 0) {
-      if (this.flagvalue === undefined) { this.valueset = 'assets/images/flags/us.jpg'; }
-    } else {
-      this.flagvalue = val.map(element => element.flag);
-    }
-    // Obter o usuário atual do serviço de autenticação
     this.currentUser = this.authService.getLogin();
-    this.monitorarMsg();
+    setTimeout(() => {
+      this.monitorarMsg();
+    }, 10000);
+
   }
 
   ngOnDestroy(): void {
