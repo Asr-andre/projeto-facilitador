@@ -85,6 +85,7 @@ export class ChatFlutuanteComponent {
         this.loadingMin = false;
         this.carregarMensagens(this.telefone);
         this.envioMensagemForm.patchValue({ mensagem: '' }); // Limpa o campo mensagem
+        this.canal = localStorage.getItem('canal');
         setTimeout(() => this.scrollToBottom(), 100);
       } else {
         this.loadingMin = false;
