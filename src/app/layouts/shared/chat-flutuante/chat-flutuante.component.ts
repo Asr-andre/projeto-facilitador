@@ -18,9 +18,10 @@ export class ChatFlutuanteComponent {
   public loadingMin: boolean = false;
 
   centro_custo = '66bba84b2e0f90a2984941c6';
-
   telefone: string = '';
-  id: string =  '';
+  id = 1;
+  canal = localStorage.getItem('canal');
+  mensagemTemporaria: HistoricoItem | null = null;
 
   @ViewChild('chatCorpo') private chatCorpo: ElementRef;
 
@@ -46,9 +47,11 @@ export class ChatFlutuanteComponent {
 
   inicializarForChat() {
     this.envioMensagemForm = this.fb.group({
+      numero: [this.telefone, [Validators.required]],
+      canal: [this.canal],
+      mensagem: ['', Validators.required],
+      idcustom: [1],
       centro_custo: [this.centro_custo, Validators.required],
-      telefone: [this.telefone, [Validators.required, Validators.pattern(/^\d{10,11}$/)]], // Valida números com 10-11 dígitos
-      mensagem: ['', Validators.required]
     });
   }
 
@@ -60,8 +63,9 @@ export class ChatFlutuanteComponent {
           this.loadingMin = false;
           this.mensagens = response.historico; // Atualiza as mensagens recebidas
           this.telefone = response.telefone;
-          this.envioMensagemForm.patchValue({ telefone: this.telefone });
+          this.envioMensagemForm.patchValue({ numero: this.telefone });
           setTimeout(() => this.scrollToBottom(), 100); // Desce para a última mensagem
+          console.log(telefone)
         } else {
           this.loadingMin = false;
         }
@@ -74,6 +78,7 @@ export class ChatFlutuanteComponent {
   }
 
   enviarMensagem() {
+    console.log(this.envioMensagemForm.value)
     this.loadingMin = true;
     this.chatVisibilidadeService.chat(this.envioMensagemForm.value).subscribe(response => {
       if (response.success === 'true') {
@@ -103,6 +108,7 @@ export class ChatFlutuanteComponent {
 
   fecharChat(): void {
     this.chatVisibilidadeService.esconderChat();
+    localStorage.removeItem(this.canal);
   }
 
   minimizarChat(): void {

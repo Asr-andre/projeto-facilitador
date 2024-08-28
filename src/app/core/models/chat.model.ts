@@ -19,13 +19,16 @@ export class HistoricoItem {
 //-------------Este e a parte da interação do chat ----------------------
 
 export class MensagemRequestModel {
-  centro_custo: string;
-  telefone: string;
+  numero: string;
+  canal: string;
   mensagem: string;
+  idcustom: number;
+  centro_custo: string;
 }
 
 export class MensagemResponseModel {
   success: string;
   msg: string;
   telefone: string;
+  data: string;
 }
