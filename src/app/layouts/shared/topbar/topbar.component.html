@@ -55,7 +55,7 @@
           </div>
           <ngx-simplebar style="position: relative; height: 230px;">
             <div *ngFor="let item of resMsg" class="d-flex">
-              <a href="javascript: void(0);" class="text-reset notification-item" (click)="abrirChat(item.telefone)">
+              <a href="javascript: void(0);" class="text-reset notification-item" (click)="abrirChat(item.telefone, item.canal)">
                 <div class="d-flex">
                   <div class="avatar-xs">
                     <i class="fab fa-whatsapp whatsapp-icon font-size-24" style="color: #25D366;"></i>

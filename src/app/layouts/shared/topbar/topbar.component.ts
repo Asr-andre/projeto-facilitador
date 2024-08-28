@@ -24,7 +24,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
   private pollingSubscription: Subscription;
   public idEmpresa: number = Number(this.authService.getIdEmpresa() || 0);
   public resMsg: AlertaModel [] = [];
-  public centro_custo = 'centro_custo';
+  private canal = 'canal';
 
   element: any;
   configData: any;
@@ -175,7 +175,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/account/login']);
   }
 
-  public abrirChat(telefone: string): void {
+  public abrirChat(telefone: string, canal: string): void {
+
+    localStorage.setItem(this.canal, canal);
     this.chatVisibilidadeService.mostrarChat(telefone); // Passa o telefone para o serviço
   }
 }

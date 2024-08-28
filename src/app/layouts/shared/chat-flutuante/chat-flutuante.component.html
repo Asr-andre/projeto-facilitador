@@ -2,13 +2,24 @@
 
 <form [formGroup]="envioMensagemForm" >
   <div class="chat-flutuante" *ngIf="chatVisivel" [ngClass]="{'minimizado': minimizado}">
-    <div class="chat-cabecalho">
-      <i class="fab fa-whatsapp whatsapp-icon font-size-24 pointer-cursor" style="color: #25D366;" ngbTooltip="Atualizar Historico" (click)="carregarMensagens(telefone)"></i>
-      <button (click)="minimizado ? restaurarChat() : minimizarChat()">
-        {{ minimizado ? 'Restaurar' : 'Minimizar' }}
-      </button>
-      <button (click)="fecharChat()">X</button>
+    <div class="chat-cabecalho d-flex align-items-center justify-content-between p-2">
+      <div class="d-flex align-items-center">
+        <i class="fab fa-whatsapp whatsapp-icon font-size-24 pointer-cursor me-2"
+           style="color: #25D366;"
+           ngbTooltip="Atualizar Historico"
+           (click)="carregarMensagens(telefone)">
+        </i>
+        <span class="me-3">{{ telefone }}</span>
+      </div>
+      <div class="d-flex align-items-center">
+        <button class="btn btn-outline-secondary btn-sm me-2"
+                (click)="minimizado ? restaurarChat() : minimizarChat()">
+          {{ minimizado ? 'Restaurar' : 'Minimizar' }}
+        </button>
+        <button class="btn btn-outline-danger btn-sm" (click)="fecharChat()">X</button>
+      </div>
     </div>
+
 
     <div class="loading-overlay-card" *ngIf="loadingMin">
       <div class="spinner-border text-primary m-1" role="status">

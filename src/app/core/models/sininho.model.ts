@@ -9,6 +9,7 @@ export class AlertaModel {
   mensagem: string;
   telefone: string;
   data_men: string;
+  canal: string;
 }
 
 export class RespostaModel {

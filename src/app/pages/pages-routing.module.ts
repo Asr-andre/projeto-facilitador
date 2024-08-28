@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FilaComponent } from './fila/fila.component';
 import { CarteiraDeClientesComponent } from './carteira-de-clientes/carteira-de-clientes.component';
+import { ChatComponent } from './chat/chat.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -11,6 +12,7 @@ const routes: Routes = [
     { path: 'processamentos', loadChildren: () => import('./processamentos/processamentos.module').then(m => m.ProcessamentosModule) },
     { path: 'fila', component: FilaComponent },
     { path: 'carteira-de-clientes', component: CarteiraDeClientesComponent },
+    { path: 'chat', component: ChatComponent },
 ];
 
 @NgModule({

@@ -25,6 +25,12 @@ import { MenuItem } from "./menu.model";
       link: "/carteira-de-clientes",
     },
     {
+      id: 3,
+      label: "MENUITEMS.CHAT.TEXT",
+      icon: "ri-chat-1-line",
+      link: "/chat",
+    },
+    {
       id: 2,
       label: "MENUITEMS.FILA.TEXT",
       icon: "fas fa-tasks",
