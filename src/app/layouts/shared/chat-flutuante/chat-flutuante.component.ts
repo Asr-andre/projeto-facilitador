@@ -138,6 +138,5 @@ export class ChatFlutuanteComponent {
 
     // Retornando a data e hora formatadas
     return `${dia}/${mes}/${ano} ${horas}:${minutos}`;
-}
-
+  }
 }
