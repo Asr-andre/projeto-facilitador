@@ -14,7 +14,6 @@ export class ChatComponent {
 
   formData: UntypedFormGroup;
 
-  // Form submit
   chatSubmit: boolean;
 
   username: string;
@@ -22,14 +21,10 @@ export class ChatComponent {
   status: string;
   image: string;
 
-  // bread crumb items
-  breadCrumbItems: Array<{}>;
-
   constructor(public formBuilder: UntypedFormBuilder) {
   }
 
   ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'Nazox' }, { label: 'Chat', active: true }];
 
     this.formData = this.formBuilder.group({
       message: ['', [Validators.required]],
@@ -44,7 +39,6 @@ export class ChatComponent {
     this.chatData = chatData;
     this.chatMessagesData = chatMessagesData;
   }
-
 
   chatUsername(name, image, status) {
     this.username = name;
@@ -63,16 +57,10 @@ export class ChatComponent {
     });
   }
 
-  /**
-   * Returns form
-   */
   get form() {
     return this.formData.controls;
   }
 
-  /**
-   * Save the message in chat
-   */
   messageSave() {
     const message = this.formData.get('message').value;
     const currentDate = new Date();
@@ -85,7 +73,6 @@ export class ChatComponent {
         time: currentDate.getHours() + ':' + currentDate.getMinutes()
       });
 
-      // Set Form Data Reset
       this.formData = this.formBuilder.group({
         message: null
       });
