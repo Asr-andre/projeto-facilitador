@@ -32,7 +32,7 @@
            [ngClass]="msg.envio.includes('Operador') ? 'mensagem-enviada' : 'mensagem-recebida'">
         <div class="mensagem-conteudo">
           <p>{{ msg.mensagem }}</p>
-          <span class="mensagem-hora">{{ data(msg.data) }}</span>
+          <span class="mensagem-hora">{{ formatarDataHora(msg.data) }}</span>
         </div>
       </div>
     </div>

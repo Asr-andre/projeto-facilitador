@@ -120,12 +120,24 @@ export class ChatFlutuanteComponent {
     this.minimizado = false;
   }
 
-  public data(data) {
+  public dataAtual(data) {
     return Utils.formatarDataParaExibicao(data);
   }
 
-  formatarHora(dataString: string): string {
+  formatarDataHora(dataString: string): string {
     const data = new Date(dataString);
-    return `${data.getHours()}:${data.getMinutes().toString().padStart(2, '0')}`;
-  }
+
+    // Formatando a data para o formato DD/MM/YYYY
+    const dia = data.getDate().toString().padStart(2, '0');
+    const mes = (data.getMonth() + 1).toString().padStart(2, '0'); // Os meses são de 0 a 11
+    const ano = data.getFullYear();
+
+    // Formatando a hora para HH:MM
+    const horas = data.getHours().toString().padStart(2, '0');
+    const minutos = data.getMinutes().toString().padStart(2, '0');
+
+    // Retornando a data e hora formatadas
+    return `${dia}/${mes}/${ano} ${horas}:${minutos}`;
+}
+
 }
