@@ -19,9 +19,9 @@ export class ChatVisibilidadeService {
     this.chatVisivelSubject.next({ visivel: true, id });
   }
 
-  obterHistoricoChat(telefone: string): Observable<HistoricoChat> {
-    const requisicao: RequisicaoChatModel = { numero: telefone }; // Cria o objeto para a requisição
-    return this.http.post<HistoricoChat>(`${this.apiUrl}/consultamensagemhistorico`, requisicao);
+  obterHistoricoChat(telefone: string, canal: string): Observable<HistoricoChat> {
+    const requisicao: RequisicaoChatModel = { numero: telefone, canal: canal }; // Cria o objeto para a requisição
+    return this.http.post<HistoricoChat>(`${this.apiUrl}/enviomensagemchat`, requisicao);
   }
 
   chat(chat: MensagemRequestModel): Observable<MensagemResponseModel> {

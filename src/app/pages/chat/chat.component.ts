@@ -18,6 +18,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   public idEmpresa: number = Number(this.auth.getIdEmpresa() || 0);
   public resMsg: AlertaModel[] = [];
 
+
   chatMessagesData: ChatMessage[];
   chatData: ChatUser[];
 

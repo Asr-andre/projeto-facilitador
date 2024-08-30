@@ -5,6 +5,7 @@ export class RequisicaoModel {
 
 export class AlertaModel {
   id: string;
+  contrato: string;
   cpf: string;
   mensagem: string;
   telefone: string;

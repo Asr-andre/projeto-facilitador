@@ -1,19 +1,20 @@
 export class RequisicaoChatModel {
   numero: string;
+  canal: string;
 }
 
 export class HistoricoChat {
   success: string;
   msg: string;
-  nome: string;
   telefone: string;
-  historico: HistoricoItem[];
+  canal: string;
+  mensagens: HistoricoItem[];
 }
 
 export class HistoricoItem {
-  envio: string;
+  tipo: string;
   mensagem: string;
-  data: string;
+  data_local: string;
 }
 
 //-------------Este e a parte da interação do chat ----------------------

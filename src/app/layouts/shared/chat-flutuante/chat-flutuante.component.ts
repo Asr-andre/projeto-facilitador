@@ -57,15 +57,15 @@ export class ChatFlutuanteComponent {
 
   carregarMensagens(telefone: string): void {
     this.loadingMin = true;
-    this.chatVisibilidadeService.obterHistoricoChat(telefone).subscribe(
+    this.chatVisibilidadeService.obterHistoricoChat(telefone, this.canal).subscribe(
       (response) => {
         if (response.success === 'true') {
           this.loadingMin = false;
-          this.mensagens = response.historico; // Atualiza as mensagens recebidas
+          this.mensagens = response.mensagens; // Atualiza as mensagens recebidas
           this.telefone = response.telefone;
           this.envioMensagemForm.patchValue({ numero: this.telefone });
           setTimeout(() => this.scrollToBottom(), 100); // Desce para a última mensagem
-          console.log(telefone)
+          console.log(this.mensagens)
         } else {
           this.loadingMin = false;
         }
