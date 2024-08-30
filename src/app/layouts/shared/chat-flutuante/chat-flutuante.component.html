@@ -28,14 +28,17 @@
 
     <div class="chat-corpo" #chatCorpo>
       <div *ngFor="let msg of mensagens"
-           class="mensagem"
-           [ngClass]="{
-            'mensagem-enviada': msg.tipo.includes('O'),
-            'mensagem-recebida': msg.tipo.includes('C')
-          }">
-        <div class="mensagem-conteudo">
-          <p>{{ msg.mensagem }}</p>
-          <span class="mensagem-hora">{{ formatarDataHora(msg.data_local) }}</span>
+      class="mensagem"
+      [ngClass]="{
+        'mensagem-enviada': msg.tipo.includes('O'),
+        'mensagem-recebida': msg.tipo.includes('C')
+      }">
+   <div class="mensagem-conteudo">
+     <!-- Adicionando "Operador" ou "Cliente" antes da mensagem -->
+     <p>
+       {{ msg.tipo.includes('O') ? 'Operador:' : 'Cliente:' }} <br> {{ msg.mensagem }}
+     </p>
+     <span class="mensagem-hora">{{ formatarDataHora(msg.data_local) }}</span>
         </div>
       </div>
     </div>
