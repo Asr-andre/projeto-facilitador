@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
@@ -12,6 +12,7 @@ import { interval, Subscription } from 'rxjs';
 import { SininhoService } from 'src/app/core/services/sininho.service';
 import { AlertaModel } from 'src/app/core/models/sininho.model';
 import { Utils } from 'src/app/core/helpers/utils';
+import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-topbar',
@@ -25,6 +26,8 @@ export class TopbarComponent implements OnInit, OnDestroy {
   public idEmpresa: number = Number(this.authService.getIdEmpresa() || 0);
   public resMsg: AlertaModel[] = [];
   private canal = 'canal';
+
+  @ViewChild('dropdown') dropdown: NgbDropdown;
 
   element: any;
   configData: any;
@@ -163,9 +166,10 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/account/login']);
   }
 
-  public abrirChat(telefone: string, canal: string): void {
+  public abrirChat(telefone: string, canal: string, dropdown: NgbDropdown): void {
 
     localStorage.setItem(this.canal, canal);
     this.chatVisibilidadeService.mostrarChat(telefone); // Passa o telefone para o serviço
+    dropdown.close(); // Fecha o dropdown após a interação
   }
 }

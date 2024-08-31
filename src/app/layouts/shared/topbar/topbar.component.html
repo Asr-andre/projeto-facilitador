@@ -37,7 +37,7 @@
         </button>
       </div>
 
-      <div class="dropdown d-inline-block" ngbDropdown>
+      <div class="dropdown d-inline-block" ngbDropdown #dropdown="ngbDropdown">
         <button type="button" ngbDropdownToggle class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="ri-notification-3-line" (click)="monitorarMsg()"></i>
           <div *ngIf="resMsg">
@@ -55,7 +55,7 @@
           </div>
           <ngx-simplebar style="position: relative; height: 230px;">
             <div *ngFor="let item of resMsg" class="d-flex">
-              <a href="javascript: void(0);" class="text-reset notification-item" (click)="abrirChat(item.telefone, item.canal)">
+              <a href="javascript: void(0);" class="text-reset notification-item" (click)="abrirChat(item.telefone, item.canal, dropdown)">
                 <div class="d-flex">
                   <div class="avatar-xs">
                     <i class="fab fa-whatsapp whatsapp-icon font-size-24" style="color: #25D366;"></i>
