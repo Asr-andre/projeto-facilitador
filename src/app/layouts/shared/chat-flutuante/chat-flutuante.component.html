@@ -46,7 +46,7 @@
 
     <div class="chat-rodape">
       <input type="text" placeholder="Digite sua mensagem..." formControlName="mensagem">
-      <button (click)="enviarMensagem()">Enviar</button>
+      <button (click)="enviarMensagem()" [disabled]="!envioMensagemForm.valid">Enviar</button>
     </div>
   </div>
 </form>
