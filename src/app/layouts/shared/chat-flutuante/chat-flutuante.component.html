@@ -36,9 +36,10 @@
    <div class="mensagem-conteudo">
      <!-- Adicionando "Operador" ou "Cliente" antes da mensagem -->
      <p>
-       {{ msg.tipo.includes('O') ? 'Operador:' : 'Cliente:' }} <br> {{ msg.mensagem }}
+      <strong>{{ msg.tipo === 'O' ? 'Operador' : 'Cliente' }}:</strong> <br>
+      {{ msg.mensagem }}
      </p>
-     <span class="mensagem-hora">{{ formatarDataHora(msg.data_local) }}</span>
+     <span class="mensagem-hora">{{ dataAtual(msg.data_local) }}</span>
         </div>
       </div>
     </div>

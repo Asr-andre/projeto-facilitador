@@ -34,15 +34,14 @@ export class ChatFlutuanteComponent {
   }
 
   ngOnInit(): void {
+    this.inicializarForChat();
     this.chatVisibilidadeService.chatVisivel.subscribe(state => {
       this.chatVisivel = state.visivel;
-
       if (state.visivel && state.id) {
         this.carregarMensagens(state.id); // Carrega mensagens com o telefone
       }
     });
 
-    this.inicializarForChat();
   }
 
   inicializarForChat() {
@@ -56,16 +55,19 @@ export class ChatFlutuanteComponent {
   }
 
   carregarMensagens(telefone: string): void {
+    if (!telefone) return;
+    this.canal = localStorage.getItem('canal');
     this.loadingMin = true;
+
     this.chatVisibilidadeService.obterHistoricoChat(telefone, this.canal).subscribe(
       (response) => {
         if (response.success === 'true') {
           this.loadingMin = false;
-          this.mensagens = response.mensagens; // Atualiza as mensagens recebidas
+           // Ordena as mensagens por data
+        this.mensagens = response.mensagens.sort((a, b) => new Date(a.data_local).getTime() - new Date(b.data_local).getTime());
           this.telefone = response.telefone;
           this.envioMensagemForm.patchValue({ numero: this.telefone });
           setTimeout(() => this.scrollToBottom(), 100); // Desce para a última mensagem
-          console.log(this.mensagens)
         } else {
           this.loadingMin = false;
         }
@@ -78,15 +80,14 @@ export class ChatFlutuanteComponent {
   }
 
   enviarMensagem() {
-    console.log(this.envioMensagemForm.value)
     this.loadingMin = true;
     this.chatVisibilidadeService.chat(this.envioMensagemForm.value).subscribe(response => {
       if (response.success === 'true') {
         this.loadingMin = false;
         this.carregarMensagens(this.telefone);
         this.envioMensagemForm.patchValue({ mensagem: '' }); // Limpa o campo mensagem
-        this.canal = localStorage.getItem('canal');
         setTimeout(() => this.scrollToBottom(), 100);
+        this.inicializarForChat();
       } else {
         this.loadingMin = false;
         console.error('Falha no envio da mensagem:', response);
@@ -110,6 +111,9 @@ export class ChatFlutuanteComponent {
   fecharChat(): void {
     this.chatVisibilidadeService.esconderChat();
     localStorage.removeItem(this.canal);
+    this.mensagens = [];
+    this.envioMensagemForm.reset(); // Limpa todos os campos do formulário
+    this.telefone = ''; // Reseta o telefone para garantir que novas mensagens sejam atualizadas corretamente
   }
 
   minimizarChat(): void {
@@ -122,21 +126,5 @@ export class ChatFlutuanteComponent {
 
   public dataAtual(data) {
     return Utils.formatarDataParaExibicao(data);
-  }
-
-  formatarDataHora(dataString: string): string {
-    const data = new Date(dataString);
-
-    // Formatando a data para o formato DD/MM/YYYY
-    const dia = data.getDate().toString().padStart(2, '0');
-    const mes = (data.getMonth() + 1).toString().padStart(2, '0'); // Os meses são de 0 a 11
-    const ano = data.getFullYear();
-
-    // Formatando a hora para HH:MM
-    const horas = data.getHours().toString().padStart(2, '0');
-    const minutos = data.getMinutes().toString().padStart(2, '0');
-
-    // Retornando a data e hora formatadas
-    return `${dia}/${mes}/${ano} ${horas}:${minutos}`;
   }
 }
