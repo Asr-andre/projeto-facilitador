@@ -158,12 +158,15 @@ export class TopbarComponent implements OnInit, OnDestroy {
    * Logout the user
    */
   logout() {
+    localStorage.clear();
+
     if (environment.defaultauth === 'firebase') {
       this.authService.logout();
     } else {
       this.authFackservice.logout();
     }
     this.router.navigate(['/account/login']);
+
   }
 
   public abrirChat(telefone: string, canal: string, dropdown: NgbDropdown): void {
