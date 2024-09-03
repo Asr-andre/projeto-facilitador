@@ -1,11 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ChatMessage, ChatUser } from './chat.model';
 import { chatData, chatMessagesData } from './data';
 import { SininhoService } from 'src/app/core/services/sininho.service';
 import { Subscription, interval } from 'rxjs';
 import { AlertaModel } from 'src/app/core/models/sininho.model';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { Utils } from 'src/app/core/helpers/utils';
+import { HistoricoItem } from 'src/app/core/models/chat.model';
+import { ChatVisibilidadeService } from 'src/app/core/services/chat.flutuante.service';
 
 @Component({
   selector: 'app-chat',
@@ -17,6 +20,15 @@ export class ChatComponent implements OnInit, OnDestroy {
   private pollingSubscription: Subscription;
   public idEmpresa: number = Number(this.auth.getIdEmpresa() || 0);
   public resMsg: AlertaModel[] = [];
+  mensagens: HistoricoItem [] = [];
+  envioMensagemForm: FormGroup;
+  public loadingMin: boolean = false;
+
+  centro_custo = '66bba84b2e0f90a2984941c6';
+  telefone: string = '';
+  id = 1;
+  canal = localStorage.getItem('canal');
+  mensagemTemporaria: HistoricoItem | null = null;
 
 
   chatMessagesData: ChatMessage[];
@@ -33,12 +45,15 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   constructor(public formBuilder: UntypedFormBuilder,
     private _sininhoService: SininhoService,
+    private chatVisibilidadeService: ChatVisibilidadeService,
     private auth: AuthenticationService,
+    private fb: FormBuilder,
   ) {
   }
 
   ngOnInit(): void {
     this.monitorarMsg();
+    this.inicializarForChat();
 
     this.formData = this.formBuilder.group({
       message: ['', [Validators.required]],
@@ -48,6 +63,38 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.username = 'Frank Vickery';
     this.status = 'online';
   }
+
+  inicializarForChat() {
+    this.envioMensagemForm = this.fb.group({
+      numero: [this.telefone, [Validators.required]],
+      canal: [this.canal],
+      mensagem: ['', Validators.required],
+      idcustom: [1],
+      centro_custo: [this.centro_custo, Validators.required],
+    });
+  }
+
+  carregarMensagens(telefone: string, canal: string): void {
+    this.loadingMin = true;
+    this.chatVisibilidadeService.obterHistoricoChat(telefone, canal).subscribe(
+      (response) => {
+        if (response.success === 'true') {
+          this.loadingMin = false;
+           // Ordena as mensagens por data
+        this.mensagens = response.mensagens.sort((a, b) => new Date(a.data_local).getTime() - new Date(b.data_local).getTime());
+          this.telefone = response.telefone;
+          this.envioMensagemForm.patchValue({ numero: this.telefone });
+        } else {
+          this.loadingMin = false;
+        }
+      },
+      (error) => {
+        this.loadingMin = false;
+        console.error('Erro ao carregar mensagens', error);
+      }
+    );
+  }
+
 
   private _fethchData() {
     this.chatData = chatData;
@@ -119,19 +166,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     });
   }
 
-  formatarDataHora(dataString: string): string {
-    const data = new Date(dataString);
-
-    // Formatando a data para o formato DD/MM/YYYY
-    const dia = data.getDate().toString().padStart(2, '0');
-    const mes = (data.getMonth() + 1).toString().padStart(2, '0'); // Os meses são de 0 a 11
-    const ano = data.getFullYear();
-
-    // Formatando a hora para HH:MM
-    const horas = data.getHours().toString().padStart(2, '0');
-    const minutos = data.getMinutes().toString().padStart(2, '0');
-
-    // Retornando a data e hora formatadas
-    return `${dia}/${mes}/${ano} ${horas}:${minutos}`;
+  public dataAtual(data) {
+    return Utils.formatarDataParaExibicao(data);
   }
 }

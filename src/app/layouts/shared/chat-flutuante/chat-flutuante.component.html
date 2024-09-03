@@ -1,5 +1,4 @@
 
-
 <form [formGroup]="envioMensagemForm" >
   <div class="chat-flutuante" *ngIf="chatVisivel" [ngClass]="{'minimizado': minimizado}">
     <div class="chat-cabecalho d-flex align-items-center justify-content-between p-2">
@@ -20,7 +19,6 @@
       </div>
     </div>
 
-
     <div class="loading-overlay-card" *ngIf="loadingMin">
       <div class="spinner-border text-primary m-1" role="status">
       </div>
@@ -34,7 +32,6 @@
         'mensagem-recebida': msg.tipo.includes('C')
       }">
    <div class="mensagem-conteudo">
-     <!-- Adicionando "Operador" ou "Cliente" antes da mensagem -->
      <p>
       <strong>{{ msg.tipo === 'O' ? 'Operador' : 'Cliente' }}:</strong> <br>
       {{ msg.mensagem }}

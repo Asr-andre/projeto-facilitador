@@ -18,9 +18,9 @@
           <li [ngbNavItem]="1">
             <ng-template ngbNavContent>
               <div>
-                <ngx-simplebar style="position: relative; height: 450px;">
+                <ngx-simplebar style="position: relative; height: 500px;">
                   <ul class="list-unstyled chat-list">
-                    <li *ngFor="let chat of resMsg">
+                    <li *ngFor="let chat of resMsg" (click)="carregarMensagens(chat.telefone, chat.canal)">
                       <a>
                         <div class="d-flex">
                           <div class="user-img online align-self-center me-3">
@@ -31,7 +31,7 @@
                             <h5 class="text-truncate font-size-14 mb-1">{{ chat.cpf }}</h5>
                             <p class="text-truncate mb-0">{{ chat.mensagem }}</p>
                           </div>
-                          <div class="font-size-11">{{ formatarDataHora(chat.data_men) }}</div>
+                          <div class="font-size-11">{{ dataAtual(chat.data_men) }}</div>
                         </div>
                       </a>
                     </li>
@@ -49,10 +49,7 @@
       <div class="p-3 px-lg-4 user-chat-border">
         <div class="row">
           <div class="col-md-4 col-6">
-            <h5 class="font-size-15 mb-1 text-truncate">{{username}}</h5>
-            <p class="text-muted text-truncate mb-0"><i class="mdi mdi-circle text-success align-middle me-1" [ngClass]="{'text-success': status === 'online',
-                'text-warning': status === 'intermediate'}"></i>
-              {{status}}</p>
+            <h5 class="font-size-15 mb-1 text-truncate"><i class="fab fa-whatsapp whatsapp-icon font-size-24 pointer-cursor me-2" style="color: #25D366;"></i> {{username}}</h5>
           </div>
           <div class="col-md-8 col-6">
             <ul class="list-inline user-chat-nav text-end mb-0">
