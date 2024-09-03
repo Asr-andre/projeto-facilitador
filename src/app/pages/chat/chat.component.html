@@ -23,8 +23,7 @@
               <div>
                 <ngx-simplebar style="position: relative; height: 500px;">
                   <ul class="list-unstyled chat-list pointer-cursor">
-                    <li *ngFor="let chat of resMsg" (click)="selecionarChat(chat)"
-                    [ngClass]="{'selected': chat === chatSelecionado}">
+                    <li *ngFor="let chat of resMsg" (click)="selecionarChat(chat)" [ngClass]="{'selected': chat === chatSelecionado}">
                       <a>
                         <div class="d-flex">
                           <div class="user-img online align-self-center me-3">
@@ -111,7 +110,7 @@
 
             <div class="col">
               <div class="position-relative">
-                <input type="text" class="form-control chat-input" placeholder="Enter Message..." formControlName="message" [ngClass]="{'is-invalid': chatSubmit && form.message.errors}">
+                <input type="text" class="form-control chat-input" placeholder="Digite uma msg..." formControlName="message" [ngClass]="{'is-invalid': chatSubmit && form.message.errors}">
                 @if(chatSubmit && form.message.errors){
                 <div class="invalid-feedback">
                   @if(form.message.errors.required){
@@ -122,7 +121,7 @@
               </div>
             </div>
             <div class="col-auto">
-              <button type="submit" class="btn btn-primary chat-send w-md waves-effect waves-light"><span class="d-none d-sm-inline-block me-2">Send</span> <i class="mdi mdi-send"></i></button>
+              <button type="submit" class="btn btn-primary chat-send w-md waves-effect waves-light"><span class="d-none d-sm-inline-block me-2">Enviar</span> <i class="mdi mdi-send"></i></button>
             </div>
 
           </form>
