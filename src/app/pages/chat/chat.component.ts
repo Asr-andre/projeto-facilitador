@@ -22,7 +22,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   public resMsg: AlertaModel[] = [];
   mensagens: HistoricoItem [] = [];
   envioMensagemForm: FormGroup;
-  public loadingMin: boolean = false;
+  public loading: boolean = false;
 
   centro_custo = '66bba84b2e0f90a2984941c6';
   telefone: string = '';
@@ -75,21 +75,21 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   carregarMensagens(telefone: string, canal: string): void {
-    this.loadingMin = true;
+    this.loading = true;
     this.chatVisibilidadeService.obterHistoricoChat(telefone, canal).subscribe(
       (response) => {
         if (response.success === 'true') {
-          this.loadingMin = false;
+          this.loading = false;
            // Ordena as mensagens por data
         this.mensagens = response.mensagens.sort((a, b) => new Date(a.data_local).getTime() - new Date(b.data_local).getTime());
           this.telefone = response.telefone;
           this.envioMensagemForm.patchValue({ numero: this.telefone });
         } else {
-          this.loadingMin = false;
+          this.loading = false;
         }
       },
       (error) => {
-        this.loadingMin = false;
+        this.loading = false;
         console.error('Erro ao carregar mensagens', error);
       }
     );
@@ -169,4 +169,25 @@ export class ChatComponent implements OnInit, OnDestroy {
   public dataAtual(data) {
     return Utils.formatarDataParaExibicao(data);
   }
+
+  public somenteData(data: Date): string {
+    const dataFormatada = new Date(data);
+    const dia = dataFormatada.getDate().toString().padStart(2, '0');
+    const mes = (dataFormatada.getMonth() + 1).toString().padStart(2, '0'); // +1 porque os meses começam do zero
+    const ano = dataFormatada.getFullYear();
+    return `${dia}/${mes}/${ano}`;
+  }
+
+  public horaAtual(dataIso: string): string {
+    if (!dataIso) return '';
+    const data = new Date(dataIso);
+
+    data.setHours(data.getHours() + 3);
+    const hora = data.getHours().toString().padStart(2, '0');
+    const minuto = data.getMinutes().toString().padStart(2, '0');
+    const segundo = data.getSeconds().toString().padStart(2, '0');
+
+    return `${hora}:${minuto}`;
+  }
+
 }

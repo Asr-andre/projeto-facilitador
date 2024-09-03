@@ -1,5 +1,8 @@
 <div class="container-fluid">
-
+  <div class="loading-overlay-pagina" *ngIf="loading">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
   <div class="d-lg-flex mb-4">
     <div class="chat-leftsidebar">
       <div class="p-3 border-bottom">
@@ -48,9 +51,6 @@
     <div class="w-100 user-chat mt-4 mt-sm-0">
       <div class="p-3 px-lg-4 user-chat-border">
         <div class="row">
-          <div class="col-md-4 col-6">
-            <h5 class="font-size-15 mb-1 text-truncate"><i class="fab fa-whatsapp whatsapp-icon font-size-24 pointer-cursor me-2" style="color: #25D366;"></i> {{username}}</h5>
-          </div>
           <div class="col-md-8 col-6">
             <ul class="list-inline user-chat-nav text-end mb-0">
               <li class="list-inline-item d-inline-block d-sm-none">
@@ -86,36 +86,26 @@
       <div class="px-lg-2">
         <div class="chat-conversation p-3">
           <ngx-simplebar style="height: 450px;">
-            @for(data of chatMessagesData;track $index){
-            <ul class="list-unstyled mb-0 pr-3" [ngClass]="{ 'right': data.align === 'right' }">
-              @if(data.text){
+            <ul *ngFor="let data of mensagens" class="list-unstyled mb-0 pr-3" [ngClass]="{ 'right': data.tipo === 'O', 'left': data.tipo !== 'O' }">
               <li>
                 <div class="chat-day-title">
-                  <span class="title">{{data.text}}</span>
+                  <span class="title">{{ somenteData(data.data_local) }}</span>
                 </div>
               </li>
-              }@else {
               <li>
                 <div class="conversation-list">
-                  @if(data.image){
-                  <div class="chat-avatar">
-                    <img src="{{data.image}}" alt="">
-                  </div>
-                  }
                   <div class="ctext-wrap">
-                    <div class="conversation-name">{{data.name}}</div>
+                    <div class="conversation-name">{{ data.tipo === 'O' ? 'Operador' : 'Cliente' }}</div>
                     <div class="ctext-wrap-content">
                       <p class="mb-0">
-                        {{data.message}}
+                        {{data.mensagem}}
                       </p>
                     </div>
-                    <p class="chat-time mb-0"><i class="mdi mdi-clock-outline align-middle me-1"></i> {{data.time}}</p>
+                    <p class="chat-time mb-0"><i class="mdi mdi-clock-outline align-middle me-1"></i> {{ horaAtual(data.data_local) }}</p>
                   </div>
                 </div>
               </li>
-              }
             </ul>
-            }
           </ngx-simplebar>
         </div>
       </div>
