@@ -1,8 +1,8 @@
 <div class="container-fluid">
   <div class="loading-overlay-pagina" *ngIf="loading">
-    <div class="spinner-border text-primary m-1" role="status">
-    </div>
+  <div class="spinner-border text-primary m-1" role="status">
   </div>
+</div>
   <div class="d-lg-flex mb-4">
     <div class="chat-leftsidebar">
       <div class="p-3 border-bottom">
@@ -22,8 +22,9 @@
             <ng-template ngbNavContent>
               <div>
                 <ngx-simplebar style="position: relative; height: 500px;">
-                  <ul class="list-unstyled chat-list">
-                    <li *ngFor="let chat of resMsg" (click)="carregarMensagens(chat.telefone, chat.canal)">
+                  <ul class="list-unstyled chat-list pointer-cursor">
+                    <li *ngFor="let chat of resMsg" (click)="selecionarChat(chat)"
+                    [ngClass]="{'selected': chat === chatSelecionado}">
                       <a>
                         <div class="d-flex">
                           <div class="user-img online align-self-center me-3">
@@ -88,11 +89,6 @@
           <ngx-simplebar style="height: 450px;">
             <ul *ngFor="let data of mensagens" class="list-unstyled mb-0 pr-3" [ngClass]="{ 'right': data.tipo === 'O', 'left': data.tipo !== 'O' }">
               <li>
-                <div class="chat-day-title">
-                  <span class="title">{{ somenteData(data.data_local) }}</span>
-                </div>
-              </li>
-              <li>
                 <div class="conversation-list">
                   <div class="ctext-wrap">
                     <div class="conversation-name">{{ data.tipo === 'O' ? 'Operador' : 'Cliente' }}</div>
@@ -101,7 +97,7 @@
                         {{data.mensagem}}
                       </p>
                     </div>
-                    <p class="chat-time mb-0"><i class="mdi mdi-clock-outline align-middle me-1"></i> {{ horaAtual(data.data_local) }}</p>
+                    <p class="chat-time mb-0"><i class="mdi mdi-clock-outline align-middle me-1"></i> {{ dataAtual(data.data_local) }}</p>
                   </div>
                 </div>
               </li>

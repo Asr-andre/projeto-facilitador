@@ -20,6 +20,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   private pollingSubscription: Subscription;
   public idEmpresa: number = Number(this.auth.getIdEmpresa() || 0);
   public resMsg: AlertaModel[] = [];
+  chatSelecionado: any; // Item atualmente selecionado
+
   mensagens: HistoricoItem [] = [];
   envioMensagemForm: FormGroup;
   public loading: boolean = false;
@@ -74,6 +76,11 @@ export class ChatComponent implements OnInit, OnDestroy {
     });
   }
 
+  selecionarChat(chat: any): void {
+    this.chatSelecionado = chat;
+    this.carregarMensagens(chat.telefone, chat.canal);
+  }
+
   carregarMensagens(telefone: string, canal: string): void {
     this.loading = true;
     this.chatVisibilidadeService.obterHistoricoChat(telefone, canal).subscribe(
@@ -94,7 +101,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       }
     );
   }
-
 
   private _fethchData() {
     this.chatData = chatData;

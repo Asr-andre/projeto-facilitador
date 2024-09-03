@@ -1,0 +1,16 @@
+.pointer-cursor {
+  cursor: pointer;
+}
+
+/* Destacar item ao passar o mouse */
+.chat-list li:hover {
+  background-color: #f1f1f1; /* Cor de fundo ao passar o mouse */
+  cursor: pointer;
+}
+
+/* Destacar item selecionado */
+.chat-list li.selected {
+  background-color: #f1f1f1; /* Cor de fundo quando o item está selecionado */
+  border-left: 4px solid #007bff; /* Borda à esquerda para indicar seleção */
+}
+
