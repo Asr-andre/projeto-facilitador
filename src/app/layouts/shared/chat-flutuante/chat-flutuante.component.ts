@@ -68,6 +68,7 @@ export class ChatFlutuanteComponent {
           this.telefone = response.telefone;
           this.envioMensagemForm.patchValue({ numero: this.telefone });
           setTimeout(() => this.scrollToBottom(), 100); // Desce para a última mensagem
+          this.inicializarForChat();
         } else {
           this.loadingMin = false;
         }
@@ -87,7 +88,6 @@ export class ChatFlutuanteComponent {
         this.carregarMensagens(this.telefone);
         this.envioMensagemForm.patchValue({ mensagem: '' }); // Limpa o campo mensagem
         setTimeout(() => this.scrollToBottom(), 100);
-        this.inicializarForChat();
       } else {
         this.loadingMin = false;
         console.error('Falha no envio da mensagem:', response);
