@@ -4,11 +4,12 @@ import { EmpresaComponent } from './empresa/empresa.component';
 import { ContratantesComponent } from './contratantes/contratantes.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { TitulosComponent } from './titulos/titulos.component';
+import { SmsWhatsappComponent } from './sms-whatsapp/sms-whatsapp.component';
 
 
 const routes: Routes = [
     {
-        path: 'empresa', component: EmpresaComponent
+      path: 'empresa', component: EmpresaComponent
     },
     {
       path: 'contratantes', component: ContratantesComponent
@@ -18,6 +19,9 @@ const routes: Routes = [
     },
     {
       path: 'titulos', component: TitulosComponent
+    },
+    {
+      path: 'sms-whatsapp', component: SmsWhatsappComponent
     }
 ];
 

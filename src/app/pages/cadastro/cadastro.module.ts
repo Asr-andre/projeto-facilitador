@@ -24,10 +24,11 @@ import { EmpresaModule } from './empresa/empresa.module';
 import { TitulosModule } from './titulos/titulos.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { OrderTableModule } from 'src/app/core/helpers/conf-tabela/order-table.module';
+import { SmsWhatsappComponent } from './sms-whatsapp/sms-whatsapp.component';
 
 @NgModule({
 
-  declarations: [EmpresaComponent, ContratantesComponent, UsuariosComponent, TitulosComponent],
+  declarations: [EmpresaComponent, ContratantesComponent, UsuariosComponent, TitulosComponent, SmsWhatsappComponent],
   imports: [
     CommonModule,
     FormsModule,
