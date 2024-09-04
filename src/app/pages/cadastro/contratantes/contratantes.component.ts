@@ -4,10 +4,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
+import { CepModel } from 'src/app/core/models/cep.model';
 import { RetornoModel } from 'src/app/core/models/retorno.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
+import { ConsultaCepService } from 'src/app/core/services/consulta.cep.service';
 
 @Component({
   selector: 'app-contratantes',
@@ -20,6 +22,7 @@ export class ContratantesComponent implements OnInit {
   public formContratante: FormGroup;
   public loading: boolean = false;
   public loadingMin: boolean = false;
+  public cep = new CepModel();
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -32,6 +35,7 @@ export class ContratantesComponent implements OnInit {
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<ContratanteModel>>;
 
   constructor(
+    private _retornoCep: ConsultaCepService,
     private _contratanteService: ContratanteService,
     private _formBuilder: FormBuilder,
     private _modalService: NgbModal,
@@ -59,6 +63,12 @@ export class ContratantesComponent implements OnInit {
       cidade: [""],
       uf: [""],
       user_login: [this._authenticationService.getLogin()],
+    });
+  }
+
+  public viaCep(cep) {
+    this._retornoCep.consultarCep(cep).then((cep: CepModel) => {
+      this.cep = cep;
     });
   }
 

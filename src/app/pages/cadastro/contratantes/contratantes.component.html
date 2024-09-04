@@ -128,28 +128,28 @@
           </div>
           <div class="col-md-3 form-group" style="padding-right: 3px;">
             <input class="form-control form-control-sm mb-3" formControlName="cep" type="text" placeholder="Cep"
-              mask="00000-000">
+              mask="00000-000" (blur)="viaCep($event.target.value)">
           </div>
 
           <div class="col-md-5 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="endereco" type="text" placeholder="Rua">
+            <input class="form-control form-control-sm mb-3" formControlName="endereco" type="text" placeholder="Rua" [(ngModel)]="cep.endereco">
           </div>
           <div class="col-md-2 form-group" style="padding-left: 3px; padding-right: 3px;">
             <input class="form-control form-control-sm mb-3" formControlName="numero" type="text" placeholder="Nº">
           </div>
           <div class="col-md-2 form-group" style="padding-left: 3px;">
             <input class="form-control form-control-sm mb-3" formControlName="complemento" type="text"
-              placeholder="Complemento">
+              placeholder="Complemento" [(ngModel)]="cep.complemento">
           </div>
           <div class="col-md-4 form-group" style="padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="bairro" type="text" placeholder="Bairro">
+            <input class="form-control form-control-sm mb-3" formControlName="bairro" type="text" placeholder="Bairro" [(ngModel)]="cep.bairro">
           </div>
 
           <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="cidade" type="text" placeholder="Cidade">
+            <input class="form-control form-control-sm mb-3" formControlName="cidade" type="text" placeholder="Cidade" [(ngModel)]="cep.cidade">
           </div>
           <div class="col-md-1 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <select class="form-control form-control-sm mb-3" formControlName="uf" placeholder="UF">
+            <select class="form-control form-control-sm mb-3" formControlName="uf" placeholder="UF" [(ngModel)]="cep.uf">
               <option value="">--</option>
               <option value="AC">AC</option>
               <option value="AL">AL</option>
