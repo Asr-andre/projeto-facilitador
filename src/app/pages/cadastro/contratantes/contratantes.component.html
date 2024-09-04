@@ -109,7 +109,7 @@
 
     <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
       <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-building"></i> Cadastrar Contratante</h6>
-      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
     </div>
     <div class="modal-body modal-padding">
       <form [formGroup]="formContratante">
@@ -138,8 +138,7 @@
             <input class="form-control form-control-sm mb-3" formControlName="numero" type="text" placeholder="Nº">
           </div>
           <div class="col-md-2 form-group" style="padding-left: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="complemento" type="text"
-              placeholder="Complemento" [(ngModel)]="cep.complemento">
+            <input class="form-control form-control-sm mb-3" formControlName="complemento" type="text" placeholder="Complemento" [(ngModel)]="cep.complemento">
           </div>
           <div class="col-md-4 form-group" style="padding-right: 3px;">
             <input class="form-control form-control-sm mb-3" formControlName="bairro" type="text" placeholder="Bairro" [(ngModel)]="cep.bairro">
@@ -149,35 +148,9 @@
             <input class="form-control form-control-sm mb-3" formControlName="cidade" type="text" placeholder="Cidade" [(ngModel)]="cep.cidade">
           </div>
           <div class="col-md-1 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <select class="form-control form-control-sm mb-3" formControlName="uf" placeholder="UF" [(ngModel)]="cep.uf">
+            <select class="form-control form-control-sm mb-3" formControlName="uf" [(ngModel)]="cep.uf">
               <option value="">--</option>
-              <option value="AC">AC</option>
-              <option value="AL">AL</option>
-              <option value="AM">AM</option>
-              <option value="AP">AP</option>
-              <option value="BA">BA</option>
-              <option value="CE">CE</option>
-              <option value="DF">DF</option>
-              <option value="ES">ES</option>
-              <option value="GO">GO</option>
-              <option value="MA">MA</option>
-              <option value="MG">MG</option>
-              <option value="MS">MS</option>
-              <option value="MT">MT</option>
-              <option value="PA">PA</option>
-              <option value="PB">PB</option>
-              <option value="PE">PE</option>
-              <option value="PI">PI</option>
-              <option value="PR">PR</option>
-              <option value="RJ">RJ</option>
-              <option value="RN">RN</option>
-              <option value="RO">RO</option>
-              <option value="RR">RR</option>
-              <option value="RS">RS</option>
-              <option value="SC">SC</option>
-              <option value="SR">SE</option>
-              <option value="SP">SP</option>
-              <option value="TO">TO</option>
+              <option *ngFor="let estado of estados" [value]="estado.sigla">{{ estado.sigla }}</option>
             </select>
           </div>
           <div class="col-md-2 form-group" style="padding-left: 3px; padding-right: 3px;">
@@ -218,7 +191,7 @@
           <button type="submit" class="btn btn-success btn-sm me-1" (click)="cadastrarContratante()" [disabled]="!this.formContratante.valid">
             <i class="fas fa-save"></i> Salvar
           </button>
-          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
             <i class="fas fa-times"></i> Cancelar
           </button>
         </div>

@@ -2,6 +2,7 @@ import { Component, OnInit, QueryList, TemplateRef, ViewChildren } from '@angula
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
+import { EstadosDoBrasil } from 'src/app/core/helpers/estados.brasil';
 import { Utils } from 'src/app/core/helpers/utils';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
 import { CepModel } from 'src/app/core/models/cep.model';
@@ -23,6 +24,7 @@ export class ContratantesComponent implements OnInit {
   public loading: boolean = false;
   public loadingMin: boolean = false;
   public cep = new CepModel();
+  public estados = EstadosDoBrasil;
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -67,9 +69,11 @@ export class ContratantesComponent implements OnInit {
   }
 
   public viaCep(cep) {
-    this._retornoCep.consultarCep(cep).then((cep: CepModel) => {
-      this.cep = cep;
-    });
+    if(cep) {
+      this._retornoCep.consultarCep(cep).then((cep: CepModel) => {
+        this.cep = cep;
+      });
+    }
   }
 
   public obterContratantes(idEmpresa: number) {
@@ -114,6 +118,7 @@ export class ContratantesComponent implements OnInit {
   }
 
   public abriModalCadastro(content: TemplateRef<any>): void {
+    this.inicializarformContratante();
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
@@ -165,5 +170,10 @@ export class ContratantesComponent implements OnInit {
 
   public data(data) {
     return Utils.formatarDataParaExibicao(data);
+  }
+
+  public fechar() {
+    this.formContratante.reset();
+    this._modalService.dismissAll();
   }
 }
