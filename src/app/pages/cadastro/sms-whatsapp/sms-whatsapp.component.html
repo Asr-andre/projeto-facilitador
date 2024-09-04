@@ -18,7 +18,7 @@
                   </div>
                   <div class="col-md-6 text-end">
                     <button class="btn btn-success btn-sm"
-                      style="padding-top: 2px; padding-bottom: 2px;">
+                      style="padding-top: 2px; padding-bottom: 2px;" (click)="abriModalCadastro(modalCadastrar)">
                       <i class="fas fa-envelope-open-text"></i>
                       Criar Nova Mensagem
                     </button>
@@ -32,3 +32,18 @@
       </div>
     </div>
   </div>
+
+  <ng-template #modalCadastrar let-modal>
+    <div class="loading-overlay-card" *ngIf="loadingMin">
+      <div class="spinner-border text-primary m-1" role="status">
+      </div>
+    </div>
+
+    <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
+      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-comments"></i> Cadastrar Mensagens - SMS e WhatsApp</h6>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
+    </div>
+    <div class="modal-body modal-padding">
+
+    </div>
+  </ng-template>
