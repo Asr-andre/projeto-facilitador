@@ -58,6 +58,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.currentUser = this.authService.getLogin();
+    this.element = document.documentElement;
     setTimeout(() => {
       this.monitorarMsg();
     }, 10000);
