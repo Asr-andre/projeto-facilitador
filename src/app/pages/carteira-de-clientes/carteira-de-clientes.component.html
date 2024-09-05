@@ -341,7 +341,7 @@
   </ng-template>
 
   <ng-template #modalMsgLote let-modal>
-    <div class="modal-header modal-header-custom" style="background: #6d706f;">
+    <div class="modal-header modal-header-custom" style="background: #5664d2;">
       <h6 class="modal-title" style="color: #ffffff">
         <i class="fas fa-comments"></i> Mensagens - SMS e WhatsApp
       </h6>
@@ -386,8 +386,8 @@
 
 
         <div class="d-flex justify-content-end" style="padding-top: 10px;">
-          <button type="submit" class="btn btn-success btn-sm me-2" (click)="enviarClienteParaFila()" [disabled]="!this.formFila.valid">
-            <i class="fas fa-save"></i> Salvar
+          <button type="submit" class="btn btn-primary btn-sm me-2">
+            <i class="fas fa-paper-plane"></i> Enviar
           </button>
           <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
             <i class="fas fa-times"></i> Cancelar
