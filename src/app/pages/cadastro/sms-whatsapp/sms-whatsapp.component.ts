@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -6,14 +6,17 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './sms-whatsapp.component.html',
   styleUrl: './sms-whatsapp.component.scss'
 })
-export class SmsWhatsappComponent {
+export class SmsWhatsappComponent implements OnInit {
   public loading: boolean = false;
   public loadingMin: boolean = false;
-
 
   constructor(
     private _modalService: NgbModal
   ) {}
+
+  ngOnInit(): void {
+
+  }
 
   public abriModalCadastro(content: TemplateRef<any>): void {
 

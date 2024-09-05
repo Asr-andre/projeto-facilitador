@@ -26,6 +26,7 @@ export class CarteiraDeClientesComponent implements OnInit {
   public contratantes: ContratanteModel[] = [];
   public formCarteiraCliente: FormGroup;
   public formFila: FormGroup;
+  public formMsgLote: FormGroup;
   public carteiraDeClientes: CarteiraClienteModel[] = [];
   public idEmpresa = Number(this._authenticationService.getIdEmpresa());
   public contratanteSelecionado: number;
@@ -63,6 +64,12 @@ export class CarteiraDeClientesComponent implements OnInit {
     this.obterContratantes();
     this.iniciarForm();
     this.iniciarFormFila();
+
+    this.formMsgLote = this._formBuilder.group({
+      id_fila: ['', Validators.required],
+      enviar_sms: [true],        // SMS marcado por padrão
+      enviar_whatsapp: [false]   // WhatsApp desmarcado por padrão
+    });
   }
 
   public iniciarForm(): void {
@@ -97,6 +104,7 @@ export class CarteiraDeClientesComponent implements OnInit {
       clientes: [""],
     });
   }
+
 
   public obterContratantes() {
     this.loading = true;
@@ -153,6 +161,11 @@ export class CarteiraDeClientesComponent implements OnInit {
     });
 
     this._modalService.open(content, { size: 'sm', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
+  public abrirModalMsgLote(content: TemplateRef<any>): void {
+
+    this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
 
@@ -233,6 +246,20 @@ export class CarteiraDeClientesComponent implements OnInit {
 
   public data(data) {
     return Utils.formatarDataParaExibicao(data);
+  }
+
+  toggleCheckbox(tipo: string): void {
+    if (tipo === 'sms') {
+      this.formMsgLote.patchValue({
+        enviar_sms: true,
+        enviar_whatsapp: false
+      });
+    } else if (tipo === 'whatsapp') {
+      this.formMsgLote.patchValue({
+        enviar_sms: false,
+        enviar_whatsapp: true
+      });
+    }
   }
 
 }
