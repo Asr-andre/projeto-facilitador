@@ -40,6 +40,7 @@ import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 import { SolicitarCreditosComponent } from "./dashboard/componente/solicitar-creditos/solicitar-creditos.component";
 import { BoletoPixComponent } from "./dashboard/componente/boleto-pix/boleto-pix.component";
 import { ChatComponent } from "./chat/chat.component";
+import { QuillModule } from 'ngx-quill';
 
 registerLocaleData(localePt);
 @NgModule({
@@ -86,6 +87,7 @@ registerLocaleData(localePt);
     NgbDatepickerModule,
     NgbModule,
     CKEditorModule,
+    QuillModule.forRoot(),
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },

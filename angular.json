@@ -28,6 +28,9 @@
             ],
             "styles": [
               "./node_modules/ngx-ui-switch/ui-switch.component.css",
+              "node_modules/quill/dist/quill.snow.css",
+              "node_modules/quill/dist/quill.bubble.css",
+              "node_modules/quill/dist/quill.core.css",
               "src/assets/scss/bootstrap.scss",
               "src/assets/scss/app.scss",
               "src/styles.scss"
