@@ -13,3 +13,12 @@ export class WhatsDetalhe {
   contrato: string;
   callbackRetorno: string;
 }
+
+//Envia class paara tratar o envio e o retorno do whatsapp em lote
+export class WhatsAppLoteRequestModel {
+  id_empresa: number;
+  id_perfilwhatsapp: number;
+  user_login: string;
+  clientes: string;
+}
+

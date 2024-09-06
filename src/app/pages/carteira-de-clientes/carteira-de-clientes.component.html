@@ -341,21 +341,26 @@
   </ng-template>
 
   <ng-template #modalMsgLote let-modal>
+    <div class="loading-overlay-card" *ngIf="loadingMin">
+      <div class="spinner-border text-primary m-1" role="status">
+      </div>
+    </div>
+
     <div class="modal-header modal-header-custom" style="background: #5664d2;">
       <h6 class="modal-title" style="color: #ffffff">
         <i class="fas fa-comments"></i> Mensagens - SMS e WhatsApp
       </h6>
       <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
-        (click)="modal.dismiss()"></button>
+        (click)="fechar()"></button>
     </div>
 
     <div class="modal-body modal-padding">
       <form [formGroup]="formMsgLote">
         <div class="row">
           <div class="col-md-12 form-group">
-            <select class="form-control form-control-sm" formControlName="id_fila" (change)="selecionarFila($event.target.value)">
+            <select class="form-control form-control-sm" formControlName="id_perfilwhatsapp">
               <option value="">Selecionar Mensagens</option>
-              <option value="">Perfil teste</option>
+              <option *ngFor="let item of msg" [value]="item.id_perfilwhatsapp">{{ item.titulo }}</option>
             </select>
           </div>
         </div>
@@ -384,12 +389,11 @@
           </div>
         </div>
 
-
         <div class="d-flex justify-content-end" style="padding-top: 10px;">
-          <button type="submit" class="btn btn-primary btn-sm me-2">
+          <button type="submit" class="btn btn-primary btn-sm me-2" (click)="enviarMsgLote()">
             <i class="fas fa-paper-plane"></i> Enviar
           </button>
-          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
             <i class="fas fa-times"></i> Cancelar
           </button>
         </div>

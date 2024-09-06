@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { WhatsappMensagemModel } from '../models/whatsapp.model';
+import { WhatsAppLoteRequestModel, WhatsappMensagemModel } from '../models/whatsapp.model';
 import { AppConfig } from './url.base.service';
 
 @Injectable({
@@ -15,5 +15,9 @@ export class WhatsappService {
 
   public enviarMensagem(mensagem: WhatsappMensagemModel): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/enviocampanhabestmessage`, mensagem);
+  }
+
+  public enviarMensagemLote(mensagem: WhatsAppLoteRequestModel): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/enviomensagemlote`, mensagem);
   }
 }

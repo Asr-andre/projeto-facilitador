@@ -18,7 +18,7 @@ export class SmsWhatsappComponent implements OnInit {
   public loadingMin: boolean = false;
   public login = this._auth.getLogin();
   public idEmpresa = Number(this._auth.getIdEmpresa());
-  public idPerfilWhatsapp = 1
+  public idPerfilWhatsapp = 1;
   public msg: PerfilWhatsappModel[] = [];
   public mensagemForm: FormGroup;
 

@@ -9,13 +9,16 @@ import {
 } from "src/app/core/helpers/conf-tabela/ordenacao-tabela";
 import { Utils } from "src/app/core/helpers/utils";
 import { ContratanteModel } from "src/app/core/models/cadastro/contratante.model";
+import { PerfilWhatsappModel } from "src/app/core/models/cadastro/sms.whatsapp.model";
 import { CarteiraClienteModel } from "src/app/core/models/carteira.de.cliente.model";
 import { FilaModel, FilaRequisicaoModel } from "src/app/core/models/fila.model";
 import { AlertService } from "src/app/core/services/alert.service";
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { ContratanteService } from "src/app/core/services/cadastro/contratante.service";
+import { SmsWhatsAppService } from "src/app/core/services/cadastro/sms.whatsapp.service";
 import { CarteiraDeClienteService } from "src/app/core/services/carteira.de.cliente.service";
 import { FilaService } from "src/app/core/services/fila.service";
+import { WhatsappService } from "src/app/core/services/whatsapp.service";
 
 @Component({
   selector: "app-carteira-de-clientes",
@@ -38,6 +41,9 @@ export class CarteiraDeClientesComponent implements OnInit {
   public clienteSelecionado: CarteiraClienteModel | null = null;
   public filas: FilaModel[]=[];
   public idUsuario: number | null = null;
+  public idPerfilWhatsapp = 1;
+  public msg: PerfilWhatsappModel[] = [];
+  public loadingMin: boolean = false;
 
   public dadosFiltrados: CarteiraClienteModel[] = [];
   public textoPesquisa: string = "";
@@ -53,6 +59,8 @@ export class CarteiraDeClientesComponent implements OnInit {
     private _contratanteService: ContratanteService,
     private _carteiraDeClienteService: CarteiraDeClienteService,
     private _authenticationService: AuthenticationService,
+    private _smsWhatsAppService: SmsWhatsAppService,
+    private _msgLote: WhatsappService,
     private _alertService: AlertService,
     private _formBuilder: FormBuilder,
     private _datePipe: DatePipe,
@@ -64,12 +72,7 @@ export class CarteiraDeClientesComponent implements OnInit {
     this.obterContratantes();
     this.iniciarForm();
     this.iniciarFormFila();
-
-    this.formMsgLote = this._formBuilder.group({
-      id_fila: ['', Validators.required],
-      enviar_sms: [true],        // SMS marcado por padrão
-      enviar_whatsapp: [false]   // WhatsApp desmarcado por padrão
-    });
+    this.iniciarFormMsgLote();
   }
 
   public iniciarForm(): void {
@@ -105,6 +108,16 @@ export class CarteiraDeClientesComponent implements OnInit {
     });
   }
 
+  public iniciarFormMsgLote() {
+    this.formMsgLote = this._formBuilder.group({
+      id_empresa: [this.idEmpresa, Validators.required],
+      id_perfilwhatsapp: ['', Validators.required],
+      user_login: [this.login, Validators.required],
+      clientes: ['', Validators.required],
+      enviar_sms: [false],
+      enviar_whatsapp: [true]
+    });
+  }
 
   public obterContratantes() {
     this.loading = true;
@@ -128,6 +141,22 @@ export class CarteiraDeClientesComponent implements OnInit {
     this._filaService.obterFilas(requisicao).subscribe((res) => {
       this.filas = res.filas;
       this.loading = false;
+    });
+  }
+
+  public obterMsgs() {
+    const dados = {
+      id_empresa: this.idEmpresa,
+      id_PerfilWhatsapp: this.idPerfilWhatsapp,
+      user_login: this.login
+    }
+
+    this._smsWhatsAppService.obterMsg(dados).subscribe((res) => {
+      if (res.success === "true") {
+        this.msg = res.perfil_whatsapp;
+      } else {
+        this._alertService.error(res.msg);
+      }
     });
   }
 
@@ -164,8 +193,32 @@ export class CarteiraDeClientesComponent implements OnInit {
   }
 
   public abrirModalMsgLote(content: TemplateRef<any>): void {
+    this.obterMsgs();
+    const idsSelecionados = this.dadosFiltrados
+      .filter(cliente => cliente.selecionado)
+      .map(cliente => cliente.id_cliente);
 
+
+    this.formMsgLote.patchValue({ clientes: idsSelecionados.join(','), enviar_whatsapp: true });
     this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
+  public enviarMsgLote() {
+    if (this.formMsgLote.valid) {
+
+      this.loadingMin = true;
+      this._msgLote.enviarMensagemLote(this.formMsgLote.value).subscribe((res) => {
+        this._alertService.success(res.msg);
+        this.fechar();
+        this.loadingMin = false;
+      }, (error) => {
+        this.loadingMin = false;
+        this._alertService.warning(error);
+      });
+    } else {
+      this.loadingMin = false;
+      this._alertService.warning("Preencha todos os campos obrigatórios.");
+    }
   }
 
 
@@ -262,4 +315,8 @@ export class CarteiraDeClientesComponent implements OnInit {
     }
   }
 
+  public fechar() {
+    this.formMsgLote.reset();
+    this._modalService.dismissAll();
+  }
 }
