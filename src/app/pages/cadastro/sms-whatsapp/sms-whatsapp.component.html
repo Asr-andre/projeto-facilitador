@@ -17,8 +17,8 @@
                     <h5 class="mb-0"><i class="fas fa-comments"></i> Mensagens - SMS e WhatsApp </h5>
                   </div>
                   <div class="col-md-6 text-end">
-                    <button class="btn btn-success btn-sm"
-                      style="padding-top: 2px; padding-bottom: 2px;" (click)="abriModalCadastro(modalCadastrar)">
+                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;"
+                      (click)="abriModalCadastro(modalCadastrar)">
                       <i class="fas fa-envelope-open-text"></i>
                       Criar Nova Mensagem
                     </button>
@@ -26,24 +26,134 @@
                 </div>
               </div>
 
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mt-3" style="font-size: 11px;">
+                  <div style="font-size: 11px;">
+                      <select id="itensPorPagina"
+                              [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
+                              style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
+                          <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina" style="font-size: 10px;" >{{ item }}</option>
+                      </select>
+                      <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
+                  </div>
+                  <div style="font-size: 10px;">
+                      <div class="dataTables_filter text-md-end">
+                          <label class="d-inline-flex align-items-center">
+                              <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
+                          </label>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+                  <thead class="tabela-custom">
+                    <tr>
+                      <th sortable="id_perfilwhatsapp" (sort)="ordenar($event)">Id</th>
+                      <th sortable="sigla" (sort)="ordenar($event)">Sigla</th>
+                      <th sortable="titulo" (sort)="ordenar($event)">Título</th>
+                      <th sortable="empresa" (sort)="ordenar($event)">Empresa</th>
+                      <th sortable="host" (sort)="ordenar($event)">Host</th>
+                      <th sortable="centro_custo" (sort)="ordenar($event)">Centro de Custo</th>
+                      <th sortable="ativo" (sort)="ordenar($event)">Ativo</th>
+                      <th sortable="gera_acionamento" (sort)="ordenar($event)">Gera Acionamento</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let perfil of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                      <td>{{ perfil.id_perfilwhatsapp }}</td>
+                      <td>{{ perfil.sigla }}</td>
+                      <td>{{ perfil.titulo }}</td>
+                      <td>{{ perfil.empresa }}</td>
+                      <td>{{ perfil.host }}</td>
+                      <td>{{ perfil.centro_custo }}</td>
+                      <td>{{ perfil.ativo === 'S' ? 'Sim' : 'Não' }}</td>
+                      <td>{{ perfil.gera_acionamento === 'S' ? 'Sim' : 'Não' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="d-flex justify-content-between align-items-center mt-3 text-small">
+                  <div>
+                    Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+                    {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+                  </div>
+                  <pagination-controls (pageChange)="paginaAtual = $event"
+                                        previousLabel="Anterior"
+                                        nextLabel="Próximo"
+                                        [maxSize]="5"
+                                        [autoHide]="false"
+                                        [responsive]="true">
+                  </pagination-controls>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <ng-template #modalCadastrar let-modal>
-    <div class="loading-overlay-card" *ngIf="loadingMin">
-      <div class="spinner-border text-primary m-1" role="status">
+<ng-template #modalCadastrar let-modal>
+  <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
+
+  <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
+    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-comments"></i> Cadastrar Mensagens - SMS e WhatsApp
+    </h6>
+    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+      (click)="fechar()"></button>
+  </div>
+  <div class="modal-body modal-padding">
+    <form [formGroup]="mensagemForm" >
+      <div class="row">
+          <div class="col-md-6 form-group">
+          <input type="text" id="empresa" class="form-control form-control-sm mb-3" formControlName="empresa" placeholder="Empresa">
+        </div>
+
+        <div class="col-md-6 form-group">
+          <input type="text" id="host" class="form-control form-control-sm mb-3" formControlName="host" placeholder="Host">
+        </div>
+
+        <div class="col-md-6 form-group">
+          <input type="text" id="usuario" class="form-control form-control-sm mb-3" formControlName="usuario" placeholder="Usuário">
+        </div>
+
+        <div class="col-md-3 form-group">
+          <input type="password" id="senha" class="form-control form-control-sm mb-3" formControlName="senha" placeholder="Senha">
+        </div>
+
+        <div class="col-md-3 form-group">
+          <input type="text" id="sigla" class="form-control form-control-sm mb-3" formControlName="sigla" placeholder="Sigla">
+        </div>
+
+        <div class="col-md-6 form-group">
+          <input type="text" id="centro_custo" class="form-control form-control-sm mb-3" formControlName="centro_custo" placeholder="Centro de Custo">
+        </div>
+
+        <div class="col-md-6 form-group">
+          <input type="text" id="token" class="form-control form-control-sm mb-3" formControlName="token" placeholder="Token">
+        </div>
+
+        <div class="col-md-12 form-group">
+          <input type="text" id="titulo" class="form-control form-control-sm mb-3" formControlName="titulo" placeholder="Título">
+        </div>
+
+        <div class="col-md-12 form-group">
+          <textarea id="mensagem" class="form-control form-control-sm mb-3" formControlName="mensagem"></textarea>
+        </div>
       </div>
-    </div>
 
-    <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
-      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-comments"></i> Cadastrar Mensagens - SMS e WhatsApp</h6>
-      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
-    </div>
-    <div class="modal-body modal-padding">
-
-    </div>
-  </ng-template>
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-success btn-sm me-2" (click)="cadastraMsg()">
+          <i class="fas fa-save"></i> Salvar
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
