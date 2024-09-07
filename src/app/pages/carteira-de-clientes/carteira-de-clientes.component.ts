@@ -208,9 +208,14 @@ export class CarteiraDeClientesComponent implements OnInit {
 
       this.loadingMin = true;
       this._msgLote.enviarMensagemLote(this.formMsgLote.value).subscribe((res) => {
-        this._alertService.success(res.msg);
-        this.fechar();
-        this.loadingMin = false;
+        if(res) {
+          this._alertService.success(res.msg);
+          this.fechar();
+          this.loadingMin = false;
+        }else {
+          this.loadingMin = false;
+          this._alertService.warning(res.msg);
+        }
       }, (error) => {
         this.loadingMin = false;
         this._alertService.warning(error);
@@ -220,7 +225,6 @@ export class CarteiraDeClientesComponent implements OnInit {
       this._alertService.warning("Preencha todos os campos obrigatórios.");
     }
   }
-
 
   public selecionarFila(idFila: string): void {
     const filaSelecionada = this.filas.find(fila => fila.id_fila === Number(idFila));

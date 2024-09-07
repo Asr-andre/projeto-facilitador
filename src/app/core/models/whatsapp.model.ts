@@ -22,3 +22,12 @@ export class WhatsAppLoteRequestModel {
   clientes: string;
 }
 
+export class WhatsAppLoteResponseModel{
+  success: string;
+  msg: string;
+  empresa: number;
+  qtde_fones: string;
+  valor_envio: number;
+  saldo_empresa: number;
+}
+
