@@ -25,10 +25,11 @@ import { TitulosModule } from './titulos/titulos.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { OrderTableModule } from 'src/app/core/helpers/conf-tabela/order-table.module';
 import { SmsWhatsappComponent } from './sms-whatsapp/sms-whatsapp.component';
+import { EmailContaComponent } from './email-conta/email-conta.component';
 
 @NgModule({
 
-  declarations: [EmpresaComponent, ContratantesComponent, UsuariosComponent, TitulosComponent, SmsWhatsappComponent],
+  declarations: [EmpresaComponent, ContratantesComponent, UsuariosComponent, TitulosComponent, SmsWhatsappComponent, EmailContaComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -27,7 +27,8 @@
         "CONTRATANTES": "Contratantes",
         "USUARIOS": "Usúarios",
         "TITULOS": "Clientes/ Titulos",
-        "SMS-WHATSAPP": "Sms/ WhatsApp"
+        "SMS-WHATSAPP": "Sms/ WhatsApp",
+        "EMAIL-CONTA":  "Email/ Conta"
       }
     },
     "RELATORIOS": {

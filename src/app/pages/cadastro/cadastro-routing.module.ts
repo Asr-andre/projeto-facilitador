@@ -5,6 +5,7 @@ import { ContratantesComponent } from './contratantes/contratantes.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { TitulosComponent } from './titulos/titulos.component';
 import { SmsWhatsappComponent } from './sms-whatsapp/sms-whatsapp.component';
+import { EmailContaComponent } from './email-conta/email-conta.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,9 @@ const routes: Routes = [
     },
     {
       path: 'sms-whatsapp', component: SmsWhatsappComponent
+    },
+    {
+      path: 'email-conta', component: EmailContaComponent
     }
 ];
 

@@ -65,11 +65,17 @@ import { MenuItem } from "./menu.model";
           label: "MENUITEMS.CADASTRO.LIST.TITULOS",
           link: "/cadastro/titulos",
           parentId: 8,
-        },,
+        },
         {
           id: 14,
           label: "MENUITEMS.CADASTRO.LIST.SMS-WHATSAPP",
           link: "/cadastro/sms-whatsapp",
+          parentId: 8,
+        },
+        {
+          id: 15,
+          label: "MENUITEMS.CADASTRO.LIST.EMAIL-CONTA",
+          link: "/cadastro/email-conta",
           parentId: 8,
         },
       ].filter(item => item.show !== false), // Filtra subItems para remover aqueles com show === false
