@@ -1,1 +1,185 @@
-<p>email-conta works!</p>
+<div class="loading-overlay-pagina" *ngIf="loading">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card-body" style="padding-bottom: 8px;">
+        <div class="d-flex">
+          <div class="flex-1 overflow-hidden">
+            <div class="card">
+
+              <div class="card-header pt-2 pb-2">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5 class="mb-0"><i class="fas fa-envelope me-2"></i> Email - Conta </h5>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;" (click)="abriModalCadastro(modalCadastrar)">
+                      <i class="fas fa-plus"></i>
+                      Cadastrar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mt-3" style="font-size: 11px;">
+                  <div style="font-size: 11px;">
+                      <select id="itensPorPagina"
+                              [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
+                              style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
+                          <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina" style="font-size: 10px;" >{{ item }}</option>
+                      </select>
+                      <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
+                  </div>
+                  <div style="font-size: 10px;">
+                      <div class="dataTables_filter text-md-end">
+                          <label class="d-inline-flex align-items-center">
+                              <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
+                          </label>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+                  <thead class="tabela-custom">
+                    <tr>
+                      <th sortable="id_perfilemail" (sort)="ordenar($event)">Id</th>
+                      <th sortable="email" (sort)="ordenar($event)">Email</th>
+                      <th sortable="porta" (sort)="ordenar($event)">Porta</th>
+                      <th sortable="smtp_usuario" (sort)="ordenar($event)">Usuario</th>
+                      <th sortable="tipo_email" (sort)="ordenar($event)">Tipo</th>
+                      <th sortable="ssl" (sort)="ordenar($event)">SSL</th>
+                      <th sortable="tls" (sort)="ordenar($event)">TLS</th>
+                      <th sortable="data_cadastro" (sort)="ordenar($event)">Data Cadastro</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let dado of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                      <td>{{ dado.id_perfilemail }}</td>
+                      <td>{{ dado.email }}</td>
+                      <td>{{ dado.porta }}</td>
+                      <td>{{ dado.smtp_usuario }}</td>
+                      <td>{{ dado.tipo_email }}</td>
+                      <td>{{ dado.ssl === 'S' ? 'Sim' : 'Não' }}</td>
+                      <td>{{ dado.tls === 'S' ? 'Sim' : 'Não' }}</td>
+                      <td>{{ data(dado.data_cadastro) }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="d-flex justify-content-between align-items-center mt-3 text-small">
+                  <div>
+                    Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+                    {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+                  </div>
+                  <pagination-controls (pageChange)="paginaAtual = $event"
+                                        previousLabel="Anterior"
+                                        nextLabel="Próximo"
+                                        [maxSize]="5"
+                                        [autoHide]="false"
+                                        [responsive]="true">
+                  </pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalCadastrar let-modal>
+  <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
+
+  <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
+    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-envelope me-2"></i> Cadastrar Email - Conta
+    </h6>
+    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+      (click)="fechar()"></button>
+  </div>
+  <div class="modal-body modal-padding">
+    <form [formGroup]="emailContaForm" >
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <input type="text" id="empresa" class="form-control form-control-sm mb-3" formControlName="nome_remetente" placeholder="Nome"
+            [ngClass]="{'is-invalid': emailContaForm.get('nome_remetente').invalid && emailContaForm.get('nome_remetente').touched}">
+        </div>
+
+        <div class="col-md-6 form-group">
+          <input type="text" id="host" class="form-control form-control-sm mb-3" formControlName="email" placeholder="Email"
+          [ngClass]="{'is-invalid': emailContaForm.get('email').invalid && emailContaForm.get('email').touched}">
+        </div>
+
+        <div class="col-md-2 form-group">
+          <input type="text" id="usuario" class="form-control form-control-sm mb-3" formControlName="porta" placeholder="Porta"
+          [ngClass]="{'is-invalid': emailContaForm.get('porta').invalid && emailContaForm.get('porta').touched}">
+        </div>
+
+        <div class="col-md-4 form-group">
+          <input type="text" id="senha" class="form-control form-control-sm mb-3" formControlName="smtp_host" placeholder="Host"
+          [ngClass]="{'is-invalid': emailContaForm.get('smtp_host').invalid && emailContaForm.get('smtp_host').touched}">
+        </div>
+
+        <div class="col-md-3 form-group">
+          <input type="text" id="sigla" class="form-control form-control-sm mb-3" formControlName="smtp_usuario" placeholder="Usuario"
+          [ngClass]="{'is-invalid': emailContaForm.get('smtp_usuario').invalid && emailContaForm.get('smtp_usuario').touched}">
+        </div>
+
+        <div class="col-md-3 form-group">
+          <input type="text" id="centro_custo" class="form-control form-control-sm mb-3" formControlName="smtp_senha" placeholder="Senha"
+          [ngClass]="{'is-invalid': emailContaForm.get('smtp_senha').invalid && emailContaForm.get('smtp_senha').touched}">
+        </div>
+
+        <div class="col-md-6 form-group">
+          <input type="text" id="token" class="form-control form-control-sm mb-3" formControlName="email_retorno" placeholder="Email Retorno"
+          [ngClass]="{'is-invalid': emailContaForm.get('email_retorno').invalid && emailContaForm.get('email_retorno').touched}">
+        </div>
+
+        <div class="col-md-6 form-group">
+          <input type="text" id="titulo" class="form-control form-control-sm mb-3" formControlName="email_envio" placeholder="Email Envio"
+          [ngClass]="{'is-invalid': emailContaForm.get('email_envio').invalid && emailContaForm.get('email_envio').touched}">
+        </div>
+
+        <div class="col-md-3 form-group">
+          <select class="form-control form-control-sm mb-3" formControlName="gera_acionamento" placeholder="Gerar Acionamento"
+          [ngClass]="{'is-invalid': emailContaForm.get('gera_acionamento').invalid && emailContaForm.get('gera_acionamento').touched}">
+            <option value="">Gerar Acionamento</option>
+            <option value="S">Sim</option>
+            <option value="N">Não</option>
+          </select>
+        </div>
+
+        <div class="col-md-6 form-group">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="sslSim" formControlName="ssl" value="S"
+                   (change)="onChangeRadio('ssl')">
+            <label class="form-check-label" for="sslSim">SSL</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="tlsSim" formControlName="tls" value="S"
+                   (change)="onChangeRadio('tls')">
+            <label class="form-check-label" for="tlsSim">TLS</label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-success btn-sm me-2" (click)="cadastrarEmailConta()">
+          <i class="fas fa-save"></i> Salvar
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
