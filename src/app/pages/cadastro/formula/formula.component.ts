@@ -64,16 +64,6 @@ export class FormulaComponent implements OnInit {
       desconto_taxa: [dado?.desconto_taxa || 0, [Validators.min(0)]],
       user_login: [dado?.user_login || this.login, Validators.required],
     });
-
-    this.formFormula.valueChanges.subscribe(values => {
-      this.verificarValorNegativo('multa');
-      this.verificarValorNegativo('juros');
-      this.verificarValorNegativo('taxa');
-      this.verificarValorNegativo('desconto_principal');
-      this.verificarValorNegativo('desconto_multa');
-      this.verificarValorNegativo('desconto_juros');
-      this.verificarValorNegativo('desconto_taxa');
-    });
   }
 
   public obterFormulas() {
@@ -210,7 +200,7 @@ export class FormulaComponent implements OnInit {
 
   public verificarValorNegativo(campo: string) {
     const valor = this.formFormula.get(campo)?.value;
-    
+
     if (valor <= 0) {
       this.formFormula.get(campo)?.setValue(0);
     }
