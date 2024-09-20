@@ -2,7 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { CdkStepperModule } from '@angular/cdk/stepper';
@@ -49,7 +49,8 @@ import { EmailContaComponent } from './email-conta/email-conta.component';
     EmpresaModule,
     NgxPaginationModule,
     OrderTableModule,
-    TitulosModule
+    TitulosModule,
+    NgbTooltipModule,
   ],
   providers: [
 

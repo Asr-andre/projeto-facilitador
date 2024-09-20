@@ -16,6 +16,10 @@ import { ConsultaCepService } from 'src/app/core/services/consulta.cep.service';
 import { lastValueFrom } from 'rxjs';
 import { SmsWhatsAppService } from 'src/app/core/services/cadastro/sms.whatsapp.service';
 import { PerfilWhatsappModel } from 'src/app/core/models/cadastro/sms.whatsapp.model';
+import { SmsService } from 'src/app/core/services/sms.service';
+import { PerfilSms } from 'src/app/core/models/sms.model';
+import { FormulaService } from 'src/app/core/services/formula.service';
+import { Formula } from 'src/app/core/models/formula.model';
 
 @Component({
   selector: 'app-contratantes',
@@ -27,6 +31,8 @@ export class ContratantesComponent implements OnInit {
   public emailConta: EmailContaModel[] = [];
   public msg: PerfilWhatsappModel[] = [];
   public contratante: ContratanteModel[];
+  public perfilSms: PerfilSms [] = [];
+  public perfilFormula: Formula[] = [];
   public idPerfilWhatsapp = 1;
   public idEmpresa = Number(this._auth.getIdEmpresa());
   public login = this._auth.getLogin();
@@ -35,6 +41,7 @@ export class ContratantesComponent implements OnInit {
   public loadingMin: boolean = false;
   public cep = new CepModel();
   public estados = EstadosDoBrasil;
+  public editar: boolean = false;
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -51,6 +58,8 @@ export class ContratantesComponent implements OnInit {
     private _contratanteService: ContratanteService,
     private _emailContaService: EmailContaService,
     private _smsWhatsAppService: SmsWhatsAppService,
+    private _smsService: SmsService,
+    private _formulaService: FormulaService,
     private _formBuilder: FormBuilder,
     private _modalService: NgbModal,
     private _auth: AuthenticationService,
@@ -62,30 +71,30 @@ export class ContratantesComponent implements OnInit {
     this.inicializarformContratante();
   }
 
-  public inicializarformContratante() {
+  public inicializarformContratante(dado?: ContratanteModel): void {
     this.formContratante = this._formBuilder.group({
-      id_contratante: [""],
-      id_empresa: [this.idEmpresa],
-      cnpj: ["", Validators.required],
-      razao_social: ["", Validators.required],
-      fantasia: ["", Validators.required],
-      cep: [""],
-      endereco: [""],
-      numero: [""],
-      complemento: [""],
-      bairro: [""],
-      cidade: [""],
-      uf: [""],
-      telefone: [""],
-      celular: [""],
-      ativo: ['S'],
-      codigo_credor: [""],
-      id_formula: [""],
-      id_perfilemail: [""],
-      id_perfilsms: [""],
-      id_perfilwhatsapp: [this.idPerfilWhatsapp],
-      id_perfiltextoemail: [""],
-      user_login: [this.login],
+      id_contratante: [dado?.id_contratante || ''],
+      id_empresa: [dado?.id_empresa || this.idEmpresa],
+      cnpj: [dado?.cnpj || '', Validators.required],
+      razao_social: [dado?.razao_social || '', Validators.required],
+      fantasia: [dado?.fantasia || '', Validators.required],
+      cep: [dado?.cep || ''],
+      endereco: [dado?.endereco || ''],
+      numero: [dado?.numero || ''],
+      complemento: [dado?.complemento || ''],
+      bairro: [dado?.bairro || ''],
+      cidade: [dado?.cidade || ''],
+      uf: [dado?.uf || ''],
+      telefone: [dado?.telefone || ''],
+      celular: [dado?.celular || ''],
+      ativo: [dado?.ativo || 'S'],
+      codigo_credor: [dado?.codigo_credor || ''],
+      id_formula: [dado?.id_formula || ''],
+      id_perfilemail: [dado?.id_perfilemail || ''],
+      id_perfilsms: [dado?.id_perfilsms || ''],
+      id_perfilwhatsapp: [dado?.id_perfilwhatsapp || this.idPerfilWhatsapp],
+      id_perfiltextoemail: [dado?.id_perfiltextoemail || ''],
+      user_login: [dado?.user_login || this.login, Validators.required],
     });
   }
 
@@ -109,18 +118,6 @@ export class ContratantesComponent implements OnInit {
     } finally {
       this.loading = false;
     }
-  }
-
-  public obterContratantePorId(dado: number) {
-    const dados = {
-      id_empresa: this.idEmpresa,
-      id_contratante: dado,
-      user_login: this.login
-    }
-
-    this._contratanteService.obterContratantePorId(dados).subscribe((res) => {
-      this.contratante = res.data;
-    });
   }
 
   async acionarPerfilEmail() {
@@ -147,7 +144,7 @@ export class ContratantesComponent implements OnInit {
     });
   }
 
-  async acionarPerfilSms() {
+  async acionarPerfilWhatsApp() {
     if (!this.msg || this.msg.length === 0) {
       await this.obterMsgs();
     }
@@ -160,13 +157,63 @@ export class ContratantesComponent implements OnInit {
       user_login: this.login
     }
 
-    this.loading = true;
+    this.loadingMin = true;
     this._smsWhatsAppService.obterMsg(dados).subscribe((res) => {
       if (res.success === "true") {
         this.msg = res.perfil_whatsapp;
-        this.loading = false;
+        this.loadingMin = false;
       } else {
-        this.loading = false;
+        this.loadingMin = false;
+        this._alertService.error(res.msg);
+      }
+    });
+  }
+
+  async acionarobterPerfilSms() {
+    if (!this.perfilSms || this.perfilSms.length === 0) {
+      await this.obterPerfilSms();
+    }
+  }
+
+  public obterPerfilSms() {
+    const dados = {
+      id_empresa: this.idEmpresa,
+      id_perfilsms: 0,
+      user_login: this.login
+    }
+
+    this.loadingMin = true;
+    this._smsService.listarPerfilSms(dados).subscribe((res) => {
+      if(res.success === "true") {
+        this.perfilSms = res.perfil_sms;
+        this.loadingMin = false;
+      } else {
+        this.loadingMin = false;
+        this._alertService.error(res.msg);
+      }
+    });
+  }
+
+  async acionarobterPerfilFormula() {
+    if (!this.perfilFormula || this.perfilFormula.length === 0) {
+      await this.obterPerfilFormula();
+    }
+  }
+
+  public obterPerfilFormula() {
+    const dados = {
+      id_empresa: this.idEmpresa,
+      id_formula: 0,
+      user_login: this.login
+    }
+
+    this.loadingMin = true;
+    this._formulaService.listarFormulas(dados).subscribe((res) => {
+      if(res.success === "true") {
+        this.perfilFormula = res.formulas;
+        this.loadingMin = false;
+      } else {
+        this.loadingMin = false;
         this._alertService.error(res.msg);
       }
     });
@@ -200,12 +247,22 @@ export class ContratantesComponent implements OnInit {
 
   public abriModalCadastro(content: TemplateRef<any>): void {
     this.inicializarformContratante();
+    this.editar = false;
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
-  public abriModalEditar(content: TemplateRef<any>): void {
-    this.inicializarformContratante();
+  public abriModalEditar(content: TemplateRef<any>, dados: ContratanteModel): void {
+    this.inicializarformContratante(dados);
+    this.editar = true;
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
+  public controleBotao() {
+    if(this.editar == false) {
+      this.cadastrarContratante();
+    } else {
+      this.editarContratante();
+    }
   }
 
   public cadastrarContratante(){
@@ -216,7 +273,7 @@ export class ContratantesComponent implements OnInit {
           this.loadingMin = false;
           this.obterContratantes();
           this._alertService.success(res.msg);
-          this._modalService.dismissAll();
+          this.fechar();
         } else {
           this.loadingMin = false;
           this._alertService.warning(res.msg);
@@ -224,7 +281,32 @@ export class ContratantesComponent implements OnInit {
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error("Ocorreu um erro ao tentar cadastrar a empresa.");
+          this._alertService.error("Ocorreu um erro ao tentar cadastrar o contratante.");
+        }
+      );
+    } else {
+      this.loadingMin = false;
+      this._alertService.warning("Preencha todos os campos obrigatórios");
+    }
+  }
+
+  public editarContratante() {
+    if (this.formContratante.valid) {
+      this.loadingMin = true;
+      this._contratanteService.ditarContratante(this.formContratante.value).subscribe((res) => {
+        if (res.success) {
+          this.loadingMin = false;
+          this.obterContratantes();
+          this._alertService.success(res.msg);
+          this.fechar();
+        } else {
+          this.loadingMin = false;
+          this._alertService.warning(res.msg);
+        }
+      },
+        (error) => {
+          this.loadingMin = false;
+          this._alertService.error("Ocorreu um erro ao tentar atualizar o contratante.");
         }
       );
     } else {

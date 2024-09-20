@@ -60,6 +60,7 @@
                         <th sortable="id_formula" (sort)="ordenar($event)">Id Fórmula</th>
                         <th sortable="data_cadastro" (sort)="ordenar($event)">Data Cadastro</th>
                         <th sortable="ativo" (sort)="ordenar($event)">Ativo</th>
+                        <th >Ações</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -76,6 +77,9 @@
                         <td>{{ contratante.id_formula }}</td>
                         <td>{{ data(contratante.data_cadastro) }}</td>
                         <td>{{ contratante.ativo === 'S' ? 'Sim' : 'Não' }}</td>
+                        <td>
+                          <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abriModalEditar(cadastraContratanteModal, contratante)"><i class="fas fa-edit"></i></button>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -107,8 +111,8 @@
       </div>
     </div>
 
-    <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
-      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-building"></i> Cadastrar Contratante</h6>
+    <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
+      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-building"></i> {{ editar ? 'Editar Contratante' : 'Cadastrar Contratante' }}</h6>
       <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
     </div>
     <div class="modal-body modal-padding">
@@ -166,21 +170,27 @@
           </div>
           <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
             <select class="form-control form-control-sm mb-3" formControlName="id_perfilemail" (click)="acionarPerfilEmail()">
-              <option value="">Perfil Email</option>
+              <option value="">Selecione Perfil Email</option>
               <option *ngFor="let perfil of emailConta" [value]="perfil.id_perfilemail">{{ perfil.email }}</option>
             </select>
           </div>
           <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" formControlName="id_formula" placeholder="Formula calculo">
+            <select class="form-control form-control-sm mb-3" formControlName="id_perfilemail" (click)="acionarobterPerfilFormula()">
+              <option value="">Selecione Formula calculo</option>
+              <option *ngFor="let perfil of perfilFormula" [value]="perfil.id_formula">{{ perfil.descricao }}</option>
+            </select>
           </div>
           <div class="col-md-3 form-group" style="padding-left: 3px;">
-            <select class="form-control form-control-sm mb-3" formControlName="id_perfilsms" (click)="acionarPerfilSms()">
-              <option value="">Perfil Sms</option>
-              <option *ngFor="let sms of msg" [value]="sms.id_perfilsms">{{ sms.titulo }}</option>
+            <select class="form-control form-control-sm mb-3" formControlName="id_perfilsms" (click)="acionarobterPerfilSms()">
+              <option value="">Selecione Perfil Sms</option>
+              <option *ngFor="let perfil of perfilSms" [value]="perfil.id_perfilsms">{{ perfil.empresa }}</option>
             </select>
           </div>
           <div class="col-md-3 form-group" style="padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" formControlName="id_perfilwhatsapp" placeholder="Perfil Whatsapp">
+            <select class="form-control form-control-sm mb-3" formControlName="id_perfilwhatsapp" (click)="acionarPerfilWhatsApp()">
+              <option value="">Perfil Whatsapp</option>
+              <option *ngFor="let sms of msg" [value]="sms.id_perfilwhatsapp">{{ sms.empresa }}</option>
+            </select>
           </div>
           <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
             <select class="form-control form-control-sm mb-3" formControlName="id_perfiltextoemail" (click)="acionarPerfilEmail ()">
@@ -190,7 +200,7 @@
           </div>
         </div>
         <div class="d-flex justify-content-end" style="padding-top: 5px;">
-          <button type="submit" class="btn btn-success btn-sm me-1" (click)="cadastrarContratante()" [disabled]="!this.formContratante.valid">
+          <button type="submit" class="btn btn-sm me-1" [ngClass]="editar ? 'btn-primary' : 'btn-success'" (click)="controleBotao()">
             <i class="fas fa-save"></i> Salvar
           </button>
           <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">

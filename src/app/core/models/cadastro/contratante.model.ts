@@ -44,3 +44,9 @@ export class RespostaContratanteModel {
   msg: string;
   data: ContratanteModel[];
 }
+
+export class RetornoGenerico {
+  success: boolean;
+  msg: string;
+  id_contratante: number;
+}
