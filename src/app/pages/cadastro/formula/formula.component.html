@@ -120,12 +120,12 @@
         <div class="row">
           <div class="col-md-3 mb-3">
             <label for="descricao" class="form-label">Descrição</label>
-            <input type="text" id="descricao" class="form-control" formControlName="descricao" placeholder="Descrição" />
+            <input type="text" id="descricao" class="form-control" formControlName="descricao" placeholder="Descrição" [readonly]="editar" />
             <div *ngIf="formFormula.get('descricao')?.invalid && formFormula.get('descricao')?.touched" class="text-danger">
               Descrição é obrigatória.
             </div>
           </div>
-    
+
           <div class="col-md-3 mb-3">
             <label for="multa" class="form-label">Multa (%)</label>
             <input type="number" id="multa" class="form-control" formControlName="multa" placeholder="Multa (%)" min="0" min="0" (input)="verificarValorNegativo('multa')"/>
@@ -133,7 +133,7 @@
               Multa é obrigatória.
             </div>
           </div>
-    
+
           <div class="col-md-3 mb-3">
             <label for="juros" class="form-label">Juros (%)</label>
             <input type="number" id="juros" class="form-control" formControlName="juros" placeholder="Juros (%)" min="0" (input)="verificarValorNegativo('juros')"/>
@@ -141,7 +141,7 @@
               Juros é obrigatório.
             </div>
           </div>
-    
+
           <div class="col-md-3 mb-3">
             <label for="taxa" class="form-label">Taxa (%)</label>
             <input type="number" id="taxa" class="form-control" formControlName="taxa" placeholder="Taxa (%)" min="0" (input)="verificarValorNegativo('taxa')" />
@@ -150,23 +150,23 @@
             </div>
           </div>
         </div>
-    
+
         <div class="row">
           <div class="col-md-3 mb-3">
             <label for="desconto_principal" class="form-label">Desconto Principal (%)</label>
             <input type="number" id="desconto_principal" class="form-control" formControlName="desconto_principal" placeholder="Desconto Principal (%)" min="0" (input)="verificarValorNegativo('desconto_principal')" />
           </div>
-    
+
           <div class="col-md-3 mb-3">
             <label for="desconto_multa" class="form-label">Desconto Multa (%)</label>
             <input type="number" id="desconto_multa" class="form-control" formControlName="desconto_multa" placeholder="Desconto Multa (%)" min="0" (input)="verificarValorNegativo('desconto_multa')" />
           </div>
-    
+
           <div class="col-md-3 mb-3">
             <label for="desconto_juros" class="form-label">Desconto Juros (%)</label>
             <input type="number" id="desconto_juros" class="form-control" formControlName="desconto_juros" placeholder="Desconto Juros (%)" min="0" (input)="verificarValorNegativo('desconto_juros')" />
           </div>
-    
+
           <div class="col-md-3 mb-3">
             <label for="desconto_taxa" class="form-label">Desconto Taxa (%)</label>
             <input type="number" id="desconto_taxa" class="form-control" formControlName="desconto_taxa" placeholder="Desconto Taxa (%)" min="0" (input)="verificarValorNegativo('desconto_taxa')" />

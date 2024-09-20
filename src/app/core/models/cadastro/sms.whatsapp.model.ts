@@ -3,7 +3,6 @@ export class SmsWhatsappRequestModel {
   id_PerfilWhatsapp: number;
   user_login: string;
 }
-
 export class PerfilWhatsappModel {
   id_perfilwhatsapp: number;
   ativo: string;
@@ -15,14 +14,12 @@ export class PerfilWhatsappModel {
   centro_custo: string;
   gera_acionamento: string;
 }
-
 export class SmsWhatsappResponseModel {
   success: string;
   msg: string;
   id_empresa: number;
   perfil_whatsapp: PerfilWhatsappModel[];
 }
-
 export class CadastroMensagemModel {
   id_empresa: number;
   titulo: string;
@@ -37,7 +34,6 @@ export class CadastroMensagemModel {
   mensagem: string;
   token: string;
 }
-
 export class WhatsappResponseModel {
   success: string;
   msg: string;

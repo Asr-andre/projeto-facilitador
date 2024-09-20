@@ -149,6 +149,7 @@ export class FormulaComponent implements OnInit {
   public abriModalEditar(content: TemplateRef<any>, formula: any): void {
     this.editar = true;
     this.formFormula.patchValue({
+      id_empresa: this.idEmpresa,
       descricao: formula.descricao,
       multa: formula.fator_multa,
       juros: formula.fator_juros,
@@ -156,7 +157,8 @@ export class FormulaComponent implements OnInit {
       desconto_principal: formula.desconto_principal,
       desconto_multa: formula.desconto_multa,
       desconto_juros: formula.desconto_juros,
-      desconto_taxa: formula.desconto_taxa
+      desconto_taxa: formula.desconto_taxa,
+      user_login: this.login,
     });
 
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });

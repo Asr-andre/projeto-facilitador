@@ -32,7 +32,6 @@ export class ContratantesRetornoModel {
   contratantes: ContratanteModel[];
 }
 
-
 export class RequisicaoContratanteModel {
   id_empresa: number;
   id_contratante: number;
