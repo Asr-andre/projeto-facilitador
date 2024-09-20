@@ -14,13 +14,13 @@
               <div class="card-header pt-2 pb-2">
                 <div class="row">
                   <div class="col-md-6">
-                    <h5 class="mb-0"><i class="fas fa-building"></i> Formulas </h5>
+                    <h5 class="mb-0"><i class="fas fa-calculator"></i> Formulas </h5>
                   </div>
                   <div class="col-md-6 text-end">
                     <button class="btn btn-success btn-sm" (click)="abriModalCadastro(modalGenerico)"
                       style="padding-top: 2px; padding-bottom: 2px;">
                       <i class="fas fa-plus"></i>
-                       Contratante
+                       Cadastrar
                     </button>
                   </div>
                 </div>
@@ -48,23 +48,35 @@
                   <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
                     <thead class="tabela-custom">
                       <tr>
-                        <th sortable="id_contratante" (sort)="ordenar($event)">Id</th>
-                        <th sortable="fantasia" (sort)="ordenar($event)">Fantasia</th>
-                        <th sortable="cnpj" (sort)="ordenar($event)">Cnpj</th>
-                        <th sortable="endereco" (sort)="ordenar($event)">Endereço</th>
-                        <th sortable="numero" (sort)="ordenar($event)">Número</th>
-                        <th sortable="bairro" (sort)="ordenar($event)">Bairro</th>
-                        <th sortable="cep" (sort)="ordenar($event)">Cep</th>
-                        <th sortable="cidade" (sort)="ordenar($event)">Cidade</th>
-                        <th sortable="uf" (sort)="ordenar($event)">Uf</th>
-                        <th sortable="id_formula" (sort)="ordenar($event)">Id Fórmula</th>
+                        <th sortable="id_formula" (sort)="ordenar($event)">Id</th>
+                        <th sortable="descricao" (sort)="ordenar($event)">Descrição</th>
+                        <th sortable="fator_multa" (sort)="ordenar($event)">Multa</th>
+                        <th sortable="fator_juros" (sort)="ordenar($event)">Juros</th>
+                        <th sortable="fator_taxa" (sort)="ordenar($event)">Taxa</th>
+                        <th sortable="desconto_principal" (sort)="ordenar($event)">Desc. Pricipal</th>
+                        <th sortable="desconto_multa" (sort)="ordenar($event)">Desc. Multa</th>
+                        <th sortable="desconto_juros" (sort)="ordenar($event)">Desc. Juros</th>
+                        <th sortable="desconto_taxa" (sort)="ordenar($event)">Desc. Taxa</th>
                         <th sortable="data_cadastro" (sort)="ordenar($event)">Data Cadastro</th>
-                        <th sortable="ativo" (sort)="ordenar($event)">Ativo</th>
+                        <th sortable="data_alteracao" (sort)="ordenar($event)">Data Alteração</th>
+                        <th sortable="user_login" (sort)="ordenar($event)">Usuário</th>
                         <th >Ações</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let formula of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                        <td> {{ formula.id_formula }} </td>
+                        <td> {{ formula.descricao }} </td>
+                        <td> {{ formula.fator_multa | currency: 'BRL' }} </td>
+                        <td> {{ formula.fator_juros | currency: 'BRL' }} </td>
+                        <td> {{ formula.fator_taxa | currency: 'BRL' }} </td>
+                        <td> {{ formula.desconto_principal | currency: 'BRL' }} </td>
+                        <td> {{ formula.desconto_multa | currency: 'BRL' }} </td>
+                        <td> {{ formula.desconto_juros | currency: 'BRL' }} </td>
+                        <td> {{ formula.desconto_taxa | currency: 'BRL' }} </td>
+                        <td> {{ data(formula.data_cadastro) }} </td>
+                        <td> {{ data(formula.data_alteracao) }} </td>
+                        <td> {{ formula.user_login }} </td>
                         <td>
                           <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abriModalEditar(modalGenerico, formula)"><i class="fas fa-edit"></i></button>
                         </td>
@@ -100,11 +112,66 @@
     </div>
 
     <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
-      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-building"></i> {{ editar ? 'Editar Formula' : 'Cadastrar Formula' }}</h6>
+      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-calculator"></i> {{ editar ? 'Editar Formula' : 'Cadastrar Formula' }}</h6>
       <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
     </div>
     <div class="modal-body modal-padding">
-      <form>
+      <form [formGroup]="formFormula">
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <input type="text" id="descricao" class="form-control" formControlName="descricao" placeholder="Descrição" />
+            <div *ngIf="formFormula.get('descricao')?.invalid && formFormula.get('descricao')?.touched" class="text-danger">
+              Descrição é obrigatória.
+            </div>
+          </div>
+    
+          <div class="col-md-3 mb-3">
+            <label for="multa" class="form-label">Multa (%)</label>
+            <input type="number" id="multa" class="form-control" formControlName="multa" placeholder="Multa (%)" min="0" min="0" (input)="verificarValorNegativo('multa')"/>
+            <div *ngIf="formFormula.get('multa')?.invalid && formFormula.get('multa')?.touched" class="text-danger">
+              Multa é obrigatória.
+            </div>
+          </div>
+    
+          <div class="col-md-3 mb-3">
+            <label for="juros" class="form-label">Juros (%)</label>
+            <input type="number" id="juros" class="form-control" formControlName="juros" placeholder="Juros (%)" min="0" (input)="verificarValorNegativo('juros')"/>
+            <div *ngIf="formFormula.get('juros')?.invalid && formFormula.get('juros')?.touched" class="text-danger">
+              Juros é obrigatório.
+            </div>
+          </div>
+    
+          <div class="col-md-3 mb-3">
+            <label for="taxa" class="form-label">Taxa (%)</label>
+            <input type="number" id="taxa" class="form-control" formControlName="taxa" placeholder="Taxa (%)" min="0" (input)="verificarValorNegativo('taxa')" />
+            <div *ngIf="formFormula.get('taxa')?.invalid && formFormula.get('taxa')?.touched" class="text-danger">
+              Taxa é obrigatória.
+            </div>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <label for="desconto_principal" class="form-label">Desconto Principal (%)</label>
+            <input type="number" id="desconto_principal" class="form-control" formControlName="desconto_principal" placeholder="Desconto Principal (%)" min="0" (input)="verificarValorNegativo('desconto_principal')" />
+          </div>
+    
+          <div class="col-md-3 mb-3">
+            <label for="desconto_multa" class="form-label">Desconto Multa (%)</label>
+            <input type="number" id="desconto_multa" class="form-control" formControlName="desconto_multa" placeholder="Desconto Multa (%)" min="0" (input)="verificarValorNegativo('desconto_multa')" />
+          </div>
+    
+          <div class="col-md-3 mb-3">
+            <label for="desconto_juros" class="form-label">Desconto Juros (%)</label>
+            <input type="number" id="desconto_juros" class="form-control" formControlName="desconto_juros" placeholder="Desconto Juros (%)" min="0" (input)="verificarValorNegativo('desconto_juros')" />
+          </div>
+    
+          <div class="col-md-3 mb-3">
+            <label for="desconto_taxa" class="form-label">Desconto Taxa (%)</label>
+            <input type="number" id="desconto_taxa" class="form-control" formControlName="desconto_taxa" placeholder="Desconto Taxa (%)" min="0" (input)="verificarValorNegativo('desconto_taxa')" />
+          </div>
+        </div>
         <div class="d-flex justify-content-end" style="padding-top: 5px;">
           <button type="submit" class="btn btn-sm me-1" [ngClass]="editar ? 'btn-primary' : 'btn-success'" (click)="controleBotao()">
             <i class="fas fa-save"></i> Salvar

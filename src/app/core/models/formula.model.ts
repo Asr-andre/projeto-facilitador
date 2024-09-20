@@ -26,3 +26,23 @@ export class RequisicaoFormula {
   id_formula: number;
   user_login: string;
 }
+
+export class FormulaRequest {
+  id_empresa: number;
+  descricao: string;
+  multa: number;
+  juros: number;
+  taxa: number;
+  desconto_principal: number;
+  desconto_multa: number;
+  desconto_juros: number;
+  desconto_taxa: number;
+  user_login: string;
+}
+
+export class RetornoFormula {
+  success: string;
+  msg: string;
+  id_empresa: string;
+  id_formula: string;
+}

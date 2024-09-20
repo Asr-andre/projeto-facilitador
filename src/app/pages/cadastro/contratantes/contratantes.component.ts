@@ -293,7 +293,7 @@ export class ContratantesComponent implements OnInit {
   public editarContratante() {
     if (this.formContratante.valid) {
       this.loadingMin = true;
-      this._contratanteService.ditarContratante(this.formContratante.value).subscribe((res) => {
+      this._contratanteService.editarContratante(this.formContratante.value).subscribe((res) => {
         if (res.success) {
           this.loadingMin = false;
           this.obterContratantes();

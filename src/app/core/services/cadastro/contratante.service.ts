@@ -27,7 +27,7 @@ export class ContratanteService {
     return this._http.post<RetornoModel>(`${this.apiUrl}/contratante`, contratante);
   }
 
-  public ditarContratante(dados: ContratanteModel): Observable<RetornoGenerico> {
+  public editarContratante(dados: ContratanteModel): Observable<RetornoGenerico> {
     return this._http.put<RetornoGenerico>(`${this.apiUrl}/editarcontratante`, dados);
   }
 }
