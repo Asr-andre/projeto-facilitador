@@ -78,6 +78,12 @@ import { MenuItem } from "./menu.model";
           link: "/cadastro/email-conta",
           parentId: 8,
         },
+        {
+          id: 15,
+          label: "MENUITEMS.CADASTRO.LIST.FORMULA",
+          link: "/cadastro/formula",
+          parentId: 8,
+        },
       ].filter(item => item.show !== false), // Filtra subItems para remover aqueles com show === false
     },
     {

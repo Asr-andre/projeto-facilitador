@@ -1,5 +1,5 @@
 export class Formula {
-  id_formula: number;
+  id_formula?: number;
   id_empresa: number;
   descricao: string;
   fator_multa: number;
@@ -9,8 +9,8 @@ export class Formula {
   desconto_multa: number;
   desconto_juros: number;
   desconto_taxa: number;
-  data_cadastro: string;
-  data_alteracao: string | null;
+  data_cadastro?: string;
+  data_alteracao?: string;
   user_login: string;
 }
 
