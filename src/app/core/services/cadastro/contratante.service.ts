@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RetornoModel } from '../../models/retorno.model';
 import { AppConfig } from '../url.base.service';
-import { ContratanteModel, ContratantesRetornoModel } from '../../models/cadastro/contratante.model';
+import { ContratanteModel, ContratantesRetornoModel, RequisicaoContratanteModel, RespostaContratanteModel } from '../../models/cadastro/contratante.model';
 import { catchError, map, Observable, of } from 'rxjs';
 import { AuthenticationService } from '../auth.service';
 
@@ -21,6 +21,10 @@ export class ContratanteService {
 
   public obterContratantePorEmpresa(idEmpresa: number): Observable<ContratantesRetornoModel> {
     return this._http.post<ContratantesRetornoModel>(`${this.apiUrl}/contratante/listarporempresa`, { id_empresa: idEmpresa });
+  }
+
+  public obterContratantePorId(dados: RequisicaoContratanteModel): Observable<RespostaContratanteModel> {
+    return this._http.post<RespostaContratanteModel>(`${this.apiUrl}/listarcontratante`, dados);
   }
 
   public cadastrarContratante(contratante: ContratanteModel) {

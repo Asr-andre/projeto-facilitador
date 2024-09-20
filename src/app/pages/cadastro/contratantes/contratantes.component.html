@@ -154,37 +154,39 @@
             </select>
           </div>
           <div class="col-md-2 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" placeholder="Inscrição municipal">
+            <input class="form-control form-control-sm mb-3" type="text" formControlName="telefone" placeholder="Telefone"
+            mask="(00) 00000-0000">
           </div>
           <div class="col-md-2 form-group" style="padding-left: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" placeholder="Inscrição estadual">
+            <input class="form-control form-control-sm mb-3" type="text" formControlName="celular" placeholder="Celular"
+            mask="(00) 00000-0000">
           </div>
-
-          <div class="col-md-5 form-group" style="padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" placeholder="Site">
-          </div>
-          <div class="col-md-5 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" placeholder="Email">
-          </div>
-          <div class="col-md-2 form-group" style="padding-left: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" placeholder="Formula calculo">
-          </div>
-          <div class="col-md-6 form-group" style="padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" placeholder="Responsavel">
+          <div class="col-md-3 form-group" style="padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" type="text" formControlName="codigo_credor" placeholder="Codigo Credor">
           </div>
           <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" placeholder="Fone Contato"
-              mask="(00) 00000-0000">
+            <select class="form-control form-control-sm mb-3" formControlName="id_perfilemail" (click)="acionarPerfilEmail()">
+              <option value="">Perfil Email</option>
+              <option *ngFor="let perfil of emailConta" [value]="perfil.id_perfilemail">{{ perfil.email }}</option>
+            </select>
+          </div>
+          <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" type="text" formControlName="id_formula" placeholder="Formula calculo">
           </div>
           <div class="col-md-3 form-group" style="padding-left: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" placeholder="Cpf Responsavel"
-              mask="000.000.000-00">
+            <select class="form-control form-control-sm mb-3" formControlName="id_perfilsms" (click)="acionarPerfilSms()">
+              <option value="">Perfil Sms</option>
+              <option *ngFor="let sms of msg" [value]="sms.id_perfilsms">{{ sms.titulo }}</option>
+            </select>
           </div>
-          <div class="col-md-4 form-group" style="padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" placeholder="RG Responsavel">
+          <div class="col-md-3 form-group" style="padding-right: 3px;">
+            <input class="form-control form-control-sm mb-3" type="text" formControlName="id_perfilwhatsapp" placeholder="Perfil Whatsapp">
           </div>
-          <div class="col-md-3 form-group" style="padding-left: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" placeholder="Expedidor">
+          <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
+            <select class="form-control form-control-sm mb-3" formControlName="id_perfiltextoemail" (click)="acionarPerfilEmail ()">
+              <option value="">Perfil Email Texto</option>
+              <option *ngFor="let perfil of emailConta" [value]="perfil.id_perfilemail">{{ perfil.email }}</option>
+            </select>
           </div>
         </div>
         <div class="d-flex justify-content-end" style="padding-top: 5px;">

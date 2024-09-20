@@ -15,9 +15,13 @@ export class ContratanteModel {
   celular: string;
   ativo: string;
   codigo_credor: string;
-  id_formula: number | null;
+  id_formula?: number;
+  id_perfilemail?: number;
+  id_perfilsms?: number;
+  id_perfilwhatsapp?: number;
+  id_perfiltextoemail: number;
   data_cadastro: string;
-  data_alteracao: string | null;
+  data_alteracao?: string;
   user_login: string;
 }
 
@@ -26,4 +30,17 @@ export class ContratantesRetornoModel {
   msg: string;
   id_empresa: string;
   contratantes: ContratanteModel[];
+}
+
+
+export class RequisicaoContratanteModel {
+  id_empresa: number;
+  id_contratante: number;
+  user_login: string;
+}
+
+export class RespostaContratanteModel {
+  success: string;
+  msg: string;
+  data: ContratanteModel[];
 }
