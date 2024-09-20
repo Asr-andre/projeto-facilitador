@@ -157,7 +157,6 @@ export class FormulaComponent implements OnInit {
   }
 
   public abriModalEditar(content: TemplateRef<any>, formula: any): void {
-    console.log("dados vindo da tela", formula)
     this.editar = true;
     this.formFormula.patchValue({
       descricao: formula.descricao,
