@@ -48,16 +48,15 @@ export class FormulaComponent implements OnInit {
   ngOnInit(): void {
     this.obterFormulas();
     this.inicializarFormFomula();
-
   }
 
   public inicializarFormFomula(dado?: FormulaRequest) {
     this.formFormula = this._formBuilder.group({
       id_empresa: [dado?.id_empresa || this.idEmpresa],
       descricao: [dado?.descricao || '', Validators.required],
-      multa: [dado?.multa || 0, [Validators.required, Validators.min(0)]],
-      juros: [dado?.juros || 0, [Validators.required, Validators.min(0)]],
-      taxa: [dado?.taxa || 0, [Validators.required, Validators.min(0)]],
+      multa: [dado?.multa || 0, [Validators.min(0)]],
+      juros: [dado?.juros || 0, [Validators.min(0)]],
+      taxa: [dado?.taxa || 0, [Validators.min(0)]],
       desconto_principal: [dado?.desconto_principal || 0, [Validators.min(0)]],
       desconto_multa: [dado?.desconto_multa || 0, [Validators.min(0)]],
       desconto_juros: [dado?.desconto_juros || 0, [Validators.min(0)]],
@@ -76,7 +75,11 @@ export class FormulaComponent implements OnInit {
         this.loading = false;
       } else {
         this.loading = false;
-        this._alertService.error(res.msg);
+        this._alertService.warning(res.msg);
+      }
+      (error) => {
+        this.loadingMin = false;
+        this._alertService.error("Ocorreu um error.", error);
       }
     });
   }
