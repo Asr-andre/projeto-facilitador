@@ -141,6 +141,10 @@ export class ContratantesComponent implements OnInit {
         this.loadingMin = false;
         this._alertService.error(res.msg);
       }
+      (error) => {
+        this.loadingMin = false;
+        this._alertService.error("Ocorreu um error.", error);
+      }
     });
   }
 
@@ -165,6 +169,10 @@ export class ContratantesComponent implements OnInit {
       } else {
         this.loadingMin = false;
         this._alertService.error(res.msg);
+      }
+      (error) => {
+        this.loadingMin = false;
+        this._alertService.error("Ocorreu um error.", error);
       }
     });
   }
@@ -191,6 +199,10 @@ export class ContratantesComponent implements OnInit {
         this.loadingMin = false;
         this._alertService.error(res.msg);
       }
+      (error) => {
+        this.loadingMin = false;
+        this._alertService.error("Ocorreu um error.", error);
+      }
     });
   }
 
@@ -215,6 +227,10 @@ export class ContratantesComponent implements OnInit {
       } else {
         this.loadingMin = false;
         this._alertService.error(res.msg);
+      }
+      (error) => {
+        this.loadingMin = false;
+        this._alertService.error("Ocorreu um error.", error);
       }
     });
   }
