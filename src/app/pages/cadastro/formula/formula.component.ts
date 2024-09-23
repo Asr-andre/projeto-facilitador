@@ -47,7 +47,6 @@ export class FormulaComponent implements OnInit {
 
   ngOnInit(): void {
     this.obterFormulas();
-    this.inicializarFormFomula();
   }
 
   public inicializarFormFomula(dado?: FormulaRequest) {
