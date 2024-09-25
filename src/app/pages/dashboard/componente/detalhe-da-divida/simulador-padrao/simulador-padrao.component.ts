@@ -73,7 +73,6 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     this.formSimulador();
     this.formsimuladorAcordo();
     this.iniciarFormgerarPixBoleto();
-    console.log('Número do contrato recebido:', this.numeroContrato);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -114,7 +113,6 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   }
 
   public iniciarFormgerarPixBoleto() {
-    // Inicializando o formulário
     this.formGerarPixBoleto = this.fb.group({
       id_empresa: [this.idEmpresa, Validators.required],
       id_contratante: [this.idContratante, Validators.required],
