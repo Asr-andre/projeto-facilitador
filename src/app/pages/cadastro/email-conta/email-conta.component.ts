@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OrdenarPeloHeaderTabela, SortEvent, compararParaOrdenar } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
-import { EmailContaModel } from 'src/app/core/models/cadastro/email.conta.model';
+import { EmailContaCadastroModel, EmailContaModel } from 'src/app/core/models/cadastro/email.conta.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { EmailContaService } from 'src/app/core/services/cadastro/email.conta.service';
@@ -20,6 +20,7 @@ export class EmailContaComponent implements OnInit {
   public login = this._auth.getLogin();
   public loading: boolean = false;
   public loadingMin: boolean = false;
+  public editar: boolean = false;
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -47,6 +48,7 @@ export class EmailContaComponent implements OnInit {
   public inicializarForm() {
     this.emailContaForm = this._fb.group({
       id_empresa: [this.idEmpresa, Validators.required],
+      id_perfilemail: [''],
       nome_remetente: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       porta: ['', Validators.required],
@@ -61,7 +63,18 @@ export class EmailContaComponent implements OnInit {
       user_login: [this.login, Validators.required]
     });
   }
-  public abriModalCadastro(content: TemplateRef<any>): void {
+
+  public controleBotao() {
+    if(this.editar == false) {
+      this.cadastrarEmailConta();
+    } else {
+      this.editarEmailConta();
+    }
+  }
+
+  public modalCadastrar(content: TemplateRef<any>): void {
+    this.editar = false;
+    this.inicializarForm();
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
@@ -83,6 +96,53 @@ export class EmailContaComponent implements OnInit {
       (error) => {
         this.loadingMin = false;
         this._alertService.error("Ocorreu um erro ao tentar cadastrar.");
+      });
+    } else {
+      this.loadingMin = false;
+      this._alertService.warning("Preencha todos os campos obrigatórios");
+    }
+  }
+
+  public modalEditar(content: TemplateRef<any>, dado: EmailContaCadastroModel): void {
+    this.editar = true;
+    this.emailContaForm.patchValue({
+      id_empresa: [dado.id_empresa],
+      id_perfilemail: [dado.id_perfilemail],
+      nome_remetente: [dado.nome_remetente],
+      email: [dado.email],
+      porta: [dado.porta],
+      smtp_host: [dado.smtp_host],
+      smtp_usuario: [dado.smtp_usuario],
+      smtp_senha: [dado.smtp_senha],
+      email_retorno: [dado.email_retorno],
+      email_envio: [dado.email_envio],
+      gera_acionamento: [dado.gera_acionamento],
+      ssl: [dado.ssl],
+      tls: [dado.tls],
+      user_login: [this.login]
+    });
+
+    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
+  public editarEmailConta() {
+    if(this.emailContaForm.valid) {
+      this.loadingMin = true;
+
+      this._emailContaService.editarEmailConta(this.emailContaForm.value).subscribe((res) => {
+        if(res.success === "true") {
+          this.loadingMin = false;
+          this._alertService.success(res.msg);
+          this.obterEmailConta();
+          this.fechar();
+        } else {
+          this.loadingMin = false;
+          this._alertService.warning(res.msg);
+        }
+      },
+      (error) => {
+        this.loadingMin = false;
+        this._alertService.error("Ocorreu um erro ao tentar editar.");
       });
     } else {
       this.loadingMin = false;

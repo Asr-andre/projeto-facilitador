@@ -17,7 +17,7 @@
                     <h5 class="mb-0"><i class="fas fa-envelope me-2"></i> Email - Conta </h5>
                   </div>
                   <div class="col-md-6 text-end">
-                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;" (click)="abriModalCadastro(modalCadastrar)">
+                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;" (click)="modalCadastrar(modalGenerico)">
                       <i class="fas fa-plus"></i>
                       Cadastrar
                     </button>
@@ -56,6 +56,7 @@
                       <th sortable="ssl" (sort)="ordenar($event)">SSL</th>
                       <th sortable="tls" (sort)="ordenar($event)">TLS</th>
                       <th sortable="data_cadastro" (sort)="ordenar($event)">Data Cadastro</th>
+                      <th>Ações</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -68,6 +69,9 @@
                       <td>{{ dado.ssl === 'S' ? 'Sim' : 'Não' }}</td>
                       <td>{{ dado.tls === 'S' ? 'Sim' : 'Não' }}</td>
                       <td>{{ data(dado.data_cadastro) }}</td>
+                      <td>
+                        <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="modalEditar(modalGenerico, dado)"><i class="fas fa-edit"></i></button>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -93,14 +97,14 @@
   </div>
 </div>
 
-<ng-template #modalCadastrar let-modal>
+<ng-template #modalGenerico let-modal>
   <div class="loading-overlay-card" *ngIf="loadingMin">
     <div class="spinner-border text-primary m-1" role="status">
     </div>
   </div>
 
-  <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
-    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-envelope me-2"></i> Cadastrar Email - Conta
+  <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
+    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-envelope me-2"></i>  {{ editar ? 'Editar Email - Conta' : 'Cadastrar Email - Conta' }}
     </h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
       (click)="fechar()"></button>
@@ -109,47 +113,56 @@
     <form [formGroup]="emailContaForm" >
       <div class="row">
         <div class="col-md-6 form-group">
-          <input type="text" id="empresa" class="form-control form-control-sm mb-3" formControlName="nome_remetente" placeholder="Nome"
+          <label for="nome_remetente" class="form-label">Remetente</label>
+          <input type="text" id="empresa" class="form-control form-control-sm mb-1" formControlName="nome_remetente" placeholder="Nome"
             [ngClass]="{'is-invalid': emailContaForm.get('nome_remetente').invalid && emailContaForm.get('nome_remetente').touched}">
         </div>
 
         <div class="col-md-6 form-group">
-          <input type="text" id="host" class="form-control form-control-sm mb-3" formControlName="email" placeholder="Email"
+          <label for="email" class="form-label">Email</label>
+          <input type="text" id="host" class="form-control form-control-sm mb-1" formControlName="email" placeholder="Email"
           [ngClass]="{'is-invalid': emailContaForm.get('email').invalid && emailContaForm.get('email').touched}">
         </div>
 
         <div class="col-md-2 form-group">
-          <input type="text" id="usuario" class="form-control form-control-sm mb-3" formControlName="porta" placeholder="Porta"
+          <label for="porta" class="form-label">Porta</label>
+          <input type="text" id="usuario" class="form-control form-control-sm mb-1" formControlName="porta" placeholder="Porta"
           [ngClass]="{'is-invalid': emailContaForm.get('porta').invalid && emailContaForm.get('porta').touched}">
         </div>
 
         <div class="col-md-4 form-group">
-          <input type="text" id="senha" class="form-control form-control-sm mb-3" formControlName="smtp_host" placeholder="Host"
+          <label for="smtp_host" class="form-label">Host</label>
+          <input type="text" id="senha" class="form-control form-control-sm mb-1" formControlName="smtp_host" placeholder="Host"
           [ngClass]="{'is-invalid': emailContaForm.get('smtp_host').invalid && emailContaForm.get('smtp_host').touched}">
         </div>
 
         <div class="col-md-3 form-group">
-          <input type="text" id="sigla" class="form-control form-control-sm mb-3" formControlName="smtp_usuario" placeholder="Usuario"
+          <label for="smtp_usuario" class="form-label">Usúario</label>
+          <input type="text" id="sigla" class="form-control form-control-sm mb-1" formControlName="smtp_usuario" placeholder="Usuario"
           [ngClass]="{'is-invalid': emailContaForm.get('smtp_usuario').invalid && emailContaForm.get('smtp_usuario').touched}">
         </div>
 
         <div class="col-md-3 form-group">
-          <input type="text" id="centro_custo" class="form-control form-control-sm mb-3" formControlName="smtp_senha" placeholder="Senha"
+          <label for="smtp_senha" class="form-label">Senha</label>
+          <input type="text" id="centro_custo" class="form-control form-control-sm mb-1" formControlName="smtp_senha" placeholder="Senha"
           [ngClass]="{'is-invalid': emailContaForm.get('smtp_senha').invalid && emailContaForm.get('smtp_senha').touched}">
         </div>
 
         <div class="col-md-6 form-group">
-          <input type="text" id="token" class="form-control form-control-sm mb-3" formControlName="email_retorno" placeholder="Email Retorno"
+          <label for="email_retorno" class="form-label">Email Retorno</label>
+          <input type="text" id="token" class="form-control form-control-sm mb-1" formControlName="email_retorno" placeholder="Email Retorno"
           [ngClass]="{'is-invalid': emailContaForm.get('email_retorno').invalid && emailContaForm.get('email_retorno').touched}">
         </div>
 
         <div class="col-md-6 form-group">
-          <input type="text" id="titulo" class="form-control form-control-sm mb-3" formControlName="email_envio" placeholder="Email Envio"
+          <label for="email_envio" class="form-label">Email Para Envio</label>
+          <input type="text" id="titulo" class="form-control form-control-sm mb-1" formControlName="email_envio" placeholder="Email Envio"
           [ngClass]="{'is-invalid': emailContaForm.get('email_envio').invalid && emailContaForm.get('email_envio').touched}">
         </div>
 
         <div class="col-md-3 form-group">
-          <select class="form-control form-control-sm mb-3" formControlName="gera_acionamento" placeholder="Gerar Acionamento"
+          <label for="gera_acionamento" class="form-label">Gerar Acionamento</label>
+          <select class="form-control form-control-sm mb-1" formControlName="gera_acionamento" placeholder="Gerar Acionamento"
           [ngClass]="{'is-invalid': emailContaForm.get('gera_acionamento').invalid && emailContaForm.get('gera_acionamento').touched}">
             <option value="">Gerar Acionamento</option>
             <option value="S">Sim</option>
@@ -157,23 +170,23 @@
           </select>
         </div>
 
-        <div class="col-md-6 form-group">
+        <div class="col-md-6 form-group" style="margin-top: 5px;">
+          <label class="form-label d-block">Tipo de Conexão</label>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="sslSim" formControlName="ssl" value="S"
-                   (change)="onChangeRadio('ssl')">
             <label class="form-check-label" for="sslSim">SSL</label>
+            <input class="form-check-input mb-1" type="radio" id="sslSim" formControlName="ssl" value="S"
+                   (change)="onChangeRadio('ssl')">
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="tlsSim" formControlName="tls" value="S"
-                   (change)="onChangeRadio('tls')">
             <label class="form-check-label" for="tlsSim">TLS</label>
+            <input class="form-check-input mb-1" type="radio" id="tlsSim" formControlName="tls" value="S"
+                   (change)="onChangeRadio('tls')">
           </div>
         </div>
-
       </div>
 
       <div class="d-flex justify-content-end">
-        <button type="submit" class="btn btn-success btn-sm me-2" (click)="cadastrarEmailConta()">
+        <button type="submit" class="btn btn-sm me-1" [ngClass]="editar ? 'btn-primary' : 'btn-success'" (click)="controleBotao()">
           <i class="fas fa-save"></i> Salvar
         </button>
         <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">

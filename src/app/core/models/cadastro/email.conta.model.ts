@@ -5,6 +5,7 @@ export class EmailContaRequestModel {
 
 export class EmailContaModel {
   id_perfilemail: number;
+  nome_remetente: string;
   email: string;
   porta: number;
   smtp_host: string;
@@ -12,6 +13,7 @@ export class EmailContaModel {
   smtp_senha: string;
   email_retorno: string;
   email_envio: string;
+  gera_acionamento: string;
   tipo_email: string;
   ssl: string;
   tls: string;
@@ -29,6 +31,7 @@ export class EmailContaResponseModel {
 // classes relacioanda ao cadastro dos parametros de smtp
 export class EmailContaCadastroModel {
   id_empresa: number;
+  id_perfilemail?: number;
   nome_remetente: string;
   email: string;
   porta: number;
@@ -47,5 +50,12 @@ export class RetornoEmailContaModel {
   success: string;
   msg: string;
   id_empresa: number;
+}
+
+export class RetornoEditarModel {
+  success: string;
+  msg: string;
+  id_empresa: number;
+  id_perfilemail: number;
 }
 
