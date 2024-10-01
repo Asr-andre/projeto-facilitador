@@ -92,7 +92,7 @@ export class ContratantesComponent implements OnInit {
       id_formula: [dado?.id_formula || ''],
       id_perfilemail: [dado?.id_perfilemail || ''],
       id_perfilsms: [dado?.id_perfilsms || ''],
-      id_perfilwhatsapp: [dado?.id_perfilwhatsapp || this.idPerfilWhatsapp],
+      id_perfilwhatsapp: [dado?.id_perfilwhatsapp || ''],
       id_perfiltextoemail: [dado?.id_perfiltextoemail || ''],
       user_login: [dado?.user_login || this.login, Validators.required],
     });
@@ -267,12 +267,6 @@ export class ContratantesComponent implements OnInit {
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
-  public abriModalEditar(content: TemplateRef<any>, dados: ContratanteModel): void {
-    this.inicializarformContratante(dados);
-    this.editar = true;
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
-  }
-
   public controleBotao() {
     if(this.editar == false) {
       this.cadastrarContratante();
@@ -304,6 +298,12 @@ export class ContratantesComponent implements OnInit {
       this.loadingMin = false;
       this._alertService.warning("Preencha todos os campos obrigatórios");
     }
+  }
+
+  public abriModalEditar(content: TemplateRef<any>, dados: ContratanteModel): void {
+    this.editar = true;
+    this.inicializarformContratante(dados);
+    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public editarContratante() {

@@ -17,7 +17,7 @@
                     <h5 class="mb-0"><i class="fas fa-building"></i> Contratantes </h5>
                   </div>
                   <div class="col-md-6 text-end">
-                    <button class="btn btn-success btn-sm" (click)="abriModalCadastro(cadastraContratanteModal)"
+                    <button class="btn btn-success btn-sm" (click)="abriModalCadastro(modalGenerico)"
                       style="padding-top: 2px; padding-bottom: 2px;">
                       <i class="fas fa-plus"></i>
                        Contratante
@@ -78,7 +78,7 @@
                         <td>{{ data(contratante.data_cadastro) }}</td>
                         <td>{{ contratante.ativo === 'S' ? 'Sim' : 'Não' }}</td>
                         <td>
-                          <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abriModalEditar(cadastraContratanteModal, contratante)"><i class="fas fa-edit"></i></button>
+                          <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abriModalEditar(modalGenerico, contratante)"><i class="fas fa-edit"></i></button>
                         </td>
                       </tr>
                     </tbody>
@@ -105,7 +105,7 @@
     </div>
   </div>
 
-  <ng-template #cadastraContratanteModal let-modal>
+  <ng-template #modalGenerico let-modal>
     <div class="loading-overlay-card" *ngIf="loadingMin">
       <div class="spinner-border text-primary m-1" role="status">
       </div>
@@ -118,83 +118,101 @@
     <div class="modal-body modal-padding">
       <form [formGroup]="formContratante">
         <div class="row">
-          <div class="col-md-5 form-group" style="padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="razao_social" type="text"
+          <div class="col-md-5 form-group">
+            <label for="razao_social" class="form-label">Razao Social</label>
+            <input class="form-control form-control-sm mb-1" formControlName="razao_social" type="text"
               placeholder="Razão Social" required>
           </div>
-          <div class="col-md-4 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="fantasia" type="text"
+          <div class="col-md-4 form-group">
+            <label for="fantasia" class="form-label">Fantasia</label>
+            <input class="form-control form-control-sm mb-1" formControlName="fantasia" type="text"
               placeholder="Fantasia" required>
           </div>
-          <div class="col-md-3 form-group" style="padding-left: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="cnpj" type="text" placeholder="CNPJ"
+          <div class="col-md-3 form-group">
+            <label for="cnpj" class="form-label">Cnpj</label>
+            <input class="form-control form-control-sm mb-1" formControlName="cnpj" type="text" placeholder="CNPJ"
               mask="00.000.000/0000-00">
           </div>
-          <div class="col-md-3 form-group" style="padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="cep" type="text" placeholder="Cep"
+          <div class="col-md-3 form-group">
+            <label for="Cep" class="form-label">Cep</label>
+            <input class="form-control form-control-sm mb-1" formControlName="cep" type="text" placeholder="Cep"
               mask="00000-000" (blur)="viaCep($event.target.value)">
           </div>
 
-          <div class="col-md-5 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="endereco" type="text" placeholder="Rua" [(ngModel)]="cep.endereco">
+          <div class="col-md-5 form-group">
+            <label for="endereco" class="form-label">Endereço</label>
+            <input class="form-control form-control-sm mb-1" formControlName="endereco" type="text" placeholder="Rua" [(ngModel)]="cep.endereco">
           </div>
-          <div class="col-md-2 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="numero" type="text" placeholder="Nº">
+          <div class="col-md-2 form-group" >
+            <label for="numero" class="form-label">Número</label>
+            <input class="form-control form-control-sm mb-1" formControlName="numero" type="text" placeholder="Nº">
           </div>
-          <div class="col-md-2 form-group" style="padding-left: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="complemento" type="text" placeholder="Complemento" [(ngModel)]="cep.complemento">
+          <div class="col-md-2 form-group">
+            <label for="Complemento" class="form-label">Número</label>
+            <input class="form-control form-control-sm mb-1" formControlName="complemento" type="text" placeholder="Complemento" [(ngModel)]="cep.complemento">
           </div>
-          <div class="col-md-4 form-group" style="padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="bairro" type="text" placeholder="Bairro" [(ngModel)]="cep.bairro">
+          <div class="col-md-4 form-group">
+            <label for="bairro" class="form-label">Bairro</label>
+            <input class="form-control form-control-sm mb-1" formControlName="bairro" type="text" placeholder="Bairro" [(ngModel)]="cep.bairro">
           </div>
 
-          <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="cidade" type="text" placeholder="Cidade" [(ngModel)]="cep.cidade">
+          <div class="col-md-3 form-group">
+            <label for="cidade" class="form-label">Cidade</label>
+            <input class="form-control form-control-sm mb-1" formControlName="cidade" type="text" placeholder="Cidade" [(ngModel)]="cep.cidade">
           </div>
-          <div class="col-md-1 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <select class="form-control form-control-sm mb-3" formControlName="uf" [(ngModel)]="cep.uf">
+          <div class="col-md-1 form-group">
+            <label for="uf" class="form-label">Uf</label>
+            <select class="form-control form-control-sm mb-1" formControlName="uf" [(ngModel)]="cep.uf">
               <option value="">--</option>
               <option *ngFor="let estado of estados" [value]="estado.sigla">{{ estado.sigla }}</option>
             </select>
           </div>
-          <div class="col-md-2 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" formControlName="telefone" placeholder="Telefone"
+          <div class="col-md-2 form-group">
+            <label for="telefone" class="form-label">Telefone</label>
+            <input class="form-control form-control-sm mb-1" type="text" formControlName="telefone" placeholder="Telefone"
             mask="(00) 00000-0000">
           </div>
-          <div class="col-md-2 form-group" style="padding-left: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" formControlName="celular" placeholder="Celular"
+          <div class="col-md-2 form-group">
+            <label for="celular" class="form-label">Celular</label>
+            <input class="form-control form-control-sm mb-1" type="text" formControlName="celular" placeholder="Celular"
             mask="(00) 00000-0000">
           </div>
-          <div class="col-md-3 form-group" style="padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" type="text" formControlName="codigo_credor" placeholder="Codigo Credor">
+          <div class="col-md-3 form-group">
+            <label for="codigo_credor" class="form-label">Codigo Credor</label>
+            <input class="form-control form-control-sm mb-1" type="text" formControlName="codigo_credor" placeholder="Codigo Credor">
           </div>
-          <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <select class="form-control form-control-sm mb-3" formControlName="id_perfilemail" (click)="acionarPerfilEmail()">
-              <option value="">Selecione Perfil Email</option>
+          <div class="col-md-3 form-group">
+            <label for="id_perfilemail" class="form-label">Perfil Email</label>
+            <select class="form-control form-control-sm mb-1" formControlName="id_perfilemail" (click)="acionarPerfilEmail()">
+              <option value="">Selecione</option>
               <option *ngFor="let perfil of emailConta" [value]="perfil.id_perfilemail">{{ perfil.email }}</option>
             </select>
           </div>
-          <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <select class="form-control form-control-sm mb-3" formControlName="id_perfilemail" (click)="acionarobterPerfilFormula()">
-              <option value="">Selecione Formula calculo</option>
+          <div class="col-md-3 form-group">
+            <label for="id_formula" class="form-label">Formula</label>
+            <select class="form-control form-control-sm mb-1" formControlName="id_formula" (click)="acionarobterPerfilFormula()">
+              <option value="">Selecione</option>
               <option *ngFor="let perfil of perfilFormula" [value]="perfil.id_formula">{{ perfil.descricao }}</option>
             </select>
           </div>
-          <div class="col-md-3 form-group" style="padding-left: 3px;">
-            <select class="form-control form-control-sm mb-3" formControlName="id_perfilsms" (click)="acionarobterPerfilSms()">
-              <option value="">Selecione Perfil Sms</option>
+          <div class="col-md-3 form-group">
+            <label for="id_perfilsms" class="form-label">Perfil Sms</label>
+            <select class="form-control form-control-sm mb-1" formControlName="id_perfilsms" (click)="acionarobterPerfilSms()">
+              <option value="">Selecione</option>
               <option *ngFor="let perfil of perfilSms" [value]="perfil.id_perfilsms">{{ perfil.empresa }}</option>
             </select>
           </div>
-          <div class="col-md-3 form-group" style="padding-right: 3px;">
-            <select class="form-control form-control-sm mb-3" formControlName="id_perfilwhatsapp" (click)="acionarPerfilWhatsApp()">
-              <option value="">Perfil Whatsapp</option>
-              <option *ngFor="let sms of msg" [value]="sms.id_perfilwhatsapp">{{ sms.empresa }}</option>
+          <div class="col-md-3 form-group">
+            <label for="id_perfilwhatsapp" class="form-label">Perfil Whatsapp</label>
+            <select class="form-control form-control-sm mb-1" formControlName="id_perfilwhatsapp" (click)="acionarPerfilWhatsApp()">
+              <option value="">Selecione</option>
+              <option *ngFor="let sms of msg" [value]="sms.id_perfilwhatsapp">{{ sms.titulo }}</option>
             </select>
           </div>
-          <div class="col-md-3 form-group" style="padding-left: 3px; padding-right: 3px;">
-            <select class="form-control form-control-sm mb-3" formControlName="id_perfiltextoemail" (click)="acionarPerfilEmail ()">
-              <option value="">Perfil Email Texto</option>
+          <div class="col-md-3 form-group">
+            <label for="id_perfiltextoemailid_perfiltextoemail" class="form-label">Perfil Email Texto</label>
+            <select class="form-control form-control-sm mb-1" formControlName="id_perfiltextoemail" (click)="acionarPerfilEmail ()">
+              <option value="">Selecione</option>
               <option *ngFor="let perfil of emailConta" [value]="perfil.id_perfilemail">{{ perfil.email }}</option>
             </select>
           </div>
