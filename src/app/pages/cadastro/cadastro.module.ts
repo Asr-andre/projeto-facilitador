@@ -30,6 +30,7 @@ import { OrderTableModule } from "src/app/core/helpers/conf-tabela/order-table.m
 import { SmsWhatsappComponent } from "./sms-whatsapp/sms-whatsapp.component";
 import { EmailContaComponent } from "./email-conta/email-conta.component";
 import { FormulaComponent } from "./formula/formula.component";
+import { SmsComponent } from "./sms/sms.component";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { FormulaComponent } from "./formula/formula.component";
     SmsWhatsappComponent,
     EmailContaComponent,
     FormulaComponent,
+    SmsComponent
   ],
   imports: [
     CommonModule,

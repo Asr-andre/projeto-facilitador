@@ -23,13 +23,14 @@
     "CADASTRO": {
       "TEXT": "Cadastro",
       "LIST": {
-        "EMPRESA": "Empresa",
         "CONTRATANTES": "Contratantes",
-        "USUARIOS": "Usúarios",
         "TITULOS": "Clientes/ Titulos",
-        "SMS-WHATSAPP": "Sms/ WhatsApp",
-        "EMAIL-CONTA":  "Email/ Conta",
-        "FORMULA": "Formulas"
+        "EMPRESA": "Empresa",
+        "EMAIL-CONTA": "Email/ Conta",
+        "FORMULA": "Formulas",
+        "USUARIOS": "Usúarios",
+        "SMS": "Sms",
+        "SMS-WHATSAPP": "WhatsApp"
       }
     },
     "RELATORIOS": {

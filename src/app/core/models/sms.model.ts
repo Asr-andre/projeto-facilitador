@@ -20,7 +20,7 @@ export class RequisicaoPefilSms {
   }
 
   export class PerfilSms {
-    id_perfilsms: number;
+    id_perfilsms?: number;
     id_empresa: number;
     ativo: string;
     titulo: string;

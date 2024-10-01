@@ -1,0 +1,18 @@
+::ng-deep .ngx-pagination .pagination-previous a::before,
+::ng-deep .ngx-pagination .pagination-previous.disabled::before,
+::ng-deep .ngx-pagination .pagination-next a::after,
+::ng-deep .ngx-pagination .pagination-next.disabled::after {
+    font-size: 11px !important;
+}
+
+.text-small {
+  font-size: 11px;
+}
+
+#iconeOlhoIcon {
+  position: absolute;
+  right: 0.75rem;
+  top: 70%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}

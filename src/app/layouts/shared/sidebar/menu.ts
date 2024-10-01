@@ -68,18 +68,24 @@ import { MenuItem } from "./menu.model";
         },
         {
           id: 14,
+          label: "MENUITEMS.CADASTRO.LIST.SMS",
+          link: "/cadastro/sms",
+          parentId: 8,
+        },
+        {
+          id: 15,
           label: "MENUITEMS.CADASTRO.LIST.SMS-WHATSAPP",
           link: "/cadastro/sms-whatsapp",
           parentId: 8,
         },
         {
-          id: 15,
+          id: 16,
           label: "MENUITEMS.CADASTRO.LIST.EMAIL-CONTA",
           link: "/cadastro/email-conta",
           parentId: 8,
         },
         {
-          id: 15,
+          id: 17,
           label: "MENUITEMS.CADASTRO.LIST.FORMULA",
           link: "/cadastro/formula",
           parentId: 8,
