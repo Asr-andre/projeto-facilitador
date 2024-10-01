@@ -45,21 +45,21 @@ export class EmailContaComponent implements OnInit {
     this.inicializarForm();
   }
 
-  public inicializarForm() {
+  public inicializarForm(dado?: EmailContaCadastroModel) {
     this.emailContaForm = this._fb.group({
       id_empresa: [this.idEmpresa, Validators.required],
-      id_perfilemail: [''],
-      nome_remetente: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      porta: ['', Validators.required],
-      smtp_host: ['', Validators.required],
-      smtp_usuario: ['', Validators.required],
-      smtp_senha: ['', Validators.required],
-      email_retorno: ['', Validators.required],
-      email_envio: ['', Validators.required],
-      gera_acionamento: ['', Validators.required],
-      ssl: ['N', Validators.required],
-      tls: ['N', Validators.required],
+      id_perfilemail: [dado?.id_perfilemail || ''],
+      nome_remetente: [dado?.nome_remetente || '', Validators.required],
+      email: [dado?.email || '', [Validators.required, Validators.email]],
+      porta: [dado?.porta || '', Validators.required],
+      smtp_host: [dado?.smtp_host || '', Validators.required],
+      smtp_usuario: [dado?.smtp_usuario || '', Validators.required],
+      smtp_senha: [dado?.smtp_senha || '', Validators.required],
+      email_retorno: [dado?.email_retorno || '', Validators.required],
+      email_envio: [dado?.email_envio || '', Validators.required],
+      gera_acionamento: [dado?.gera_acionamento || '', Validators.required],
+      ssl: [dado?.ssl ||'N', Validators.required],
+      tls: [dado?.tls || 'N', Validators.required],
       user_login: [this.login, Validators.required]
     });
   }
@@ -105,23 +105,7 @@ export class EmailContaComponent implements OnInit {
 
   public modalEditar(content: TemplateRef<any>, dado: EmailContaCadastroModel): void {
     this.editar = true;
-    this.emailContaForm.patchValue({
-      id_empresa: [dado.id_empresa],
-      id_perfilemail: [dado.id_perfilemail],
-      nome_remetente: [dado.nome_remetente],
-      email: [dado.email],
-      porta: [dado.porta],
-      smtp_host: [dado.smtp_host],
-      smtp_usuario: [dado.smtp_usuario],
-      smtp_senha: [dado.smtp_senha],
-      email_retorno: [dado.email_retorno],
-      email_envio: [dado.email_envio],
-      gera_acionamento: [dado.gera_acionamento],
-      ssl: [dado.ssl],
-      tls: [dado.tls],
-      user_login: [this.login]
-    });
-
+    this.inicializarForm(dado)
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
