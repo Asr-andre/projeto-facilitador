@@ -20,4 +20,8 @@ export class UsuarioService {
   public cadastrarUsuario(usuario: UsuarioModel) {
     return this._http.post<RetornoModel>(`${this.apiUrl}/usuario`, usuario);
   }
+
+  public editarUsuario(usuario: UsuarioModel): Observable<UsuariosRetornoModel> {
+    return this._http.put<UsuariosRetornoModel>(`${this.apiUrl}/editarusuario`, usuario);
+  }
 }

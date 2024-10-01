@@ -14,13 +14,13 @@
               <div class="card-header pt-2 pb-2">
                 <div class="row">
                   <div class="col-md-6">
-                    <h5 class="mb-0"><i class="fas fa-user"></i> Usuários </h5>
+                    <h5 class="mb-0"><i class="fas fa-user"></i> Usúarios </h5>
                   </div>
                   <div class="col-md-6 text-end">
-                    <button class="btn btn-success btn-sm" (click)="abrirModalCadastro(cadastraUsuarioModal)"
+                    <button class="btn btn-success btn-sm" (click)="abrirModalCadastro(modalGenerico)"
                       style="padding-top: 2px; padding-bottom: 2px;">
                       <i class="fas fa-plus"></i>
-                      <strong> Usuário </strong>
+                      <strong> Cadastrar </strong>
                     </button>
                   </div>
                 </div>
@@ -57,6 +57,7 @@
                         <th sortable="email" (sort)="ordenar($event)">Email</th>
                         <th sortable="fone" (sort)="ordenar($event)">Fone</th>
                         <th sortable="ativo" (sort)="ordenar($event)">Ativo</th>
+                        <th>Ações</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -70,6 +71,9 @@
                         <td>{{ usuario.email }}</td>
                         <td>{{ mascararTelefone(usuario.fone) }}</td>
                         <td>{{ usuario.ativo === 'S' ? 'Sim' : 'Não' }}</td>
+                        <td>
+                          <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abrirModalEditar(modalGenerico, usuario)"><i class="fas fa-edit"></i></button>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -95,51 +99,60 @@
     </div>
   </div>
 
-  <ng-template #cadastraUsuarioModal let-modal>
+  <ng-template #modalGenerico let-modal>
     <div class="loading-overlay-card" *ngIf="loadingMin">
       <div class="spinner-border text-primary m-1" role="status"></div>
     </div>
 
-    <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
-      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-user-plus"></i> Cadastrar Usuário</h6>
+    <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
+      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-user-plus"></i> {{ editar ? 'Editar Usúario' : 'Cadastrar Usúario' }}</h6>
       <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
-        (click)="modal.dismiss()"></button>
+      (click)="fechar()"></button>
     </div>
 
     <div class="modal-body modal-padding">
       <form [formGroup]="formUsuario">
         <div class="row">
-          <div class="col-md-6 form-group" style="padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="nome" type="text" placeholder="Nome"
-              required (input)="convertMaisculo(formUsuario.get('nome'))">
+          <div class="col-md-6 form-group">
+            <label for="nome" class="form-label">Nome</label>
+            <input class="form-control form-control-sm mb-1" formControlName="nome" type="text" placeholder="Nome"
+              required (input)="convertMaisculo(formUsuario.get('nome'))"
+              [ngClass]="{'is-invalid': formUsuario.get('nome').invalid && formUsuario.get('nome').touched}">
           </div>
-          <div class="col-md-3 form-group" style="padding-right: 3px; padding-left: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="login" type="text" placeholder="Login"
-              required (input)="convertMaisculo(formUsuario.get('login'))">
+          <div class="col-md-3 form-group">
+            <label for="login" class="form-label">Login</label>
+            <input class="form-control form-control-sm mb-1" formControlName="login" type="text" placeholder="Login"
+              required (input)="convertMaisculo(formUsuario.get('login'))"
+              [ngClass]="{'is-invalid': formUsuario.get('login').invalid && formUsuario.get('login').touched}">
           </div>
-          <div class="col-md-3 form-group" style="padding-left: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="senha" type="password" placeholder="Senha"
-              required>
+          <div class="col-md-3 form-group">
+            <label for="senha" class="form-label">Senha</label>
+            <input class="form-control form-control-sm mb-1" formControlName="senha" type="password" placeholder="Senha"
+              required [ngClass]="{'is-invalid': formUsuario.get('senha').invalid && formUsuario.get('senha').touched}">
           </div>
-          <div class="col-md-6 form-group" style="padding-right: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="cpf" type="text" placeholder="CPF"
+          <div class="col-md-6 form-group">
+            <label for="cpf" class="form-label">Cpf</label>
+            <input class="form-control form-control-sm mb-1" formControlName="cpf" type="text" placeholder="CPF"
               mask="000.000.000-00" required>
           </div>
-          <div class="col-md-6 form-group" style="padding-left: 3px;">
-            <input class="form-control form-control-sm mb-3" formControlName="email" type="email" placeholder="Email"
-              required (input)="converterMinuscula(formUsuario.get('email'))">
+          <div class="col-md-6 form-group">
+            <label for="email" class="form-label">Email</label>
+            <input class="form-control form-control-sm mb-1" formControlName="email" type="email" placeholder="Email"
+              required (input)="converterMinuscula(formUsuario.get('email'))"
+              [ngClass]="{'is-invalid': formUsuario.get('email').invalid && formUsuario.get('email').touched}">
           </div>
-          <div class="col-md-4 form-group" style="padding-right: 3px;">
+          <div class="col-md-4 form-group">
+            <label for="fone" class="form-label">Fone</label>
             <input class="form-control form-control-sm mb-3" formControlName="fone" type="text" placeholder="Telefone"
               mask="(00) 0000-0000" required>
           </div>
         </div>
 
         <div class="d-flex justify-content-end" style="padding-top: 10px;">
-          <button type="submit" class="btn btn-success btn-sm me-2" (click)="cadastrarUsuario()" [disabled]="!this.formUsuario.valid">
+          <button type="submit" class="btn btn-sm me-1" [ngClass]="editar ? 'btn-primary' : 'btn-success'" (click)="controleBotao()" [disabled]="!this.formUsuario.valid">
             <i class="fas fa-save"></i> Salvar
           </button>
-          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
             <i class="fas fa-times"></i> Cancelar
           </button>
         </div>

@@ -15,10 +15,13 @@ import { UsuarioService } from 'src/app/core/services/cadastro/usuario.service';
 })
 export class UsuariosComponent implements OnInit {
   public usuarios: UsuarioModel[];
-  public idEmpresa: number;
+  public idEmpresa = Number(this._auth.getIdEmpresa());
+  public sigla = this._auth.getSigla();
+  public login = this._auth.getLogin();
   public formUsuario: FormGroup;
   public loading: boolean =false;
   public loadingMin: boolean = false;
+  public editar: boolean = false;
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -34,35 +37,43 @@ export class UsuariosComponent implements OnInit {
     private _usuarioService: UsuarioService,
     private _formBuilder: FormBuilder,
     private _modalService: NgbModal,
-    private _authenticationService: AuthenticationService,
+    private _auth: AuthenticationService,
     private _alertService: AlertService
   ) { }
 
   ngOnInit(): void {
-    this.idEmpresa = Number(this._authenticationService.getIdEmpresa());
-    this.obterUsuarios(this.idEmpresa);
+    this.obterUsuarios();
     this.inicializarFormUsuario();
   }
 
-  public inicializarFormUsuario() {
+  public inicializarFormUsuario(dado?: UsuarioModel) {
     this.formUsuario = this._formBuilder.group({
+      id_usuario: [dado?.id_usuario || ''],
       id_empresa: [this.idEmpresa],
-      sigla: [this._authenticationService.getSigla()],
-      login: ["", Validators.required],
-      nome: ["", Validators.required],
-      cpf: [""],
-      email: ["", Validators.required],
-      tipo: [""],
-      fone: [""],
-      ATIVO: ["A"],
-      senha: ["", Validators.required],
-      user_login: [this._authenticationService.getLogin()],
+      sigla: [this.sigla],
+      login: [this.login, Validators.required],
+      nome: [dado?.nome || "", Validators.required],
+      cpf: [dado?.cpf || ""],
+      email: [dado?.email || "", Validators.required],
+      tipo: ["A"],
+      fone: [dado?.fone || ""],
+      ATIVO: ["S"],
+      senha: [dado?.senha || "", Validators.required],
+      user_login: [this.login],
     });
   }
 
-  public obterUsuarios(idEmpresa: number) {
+  public controleBotao() {
+    if(this.editar == false) {
+      this.cadastrarUsuario();
+    } else {
+      this.editarUsuario();
+    }
+  }
+
+  public obterUsuarios() {
     this.loading = true;
-    this._usuarioService.obterUsuariosPorEmpresa(idEmpresa).subscribe((res) => {
+    this._usuarioService.obterUsuariosPorEmpresa(this.idEmpresa).subscribe((res) => {
       this.usuarios = res.contratantes;
       this.filtrar();
       this.atualizarQuantidadeExibida();
@@ -101,6 +112,8 @@ export class UsuariosComponent implements OnInit {
   }
 
   public abrirModalCadastro(content: TemplateRef<any>): void {
+    this.editar = false;
+    this.inicializarFormUsuario();
     this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
@@ -110,9 +123,9 @@ export class UsuariosComponent implements OnInit {
       this._usuarioService.cadastrarUsuario(this.formUsuario.value).subscribe((res) => {
         if (res && res.success === "true") {
           this.loading = false;
-          this.obterUsuarios(this.idEmpresa);
+          this.obterUsuarios();
           this._alertService.success(res.msg);
-          this._modalService.dismissAll();
+          this.fechar();
         } else {
           this.loading = false;
           this._alertService.warning(res.msg);
@@ -121,6 +134,35 @@ export class UsuariosComponent implements OnInit {
       (error) => {
         this.loading = false;
         this._alertService.error("Ocorreu um erro ao tentar cadastrar o usuário.");
+      });
+    } else {
+      this._alertService.warning("Preencha todos os campos obrigatórios");
+    }
+  }
+
+  public abrirModalEditar(content: TemplateRef<any>, dados: UsuarioModel): void {
+    this.editar = true;
+    this.inicializarFormUsuario(dados);
+    this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
+  public editarUsuario() {
+    if (this.formUsuario.valid) {
+      this.loading = true;
+      this._usuarioService.editarUsuario(this.formUsuario.value).subscribe((res) => {
+        if (res && res.success === "true") {
+          this.loading = false;
+          this.obterUsuarios();
+          this._alertService.success(res.msg);
+          this.fechar();
+        } else {
+          this.loading = false;
+          this._alertService.warning(res.msg);
+        }
+      },
+      (error) => {
+        this.loading = false;
+        this._alertService.error("Ocorreu um erro ao tentar editar o usuário.");
       });
     } else {
       this._alertService.warning("Preencha todos os campos obrigatórios");
@@ -147,6 +189,11 @@ export class UsuariosComponent implements OnInit {
 
   public converterMinuscula(campo: AbstractControl) {
     return Utils.converterMinuscula(campo);
+  }
+
+  public fechar() {
+    this.formUsuario.reset();
+    this._modalService.dismissAll();
   }
 
 }
