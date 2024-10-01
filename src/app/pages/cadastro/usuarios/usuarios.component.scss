@@ -8,3 +8,11 @@
 .text-small {
   font-size: 11px;
 }
+
+#iconeOlhoIcon {
+  position: absolute;
+  right: 0.75rem;
+  top: 65%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}

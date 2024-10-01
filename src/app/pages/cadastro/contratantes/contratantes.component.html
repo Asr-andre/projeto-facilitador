@@ -141,7 +141,7 @@
 
           <div class="col-md-5 form-group">
             <label for="endereco" class="form-label">Endereço</label>
-            <input class="form-control form-control-sm mb-1" formControlName="endereco" type="text" placeholder="Rua" [(ngModel)]="cep.endereco">
+            <input class="form-control form-control-sm mb-1" formControlName="endereco" type="text" placeholder="Rua" [value]="cep.endereco" (input)="cep.endereco = $event.target.value">
           </div>
           <div class="col-md-2 form-group" >
             <label for="numero" class="form-label">Número</label>
@@ -149,22 +149,22 @@
           </div>
           <div class="col-md-2 form-group">
             <label for="Complemento" class="form-label">Número</label>
-            <input class="form-control form-control-sm mb-1" formControlName="complemento" type="text" placeholder="Complemento" [(ngModel)]="cep.complemento">
+            <input class="form-control form-control-sm mb-1" formControlName="complemento" type="text" placeholder="Complemento" [value]="cep.complemento" (input)="cep.complemento = $event.target.value">
           </div>
           <div class="col-md-4 form-group">
             <label for="bairro" class="form-label">Bairro</label>
-            <input class="form-control form-control-sm mb-1" formControlName="bairro" type="text" placeholder="Bairro" [(ngModel)]="cep.bairro">
+            <input class="form-control form-control-sm mb-1" formControlName="bairro" type="text" placeholder="Bairro" [value]="cep.bairro" (input)="cep.bairro = $event.target.value">
           </div>
 
           <div class="col-md-3 form-group">
             <label for="cidade" class="form-label">Cidade</label>
-            <input class="form-control form-control-sm mb-1" formControlName="cidade" type="text" placeholder="Cidade" [(ngModel)]="cep.cidade">
+            <input class="form-control form-control-sm mb-1" formControlName="cidade" type="text" placeholder="Cidade" [value]="cep.cidade" (input)="cep.cidade = $event.target.value">
           </div>
           <div class="col-md-1 form-group">
             <label for="uf" class="form-label">Uf</label>
-            <select class="form-control form-control-sm mb-1" formControlName="uf" [(ngModel)]="cep.uf">
+            <select class="form-control form-control-sm mb-1" formControlName="uf" [value]="cep.uf" (input)="cep.uf = $event.target.value">
               <option value="">--</option>
-              <option *ngFor="let estado of estados" [value]="estado.sigla">{{ estado.sigla }}</option>
+              <option *ngFor="let estado of estados" [value]="estado.sigla"> {{ estado.sigla }} </option>
             </select>
           </div>
           <div class="col-md-2 form-group">

@@ -12,3 +12,11 @@
 .is-invalid {
   border-color: red;
 }
+
+#iconeOlhoIcon {
+  position: absolute;
+  right: 0.75rem;
+  top: 65%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}

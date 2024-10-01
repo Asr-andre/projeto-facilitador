@@ -195,4 +195,8 @@ export class EmailContaComponent implements OnInit {
   public data(data) {
     return Utils.formatarDataParaExibicao(data);
   }
+
+  public mostrarSenha(campoId: string, iconeId: string): void {
+    Utils.alternarVisibilidadeSenha(campoId, iconeId);
+  }
 }

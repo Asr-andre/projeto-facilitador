@@ -51,7 +51,7 @@ export class UsuariosComponent implements OnInit {
       id_usuario: [dado?.id_usuario || ''],
       id_empresa: [this.idEmpresa],
       sigla: [this.sigla],
-      login: [this.login || '', Validators.required],
+      login: [dado?.login || '', Validators.required],
       nome: [dado?.nome || '', Validators.required],
       cpf: [dado?.cpf || ''],
       email: [dado?.email || '', Validators.required],
@@ -196,4 +196,7 @@ export class UsuariosComponent implements OnInit {
     this._modalService.dismissAll();
   }
 
+  public mostrarSenha(campoId: string, iconeId: string): void {
+    Utils.alternarVisibilidadeSenha(campoId, iconeId);
+  }
 }
