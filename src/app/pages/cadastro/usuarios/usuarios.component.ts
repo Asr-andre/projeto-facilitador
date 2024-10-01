@@ -58,7 +58,7 @@ export class UsuariosComponent implements OnInit {
       tipo: ['A'],
       fone: [dado?.fone || ''],
       ATIVO: ['S'],
-      senha: [dado?.senha || '', Validators.required],
+      senha: [dado?.senha || ''],
       user_login: [this.login],
     });
   }
@@ -162,7 +162,7 @@ export class UsuariosComponent implements OnInit {
       },
       (error) => {
         this.loading = false;
-        this._alertService.error("Ocorreu um erro ao tentar editar o usuário.");
+        this._alertService.error("Ocorreu um erro ao tentar editar o usuário.", error);
       });
     } else {
       this._alertService.warning("Preencha todos os campos obrigatórios");
