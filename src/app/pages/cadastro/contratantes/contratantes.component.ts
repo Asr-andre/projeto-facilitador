@@ -64,14 +64,33 @@ export class ContratantesComponent implements OnInit {
     private _modalService: NgbModal,
     private _auth: AuthenticationService,
     private _alertService: AlertService
-  ) { }
+  ) {  }
 
-  ngOnInit(): void {
-    this.obterContratantes();
-    this.inicializarformContratante();
+  async ngOnInit(): Promise<void> {
+    this.loading = true;
+    try {
+      await this.obterMsgs();
+      await this.delay(3000);
+      await this.obterEmailConta();
+      await this.delay(3000);
+      await this.obterPerfilSms();
+      await this.delay(3000);
+      await this.obterPerfilFormula();
+      await this.delay(3000);
+      await this.obterContratantes();
+      await this.inicializarformContratante();
+    } catch (error) {
+      this._alertService.error("Ocorreu um erro ao carregar os dados.");
+    } finally {
+      this.loading = false;
+    }
   }
 
-  public inicializarformContratante(dado?: ContratanteModel): void {
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  public async inicializarformContratante(dado?: ContratanteModel): Promise<void> {
     this.formContratante = this._formBuilder.group({
       id_contratante: [dado?.id_contratante || ''],
       id_empresa: [dado?.id_empresa || this.idEmpresa],
@@ -120,118 +139,114 @@ export class ContratantesComponent implements OnInit {
     }
   }
 
-  async acionarPerfilEmail() {
-    if (!this.emailConta || this.emailConta.length === 0) {
-      await this.obterEmailConta();
-    }
-  }
-
-  public obterEmailConta() {
+  public async obterEmailConta(): Promise<void> {
     const dados = {
       id_empresa: this.idEmpresa,
       id_perfilemail: 0
-    }
+    };
 
     this.loadingMin = true;
-    this._emailContaService.obterEmailConta(dados).subscribe((res) => {
-      if(res.success === "true") {
-        this.emailConta = res.perfil;
+
+    return new Promise((resolve, reject) => {
+      this._emailContaService.obterEmailConta(dados).subscribe((res) => {
         this.loadingMin = false;
-      } else {
+
+        if (res.success === "true") {
+          this.emailConta = res.perfil;
+          resolve();
+        } else {
+          this._alertService.error(res.msg);
+          reject();
+        }
+      }, (error) => {
         this.loadingMin = false;
-        this._alertService.error(res.msg);
-      }
-      (error) => {
-        this.loadingMin = false;
-        this._alertService.error("Ocorreu um error.", error);
-      }
+        this._alertService.error("Ocorreu um erro.", error);
+        reject();
+      });
     });
   }
 
-  async acionarPerfilWhatsApp() {
-    if (!this.msg || this.msg.length === 0) {
-      await this.obterMsgs();
-    }
-  }
-
-  public obterMsgs() {
+  public async obterMsgs(): Promise<void> {
     const dados = {
       id_empresa: this.idEmpresa,
       id_PerfilWhatsapp: this.idPerfilWhatsapp,
       user_login: this.login
-    }
+    };
 
     this.loadingMin = true;
-    this._smsWhatsAppService.obterMsg(dados).subscribe((res) => {
-      if (res.success === "true") {
-        this.msg = res.perfil_whatsapp;
+
+    return new Promise((resolve, reject) => {
+      this._smsWhatsAppService.obterMsg(dados).subscribe((res) => {
         this.loadingMin = false;
-      } else {
+
+        if (res.success === "true") {
+          this.msg = res.perfil_whatsapp;
+          resolve();
+        } else {
+          this._alertService.error(res.msg);
+          reject();
+        }
+      }, (error) => {
         this.loadingMin = false;
-        this._alertService.error(res.msg);
-      }
-      (error) => {
-        this.loadingMin = false;
-        this._alertService.error("Ocorreu um error.", error);
-      }
+        this._alertService.error("Ocorreu um erro.", error);
+        reject();
+      });
     });
   }
 
-  async acionarobterPerfilSms() {
-    if (!this.perfilSms || this.perfilSms.length === 0) {
-      await this.obterPerfilSms();
-    }
-  }
-
-  public obterPerfilSms() {
+  public async obterPerfilSms(): Promise<void> {
     const dados = {
       id_empresa: this.idEmpresa,
       id_perfilsms: 0,
       user_login: this.login
-    }
+    };
 
     this.loadingMin = true;
-    this._smsService.listarPerfilSms(dados).subscribe((res) => {
-      if(res.success === "true") {
-        this.perfilSms = res.perfil_sms;
+
+    return new Promise((resolve, reject) => {
+      this._smsService.listarPerfilSms(dados).subscribe((res) => {
         this.loadingMin = false;
-      } else {
+
+        if (res.success === "true") {
+          this.perfilSms = res.perfil_sms;
+          resolve();
+        } else {
+          this._alertService.error(res.msg);
+          reject();
+        }
+      }, (error) => {
         this.loadingMin = false;
-        this._alertService.error(res.msg);
-      }
-      (error) => {
-        this.loadingMin = false;
-        this._alertService.error("Ocorreu um error.", error);
-      }
+        this._alertService.error("Ocorreu um erro.", error);
+        reject();
+      });
     });
   }
 
-  async acionarobterPerfilFormula() {
-    if (!this.perfilFormula || this.perfilFormula.length === 0) {
-      await this.obterPerfilFormula();
-    }
-  }
-
-  public obterPerfilFormula() {
+  public async obterPerfilFormula(): Promise<void> {
     const dados = {
       id_empresa: this.idEmpresa,
       id_formula: 0,
       user_login: this.login
-    }
+    };
 
     this.loadingMin = true;
-    this._formulaService.listarFormulas(dados).subscribe((res) => {
-      if(res.success === "true") {
-        this.perfilFormula = res.formulas;
+
+    return new Promise((resolve, reject) => {
+      this._formulaService.listarFormulas(dados).subscribe((res) => {
         this.loadingMin = false;
-      } else {
+
+        if (res.success === "true") {
+          this.perfilFormula = res.formulas;
+          resolve();
+        } else {
+          this._alertService.error(res.msg);
+          reject();
+        }
+      }, (error) => {
         this.loadingMin = false;
-        this._alertService.error(res.msg);
-      }
-      (error) => {
-        this.loadingMin = false;
-        this._alertService.error("Ocorreu um error.", error);
-      }
+        this._alertService.error("Ocorreu um erro.", error);
+        reject();
+      });
     });
   }
 
@@ -307,7 +322,7 @@ export class ContratantesComponent implements OnInit {
   }
 
   public editarContratante() {
-    if (this.formContratante.valid) {
+
       this.loadingMin = true;
       this._contratanteService.editarContratante(this.formContratante.value).subscribe((res) => {
         if (res.success) {
@@ -325,10 +340,7 @@ export class ContratantesComponent implements OnInit {
           this._alertService.error("Ocorreu um erro ao tentar atualizar o contratante.");
         }
       );
-    } else {
-      this.loadingMin = false;
-      this._alertService.warning("Preencha todos os campos obrigatórios");
-    }
+
   }
 
   public mascararCpfCnpj(value: string): string {

@@ -183,35 +183,35 @@
           </div>
           <div class="col-md-3 form-group">
             <label for="id_perfilemail" class="form-label">Perfil Email</label>
-            <select class="form-control form-control-sm mb-1" formControlName="id_perfilemail" (click)="acionarPerfilEmail()">
+            <select class="form-control form-control-sm mb-1" formControlName="id_perfilemail">
               <option value="">Selecione</option>
               <option *ngFor="let perfil of emailConta" [value]="perfil.id_perfilemail">{{ perfil.email }}</option>
             </select>
           </div>
           <div class="col-md-3 form-group">
             <label for="id_formula" class="form-label">Formula</label>
-            <select class="form-control form-control-sm mb-1" formControlName="id_formula" (click)="acionarobterPerfilFormula()">
+            <select class="form-control form-control-sm mb-1" formControlName="id_formula">
               <option value="">Selecione</option>
               <option *ngFor="let perfil of perfilFormula" [value]="perfil.id_formula">{{ perfil.descricao }}</option>
             </select>
           </div>
           <div class="col-md-3 form-group">
             <label for="id_perfilsms" class="form-label">Perfil Sms</label>
-            <select class="form-control form-control-sm mb-1" formControlName="id_perfilsms" (click)="acionarobterPerfilSms()">
+            <select class="form-control form-control-sm mb-1" formControlName="id_perfilsms">
               <option value="">Selecione</option>
               <option *ngFor="let perfil of perfilSms" [value]="perfil.id_perfilsms">{{ perfil.empresa }}</option>
             </select>
           </div>
           <div class="col-md-3 form-group">
             <label for="id_perfilwhatsapp" class="form-label">Perfil Whatsapp</label>
-            <select class="form-control form-control-sm mb-1" formControlName="id_perfilwhatsapp" (click)="acionarPerfilWhatsApp()">
+            <select class="form-control form-control-sm mb-1" formControlName="id_perfilwhatsapp">
               <option value="">Selecione</option>
               <option *ngFor="let sms of msg" [value]="sms.id_perfilwhatsapp">{{ sms.titulo }}</option>
             </select>
           </div>
           <div class="col-md-3 form-group">
             <label for="id_perfiltextoemailid_perfiltextoemail" class="form-label">Perfil Email Texto</label>
-            <select class="form-control form-control-sm mb-1" formControlName="id_perfiltextoemail" (click)="acionarPerfilEmail ()">
+            <select class="form-control form-control-sm mb-1" formControlName="id_perfiltextoemail">
               <option value="">Selecione</option>
               <option *ngFor="let perfil of emailConta" [value]="perfil.id_perfilemail">{{ perfil.email }}</option>
             </select>
