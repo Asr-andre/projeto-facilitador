@@ -50,6 +50,7 @@ export class SmsWhatsappComponent implements OnInit {
 
   public inicializarMensagemForm(dado?: CadastroMensagemModel) {
     this.mensagemForm = this.fb.group({
+      id_perfilwhatsapp: [dado?.id_perfilwhatsapp || ''],
       id_empresa: [this.idEmpresa, Validators.required],
       titulo: [dado?.titulo || '', Validators.required],
       empresa: [dado?.empresa || '', Validators.required],
