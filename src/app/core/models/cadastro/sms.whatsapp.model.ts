@@ -25,6 +25,7 @@ export class SmsWhatsappResponseModel {
 
 export class CadastroMensagemModel {
   id_empresa: number;
+  id_perfilwhatsapp?: number;
   titulo: string;
   empresa: string;
   host: string;

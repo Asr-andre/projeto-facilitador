@@ -9,6 +9,10 @@
   font-size: 11px;
 }
 
-.textarea-grande {
-  height: 200px; /* Ajuste a altura como preferir */
+#iconeOlhoIcon {
+  position: absolute;
+  right: 0.75rem;
+  top: 70%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }

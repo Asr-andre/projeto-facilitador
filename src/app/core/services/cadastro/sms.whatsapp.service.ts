@@ -20,4 +20,8 @@ export class SmsWhatsAppService {
   public cadastrarMsg(dados: CadastroMensagemModel): Observable<WhatsappResponseModel> {
     return this._http.post<WhatsappResponseModel>(`${this.apiUrl}/inserirperfilwhatsapp`, dados);
   }
+
+  public editarMsg(dados: CadastroMensagemModel): Observable<WhatsappResponseModel> {
+    return this._http.put<WhatsappResponseModel>(`${this.apiUrl}/editarperfilwhatsapp`, dados);
+  }
 }

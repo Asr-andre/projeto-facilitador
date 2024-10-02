@@ -18,7 +18,7 @@
                   </div>
                   <div class="col-md-6 text-end">
                     <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;"
-                      (click)="abriModalCadastro(modalCadastrar)">
+                      (click)="abriModalCadastro(modalGenerico)">
                       <i class="fas fa-plus"></i>
                       Cadastrar
                     </button>
@@ -57,6 +57,7 @@
                       <th sortable="centro_custo" (sort)="ordenar($event)">Centro de Custo</th>
                       <th sortable="ativo" (sort)="ordenar($event)">Ativo</th>
                       <th sortable="gera_acionamento" (sort)="ordenar($event)">Gera Acionamento</th>
+                      <th>Ações</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -69,6 +70,9 @@
                       <td>{{ perfil.centro_custo }}</td>
                       <td>{{ perfil.ativo === 'S' ? 'Sim' : 'Não' }}</td>
                       <td>{{ perfil.gera_acionamento === 'S' ? 'Sim' : 'Não' }}</td>
+                      <td>
+                        <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abriModalEditar(modalGenerico, perfil)"><i class="fas fa-edit"></i></button>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -94,15 +98,14 @@
   </div>
 </div>
 
-<ng-template #modalCadastrar let-modal>
+<ng-template #modalGenerico let-modal>
   <div class="loading-overlay-card" *ngIf="loadingMin">
     <div class="spinner-border text-primary m-1" role="status">
     </div>
   </div>
 
-  <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
-    <h6 class="modal-title" style="color: #ffffff"><i class="fab fa-whatsapp"></i> Cadastrar Mensagens - WhatsApp
-    </h6>
+  <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
+    <h6 class="modal-title" style="color: #ffffff"><i class="fab fa-whatsapp"></i>  {{ editar ? 'Editar WhatsApp' : 'Cadastrar WhatsApp' }} </h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
       (click)="fechar()"></button>
   </div>
@@ -110,49 +113,72 @@
     <form [formGroup]="mensagemForm">
       <div class="row">
           <div class="col-md-6 form-group">
-          <input type="text" id="empresa" class="form-control form-control-sm mb-3" formControlName="empresa" placeholder="Empresa">
+            <label for="empresa" class="form-label">Empresa</label>
+          <input type="text" id="empresa" class="form-control form-control-sm mb-1" formControlName="empresa" placeholder="Empresa"
+          [ngClass]="{'is-invalid': mensagemForm.get('empresa').invalid && mensagemForm.get('empresa').touched}">
         </div>
 
         <div class="col-md-6 form-group">
-          <input type="text" id="host" class="form-control form-control-sm mb-3" formControlName="host" placeholder="Host">
+          <label for="host" class="form-label">Host</label>
+          <input type="text" id="host" class="form-control form-control-sm mb-1" formControlName="host" placeholder="Host"
+          [ngClass]="{'is-invalid': mensagemForm.get('host').invalid && mensagemForm.get('host').touched}">
         </div>
 
         <div class="col-md-6 form-group">
-          <input type="text" id="usuario" class="form-control form-control-sm mb-3" formControlName="usuario" placeholder="Usuário">
+          <label for="usuario" class="form-label">Usúario</label>
+          <input type="text" id="usuario" class="form-control form-control-sm mb-1" formControlName="usuario" placeholder="Usuário"
+          [ngClass]="{'is-invalid': mensagemForm.get('usuario').invalid && mensagemForm.get('usuario').touched}">
         </div>
 
         <div class="col-md-3 form-group">
-          <input type="password" id="senha" class="form-control form-control-sm mb-3" formControlName="senha" placeholder="Senha">
+          <label for="senha" class="form-label">Senha</label>
+          <input type="password" id="senha" class="form-control form-control-sm mb-1" formControlName="senha" placeholder="Senha"
+          [ngClass]="{'is-invalid': mensagemForm.get('senha').invalid && mensagemForm.get('senha').touched}">
+          <i class="fas fa-eye-slash" id="iconeOlhoIcon" (click)="mostrarSenha('senha', 'iconeOlhoIcon')" style="padding-right: 5px;"></i>
         </div>
 
         <div class="col-md-3 form-group">
-          <input type="text" id="sigla" class="form-control form-control-sm mb-3" formControlName="sigla" placeholder="Sigla">
+          <label for="sigla" class="form-label">Sigla</label>
+          <input type="text" id="sigla" class="form-control form-control-sm mb-1" formControlName="sigla" placeholder="Sigla"
+          [ngClass]="{'is-invalid': mensagemForm.get('sigla').invalid && mensagemForm.get('sigla').touched}">
         </div>
 
         <div class="col-md-6 form-group">
-          <input type="text" id="centro_custo" class="form-control form-control-sm mb-3" formControlName="centro_custo" placeholder="Centro de Custo">
+          <label for="centro_custo" class="form-label">Centro de Custo</label>
+          <input type="text" id="centro_custo" class="form-control form-control-sm mb-1" formControlName="centro_custo" placeholder="Centro de Custo"
+          [ngClass]="{'is-invalid': mensagemForm.get('centro_custo').invalid && mensagemForm.get('centro_custo').touched}">
         </div>
 
         <div class="col-md-6 form-group">
-          <input type="text" id="token" class="form-control form-control-sm mb-3" formControlName="token" placeholder="Token">
+          <label for="token" class="form-label">Token</label>
+          <input type="text" id="token" class="form-control form-control-sm mb-1" formControlName="token" placeholder="Token"
+          [ngClass]="{'is-invalid': mensagemForm.get('token').invalid && mensagemForm.get('token').touched}">
         </div>
 
         <div class="col-md-12 form-group">
-          <input type="text" id="titulo" class="form-control form-control-sm mb-3" formControlName="titulo" placeholder="Título">
+          <label for="titulo" class="form-label">Titulo</label>
+          <input type="text" id="titulo" class="form-control form-control-sm mb-1" formControlName="titulo" placeholder="Título"
+          [ngClass]="{'is-invalid': mensagemForm.get('titulo').invalid && mensagemForm.get('titulo').touched}">
         </div>
 
         <div class="col-md-12 form-group">
-          <textarea id="mensagem" class="form-control form-control-sm mb-3 textarea-grande" formControlName="mensagem"></textarea>
+          <label for="mensagem" class="form-label">Mensagem</label>
+          <textarea id="mensagem" class="form-control form-control-sm mb-1" rows="6" formControlName="mensagem"
+          [ngClass]="{'is-invalid': mensagemForm.get('mensagem').invalid && mensagemForm.get('mensagem').touched}">
+        </textarea>
         </div>
       </div>
 
-      <div class="d-flex justify-content-end">
-        <button type="submit" class="btn btn-success btn-sm me-2" (click)="cadastraMsg()">
-          <i class="fas fa-save"></i> Salvar
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
-          <i class="fas fa-times"></i> Cancelar
-        </button>
+      <div class="d-flex justify-content-between align-items-center" style="padding-top: 5px;">
+        <small>{{ mensagemForm.get('mensagem')?.value?.length || 0 }}/{{maxCaractere}} caracteres</small>
+        <div>
+          <button type="submit" class="btn btn-sm me-1" [ngClass]="editar ? 'btn-primary' : 'btn-success'" (click)="controleBotao()">
+            <i class="fas fa-save"></i> Salvar
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </div>
       </div>
     </form>
   </div>

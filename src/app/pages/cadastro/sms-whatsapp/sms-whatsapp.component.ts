@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OrdenarPeloHeaderTabela, SortEvent, compararParaOrdenar } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
-import { PerfilWhatsappModel } from 'src/app/core/models/cadastro/sms.whatsapp.model';
+import { CadastroMensagemModel, PerfilWhatsappModel } from 'src/app/core/models/cadastro/sms.whatsapp.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { SmsWhatsAppService } from 'src/app/core/services/cadastro/sms.whatsapp.service';
@@ -21,6 +21,9 @@ export class SmsWhatsappComponent implements OnInit {
   public idPerfilWhatsapp = 1;
   public msg: PerfilWhatsappModel[] = [];
   public mensagemForm: FormGroup;
+  public editar: boolean = false;
+  public maxCaractere: number = 4096;
+  public mensagem: string = '';
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -45,25 +48,29 @@ export class SmsWhatsappComponent implements OnInit {
     this.inicializarMensagemForm();
   }
 
-  public inicializarMensagemForm(dado?: PerfilWhatsappModel) {
+  public inicializarMensagemForm(dado?: CadastroMensagemModel) {
     this.mensagemForm = this.fb.group({
       id_empresa: [this.idEmpresa, Validators.required],
-      titulo: ['', Validators.required],
-      empresa: ['', Validators.required],
-      host: ['', Validators.required],
-      usuario: ['', Validators.required],
-      senha: ['', Validators.required],
-      sigla: ['', Validators.required],
-      centro_custo: ['', Validators.required],
-      gera_acionamento: ['S', Validators.required],
+      titulo: [dado?.titulo || '', Validators.required],
+      empresa: [dado?.empresa || '', Validators.required],
+      host: [dado?.host || '', Validators.required],
+      usuario: [dado?.usuario || '', Validators.required],
+      senha: [dado?.senha || '', Validators.required],
+      sigla: [dado?.sigla || '', Validators.required],
+      centro_custo: [dado?.centro_custo || '', Validators.required],
+      gera_acionamento: [dado?.gera_acionamento || 'S', Validators.required],
       user_login: [this.login, Validators.required],
-      mensagem: ['', Validators.required],
-      token: ['', Validators.required],
+      mensagem: [dado?.mensagem || '', Validators.required],
+      token: [dado?.token || '', Validators.required],
     });
   }
 
-  public abriModalCadastro(content: TemplateRef<any>): void {
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  public controleBotao() {
+    if(this.editar == false) {
+      this.cadastraMsg();
+    } else {
+      this.editarMsg();
+    }
   }
 
   public obterMsgs() {
@@ -86,6 +93,12 @@ export class SmsWhatsappComponent implements OnInit {
     });
   }
 
+  public abriModalCadastro(content: TemplateRef<any>): void {
+    this.editar = false;
+    this.inicializarMensagemForm();
+    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
   public cadastraMsg() {
     if (this.mensagemForm.valid) {
       this.loadingMin = true;
@@ -103,6 +116,36 @@ export class SmsWhatsappComponent implements OnInit {
         (error) => {
           this.loadingMin = false;
           this._alertService.error("Ocorreu um erro ao tentar cadastrar a mensagem.");
+        });
+    } else {
+      this.loadingMin = false;
+      this._alertService.warning("Preencha todos os campos obrigatórios");
+    }
+  }
+
+  public abriModalEditar(content: TemplateRef<any>, dados: CadastroMensagemModel): void {
+    this.editar = true;
+    this.inicializarMensagemForm(dados);
+    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
+  public editarMsg() {
+    if (this.mensagemForm.valid) {
+      this.loadingMin = true;
+      this._smsWhatsAppService.editarMsg(this.mensagemForm.value).subscribe((res) => {
+        if (res.success === "true") {
+          this._alertService.success(res.msg);
+          this.fechar();
+          this.obterMsgs();
+          this.loadingMin = false;
+        } else {
+          this.loadingMin = false;
+          this._alertService.warning(res.msg);
+        }
+      },
+        (error) => {
+          this.loadingMin = false;
+          this._alertService.error("Ocorreu um erro ao tentar editar a mensagem.", error);
         });
     } else {
       this.loadingMin = false;
@@ -139,5 +182,9 @@ export class SmsWhatsappComponent implements OnInit {
   public fechar() {
     this.mensagemForm.reset();
     this._modalService.dismissAll();
+  }
+
+  public mostrarSenha(campoId: string, iconeId: string): void {
+    Utils.alternarVisibilidadeSenha(campoId, iconeId);
   }
 }
