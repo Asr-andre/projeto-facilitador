@@ -7,13 +7,21 @@
   </div>
   <div class="modal-body modal-padding">
     <form [formGroup]="formularioEnvioEmail">
-      <div class="mb-3">
-        <input type="text" class="form-control mb-3"  formControlName="assunto" placeholder="Digite o assunto">
+      <div class="col-md-12 form-group">
+        <label class="form-label">Asunto</label>
+        <input type="text" class="form-control form-control-sm mb-2"  formControlName="assunto" placeholder="Digite o assunto">
       </div>
-      <quill-editor placeholder="Digite sua mensagem" row="6" formControlName="mensagem"></quill-editor>
+      <div class="col-md-12 form-group">
+        <quill-editor
+          class="custom-quill-editor"
+          placeholder="Digite sua mensagem"
+          formControlName="mensagem"
+          [modules]="{ toolbar: toolbarOptions }">
+        </quill-editor>
+      </div>
 
-      <div class="mb-3" style="margin-top: 15px;">
-        <input type="file" class="form-control mb-3" (change)="aoSelecionarArquivo($event)">
+      <div class="col-md-12 form-group">
+        <input type="file" class="form-control form-control-sm mb-2" (change)="aoSelecionarArquivo($event)">
       </div>
       <div class="d-flex justify-content-end align-items-center" style="margin-top: 5px;">
         <button type="button" class="btn btn-success btn-sm me-1" (click)="enviarEmail()" [disabled]="formularioEnvioEmail.invalid">

@@ -1,5 +1,4 @@
-::ng-deep .ck-editor__editable_inline {
-  min-height: 300px !important;
-  max-height: 600px !important;
-  height: 300px !important; /* Ajuste conforme necessário */
+.custom-quill-editor {
+  width: 100%; /* Ocupa 100% da largura do pai */
+  height: 200px; /* Ajuste o valor conforme a necessidade */
 }

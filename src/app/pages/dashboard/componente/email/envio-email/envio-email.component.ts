@@ -21,6 +21,22 @@ export class EnvioEmailComponent implements OnInit {
   private arquivoSelecionado: File | null = null;
   public carregandoEnvio: boolean = false;
 
+  toolbarOptions = [
+    ['bold', 'italic', 'underline', 'strike'],        // Negrito, Itálico, Sublinhado, Tachado
+    [{ 'header': 1 }, { 'header': 2 }],               // Cabeçalhos H1 e H2
+    [{ 'font': [] }],                                 // Fonte
+    [{ 'size': [] }],                                 // Tamanhos de texto
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],     // Listas ordenadas e não ordenadas
+    [{ 'indent': '-1'}, { 'indent': '+1' }],          // Indentação
+    [{ 'align': [] }],                                // Alinhamento
+    [{ 'color': [] }, { 'background': [] }],          // Cor do texto e fundo
+    //['blockquote', 'code-block'],                     // Bloco de citação e código
+    //[{ 'script': 'sub' }, { 'script': 'super' }],     // Subscrito e Sobrescrito
+    //[{ 'direction': 'rtl' }],                         // Direção do texto (direita para esquerda)
+    // ['link', 'image', 'video'],                    // Remover essas funcionalidades
+    ['clean']                                         // Limpar formatação
+  ];
+
   public Editor = ClassicEditor;
 
   constructor(
@@ -47,6 +63,8 @@ export class EnvioEmailComponent implements OnInit {
       user_login: [this._authService.getLogin()]
     });
   }
+
+
 
   public abrirModalEmail(email: string, idCliente: number | undefined, idContratante: number | undefined): void {
     this.destinatarioEmail = email;
