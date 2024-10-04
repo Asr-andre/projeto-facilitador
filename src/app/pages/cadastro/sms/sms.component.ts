@@ -126,7 +126,7 @@ export class SmsComponent implements OnInit {
   public abriModalCadastro(content: TemplateRef<any>): void {
     this.editar = false;
     this.inicializarMensagemForm();
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastraSms() {
@@ -156,7 +156,7 @@ export class SmsComponent implements OnInit {
   public abriModalEditar(content: TemplateRef<any>, dado: PerfilSms): void {
     this.editar = true;
     this.inicializarMensagemForm(dado);
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public editarSms() {

@@ -122,26 +122,26 @@
         [ngClass]="{'is-invalid': smsForm.get('host').invalid && smsForm.get('host').touched}">
       </div>
 
-      <div class="col-md-3 form-group">
+      <div class="col-md-6 form-group">
         <label for="usuario" class="form-label">Usúario</label>
         <input type="text" id="usuario" class="form-control form-control-sm mb-1" formControlName="usuario" placeholder="Usuário"
         [ngClass]="{'is-invalid': smsForm.get('usuario').invalid && smsForm.get('usuario').touched}">
       </div>
 
-      <div class="col-md-3 form-group">
+      <div class="col-md-6 form-group">
         <label for="senha" class="form-label">Senha</label>
         <input type="password" id="senha" class="form-control form-control-sm mb-1" formControlName="senha" placeholder="Senha"
         [ngClass]="{'is-invalid': smsForm.get('senha').invalid && smsForm.get('senha').touched}">
         <i class="fas fa-eye-slash" id="iconeOlhoIcon" (click)="mostrarSenha('senha', 'iconeOlhoIcon')" style="padding-right: 5px;"></i>
       </div>
 
-      <div class="col-md-3 form-group">
+      <div class="col-md-6 form-group">
         <label for="sigla" class="form-label">Sigla</label>
         <input type="text" id="sigla" class="form-control form-control-sm mb-1" formControlName="sigla" placeholder="Sigla"
         [ngClass]="{'is-invalid': smsForm.get('sigla').invalid && smsForm.get('sigla').touched}">
       </div>
 
-      <div class="col-md-3 form-group">
+      <div class="col-md-6 form-group">
         <label for="gera_acionamento" class="form-label">Gerar Acionamento</label>
         <select class="form-control form-control-sm mb-1" formControlName="gera_acionamento" placeholder="Gerar Acionamento"
         [ngClass]="{'is-invalid': smsForm.get('gera_acionamento').invalid && smsForm.get('gera_acionamento').touched}">
