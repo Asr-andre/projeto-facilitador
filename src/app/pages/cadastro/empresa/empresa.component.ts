@@ -40,7 +40,7 @@ export class EmpresaComponent implements OnInit {
       cidade: [''],
       uf: [''],
       site: [''],
-      email: ['',Validators.email],
+      email: ['',Validators.required],
       celular: [''],
       nome_responsavel: [''],
       user_login: [this._authenticationService.getLogin()],
@@ -48,7 +48,7 @@ export class EmpresaComponent implements OnInit {
   }
 
   public cadastrarEmpresa() {
-    if (this.formEmpresa.valid) {
+
       this._empresaService.cadastrarEmpresa(this.formEmpresa.value).subscribe((res: RetornoModel) => {
           if (res && res.success === 'true') {
             this._alertService.success(res.msg);
@@ -64,8 +64,6 @@ export class EmpresaComponent implements OnInit {
           this._alertService.error('Ocorreu um erro ao tentar cadastrar a empresa.');
         }
       );
-    } else {
-      this._alertService.warning("Preencha todos os campos obrigatórios");
-    }
+
   }
 }
