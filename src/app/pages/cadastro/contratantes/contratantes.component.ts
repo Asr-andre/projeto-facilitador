@@ -108,11 +108,11 @@ export class ContratantesComponent implements OnInit {
       celular: [dado?.celular || ''],
       ativo: [dado?.ativo || 'S'],
       codigo_credor: [dado?.codigo_credor || ''],
-      id_formula: [dado?.id_formula || ''],
-      id_perfilemail: [dado?.id_perfilemail || ''],
-      id_perfilsms: [dado?.id_perfilsms || ''],
-      id_perfilwhatsapp: [dado?.id_perfilwhatsapp || ''],
-      id_perfiltextoemail: [dado?.id_perfiltextoemail || ''],
+      id_formula: [dado?.id_formula || 0],
+      id_perfilemail: [dado?.id_perfilemail || 0],
+      id_perfilsms: [dado?.id_perfilsms || 0],
+      id_perfilwhatsapp: [dado?.id_perfilwhatsapp || 0],
+      id_perfiltextoemail: [dado?.id_perfiltextoemail || 0],
       user_login: [dado?.user_login || this.login, Validators.required],
     });
   }
