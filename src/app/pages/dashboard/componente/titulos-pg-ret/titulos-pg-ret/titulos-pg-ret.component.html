@@ -29,7 +29,7 @@
         <tr *ngFor="let titulo of tituloPgRet">
           <td>{{ titulo.id_titulo }}</td>
           <td>{{ titulo.numero_contrato }}</td>
-          <td>{{ titulo.vencimento | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ dataBrasil(titulo.vencimento) }}</td>
           <td>{{ data(titulo.pagamento) }}</td>
           <td>{{ titulo.tipo_baixa }}</td>
           <td>{{ titulo.valor | currency: 'BRL' }}</td>

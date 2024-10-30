@@ -57,4 +57,8 @@ export class TitulosPgRetComponent implements OnInit, OnChanges {
   public data(data) {
     return Utils.formatarDataParaExibicao(data);
   }
+
+  public dataBrasil(data) {
+    return Utils.dataBrasil(data);
+  }
 }
