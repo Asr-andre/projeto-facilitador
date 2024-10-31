@@ -7,14 +7,14 @@
   <div class="col-md-6"><b>CPF:</b> {{ formatarCPF(detalhamentoSelecionado?.cpf) }}</div>
 </div>
 <div class="row pt-1 brder">
-  <div class="col-md-6">
-    <b>outras infomações:</b>
-  </div>
+  <div class="col-md-6"><b>Rua: </b> {{ detalhamentoSelecionado?.endereco }}</div>
+  <div class="col-md-2"><b>Número: </b> {{ detalhamentoSelecionado?.numero }}</div>
+  <div class="col-md-4"><b>Complemento: </b> {{ detalhamentoSelecionado?.complemento }}</div>
 </div>
-
 <div class="row pt-1 brder">
-  <div class="col-md-6"><b>outras infomações:</b>
-  </div>
+  <div class="col-md-4"><b>Bairro: </b> {{ detalhamentoSelecionado?.bairro }}</div>
+  <div class="col-md-4"><b>Cidade:</b> {{ detalhamentoSelecionado?.cidade }}</div>
+  <div class="col-md-4"><b>Uf: </b> {{ detalhamentoSelecionado?.uf }}</div>
 </div>
 
 <div class="d-flex justify-content-end">
