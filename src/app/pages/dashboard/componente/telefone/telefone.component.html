@@ -22,7 +22,7 @@
           <th scope="col" >Status</th>
           <th scope="col" >Whatsapp</th>
           <th scope="col" >Obs</th>
-          <!--<th>Ações</th>-->
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -37,7 +37,9 @@
           <td> <div class="editable-field">{{ statusTelefone(telefone.status_fone) }}</div> </td>
           <td>{{ telefone.whatsapp === 'S' ? 'Sim' : 'Não' }}</td>
           <td>{{ telefone.obs_fone }}</td>
-         <!-- <td><i class="fas fa-pencil-alt text-primary" style="cursor: pointer;"></i></td>-->
+          <td>
+            <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abriModalEditar(telefoneModal, telefone)"><i class="fas fa-edit"></i></button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -45,12 +47,13 @@
 </div>
 
 <ng-template #telefoneModal let-modal>
-  <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
-    <h5 class="modal-title" style="color: #ffffff"><i class="fas fa-phone-alt"></i> Cadastrar Telefone</h5>
-    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
+  <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
+    <h6 class="modal-title" style="color: #ffffff"><i class="fab fa-whatsapp"></i>  {{ editar ? 'Editar Telefone' : 'Cadastrar Telefone' }} </h6>
+    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+      (click)="fechar()"></button>
   </div>
   <div class="modal-body modal-padding">
-    <form [formGroup]="telefoneForm" (ngSubmit)="cadastrarTelefone(modal)">
+    <form [formGroup]="telefoneForm">
       <div class="row">
         <div class="col-md-6" style="padding-right: 3px;">
           <div class="mb-1">
@@ -111,10 +114,10 @@
         </div>
       </div>
       <div class="d-flex justify-content-end" style="padding-top: 5px;">
-        <button type="submit" class="btn btn-success btn-sm me-1">
+        <button type="submit" class="btn btn-sm me-1" [ngClass]="editar ? 'btn-primary' : 'btn-success'" (click)="controleBotao()">
           <i class="fas fa-save"></i> Salvar
         </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss()">
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
           <i class="fas fa-times"></i> Cancelar
         </button>
       </div>

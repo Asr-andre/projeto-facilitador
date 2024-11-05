@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TelefoneRetornoModel } from 'src/app/core/models/telefone.model';
+import { TelefoneModel, TelefoneRetornoModel } from 'src/app/core/models/telefone.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { TelefoneService } from 'src/app/core/services/telefone.service';
@@ -23,6 +23,7 @@ export class TelefoneComponent implements OnInit, OnChanges {
   public telefones: TelefoneRetornoModel;
   public loadingMin: boolean = false;
   public telefoneForm: FormGroup;
+  public editar: boolean = false;
 
   constructor(private _telefoneService: TelefoneService,
     private _formBuilder: FormBuilder,
@@ -50,18 +51,27 @@ export class TelefoneComponent implements OnInit, OnChanges {
     }
   }
 
-  public inicializarTelefoneForm() {
+  public inicializarTelefoneForm(dado?: TelefoneModel) {
     this.telefoneForm = this._formBuilder.group({
       id_cliente: this.idCliente,
-      fone: ['', Validators.required],
-      tipo: ['', Validators.required],
-      prioritario: ['', Validators.required],
-      status_fone: ['', Validators.required],
-      whatsapp: ['', Validators.required],
-      obs_fone: ['Cadastro'],
+      fone: [dado?.fone ||'', Validators.required],
+      tipo: [dado?.tipo || '', Validators.required],
+      prioritario: [dado?.prioritario || '', Validators.required],
+      status_fone: [dado?.status_fone || '', Validators.required],
+      whatsapp: [dado?.whatsapp || '', Validators.required],
+      obs_fone: [dado?.obs_fone || 'Cadastro'],
       user_login: [this._authenticationService.getLogin()]
     });
   }
+
+  public controleBotao() {
+    if(this.editar == false) {
+      this.cadastrarTelefone();
+    } else {
+      this.editarTelefone();
+    }
+  }
+
 
   public carregarTelefones(idCliente: number): void {
     this.loadingMin = true;
@@ -106,16 +116,24 @@ export class TelefoneComponent implements OnInit, OnChanges {
   }
 
   public abriModalTelefone(content: TemplateRef<any>): void {
+    this.editar = false;
+    this.inicializarTelefoneForm();
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
-  public cadastrarTelefone(modal: any): void {
+  public abriModalEditar(content: TemplateRef<any>, dados: TelefoneModel): void {
+    this.editar = true;
+    this.inicializarTelefoneForm(dados);
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
+  public cadastrarTelefone(): void {
     if (this.telefoneForm.valid) {
       this.loadingMin = true;
       this._telefoneService.cadastrarTelefone(this.telefoneForm.value).subscribe((res) => {
         if (res.success === 'true') {
           this.carregarTelefones(this.idCliente);
-          modal.close();
+         this.fechar();
           this._alertService.success(res.msg);
           this.loadingMin = false;
         } else {
@@ -133,11 +151,40 @@ export class TelefoneComponent implements OnInit, OnChanges {
     }
   }
 
+  public editarTelefone(): void {
+    if (this.telefoneForm.valid) {
+      this.loadingMin = true;
+      this._telefoneService.editarTelefone(this.telefoneForm.value).subscribe((res) => {
+        if (res.success === 'true') {
+          this.carregarTelefones(this.idCliente);
+         this.fechar();
+          this._alertService.success(res.msg);
+          this.loadingMin = false;
+        } else {
+          this.loadingMin = false;
+          this._alertService.warning(res.msg);
+        }
+      },
+        (error) => {
+          this.loadingMin = false;
+          this._alertService.error('Ocorreu um erro ao tentar atualizar o telefone.');
+        }
+      );
+    } else {
+      this._alertService.warning("Preencha todos os campos obrigatórios");
+    }
+  }
+
   public abrirWhatsappModal(telefone: string): void {
     this.whatsappComponent.abrirModalWhatsapp(telefone);
   }
 
   public abrirSmsModal(sms: string): void {
     this.EnvioSmsComponent.abrirModalSms(sms, this.idCliente, this.idContratante);
+  }
+
+  public fechar() {
+    this.telefoneForm.reset();
+    this.modalService.dismissAll();
   }
 }

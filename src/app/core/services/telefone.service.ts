@@ -25,4 +25,8 @@ export class TelefoneService {
   public cadastrarTelefone(telefone: TelefoneModel): Observable<any> {
     return this._http.post<RetornoModel>(`${this.apiUrl}/telefone`, telefone);
   }
+
+  public editarTelefone(telefone: TelefoneModel): Observable<any> {
+    return this._http.put<RetornoModel>(`${this.apiUrl}/telefone`, telefone);
+  }
 }
