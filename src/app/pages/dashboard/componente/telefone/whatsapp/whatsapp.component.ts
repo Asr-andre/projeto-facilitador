@@ -1,8 +1,10 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PerfilWhatsappModel } from 'src/app/core/models/cadastro/sms.whatsapp.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { SmsWhatsAppService } from 'src/app/core/services/cadastro/sms.whatsapp.service';
 import { WhatsappService } from 'src/app/core/services/whatsapp.service';
 
 @Component({
@@ -18,6 +20,10 @@ export class WhatsappComponent implements OnInit {
   @Input() idCliente: number | undefined;
   @Input() nomeCliente: string | undefined;
   public maxCaractere: number = 4096;
+  public msg: PerfilWhatsappModel[] = [];
+  public idPerfilWhatsapp = 1;
+
+  public mensagem: string = '';
 
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
   public login = this._auth.getLogin();
@@ -30,10 +36,12 @@ export class WhatsappComponent implements OnInit {
     private _auth: AuthenticationService,
     private _modalService: NgbModal,
     private _alertService: AlertService,
+    private _smsWhatsAppService: SmsWhatsAppService,
   ) { }
 
   ngOnInit(): void {
     this.inicializarwhatsappForm();
+    this.obterMsgs();
   }
 
   public inicializarwhatsappForm() {
@@ -53,6 +61,32 @@ export class WhatsappComponent implements OnInit {
       ])
     });
   }
+
+  public obterMsgs() {
+    const dados = {
+      id_empresa: this.idEmpresa,
+      id_PerfilWhatsapp: this.idPerfilWhatsapp,
+      user_login: this.login
+    }
+
+    this._smsWhatsAppService.obterMsg(dados).subscribe((res) => {
+      if (res.success === "true") {
+        this.msg = res.perfil_whatsapp;
+      } else {
+        this._alertService.error(res.msg);
+      }
+    });
+  }
+
+  public atualizarMensagem(event: Event): void {
+    const selectedMessage = (event.target as HTMLSelectElement).value;
+    const mensagemControl = this.whatsappForm.get('whats.0.mensagem');
+
+    if (mensagemControl) {
+      mensagemControl.setValue(selectedMessage);
+    }
+  }
+
 
   public abrirModalWhatsapp(telefone: string): void {
     if (telefone) {
@@ -77,6 +111,23 @@ export class WhatsappComponent implements OnInit {
       this._alertService.warning('Preencha todos os campos obrigatórios.');
     }
   }
+
+  public enviarApiWhatsApp(): void {
+    const mensagemControl = this.whatsappForm.get('whats.0.mensagem');
+    const telefone = this.limparNumero(this.telefoneCliente);
+    const telefoneEncoded = encodeURIComponent(telefone);
+
+    if (mensagemControl && mensagemControl.value) {
+      const mensagemEncoded = encodeURIComponent(mensagemControl.value);
+      const url = `https://api.whatsapp.com/send?phone=55${telefoneEncoded}&text=${mensagemEncoded}`;
+
+      window.open(url, '_blank');
+      this.fechaModal();
+    } else {
+      this._alertService.warning('Digite a mensagem que deseja enviar');
+    }
+  }
+
 
   public fechaModal() {
     this.abrirModal = false;
