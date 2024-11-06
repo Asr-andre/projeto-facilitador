@@ -41,7 +41,6 @@ export class WhatsappComponent implements OnInit {
 
   ngOnInit(): void {
     this.inicializarwhatsappForm();
-    this.obterMsgs();
   }
 
   public inicializarwhatsappForm() {
@@ -89,6 +88,7 @@ export class WhatsappComponent implements OnInit {
 
 
   public abrirModalWhatsapp(telefone: string): void {
+    this.obterMsgs();
     if (telefone) {
       this.telefoneCliente = this.limparNumero(telefone);
       this.inicializarwhatsappForm();
