@@ -34,10 +34,14 @@ export class ClienteContratanteComponent {
       this.cliente.nome = linha.querySelector('.nome').textContent.trim();
       this.cliente.endereco = linha.querySelector('.endereco').textContent.trim();
       this.cliente.numero = linha.querySelector('.numero').textContent.trim();
+      this.cliente.complemento = linha.querySelector('.complemento').textContent.trim();
       this.cliente.bairro = linha.querySelector('.bairro').textContent.trim();
       this.cliente.cidade = linha.querySelector('.cidade').textContent.trim();
       this.cliente.uf = linha.querySelector('.uf').textContent.trim();
       this.cliente.cep = linha.querySelector('.cep').textContent.trim();
+      this.cliente.fone_celular = linha.querySelector('.fone_celular').textContent.trim();
+      this.cliente.fone_comercial = linha.querySelector('.fone_comercial').textContent.trim();
+      this.cliente.fone_residencial = linha.querySelector('.fone_residencial').textContent.trim();
       this.cliente.user_login = this._authService.getLogin();
 
       if (this.clientePreenchido(this.cliente)) {
@@ -77,10 +81,14 @@ export class ClienteContratanteComponent {
       cliente.nome &&
       cliente.endereco &&
       cliente.numero &&
+      cliente.complemento &&
       cliente.bairro &&
       cliente.cidade &&
       cliente.uf &&
       cliente.cep &&
+      cliente.fone_celular &&
+      cliente.fone_comercial &&
+      cliente.fone_residencial &&
       cliente.user_login
     );
   }
