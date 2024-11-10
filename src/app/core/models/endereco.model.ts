@@ -3,6 +3,8 @@ export class EnderecoRequestModel {
 }
 
 export class EnderecoModel {
+  id_cliente: number;
+  id_ender: number;
   endereco: string;
   numero: string;
   complemento: string;

@@ -4,6 +4,12 @@
 </div>
 
 <div class="card-body" style="height: 300px; overflow: auto; padding: 2px 0;">
+  <div class="mb-1 text-start">
+    <button class="btn btn-success btn-sm" (click)="abriModalTelefone(modalGenerico)" style="padding-top: 0px; padding-bottom: 0px; padding-right: 5px; padding-left: 5px;">
+      <i class="fas fa-plus fa-sm"></i>
+      <strong> Cadastrar Endereço</strong>
+    </button>
+  </div>
   <div *ngIf="enderecos.length > 0; else semEnderecos">
   <div class="table-responsive">
     <table class="table table-sm table-hover font-size-13">
@@ -19,6 +25,7 @@
           <th scope="col">Tipo</th>
           <th scope="col">Origem</th>
           <th scope="col">Situação</th>
+          <th scope="col">Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -33,6 +40,9 @@
           <td> {{ endereco.tipo }} </td>
           <td> {{ endereco.origem }} </td>
           <td> {{ endereco.situacao }} </td>
+          <td>
+            <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abriModalEditar(modalGenerico, endereco)"><i class="fas fa-edit"></i></button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -43,5 +53,83 @@
 </ng-template>
 </div>
 
+<ng-template #modalGenerico let-modal>
+  <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
+    <h6 class="modal-title" style="color: #ffffff"><i class="fab fa-whatsapp"></i>  {{ editar ? 'Editar Endereço' : 'Cadastrar Endereço' }} </h6>
+    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+      (click)="fechar()"></button>
+  </div>
+  <div class="modal-body modal-padding">
+    <form [formGroup]="formEndereco">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-1">
+            <label for="fone" class="form-label">Endereço</label>
+            <input type="text" id="fone" formControlName="endereco" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="mb-1">
+            <label for="fone" class="form-label">Número</label>
+            <input type="text" id="fone" formControlName="numero" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="mb-1">
+            <label for="fone" class="form-label">Complemento</label>
+            <input type="text" id="fone" formControlName="complemento" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="mb-1">
+            <label for="fone" class="form-label">Cep</label>
+            <input type="text" id="fone" formControlName="cep" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-1">
+            <label for="fone" class="form-label">Bairro</label>
+            <input type="text" id="fone" formControlName="bairro" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="mb-1">
+            <label for="fone" class="form-label">Cidade</label>
+            <input type="text" id="fone" formControlName="cidade" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="mb-1">
+            <label for="fone" class="form-label">Uf</label>
+            <select class="form-control form-control-sm mb-1" formControlName="uf"  >
+              <option value="">--</option>
+              <option *ngFor="let estado of estados" [value]="estado.sigla"> {{ estado.sigla }} </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-1">
+            <label for="fone" class="form-label">Tipo</label>
+            <input type="text" id="fone" formControlName="tipo" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-1">
+            <label for="fone" class="form-label">Situação</label>
+            <input type="text" id="fone" formControlName="situacao" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end" style="padding-top: 5px;">
+        <button type="submit" class="btn btn-sm me-1" [ngClass]="editar ? 'btn-primary' : 'btn-success'" (click)="controleBotao()">
+          <i class="fas fa-save"></i> Salvar
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
 
 
