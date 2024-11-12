@@ -15,7 +15,11 @@ export class JuridicoService {
 
   ) { }
 
-  public obterBoletoPix(dados: JuridicoRequestModel): Observable<JuridicoResponseModel> {
+  public obterProcessos(dados: JuridicoRequestModel): Observable<JuridicoResponseModel> {
     return this._http.post<JuridicoResponseModel>(`${this.apiUrl}/listarjuridico`, dados);
+  }
+
+  public editarProcesso(dado: JuridicoResponseModel): Observable<any> {
+    return this._http.put<JuridicoResponseModel>(`${this.apiUrl}/editarjuridico`, dado);
   }
 }

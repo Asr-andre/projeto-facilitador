@@ -1,20 +1,106 @@
-<div class="loading-overlay-card" *ngIf="loadingMin">
-  <div class="spinner-border text-primary m-1" role="status">
+<div class="card-body" style="height: 300px; padding: 2px 0;">
+
+  <div class="table-responsive" style="margin-top: 10px; max-height: 400px; overflow-y: auto;">
+    <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+      <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
+        <tr>
+          <th scope="col" >#</th>
+          <th scope="col" >Data Entrada</th>
+          <th scope="col" >Tipo</th>
+          <th scope="col" >Comarca</th>
+          <th scope="col" >Vara</th>
+          <th scope="col" >Causa</th>
+          <th scope="col" >Adv contratio</th>
+          <th scope="col" >Data Audiência</th>
+          <th scope="col" >Obs</th>
+          <th scope="col" >Data Cadastro</th>
+          <th scope="col" >Usuario</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of processos">
+          <td>{{ item.numero_processo }}</td>
+          <td>{{ data(item.data_entrada_processo) }}</td>
+          <td>{{ item.tipo_acao }}</td>
+          <td> {{ item.comarca }} </td>
+          <td>{{ item.vara }}</td>
+          <td>{{ item.adv_causa }}</td>
+          <td>{{ item.adv_contrario }}</td>
+          <td>{{ data(item.data_audiencia) }}</td>
+          <td>{{ item.obs }}</td>
+          <td>{{ data(item.data_cadastro) }}</td>
+          <td>{{ item.user_login }}</td>
+          <td>
+            <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abriModalEditar(modalGenerico, item)"><i class="fas fa-edit"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
-    <div class="table-responsive" style="margin-top: 10px; max-height: 400px; overflow-y: auto;">
-      <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
-        <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
-          <tr>
-
-            <th scope="col">Ação</th>
-          </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-      </table>
+<ng-template #modalGenerico let-modal>
+  <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status">
     </div>
+  </div>
 
+  <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
+    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-balance-scale"></i>  {{ editar ? 'Editar Processo' : 'Cadastrar Processo' }} </h6>
+    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+      (click)="fechar()"></button>
+  </div>
+  <div class="modal-body modal-padding">
+    <form [formGroup]="formProcesso">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="mb-1">
+            <label for="fone" class="form-label">Número do processo</label>
+            <input type="text" id="fone" formControlName="numero_processo" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-1">
+            <label for="fone" class="form-label">Tipo</label>
+            <input type="text" id="fone" formControlName="tipo_acao" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-1">
+            <label for="fone" class="form-label">Comarca</label>
+            <input type="text" id="fone" formControlName="comarca" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-1">
+            <label for="fone" class="form-label">Adv contrario</label>
+            <input type="text" id="fone" formControlName="adv_contrario" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
 
+        <div class="col-md-12">
+          <div class="mb-1">
+            <label for="ultimo_andamento" class="form-label">Último andamento</label>
+            <textarea id="ultimo_andamento" formControlName="ultimo_andamento" class="form-control form-control-pad form-control-sm" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="mb-1">
+            <label for="obs" class="form-label">Observação</label>
+            <textarea id="obs" formControlName="obs" class="form-control form-control-pad form-control-sm" rows="3"></textarea>
+          </div>
+        </div>
+
+      </div>
+      <div class="d-flex justify-content-end" style="padding-top: 5px;">
+        <button type="submit" class="btn btn-sm me-1" [ngClass]="editar ? 'btn-primary' : 'btn-success'" (click)="controleBotao()">
+          <i class="fas fa-save"></i> Salvar
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
