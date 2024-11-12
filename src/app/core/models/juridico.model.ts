@@ -1,5 +1,6 @@
 export class JuridicoRequestModel {
   id_empresa: number;
+  id_cliente: number;
   user_login: string;
 }
 

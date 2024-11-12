@@ -19,6 +19,10 @@ export class JuridicoService {
     return this._http.post<JuridicoResponseModel>(`${this.apiUrl}/listarjuridico`, dados);
   }
 
+  public cadastrarProcesso(dado: JuridicoResponseModel): Observable<any> {
+    return this._http.post<JuridicoResponseModel>(`${this.apiUrl}/inserirjuridico`, dado);
+  }
+
   public editarProcesso(dado: JuridicoResponseModel): Observable<any> {
     return this._http.put<JuridicoResponseModel>(`${this.apiUrl}/editarjuridico`, dado);
   }

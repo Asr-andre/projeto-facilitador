@@ -72,7 +72,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
   public controleBotao() {
     console.log(this.editar)
     if(this.editar == false) {
-
+      this.cadastrarProcesso();
     } else {
       this.editarProcesso();
     }
@@ -81,6 +81,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
   public obterProcessos() {
     const request = {
       id_empresa: this.idEmpresa,
+      id_cliente: this.idCliente,
       user_login: this.login
     };
 
@@ -111,6 +112,30 @@ export class JuridicoComponent implements OnInit, OnChanges {
     this.editar = true;
     this.inicializarFormProcesso(dados);
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
+  public cadastrarProcesso(): void {
+    if (this.formProcesso.valid) {
+      this.loadingMin = true;
+      this._JuridicoService.cadastrarProcesso(this.formProcesso.value).subscribe((res) => {
+        if (res.success === 'true') {
+          this.obterProcessos();
+         this.fechar();
+          this._alertService.success(res.msg);
+          this.loadingMin = false;
+        } else {
+          this.loadingMin = false;
+          this._alertService.warning(res.msg);
+        }
+      },
+        (error) => {
+          this.loadingMin = false;
+          this._alertService.error('Ocorreu um erro ao tentar editar o processo.');
+        }
+      );
+    } else {
+      this._alertService.warning("Preencha todos os campos obrigatórios");
+    }
   }
 
   public editarProcesso(): void {
