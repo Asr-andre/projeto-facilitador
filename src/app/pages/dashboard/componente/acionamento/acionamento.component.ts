@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { utils } from 'protractor';
 import { Subject, debounceTime } from 'rxjs';
 import { Utils } from 'src/app/core/helpers/utils';
 import { AcionamentoModel, RequisicaoAcionamentoModel } from 'src/app/core/models/acionamento.model';
@@ -21,18 +20,19 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
   @Output() clienteAcionado = new EventEmitter<void>();
-  public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public usuario: string = this._auth.getLogin();
+  public idUsuario: number = Number (this._auth.getCurrentUser() || 0);
   public acionamentos: AcionamentoModel[] = [];
   public acoesCobranca: AcaoCobrancaModel[] = [];
   public formAcionamento: FormGroup;
 
   private updateSubject: Subject<void> = new Subject<void>();
 
-
   constructor(
     private _alertService: AlertService,
     private _modalService: NgbModal,
-    private _authService: AuthenticationService,
+    private _auth: AuthenticationService,
     private _acionamentoService: AcionamentoService,
     private _acaoCobrancaService: AcaoCobrancaService,
     private _formBuilder: FormBuilder
@@ -56,8 +56,9 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       id_contratante: [this.idContratante],
       id_cliente: [this.idCliente],
       id_acao: [],
+      id_usuario: [this.idUsuario],
       mensagem: [""],
-      user_login: [this._authService.getLogin()],
+      user_login: [this.usuario],
     });
   }
 

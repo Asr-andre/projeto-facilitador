@@ -28,6 +28,7 @@ export class InserirAcionamentoModel {
   id_contratante: number;
   id_cliente: number;
   id_acao: number;
+  id_usuario: number;
   mensagem: string;
   user_login: string;
 }
