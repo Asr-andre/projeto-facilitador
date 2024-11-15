@@ -2,7 +2,9 @@ export class AcionamentoModel {
   id_acionamento: number;
   descricao: string;
   data_acio: string;
+  data_prox_acio: string;
   mensagem: string;
+  usuario: string;
   fone: string;
   titulo: string;
 }

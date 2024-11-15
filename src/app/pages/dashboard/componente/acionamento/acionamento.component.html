@@ -14,7 +14,9 @@
           <th>Data</th>
           <th>Mensagem</th>
           <th>Fone</th>
+          <th>Proximo Acionamento</th>
           <th>Titulo</th>
+          <th>Usúario</th>
         </tr>
       </thead>
       <tbody>
@@ -24,7 +26,9 @@
           <td>{{ data(acionamento.data_acio) }}</td>
           <td>{{ acionamento.mensagem }}</td>
           <td>{{ acionamento.fone }}</td>
+          <td>{{ data(acionamento.data_prox_acio) }}</td>
           <td>{{ acionamento.titulo }}</td>
+          <td>{{ acionamento.usuario }}</td>
         </tr>
       </tbody>
     </table>
