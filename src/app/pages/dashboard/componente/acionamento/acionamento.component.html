@@ -52,6 +52,9 @@
 
         <div class="col-md-6 form-group">
           <label for="dataHora" class="form-label">Agendar para:</label>
+          <span style="font-size: 8px; color: green; text-align: justify;">
+            {{ formAcionamento.value.data_prox_acio }}
+          </span>
           <input type="datetime-local" class="form-control form-control-sm mb-2" id="dataHora" formControlName="data_prox_acio" />
         </div>
         <div class="col-md-12 form-group">

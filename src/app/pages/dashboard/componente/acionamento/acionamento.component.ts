@@ -47,22 +47,27 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   ngOnInit(): void {
     this.inicializarformAcionamentos();
 
-    // Monitora mudanças no campo 'id_acao'
-    this.formAcionamento.get('id_acao')?.valueChanges.subscribe((idAcaoSelecionada) => {
-      console.log('ID da ação selecionada:', idAcaoSelecionada); // Debug
-      const acaoSelecionada = this.acoesCobranca.find(acao => acao.id_acao === Number(idAcaoSelecionada));
-      console.log('Ação encontrada:', acaoSelecionada);
-      if (acaoSelecionada && acaoSelecionada.data_prox_acio) {
-        console.log('Data próxima ação:', acaoSelecionada.data_prox_acio);
-        // Se a ação tiver 'data_prox_acio', habilita o campo e preenche com o valor vindo
-        this.formAcionamento.get('data_prox_acio')?.enable(); // Habilita o campo
-        this.formAcionamento.get('data_prox_acio')?.setValue(acaoSelecionada.data_prox_acio); // Atualiza o valor
-      } else {
-        // Caso contrário, desabilita e limpa o campo
-        this.formAcionamento.get('data_prox_acio')?.disable(); // Desabilita o campo
-        this.formAcionamento.get('data_prox_acio')?.setValue(null); // Limpa o valor
-      }
-    });
+     // Monitora mudanças no campo 'id_acao'
+  this.formAcionamento.get('id_acao')?.valueChanges.subscribe((idAcaoSelecionada) => {
+    console.log('ID da ação selecionada:', idAcaoSelecionada); // Debug
+    const acaoSelecionada = this.acoesCobranca.find(acao => acao.id_acao === Number(idAcaoSelecionada));
+    console.log('Ação encontrada:', acaoSelecionada);
+
+    if (acaoSelecionada && acaoSelecionada.data_prox_acio) {
+      console.log('Data próxima ação:', acaoSelecionada.data_prox_acio);
+
+      // Se a ação tiver 'data_prox_acio', habilita o campo e preenche com o valor formatado
+      this.formAcionamento.get('data_prox_acio')?.enable(); // Habilita o campo
+
+      // Converte a data para o formato 'dd/MM/yyyy HH:mm'
+      const dataFormatada = this._datePipe.transform(acaoSelecionada.data_prox_acio, 'dd/MM/yyyy HH:mm');
+      this.formAcionamento.get('data_prox_acio')?.setValue(dataFormatada); // Atualiza o valor
+    } else {
+      // Caso contrário, desabilita e limpa o campo
+      this.formAcionamento.get('data_prox_acio')?.disable(); // Desabilita o campo
+      this.formAcionamento.get('data_prox_acio')?.setValue(null); // Limpa o valor
+    }
+  });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -147,7 +152,12 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   }
 
   public enviarAcionamento(): void {
-    const acionamento = this.formAcionamento.value;
+    const acionamento = { ...this.formAcionamento.value };
+
+  if (acionamento.data_prox_acio) {
+    acionamento.data_prox_acio = this._datePipe.transform(acionamento.data_prox_acio, 'dd/MM/yyyy HH:mm:ss');
+  }
+
     this._acionamentoService.inserirAcionamento(acionamento).subscribe(
       (res) => {
         if (res.success) {
