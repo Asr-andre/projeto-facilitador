@@ -2,7 +2,7 @@ export class AcionamentoModel {
   id_acionamento: number;
   descricao: string;
   data_acio: string;
-  data_prox_acio: string;
+  data_prox_acio?: string;
   mensagem: string;
   usuario: string;
   fone: string;
@@ -28,7 +28,7 @@ export class InserirAcionamentoModel {
   id_contratante: number;
   id_cliente: number;
   id_acao: number;
-  data_prox_acio: string;
+  data_prox_acio?: string;
   id_usuario: number;
   mensagem: string;
   user_login: string;
