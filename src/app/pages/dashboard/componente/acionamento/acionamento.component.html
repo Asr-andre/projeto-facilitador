@@ -42,12 +42,23 @@
   </div>
   <div class="modal-body modal-padding">
     <form [formGroup]="formAcionamento">
-      <div class="col-md-12 form-group" style="padding-left: 3px; padding-right: 3px;">
-        <select class="form-control form-control-sm mb-3" formControlName="id_acao" (click)="this.listarAcoesCobranca()">
-          <option *ngFor="let acao of acoesCobranca" [value]="acao.id_acao">{{ acao.descricao }}</option>
-        </select>
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="id_acao" class="form-label">Selecione uma ação</label>
+          <select class="form-control form-control-sm mb-1" formControlName="id_acao">
+            <option *ngFor="let acao of acoesCobranca" [value]="acao.id_acao">{{ acao.descricao }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-6 form-group">
+          <label for="dataHora" class="form-label">Agendar para:</label>
+          <input type="datetime-local" class="form-control form-control-sm mb-2" id="dataHora" />
+        </div>
+        <div class="col-md-12 form-group">
+          <textarea class="form-control form-control-sm mb-2" formControlName="mensagem" placeholder="Digite sua mensagem" rows="5"></textarea>
+        </div>
       </div>
-      <textarea class="form-control" formControlName="mensagem" placeholder="Digite sua mensagem" rows="5"></textarea>
+
       <div class="d-flex justify-content-end align-items-center" style="margin-top: 5px;">
         <button type="button" class="btn btn-success btn-sm me-1" (click)="enviarAcionamento()">
           <i class="fas fa-paper-plane"></i> Salvar

@@ -114,6 +114,8 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       id_contratante: this.idContratante
     });
 
+    this.listarAcoesCobranca()
+
     this._modalService.open(this.modalEmailRef, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
   }
 

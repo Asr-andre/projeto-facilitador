@@ -2,7 +2,6 @@ export class RequisicaoAcaoCobrancaModel {
   id_empresa: number;
 }
 
-
 export class AcaoCobrancaModel {
   id_acao: number;
   descricao: string;
