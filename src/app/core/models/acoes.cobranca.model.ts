@@ -6,6 +6,7 @@ export class AcaoCobrancaModel {
   id_acao: number;
   descricao: string;
   data_prox_acio: string;
+  id_agenda: number;
 }
 
 export class RespostaAcaoCobrancaModel {

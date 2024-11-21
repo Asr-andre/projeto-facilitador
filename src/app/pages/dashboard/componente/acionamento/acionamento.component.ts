@@ -133,6 +133,10 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     this.formAcionamento.patchValue({
       id_cliente: this.idCliente,
       id_contratante: this.idContratante,
+      id_empresa: this.idEmpresa,
+      id_usuario: this.idUsuario,
+      mensagem: "",
+      user_login: this.usuario,
     });
 
     this.listarAcoesCobranca();
@@ -143,18 +147,19 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   public enviarAcionamento(): void {
     const acionamento = { ...this.formAcionamento.value };
 
-  if (acionamento.data_prox_acio) {
-    acionamento.data_prox_acio = this._datePipe.transform(acionamento.data_prox_acio, 'dd/MM/yyyy HH:mm:ss');
-  }
+    if (acionamento.data_prox_acio) {
+      acionamento.data_prox_acio = this._datePipe.transform(acionamento.data_prox_acio, 'dd/MM/yyyy HH:mm:ss');
+    } else {
+      acionamento.data_prox_acio = '';
+    }
 
     this._acionamentoService.inserirAcionamento(acionamento).subscribe(
       (res) => {
         if (res.success) {
-          this._alertService.success("Acionamento inserido com sucesso");
+          this._alertService.success(res.msg);
           this.listarAcionamentos();
           this.clienteAcionado.emit();
-          this.resetarCampos();
-          this._modalService.dismissAll();
+          this.fechar();
         } else {
           this._alertService.error(res.msg);
         }
@@ -163,13 +168,6 @@ export class AcionamentoComponent implements OnChanges, OnInit {
         this._alertService.error("Erro ao inserir acionamento");
       }
     );
-  }
-
-  private resetarCampos() {
-    this.formAcionamento.patchValue({
-      id_acao: "",
-      mensagem: "",
-    });
   }
 
   public fechar() {
