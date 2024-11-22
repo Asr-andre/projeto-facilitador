@@ -27,5 +27,5 @@ export interface FilaAtualizadaResponse {
   success: string;
   msg: string;
   id_empresa: string;
-  id_fila: string;
+  id_fila: number;
 }
