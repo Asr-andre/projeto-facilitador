@@ -88,6 +88,7 @@ export class DashboardComponent implements OnInit {
     return {
         id_empresa: this.idEmpresa,
         id_fila: idFila,
+        id_usuario: this.idUsuario,
         nome: this.tipoPesquisa === "nome" ? this.textoPesquisa : "",
         cnpj_cpf: this.tipoPesquisa === "cpf" ? this.textoPesquisa : "",
         mostrar_cliente_sem_dividas: this.mostrarSemDivida ? "S" : "N",
