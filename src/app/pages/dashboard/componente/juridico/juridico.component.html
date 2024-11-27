@@ -14,33 +14,27 @@
     <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
       <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
         <tr>
-          <th scope="col" >#</th>
-          <th scope="col" >Data Entrada</th>
-          <th scope="col" >Tipo</th>
+          <th scope="col" >Processo Nº</th>
           <th scope="col" >Comarca</th>
           <th scope="col" >Vara</th>
-          <th scope="col" >Causa</th>
-          <th scope="col" >Adv contratio</th>
-          <th scope="col" >Data Audiência</th>
+          <th scope="col" >Distribuição</th>
+          <th scope="col" >Tipo Ação</th>
+          <th scope="col" >Usuário</th>
+          <th scope="col" >Movimentação</th>
           <th scope="col" >Obs</th>
-          <th scope="col" >Data Cadastro</th>
-          <th scope="col" >Usuario</th>
           <th>Ações</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of processos">
           <td>{{ item.numero_processo }}</td>
-          <td>{{ data(item.data_entrada_processo) }}</td>
-          <td>{{ item.tipo_acao }}</td>
           <td> {{ item.comarca }} </td>
           <td>{{ item.vara }}</td>
-          <td>{{ item.adv_causa }}</td>
-          <td>{{ item.adv_contrario }}</td>
-          <td>{{ data(item.data_audiencia) }}</td>
-          <td>{{ item.obs }}</td>
-          <td>{{ data(item.data_cadastro) }}</td>
+          <td>{{ data(item.data_entrada_processo) }}</td>
+          <td>{{ item.tipo_acao }}</td>
           <td>{{ item.user_login }}</td>
+          <td>{{ item.ultimo_andamento }}</td>
+          <td>{{ item.obs }}</td>
           <td>
             <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abriModalEditar(modalGenerico, item)"><i class="fas fa-edit"></i></button>
           </td>
@@ -67,12 +61,12 @@
         <div class="col-md-8">
           <div class="mb-1">
             <label for="fone" class="form-label">Número do processo</label>
-            <input type="text" id="fone" formControlName="numero_processo" class="form-control form-control-pad form-control-sm">
+            <input type="text" id="fone" formControlName="numero_processo" class="form-control form-control-pad form-control-sm" mask="0000000-00.0000.00.0000" placeholder="0000000-00.0000.00.0000">
           </div>
         </div>
         <div class="col-md-4">
           <div class="mb-1">
-            <label for="fone" class="form-label">Tipo</label>
+            <label for="fone" class="form-label">Tipo Ação</label>
             <input type="text" id="fone" formControlName="tipo_acao" class="form-control form-control-pad form-control-sm">
           </div>
         </div>
@@ -84,15 +78,22 @@
         </div>
         <div class="col-md-6">
           <div class="mb-1">
+            <label for="vara" class="form-label">Vara</label>
+            <input type="text" id="vara" formControlName="vara" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-1">
             <label for="fone" class="form-label">Adv contrario</label>
             <input type="text" id="fone" formControlName="adv_contrario" class="form-control form-control-pad form-control-sm">
           </div>
         </div>
 
-        <div class="col-md-12">
+
+        <div class="col-md-6">
           <div class="mb-1">
-            <label for="ultimo_andamento" class="form-label">Último andamento</label>
-            <textarea id="ultimo_andamento" formControlName="ultimo_andamento" class="form-control form-control-pad form-control-sm" rows="3"></textarea>
+            <label for="ultimo_andamento" class="form-label">Movimentação</label>
+            <input id="ultimo_andamento" formControlName="ultimo_andamento" class="form-control form-control-pad form-control-sm">
           </div>
         </div>
         <div class="col-md-12">
