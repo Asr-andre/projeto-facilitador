@@ -68,12 +68,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  public carregarFilas() {
-    if (!this.filas.length) {
-      this.obterFilas();
-    }
-  }
-
   public filaCliente(): void {
     const filtros = this.construirFiltros(this.formFila.get("id_fila")?.value || 0);
     this.obterDevedores(filtros);

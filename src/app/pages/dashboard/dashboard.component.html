@@ -66,7 +66,7 @@
             <div class="col-md-3 mb-2">
               <form [formGroup]="formFila">
                 <div class="input-group">
-                  <select id="contratanteSelect" class="form-control form-control-sm" formControlName="id_fila" (focus)="carregarFilas()">
+                  <select id="contratanteSelect" class="form-control form-control-sm" formControlName="id_fila" (focus)="obterFilas()">
                     <option value="0">Selecione a Fila</option>
                     <option *ngFor="let fila of filas" [value]="fila.id_fila">{{ fila.descricao }}</option>
                   </select>
