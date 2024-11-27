@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Utils } from 'src/app/core/helpers/utils';
 import { ProcessoModel } from 'src/app/core/models/juridico.model';
+import { MovimentosResponseModel } from 'src/app/core/models/movimento.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { JuridicoService } from 'src/app/core/services/juridico.service';
@@ -21,9 +22,10 @@ export class JuridicoComponent implements OnInit, OnChanges {
   public processos: ProcessoModel [] = [];
   public editar: boolean = false;
   public formProcesso: FormGroup;
+  public movimentacao: string  [] = [];
 
   constructor(
-    private _JuridicoService: JuridicoService,
+    private _juridicoService: JuridicoService,
     private _auth: AuthenticationService,
     private _alertService: AlertService,
     private _formBuilder: FormBuilder,
@@ -44,10 +46,10 @@ export class JuridicoComponent implements OnInit, OnChanges {
 
   public inicializarFormProcesso(dado?: ProcessoModel) {
     this.formProcesso = this._formBuilder.group({
-      id_processo: [dado?.id_processo, Validators.required],
+      id_processo: [dado?.id_processo],
       id_empresa: [this.idEmpresa],
       id_cliente: [this.idCliente],
-      numero_processo: [dado?.numero_processo || ""],
+      numero_processo: [dado?.numero_processo, Validators.required],
       data_entrada_processo: [
         dado?.data_entrada_processo
           ? this.datePipe.transform(dado.data_entrada_processo, 'dd/MM/yyyy')
@@ -67,10 +69,11 @@ export class JuridicoComponent implements OnInit, OnChanges {
       obs: [dado?.obs || ""],
       user_login: [this.login]
     });
+
+
   }
 
   public controleBotao() {
-    console.log(this.editar)
     if(this.editar == false) {
       this.cadastrarProcesso();
     } else {
@@ -86,7 +89,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
     };
 
     this.loadingMin = true;
-    this._JuridicoService.obterProcessos(request).subscribe((res) => {
+    this._juridicoService.obterProcessos(request).subscribe((res) => {
       if (res.success === 'true') {
         this.processos = res.processos;
         this.loadingMin = false;
@@ -102,14 +105,32 @@ export class JuridicoComponent implements OnInit, OnChanges {
     );
   }
 
+  public obterMovimentacao() {
+    const request = {
+      id_empresa: this.idEmpresa,
+      user_login: this.login
+    };
+
+    this._juridicoService.obterMovimento(request).subscribe((res) => {
+      if (res.success === 'true') {
+        this.movimentacao = res.dados;
+        this.obterProcessos();
+      } else {
+        this._alertService.warning(res.msg);
+      }
+    });
+  }
+
   public abriModalCadastrar(content: TemplateRef<any>): void {
     this.editar = false;
+    this.obterMovimentacao();
     this.inicializarFormProcesso();
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public abriModalEditar(content: TemplateRef<any>, dados: ProcessoModel): void {
     this.editar = true;
+    this.obterMovimentacao();
     this.inicializarFormProcesso(dados);
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
@@ -117,7 +138,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
   public cadastrarProcesso(): void {
     if (this.formProcesso.valid) {
       this.loadingMin = true;
-      this._JuridicoService.cadastrarProcesso(this.formProcesso.value).subscribe((res) => {
+      this._juridicoService.cadastrarProcesso(this.formProcesso.value).subscribe((res) => {
         if (res.success === 'true') {
           this.obterProcessos();
          this.fechar();
@@ -141,7 +162,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
   public editarProcesso(): void {
     if (this.formProcesso.valid) {
       this.loadingMin = true;
-      this._JuridicoService.editarProcesso(this.formProcesso.value).subscribe((res) => {
+      this._juridicoService.editarProcesso(this.formProcesso.value).subscribe((res) => {
         if (res.success === 'true') {
           this.obterProcessos();
          this.fechar();

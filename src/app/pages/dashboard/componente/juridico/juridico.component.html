@@ -91,7 +91,10 @@
         <div class="col-md-4">
           <div class="mb-1">
             <label for="ultimo_andamento" class="form-label">Movimentação</label>
-            <input id="ultimo_andamento" formControlName="ultimo_andamento" class="form-control form-control-pad form-control-sm">
+            <select class="form-control form-control-sm">
+              <option value="">Selecionar</option>
+              <option *ngFor="let item of movimentacao" [value]="item">{{ item }}</option>
+            </select>
           </div>
         </div>
         <div class="col-md-12">

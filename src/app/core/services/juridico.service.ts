@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConfig } from './url.base.service';
 import { JuridicoRequestModel, JuridicoResponseModel } from '../models/juridico.model';
+import { MovimentosRequestModel, MovimentosResponseModel } from '../models/movimento.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,10 @@ export class JuridicoService {
 
   public obterProcessos(dados: JuridicoRequestModel): Observable<JuridicoResponseModel> {
     return this._http.post<JuridicoResponseModel>(`${this.apiUrl}/listarjuridico`, dados);
+  }
+
+  public obterMovimento(dados: MovimentosRequestModel): Observable<MovimentosResponseModel> {
+    return this._http.post<MovimentosResponseModel>(`${this.apiUrl}/movimentos`, dados);
   }
 
   public cadastrarProcesso(dado: JuridicoResponseModel): Observable<any> {
