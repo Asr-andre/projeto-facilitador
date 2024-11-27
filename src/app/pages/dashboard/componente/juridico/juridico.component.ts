@@ -65,8 +65,6 @@ export class JuridicoComponent implements OnInit, OnChanges {
       obs: [dado?.obs || ""],
       user_login: [this.login]
     });
-
-
   }
 
   public controleBotao() {
@@ -168,7 +166,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
       this._juridicoService.editarProcesso(dadosParaEnvio).subscribe((res) => {
         if (res.success === 'true') {
           this.obterProcessos();
-         this.fechar();
+          this.fechar();
           this._alertService.success(res.msg);
           this.loadingMin = false;
         } else {
@@ -216,5 +214,4 @@ export class JuridicoComponent implements OnInit, OnChanges {
   formatoBr(data: string | Date | null): string {
     return this._datePipe.transform(data, 'dd/MM/yyyy') || '';
   }
-
 }
