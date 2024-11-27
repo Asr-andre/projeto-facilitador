@@ -58,7 +58,7 @@
   <div class="modal-body modal-padding">
     <form [formGroup]="formProcesso">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-5">
           <div class="mb-1">
             <label for="fone" class="form-label">Número do processo</label>
             <input type="text" id="fone" formControlName="numero_processo" class="form-control form-control-pad form-control-sm" mask="0000000-00.0000.00.0000" placeholder="0000000-00.0000.00.0000">
@@ -70,27 +70,25 @@
             <input type="text" id="fone" formControlName="tipo_acao" class="form-control form-control-pad form-control-sm">
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <div class="mb-1">
-            <label for="fone" class="form-label">Comarca</label>
-            <input type="text" id="fone" formControlName="comarca" class="form-control form-control-pad form-control-sm">
+            <label for="fone" class="form-label">Data da Audiência</label>
+            <input type="date" id="fone" formControlName="comarca" class="form-control form-control-pad form-control-sm">
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="mb-1">
             <label for="vara" class="form-label">Vara</label>
             <input type="text" id="vara" formControlName="vara" class="form-control form-control-pad form-control-sm">
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="mb-1">
             <label for="fone" class="form-label">Adv contrario</label>
             <input type="text" id="fone" formControlName="adv_contrario" class="form-control form-control-pad form-control-sm">
           </div>
         </div>
-
-
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="mb-1">
             <label for="ultimo_andamento" class="form-label">Movimentação</label>
             <input id="ultimo_andamento" formControlName="ultimo_andamento" class="form-control form-control-pad form-control-sm">
