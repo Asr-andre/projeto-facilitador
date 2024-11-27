@@ -19,6 +19,7 @@
           <th scope="col" >Vara</th>
           <th scope="col" >Distribuição</th>
           <th scope="col" >Tipo Ação</th>
+          <th scope="col" >Data da Audiência</th>
           <th scope="col" >Usuário</th>
           <th scope="col" >Movimentação</th>
           <th scope="col" >Obs</th>
@@ -32,6 +33,7 @@
           <td>{{ item.vara }}</td>
           <td>{{ formatToBR(item.data_entrada_processo)}}</td>
           <td>{{ item.tipo_acao }}</td>
+          <td>{{ formatToBR(item.data_audiencia)}}</td>
           <td>{{ item.user_login }}</td>
           <td>{{ item.ultimo_andamento }}</td>
           <td>{{ item.obs }}</td>
