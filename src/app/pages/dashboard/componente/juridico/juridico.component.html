@@ -27,10 +27,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of processos">
-          <td>{{ item.numero_processo }}</td>
+          <td>{{ formatarNumeroProcesso(item.numero_processo) }}</td>
           <td> {{ item.comarca }} </td>
           <td>{{ item.vara }}</td>
-          <td>{{ data(item.data_entrada_processo) }}</td>
+          <td>{{ formatToBR(item.data_entrada_processo)}}</td>
           <td>{{ item.tipo_acao }}</td>
           <td>{{ item.user_login }}</td>
           <td>{{ item.ultimo_andamento }}</td>
@@ -58,22 +58,28 @@
   <div class="modal-body modal-padding">
     <form [formGroup]="formProcesso">
       <div class="row">
-        <div class="col-md-5">
-          <div class="mb-1">
-            <label for="fone" class="form-label">Número do processo</label>
-            <input type="text" id="fone" formControlName="numero_processo" class="form-control form-control-pad form-control-sm" mask="0000000-00.0000.00.0000" placeholder="0000000-00.0000.00.0000">
-          </div>
-        </div>
         <div class="col-md-4">
           <div class="mb-1">
-            <label for="fone" class="form-label">Tipo Ação</label>
-            <input type="text" id="fone" formControlName="tipo_acao" class="form-control form-control-pad form-control-sm">
+            <label for="numero_processo" class="form-label">Número do processo</label>
+            <input type="text" id="numero_processo" formControlName="numero_processo" class="form-control form-control-pad form-control-sm" mask="0000000-00.0000.00.0000" placeholder="0000000-00.0000.00.0000">
           </div>
         </div>
         <div class="col-md-3">
           <div class="mb-1">
-            <label for="fone" class="form-label">Data da Audiência</label>
-            <input type="date" id="fone" formControlName="comarca" class="form-control form-control-pad form-control-sm">
+            <label for="comarca" class="form-label">Comarca</label>
+            <input type="text" id="comarca" formControlName="comarca" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="mb-1">
+            <label for="tipo_acao" class="form-label">Tipo Ação</label>
+            <input type="text" id="tipo_acao" formControlName="tipo_acao" class="form-control form-control-pad form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="mb-1">
+            <label for="data_audiencia" class="form-label">Data da Audiência</label>
+            <input type="date" id="data_audiencia" formControlName="data_audiencia" class="form-control form-control-pad form-control-sm">
           </div>
         </div>
         <div class="col-md-4">
@@ -84,14 +90,14 @@
         </div>
         <div class="col-md-4">
           <div class="mb-1">
-            <label for="fone" class="form-label">Adv contrario</label>
-            <input type="text" id="fone" formControlName="adv_contrario" class="form-control form-control-pad form-control-sm">
+            <label for="adv_contrario" class="form-label">Adv contrario</label>
+            <input type="text" id="adv_contrario" formControlName="adv_contrario" class="form-control form-control-pad form-control-sm">
           </div>
         </div>
         <div class="col-md-4">
           <div class="mb-1">
             <label for="ultimo_andamento" class="form-label">Movimentação</label>
-            <select class="form-control form-control-sm">
+            <select class="form-control form-control-sm" formControlName="ultimo_andamento">
               <option value="">Selecionar</option>
               <option *ngFor="let item of movimentacao" [value]="item">{{ item }}</option>
             </select>

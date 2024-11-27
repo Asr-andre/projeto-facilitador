@@ -30,7 +30,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
     private _alertService: AlertService,
     private _formBuilder: FormBuilder,
     private _modalService: NgbModal,
-    private datePipe: DatePipe,
+    private _datePipe: DatePipe,
   ) { }
 
   ngOnInit(): void {
@@ -52,19 +52,15 @@ export class JuridicoComponent implements OnInit, OnChanges {
       numero_processo: [dado?.numero_processo, Validators.required],
       data_entrada_processo: [
         dado?.data_entrada_processo
-          ? this.datePipe.transform(dado.data_entrada_processo, 'dd/MM/yyyy')
-          : this.datePipe.transform(new Date(), 'dd/MM/yyyy')
+          ? this.formatoBr(dado.data_entrada_processo)
+          : this.formatoBr(new Date())
       ],
       tipo_acao: [dado?.tipo_acao || ""],
       comarca: [dado?.comarca || ""],
       vara: [dado?.vara || ""],
       adv_causa: [dado?.adv_causa || ""],
       adv_contrario: [dado?.adv_contrario || ""],
-      data_audiencia: [
-        dado?.data_audiencia
-          ? this.datePipe.transform(dado.data_audiencia, 'dd/MM/yyyy')
-          : this.datePipe.transform(new Date(), 'dd/MM/yyyy')
-      ],
+      data_audiencia: [dado?.data_audiencia || ""],
       ultimo_andamento: [dado?.ultimo_andamento || ""],
       obs: [dado?.obs || ""],
       user_login: [this.login]
@@ -137,8 +133,12 @@ export class JuridicoComponent implements OnInit, OnChanges {
 
   public cadastrarProcesso(): void {
     if (this.formProcesso.valid) {
+
+      const dadosParaEnvio = { ...this.formProcesso.value };
+      dadosParaEnvio.data_audiencia = this._datePipe.transform(dadosParaEnvio.data_audiencia, "dd/MM/yyyy") || "";
+
       this.loadingMin = true;
-      this._juridicoService.cadastrarProcesso(this.formProcesso.value).subscribe((res) => {
+      this._juridicoService.cadastrarProcesso(dadosParaEnvio).subscribe((res) => {
         if (res.success === 'true') {
           this.obterProcessos();
          this.fechar();
@@ -161,8 +161,11 @@ export class JuridicoComponent implements OnInit, OnChanges {
 
   public editarProcesso(): void {
     if (this.formProcesso.valid) {
+      const dadosParaEnvio = { ...this.formProcesso.value };
+      dadosParaEnvio.data_audiencia = this._datePipe.transform(dadosParaEnvio.data_audiencia, "dd/MM/yyyy") || "";
+
       this.loadingMin = true;
-      this._juridicoService.editarProcesso(this.formProcesso.value).subscribe((res) => {
+      this._juridicoService.editarProcesso(dadosParaEnvio).subscribe((res) => {
         if (res.success === 'true') {
           this.obterProcessos();
          this.fechar();
@@ -188,7 +191,30 @@ export class JuridicoComponent implements OnInit, OnChanges {
     this._modalService.dismissAll();
   }
 
-  public data(data) {
-    return Utils.formatarDataParaExibicao(data);
+  formatToBR(date: string | null): string {
+    if (!date) return '';
+
+    // Dividir a string de data ISO e usar apenas a parte da data
+    const [year, month, day] = date.split('T')[0].split('-');
+    return `${day}/${month}/${year}`; // Formato dd/MM/yyyy
   }
+
+
+  formatarNumeroProcesso(numero: string): string {
+    if (!numero) return '';
+
+    const regex = /^(\d{7})(\d{2})(\d{4})(\d{2})(\d{4})$/;
+    const match = numero.match(regex);
+
+    if (match) {
+      return `${match[1]}-${match[2]}.${match[3]}.${match[4]}.${match[5]}`;
+    }
+
+    return numero;
+  }
+
+  formatoBr(data: string | Date | null): string {
+    return this._datePipe.transform(data, 'dd/MM/yyyy') || '';
+  }
+
 }
