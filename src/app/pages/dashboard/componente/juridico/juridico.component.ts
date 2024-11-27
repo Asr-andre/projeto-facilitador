@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Utils } from 'src/app/core/helpers/utils';
 import { ProcessoModel } from 'src/app/core/models/juridico.model';
@@ -44,7 +44,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
 
   public inicializarFormProcesso(dado?: ProcessoModel) {
     this.formProcesso = this._formBuilder.group({
-      id_processo: [dado?.id_processo],
+      id_processo: [dado?.id_processo, Validators.required],
       id_empresa: [this.idEmpresa],
       id_cliente: [this.idCliente],
       numero_processo: [dado?.numero_processo || ""],

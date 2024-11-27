@@ -39,9 +39,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     private _formBuilder: FormBuilder,
     private _datePipe: DatePipe
   ) {
-    this.updateSubject
-      .pipe(debounceTime(300))
-      .subscribe(() => this.listarAcionamentos());
+    this.updateSubject.pipe(debounceTime(300)).subscribe(() => this.listarAcionamentos());
   }
 
   ngOnInit(): void {
@@ -89,14 +87,13 @@ export class AcionamentoComponent implements OnChanges, OnInit {
         id_cliente: this.idCliente,
       };
 
-      this._acionamentoService.listarAcionamentos(requisicao).subscribe(
-        (res) => {
-          if (res.success) {
-            this.acionamentos = res.acionamentos;
-          } else {
-            this._alertService.error(res.msg);
-          }
-        },
+      this._acionamentoService.listarAcionamentos(requisicao).subscribe((res) => {
+        if (res.success) {
+          this.acionamentos = res.acionamentos;
+        } else {
+          this._alertService.error(res.msg);
+        }
+      },
         (error) => {
           this._alertService.error("Erro ao listar acionamentos");
         }
@@ -110,14 +107,13 @@ export class AcionamentoComponent implements OnChanges, OnInit {
         id_empresa: this.idEmpresa,
       };
 
-      this._acaoCobrancaService.listarAcoesCobranca(requisicao).subscribe(
-        (res) => {
-          if (res.success) {
-            this.acoesCobranca = res.contratantes;
-          } else {
-            this._alertService.error(res.msg);
-          }
-        },
+      this._acaoCobrancaService.listarAcoesCobranca(requisicao).subscribe((res) => {
+        if (res.success) {
+          this.acoesCobranca = res.contratantes;
+        } else {
+          this._alertService.error(res.msg);
+        }
+      },
         (error) => {
           this._alertService.error("Erro ao listar ações de cobrança");
         }
@@ -141,7 +137,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
 
     this.listarAcoesCobranca();
 
-    this._modalService.open(this.modalEmailRef, { size: "lg", ariaLabelledBy: "modal-basic-title", });
+    this._modalService.open(this.modalEmailRef, { size: "lg", ariaLabelledBy: "modal-basic-title",  backdrop: "static", keyboard: false,});
   }
 
   public enviarAcionamento(): void {
@@ -153,17 +149,16 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       acionamento.data_prox_acio = '';
     }
 
-    this._acionamentoService.inserirAcionamento(acionamento).subscribe(
-      (res) => {
-        if (res.success) {
-          this._alertService.success(res.msg);
-          this.listarAcionamentos();
-          this.clienteAcionado.emit();
-          this.fechar();
-        } else {
-          this._alertService.error(res.msg);
-        }
-      },
+    this._acionamentoService.inserirAcionamento(acionamento).subscribe((res) => {
+      if (res.success) {
+        this._alertService.success(res.msg);
+        this.listarAcionamentos();
+        this.clienteAcionado.emit();
+        this.fechar();
+      } else {
+        this._alertService.error(res.msg);
+      }
+    },
       (error) => {
         this._alertService.error("Erro ao inserir acionamento");
       }
