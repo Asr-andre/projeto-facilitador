@@ -2,9 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Utils } from 'src/app/core/helpers/utils';
 import { ProcessoModel } from 'src/app/core/models/juridico.model';
-import { MovimentosResponseModel } from 'src/app/core/models/movimento.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { JuridicoService } from 'src/app/core/services/juridico.service';
@@ -108,7 +106,6 @@ export class JuridicoComponent implements OnInit, OnChanges {
     this._juridicoService.obterMovimento(request).subscribe((res) => {
       if (res.success === 'true') {
         this.movimentacao = res.dados;
-        this.obterProcessos();
       } else {
         this._alertService.warning(res.msg);
       }
@@ -139,7 +136,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
       this._juridicoService.cadastrarProcesso(dadosParaEnvio).subscribe((res) => {
         if (res.success === 'true') {
           this.obterProcessos();
-         this.fechar();
+          this.fechar();
           this._alertService.success(res.msg);
           this.loadingMin = false;
         } else {
