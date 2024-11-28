@@ -110,7 +110,6 @@
                   <th sortable="nome" (sort)="ordenar($event)" scope="col">Nome</th>
                   <th sortable="soma_titulos_nao_pagos" (sort)="ordenar($event)" scope="col">Valor Divida</th>
                   <th sortable="descricao_acao" (sort)="ordenar($event)" scope="col">Ultimo Acionamento</th>
-                  <th sortable="data_acionamento" (sort)="ordenar($event)" scope="col">Data</th>
                 </tr>
               </thead>
               <tbody>
@@ -124,7 +123,6 @@
                   <td>{{ devedor.nome}}</td>
                   <td>{{ devedor.soma_titulos_nao_pagos | currency:'BRL' }}</td>
                   <td>{{ devedor.descricao_acao }}</td>
-                  <td>{{ data(devedor.data_acionamento) }}</td>
                 </tr>
               </tbody>
             </table>
