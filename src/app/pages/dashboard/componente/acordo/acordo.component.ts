@@ -18,9 +18,12 @@ export class AcordoComponent implements OnInit, OnChanges {
   public loadingMin: boolean = false;
   public acordos: AcordoModel[] = [];
 
+  public idsSelecionados: string[] = [];
+
   constructor(
     private _acordoService: AcordoService,
     private _authService: AuthenticationService,
+    private _alertService: AlertService,
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +59,45 @@ export class AcordoComponent implements OnInit, OnChanges {
         console.error('Erro ao listar acordos:', error);
       }
     );
+  }
+
+  public toggleSelecao(id: string, selecionado: boolean): void {
+    if (selecionado) {
+      this.idsSelecionados.push(id); // Adiciona o ID à lista
+    } else {
+      this.idsSelecionados = this.idsSelecionados.filter((item) => item !== id); // Remove o ID da lista
+    }
+  }
+
+  public gerarConfissaoDivida(): void {
+    if (this.idsSelecionados.length === 0) {
+      alert('Nenhum acordo selecionado!');
+      return;
+    }
+
+    this.idsSelecionados.forEach((idAcordo) => {
+      const dadosSelecionado = {
+        id_empresa: this.idEmpresa,
+        id_contratante: this.idContratante,
+        id_cliente: this.idCliente,
+        id_acordo: idAcordo,
+        user_login: this.login,
+      };
+
+      this.loadingMin = true;
+      this._acordoService.imprimirConfissaoDivida(dadosSelecionado).subscribe(
+        (res) => {
+          var link = "data:application/pdf;base64, " + res.base64;
+          fetch(link).then(res => res.blob()).then(res => window.open(URL.createObjectURL(res), '_blank'));
+          this._alertService.success(res.msg);
+          this.loadingMin = false;
+        },
+        (error) => {
+          this.loadingMin = false;
+          this._alertService.success(`Erro ao gerar confissão de dívida para o acordo: ${idAcordo}`, error);
+        }
+      );
+    });
   }
 
   public dataBrasil(data) {

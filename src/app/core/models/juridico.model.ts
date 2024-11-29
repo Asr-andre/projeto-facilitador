@@ -29,3 +29,4 @@ export class ProcessoModel {
   data_cadastro: string;
   data_alteracao: string;
 }
+

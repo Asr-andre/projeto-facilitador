@@ -9,6 +9,7 @@
     <table class="table table-sm table-hover font-size-13">
       <thead class="tabela-custom">
         <tr>
+          <th scope="col">#</th>
           <th scope="col">id</th>
           <th scope="col">Valor do acordo</th>
           <th scope="col">Data do acordo</th>
@@ -16,10 +17,15 @@
           <th scope="col">Valor entrada</th>
           <th scope="col">Valor parcela</th>
           <th scope="col">Vencimento primaira parcela</th>
+          <th scope="col">Ações</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let acordo of acordos">
+          <td><input
+            type="checkbox"
+            (change)="toggleSelecao(acordo.id_acordo, $event.target.checked)"
+          /></td>
           <td> {{ acordo.id_acordo }} </td>
           <td> {{ acordo.valor_acordo | currency:'BRL' }} </td>
           <td> {{ data(acordo.data_acordo) }} </td>
@@ -27,6 +33,16 @@
           <td> {{ acordo.valor_entrada | currency:'BRL' }} </td>
           <td> {{ acordo.valor_parcela | currency:'BRL' }} </td>
           <td> {{ dataBrasil(acordo.venc_primeira_parcela) }} </td>
+          <td>
+            <div class="dropdown float-end" ngbDropdown>
+              <a href="javascript: void(0);" class="dropdown-toggle arrow-none card-drop" ngbDropdownToggle data-toggle="dropdown" aria-expanded="false">
+                <i class="mdi mdi-dots-vertical"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                <a href="javascript:void(0);" class="dropdown-item" (click)="gerarConfissaoDivida()">Confissão Divida</a>
+              </div>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
