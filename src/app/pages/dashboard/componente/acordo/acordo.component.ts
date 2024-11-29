@@ -71,7 +71,7 @@ export class AcordoComponent implements OnInit, OnChanges {
 
   public gerarConfissaoDivida(): void {
     if (this.idsSelecionados.length === 0) {
-      alert('Nenhum acordo selecionado!');
+      this._alertService.info(`Nenhum acordo selecionado!`);
       return;
     }
 
@@ -94,7 +94,7 @@ export class AcordoComponent implements OnInit, OnChanges {
         },
         (error) => {
           this.loadingMin = false;
-          this._alertService.success(`Erro ao gerar confissão de dívida para o acordo: ${idAcordo}`, error);
+          this._alertService.error(`Erro ao gerar confissão de dívida para o acordo: ${idAcordo}`, error);
         }
       );
     });
