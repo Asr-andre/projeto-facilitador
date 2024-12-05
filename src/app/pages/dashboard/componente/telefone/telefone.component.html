@@ -38,7 +38,7 @@
           <td>{{ telefone.whatsapp === 'S' ? 'Sim' : 'Não' }}</td>
           <td>{{ telefone.obs_fone }}</td>
           <td>
-            <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abriModalEditar(telefoneModal, telefone)"><i class="fas fa-edit"></i></button>
+            <a href="javascript:void(0);" class="me-3 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18" (click)="abriModalEditar(telefoneModal, telefone)"></i></a>
           </td>
         </tr>
       </tbody>
