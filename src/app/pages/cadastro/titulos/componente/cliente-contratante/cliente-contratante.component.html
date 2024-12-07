@@ -5,6 +5,7 @@
     <thead>
       <tr>
         <th>CNPJ/CPF</th>
+        <th>RG</th>
         <th>Nome</th>
         <th>Endereço</th>
         <th>Número</th>
@@ -21,6 +22,7 @@
     <tbody>
       <tr>
         <td contenteditable="true" class="cnpj_cpf" (input)="limitarCaracteres($event, 14)"></td>
+        <td contenteditable="true" class="rg" (input)="limitarCaracteres($event, 14)"></td>
         <td contenteditable="true" class="nome"></td>
         <td contenteditable="true" class="endereco"></td>
         <td contenteditable="true" class="numero"></td>

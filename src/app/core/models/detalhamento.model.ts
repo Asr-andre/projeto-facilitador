@@ -20,6 +20,7 @@ export class DetalhamentoModel {
   public credor: string;
   public nome: string;
   public cpf: string;
+  public rg: string;
   public endereco: string;
   public numero: string;
   public complemento: string;
