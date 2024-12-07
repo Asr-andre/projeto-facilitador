@@ -4,6 +4,7 @@ export class ClienteModel {
   nome: string;
   cnpj_cpf: string;
   endereco: string;
+  rg: string;
   numero: string;
   complemento: string;
   bairro: string;

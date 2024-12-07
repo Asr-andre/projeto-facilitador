@@ -3,8 +3,9 @@
 </div>
 
 <div class="row pt-1 brder">
-  <div class="col-md-6"><b>Nome:</b> {{ detalhamentoSelecionado?.nome }}</div>
-  <div class="col-md-6"><b>CPF:</b> {{ formatarCPF(detalhamentoSelecionado?.cpf) }}</div>
+  <div class="col-md-4"><b>Nome:</b> {{ detalhamentoSelecionado?.nome }}</div>
+  <div class="col-md-4"><b>CPF:</b> {{ formatarCPF(detalhamentoSelecionado?.cpf) }}</div>
+  <div class="col-md-4"><b>RG:</b> {{ formatarCPF(detalhamentoSelecionado?.rg) }}</div>
 </div>
 <div class="row pt-1 brder">
   <div class="col-md-6"><b>Rua: </b> {{ detalhamentoSelecionado?.endereco }}</div>

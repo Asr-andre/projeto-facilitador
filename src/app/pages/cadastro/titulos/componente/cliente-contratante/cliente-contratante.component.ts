@@ -31,6 +31,7 @@ export class ClienteContratanteComponent {
       this.cliente.id_empresa = Number(this._authService.getIdEmpresa());
       this.cliente.id_contratante = Number(this.idContratante);
       this.cliente.cnpj_cpf = linha.querySelector('.cnpj_cpf').textContent.trim();
+      this.cliente.rg = linha.querySelector('.rg').textContent.trim();
       this.cliente.nome = linha.querySelector('.nome').textContent.trim();
       this.cliente.endereco = linha.querySelector('.endereco').textContent.trim();
       this.cliente.numero = linha.querySelector('.numero').textContent.trim();
@@ -78,6 +79,7 @@ export class ClienteContratanteComponent {
       cliente.id_empresa &&
       cliente.id_contratante &&
       cliente.cnpj_cpf &&
+      cliente.rg &&
       cliente.nome &&
       cliente.endereco &&
       cliente.numero &&
