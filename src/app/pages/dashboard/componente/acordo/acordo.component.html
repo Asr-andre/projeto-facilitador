@@ -13,7 +13,8 @@
           <th scope="col">id</th>
           <th scope="col">Valor do acordo</th>
           <th scope="col">Data do acordo</th>
-          <th scope="col">Qtde parcelas Originais</th>
+          <th scope="col">Qtde parc orig</th>
+          <th scope="col">Qtde parc acordo</th>
           <th scope="col">Valor entrada</th>
           <th scope="col">Valor parcela</th>
           <th scope="col">Vencimento primaira parcela</th>
@@ -30,6 +31,7 @@
           <td> {{ acordo.valor_acordo | currency:'BRL' }} </td>
           <td> {{ data(acordo.data_acordo) }} </td>
           <td> {{ acordo.qtde_parcelas_originais }} </td>
+          <td> {{ acordo.qtde_parcelas }} </td>
           <td> {{ acordo.valor_entrada | currency:'BRL' }} </td>
           <td> {{ acordo.valor_parcela | currency:'BRL' }} </td>
           <td> {{ dataBrasil(acordo.venc_primeira_parcela) }} </td>
