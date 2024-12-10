@@ -31,6 +31,7 @@ import { SmsWhatsappComponent } from "./sms-whatsapp/sms-whatsapp.component";
 import { EmailContaComponent } from "./email-conta/email-conta.component";
 import { FormulaComponent } from "./formula/formula.component";
 import { SmsComponent } from "./sms/sms.component";
+import { ClienteComponent } from "./cliente/cliente.component";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { SmsComponent } from "./sms/sms.component";
     SmsWhatsappComponent,
     EmailContaComponent,
     FormulaComponent,
-    SmsComponent
+    SmsComponent,
+    ClienteComponent
   ],
   imports: [
     CommonModule,

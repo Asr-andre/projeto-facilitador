@@ -8,6 +8,7 @@ import { SmsWhatsappComponent } from './sms-whatsapp/sms-whatsapp.component';
 import { EmailContaComponent } from './email-conta/email-conta.component';
 import { FormulaComponent } from './formula/formula.component';
 import { SmsComponent } from './sms/sms.component';
+import { ClienteComponent } from './cliente/cliente.component';
 
 
 const routes: Routes = [
@@ -34,6 +35,9 @@ const routes: Routes = [
     },
     {
       path: 'sms', component: SmsComponent
+    },
+    {
+      path: 'cliente', component: ClienteComponent
     }
 ];
 

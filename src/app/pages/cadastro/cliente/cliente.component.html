@@ -1,0 +1,194 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body" style="padding-bottom: 8px;">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-title m-0">
+                  <i class="fas fa-search me-2"></i> Cadastro manual
+                </h4>
+                <button class="btn btn-success btn-sm" (click)="abilitarCadastro()">
+                  <i class="fas fa-plus"></i><strong> Cadastrar</strong>
+                </button>
+              </div>
+
+              <hr>
+              <div class="d-flex justify-content-left mb-3">
+                <input type="text" class="form-control form-control-sm me-2" [(ngModel)]="textoPesquisa" placeholder="Pesquisar cliente existente..." style="width: 400px;">
+                <button type="button" class="btn btn-secondary btn-sm" (click)="pesquisaCliente()"><i class="fas fa-search me-2"></i> Pesquisar </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" *ngIf="mostrarTabela">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+
+          <div class="table-responsive">
+            <table class="table table-sm table-hover font-size-13 tabelaOrdenada" style="white-space: nowrap; overflow-x: auto;">
+              <thead class="tabela-custom table-td-scroll">
+                <tr>
+                  <th sortable="fantasia" (sort)="ordenar($event)" scope="col">Credor</th>
+                  <th sortable="id_cliente" (sort)="ordenar($event)" scope="col">Id</th>
+                  <th sortable="cnpj_cpf" (sort)="ordenar($event)" scope="col">Cpf</th>
+                  <th sortable="nome" (sort)="ordenar($event)" scope="col">Nome</th>
+                  <th sortable="soma_titulos_nao_pagos" (sort)="ordenar($event)" scope="col">Valor Divida</th>
+                  <th scope="col">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let devedor of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }"
+                  [ngClass]="{'selected': devedorSelecionado === devedor, 'table-row': true}"
+                  (click)="selecionarDevedor(devedor)">
+                  <td>{{ devedor.fantasia }}</td>
+                  <td>{{ devedor.id_cliente }}</td>
+                  <td>{{devedor.cnpj_cpf }}</td>
+                  <td>{{ devedor.nome}}</td>
+                  <td>{{ devedor.soma_titulos_nao_pagos | currency:'BRL' }}</td>
+                  <td>
+                    <a href="javascript:void(0);" class="me-3 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="d-flex justify-content-between align-items-center mt-3 text-small">
+              <div>
+                Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+                {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+              </div>
+              <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo"
+                [maxSize]="5" [autoHide]="false" [responsive]="true">
+              </pagination-controls>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" *ngIf="mostrarForm">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title m-0">
+              <i class="fas fa-search me-2"></i> Cadastrar endereço do cliente
+            </h4>
+          </div>
+          <hr>
+
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <div class="d-flex justify-content-between align-items-center">
+                <form [formGroup]="formCliente">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <label for="id_contratante">Contratante</label>
+                        <select class="form-control form-control-sm me-2" formControlName="id_contratante" >
+                          <option value="">Selecione</option>
+                          <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">{{ contratante.fantasia }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label for="nome">Nome</label>
+                      <input type="text" id="nome" class="form-control form-control-sm me-1" formControlName="nome" />
+                    </div>
+                    <div class="col-md-3">
+                      <label for="cnpj_cpf">CNPJ/CPF</label>
+                      <input type="text" id="cnpj_cpf" class="form-control form-control-sm me-1"
+                        formControlName="cnpj_cpf" />
+                    </div>
+                    <div class="col-md-3">
+                      <label for="rg">RG</label>
+                      <input type="text" id="rg" class="form-control form-control-sm me-1" formControlName="rg" />
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="cep">CEP</label>
+                      <input type="text" id="cep" class="form-control form-control-sm me-1" formControlName="cep" />
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="endereco">Endereço</label>
+                      <input type="text" id="endereco" class="form-control form-control-sm me-1"
+                        formControlName="endereco" />
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="numero">Número</label>
+                      <input type="text" id="numero" class="form-control form-control-sm me-1"
+                        formControlName="numero" />
+                    </div>
+                    <div class="col-md-3">
+                      <label for="complemento">Complemento</label>
+                      <input type="text" id="complemento" class="form-control form-control-sm me-1"
+                        formControlName="complemento" />
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="bairro">Bairro</label>
+                      <input type="text" id="bairro" class="form-control form-control-sm me-1"
+                        formControlName="bairro" />
+                    </div>
+                    <div class="col-md-3">
+                      <label for="cidade">Cidade</label>
+                      <input type="text" id="cidade" class="form-control form-control-sm me-1"
+                        formControlName="cidade" />
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="uf">UF</label>
+                      <input type="text" id="uf" class="form-control form-control-sm me-1" formControlName="uf" />
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="fone_celular">Fone Celular</label>
+                      <input type="text" id="fone_celular" class="form-control form-control-sm me-1"
+                        formControlName="fone_celular" />
+                    </div>
+                    <div class="col-md-3">
+                      <label for="fone_comercial">Fone Comercial</label>
+                      <input type="text" id="fone_comercial" class="form-control form-control-sm me-1"
+                        formControlName="fone_comercial" />
+                    </div>
+                    <div class="col-md-3">
+                      <label for="fone_residencial">Fone Residencial</label>
+                      <input type="text" id="fone_residencial" class="form-control form-control-sm me-1"
+                        formControlName="fone_residencial" />
+                    </div>
+
+                    <div class="d-flex justify-content-end" style="padding-top: 5px;">
+                      <button type="submit" class="btn btn-secondary btn-sm" (click)="cadastrarCliente()">
+                        <i class="fas fa-save"></i> Salvar
+                      </button>
+                    </div>
+
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

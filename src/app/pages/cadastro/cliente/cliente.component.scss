@@ -1,0 +1,35 @@
+.brder {
+  border-bottom: 1px ridge;
+  padding: 2px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.table-row:hover {
+  cursor: pointer;
+}
+
+.selected {
+  background-color: #cce5ff !important;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-card-title {
+  margin-bottom: 4px !important;
+}
+
+::ng-deep .ngx-pagination .pagination-previous a::before,
+::ng-deep .ngx-pagination .pagination-previous.disabled::before,
+::ng-deep .ngx-pagination .pagination-next a::after,
+::ng-deep .ngx-pagination .pagination-next.disabled::after {
+    font-size: 11px !important;
+}
+
+.text-small {
+  font-size: 11px;
+}
+
