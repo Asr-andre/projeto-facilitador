@@ -107,4 +107,12 @@ export class AcordoComponent implements OnInit, OnChanges {
   public data(data) {
     return Utils.formatarDataParaExibicao(data);
   }
+
+  public status(tipo: string): string {
+    switch (tipo) {
+      case 'A': return 'Ativo';
+      case 'C': return 'Cancelado';
+      default: return 'Desconhecido';
+    }
+  }
 }

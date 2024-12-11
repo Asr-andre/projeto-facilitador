@@ -14,6 +14,8 @@ export class AcordoModel {
   valor_entrada: number;
   valor_parcela: number;
   venc_primeira_parcela: string;
+  status: string;
+  percem_pago: Number;
 }
 
 export class AcordoRespostaModel {
