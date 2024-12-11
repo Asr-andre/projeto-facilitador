@@ -46,3 +46,17 @@ export class ResponseConfissaoDividaModel {
   id_cliente: string;
   base64: string;
 }
+
+export class RequisicaoQuebraAcordoModel {
+  id_empresa: number;
+  id_acordo: string;
+  user_login: string;
+}
+
+export class ResponseQuebraAcordoModel {
+  success: true;
+  msg: string;
+  id_empresa: number;
+  user_login: string;
+  id_acordo: string
+}

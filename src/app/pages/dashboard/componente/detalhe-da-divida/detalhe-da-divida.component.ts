@@ -19,6 +19,7 @@ export class DetalheDaDividaComponent implements OnChanges {
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
   @Input() numeroContrato: number | undefined;
+  @Input() numeroDocumento: string | undefined;
   public detalhamentoSelecionado: DetalhamentoModel | null = null;
   public loadingMin: boolean = false;
   public selecionarTodos: boolean = true;
@@ -192,6 +193,7 @@ export class DetalheDaDividaComponent implements OnChanges {
         id_empresa: this.idEmpresa,
         id_contratante: this.idContratante,
         id_cliente: this.idCliente,
+        id_acordo: this.numeroDocumento,
         data_negociacao: dataNegociacao,
         tipo_baixa: 'R',
         user_login: this.login,

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConfig } from './url.base.service';
-import { AcordoRequisicaoModel, AcordoRespostaModel, RequisicaoConfissaoDividaModel, ResponseConfissaoDividaModel } from '../models/acordo.model';
+import { AcordoRequisicaoModel, AcordoRespostaModel, RequisicaoConfissaoDividaModel, RequisicaoQuebraAcordoModel, ResponseConfissaoDividaModel, ResponseQuebraAcordoModel } from '../models/acordo.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +21,9 @@ export class AcordoService {
 
   public imprimirConfissaoDivida(dados: RequisicaoConfissaoDividaModel): Observable<ResponseConfissaoDividaModel> {
     return this._http.post<ResponseConfissaoDividaModel>(`${this.apiUrl}/gerarconfissao`, dados);
+  }
+
+  public quebraAcordo(dados: RequisicaoQuebraAcordoModel): Observable<ResponseQuebraAcordoModel> {
+    return this._http.post<ResponseQuebraAcordoModel>(`${this.apiUrl}/quebraacordo`, dados);
   }
 }

@@ -100,6 +100,36 @@ export class AcordoComponent implements OnInit, OnChanges {
     });
   }
 
+  public quebraAcordo(acordo: any) {
+    const requisicao = {
+      id_empresa: this.idEmpresa,
+      id_acordo: acordo.id_acordo,
+      user_login: this.login
+    };
+
+    if (acordo.percem_pago > 0 || acordo.status !== "A") {
+      this._alertService.warning("Acordo não pode ser quebrado");
+      return;
+    }
+
+    this.loadingMin = true;
+    this._acordoService.quebraAcordo(requisicao).subscribe((res) => {
+      if (res.success) {
+        this.loadingMin = false;
+        this._alertService.success(res.msg);
+        this.listarAcordos();
+      } else {
+        this.loadingMin = false;
+        this._alertService.warning(res.msg);
+      }
+    },
+      (error) => {
+        this.loadingMin = false;
+        this._alertService.error("Erro ao quebrar o acordo", error);
+      }
+    );
+  }
+
   public dataBrasil(data) {
     return Utils.dataBrasil(data);
   }

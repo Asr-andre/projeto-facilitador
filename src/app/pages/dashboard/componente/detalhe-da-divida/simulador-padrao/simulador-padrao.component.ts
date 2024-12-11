@@ -22,6 +22,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
   @Input() numeroContrato: number | undefined;
+  @Input() numeroDocumento: string | undefined;
   private modalRef: NgbModalRef;
   public descontoMaximo: any;
   public data: any;
@@ -86,6 +87,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       id_empresa: [this.idEmpresa],
       id_contratante: [this.idContratante],
       id_cliente: [this.idCliente],
+      id_acordo: [],
       desconto_principal: ["", Validators.min(0)],
       desconto_multa: ["", Validators.min(0)],
       desconto_juros: ["", Validators.min(0)],
@@ -239,6 +241,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       id_empresa: this.idEmpresa,
       id_contratante: this.idContratante,
       id_cliente: this.idCliente,
+      id_acordo: this.numeroDocumento,
       data_negociacao: this.datePipe.transform(this.form.get("data_atualizacao").value, "dd/MM/yyyy")!,
       tipo_baixa: "P",
       user_login: this.login,
@@ -249,6 +252,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       if (!confirmarPg) {
         return;
       }
+      console.log(dadosParaEnvio);
 
       this.simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe(
         (res) => {

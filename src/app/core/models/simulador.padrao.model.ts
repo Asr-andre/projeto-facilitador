@@ -89,6 +89,7 @@ export class BaixaPagamentoRequisicaoModel {
   id_empresa: number;
   id_contratante: number;
   id_cliente: number;
+  id_acordo: string;
   data_negociacao: string;
   tipo_baixa: string;
   user_login: string;
