@@ -115,6 +115,24 @@ export class AlertService {
     });
   }
 
+  quebra(): Promise<boolean> {
+    return this.swalWithBootstrapButtons.fire({
+      title: 'Você deseja quebra o acordo selecionado?',
+      icon: 'warning',
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.swalWithBootstrapButtons.fire('Quebra de acordo efetuada com sucesso!');
+        return true;
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        return false;
+      }
+      return false;
+    });
+  }
+
   baixarPg(): Promise<boolean> {
     return this.swalWithBootstrapButtons.fire({
       title: 'Você deseja baixar todos os titulos selecionados?',

@@ -100,34 +100,37 @@ export class AcordoComponent implements OnInit, OnChanges {
     });
   }
 
-  public quebraAcordo(acordo: any) {
-    const requisicao = {
+  async quebraAcordo(acordo: any) {
+    const solicitacao = {
       id_empresa: this.idEmpresa,
       id_acordo: acordo.id_acordo,
       user_login: this.login
     };
 
-    if (acordo.percem_pago > 0 || acordo.status !== "A") {
-      this._alertService.warning("Acordo não pode ser quebrado");
+    if (acordo.percentualPago > 0 || acordo.status !== 'A') {
+      this._alertService.warning('Acordo não pode ser quebrado');
+      return;
+    }
+
+    const confirmarRetirada = await this._alertService.quebra();
+    if (!confirmarRetirada) {
       return;
     }
 
     this.loadingMin = true;
-    this._acordoService.quebraAcordo(requisicao).subscribe((res) => {
-      if (res.success) {
-        this.loadingMin = false;
-        this._alertService.success(res.msg);
+    try {
+      const resposta = await this._acordoService.quebraAcordo(solicitacao).toPromise();
+      this.loadingMin = false;
+      if (resposta.success) {
+        this._alertService.success(resposta.msg);
         this.listarAcordos();
       } else {
-        this.loadingMin = false;
-        this._alertService.warning(res.msg);
+        this._alertService.warning(resposta.msg);
       }
-    },
-      (error) => {
-        this.loadingMin = false;
-        this._alertService.error("Erro ao quebrar o acordo", error);
-      }
-    );
+    } catch (error) {
+      this.loadingMin = false;
+      this._alertService.error('Erro ao quebrar o acordo', error);
+    }
   }
 
   public dataBrasil(data) {
