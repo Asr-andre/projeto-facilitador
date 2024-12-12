@@ -198,11 +198,12 @@ export class JuridicoComponent implements OnInit, OnChanges {
   formatarNumeroProcesso(numero: string): string {
     if (!numero) return '';
 
-    const regex = /^(\d{7})(\d{2})(\d{4})(\d{2})(\d{4})$/;
+    // Ajustando o regex para incluir o novo formato
+    const regex = /^(\d{7})(\d{2})(\d{4})(\d{1})(\d{2})(\d{4})$/;
     const match = numero.match(regex);
 
     if (match) {
-      return `${match[1]}-${match[2]}.${match[3]}.${match[4]}.${match[5]}`;
+      return `${match[1]}-${match[2]}.${match[3]}.${match[4]}.${match[5]}.${match[6]}`;
     }
 
     return numero;
