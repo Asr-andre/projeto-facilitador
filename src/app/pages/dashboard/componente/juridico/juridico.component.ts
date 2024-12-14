@@ -48,11 +48,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
       id_empresa: [this.idEmpresa],
       id_cliente: [this.idCliente],
       numero_processo: [dado?.numero_processo, Validators.required],
-      data_entrada_processo: [
-        dado?.data_entrada_processo
-          ? this.formatoBr(dado.data_entrada_processo)
-          : this.formatoBr(new Date())
-      ],
+      data_entrada_processo: [dado?.data_entrada_processo || ""],
       tipo_acao: [dado?.tipo_acao || ""],
       comarca: [dado?.comarca || ""],
       vara: [dado?.vara || ""],
@@ -130,7 +126,8 @@ export class JuridicoComponent implements OnInit, OnChanges {
     if (this.formProcesso.valid) {
 
       const dadosParaEnvio = { ...this.formProcesso.value };
-      dadosParaEnvio.data_audiencia = this._datePipe.transform(dadosParaEnvio.data_audiencia, "dd/MM/yyyy") || "";
+      dadosParaEnvio.data_audiencia = this._datePipe.transform(dadosParaEnvio.data_audiencia, "dd/MM/yyyy HH:mm:ss") || "";
+      dadosParaEnvio.data_entrada_processo = this._datePipe.transform(dadosParaEnvio.data_entrada_processo, "dd/MM/yyyy") || "";
 
       this.loadingMin = true;
       this._juridicoService.cadastrarProcesso(dadosParaEnvio).subscribe((res) => {
@@ -158,6 +155,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
     if (this.formProcesso.valid) {
       const dadosParaEnvio = { ...this.formProcesso.value };
       dadosParaEnvio.data_audiencia = this._datePipe.transform(dadosParaEnvio.data_audiencia, "dd/MM/yyyy") || "";
+      dadosParaEnvio.data_entrada_processo = this._datePipe.transform(dadosParaEnvio.data_entrada_processo, "dd/MM/yyyy") || "";
 
       this.loadingMin = true;
       this._juridicoService.editarProcesso(dadosParaEnvio).subscribe((res) => {
@@ -210,6 +208,6 @@ export class JuridicoComponent implements OnInit, OnChanges {
   }
 
   formatoBr(data: string | Date | null): string {
-    return this._datePipe.transform(data, 'dd/MM/yyyy') || '';
+    return this._datePipe.transform(data, 'dd/MM/yyyy HH:mm:ss') || '';
   }
 }
