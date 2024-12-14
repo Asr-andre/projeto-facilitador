@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Utils } from 'src/app/core/helpers/utils';
 import { ProcessoModel } from 'src/app/core/models/juridico.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
@@ -23,11 +24,11 @@ export class JuridicoComponent implements OnInit, OnChanges {
   public movimentacao: string  [] = [];
 
   constructor(
-    private _juridicoService: JuridicoService,
+    private _juridico: JuridicoService,
     private _auth: AuthenticationService,
-    private _alertService: AlertService,
+    private _alert: AlertService,
     private _formBuilder: FormBuilder,
-    private _modalService: NgbModal,
+    private _modal: NgbModal,
     private _datePipe: DatePipe,
   ) { }
 
@@ -77,18 +78,18 @@ export class JuridicoComponent implements OnInit, OnChanges {
     };
 
     this.loadingMin = true;
-    this._juridicoService.obterProcessos(request).subscribe((res) => {
+    this._juridico.obterProcessos(request).subscribe((res) => {
       if (res.success === 'true') {
         this.processos = res.processos;
         this.loadingMin = false;
       } else {
         this.loadingMin = false;
-        this._alertService.warning(res.msg);
+        this._alert.warning(res.msg);
       }
     },
       (error) => {
         this.loadingMin = false;
-        this._alertService.error('Erro ao obter os boletos.',error);
+        this._alert.error('Erro ao obter os boletos.',error);
       }
     );
   }
@@ -99,11 +100,11 @@ export class JuridicoComponent implements OnInit, OnChanges {
       user_login: this.login
     };
 
-    this._juridicoService.obterMovimento(request).subscribe((res) => {
+    this._juridico.obterMovimento(request).subscribe((res) => {
       if (res.success === 'true') {
         this.movimentacao = res.dados;
       } else {
-        this._alertService.warning(res.msg);
+        this._alert.warning(res.msg);
       }
     });
   }
@@ -112,14 +113,14 @@ export class JuridicoComponent implements OnInit, OnChanges {
     this.editar = false;
     this.obterMovimentacao();
     this.inicializarFormProcesso();
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public abriModalEditar(content: TemplateRef<any>, dados: ProcessoModel): void {
     this.editar = true;
     this.obterMovimentacao();
     this.inicializarFormProcesso(dados);
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastrarProcesso(): void {
@@ -130,24 +131,24 @@ export class JuridicoComponent implements OnInit, OnChanges {
       dadosParaEnvio.data_entrada_processo = this._datePipe.transform(dadosParaEnvio.data_entrada_processo, "dd/MM/yyyy") || "";
 
       this.loadingMin = true;
-      this._juridicoService.cadastrarProcesso(dadosParaEnvio).subscribe((res) => {
+      this._juridico.cadastrarProcesso(dadosParaEnvio).subscribe((res) => {
         if (res.success === 'true') {
           this.obterProcessos();
           this.fechar();
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.loadingMin = false;
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error('Ocorreu um erro ao tentar editar o processo.');
+          this._alert.error('Ocorreu um erro ao tentar editar o processo.');
         }
       );
     } else {
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
@@ -158,30 +159,30 @@ export class JuridicoComponent implements OnInit, OnChanges {
       dadosParaEnvio.data_entrada_processo = this._datePipe.transform(dadosParaEnvio.data_entrada_processo, "dd/MM/yyyy") || "";
 
       this.loadingMin = true;
-      this._juridicoService.editarProcesso(dadosParaEnvio).subscribe((res) => {
+      this._juridico.editarProcesso(dadosParaEnvio).subscribe((res) => {
         if (res.success === 'true') {
           this.obterProcessos();
           this.fechar();
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.loadingMin = false;
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error('Ocorreu um erro ao tentar editar o processo.');
+          this._alert.error('Ocorreu um erro ao tentar editar o processo.');
         }
       );
     } else {
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
   public fechar() {
     this.formProcesso.reset();
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 
   formatToBR(date: string | null): string {
@@ -207,7 +208,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
     return numero;
   }
 
-  formatoBr(data: string | Date | null): string {
-    return this._datePipe.transform(data, 'dd/MM/yyyy HH:mm:ss') || '';
-  }
+  public data(data) {
+      return Utils.formatarDataParaExibicao(data);
+    }
 }
