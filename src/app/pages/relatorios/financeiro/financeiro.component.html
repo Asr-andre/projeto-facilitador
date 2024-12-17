@@ -71,10 +71,28 @@
                     <ng-template ngbNavContent>
                       <section style="white-space: nowrap; overflow: auto;">
                         <div style="font-size: 10px;">
-                          <div class="dataTables_filter text-md-end">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <!-- Botão de Exportação (lado esquerdo) -->
+                            <button
+                              class="btn btn-success m-1"
+                              (click)="exportExcel()"
+                              ngbTooltip="Exportar Dados para Excel"
+                              placement="right"
+                              style="padding-bottom: 2px; padding-top: 2px;">
+                              <i class="fas fa-download"></i>
+                            </button>
+
+                            <!-- Campo de Pesquisa (lado direito) -->
+                            <div class="dataTables_filter">
                               <label class="d-inline-flex align-items-center" style="margin-bottom: 0px;">
-                                  <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
+                                <input
+                                  type="text"
+                                  class="form-control form-control-sm ms-2"
+                                  placeholder="Pesquisar"
+                                  [(ngModel)]="textoPesquisa"
+                                  (input)="filtrar()" />
                               </label>
+                            </div>
                           </div>
                       </div>
                         <div class="card-body" style="padding-top: 0; padding-bottom: 0px; padding-right: 0; padding-left: 0;">

@@ -8,6 +8,7 @@ import { TituloLiquidado } from 'src/app/core/models/financeiro.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
+import { ExcelService } from 'src/app/core/services/excel.service';
 import { FinanceiroService } from 'src/app/core/services/financeiro.service';
 
 @Component({
@@ -44,7 +45,8 @@ export class FinanceiroComponent {
     private _auth: AuthenticationService,
     private _formBuilder: FormBuilder,
     private _datePipe: DatePipe,
-    private _alertService: AlertService
+    private _alertService: AlertService,
+    private _excelService: ExcelService
 
   ) { }
 
@@ -61,6 +63,10 @@ export class FinanceiroComponent {
       data_fim: ["", Validators.required],
       user_login: [this.login, Validators.required],
     });
+  }
+
+  public exportExcel() {
+    this._excelService.exportAsExcelFile(this.dadosFiltrados, 'exportacaoPagamentos');
   }
 
   public obterFiltros() {
