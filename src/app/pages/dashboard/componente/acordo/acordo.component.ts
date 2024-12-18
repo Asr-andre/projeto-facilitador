@@ -107,10 +107,12 @@ export class AcordoComponent implements OnInit, OnChanges {
       user_login: this.login
     };
 
-    if (acordo.percentualPago > 0 || acordo.status !== 'A') {
+    /*
+    if (acordo.percentualPago == 0 && acordo.status !== 'C') {
       this._alertService.warning('Acordo não pode ser quebrado');
       return;
     }
+    */
 
     const confirmarRetirada = await this._alertService.quebra();
     if (!confirmarRetirada) {
