@@ -17,6 +17,7 @@ import { AuthenticationService } from "src/app/core/services/auth.service";
 import { ContratanteService } from "src/app/core/services/cadastro/contratante.service";
 import { SmsWhatsAppService } from "src/app/core/services/cadastro/sms.whatsapp.service";
 import { CarteiraDeClienteService } from "src/app/core/services/carteira.de.cliente.service";
+import { ExcelService } from "src/app/core/services/excel.service";
 import { FilaService } from "src/app/core/services/fila.service";
 import { WhatsappService } from "src/app/core/services/whatsapp.service";
 
@@ -66,6 +67,7 @@ export class CarteiraDeClientesComponent implements OnInit {
     private _datePipe: DatePipe,
     private _modalService: NgbModal,
     private _filaService: FilaService,
+    private _excelService: ExcelService
   ) { }
 
   ngOnInit(): void {
@@ -117,6 +119,10 @@ export class CarteiraDeClientesComponent implements OnInit {
       enviar_sms: [false],
       enviar_whatsapp: [true]
     });
+  }
+
+  public exportExcel() {
+    this._excelService.exportAsExcelFile(this.dadosFiltrados, 'exportacaoCarteira');
   }
 
   public obterContratantes() {
