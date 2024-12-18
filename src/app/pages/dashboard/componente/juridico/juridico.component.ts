@@ -154,8 +154,9 @@ export class JuridicoComponent implements OnInit, OnChanges {
 
   public editarProcesso(): void {
     if (this.formProcesso.valid) {
+
       const dadosParaEnvio = { ...this.formProcesso.value };
-      dadosParaEnvio.data_audiencia = this._datePipe.transform(dadosParaEnvio.data_audiencia, "dd/MM/yyyy") || "";
+      dadosParaEnvio.data_audiencia = this._datePipe.transform(dadosParaEnvio.data_audiencia, "dd/MM/yyyy HH:mm:ss") || "";
       dadosParaEnvio.data_entrada_processo = this._datePipe.transform(dadosParaEnvio.data_entrada_processo, "dd/MM/yyyy") || "";
 
       this.loadingMin = true;
