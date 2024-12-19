@@ -21,7 +21,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   @ViewChild("pixTitulosModal") pixTitulos: SimuladorPadraoComponent;
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
-  @Input() numeroContrato: number | undefined;
+  @Input() numeroContrato: string | undefined;
   @Input() numeroDocumento: string | undefined;
   private modalRef: NgbModalRef;
   public descontoMaximo: any;
@@ -241,12 +241,14 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       id_empresa: this.idEmpresa,
       id_contratante: this.idContratante,
       id_cliente: this.idCliente,
-      id_acordo: this.numeroDocumento,
+      id_acordo: this.numeroContrato,
       data_negociacao: this.datePipe.transform(this.form.get("data_atualizacao").value, "dd/MM/yyyy")!,
       tipo_baixa: "P",
       user_login: this.login,
       titulos: titulos,
     };
+
+    console.log(`este e o numero de contrato recebido${ this.numeroContrato }`)
 
     this._alertService.baixarPg().then(confirmarPg => {
       if (!confirmarPg) {

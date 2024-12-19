@@ -82,7 +82,7 @@
           <app-simulador-padrao
               [idCliente]="idCliente"
               [idContratante]="idContratante"
-              [numeroContrato]="numeroContrato"
-              [numeroDocumento]="numeroDocumento">
+              [numeroContrato]="obterPrimeiroContratoSelecionado()"
+              [numeroDocumento]="numeroDocumento"
               (clienteAtualizado)="atualizarDetalhamento()">
           </app-simulador-padrao>

@@ -18,7 +18,7 @@ export class DetalheDaDividaComponent implements OnChanges {
   @ViewChild(SimuladorPadraoComponent) SimuladorPadraoComponent: SimuladorPadraoComponent;
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
-  @Input() numeroContrato: number | undefined;
+  @Input() numeroContrato: string | undefined;
   @Input() numeroDocumento: string | undefined;
   public detalhamentoSelecionado: DetalhamentoModel | null = null;
   public loadingMin: boolean = false;
@@ -51,6 +51,12 @@ export class DetalheDaDividaComponent implements OnChanges {
     }
   }
 
+  public obterPrimeiroContratoSelecionado(): string | undefined {
+    const parcelaSelecionada = this.detalhamentoSelecionado?.parcelas.find(parcela => parcela.selecionado);
+    return parcelaSelecionada?.numero_contrato;
+  }
+
+
   public atualizarDetalhamento(): void {
     this.obterDetalhamentoPorId(this.idCliente, this.idContratante);
     this.clienteAtualizado.emit();
@@ -66,6 +72,7 @@ export class DetalheDaDividaComponent implements OnChanges {
       (detalhamento) => {
         if (detalhamento && detalhamento.success) {
           this.detalhamentoSelecionado = detalhamento;
+          this.numeroContrato = detalhamento.parcelas?.[0]?.numero_contrato;
           if (this.detalhamentoSelecionado.parcelas) {
             this.detalhamentoSelecionado.parcelas.forEach(parcela => {
               parcela.selecionado = true;
