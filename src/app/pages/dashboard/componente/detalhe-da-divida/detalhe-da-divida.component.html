@@ -32,6 +32,17 @@
   </div>
 </div>
 
+<div class="row pt-1 brder">
+  <div class="col-md-4">
+    <label for="filtro">Filtrar por:</label>
+    <select id="filtro" [(ngModel)]="filtroSelecionado" (change)="filtrarTitulos()">
+      <option value="todos">Todos</option>
+      <option value="acordo">Acordo</option>
+      <option value="semAcordo">Sem Acordo</option>
+    </select>
+  </div>
+</div>
+
 <div class="table-responsive font-size-12" style="margin-top: 10px; max-height: 300px; overflow-y: auto;">
     <table class="table table-sm table-hover">
       <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
@@ -51,7 +62,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let prestacao of detalhamentoSelecionado?.parcelas">
+        <tr *ngFor="let prestacao of titulosFiltrados">
           <td>
             <input type="checkbox" [(ngModel)]="prestacao.selecionado" (change)="verificarSelecao()">
           </td>
