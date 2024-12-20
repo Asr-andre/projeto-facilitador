@@ -43,7 +43,6 @@ export class DetalheDaDividaComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.idCliente || changes.idContratante) {
       this.obterDetalhamentoPorId(this.idCliente, this.idContratante);
-
     }
   }
 
@@ -229,8 +228,6 @@ export class DetalheDaDividaComponent implements OnChanges {
   }
 
   public filtrarTitulos() {
-
-    console.log(this.titulosFiltrados)
     if (this.filtroSelecionado === 'todos') {
       this.titulosFiltrados = this.detalhamentoSelecionado.parcelas;
     } else if (this.filtroSelecionado === 'acordo') {
