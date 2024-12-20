@@ -26,6 +26,9 @@ export class DetalheDaDividaComponent implements OnChanges {
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public login = this._authService.getLogin();
 
+  public filtroSelecionado: string = 'todos';
+  public titulosFiltrados: any[] = [];
+
   @Output() clienteAtualizado = new EventEmitter<void>();
 
   constructor(
@@ -72,6 +75,7 @@ export class DetalheDaDividaComponent implements OnChanges {
       (detalhamento) => {
         if (detalhamento && detalhamento.success) {
           this.detalhamentoSelecionado = detalhamento;
+          this.titulosFiltrados = this.detalhamentoSelecionado?.parcelas || [];
           this.numeroContrato = detalhamento.parcelas?.[0]?.numero_contrato;
           if (this.detalhamentoSelecionado.parcelas) {
             this.detalhamentoSelecionado.parcelas.forEach(parcela => {
@@ -221,5 +225,15 @@ export class DetalheDaDividaComponent implements OnChanges {
         }
       );
     });
+  }
+
+  public filtrarTitulos() {
+    if (this.filtroSelecionado === 'todos') {
+      this.titulosFiltrados = this.detalhamentoSelecionado.parcelas;
+    } else if (this.filtroSelecionado === 'acordo') {
+      this.titulosFiltrados = this.detalhamentoSelecionado.parcelas.filter(parcela => parcela.numero_contrato.startsWith('ACD'));
+    } else if (this.filtroSelecionado === 'semAcordo') {
+      this.titulosFiltrados = this.detalhamentoSelecionado.parcelas.filter(parcela => !parcela.numero_contrato.startsWith('ACD'));
+    }
   }
 }
