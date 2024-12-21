@@ -94,8 +94,8 @@ export class DetalheDaDividaComponent implements OnChanges {
   }
 
   public calcularTotal(coluna: string): number {
-    if (this.detalhamentoSelecionado?.parcelas) {
-      return this.detalhamentoSelecionado.parcelas.reduce((total, prestacao) => {
+    if (this.titulosFiltrados) {
+      return this.titulosFiltrados.reduce((total, prestacao) => {
         if (coluna === 'valorTotalAtualizado') {
           return total + this.calcularTotalAtualizado(prestacao);
         }
@@ -127,8 +127,8 @@ export class DetalheDaDividaComponent implements OnChanges {
 
   public marcaTodos(event: any) {
     this.selecionarTodos = event.target.checked;
-    if (this.detalhamentoSelecionado && this.detalhamentoSelecionado.parcelas) {
-      this.detalhamentoSelecionado.parcelas.forEach(parcela => {
+    if (this.titulosFiltrados && this.titulosFiltrados) {
+      this.titulosFiltrados.forEach(parcela => {
         parcela.selecionado = this.selecionarTodos;
       });
     }

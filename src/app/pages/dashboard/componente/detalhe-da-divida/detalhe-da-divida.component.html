@@ -18,32 +18,37 @@
   <div class="col-md-4"><b>Uf: </b> {{ detalhamentoSelecionado?.uf }}</div>
 </div>
 
-<div class="d-flex justify-content-end">
-  <div  style="font-size: 11px;">
-    <div class="btn-group" role="group" ngbDropdown>
-      <button id="btnGroupVerticalDrop1" type="button" class="btn btn-success btn-sm dropdown-toggle" ngbDropdownToggle style="margin-top: 6px;">
-        <i class="fas fa-calculator"></i> Ações <i class="mdi mdi-chevron-down"></i>
-      </button>
-      <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" ngbDropdownMenu>
-        <a class="dropdown-item" href="javascript: void(0);" (click)="simularNegociacao()"><i class="fas fa-calculator"></i> Simulador</a>
-        <a class="dropdown-item" href="javascript: void(0);" (click)="retiradas()"><i class="fas fa-exclamation-triangle" style="color: #ec0b0b;"></i> Retirada</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row pt-1 brder">
-  <div class="col-md-4">
-    <label for="filtro" style="margin-right: 2px;">Filtrar por: </label>
-    <select id="filtro" [(ngModel)]="filtroSelecionado" (change)="filtrarTitulos()">
+<div class="d-flex justify-content-between align-items-center" style="margin-top: 10px;">
+  <!-- Filtro à esquerda -->
+  <div class="d-flex align-items-center">
+    <label for="filtro" class="me-2" style="
+    margin-top: 8px;">Filtrar:</label>
+    <select id="filtro" class="form-select form-select-sm" [(ngModel)]="filtroSelecionado" (change)="filtrarTitulos()">
       <option value="todos">Todos</option>
       <option value="acordo">Acordo</option>
       <option value="semAcordo">Sem Acordo</option>
     </select>
   </div>
+
+  <!-- Botão de ações à direita -->
+  <div class="d-flex align-items-center">
+    <div class="btn-group" role="group" ngbDropdown>
+      <button id="btnGroupVerticalDrop1" type="button" class="btn btn-success btn-sm dropdown-toggle" ngbDropdownToggle>
+        <i class="fas fa-calculator"></i> Ações <i class="mdi mdi-chevron-down"></i>
+      </button>
+      <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" ngbDropdownMenu>
+        <a class="dropdown-item" href="javascript: void(0);" (click)="simularNegociacao()">
+          <i class="fas fa-calculator"></i> Simulador
+        </a>
+        <a class="dropdown-item" href="javascript: void(0);" (click)="retiradas()">
+          <i class="fas fa-exclamation-triangle" style="color: #ec0b0b;"></i> Retirada
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="table-responsive font-size-12" style="margin-top: 10px; max-height: 300px; overflow-y: auto;">
+<div class="table-responsive font-size-12" style="margin-top: 5px; max-height: 300px; overflow-y: auto;">
     <table class="table table-sm table-hover">
       <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
         <tr>
