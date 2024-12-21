@@ -22,6 +22,12 @@
   padding-left: 10px;
 }
 
+.form-select:focus {
+  box-shadow: none !important;
+  border-left: 3px solid #466eb0;
+  padding-left: 10px;
+}
+
 .main-content {
   position: relative;
   z-index: 1;
