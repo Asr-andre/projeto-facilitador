@@ -17,6 +17,8 @@ export class EmailComponent implements OnInit, OnChanges{
   @Output() dadosEnviado: EventEmitter<void> = new EventEmitter<void>();
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public login = this._auth.getLogin();
   public loadingMin: boolean = false;
   public emails: EmailRetornoModel;
   public formEmail: FormGroup;
@@ -24,7 +26,7 @@ export class EmailComponent implements OnInit, OnChanges{
   constructor(
     private _emailService: EmailService,
     private _formBuilder: FormBuilder,
-    private _authenticationService: AuthenticationService,
+    private _auth: AuthenticationService,
     private _alertService: AlertService,
     private _modalService: NgbModal
   ) { }
@@ -51,11 +53,12 @@ export class EmailComponent implements OnInit, OnChanges{
   public inicializarEmailForm() {
     this.formEmail = this._formBuilder.group({
       id_cliente: [this.idCliente],
+      id_empresa: [this.idEmpresa],
       email: ['', [Validators.required, Validators.email]],
       situacao: ['A'],
       origem: ['Cadastro'],
       ativo: ['S'],
-      user_login: [this._authenticationService.getLogin()]
+      user_login: [this.login]
     });
   }
 

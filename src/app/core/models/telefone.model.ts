@@ -1,4 +1,5 @@
 export class TelefoneModel {
+  id_empresa: number;
   fone: string;
   tipo: number;
   status_fone: string;

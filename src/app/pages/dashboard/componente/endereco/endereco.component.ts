@@ -19,6 +19,7 @@ export class EnderecoComponent implements OnInit, OnChanges {
   public enderecos: EnderecoModel[] = [];
   public formEndereco: FormGroup;
   public login = this._auth.getLogin();
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
   public editar: boolean = false;
   public estados = EstadosDoBrasil;
 
@@ -44,6 +45,7 @@ export class EnderecoComponent implements OnInit, OnChanges {
   public inicializarFormEndereco(dado?: EnderecoModel) {
     this.formEndereco = this._formBuilder.group({
       id_cliente: [this.idCliente],
+      id_empresa: [this.idEmpresa],
       id_ender: [dado?.id_ender],
       endereco: [dado?.endereco || ""],
       numero: [dado?.numero || ""],

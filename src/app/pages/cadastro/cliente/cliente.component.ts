@@ -1,7 +1,6 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { OrdenarPeloHeaderTabela } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
-import { Utils } from 'src/app/core/helpers/utils';
 import { Cliente} from 'src/app/core/models/cadastro/cliente.model';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -9,7 +8,6 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
 import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
 import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
-import { DashboardService } from 'src/app/core/services/dashboard.service';
 
 @Component({
   selector: 'app-cliente',
@@ -25,7 +23,8 @@ export class ClienteComponent {
   public idUsuario: number = Number(this._auth.getCurrentUser() || 0);
   public login = this._auth.getLogin();
   public mostrarTabela: Boolean = false;
-  public mostrarForm: Boolean = false;
+  public mostrarCardCliente: Boolean = false;
+  public mostrarCardTitulo: Boolean = false;
   public idCliente: Number;
   public formCliente: FormGroup;
   public title: string = '';
@@ -53,7 +52,6 @@ export class ClienteComponent {
 
   constructor(
     private _cliente: ClienteService,
-    private _dashboard: DashboardService,
     private _contratanteService: ContratanteService,
     private _auth: AuthenticationService,
     private _formBuilder: FormBuilder,
@@ -85,15 +83,12 @@ export class ClienteComponent {
   }
 
 
-
-
-
   public selecionarDevedor(devedor: Cliente): void {
-    this.mostrarForm = true;
+    this.mostrarCardCliente = true;
+    this.mostrarCardTitulo = true;
     this.title = "Atualizar Dados do Cliente"
     this.devedorSelecionado = devedor;
     this.inicializarFormCliente(devedor)
-    console.log(devedor)
   }
 
   public atualizarQuantidadeExibida() {
@@ -114,9 +109,9 @@ export class ClienteComponent {
   }
 
   public abilitarCadastro() {
-    this.mostrarForm = true;
+    this.mostrarCardCliente = true;
+    this.mostrarCardTitulo = true;
     this.title = "Cadastrar Dados do Cliente"
-    console.log(this.mostrarForm);
   }
 
   public cadastrarCliente() {
@@ -161,7 +156,8 @@ export class ClienteComponent {
   }
 
   public cancela() {
-    this.mostrarForm = false;
+    this.mostrarCardCliente = false;
+    this.mostrarCardTitulo = false;
     this.mostrarTabela =false;
     this.inicializarFormCliente();
   }

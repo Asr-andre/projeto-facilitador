@@ -55,7 +55,7 @@
             </div>
           </div>
 
-          <div class="container-fluid" *ngIf="mostrarForm">
+          <div class="container-fluid" *ngIf="mostrarCardCliente">
             <div class="row">
               <div class="col-md-12">
 
@@ -149,50 +149,51 @@
                 </div>
               </div>
             </div>
-
-            <h5 class="mb-3">Editar Título</h5>
-            <hr>
-
-            <!-- Seção de Títulos -->
-            <div class="row">
-              <!-- Coluna para listar os títulos -->
-              <div class="col-md-4">
-                <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
-                  <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
-                    <tr>
-                      <th>Número do Contrato</th>
-                      <th>Valor</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let titulo of devedorSelecionado?.titulos">
-                      <td>{{ titulo.numero_contrato }}</td>
-                      <td>{{ titulo.valor | currency:'BRL':'symbol':'1.2-2' }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Coluna para editar um título -->
-              <div class="col-md-8">
-                <form>
-                  <div class="col-md-2">
-                    <label for="numero_contrato">Número do Contrato</label>
-                    <input type="text" id="numero_contrato" class="form-control form-control-sm" />
-                  </div>
-                  <div class="col-md-2">
-                    <label for="valor">Valor</label>
-                    <input type="text" id="valor" class="form-control form-control-sm" />
-                  </div>
-
-                </form>
-              </div>
-            </div>
-
           </div>
-
         </div>
       </div>
+
+      <div class="row"  *ngIf="mostrarCardTitulo">
+        <div class="col-lg-5">
+          <div class="card h-100">
+            <div class="card-body" style="white-space: nowrap; overflow-x: auto; padding: 12px;">
+              <div class="row mb-12">
+                <div class="col-md-3 mb-2">
+                </div>
+              </div>
+              <div class="table-responsive">
+              <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+                <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
+                  <tr>
+                    <th scope="col">Número do Contrato</th>
+                    <th scope="col">Valor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let titulo of devedorSelecionado?.titulos">
+                    <td>{{ titulo.numero_contrato }}</td>
+                    <td>{{ titulo.valor | currency }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="card h-100">
+            <div class="card-body font-size-13"
+              style=" padding-top: 5px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px;">
+
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </div>
 </div>

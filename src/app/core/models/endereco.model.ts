@@ -4,6 +4,7 @@ export class EnderecoRequestModel {
 
 export class EnderecoModel {
   id_cliente: number;
+  id_empresa: number;
   id_ender: number;
   endereco: string;
   numero: string;
