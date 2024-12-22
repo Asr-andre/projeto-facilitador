@@ -1,4 +1,5 @@
 export class CadastrarEmailModel {
+  id_empresa: number;
   id_cliente: number;
   email: string;
   situacao: string;

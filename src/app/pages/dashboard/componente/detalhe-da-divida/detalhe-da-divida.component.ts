@@ -104,6 +104,9 @@ export class DetalheDaDividaComponent implements OnChanges {
     }
     return 0;
   }
+  public calcularQuantidadeTitulos(): number {
+    return this.titulosFiltrados ? this.titulosFiltrados.length : 0;
+  }
 
   public calcularTotalAtualizado(prestacao: any): number {
     return (prestacao.valor || 0) +

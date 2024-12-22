@@ -13,6 +13,7 @@ import { SininhoService } from 'src/app/core/services/sininho.service';
 import { AlertaModel } from 'src/app/core/models/sininho.model';
 import { Utils } from 'src/app/core/helpers/utils';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
+import { LogoutService } from 'src/app/core/services/logout.service';
 
 @Component({
   selector: 'app-topbar',
@@ -23,7 +24,8 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   private pollingInterval = 60000; // 30 segundos
   private pollingSubscription: Subscription;
-  public idEmpresa: number = Number(this.authService.getIdEmpresa() || 0);
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public login = this._auth.getLogin();
   public resMsg: AlertaModel[] = [];
   private canal = 'canal';
 
@@ -45,19 +47,20 @@ export class TopbarComponent implements OnInit, OnDestroy {
   constructor(@Inject(DOCUMENT)
   private document: any,
     private router: Router,
-    private authService: AuthenticationService,
+    private _auth: AuthenticationService,
     private authFackservice: AuthfakeauthenticationService,
     public languageService: LanguageService,
     public cookiesService: CookieService,
     private chatVisibilidadeService: ChatVisibilidadeService,
     private _sininhoService: SininhoService,
+    private _logoutService: LogoutService
   ) { }
 
   @Output() mobileMenuButtonClicked = new EventEmitter();
   @Output() settingsButtonClicked = new EventEmitter();
 
   ngOnInit(): void {
-    this.currentUser = this.authService.getLogin();
+    this.currentUser = this._auth.getLogin();
     this.element = document.documentElement;
     setTimeout(() => {
       this.monitorarMsg();
@@ -154,15 +157,39 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.languageService.setLanguage(lang);
   }
 
+  private formatarDataLogout(data: Date): string {
+    const pad = (n: number) => (n < 10 ? '0' + n : n);
+    const dia = pad(data.getDate());
+    const mes = pad(data.getMonth() + 1);
+    const ano = data.getFullYear();
+    const horas = pad(data.getHours());
+    const minutos = pad(data.getMinutes());
+    const segundos = pad(data.getSeconds());
+    return `${dia}/${mes}/${ano} ${horas}:${minutos}:${segundos}`;
+  }
 
   /**
    * Logout the user
    */
   logout() {
-    localStorage.clear();
+
+
+    const dados = {
+      id_empresa: this.idEmpresa,
+      user_login: this.login,
+      data_logout: this.formatarDataLogout(new Date())
+    };
+
+    this._logoutService.logout(dados).subscribe((res) => {
+      if(res.success === 'true') {
+        localStorage.clear();
+        this._auth.logout();
+        this.router.navigate(['/account/login']);
+      }
+    });
 
     if (environment.defaultauth === 'firebase') {
-      this.authService.logout();
+      this._auth.logout();
     } else {
       this.authFackservice.logout();
     }

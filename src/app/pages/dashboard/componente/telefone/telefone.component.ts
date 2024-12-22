@@ -25,9 +25,12 @@ export class TelefoneComponent implements OnInit, OnChanges {
   public telefoneForm: FormGroup;
   public editar: boolean = false;
 
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public login = this._auth.getLogin();
+
   constructor(private _telefoneService: TelefoneService,
     private _formBuilder: FormBuilder,
-    private _authenticationService: AuthenticationService,
+    private _auth: AuthenticationService,
     private _alertService: AlertService,
     private modalService: NgbModal
   ) { }
@@ -54,13 +57,14 @@ export class TelefoneComponent implements OnInit, OnChanges {
   public inicializarTelefoneForm(dado?: TelefoneModel) {
     this.telefoneForm = this._formBuilder.group({
       id_cliente: this.idCliente,
+      id_empresa: [this.idEmpresa],
       fone: [dado?.fone ||'', Validators.required],
       tipo: [dado?.tipo || '', Validators.required],
       prioritario: [dado?.prioritario || '', Validators.required],
       status_fone: [dado?.status_fone || '', Validators.required],
       whatsapp: [dado?.whatsapp || '', Validators.required],
       obs_fone: [dado?.obs_fone || 'Cadastro'],
-      user_login: [this._authenticationService.getLogin()]
+      user_login: [this.login]
     });
   }
 
