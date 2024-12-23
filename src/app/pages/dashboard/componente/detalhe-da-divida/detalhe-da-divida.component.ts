@@ -9,6 +9,8 @@ import { SimuladorPadraoComponent } from './simulador-padrao/simulador-padrao.co
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { DatePipe } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TipoTituloModel } from 'src/app/core/models/tipo.titulo.model';
+import { TipoTituloService } from 'src/app/core/services/tipo.titulo.service';
 
 @Component({
   selector: 'app-detalhe-da-divida',
@@ -27,6 +29,7 @@ export class DetalheDaDividaComponent implements OnChanges {
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public login = this._authService.getLogin();
   public editar: boolean = false;
+  public tipoTitulo: TipoTituloModel;
 
   public filtroSelecionado: string = 'todos';
   public titulosFiltrados: any[] = [];
@@ -40,7 +43,8 @@ export class DetalheDaDividaComponent implements OnChanges {
     private _authService: AuthenticationService,
     private _simuladorService: SimuladorPadraoService,
     private _datePipe: DatePipe,
-    private _modalService: NgbModal
+    private _modalService: NgbModal,
+    private _tipoTituloService: TipoTituloService
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -59,7 +63,7 @@ export class DetalheDaDividaComponent implements OnChanges {
 
   public abriModalTitulo(content: TemplateRef<any>): void {
     this.editar = false;
-
+    this.obterTipoTitulo();
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
@@ -100,6 +104,14 @@ export class DetalheDaDividaComponent implements OnChanges {
         this._alertService.timer(false);
       }
     );
+  }
+
+  public obterTipoTitulo() {
+    this._tipoTituloService.obterTipoTitulo().subscribe((res) => {
+      if (res) {
+        this.tipoTitulo = res;
+      }
+    });
   }
 
   public calcularTotal(coluna: string): number {

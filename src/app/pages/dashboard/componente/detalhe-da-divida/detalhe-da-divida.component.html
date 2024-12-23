@@ -115,7 +115,9 @@
       <div class="row">
         <div class="col-md-4 form-group">
           <label for="tipoTitulo" class="form-label">Tipo de Título</label>
-          <input type="text" class="form-control form-control-pad form-control-sm" id="tipoTitulo"  name="tipoTitulo">
+          <select type="text" class="form-control form-control-pad form-control-sm" id="tipoTitulo"  name="tipoTitulo">
+              <option *ngFor="let tipo of tipoTitulo" [value]="tipo.id_tipo_titulo">{{ tipo.tipo_titulo }}</option>
+          </select>
         </div>
         <div class="col-md-2 form-group">
           <label for="parcela" class="form-label">Parcela</label>
