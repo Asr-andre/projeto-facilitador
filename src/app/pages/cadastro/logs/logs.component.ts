@@ -112,4 +112,8 @@ ngOnInit(): void {
   public ativarAba() {
     this.ativaAba = 1;
   }
+
+  public data(data) {
+    return Utils.formatarDataParaExibicao(data);
+  }
 }
