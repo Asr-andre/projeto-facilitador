@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { DetalhamentoModel } from 'src/app/core/models/detalhamento.model';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -8,6 +8,7 @@ import { SimuladorPadraoService } from 'src/app/core/services/simulador.padrao.s
 import { SimuladorPadraoComponent } from './simulador-padrao/simulador-padrao.component';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { DatePipe } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-detalhe-da-divida',
@@ -25,6 +26,7 @@ export class DetalheDaDividaComponent implements OnChanges {
   public selecionarTodos: boolean = true;
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public login = this._authService.getLogin();
+  public editar: boolean = false;
 
   public filtroSelecionado: string = 'todos';
   public titulosFiltrados: any[] = [];
@@ -38,6 +40,7 @@ export class DetalheDaDividaComponent implements OnChanges {
     private _authService: AuthenticationService,
     private _simuladorService: SimuladorPadraoService,
     private _datePipe: DatePipe,
+    private _modalService: NgbModal
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -52,6 +55,12 @@ export class DetalheDaDividaComponent implements OnChanges {
       this.SimuladorPadraoComponent.idContratante = this.idContratante;
       this.SimuladorPadraoComponent.numeroContrato = this.numeroContrato;
     }
+  }
+
+  public abriModalTitulo(content: TemplateRef<any>): void {
+    this.editar = false;
+
+    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public obterPrimeiroContratoSelecionado(): string | undefined {
@@ -238,5 +247,9 @@ export class DetalheDaDividaComponent implements OnChanges {
     } else if (this.filtroSelecionado === 'semAcordo') {
       this.titulosFiltrados = this.detalhamentoSelecionado.parcelas.filter(parcela => !parcela.numero_contrato.startsWith('ACD'));
     }
+  }
+
+  public fechar() {
+    this._modalService.dismissAll();
   }
 }

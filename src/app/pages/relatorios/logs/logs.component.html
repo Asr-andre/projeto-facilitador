@@ -86,7 +86,7 @@
                             </div>
                           </div>
                       </div>
-                        <div class="card-body" style="padding-top: 0; padding-bottom: 0px; padding-right: 0; padding-left: 0;">
+                        <div class="card-body" style="padding-top: 0; padding-bottom: 0px; padding-right: 0; padding-left: 0;" *ngIf="dadosFiltrados.length > 0; else semLogs">
                           <div class="table-responsive" style="margin-top: 10px; max-height: 550px; overflow-y: auto;">
                             <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
                               <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
@@ -113,6 +113,9 @@
                           </div>
                         </div>
                       </section>
+                      <ng-template #semLogs>
+                        <p class="text-center">Não há logs no sistema.</p>
+                      </ng-template>
                     </ng-template>
                   </li>
                 </ul>

@@ -32,7 +32,7 @@ export class TelefoneComponent implements OnInit, OnChanges {
     private _formBuilder: FormBuilder,
     private _auth: AuthenticationService,
     private _alertService: AlertService,
-    private modalService: NgbModal
+    private _modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -121,13 +121,13 @@ export class TelefoneComponent implements OnInit, OnChanges {
   public abriModalTelefone(content: TemplateRef<any>): void {
     this.editar = false;
     this.inicializarTelefoneForm();
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public abriModalEditar(content: TemplateRef<any>, dados: TelefoneModel): void {
     this.editar = true;
     this.inicializarTelefoneForm(dados);
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastrarTelefone(): void {
@@ -188,6 +188,6 @@ export class TelefoneComponent implements OnInit, OnChanges {
 
   public fechar() {
     this.telefoneForm.reset();
-    this.modalService.dismissAll();
+    this._modalService.dismissAll();
   }
 }
