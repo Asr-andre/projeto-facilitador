@@ -150,37 +150,9 @@
         </div>
       </div>
     </form>
-    <button type="button" class="btn btn-primary btn-sm" (click)="gerarParc()" style="margin-top: 5px;">Gerar Parcela</button>
-    <div class="table-responsive font-size-12" style="margin-top: 5px; max-height: 300px; overflow-y: auto;">
-      <table class="table table-sm table-hover">
-        <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
-          <tr>
-            <th>Parcela</th>
-            <th>Plano</th>
-            <th>Contrato</th>
-            <th>Documento</th>
-            <th>Vencimento</th>
-            <th>Tipo produto</th>
-            <th>Valor</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let parcela of parcelasGeradas">
-            <td>{{ parcela.parcela }}</td>
-            <td>{{ parcela.plano }}</td>
-            <td>{{ parcela.numero_contrato }}</td>
-            <td>{{ parcela.numero_documento }}</td>
-            <td>{{ parcela.vencimento | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ parcela.tipo_produto }}</td>
-            <td>{{ parcela.valor | currency: 'BRL' }}</td>
-          </tr>
-        </tbody>
-
-      </table>
-    </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-sm">Salvar</button>
-    <button type="button" class="btn btn-danger btn-sm" >Cancelar</button>
+    <button type="button" class="btn btn-success btn-sm" (click)="cadastrarTitulo()"><i class="fas fa-save"></i> Salvar</button>
+    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()"><i class="fas fa-times"></i> Cancelar</button>
   </div>
 </ng-template>

@@ -1,3 +1,4 @@
+import { Validators } from '@angular/forms';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { DetalhamentoModel } from 'src/app/core/models/detalhamento.model';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
@@ -11,7 +12,7 @@ import { DatePipe } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TipoTituloModel } from 'src/app/core/models/tipo.titulo.model';
 import { TipoTituloService } from 'src/app/core/services/tipo.titulo.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ClienteTitulosModel } from 'src/app/core/models/cadastro/cliente.titulos.model';
 
 @Component({
@@ -33,9 +34,6 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   public editar: boolean = false;
   public tipoTitulo: TipoTituloModel;
   public formTitulo: FormGroup;
-
-  public parcelasGeradas: any[] = [];
-
 
   public filtroSelecionado: string = 'todos';
   public titulosFiltrados: any[] = [];
@@ -74,14 +72,14 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
   public inicializarformTitulo(dado?: ClienteTitulosModel) {
     this.formTitulo = this._formBuilder.group({
-      tipo_titulo: [dado?.tipo_titulo],
-      parcela: [dado?.parcela || ""],
-      plano: [dado?.plano || ""],
-      numero_contrato: [dado?.numero_contrato || ""],
-      numero_documento: [dado?.numero_documento || ""],
-      vencimento: [dado?.vencimento || ""],
-      tipo_produto: [dado?.tipo_produto || ""],
-      valor: [dado?.valor || ""],
+      tipo_titulo: [dado?.tipo_titulo || "", Validators.required],
+      parcela: [dado?.parcela || "", Validators.required],
+      plano: [dado?.plano || "", Validators.required],
+      numero_contrato: [dado?.numero_contrato || "", Validators.required],
+      numero_documento: [dado?.numero_documento || "", Validators.required],
+      vencimento: [dado?.vencimento || "", Validators.required],
+      tipo_produto: [dado?.tipo_produto || "", Validators.required],
+      valor: [dado?.valor || "", Validators.required],
       id_contratante: [this.idContratante],
       id_empresa: [this.idEmpresa],
       id_cliente: [this.idCliente],
@@ -293,59 +291,20 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     this._modalService.dismissAll();
   }
 
-  public cadastrarParcelas(parcela: number, plano: number): void {
-    if (plano <= parcela) {
-      this._alertService.error('O plano deve ser maior que a parcela.');
+  public cadastrarTitulo(): void {
+
+    if (!this.idCliente || !this.idEmpresa || !this.idContratante) {
+      this._alertService.warning('Os dados necessários não estão disponíveis.');
       return;
     }
 
-    const quantidadeParcelas = Math.ceil(plano / parcela);
-    const parcelas = [];
+    const dadosTitulo = {
+      ...this.formTitulo.value,
+      id_cliente: this.idCliente,
+      id_contratante: this.idContratante
+    };
 
-    for (let i = 0; i < quantidadeParcelas; i++) {
-      const valorParcela = i === quantidadeParcelas - 1 ? plano - (parcela * i) : parcela;
-      parcelas.push({
-        numero: i + 1,
-        valor: valorParcela,
-        selecionado: false
-      });
-    }
-
-    this.detalhamentoSelecionado.parcelas = parcelas;
-    this.titulosFiltrados = parcelas;
-    this._alertService.success('Parcelas cadastradas com sucesso.');
+    console.log(dadosTitulo);
   }
-
-  public gerarParc(): void {
-    const { parcela, plano, vencimento, valor, tipo_produto, numero_contrato, numero_documento } = this.formTitulo.value;
-
-    if (!parcela || !plano || !vencimento || !valor) {
-      this._alertService.error('Preencha todos os campos necessários para gerar as parcelas.');
-      return;
-    }
-
-    const dataInicial = new Date(vencimento);
-    const parcelas = [];
-
-    for (let i = 0; i < plano; i++) {
-      const novaData = new Date(dataInicial);
-      novaData.setMonth(dataInicial.getMonth() + i); // Incrementa o mês corretamente
-
-      const novaParcela = {
-        parcela: parseInt(parcela, 10) + i,
-        plano,
-        vencimento: novaData, // Data corrigida
-        valor: parseFloat(valor).toFixed(2), // Valor fixo para cada parcela
-        tipo_produto,
-        numero_contrato,
-        numero_documento,
-      };
-      parcelas.push(novaParcela);
-    }
-
-    this.parcelasGeradas = parcelas;
-  }
-
-
 
 }
