@@ -111,43 +111,76 @@
       (click)="fechar()"></button>
   </div>
   <div class="modal-body modal-padding">
-    <form >
+    <form [formGroup]="formTitulo">
       <div class="row">
-        <div class="col-md-4 form-group">
-          <label for="tipoTitulo" class="form-label">Tipo de Título</label>
-          <select type="text" class="form-control form-control-pad form-control-sm" id="tipoTitulo"  name="tipoTitulo">
+        <div class="col-md-3 form-group">
+          <label for="tipo_titulo" class="form-label">Tipo de Título</label>
+          <select type="text" class="form-control form-control-pad form-control-sm" formControlName="tipo_titulo" id="tipo_titulo"  name="tipo_titulo">
+            <option value="">Selecione</option>
               <option *ngFor="let tipo of tipoTitulo" [value]="tipo.id_tipo_titulo">{{ tipo.tipo_titulo }}</option>
           </select>
         </div>
         <div class="col-md-2 form-group">
           <label for="parcela" class="form-label">Parcela</label>
-          <input type="text" class="form-control form-control-pad form-control-sm" id="parcela"  name="parcela">
+          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="parcela" id="parcela"  name="parcela">
         </div>
         <div class="col-md-2 form-group">
           <label for="plano" class="form-label">Plano</label>
-          <input type="text" class="form-control form-control-pad form-control-sm" id="plano"  name="plano">
+          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="plano" id="plano"  name="plano">
+        </div>
+        <div class="col-md-5 form-group">
+          <label for="numero_contrato" class="form-label">Número do Contrato</label>
+          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="numero_contrato" id="numero_contrato"  name="numero_contrato">
         </div>
         <div class="col-md-4 form-group">
-          <label for="numeroContrato" class="form-label">Número do Contrato</label>
-          <input type="text" class="form-control form-control-pad form-control-sm" id="numeroContrato"  name="numeroContrato">
+          <label for="numero_documento" class="form-label">Número do Documento</label>
+          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="numero_documento" id="numero_documento"  name="numero_documento">
         </div>
         <div class="col-md-4 form-group">
-          <label for="numeroDocumento" class="form-label">Número do Documento</label>
-          <input type="text" class="form-control form-control-pad form-control-sm" id="numeroDocumento"  name="numeroDocumento">
-        </div>
-        <div class="col-md-4 form-group">
-          <label for="produto" class="form-label">Produto</label>
-          <input type="text" class="form-control form-control-pad form-control-sm" id="produto"  name="produto">
+          <label for="tipo_produto" class="form-label">Produto</label>
+          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="tipo_produto" id="tipo_produto"  name="tipo_produto">
         </div>
         <div class="col-md-2 form-group">
           <label for="vencimento" class="form-label">Vencimento</label>
-          <input type="date" class="form-control form-control-pad form-control-sm"id="vencimento"  name="vencimento">
+          <input type="date" class="form-control form-control-pad form-control-sm" formControlName="vencimento" id="vencimento"  name="vencimento">
         </div>
         <div class="col-md-2 form-group">
           <label for="valor" class="form-label">Valor</label>
-          <input type="number" class="form-control form-control-pad form-control-sm" id="valor"  name="valor">
+          <input type="number" class="form-control form-control-pad form-control-sm" formControlName="valor" id="valor"  name="valor">
         </div>
       </div>
     </form>
+    <button type="button" class="btn btn-primary btn-sm" (click)="gerarParc()" style="margin-top: 5px;">Gerar Parcela</button>
+    <div class="table-responsive font-size-12" style="margin-top: 5px; max-height: 300px; overflow-y: auto;">
+      <table class="table table-sm table-hover">
+        <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
+          <tr>
+            <th>Parcela</th>
+            <th>Plano</th>
+            <th>Contrato</th>
+            <th>Documento</th>
+            <th>Vencimento</th>
+            <th>Tipo produto</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let parcela of parcelasGeradas">
+            <td>{{ parcela.parcela }}</td>
+            <td>{{ parcela.plano }}</td>
+            <td>{{ parcela.numero_contrato }}</td>
+            <td>{{ parcela.numero_documento }}</td>
+            <td>{{ parcela.vencimento | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ parcela.tipo_produto }}</td>
+            <td>{{ parcela.valor | currency: 'BRL' }}</td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm">Salvar</button>
+    <button type="button" class="btn btn-danger btn-sm" >Cancelar</button>
   </div>
 </ng-template>

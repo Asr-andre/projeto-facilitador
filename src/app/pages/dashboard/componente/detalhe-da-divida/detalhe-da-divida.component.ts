@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { DetalhamentoModel } from 'src/app/core/models/detalhamento.model';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -11,13 +11,15 @@ import { DatePipe } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TipoTituloModel } from 'src/app/core/models/tipo.titulo.model';
 import { TipoTituloService } from 'src/app/core/services/tipo.titulo.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ClienteTitulosModel } from 'src/app/core/models/cadastro/cliente.titulos.model';
 
 @Component({
   selector: 'app-detalhe-da-divida',
   templateUrl: './detalhe-da-divida.component.html',
   styleUrls: ['./detalhe-da-divida.component.scss']
 })
-export class DetalheDaDividaComponent implements OnChanges {
+export class DetalheDaDividaComponent implements OnInit, OnChanges {
   @ViewChild(SimuladorPadraoComponent) SimuladorPadraoComponent: SimuladorPadraoComponent;
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
@@ -30,6 +32,10 @@ export class DetalheDaDividaComponent implements OnChanges {
   public login = this._authService.getLogin();
   public editar: boolean = false;
   public tipoTitulo: TipoTituloModel;
+  public formTitulo: FormGroup;
+
+  public parcelasGeradas: any[] = [];
+
 
   public filtroSelecionado: string = 'todos';
   public titulosFiltrados: any[] = [];
@@ -44,8 +50,13 @@ export class DetalheDaDividaComponent implements OnChanges {
     private _simuladorService: SimuladorPadraoService,
     private _datePipe: DatePipe,
     private _modalService: NgbModal,
-    private _tipoTituloService: TipoTituloService
+    private _tipoTituloService: TipoTituloService,
+    private _formBuilder: FormBuilder,
   ) { }
+
+  ngOnInit(): void {
+    this.inicializarformTitulo();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.idCliente || changes.idContratante) {
@@ -59,6 +70,23 @@ export class DetalheDaDividaComponent implements OnChanges {
       this.SimuladorPadraoComponent.idContratante = this.idContratante;
       this.SimuladorPadraoComponent.numeroContrato = this.numeroContrato;
     }
+  }
+
+  public inicializarformTitulo(dado?: ClienteTitulosModel) {
+    this.formTitulo = this._formBuilder.group({
+      tipo_titulo: [dado?.tipo_titulo],
+      parcela: [dado?.parcela || ""],
+      plano: [dado?.plano || ""],
+      numero_contrato: [dado?.numero_contrato || ""],
+      numero_documento: [dado?.numero_documento || ""],
+      vencimento: [dado?.vencimento || ""],
+      tipo_produto: [dado?.tipo_produto || ""],
+      valor: [dado?.valor || ""],
+      id_contratante: [this.idContratante],
+      id_empresa: [this.idEmpresa],
+      id_cliente: [this.idCliente],
+      user_login: [this.login]
+    });
   }
 
   public abriModalTitulo(content: TemplateRef<any>): void {
@@ -264,4 +292,60 @@ export class DetalheDaDividaComponent implements OnChanges {
   public fechar() {
     this._modalService.dismissAll();
   }
+
+  public cadastrarParcelas(parcela: number, plano: number): void {
+    if (plano <= parcela) {
+      this._alertService.error('O plano deve ser maior que a parcela.');
+      return;
+    }
+
+    const quantidadeParcelas = Math.ceil(plano / parcela);
+    const parcelas = [];
+
+    for (let i = 0; i < quantidadeParcelas; i++) {
+      const valorParcela = i === quantidadeParcelas - 1 ? plano - (parcela * i) : parcela;
+      parcelas.push({
+        numero: i + 1,
+        valor: valorParcela,
+        selecionado: false
+      });
+    }
+
+    this.detalhamentoSelecionado.parcelas = parcelas;
+    this.titulosFiltrados = parcelas;
+    this._alertService.success('Parcelas cadastradas com sucesso.');
+  }
+
+  public gerarParc(): void {
+    const { parcela, plano, vencimento, valor, tipo_produto, numero_contrato, numero_documento } = this.formTitulo.value;
+
+    if (!parcela || !plano || !vencimento || !valor) {
+      this._alertService.error('Preencha todos os campos necessários para gerar as parcelas.');
+      return;
+    }
+
+    const dataInicial = new Date(vencimento);
+    const parcelas = [];
+
+    for (let i = 0; i < plano; i++) {
+      const novaData = new Date(dataInicial);
+      novaData.setMonth(dataInicial.getMonth() + i); // Incrementa o mês corretamente
+
+      const novaParcela = {
+        parcela: parseInt(parcela, 10) + i,
+        plano,
+        vencimento: novaData, // Data corrigida
+        valor: parseFloat(valor).toFixed(2), // Valor fixo para cada parcela
+        tipo_produto,
+        numero_contrato,
+        numero_documento,
+      };
+      parcelas.push(novaParcela);
+    }
+
+    this.parcelasGeradas = parcelas;
+  }
+
+
+
 }
