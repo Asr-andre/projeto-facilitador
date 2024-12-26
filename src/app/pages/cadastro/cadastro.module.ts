@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import {
   NgbDatepickerModule,
+  NgbModule,
   NgbTooltipModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
@@ -32,6 +33,7 @@ import { EmailContaComponent } from "./email-conta/email-conta.component";
 import { FormulaComponent } from "./formula/formula.component";
 import { SmsComponent } from "./sms/sms.component";
 import { ClienteComponent } from "./cliente/cliente.component";
+import { LogsComponent } from "../relatorios/logs/logs.component";
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { ClienteComponent } from "./cliente/cliente.component";
     EmailContaComponent,
     FormulaComponent,
     SmsComponent,
-    ClienteComponent
+    ClienteComponent,
+    LogsComponent
   ],
   imports: [
     CommonModule,
@@ -60,6 +63,7 @@ import { ClienteComponent } from "./cliente/cliente.component";
     UiSwitchModule,
     ColorPickerModule,
     NgbDatepickerModule,
+    NgbModule,
     DropzoneModule,
     EmpresaModule,
     NgxPaginationModule,

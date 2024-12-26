@@ -1,0 +1,130 @@
+<div class="loading-overlay-pagina" *ngIf="loading">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card-body" style="padding-bottom: 8px;">
+        <div class="d-flex">
+          <div class="flex-1 overflow-hidden">
+            <div class="card">
+
+              <div class="card-header pt-2 pb-2">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5 class="mb-0"><i class="fas fa-history"></i> Listagem de logs do sistema </h5>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <ul ngbNav #nav="ngbNav" class="nav-tabs" [activeId]="ativaAba">
+                  <li [ngbNavItem]="1" (click)="ativarAba()">
+                    <a ngbNavLink>
+                      <b><i class="fas fa-filter"></i> Filtros</b>
+                    </a>
+                    <ng-template ngbNavContent>
+                      <form [formGroup]="formFiltros">
+                        <div class="col-md-6">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="card mb-2" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+                                <h6 style="text-align: center; font-weight: bold;">Período</h6>
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <input type="date" class="form-control form-control-sm" formControlName="data_inicio"
+                                      placeholder="Inicial">
+                                  </div>
+                                  <div class="col-md-6">
+                                    <input type="date" class="form-control form-control-sm" formControlName="data_fim"
+                                      placeholder="Final">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+
+                      <div class="col-md-12 d-flex justify-content-end align-items-end">
+                        <button type="submit" class="btn btn-secondary btn-sm" (click)="obterFiltros()" [disabled]="!this.formFiltros.valid">
+                          <i class="fas fa-search"></i> Filtrar
+                        </button>
+                      </div>
+                    </ng-template>
+                  </li>
+                  <li [ngbNavItem]="2">
+                    <a ngbNavLink>
+                      <b><i class="fas fa-file-alt"></i> Resultado</b>
+                    </a>
+                    <ng-template ngbNavContent>
+                      <section style="white-space: nowrap; overflow: auto;">
+                        <div style="font-size: 10px;">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <!-- Botão de Exportação (lado esquerdo) -->
+                            <button
+                              class="btn btn-success m-1"
+                              (click)="exportExcel()"
+                              ngbTooltip="Exportar Dados para Excel"
+                              placement="right"
+                              style="padding-bottom: 2px; padding-top: 2px;">
+                              <i class="fas fa-download"></i>
+                            </button>
+
+                            <!-- Campo de Pesquisa (lado direito) -->
+                            <div class="dataTables_filter">
+                              <label class="d-inline-flex align-items-center" style="margin-bottom: 0px;">
+                                <input
+                                  type="text"
+                                  class="form-control form-control-sm ms-2"
+                                  placeholder="Pesquisar"
+                                  [(ngModel)]="textoPesquisa"
+                                  (input)="filtrar()" />
+                              </label>
+                            </div>
+                          </div>
+                      </div>
+                        <div class="card-body" style="padding-top: 0; padding-bottom: 0px; padding-right: 0; padding-left: 0;" *ngIf="dadosFiltrados.length > 0; else semLogs">
+                          <div class="table-responsive" style="margin-top: 10px; max-height: 550px; overflow-y: auto;">
+                            <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+                              <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
+                                <tr>
+                                  <th sortable="idlog" (sort)="ordenar($event)" scope="col">Id</th>
+                                  <th sortable="data" (sort)="ordenar($event)" scope="col">Data</th>
+                                  <th sortable="acao" (sort)="ordenar($event)" scope="col">Ação</th>
+                                  <th sortable="descricao" (sort)="ordenar($event)" scope="col">Descição</th>
+                                  <th sortable="user_login" (sort)="ordenar($event)" scope="col">Usuário</th>
+                                  <th sortable="user_ip" (sort)="ordenar($event)" scope="col">Ip</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of dadosFiltrados">
+                                  <td>{{ item.idlog }}</td>
+                                  <td>{{ data(item.data) }}</td>
+                                  <td>{{ item.acao }}</td>
+                                  <td>{{ item.descricao }}</td>
+                                  <td>{{ item.user_login }}</td>
+                                  <td>{{ item.user_ip }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </section>
+                      <ng-template #semLogs>
+                        <p class="text-center">Não há logs no sistema.</p>
+                      </ng-template>
+                    </ng-template>
+                  </li>
+                </ul>
+                <div [ngbNavOutlet]="nav" class="mt-2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

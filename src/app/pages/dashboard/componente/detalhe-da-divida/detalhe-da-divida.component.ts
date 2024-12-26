@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { DetalhamentoModel } from 'src/app/core/models/detalhamento.model';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -8,13 +9,19 @@ import { SimuladorPadraoService } from 'src/app/core/services/simulador.padrao.s
 import { SimuladorPadraoComponent } from './simulador-padrao/simulador-padrao.component';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { DatePipe } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TipoTituloModel } from 'src/app/core/models/tipo.titulo.model';
+import { TipoTituloService } from 'src/app/core/services/tipo.titulo.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ClienteTitulosModel } from 'src/app/core/models/cadastro/cliente.titulos.model';
+import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
 
 @Component({
   selector: 'app-detalhe-da-divida',
   templateUrl: './detalhe-da-divida.component.html',
   styleUrls: ['./detalhe-da-divida.component.scss']
 })
-export class DetalheDaDividaComponent implements OnChanges {
+export class DetalheDaDividaComponent implements OnInit, OnChanges {
   @ViewChild(SimuladorPadraoComponent) SimuladorPadraoComponent: SimuladorPadraoComponent;
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
@@ -25,6 +32,9 @@ export class DetalheDaDividaComponent implements OnChanges {
   public selecionarTodos: boolean = true;
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public login = this._authService.getLogin();
+  public editar: boolean = false;
+  public tipoTitulo: TipoTituloModel;
+  public formTitulo: FormGroup;
 
   public filtroSelecionado: string = 'todos';
   public titulosFiltrados: any[] = [];
@@ -38,7 +48,15 @@ export class DetalheDaDividaComponent implements OnChanges {
     private _authService: AuthenticationService,
     private _simuladorService: SimuladorPadraoService,
     private _datePipe: DatePipe,
+    private _modalService: NgbModal,
+    private _tipoTituloService: TipoTituloService,
+    private _formBuilder: FormBuilder,
+    private _clienteService: ClienteService
   ) { }
+
+  ngOnInit(): void {
+    this.inicializarformTitulo();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.idCliente || changes.idContratante) {
@@ -52,6 +70,29 @@ export class DetalheDaDividaComponent implements OnChanges {
       this.SimuladorPadraoComponent.idContratante = this.idContratante;
       this.SimuladorPadraoComponent.numeroContrato = this.numeroContrato;
     }
+  }
+
+  public inicializarformTitulo(dado?: ClienteTitulosModel) {
+    this.formTitulo = this._formBuilder.group({
+      tipo_titulo: [dado?.tipo_titulo || "", Validators.required],
+      parcela: [dado?.parcela || "", Validators.required],
+      plano: [dado?.plano || "", Validators.required],
+      numero_contrato: [dado?.numero_contrato || "", Validators.required],
+      numero_documento: [dado?.numero_documento || "", Validators.required],
+      vencimento: [dado?.vencimento || "", Validators.required],
+      tipo_produto: [dado?.tipo_produto || "", Validators.required],
+      valor: [dado?.valor || "", Validators.required],
+      id_contratante: [this.idContratante],
+      id_empresa: [this.idEmpresa],
+      id_cliente: [this.idCliente],
+      user_login: [this.login]
+    });
+  }
+
+  public abriModalTitulo(content: TemplateRef<any>): void {
+    this.editar = false;
+    this.obterTipoTitulo();
+    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public obterPrimeiroContratoSelecionado(): string | undefined {
@@ -91,6 +132,14 @@ export class DetalheDaDividaComponent implements OnChanges {
         this._alertService.timer(false);
       }
     );
+  }
+
+  public obterTipoTitulo() {
+    this._tipoTituloService.obterTipoTitulo().subscribe((res) => {
+      if (res) {
+        this.tipoTitulo = res;
+      }
+    });
   }
 
   public calcularTotal(coluna: string): number {
@@ -239,4 +288,52 @@ export class DetalheDaDividaComponent implements OnChanges {
       this.titulosFiltrados = this.detalhamentoSelecionado.parcelas.filter(parcela => !parcela.numero_contrato.startsWith('ACD'));
     }
   }
+
+  public cadastrarTitulo(): void {
+    if (!this.formTitulo.valid) {
+      this._alertService.warning('Todos os campos são obrigatórios.');
+      return;
+    }
+
+    if (!this.idCliente || !this.idEmpresa || !this.idContratante) {
+      this._alertService.warning('Os dados necessários não estão disponíveis.');
+      return;
+    }
+
+    const dadosTitulo = {
+      ...this.formTitulo.value,
+      id_cliente: this.idCliente,
+      id_contratante: this.idContratante,
+      vencimento: this._datePipe.transform(this.formTitulo.value.vencimento, 'dd/MM/yyyy') || ''
+    };
+
+    this._clienteService.cadastrarTitulos(dadosTitulo).subscribe((res) => {
+      if (res.success) {
+        this._alertService.success(res.msg);
+        this.atualizarDetalhamento();
+        this.fechar();
+      } else {
+        this._alertService.warning(res.msg);
+      }
+    },
+      (error) => {
+        this.loadingMin = false;
+        this._alertService.error('Ocorreu um error ao cadastrar o titulo');
+      }
+    );
+  }
+
+  public verificarValorNegativo(campo: string) {
+    const valor = this.formTitulo.get(campo)?.value;
+
+    if (valor <= 0) {
+      this.formTitulo.get(campo)?.setValue(0);
+    }
+  }
+
+  public fechar() {
+    this._modalService.dismissAll();
+    this.formTitulo.reset();
+  }
+
 }

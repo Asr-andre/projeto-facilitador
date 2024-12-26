@@ -37,7 +37,8 @@
       "TEXT": "Relatórios",
       "LIST": {
         "DASHBOARD": "Dashboard",
-        "FINANCEIRO": "Financeiro"
+        "FINANCEIRO": "Financeiro",
+        "LOGS": "Logs"
       }
     },
     "PROCESSAMENTOS": {

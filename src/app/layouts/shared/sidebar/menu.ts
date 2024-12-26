@@ -109,6 +109,12 @@ import { MenuItem } from "./menu.model";
           link: "/relatorios/financeiro",
           parentId: 14,
         },
+        {
+          id: 17,
+          label: "MENUITEMS.RELATORIOS.LIST.LOGS",
+          link: "/relatorios/logs",
+          parentId: 8,
+        },
       ],
     },
     {

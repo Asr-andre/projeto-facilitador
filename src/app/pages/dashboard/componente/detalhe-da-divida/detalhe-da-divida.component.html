@@ -36,6 +36,9 @@
         <i class="fas fa-calculator"></i> Ações <i class="mdi mdi-chevron-down"></i>
       </button>
       <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" ngbDropdownMenu>
+        <a class="dropdown-item" href="javascript: void(0);" (click)="abriModalTitulo(tituloModal)">
+          <i class="fas fa-list"></i> Cadastrar Titulo
+        </a>
         <a class="dropdown-item" href="javascript: void(0);" (click)="simularNegociacao()">
           <i class="fas fa-calculator"></i> Simulador
         </a>
@@ -48,57 +51,108 @@
 </div>
 
 <div class="table-responsive font-size-12" style="margin-top: 5px; max-height: 300px; overflow-y: auto;">
-    <table class="table table-sm table-hover">
-      <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
-        <tr>
-          <th><input type="checkbox" (change)="marcaTodos($event)" [checked]="selecionarTodos"></th>
-          <th>Parcela</th>
-          <th>Plano</th>
-          <th>Contrato</th>
-          <th>Vencimento</th>
-          <th>Produto</th>
-          <th>Atraso</th>
-          <th>Valor</th>
-          <th>Juros</th>
-          <th>Multa</th>
-          <th>Taxa</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let prestacao of titulosFiltrados">
-          <td>
-            <input type="checkbox" [(ngModel)]="prestacao.selecionado" (change)="verificarSelecao()">
-          </td>
-          <td>{{ prestacao.parcela }}</td>
-          <td>{{ prestacao.plano }}</td>
-          <td>{{ prestacao.numero_contrato }}</td>
-          <td>{{ dataBrasil(prestacao.vencimento) }}</td>
-          <td>{{ prestacao.produto }}</td>
-          <td>{{ prestacao.atraso }}</td>
-          <td>{{ prestacao.valor | currency:'BRL' }}</td>
-          <td>{{ prestacao.valor_juros | currency:'BRL' }}</td>
-          <td>{{ prestacao.valor_multa | currency:'BRL' }}</td>
-          <td>{{ prestacao.valor_taxa | currency:'BRL' }}</td>
-          <td>{{ prestacao.saldo_devedor | currency:'BRL' }}</td>
-          <!-- <td>{{ calcularTotalAtualizado(prestacao) | currency:'BRL' }}</td> -->
-        <tr class="tabela-custom">
-          <td style="text-align: end;"><strong>Quantidade de Títulos:</strong> {{ calcularQuantidadeTitulos() }}</td>
-          <td colspan="6" style="text-align: end;"><strong>Total:</strong></td>
-          <td><strong>{{ calcularTotal('valor') | currency:'BRL' }}</strong></td>
-          <td><strong>{{ calcularTotal('valor_juros') | currency:'BRL' }}</strong></td>
-          <td><strong>{{ calcularTotal('valor_multa') | currency:'BRL' }}</strong></td>
-          <td><strong>{{ calcularTotal('valor_taxa') | currency:'BRL' }}</strong></td>
-          <td><strong>{{ calcularTotal('saldo_devedor') | currency:'BRL' }}</strong></td>
-          <!-- <td><strong>{{ calcularTotal('valorTotalAtualizado') | currency:'BRL' }}</strong></td> -->
-        </tr>
-      </tbody>
-    </table>
+  <table class="table table-sm table-hover">
+    <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
+      <tr>
+        <th><input type="checkbox" (change)="marcaTodos($event)" [checked]="selecionarTodos"></th>
+        <th>Parcela</th>
+        <th>Plano</th>
+        <th>Contrato</th>
+        <th>Vencimento</th>
+        <th>Produto</th>
+        <th>Atraso</th>
+        <th>Valor</th>
+        <th>Juros</th>
+        <th>Multa</th>
+        <th>Taxa</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prestacao of titulosFiltrados">
+        <td>
+          <input type="checkbox" [(ngModel)]="prestacao.selecionado" (change)="verificarSelecao()">
+        </td>
+        <td>{{ prestacao.parcela }}</td>
+        <td>{{ prestacao.plano }}</td>
+        <td>{{ prestacao.numero_contrato }}</td>
+        <td>{{ dataBrasil(prestacao.vencimento) }}</td>
+        <td>{{ prestacao.produto }}</td>
+        <td>{{ prestacao.atraso }}</td>
+        <td>{{ prestacao.valor | currency:'BRL' }}</td>
+        <td>{{ prestacao.valor_juros | currency:'BRL' }}</td>
+        <td>{{ prestacao.valor_multa | currency:'BRL' }}</td>
+        <td>{{ prestacao.valor_taxa | currency:'BRL' }}</td>
+        <td>{{ prestacao.saldo_devedor | currency:'BRL' }}</td>
+        <!-- <td>{{ calcularTotalAtualizado(prestacao) | currency:'BRL' }}</td> -->
+      <tr class="tabela-custom">
+        <td colspan="3" style="text-align: end;"><strong>Qtde Títulos:</strong> {{ calcularQuantidadeTitulos() }}</td>
+        <td colspan="4" style="text-align: end;"><strong>Total:</strong></td>
+        <td><strong>{{ calcularTotal('valor') | currency:'BRL' }}</strong></td>
+        <td><strong>{{ calcularTotal('valor_juros') | currency:'BRL' }}</strong></td>
+        <td><strong>{{ calcularTotal('valor_multa') | currency:'BRL' }}</strong></td>
+        <td><strong>{{ calcularTotal('valor_taxa') | currency:'BRL' }}</strong></td>
+        <td><strong>{{ calcularTotal('saldo_devedor') | currency:'BRL' }}</strong></td>
+        <!-- <td><strong>{{ calcularTotal('valorTotalAtualizado') | currency:'BRL' }}</strong></td> -->
+      </tr>
+    </tbody>
+  </table>
 </div>
-          <app-simulador-padrao
-              [idCliente]="idCliente"
-              [idContratante]="idContratante"
-              [numeroContrato]="obterPrimeiroContratoSelecionado()"
-              [numeroDocumento]="numeroDocumento"
-              (clienteAtualizado)="atualizarDetalhamento()">
-          </app-simulador-padrao>
+<app-simulador-padrao [idCliente]="idCliente" [idContratante]="idContratante"
+  [numeroContrato]="obterPrimeiroContratoSelecionado()" [numeroDocumento]="numeroDocumento"
+  (clienteAtualizado)="atualizarDetalhamento()">
+</app-simulador-padrao>
+
+
+<ng-template #tituloModal let-modal>
+  <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
+    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-list"></i>  {{ editar ? 'Editar Titulo' : 'Cadastrar Titulo' }} </h6>
+    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+      (click)="fechar()"></button>
+  </div>
+  <div class="modal-body modal-padding">
+    <form [formGroup]="formTitulo">
+      <div class="row">
+        <div class="col-md-3 form-group">
+          <label for="tipo_titulo" class="form-label">Tipo de Título</label>
+          <select type="text" class="form-control form-control-pad form-control-sm" formControlName="tipo_titulo" id="tipo_titulo"  name="tipo_titulo">
+            <option value="">Selecione</option>
+              <option *ngFor="let tipo of tipoTitulo" [value]="tipo.id_tipo_titulo">{{ tipo.tipo_titulo }}</option>
+          </select>
+        </div>
+        <div class="col-md-2 form-group">
+          <label for="parcela" class="form-label">Parcela</label>
+          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="parcela" id="parcela"  name="parcela">
+        </div>
+        <div class="col-md-2 form-group">
+          <label for="plano" class="form-label">Plano</label>
+          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="plano" id="plano"  name="plano">
+        </div>
+        <div class="col-md-5 form-group">
+          <label for="numero_contrato" class="form-label">Número do Contrato</label>
+          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="numero_contrato" id="numero_contrato"  name="numero_contrato">
+        </div>
+        <div class="col-md-4 form-group">
+          <label for="numero_documento" class="form-label">Número do Documento</label>
+          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="numero_documento" id="numero_documento"  name="numero_documento">
+        </div>
+        <div class="col-md-4 form-group">
+          <label for="tipo_produto" class="form-label">Produto</label>
+          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="tipo_produto" id="tipo_produto"  name="tipo_produto">
+        </div>
+        <div class="col-md-2 form-group">
+          <label for="vencimento" class="form-label">Vencimento</label>
+          <input type="date" class="form-control form-control-pad form-control-sm" formControlName="vencimento" id="vencimento"  name="vencimento">
+        </div>
+        <div class="col-md-2 form-group">
+          <label for="valor" class="form-label">Valor</label>
+          <input type="number" class="form-control form-control-pad form-control-sm" formControlName="valor" id="valor"  name="valor" (input)="verificarValorNegativo('valor')">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success btn-sm" (click)="cadastrarTitulo()"><i class="fas fa-save"></i> Salvar</button>
+    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()"><i class="fas fa-times"></i> Cancelar</button>
+  </div>
+</ng-template>
