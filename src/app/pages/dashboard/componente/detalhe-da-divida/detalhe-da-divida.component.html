@@ -86,8 +86,8 @@
         <td>{{ prestacao.saldo_devedor | currency:'BRL' }}</td>
         <!-- <td>{{ calcularTotalAtualizado(prestacao) | currency:'BRL' }}</td> -->
       <tr class="tabela-custom">
-        <td style="text-align: end;"><strong>Qtde Títulos:</strong> {{ calcularQuantidadeTitulos() }}</td>
-        <td colspan="6" style="text-align: end;"><strong>Total:</strong></td>
+        <td colspan="3" style="text-align: end;"><strong>Qtde Títulos:</strong> {{ calcularQuantidadeTitulos() }}</td>
+        <td colspan="4" style="text-align: end;"><strong>Total:</strong></td>
         <td><strong>{{ calcularTotal('valor') | currency:'BRL' }}</strong></td>
         <td><strong>{{ calcularTotal('valor_juros') | currency:'BRL' }}</strong></td>
         <td><strong>{{ calcularTotal('valor_multa') | currency:'BRL' }}</strong></td>
@@ -146,7 +146,7 @@
         </div>
         <div class="col-md-2 form-group">
           <label for="valor" class="form-label">Valor</label>
-          <input type="number" class="form-control form-control-pad form-control-sm" formControlName="valor" id="valor"  name="valor">
+          <input type="number" class="form-control form-control-pad form-control-sm" formControlName="valor" id="valor"  name="valor" (input)="verificarValorNegativo('valor')">
         </div>
       </div>
     </form>

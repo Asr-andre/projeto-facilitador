@@ -14,6 +14,7 @@ import { TipoTituloModel } from 'src/app/core/models/tipo.titulo.model';
 import { TipoTituloService } from 'src/app/core/services/tipo.titulo.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ClienteTitulosModel } from 'src/app/core/models/cadastro/cliente.titulos.model';
+import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
 
 @Component({
   selector: 'app-detalhe-da-divida',
@@ -50,6 +51,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     private _modalService: NgbModal,
     private _tipoTituloService: TipoTituloService,
     private _formBuilder: FormBuilder,
+    private _clienteService: ClienteService
   ) { }
 
   ngOnInit(): void {
@@ -287,11 +289,11 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     }
   }
 
-  public fechar() {
-    this._modalService.dismissAll();
-  }
-
   public cadastrarTitulo(): void {
+    if (!this.formTitulo.valid) {
+      this._alertService.warning('Todos os campos são obrigatórios.');
+      return;
+    }
 
     if (!this.idCliente || !this.idEmpresa || !this.idContratante) {
       this._alertService.warning('Os dados necessários não estão disponíveis.');
@@ -301,10 +303,37 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     const dadosTitulo = {
       ...this.formTitulo.value,
       id_cliente: this.idCliente,
-      id_contratante: this.idContratante
+      id_contratante: this.idContratante,
+      vencimento: this._datePipe.transform(this.formTitulo.value.vencimento, 'dd/MM/yyyy') || ''
     };
 
-    console.log(dadosTitulo);
+    this._clienteService.cadastrarTitulos(dadosTitulo).subscribe((res) => {
+      if (res.success) {
+        this._alertService.success(res.msg);
+        this.atualizarDetalhamento();
+        this.fechar();
+      } else {
+        this._alertService.warning(res.msg);
+      }
+    },
+      (error) => {
+        this.loadingMin = false;
+        this._alertService.error('Ocorreu um error ao cadastrar o titulo');
+      }
+    );
+  }
+
+  public verificarValorNegativo(campo: string) {
+    const valor = this.formTitulo.get(campo)?.value;
+
+    if (valor <= 0) {
+      this.formTitulo.get(campo)?.setValue(0);
+    }
+  }
+
+  public fechar() {
+    this._modalService.dismissAll();
+    this.formTitulo.reset();
   }
 
 }

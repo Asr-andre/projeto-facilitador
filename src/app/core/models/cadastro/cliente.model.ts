@@ -113,3 +113,25 @@ export class Retorno {
   cliente: Cliente[];
 }
 
+// modelo para o cadsatro de cliente na tela de detalhamento de cliente
+export class CadastrarTituloRequest {
+  id_empresa: number;
+  id_contratante: number;
+  id_cliente: number;
+  tipo_titulo: number;
+  numero_contrato: string;
+  numero_documento: string;
+  parcela: number;
+  plano: number;
+  vencimento: string;
+  valor: number;
+  produto: string;
+  user_login: string;
+}
+
+export class CadastrarTituloResponse {
+  success: string;
+  msg: string;
+  id_empresa: string;
+  id_cliente: string;
+}
