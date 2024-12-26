@@ -91,6 +91,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
   public abriModalTitulo(content: TemplateRef<any>): void {
     this.editar = false;
+    this.inicializarformTitulo();
     this.obterTipoTitulo();
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
@@ -302,6 +303,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
     const dadosTitulo = {
       ...this.formTitulo.value,
+      id_empresa: this.idEmpresa,
       id_cliente: this.idCliente,
       id_contratante: this.idContratante,
       vencimento: this._datePipe.transform(this.formTitulo.value.vencimento, 'dd/MM/yyyy') || ''

@@ -6,7 +6,7 @@
       (click)="fechaModal()"></button>
   </div>
   <div class="modal-body" style="padding-top: 2px; padding-bottom: 2px;">
-    <form [formGroup]="form" (ngSubmit)="recalcular()">
+    <form [formGroup]="form">
       <div class="row mt-2">
         <div class="col-md-12">
           <div class="row align-items-center">
@@ -36,7 +36,7 @@
             </div>
           </div>
           <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px;">
-            <button type="submit" class="btn btn-primary btn-sm me-1" style="padding-bottom: 2px; padding-top: 2px;">
+            <button type="submit" class="btn btn-primary btn-sm me-1" style="padding-bottom: 2px; padding-top: 2px;" (click)="recalcular()">
               <i class="fas fa-redo-alt"></i> Recalcular
             </button>
             <button type="submit" class="btn btn-secondary btn-sm" style="padding-bottom: 2px; padding-top: 2px;" (click)="habilitaBotao()">
@@ -51,10 +51,10 @@
             <tr>
               <th>Vencimento</th>
               <th>Atraso</th>
-              <th>Desc Principal</th>
-              <th scope="col" class="text-right">Desc Juros</th>
-              <th scope="col" class="text-right">Desc Multa</th>
-              <th>Desc Taxa</th>
+              <th>Principal</th>
+              <th scope="col" class="text-right">Juros</th>
+              <th scope="col" class="text-right">Multa</th>
+              <th>Taxa</th>
               <th scope="col" class="text-right">Valor Atualizado</th>
             </tr>
           </thead>
