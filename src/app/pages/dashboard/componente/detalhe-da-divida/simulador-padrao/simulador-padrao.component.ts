@@ -245,13 +245,10 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       titulos: titulos,
     };
 
-    console.log(`este e o numero de contrato recebido${ this.numeroContrato }`)
-
     this._alertService.baixarPg().then(confirmarPg => {
       if (!confirmarPg) {
         return;
       }
-      console.log(dadosParaEnvio);
 
       this.simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe(
         (res) => {
