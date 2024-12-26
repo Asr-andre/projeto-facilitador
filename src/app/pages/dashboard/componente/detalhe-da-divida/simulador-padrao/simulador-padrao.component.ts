@@ -88,10 +88,10 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       id_contratante: [this.idContratante],
       id_cliente: [this.idCliente],
       id_acordo: [],
-      desconto_principal: ["", Validators.min(0)],
-      desconto_multa: ["", Validators.min(0)],
-      desconto_juros: ["", Validators.min(0)],
-      desconto_taxa: ["", Validators.min(0)],
+      desconto_principal: ["0", Validators.min(0)],
+      desconto_multa: ["0", Validators.min(0)],
+      desconto_juros: ["0", Validators.min(0)],
+      desconto_taxa: ["0", Validators.min(0)],
       data_atualizacao: [""],
       titulos: [""],
       user_login: [this.login],
@@ -151,7 +151,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
 
   public abrirModalSimulado(data: any): void {
     this.data = data;
-
+    this.formSimulador();
     this.originalPrincipal = data.desconto_principal;
     this.originalMulta = data.desconto_multa;
     this.originalJuros = data.desconto_juros;
@@ -165,10 +165,6 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       id_empresa: this.idEmpresa,
       id_contratante: this.idContratante,
       id_cliente: this.idCliente,
-      desconto_principal: data.desconto_principal,
-      desconto_multa: data.desconto_multa,
-      desconto_juros: data.desconto_juros,
-      desconto_taxa: data.desconto_taxa,
       data_atualizacao: dataAtualizacao,
       titulos: data.titulos.map((titulo) => titulo.id_titulo).join(","),
       user_login: data.user_login,
@@ -178,6 +174,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       titulos: data.titulos.map((titulo) => titulo.id_titulo).join(","),
     });
 
+    this.recalcular(); // Recalcula os valores ao abrir o modal
     this.calcularTotais();  // Calcula os totais para atualizar valor_atualizado_simulador
     this.iniciarFormgerarPixBoleto();  // Reinicia o form de créditos após calcular os totais
     this.modalRef = this._modalService.open(this.modalTemplate, { size: "lg", ariaLabelledBy: "modal-basic-title", backdrop: "static", keyboard: false, });
@@ -357,5 +354,6 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     this.habilitarAcordo = false;
     this.simulaAcordo = false;
     this.modalRef.dismiss();
+    this.form.reset();
   }
 }
