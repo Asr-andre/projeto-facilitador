@@ -13,8 +13,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TipoTituloModel } from 'src/app/core/models/tipo.titulo.model';
 import { TipoTituloService } from 'src/app/core/services/tipo.titulo.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ClienteTitulosModel } from 'src/app/core/models/cadastro/cliente.titulos.model';
 import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
+import { CadastrarTituloRequest } from 'src/app/core/models/cadastro/cliente.model';
 
 @Component({
   selector: 'app-detalhe-da-divida',
@@ -72,7 +72,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     }
   }
 
-  public inicializarformTitulo(dado?: ClienteTitulosModel) {
+  public inicializarformTitulo(dado?: CadastrarTituloRequest) {
     this.formTitulo = this._formBuilder.group({
       tipo_titulo: [dado?.tipo_titulo || "", Validators.required],
       parcela: [dado?.parcela || "", Validators.required],
@@ -80,7 +80,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
       numero_contrato: [dado?.numero_contrato || "", Validators.required],
       numero_documento: [dado?.numero_documento || "", Validators.required],
       vencimento: [dado?.vencimento || "", Validators.required],
-      tipo_produto: [dado?.tipo_produto || "", Validators.required],
+      produto: [dado?.produto || "", Validators.required],
       valor: [dado?.valor || "", Validators.required],
       id_contratante: [this.idContratante],
       id_empresa: [this.idEmpresa],
@@ -309,18 +309,21 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
       vencimento: this._datePipe.transform(this.formTitulo.value.vencimento, 'dd/MM/yyyy') || ''
     };
 
+    this.loadingMin = true;
+
     this._clienteService.cadastrarTitulos(dadosTitulo).subscribe((res) => {
       if (res.success) {
         this._alertService.success(res.msg);
         this.atualizarDetalhamento();
         this.fechar();
       } else {
+        this.loadingMin = false;
         this._alertService.warning(res.msg);
       }
     },
       (error) => {
         this.loadingMin = false;
-        this._alertService.error('Ocorreu um error ao cadastrar o titulo');
+        this._alertService.error('Atenção Título Já Existente, Verifique os Campos Chaves!!!');
       }
     );
   }
@@ -337,5 +340,4 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     this._modalService.dismissAll();
     this.formTitulo.reset();
   }
-
 }
