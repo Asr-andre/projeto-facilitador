@@ -302,6 +302,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
     const dadosTitulo = {
       ...this.formTitulo.value,
+      id_empresa: this.idEmpresa,
       id_cliente: this.idCliente,
       id_contratante: this.idContratante,
       vencimento: this._datePipe.transform(this.formTitulo.value.vencimento, 'dd/MM/yyyy') || ''
