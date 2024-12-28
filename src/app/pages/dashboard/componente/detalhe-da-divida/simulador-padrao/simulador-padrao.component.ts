@@ -42,6 +42,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
 
   public totalJuros: number = 0;
   public totalMulta: number = 0;
+  public totalIndice: number = 0;
   public totalTaxa: number = 0;
   public totalGeral: number = 0;
   public totalValor: number = 0;
@@ -50,6 +51,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
 
   public originalPrincipal: number = 0;
   public originalMulta: number = 0;
+  public originalIndice: number = 0;
   public originalJuros: number = 0;
   public originalTaxa: number = 0;
 
@@ -91,6 +93,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       desconto_principal: ["0", Validators.min(0)],
       desconto_multa: ["0", Validators.min(0)],
       desconto_juros: ["0", Validators.min(0)],
+      valor_indice: ["0", Validators.min(0)],
       desconto_taxa: ["0", Validators.min(0)],
       data_atualizacao: [""],
       titulos: [""],
@@ -154,6 +157,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     this.formSimulador();
     this.originalPrincipal = data.desconto_principal;
     this.originalMulta = data.desconto_multa;
+    this.originalMulta = data.valor_indice;
     this.originalJuros = data.desconto_juros;
     this.originalTaxa = data.desconto_taxa;
 
@@ -177,7 +181,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     this.recalcular(); // Recalcula os valores ao abrir o modal
     this.calcularTotais();  // Calcula os totais para atualizar valor_atualizado_simulador
     this.iniciarFormgerarPixBoleto();  // Reinicia o form de créditos após calcular os totais
-    this.modalRef = this._modalService.open(this.modalTemplate, { size: "lg", ariaLabelledBy: "modal-basic-title", backdrop: "static", keyboard: false, });
+    this.modalRef = this._modalService.open(this.modalTemplate, { size: "xl", ariaLabelledBy: "modal-basic-title", backdrop: "static", keyboard: false, });
   }
 
   public recalcular(): void {
@@ -199,6 +203,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   private calcularTotais(): void {
     this.totalValor = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor, 0);
     this.totalJuros = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_juros, 0);
+    this.totalIndice = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_indice, 0);
     this.totalMulta = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_multa, 0);
     this.totalTaxa = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_taxa, 0);
     this.totalGeral = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_atualizado,0);
