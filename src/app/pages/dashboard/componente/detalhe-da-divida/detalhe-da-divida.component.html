@@ -105,8 +105,8 @@
 
 
 <ng-template #tituloModal let-modal>
-  <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
-    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-list"></i>  {{ editar ? 'Editar Titulo' : 'Cadastrar Titulo' }} </h6>
+  <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
+    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-list"></i>  Cadastrar Titulo </h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
       (click)="fechar()"></button>
   </div>
@@ -122,11 +122,11 @@
         </div>
         <div class="col-md-2 form-group">
           <label for="parcela" class="form-label">Parcela</label>
-          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="parcela" id="parcela"  name="parcela">
+          <input type="number" class="form-control form-control-pad form-control-sm" formControlName="parcela" id="parcela"  name="parcela" (input)="verificarValorNegativo('parcela')">
         </div>
         <div class="col-md-2 form-group">
           <label for="plano" class="form-label">Plano</label>
-          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="plano" id="plano"  name="plano">
+          <input type="number" class="form-control form-control-pad form-control-sm" formControlName="plano" id="plano"  name="plano" (input)="verificarValorNegativo('plano')">
         </div>
         <div class="col-md-5 form-group">
           <label for="numero_contrato" class="form-label">Número do Contrato</label>

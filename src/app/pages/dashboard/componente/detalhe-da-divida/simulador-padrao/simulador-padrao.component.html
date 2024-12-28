@@ -1,9 +1,15 @@
+
+
 <ng-template #modalTemplate let-modal>
   <div class="modal-header modal-header-custom" style="background: #3e4988; margin: 0">
     <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-calculator" style="margin-right: 5px;"></i>
       Simulação de Negociação</h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
       (click)="fechaModal()"></button>
+  </div>
+  <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
   </div>
   <div class="modal-body" style="padding-top: 2px; padding-bottom: 2px;">
     <form [formGroup]="form">
@@ -26,11 +32,16 @@
                 [max]="originalJuros" (input)="validarDesconto($event, 'Juros')">
             </div>
             <div class="col-md-2" style="font-size: 12px;">
+              <small>Indice </small>
+              <input type="number" class="form-control form-control-sm" formControlName="valor_indice" min="0"
+                 (input)="validarDesconto($event, 'valor_indice')">
+            </div>
+            <div class="col-md-2" style="font-size: 12px;">
               <small>Taxa: {{ (originalTaxa / 100) | percent:'1.0-0' }}</small>
               <input type="number" class="form-control form-control-sm" formControlName="desconto_taxa" min="0"
                 [max]="originalTaxa" (input)="validarDesconto($event, 'Taxa')">
             </div>
-            <div class="col-md-4" style="font-size: 12px;">
+            <div class="col-md-2" style="font-size: 12px;">
               <small>Data Negociação</small>
               <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="data_atualizacao">
             </div>
@@ -54,6 +65,7 @@
               <th>Principal</th>
               <th scope="col" class="text-right">Juros</th>
               <th scope="col" class="text-right">Multa</th>
+              <th scope="col" class="text-right">Indice</th>
               <th>Taxa</th>
               <th scope="col" class="text-right">Valor Atualizado</th>
             </tr>
@@ -65,6 +77,7 @@
               <td scope="col" class="text-right">{{ titulo.valor | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ titulo.valor_juros | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ titulo.valor_multa | currency:'BRL' }}</td>
+              <td scope="col" class="text-right">{{ titulo.valor_indice | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ titulo.valor_taxa | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ titulo.valor_atualizado | currency:'BRL' }}</td>
             </tr>
@@ -73,6 +86,7 @@
               <td scope="col" class="text-right">{{ totalValor | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ totalJuros | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ totalMulta | currency:'BRL' }}</td>
+              <td scope="col" class="text-right">{{ totalIndice | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ totalTaxa | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ totalGeral | currency:'BRL' }}</td>
             </tr>

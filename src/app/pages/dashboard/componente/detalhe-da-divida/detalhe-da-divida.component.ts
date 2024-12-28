@@ -32,7 +32,6 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   public selecionarTodos: boolean = true;
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public login = this._authService.getLogin();
-  public editar: boolean = false;
   public tipoTitulo: TipoTituloModel;
   public formTitulo: FormGroup;
 
@@ -90,7 +89,6 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   }
 
   public abriModalTitulo(content: TemplateRef<any>): void {
-    this.editar = false;
     this.inicializarformTitulo();
     this.obterTipoTitulo();
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
