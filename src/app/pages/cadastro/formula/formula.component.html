@@ -56,6 +56,7 @@
                         <th sortable="desconto_principal" (sort)="ordenar($event)">Desc. Pricipal</th>
                         <th sortable="desconto_multa" (sort)="ordenar($event)">Desc. Multa</th>
                         <th sortable="desconto_juros" (sort)="ordenar($event)">Desc. Juros</th>
+                        <th sortable="desconto_indice" (sort)="ordenar($event)">Desc. Indice</th>
                         <th sortable="desconto_taxa" (sort)="ordenar($event)">Desc. Taxa</th>
                         <th sortable="data_cadastro" (sort)="ordenar($event)">Data Cadastro</th>
                         <th sortable="data_alteracao" (sort)="ordenar($event)">Data Alteração</th>
@@ -73,6 +74,7 @@
                         <td> {{ formula.desconto_principal / 100  | percent: '1.2-2' }} </td>
                         <td> {{ formula.desconto_multa / 100  | percent: '1.2-2' }} </td>
                         <td> {{ formula.desconto_juros / 100  | percent: '1.2-2' }} </td>
+                        <td> {{ formula.desconto_indice / 100  | percent: '1.2-2' }} </td>
                         <td> {{ formula.desconto_taxa / 100  | percent: '1.2-2' }} </td>
                         <td> {{ data(formula.data_cadastro) }} </td>
                         <td> {{ data(formula.data_alteracao) }} </td>
