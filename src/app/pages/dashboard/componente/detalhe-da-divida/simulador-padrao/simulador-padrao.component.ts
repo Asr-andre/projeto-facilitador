@@ -94,7 +94,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       desconto_principal: ["0", Validators.min(0)],
       desconto_multa: ["0", Validators.min(0)],
       desconto_juros: ["0", Validators.min(0)],
-      valor_indice: ["0", Validators.min(0)],
+      desc_indice: ["0", Validators.min(0)],
       desconto_taxa: ["0", Validators.min(0)],
       data_atualizacao: [""],
       titulos: [""],
