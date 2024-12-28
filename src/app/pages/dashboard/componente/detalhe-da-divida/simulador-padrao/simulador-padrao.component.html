@@ -32,9 +32,9 @@
                 [max]="originalJuros" (input)="validarDesconto($event, 'Juros')">
             </div>
             <div class="col-md-2" style="font-size: 12px;">
-              <small>Indice </small>
+              <small>Indice {{ (originalIndice / 100) | percent:'1.0-0' }}</small>
               <input type="number" class="form-control form-control-sm" formControlName="desc_indice" min="0"
-                 (input)="validarDesconto($event, 'desc_indice')">
+              [max]="originalIndice" (input)="validarDesconto($event, 'desc_indice')">
             </div>
             <div class="col-md-2" style="font-size: 12px;">
               <small>Taxa: {{ (originalTaxa / 100) | percent:'1.0-0' }}</small>

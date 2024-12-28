@@ -5,6 +5,7 @@ export class Formula {
   fator_multa: number;
   fator_juros: number;
   fator_taxa: number;
+  desconto_indice: number;
   desconto_principal: number;
   desconto_multa: number;
   desconto_juros: number;
