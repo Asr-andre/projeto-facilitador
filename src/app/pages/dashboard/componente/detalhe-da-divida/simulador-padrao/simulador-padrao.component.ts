@@ -37,6 +37,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public ocultaBotaoPix: boolean = true;
   public dadosSimulacao: any;
   public dadosPixGerado: GerarPixResponse;
+  public loadingMin: boolean =false;
 
   @Output() clienteAtualizado = new EventEmitter<void>();
 
@@ -187,14 +188,16 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public recalcular(): void {
     const dadosParaEnvio = { ...this.form.value };
     dadosParaEnvio.data_atualizacao = this.datePipe.transform(dadosParaEnvio.data_atualizacao, "dd/MM/yyyy");
-
+    this.loadingMin = true;
     this.simuladorService.recalcularNegociacao(dadosParaEnvio).subscribe(
       (response: RecalculoRetornoModel) => {
         this.data = response;
+        this.loadingMin = false;
         this.calcularTotais();
         this.iniciarFormgerarPixBoleto();  // Reinicia o formulário de créditos com os valores atualizados
       },
       (error) => {
+        this.loadingMin = false;
         this._alertService.error("Erro ao recalcular:", error);
       }
     );
@@ -282,18 +285,21 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     if (this.formAcordo.valid) {
       const dadosParaEnvio = { ...this.formAcordo.value };
       dadosParaEnvio.vencimento = this.datePipe.transform(dadosParaEnvio.vencimento, "dd/MM/yyyy");
-
+      this.loadingMin = true;
       this.simuladorService.simularAcordo(dadosParaEnvio).subscribe(
         (response) => {
           if (response.success) {
+            this.loadingMin = false;
             this.dadosSimulacao = response;
             this.totalAcordo = this.dadosSimulacao.titulos.reduce((acc: number, item: any) => acc + item.valor, 0);
             this.simulaAcordo = true;
           } else {
+            this.loadingMin = false;
             this._alertService.error(response.msg);
           }
         },
         (error) => {
+          this.loadingMin = false;
           this._alertService.error("Ocorreu um erro ao simular o acordo.");
         }
       );

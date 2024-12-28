@@ -1,9 +1,15 @@
+
+
 <ng-template #modalTemplate let-modal>
   <div class="modal-header modal-header-custom" style="background: #3e4988; margin: 0">
     <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-calculator" style="margin-right: 5px;"></i>
       Simulação de Negociação</h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
       (click)="fechaModal()"></button>
+  </div>
+  <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
   </div>
   <div class="modal-body" style="padding-top: 2px; padding-bottom: 2px;">
     <form [formGroup]="form">
