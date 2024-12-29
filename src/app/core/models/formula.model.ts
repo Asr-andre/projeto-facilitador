@@ -38,9 +38,6 @@ export class FormulaRequest {
   id_empresa: number;
   descricao: string;
   usa_indice?: string;
-  multa: number;
-  juros: number;
-  taxa: number;
   desconto_principal: number;
   desconto_multa: number;
   desconto_juros: number;
