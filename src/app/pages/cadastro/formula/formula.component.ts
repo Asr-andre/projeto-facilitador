@@ -55,9 +55,6 @@ export class FormulaComponent implements OnInit {
       id_empresa: [dado?.id_empresa || this.idEmpresa],
       descricao: [dado?.descricao || '', Validators.required],
       usa_indice: [dado?.usa_indice || ''],
-      multa: [dado?.multa || 0, [Validators.min(0)]],
-      juros: [dado?.juros || 0, [Validators.min(0)]],
-      taxa: [dado?.taxa || 0, [Validators.min(0)]],
       desconto_principal: [dado?.desconto_principal || 0, [Validators.min(0)]],
       desconto_multa: [dado?.desconto_multa || 0, [Validators.min(0)]],
       desconto_juros: [dado?.desconto_juros || 0, [Validators.min(0)]],
@@ -157,6 +154,7 @@ export class FormulaComponent implements OnInit {
 
   public abriModalEditar(content: TemplateRef<any>, dados: FormulaRequest): void {
     this.editar = true;
+    console.log(dados);
     this.inicializarFormFomula(dados)
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
