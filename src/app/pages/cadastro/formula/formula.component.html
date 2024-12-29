@@ -173,10 +173,6 @@
             <label for="desconto_taxa" class="form-label">Desconto Taxa (%)</label>
             <input type="number" id="desconto_taxa" class="form-control form-control-sm mb-1" formControlName="desconto_taxa" min="0" (input)="verificarValorNegativo('desconto_taxa')" />
           </div>
-          <div class="col-md-3">
-            <label for="desconto_indice" class="form-label">Desconto Indice (%)</label>
-            <input type="number" id="desconto_indice" class="form-control form-control-sm mb-1" formControlName="desconto_indice" min="0" (input)="verificarValorNegativo('desconto_indice')" />
-          </div>
 
           <div class="col-md-3">
             <label for="desconto_taxa" class="form-label">Usar Indice</label>
@@ -186,6 +182,11 @@
               <option value="IPCA">IPCA</option>
               <option value="INCC">INCC</option>
             </select>
+          </div>
+
+          <div class="col-md-3">
+            <label for="desconto_indice" class="form-label">Desconto Indice (%)</label>
+            <input type="number" id="desconto_indice" class="form-control form-control-sm mb-1" formControlName="desconto_indice" min="0" (input)="verificarValorNegativo('desconto_indice')" />
           </div>
 
           <div class="col-md-3">
