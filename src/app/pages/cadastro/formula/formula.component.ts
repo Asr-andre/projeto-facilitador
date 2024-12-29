@@ -154,7 +154,6 @@ export class FormulaComponent implements OnInit {
 
   public abriModalEditar(content: TemplateRef<any>, dados: FormulaRequest): void {
     this.editar = true;
-    console.log(dados);
     this.inicializarFormFomula(dados)
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
