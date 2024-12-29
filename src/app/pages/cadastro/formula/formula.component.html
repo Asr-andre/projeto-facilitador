@@ -138,18 +138,18 @@
           </div>
 
           <div class="col-md-3">
-            <label for="desconto_multa" class="form-label">Multa (%)</label>
-            <input type="number" id="multa" class="form-control form-control-sm mb-1" formControlName="desconto_multa" min="0" min="0" (input)="verificarValorNegativo('desconto_multa')"/>
+            <label for="multa" class="form-label">Multa (%)</label>
+            <input type="number" id="multa" class="form-control form-control-sm mb-1" formControlName="multa" min="0" min="0" (input)="verificarValorNegativo('multa')"/>
           </div>
 
           <div class="col-md-3">
-            <label for="desconto_juros" class="form-label">Juros (%)</label>
-            <input type="number" id="juros" class="form-control form-control-sm mb-1" formControlName="desconto_juros" min="0" (input)="verificarValorNegativo('desconto_juros')"/>
+            <label for="juros" class="form-label">Juros (%)</label>
+            <input type="number" id="juros" class="form-control form-control-sm mb-1" formControlName="juros" min="0" (input)="verificarValorNegativo('juros')"/>
           </div>
 
           <div class="col-md-3">
-            <label for="desconto_taxa" class="form-label">Taxa (%)</label>
-            <input type="number" id="desconto_taxa" class="form-control form-control-sm mb-1" formControlName="desconto_taxa" min="0" (input)="verificarValorNegativo('desconto_taxa')" />
+            <label for="taxa" class="form-label">Taxa (%)</label>
+            <input type="number" id="taxa" class="form-control form-control-sm mb-1" formControlName="taxa" min="0" (input)="verificarValorNegativo('taxa')" />
           </div>
         </div>
 
@@ -172,6 +172,10 @@
           <div class="col-md-3">
             <label for="desconto_taxa" class="form-label">Desconto Taxa (%)</label>
             <input type="number" id="desconto_taxa" class="form-control form-control-sm mb-1" formControlName="desconto_taxa" min="0" (input)="verificarValorNegativo('desconto_taxa')" />
+          </div>
+          <div class="col-md-3">
+            <label for="desconto_indice" class="form-label">Desconto Indice (%)</label>
+            <input type="number" id="desconto_indice" class="form-control form-control-sm mb-1" formControlName="desconto_indice" min="0" (input)="verificarValorNegativo('desconto_indice')" />
           </div>
 
           <div class="col-md-3">
@@ -196,17 +200,17 @@
 
           <div class="col-md-3">
             <label for="receita_juros" class="form-label">Receita Juros (%)</label>
-            <input type="number" id="receita_juros" class="form-control form-control-sm mb-1" formControlName="receita_juros" min="0" (input)="verificarValorNegativo('receita_multa')" />
+            <input type="number" id="receita_juros" class="form-control form-control-sm mb-1" formControlName="receita_juros" min="0" (input)="verificarValorNegativo('receita_juros')" />
           </div>
 
           <div class="col-md-3">
             <label for="receita_indice" class="form-label">Receita Indice (%)</label>
-            <input type="number" id="receita_indice" class="form-control form-control-sm mb-1" formControlName="receita_indice" min="0" (input)="verificarValorNegativo('receita_multa')" />
+            <input type="number" id="receita_indice" class="form-control form-control-sm mb-1" formControlName="receita_indice" min="0" (input)="verificarValorNegativo('receita_indice')" />
           </div>
 
           <div class="col-md-3">
             <label for="receita_taxa" class="form-label">Receita Taxa (%)</label>
-            <input type="number" id="receita_taxa" class="form-control form-control-sm mb-1" formControlName="receita_taxa" min="0" (input)="verificarValorNegativo('receita_multa')" />
+            <input type="number" id="receita_taxa" class="form-control form-control-sm mb-1" formControlName="receita_taxa" min="0" (input)="verificarValorNegativo('receita_taxa')" />
           </div>
 
         </div>

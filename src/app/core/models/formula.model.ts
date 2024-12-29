@@ -38,10 +38,14 @@ export class FormulaRequest {
   id_empresa: number;
   descricao: string;
   usa_indice?: string;
+  fator_multa: number;
+  fator_juros: number;
+  fator_taxa: number;
   desconto_principal: number;
   desconto_multa: number;
   desconto_juros: number;
   desconto_taxa: number;
+  desconto_indice: number;
   receita_principal: number;
   receita_multa: number;
   receita_juros: number;
