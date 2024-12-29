@@ -54,6 +54,7 @@ export class FormulaComponent implements OnInit {
     this.formFormula = this._formBuilder.group({
       id_empresa: [dado?.id_empresa || this.idEmpresa],
       descricao: [dado?.descricao || '', Validators.required],
+      usa_indice: [dado?.usa_indice || ''],
       multa: [dado?.multa || 0, [Validators.min(0)]],
       juros: [dado?.juros || 0, [Validators.min(0)]],
       taxa: [dado?.taxa || 0, [Validators.min(0)]],
@@ -61,6 +62,11 @@ export class FormulaComponent implements OnInit {
       desconto_multa: [dado?.desconto_multa || 0, [Validators.min(0)]],
       desconto_juros: [dado?.desconto_juros || 0, [Validators.min(0)]],
       desconto_taxa: [dado?.desconto_taxa || 0, [Validators.min(0)]],
+      receita_principal: [dado?.receita_principal || 0, [Validators.min(0)]],
+      receita_multa: [dado?.receita_multa || 0, [Validators.min(0)]],
+      receita_juros: [dado?.receita_juros || 0, [Validators.min(0)]],
+      receita_indice: [dado?.receita_indice || 0, [Validators.min(0)]],
+      receita_taxa: [dado?.receita_taxa || 0, [Validators.min(0)]],
       user_login: [dado?.user_login || this.login, Validators.required],
     });
   }
@@ -149,21 +155,9 @@ export class FormulaComponent implements OnInit {
     }
   }
 
-  public abriModalEditar(content: TemplateRef<any>, formula: any): void {
+  public abriModalEditar(content: TemplateRef<any>, dados: FormulaRequest): void {
     this.editar = true;
-    this.formFormula.patchValue({
-      id_empresa: this.idEmpresa,
-      descricao: formula.descricao,
-      multa: formula.fator_multa,
-      juros: formula.fator_juros,
-      taxa: formula.fator_taxa,
-      desconto_principal: formula.desconto_principal,
-      desconto_multa: formula.desconto_multa,
-      desconto_juros: formula.desconto_juros,
-      desconto_taxa: formula.desconto_taxa,
-      user_login: this.login,
-    });
-
+    this.inicializarFormFomula(dados)
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
