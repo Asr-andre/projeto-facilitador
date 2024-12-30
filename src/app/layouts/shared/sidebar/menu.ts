@@ -55,6 +55,12 @@ import { MenuItem } from "./menu.model";
           parentId: 8,
         },
         {
+          id: 10,
+          label: "MENUITEMS.CADASTRO.LIST.CLIENTE",
+          link: "/cadastro/cliente",
+          parentId: 8,
+        },
+        {
           id: 11,
           label: "MENUITEMS.CADASTRO.LIST.USUARIOS",
           link: "/cadastro/usuarios",

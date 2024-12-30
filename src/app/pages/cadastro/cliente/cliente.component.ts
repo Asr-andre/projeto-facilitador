@@ -28,6 +28,7 @@ export class ClienteComponent {
   public idCliente: Number;
   public formCliente: FormGroup;
   public title: string = '';
+  public editar: boolean = false;
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 3;
@@ -68,7 +69,7 @@ export class ClienteComponent {
     this.formCliente = this._formBuilder.group({
       id_empresa: [this.idEmpresa],
       id_contratante: [dado?.id_contratante || ''],
-      id_cliente: [dado?.id_cliente || null],
+      id_cliente: [dado?.id_cliente || 0],
       identificador: [dado?.identificador || ''],
       nome: [dado?.nome || ''],
       tipo_pessoa: [dado?.tipo_pessoa || ''],
@@ -105,6 +106,7 @@ export class ClienteComponent {
     this.title = "Atualizar Dados do Cliente"
     this.devedorSelecionado = devedor;
     this.inicializarFormCliente(devedor)
+    this.editar = true;
   }
 
   public atualizarQuantidadeExibida() {
@@ -125,7 +127,8 @@ export class ClienteComponent {
   }
 
   public salvarCliente() {
-    if (this.devedorSelecionado.id_cliente > 0) {
+    console.log(this.editar);
+    if (this.editar == true) {
       this.editarCliente();
     } else {
       this.cadastrarCliente();
@@ -133,6 +136,7 @@ export class ClienteComponent {
   }
 
   public abilitarCadastro() {
+    this.editar = false;
     this.mostrarCardCliente = true;
     this.title = "Cadastrar Dados do Cliente"
   }
@@ -149,6 +153,7 @@ export class ClienteComponent {
         this.loading = false;
         if (res.success === 'true') {
           this._alertService.success(res.msg);
+          this.cancela();
         } else {
           this._alertService.warning(res.msg);
         }
@@ -218,6 +223,6 @@ export class ClienteComponent {
     this.mostrarCardCliente = false;
     this.mostrarCardTitulo = false;
     this.mostrarTabela =false;
-    this.inicializarFormCliente();
+    this.formCliente.reset();
   }
 }
