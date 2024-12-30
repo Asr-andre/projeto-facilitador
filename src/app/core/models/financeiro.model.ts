@@ -20,6 +20,15 @@ export class TituloLiquidado {
   valor_juros: number;
   valor_multa: number;
   valor_taxa: number;
+  desc_principal: number;
+  desc_multa: number;
+  desc_juros: number;
+  receita_principal: number;
+  receita_multa: number;
+  receita_juros: number;
+  receita_taxa: number;
+  comissao: number;
+  repasse: number;
 }
 
 export class RetornoTitulosLiquidados {

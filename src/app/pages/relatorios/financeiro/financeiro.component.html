@@ -112,6 +112,15 @@
                                   <th sortable="valor_juros" (sort)="ordenar($event)" scope="col">Valor Juros</th>
                                   <th sortable="valor_multa" (sort)="ordenar($event)" scope="col">Valor Multa</th>
                                   <th sortable="valor_taxa" (sort)="ordenar($event)" scope="col">Valor Taxa</th>
+                                  <th sortable="desc_principal" (sort)="ordenar($event)" scope="col">Desc Principal</th>
+                                  <th sortable="desc_multa" (sort)="ordenar($event)" scope="col">Desc Multa</th>
+                                  <th sortable="desc_juros" (sort)="ordenar($event)" scope="col">Desc Juros</th>
+                                  <th sortable="receita_principal" (sort)="ordenar($event)" scope="col">Receita Principipal</th>
+                                  <th sortable="receita_multa" (sort)="ordenar($event)" scope="col">Receita Multa</th>
+                                  <th sortable="receita_juros" (sort)="ordenar($event)" scope="col">Receita Juros</th>
+                                  <th sortable="receita_taxa" (sort)="ordenar($event)" scope="col">Receita Taxa</th>
+                                  <th sortable="comissao" (sort)="ordenar($event)" scope="col">Comissão</th>
+                                  <th sortable="repasse" (sort)="ordenar($event)" scope="col">Repasse</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -128,6 +137,15 @@
                                   <td>{{ item.valor_juros | currency: 'BRL':'symbol':'1.2-2' }}</td>
                                   <td>{{ item.valor_multa | currency: 'BRL':'symbol':'1.2-2' }}</td>
                                   <td>{{ item.valor_taxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td>{{ item.desc_principal | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td>{{ item.desc_multa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td>{{ item.desc_juros | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td>{{ item.receita_principal | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td>{{ item.receita_multa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td>{{ item.receita_juros | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td>{{ item.receita_taxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td>{{ item.comissao | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td>{{ item.repasse | currency: 'BRL':'symbol':'1.2-2' }}</td>
                                 </tr>
                                 <tr class="tabela-custom">
                                   <td colspan="6" style="text-align: right; font-weight: bold;">Total Pagamentos:</td>

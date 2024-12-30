@@ -1,20 +1,34 @@
 export class ClienteModel {
   id_empresa: number;
   id_contratante: number;
+  id_cliente?: number;
+  identificador?: string;
   nome: string;
+  tipo_pessoa: string;
   cnpj_cpf: string;
-  endereco: string;
   rg: string;
+  orgao_expedidor: string;
+  endereco: string;
   numero: string;
   complemento: string;
   bairro: string;
   cidade: string;
   uf: string;
   cep: string;
-  fone_celular: string;
-  fone_comercial: string;
-  fone_residencial: string;
+  pai: string;
+  mae: string;
+  sexo: string;
+  conjuge: string;
+  trabalho: string;
+  cargo: string;
+  valor_renda: number;
+  melhor_canal_localizacao: string;
+  fone_celular?: string;
+  fone_comercial?: string;
+  fone_residencial?: string;
+  email?: string;
   user_login: string;
+  data_nascimento: string;
 }
 
 // esse campos estão sendo usado para o componente de cadastro de cliente

@@ -1,7 +1,7 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { OrdenarPeloHeaderTabela } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
-import { Cliente} from 'src/app/core/models/cadastro/cliente.model';
+import { Cliente, ClienteModel} from 'src/app/core/models/cadastro/cliente.model';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
@@ -64,13 +64,17 @@ export class ClienteComponent {
     this.inicializarFormCliente();
   }
 
-  public inicializarFormCliente(dado?: Cliente) {
+  public inicializarFormCliente(dado?: ClienteModel) {
     this.formCliente = this._formBuilder.group({
       id_empresa: [this.idEmpresa],
       id_contratante: [dado?.id_contratante || ''],
+      id_cliente: [dado?.id_cliente || null],
+      identificador: [dado?.identificador || ''],
+      nome: [dado?.nome || ''],
+      tipo_pessoa: [dado?.tipo_pessoa || ''],
       cnpj_cpf: [dado?.cnpj_cpf || ''],
       rg: [dado?.rg || ''],
-      nome: [dado?.nome || ''],
+      orgao_expedidor: [dado?.orgao_expedidor || ''],
       endereco: [dado?.endereco || ''],
       numero: [dado?.numero || ''],
       complemento: [dado?.complemento || ''],
@@ -78,14 +82,26 @@ export class ClienteComponent {
       cidade: [dado?.cidade || ''],
       uf: [dado?.uf || ''],
       cep: [dado?.cep || ''],
-      user_login: [this.login]
-    })
-  }
+      pai: [dado?.pai || ''],
+      mae: [dado?.mae || ''],
+      sexo: [dado?.sexo || ''],
+      conjuge: [dado?.conjuge || ''],
+      trabalho: [dado?.trabalho || ''],
+      cargo: [dado?.cargo || ''],
+      valor_renda: [dado?.valor_renda || 0],
+      melhor_canal_localizacao: [dado?.melhor_canal_localizacao || ''],
+      fone_celular: [dado?.fone_celular || ''],
+      fone_comercial: [dado?.fone_comercial || ''],
+      fone_residencial: [dado?.fone_residencial || ''],
+      email: [dado?.email || ''],
+      user_login: [this.login],
+      data_nascimento: [dado?.data_nascimento || '']
+    });
+}
 
 
   public selecionarDevedor(devedor: Cliente): void {
     this.mostrarCardCliente = true;
-    this.mostrarCardTitulo = true;
     this.title = "Atualizar Dados do Cliente"
     this.devedorSelecionado = devedor;
     this.inicializarFormCliente(devedor)
@@ -108,25 +124,67 @@ export class ClienteComponent {
     );
   }
 
+  public salvarCliente() {
+    if (this.devedorSelecionado.id_cliente > 0) {
+      this.editarCliente();
+    } else {
+      this.cadastrarCliente();
+    }
+  }
+
   public abilitarCadastro() {
     this.mostrarCardCliente = true;
-    this.mostrarCardTitulo = true;
     this.title = "Cadastrar Dados do Cliente"
   }
 
   public cadastrarCliente() {
+    if (this.formCliente.invalid) {
+      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
 
-    this._servicoEmpresa.importarClientes(this.formCliente.value).subscribe((res) => {
-      if (res.success === 'true') {
-
-        this.idCliente = res.id_cliente;
-        this._alertService.success(res.msg);
-      } else  {
+    this.loading = true;
+    this._cliente.cadastrarCliente(this.formCliente.value).subscribe({
+      next: (res) => {
         this.loading = false;
-        this._alertService.warning(res.msg);
+        if (res.success === 'true') {
+          this._alertService.success(res.msg);
+        } else {
+          this._alertService.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this.loading = false;
+        this._alertService.error('Ocorreu um erro ao tentar cadastrar o cliente:', err);
       }
     });
   }
+
+  public editarCliente(): void {
+    if (this.formCliente.invalid) {
+      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
+    this.loading = true;
+
+    // Envia os dados do formulário se for válido
+    this._cliente.editarCliente(this.formCliente.value).subscribe({
+      next: (res) => {
+        this.loading = false;
+        if (res.success === 'true') {
+          this._alertService.success(res.msg);
+        } else {
+          this._alertService.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this.loading = false;
+        this._alertService.error('Ocorreu um erro ao tentar editar o cliente:', err);
+      }
+    });
+  }
+
 
   pesquisaClientes(): void {
     if (!this.textoPesquisa.trim()) {
@@ -134,9 +192,11 @@ export class ClienteComponent {
       return;
     }
 
+    const texto = this.textoPesquisa.replace(/[.\-\/]/g, '').trim();
+
     this.loading = true;
 
-    this._cliente.pesquisarCliente(this.textoPesquisa.trim()).subscribe({
+    this._cliente.pesquisarCliente(texto).subscribe({
       next: (res) => {
         if (res.success === 'true') {
           this.listarDevedor = res.cliente || [];
@@ -148,8 +208,7 @@ export class ClienteComponent {
         this.loading = false;
       },
       error: (err) => {
-        console.error('Erro ao pesquisar clientes:', err);
-        this._alertService.error('Erro ao buscar clientes. Tente novamente mais tarde.');
+        this._alertService.error('Erro ao pesquisar clientes:', err);
         this.loading = false;
       }
     });
