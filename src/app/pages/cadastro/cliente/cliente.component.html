@@ -102,7 +102,7 @@
 
                           <div class="col-md-2 form-group">
                             <label for="cnpj_cpf" class="form-label">CNPJ/CPF</label>
-                            <input type="text" id="cnpj_cpf" class="form-control form-control-sm" formControlName="cnpj_cpf" />
+                            <input type="text" id="cnpj_cpf" class="form-control form-control-sm" formControlName="cnpj_cpf" mascaraCpfCnpj />
                           </div>
 
                           <div class="col-md-2 form-group">
@@ -117,12 +117,12 @@
 
                           <div class="col-md-2 form-group">
                             <label for="cep" class="form-label">CEP</label>
-                            <input type="text" id="cep" class="form-control form-control-sm" formControlName="cep" />
+                            <input type="text" id="cep" class="form-control form-control-sm" formControlName="cep" mask="00000-000" (blur)="viaCep($event.target.value)" />
                           </div>
 
                           <div class="col-md-4 form-group">
                             <label for="endereco" class="form-label">Endereço</label>
-                            <input type="text" id="endereco" class="form-control form-control-sm" formControlName="endereco" />
+                            <input type="text" id="endereco" class="form-control form-control-sm" formControlName="endereco" [value]="cep?.endereco" (input)="cep.endereco = $event.target.value"/>
                           </div>
 
                           <div class="col-md-2 form-group">
@@ -132,22 +132,51 @@
 
                           <div class="col-md-2 form-group">
                             <label for="complemento" class="form-label">Complemento</label>
-                            <input type="text" id="complemento" class="form-control form-control-sm" formControlName="complemento" />
+                            <input type="text" id="complemento" class="form-control form-control-sm" formControlName="complemento" [value]="cep?.complemento" (input)="cep.complemento = $event.target.value"/>
                           </div>
 
                           <div class="col-md-6 form-group">
                             <label for="bairro" class="form-label">Bairro</label>
-                            <input type="text" id="bairro" class="form-control form-control-sm" formControlName="bairro" />
+                            <input type="text" id="bairro" class="form-control form-control-sm" formControlName="bairro" [value]="cep?.bairro" (input)="cep.bairro = $event.target.value"/>
                           </div>
 
                           <div class="col-md-4 form-group">
                             <label for="cidade" class="form-label">Cidade</label>
-                            <input type="text" id="cidade" class="form-control form-control-sm" formControlName="cidade" />
+                            <input type="text" id="cidade" class="form-control form-control-sm" formControlName="cidade" [value]="cep?.cidade" (input)="cep.cidade = $event.target.value"/>
                           </div>
 
                           <div class="col-md-2 form-group">
                             <label for="uf" class="form-label">UF</label>
-                            <input type="text" id="uf" class="form-control form-control-sm" formControlName="uf" />
+                            <select class="form-control form-control-sm" formControlName="uf" placeholder="UF" [value]="cep?.uf" (input)="cep.uf = $event.target.value">
+                              <option value="">--</option>
+                              <option value="AC">AC</option>
+                              <option value="AL">AL</option>
+                              <option value="AM">AM</option>
+                              <option value="AP">AP</option>
+                              <option value="BA">BA</option>
+                              <option value="CE">CE</option>
+                              <option value="DF">DF</option>
+                              <option value="ES">ES</option>
+                              <option value="GO">GO</option>
+                              <option value="MA">MA</option>
+                              <option value="MG">MG</option>
+                              <option value="MS">MS</option>
+                              <option value="MT">MT</option>
+                              <option value="PA">PA</option>
+                              <option value="PB">PB</option>
+                              <option value="PE">PE</option>
+                              <option value="PI">PI</option>
+                              <option value="PR">PR</option>
+                              <option value="RJ">RJ</option>
+                              <option value="RN">RN</option>
+                              <option value="RO">RO</option>
+                              <option value="RR">RR</option>
+                              <option value="RS">RS</option>
+                              <option value="SC">SC</option>
+                              <option value="SR">SE</option>
+                              <option value="SP">SP</option>
+                              <option value="TO">TO</option>
+                            </select>
                           </div>
 
                           <div class="col-md-2 form-group">

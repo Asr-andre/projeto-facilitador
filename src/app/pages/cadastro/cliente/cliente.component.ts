@@ -1,13 +1,15 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrdenarPeloHeaderTabela } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
+import { Utils } from 'src/app/core/helpers/utils';
 import { Cliente, ClienteModel} from 'src/app/core/models/cadastro/cliente.model';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
+import { CepModel } from 'src/app/core/models/cep.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
 import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
-import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
+import { ConsultaCepService } from 'src/app/core/services/consulta.cep.service';
 
 @Component({
   selector: 'app-cliente',
@@ -29,6 +31,7 @@ export class ClienteComponent {
   public formCliente: FormGroup;
   public title: string = '';
   public editar: boolean = false;
+  public cep = new CepModel();
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 3;
@@ -52,11 +55,11 @@ export class ClienteComponent {
   public mostrarSemDivida: boolean = false;
 
   constructor(
+    private _retornoCep: ConsultaCepService,
     private _cliente: ClienteService,
     private _contratanteService: ContratanteService,
     private _auth: AuthenticationService,
     private _formBuilder: FormBuilder,
-    private _servicoEmpresa: EmpresaService,
     private _alertService: AlertService
   ) {}
 
@@ -73,7 +76,7 @@ export class ClienteComponent {
       identificador: [dado?.identificador || ''],
       nome: [dado?.nome || ''],
       tipo_pessoa: [dado?.tipo_pessoa || ''],
-      cnpj_cpf: [dado?.cnpj_cpf || ''],
+      cnpj_cpf: [dado?.cnpj_cpf || '', Validators.maxLength(14)],
       rg: [dado?.rg || ''],
       orgao_expedidor: [dado?.orgao_expedidor || ''],
       endereco: [dado?.endereco || ''],
@@ -225,4 +228,22 @@ export class ClienteComponent {
     this.mostrarTabela =false;
     this.formCliente.reset();
   }
+
+  public viaCep(cep: string): void {
+    if (cep) {
+      this._retornoCep.consultarCep(cep)
+        .then((cepResponse: CepModel | null) => {
+          if (cepResponse) {
+            this.cep = cepResponse; // Atualiza o objeto CEP
+          } else {
+            this.cep = null; // Define como null se não houver retorno
+          }
+        })
+        .catch(() => {
+          // Tratamento de erro (opcional)
+          this.cep = null;
+        });
+    }
+  }
+
 }
