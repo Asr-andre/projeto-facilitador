@@ -27,8 +27,6 @@ export class ClienteComponent {
   public login = this._auth.getLogin();
   public mostrarTabela: Boolean = false;
   public mostrarCardCliente: Boolean = false;
-  public mostrarCardTitulo: Boolean = false;
-  public idCliente: Number;
   public formCliente: FormGroup;
   public title: string = '';
   public editar: boolean = true;
@@ -43,25 +41,13 @@ export class ClienteComponent {
   public direcaoOrdenacao: { [key: string]: string } = {};
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<Cliente>>;
 
-  public qtdeEmail: number = 0;
-  public totalEmail: number = 0;
-  public qtdeSms: number = 0;
-  public totalSms: number = 0;
-  public qtdeWhatsapp: number = 0;
-  public totalWhatsapp: number = 0;
-  public totalUtilizado: number = 0;
-  public saldo: number = 0;
-
-  public tipoPesquisa: string = "nome";
-  public mostrarSemDivida: boolean = false;
-
   constructor(
     private _retornoCep: ConsultaCepService,
     private _cliente: ClienteService,
-    private _contratanteService: ContratanteService,
+    private _contratante: ContratanteService,
     private _auth: AuthenticationService,
     private _formBuilder: FormBuilder,
-    private _alertService: AlertService,
+    private _alert: AlertService,
     private _datePipe: DatePipe,
   ) {}
 
@@ -116,7 +102,7 @@ export class ClienteComponent {
 
   pesquisaClientes(): void {
     if (!this.textoPesquisa.trim()) {
-      this._alertService.warning('Por favor, insira um cpf para a pesquisa o cliente.');
+      this._alert.warning('Por favor, insira um cpf para a pesquisa o cliente.');
       return;
     }
 
@@ -130,13 +116,13 @@ export class ClienteComponent {
           this.listarDevedor = res.cliente || [];
           this.mostrarTabela = true;
         } else {
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
           this.listarDevedor = [];
         }
         this.loading = false;
       },
       error: (err) => {
-        this._alertService.error('Erro ao pesquisar clientes:', err);
+        this._alert.error('Erro ao pesquisar clientes:', err);
         this.loading = false;
       }
     });
@@ -150,11 +136,11 @@ export class ClienteComponent {
   }
 
   public obterContratantes() {
-    this._contratanteService.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
+    this._contratante.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
       this.contratantes = res.contratantes;
     },
       (error) => {
-        this._alertService.error('Ocorreu um erro ao obter os contratantes.');
+        this._alert.error('Ocorreu um erro ao obter os contratantes.');
       }
     );
   }
@@ -164,7 +150,7 @@ export class ClienteComponent {
 
   if (this.formCliente.invalid) {
     this.marcarCamposComoTocados(this.formCliente);
-    this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+    this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
     return;
   }
 
@@ -193,7 +179,7 @@ export class ClienteComponent {
 
   public cadastrarCliente() {
     if (this.formCliente.invalid) {
-      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
@@ -206,22 +192,22 @@ export class ClienteComponent {
       next: (res) => {
         this.loading = false;
         if (res.success === 'true') {
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.cancela();
         } else {
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
       error: (err) => {
         this.loading = false;
-        this._alertService.error('Ocorreu um erro ao tentar cadastrar o cliente:', err);
+        this._alert.error('Ocorreu um erro ao tentar cadastrar o cliente:', err);
       }
     });
   }
 
   public editarCliente(): void {
     if (this.formCliente.invalid) {
-      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
@@ -236,14 +222,14 @@ export class ClienteComponent {
         this.loading = false;
         if (res.success === 'true') {
           this.pesquisaClientes();
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
         } else {
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
       error: (err) => {
         this.loading = false;
-        this._alertService.error('Ocorreu um erro ao tentar editar o cliente:', err);
+        this._alert.error('Ocorreu um erro ao tentar editar o cliente:', err);
       }
     });
   }
