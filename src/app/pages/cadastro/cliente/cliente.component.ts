@@ -73,7 +73,7 @@ export class ClienteComponent {
   public inicializarFormCliente(dado?: ClienteModel) {
     this.formCliente = this._formBuilder.group({
       id_empresa: [this.idEmpresa],
-      id_contratante: [dado?.id_contratante || ''],
+      id_contratante: [dado?.id_contratante || '', [Validators.required]],
       id_cliente: [dado?.id_cliente || 0],
       identificador: [dado?.identificador || ''],
       nome: [dado?.nome || ''],
@@ -87,7 +87,7 @@ export class ClienteComponent {
       bairro: [dado?.bairro || ''],
       cidade: [dado?.cidade || ''],
       uf: [dado?.uf || ''],
-      cep: [dado?.cep || ''],
+      cep: [dado?.cep || '', [Validators.required]],
       pai: [dado?.pai || ''],
       mae: [dado?.mae || ''],
       sexo: [dado?.sexo || ''],
@@ -114,6 +114,34 @@ export class ClienteComponent {
     this.editar = true;
   }
 
+  pesquisaClientes(): void {
+    if (!this.textoPesquisa.trim()) {
+      this._alertService.warning('Por favor, insira um cpf para a pesquisa o cliente.');
+      return;
+    }
+
+    const texto = this.textoPesquisa.replace(/[.\-\/]/g, '').trim();
+
+    this.loading = true;
+
+    this._cliente.pesquisarCliente(texto).subscribe({
+      next: (res) => {
+        if (res.success === 'true') {
+          this.listarDevedor = res.cliente || [];
+          this.mostrarTabela = true;
+        } else {
+          this._alertService.warning(res.msg);
+          this.listarDevedor = [];
+        }
+        this.loading = false;
+      },
+      error: (err) => {
+        this._alertService.error('Erro ao pesquisar clientes:', err);
+        this.loading = false;
+      }
+    });
+  }
+
   public atualizarQuantidadeExibida() {
     this.totalRegistrosExibidos = Math.min(
       this.paginaAtual * this.itensPorPagina,
@@ -135,6 +163,7 @@ export class ClienteComponent {
     this.formCliente.get('cnpj_cpf')?.enable();
 
   if (this.formCliente.invalid) {
+    this.marcarCamposComoTocados(this.formCliente);
     this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
     return;
   }
@@ -145,6 +174,14 @@ export class ClienteComponent {
     } else {
       this.cadastrarCliente();
     }
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 
   public abilitarCadastro() {
@@ -198,6 +235,7 @@ export class ClienteComponent {
       next: (res) => {
         this.loading = false;
         if (res.success === 'true') {
+          this.pesquisaClientes();
           this._alertService.success(res.msg);
         } else {
           this._alertService.warning(res.msg);
@@ -206,35 +244,6 @@ export class ClienteComponent {
       error: (err) => {
         this.loading = false;
         this._alertService.error('Ocorreu um erro ao tentar editar o cliente:', err);
-      }
-    });
-  }
-
-
-  pesquisaClientes(): void {
-    if (!this.textoPesquisa.trim()) {
-      this._alertService.warning('Por favor, insira um cpf para a pesquisa o cliente.');
-      return;
-    }
-
-    const texto = this.textoPesquisa.replace(/[.\-\/]/g, '').trim();
-
-    this.loading = true;
-
-    this._cliente.pesquisarCliente(texto).subscribe({
-      next: (res) => {
-        if (res.success === 'true') {
-          this.listarDevedor = res.cliente || [];
-          this.mostrarTabela = true;
-        } else {
-          this._alertService.warning(res.msg);
-          this.listarDevedor = [];
-        }
-        this.loading = false;
-      },
-      error: (err) => {
-        this._alertService.error('Erro ao pesquisar clientes:', err);
-        this.loading = false;
       }
     });
   }

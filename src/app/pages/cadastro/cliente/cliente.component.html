@@ -78,7 +78,8 @@
                         <div class="row">
                           <div class="col-md-2 form-group">
                             <label for="id_contratante" class="form-label">Contratante</label>
-                            <select class="form-control form-control-sm" formControlName="id_contratante">
+                            <select class="form-control form-control-sm" formControlName="id_contratante"
+                            [ngClass]="{'is-invalid': formCliente.get('id_contratante').invalid && formCliente.get('id_contratante').touched}">
                               <option value="">Selecione</option>
                               <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">
                                 {{ contratante.fantasia }}
@@ -102,7 +103,8 @@
 
                           <div class="col-md-2 form-group">
                             <label for="cnpj_cpf" class="form-label">CNPJ/CPF</label>
-                            <input type="text" id="cnpj_cpf" class="form-control form-control-sm" formControlName="cnpj_cpf" mascaraCpfCnpj />
+                            <input type="text" id="cnpj_cpf" class="form-control form-control-sm" formControlName="cnpj_cpf" mascaraCpfCnpj
+                            [ngClass]="{'is-invalid': formCliente.get('cnpj_cpf').invalid && formCliente.get('cnpj_cpf').touched}"/>
                           </div>
 
                           <div class="col-md-2 form-group">
@@ -117,7 +119,8 @@
 
                           <div class="col-md-2 form-group">
                             <label for="cep" class="form-label">CEP</label>
-                            <input type="text" id="cep" class="form-control form-control-sm" formControlName="cep" mask="00000-000" (blur)="viaCep($event.target.value)" />
+                            <input type="text" id="cep" class="form-control form-control-sm" formControlName="cep" mask="00000-000" (blur)="viaCep($event.target.value)"
+                            [ngClass]="{'is-invalid': formCliente.get('cep').invalid && formCliente.get('cep').touched}">
                           </div>
 
                           <div class="col-md-4 form-group">
