@@ -65,11 +65,25 @@ export class SmsComponent implements OnInit {
   }
 
   public controleBotao() {
+    if (this.smsForm.invalid) {
+      this.marcarCamposComoTocados(this.smsForm);
+      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
     if(this.editar == false) {
       this.cadastraSms();
     } else {
       this.editarSms();
     }
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 
   public obterPerfilSms() {

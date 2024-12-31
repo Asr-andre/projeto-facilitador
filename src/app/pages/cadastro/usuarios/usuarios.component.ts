@@ -38,7 +38,7 @@ export class UsuariosComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _modalService: NgbModal,
     private _auth: AuthenticationService,
-    private _alertService: AlertService
+    private _alert: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -64,11 +64,25 @@ export class UsuariosComponent implements OnInit {
   }
 
   public controleBotao() {
+    if (this.formUsuario.invalid) {
+      this.marcarCamposComoTocados(this.formUsuario);
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
     if(this.editar == false) {
       this.cadastrarUsuario();
     } else {
       this.editarUsuario();
     }
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 
   public obterUsuarios() {
@@ -80,7 +94,7 @@ export class UsuariosComponent implements OnInit {
       this.loading = false;
     },
     (error) => {
-      this._alertService.error('Ocorreu um erro ao obter os usuários.');
+      this._alert.error('Ocorreu um erro ao obter os usuários.');
       this.loading = false;
     });
   }
@@ -124,19 +138,19 @@ export class UsuariosComponent implements OnInit {
         if (res && res.success === "true") {
           this.loading = false;
           this.obterUsuarios();
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.fechar();
         } else {
           this.loading = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
       (error) => {
         this.loading = false;
-        this._alertService.error("Ocorreu um erro ao tentar cadastrar o usuário.");
+        this._alert.error("Ocorreu um erro ao tentar cadastrar o usuário.");
       });
     } else {
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
@@ -153,19 +167,19 @@ export class UsuariosComponent implements OnInit {
         if (res && res.success === "true") {
           this.loading = false;
           this.obterUsuarios();
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.fechar();
         } else {
           this.loading = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
       (error) => {
         this.loading = false;
-        this._alertService.error("Ocorreu um erro ao tentar editar o usuário.", error);
+        this._alert.error("Ocorreu um erro ao tentar editar o usuário.", error);
       });
     } else {
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 

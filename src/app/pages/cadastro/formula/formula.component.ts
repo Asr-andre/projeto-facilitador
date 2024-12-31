@@ -118,11 +118,25 @@ export class FormulaComponent implements OnInit {
   }
 
   public controleBotao() {
+    if (this.formFormula.invalid) {
+      this.marcarCamposComoTocados(this.formFormula);
+      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
     if(this.editar == false) {
       this.cadastrarFormula();
     } else {
       this.editarFormula();
     }
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 
   public abriModalCadastro(content: TemplateRef<any>): void {

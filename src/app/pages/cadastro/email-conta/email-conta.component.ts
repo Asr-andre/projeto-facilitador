@@ -65,11 +65,25 @@ export class EmailContaComponent implements OnInit {
   }
 
   public controleBotao() {
+    if (this.emailContaForm.invalid) {
+      this.marcarCamposComoTocados(this.emailContaForm);
+      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
     if(this.editar == false) {
       this.cadastrarEmailConta();
     } else {
       this.editarEmailConta();
     }
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 
   public modalCadastrar(content: TemplateRef<any>): void {
