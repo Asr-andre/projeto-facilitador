@@ -30,7 +30,7 @@ export class ClienteComponent {
   public idCliente: Number;
   public formCliente: FormGroup;
   public title: string = '';
-  public editar: boolean = false;
+  public editar: boolean = true;
   public cep = new CepModel();
 
   public paginaAtual: number = 1;
@@ -76,7 +76,7 @@ export class ClienteComponent {
       identificador: [dado?.identificador || ''],
       nome: [dado?.nome || ''],
       tipo_pessoa: [dado?.tipo_pessoa || ''],
-      cnpj_cpf: [dado?.cnpj_cpf || '', Validators.maxLength(14)],
+      cnpj_cpf: [{ value: dado?.cnpj_cpf || '', disabled: this.editar }, [Validators.required]],
       rg: [dado?.rg || ''],
       orgao_expedidor: [dado?.orgao_expedidor || ''],
       endereco: [dado?.endereco || ''],
@@ -130,7 +130,14 @@ export class ClienteComponent {
   }
 
   public salvarCliente() {
-    console.log(this.editar);
+    this.formCliente.get('cnpj_cpf')?.enable();
+
+  if (this.formCliente.invalid) {
+    this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+    return;
+  }
+
+    this.formCliente.getRawValue();
     if (this.editar == true) {
       this.editarCliente();
     } else {
@@ -142,6 +149,7 @@ export class ClienteComponent {
     this.editar = false;
     this.mostrarCardCliente = true;
     this.title = "Cadastrar Dados do Cliente"
+    this.inicializarFormCliente();
   }
 
   public cadastrarCliente() {
@@ -196,7 +204,7 @@ export class ClienteComponent {
 
   pesquisaClientes(): void {
     if (!this.textoPesquisa.trim()) {
-      this._alertService.warning('Por favor, insira um texto para a pesquisa.');
+      this._alertService.warning('Por favor, insira um cpf para a pesquisa o cliente.');
       return;
     }
 
@@ -224,9 +232,9 @@ export class ClienteComponent {
 
   public cancela() {
     this.mostrarCardCliente = false;
-    this.mostrarCardTitulo = false;
     this.mostrarTabela =false;
     this.formCliente.reset();
+    this.editar = true;
   }
 
   public viaCep(cep: string): void {
@@ -246,4 +254,14 @@ export class ClienteComponent {
     }
   }
 
+  public mascararCpfCnpj(value: string): string {
+    if (value) {
+      return Utils.formatarDocumento(value);
+    }
+    return value;
+  }
+
+  public data(data) {
+    return Utils.formatarDataParaExibicao(data);
+  }
 }

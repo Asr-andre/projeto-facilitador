@@ -49,9 +49,9 @@
                       (click)="selecionarDevedor(devedor)">
                       <td>{{ devedor.id_contratante }}</td>
                       <td>{{ devedor.id_cliente }}</td>
-                      <td>{{devedor.cnpj_cpf }}</td>
+                      <td>{{ mascararCpfCnpj(devedor.cnpj_cpf) }}</td>
                       <td>{{ devedor.nome}}</td>
-                      <td>{{ devedor.data_cadastro }}</td>
+                      <td>{{ data(devedor.data_cadastro) }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -234,12 +234,12 @@
                               type="submit"
                               class="btn btn-sm me-1"
                               [ngClass]="{
-                                'btn-primary': devedorSelecionado?.id_cliente,
-                                'btn-success': !devedorSelecionado?.id_cliente
+                                'btn-primary': editar,
+                                'btn-success': !editar
                               }"
                               (click)="salvarCliente()"
                             >
-                              <i class="fas fa-save"></i> Salvar
+                              <i class="fas fa-save"></i> {{ editar ? 'Atualizar' : 'Salvar' }}
                             </button>
                             <button type="button" class="btn btn-danger btn-sm" (click)="cancela()">
                               <i class="fas fa-times"></i> Cancelar
