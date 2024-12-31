@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrdenarPeloHeaderTabela } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
@@ -60,7 +61,8 @@ export class ClienteComponent {
     private _contratanteService: ContratanteService,
     private _auth: AuthenticationService,
     private _formBuilder: FormBuilder,
-    private _alertService: AlertService
+    private _alertService: AlertService,
+    private _datePipe: DatePipe,
   ) {}
 
   ngOnInit(): void {
@@ -158,8 +160,12 @@ export class ClienteComponent {
       return;
     }
 
+      const dadosParaEnvio = { ...this.formCliente.value };
+      dadosParaEnvio.vencimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
+
     this.loading = true;
-    this._cliente.cadastrarCliente(this.formCliente.value).subscribe({
+
+    this._cliente.cadastrarCliente(dadosParaEnvio).subscribe({
       next: (res) => {
         this.loading = false;
         if (res.success === 'true') {
@@ -182,10 +188,13 @@ export class ClienteComponent {
       return;
     }
 
+    const dadosParaEnvio = { ...this.formCliente.value };
+      dadosParaEnvio.vencimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
+
     this.loading = true;
 
     // Envia os dados do formulário se for válido
-    this._cliente.editarCliente(this.formCliente.value).subscribe({
+    this._cliente.editarCliente(dadosParaEnvio).subscribe({
       next: (res) => {
         this.loading = false;
         if (res.success === 'true') {
@@ -263,5 +272,13 @@ export class ClienteComponent {
 
   public data(data) {
     return Utils.formatarDataParaExibicao(data);
+  }
+
+  public verificarValorNegativo(campo: string) {
+    const valor = this.formCliente.get(campo)?.value;
+
+    if (valor <= 0) {
+      this.formCliente.get(campo)?.setValue(0);
+    }
   }
 }

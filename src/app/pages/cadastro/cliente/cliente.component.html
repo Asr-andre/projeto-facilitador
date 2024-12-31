@@ -215,7 +215,7 @@
 
                           <div class="col-md-2 form-group">
                             <label for="valor_renda" class="form-label">Valor Renda</label>
-                            <input type="number" id="valor_renda" class="form-control form-control-sm" formControlName="valor_renda" />
+                            <input type="number" id="valor_renda" class="form-control form-control-sm" formControlName="valor_renda" min="0" (input)="verificarValorNegativo('valor_renda')" />
                           </div>
 
                           <div class="col-md-3 form-group">
