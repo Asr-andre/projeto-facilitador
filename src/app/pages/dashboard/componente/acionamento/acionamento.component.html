@@ -24,7 +24,15 @@
           <td>{{ acionamento.id_acionamento }}</td>
           <td>{{ acionamento.descricao }}</td>
           <td>{{ data(acionamento.data_acio) }}</td>
-          <td>{{ acionamento.mensagem }}</td>
+          <td>
+            <span
+              [ngbTooltip]="acionamento.mensagem"
+              placement="top"
+              container="body"
+            >
+              {{ mostraConteudoTruncado(acionamento.mensagem, 30) }}
+            </span>
+          </td>
           <td>{{ acionamento.fone }}</td>
           <td>{{ data(acionamento.data_prox_acio) }}</td>
           <td>{{ acionamento.titulo }}</td>
@@ -45,9 +53,11 @@
       <div class="row">
         <div class="col-md-6 form-group">
           <label for="id_acao" class="form-label">Selecione uma ação</label>
-          <select class="form-control form-control-sm mb-1" formControlName="id_acao">
+          <select class="form-control form-control-sm mb-1" formControlName="id_acao"
+          [ngClass]="{'is-invalid': formAcionamento.get('id_acao').invalid && formAcionamento.get('id_acao').touched}">
             <option *ngFor="let acao of acoesCobranca" [value]="acao.id_acao">{{ acao.descricao }}</option>
           </select>
+
         </div>
 
         <div class="col-md-6 form-group">
@@ -58,7 +68,8 @@
           <input type="datetime-local" class="form-control form-control-sm mb-2" id="dataHora" formControlName="data_prox_acio" />
         </div>
         <div class="col-md-12 form-group">
-          <textarea class="form-control form-control-sm mb-2" formControlName="mensagem" placeholder="Digite sua mensagem" rows="5"></textarea>
+          <textarea class="form-control form-control-sm mb-2" formControlName="mensagem" placeholder="Digite sua mensagem" rows="5"
+          [ngClass]="{'is-invalid': formAcionamento.get('mensagem').invalid && formAcionamento.get('mensagem').touched}"></textarea>
         </div>
       </div>
 

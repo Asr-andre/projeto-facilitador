@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, debounceTime } from 'rxjs';
 import { Utils } from 'src/app/core/helpers/utils';
@@ -27,6 +27,9 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   public acionamentos: AcionamentoModel[] = [];
   public acoesCobranca: AcaoCobrancaModel[] = [];
   public formAcionamento: FormGroup;
+  public conteudoCompleto: string = "";
+  public textoVisivel: string = ''; // Armazena o texto atualmente visível
+
 
   private updateSubject: Subject<void> = new Subject<void>();
 
@@ -71,10 +74,10 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       id_empresa: [this.idEmpresa],
       id_contratante: [this.idContratante],
       id_cliente: [this.idCliente],
-      id_acao: [],
+      id_acao: ['', Validators.required],
       data_prox_acio: [{ value: null, disabled: true }], // Inicializa desabilitado
       id_usuario: [this.idUsuario],
-      mensagem: [""],
+      mensagem: ["", Validators.required],
       user_login: [this.usuario],
     });
   }
@@ -141,6 +144,12 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   }
 
   public enviarAcionamento(): void {
+    if (this.formAcionamento.invalid) {
+      this.marcarCamposComoTocados(this.formAcionamento);
+      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
     const acionamento = { ...this.formAcionamento.value };
 
     if (acionamento.data_prox_acio) {
@@ -164,6 +173,27 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       }
     );
   }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
+  }
+
+  public mostraConteudoTruncado(texto: string, limite: number): string {
+    return texto.length > limite ? texto.substring(0, limite) + '...' : texto;
+  }
+
+  public exibirConteudoCompleto(acionamento: any, campo: string): void {
+    acionamento[campo + '_visivel'] = acionamento[campo]; // Mostra o texto completo
+  }
+
+  public ocultarConteudoTruncado(acionamento: any, campo: string, limite: number): void {
+    acionamento[campo + '_visivel'] = this.mostraConteudoTruncado(acionamento[campo], limite); // Volta ao texto truncado
+  }
+
 
   public fechar() {
     this.formAcionamento.reset();

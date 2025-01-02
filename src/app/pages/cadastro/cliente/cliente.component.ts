@@ -92,7 +92,7 @@ export class ClienteComponent {
 
   pesquisaClientes(): void {
     if (!this.textoPesquisa.trim()) {
-      this._alert.warning('Por favor, insira um cpf para a pesquisa o cliente.');
+      this._alert.warning('Por favor, insira um cpf ou nome para a pesquisa o cliente.');
       return;
     }
 
