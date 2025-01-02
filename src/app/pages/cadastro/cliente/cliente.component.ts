@@ -1,7 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { Component, QueryList, ViewChildren } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { OrdenarPeloHeaderTabela } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
 import { Cliente, ClienteModel} from 'src/app/core/models/cadastro/cliente.model';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
@@ -18,8 +17,8 @@ import { ConsultaCepService } from 'src/app/core/services/consulta.cep.service';
   styleUrl: './cliente.component.scss'
 })
 export class ClienteComponent {
-  public listarDevedor: Cliente[] = [];
-  public devedorSelecionado: Cliente | null = null;
+  public listarCliente: Cliente[] = [];
+  public clienteSelecionado: Cliente | null = null;
   public contratantes: ContratanteModel [] = [];
   public loading: boolean = false;
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
@@ -31,15 +30,7 @@ export class ClienteComponent {
   public title: string = '';
   public editar: boolean = true;
   public cep = new CepModel();
-
-  public paginaAtual: number = 1;
-  public itensPorPagina: number = 3;
-  public dadosFiltrados: Cliente[] = [];
   public textoPesquisa: string = "";
-  public totalRegistros: number = 0;
-  public totalRegistrosExibidos: number = 0;
-  public direcaoOrdenacao: { [key: string]: string } = {};
-  @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<Cliente>>;
 
   constructor(
     private _retornoCep: ConsultaCepService,
@@ -89,14 +80,13 @@ export class ClienteComponent {
       user_login: [this.login],
       data_nascimento: [dado?.data_nascimento || '']
     });
-}
+  }
 
-
-  public selecionarDevedor(devedor: Cliente): void {
+  public selecionarcliente(cliente: Cliente): void {
     this.mostrarCardCliente = true;
     this.title = "Atualizar Dados do Cliente"
-    this.devedorSelecionado = devedor;
-    this.inicializarFormCliente(devedor)
+    this.clienteSelecionado = cliente;
+    this.inicializarFormCliente(cliente)
     this.editar = true;
   }
 
@@ -125,11 +115,12 @@ export class ClienteComponent {
     this._cliente.pesquisarCliente(dados).subscribe({
       next: (res) => {
         if (res.success === 'true' && res.cliente && res.cliente.length > 0) {
-          this.listarDevedor = res.cliente || [];
+          this.listarCliente = res.cliente || [];
           this.mostrarTabela = true;
         } else {
+          this.cancela()
+          this.listarCliente = [];
           this._alert.warning("Cliente não localizado")
-          this.editar = true;
         }
         this.loading = false;
       },
@@ -138,13 +129,6 @@ export class ClienteComponent {
         this.loading = false;
       }
     });
-  }
-
-  public atualizarQuantidadeExibida() {
-    this.totalRegistrosExibidos = Math.min(
-      this.paginaAtual * this.itensPorPagina,
-      this.totalRegistros
-    );
   }
 
   public obterContratantes() {
@@ -160,11 +144,11 @@ export class ClienteComponent {
   public salvarCliente() {
     this.formCliente.get('cnpj_cpf')?.enable();
 
-  if (this.formCliente.invalid) {
-    this.marcarCamposComoTocados(this.formCliente);
-    this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
-    return;
-  }
+    if (this.formCliente.invalid) {
+      this.marcarCamposComoTocados(this.formCliente);
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
 
     this.formCliente.getRawValue();
     if (this.editar == true) {
@@ -228,7 +212,6 @@ export class ClienteComponent {
 
     this.loading = true;
 
-    // Envia os dados do formulário se for válido
     this._cliente.editarCliente(dadosParaEnvio).subscribe({
       next: (res) => {
         this.loading = false;
@@ -255,18 +238,15 @@ export class ClienteComponent {
 
   public viaCep(cep: string): void {
     if (cep) {
-      this._retornoCep.consultarCep(cep)
-        .then((cepResponse: CepModel | null) => {
-          if (cepResponse) {
-            this.cep = cepResponse; // Atualiza o objeto CEP
-          } else {
-            this.cep = null; // Define como null se não houver retorno
-          }
-        })
-        .catch(() => {
-          // Tratamento de erro (opcional)
+      this._retornoCep.consultarCep(cep).then((cepResponse: CepModel | null) => {
+        if (cepResponse) {
+          this.cep = cepResponse; // Atualiza o objeto CEP
+        } else {
           this.cep = null;
-        });
+        }
+      }).catch(() => {
+        this.cep = null;
+      });
     }
   }
 
