@@ -1,3 +1,10 @@
+export class PesquisarClienteModel {
+  id_empresa: number;
+  nome: string;
+  cnpj_cpf: string;
+  user_login: string;
+}
+
 export class ClienteModel {
   id_empresa: number;
   id_contratante: number;

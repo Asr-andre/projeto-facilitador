@@ -107,17 +107,29 @@ export class ClienteComponent {
     }
 
     const texto = this.textoPesquisa.replace(/[.\-\/]/g, '').trim();
+    const dados = {
+      id_empresa: this.idEmpresa,
+      user_login: this.login,
+      nome: '',
+      cnpj_cpf: ''
+    };
+
+    if (isNaN(Number(texto))) {
+      dados.nome = texto;
+    } else {
+      dados.cnpj_cpf = texto;
+    }
 
     this.loading = true;
 
-    this._cliente.pesquisarCliente(texto).subscribe({
+    this._cliente.pesquisarCliente(dados).subscribe({
       next: (res) => {
-        if (res.success === 'true') {
+        if (res.success === 'true' && res.cliente && res.cliente.length > 0) {
           this.listarDevedor = res.cliente || [];
           this.mostrarTabela = true;
         } else {
-          this._alert.warning(res.msg);
-          this.listarDevedor = [];
+          this._alert.warning("Cliente não localizado")
+          this.editar = true;
         }
         this.loading = false;
       },
