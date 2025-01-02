@@ -10,7 +10,7 @@
       <strong> Cadastrar endereço</strong>
     </button>
   </div>
-  <div *ngIf="enderecos.length > 0; else semEnderecos">
+  <div>
     <div class="table-responsive" style="margin-top: 10px; max-height: 400px; overflow-y: auto;">
       <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
         <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
@@ -28,7 +28,7 @@
           <th scope="col">Ações</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="enderecos.length > 0; else semEnderecos">
         <tr *ngFor="let endereco of enderecos">
           <td> {{ endereco.endereco }} </td>
           <td> {{ endereco.numero }} </td>
@@ -45,12 +45,16 @@
           </td>
         </tr>
       </tbody>
+      <ng-template #semEnderecos>
+        <tbody>
+          <tr>
+            <td colspan="11" class="text-center">Nenhum endereço cadastrado.</td>
+          </tr>
+        </tbody>
+      </ng-template>
     </table>
   </div>
 </div>
-<ng-template #semEnderecos>
-  <p class="text-center">Nenhum endereço cadastrado.</p>
-</ng-template>
 </div>
 
 <ng-template #modalGenerico let-modal>

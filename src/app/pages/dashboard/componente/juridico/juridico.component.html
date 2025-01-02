@@ -26,7 +26,7 @@
           <th>Ações</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="processos.length > 0; else semProcessos">
         <tr *ngFor="let item of processos">
           <td>{{ formatarNumeroProcesso(item.numero_processo) }}</td>
           <td> {{ item.comarca }} </td>
@@ -42,6 +42,13 @@
           </td>
         </tr>
       </tbody>
+      <ng-template #semProcessos>
+        <tbody>
+          <tr>
+            <td colspan="10" class="text-center">Nenhum processo cadastrado.</td>
+          </tr>
+        </tbody>
+      </ng-template>
     </table>
   </div>
 </div>
