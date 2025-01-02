@@ -13,7 +13,8 @@ export class AlertService {
     customClass: {
       confirmButton: 'btn btn-success btn-sm me-1',
       cancelButton: 'btn btn-danger btn-sm ml-2',
-      title: 'text-center'  // Opcional, para centralizar o título
+      title: 'text-center',  // Opcional, para centralizar o título
+      popup: 'custom-alert-size',
     },
     buttonsStyling: false
   });

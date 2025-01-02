@@ -156,3 +156,20 @@
   -ms-transform: rotate(180deg);
 }
 
+// trata estilo dos alert, tem uma classe dentro da service que recebe essas configurações
+.custom-alert-size {
+  max-width: 400px; /* Define a largura máxima */
+  font-size: 14px;  /* Ajusta o tamanho da fonte */
+}
+
+.custom-alert-size .swal2-title {
+  font-size: 18px; /* Tamanho do título */
+}
+
+.custom-alert-size .swal2-content {
+  font-size: 14px; /* Tamanho do conteúdo */
+}
+
+.custom-alert-size .swal2-popup {
+  padding: 20px; /* Ajusta o preenchimento interno */
+}
