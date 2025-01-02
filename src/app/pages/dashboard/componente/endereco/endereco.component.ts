@@ -1,3 +1,4 @@
+import { Validators } from '@angular/forms';
 import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -7,6 +8,7 @@ import { EnderecoModel, EnderecoResponseModel } from 'src/app/core/models/endere
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { EnderecoService } from 'src/app/core/services/endereco.service';
+import { dA } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'app-endereco',
@@ -22,6 +24,7 @@ export class EnderecoComponent implements OnInit, OnChanges {
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
   public editar: boolean = false;
   public estados = EstadosDoBrasil;
+  public conteudoCompleto: string;
 
   constructor(
     private _enderecoService: EnderecoService,
@@ -47,7 +50,7 @@ export class EnderecoComponent implements OnInit, OnChanges {
       id_cliente: [this.idCliente],
       id_empresa: [this.idEmpresa],
       id_ender: [dado?.id_ender],
-      endereco: [dado?.endereco || ""],
+      endereco: [dado?.endereco || "", Validators.required],
       numero: [dado?.numero || ""],
       complemento: [dado?.complemento || ""],
       bairro: [dado?.bairro || ""],
@@ -62,12 +65,25 @@ export class EnderecoComponent implements OnInit, OnChanges {
   }
 
   public controleBotao() {
-    console.log(this.editar)
+    if (this.formEndereco.invalid) {
+      this.marcarCamposComoTocados(this.formEndereco);
+      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
     if(this.editar == false) {
       this.cadastrarEndereco();
     } else {
       this.editarEndereco();
     }
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 
   public obterEnderecos(): void {

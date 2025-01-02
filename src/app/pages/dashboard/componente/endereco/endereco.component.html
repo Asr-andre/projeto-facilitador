@@ -70,7 +70,8 @@
         <div class="col-md-6">
           <div class="mb-1">
             <label for="fone" class="form-label">Endereço</label>
-            <input type="text" id="fone" formControlName="endereco" class="form-control form-control-pad form-control-sm">
+            <input type="text" id="fone" formControlName="endereco" class="form-control form-control-pad form-control-sm"
+            [ngClass]="{'is-invalid': formEndereco.get('endereco').invalid && formEndereco.get('endereco').touched}">
           </div>
         </div>
         <div class="col-md-3">

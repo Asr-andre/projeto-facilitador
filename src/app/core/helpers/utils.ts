@@ -1,3 +1,4 @@
+import { SolicitarCreditosService } from './../services/solicitar.creditos.service';
 import { AbstractControl } from "@angular/forms";
 
 export class Utils {
@@ -184,5 +185,13 @@ export class Utils {
     document.execCommand('copy');
     //remove o elemento
     document.body.removeChild(inputTest);
+  }
+
+  public static carregarConteudoCompleto(parametro: any, campo: string): string {
+    if(parametro && parametro[campo]) {
+      return parametro[campo]
+    } else {
+      return '';
+    }
   }
 }
