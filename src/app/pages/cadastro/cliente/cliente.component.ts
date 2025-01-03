@@ -78,7 +78,11 @@ export class ClienteComponent {
       fone_residencial: [dado?.fone_residencial || ''],
       email: [dado?.email || ''],
       user_login: [this.login],
-      data_nascimento: [dado?.data_nascimento || '']
+      data_nascimento: [
+        dado?.data_nascimento
+          ? new Date(dado.data_nascimento).toISOString().split('T')[0]
+          : ''
+      ]
     });
   }
 
