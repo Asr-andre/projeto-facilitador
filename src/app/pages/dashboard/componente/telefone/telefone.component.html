@@ -25,7 +25,7 @@
           <th>Ações</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="telefones?.telefones.length > 0; else semTelefone">
         <tr *ngFor="let telefone of telefones?.telefones">
           <td>
             <i class="fas fa-sms sms-icon" (click)="abrirSmsModal(telefone.fone)" ngbTooltip="Enviar Sms"></i>
@@ -42,6 +42,13 @@
           </td>
         </tr>
       </tbody>
+      <ng-template #semTelefone>
+        <tbody>
+          <tr>
+            <td colspan="8" class="text-center">Nenhum telefone cadastrado.</td>
+          </tr>
+        </tbody>
+      </ng-template>
     </table>
   </div>
 </div>

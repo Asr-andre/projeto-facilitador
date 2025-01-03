@@ -4,7 +4,7 @@
 </div>
 
 <div class="table-responsive" >
-  <div *ngIf="acordos.length > 0; else semAcordos">
+  <div>
   <div class="table-responsive" style="margin-top: 10px; max-height: 400px; overflow-y: auto;">
     <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
       <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
@@ -23,7 +23,7 @@
           <th scope="col">Ações</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="acordos.length > 0; else semAcordos">
         <tr *ngFor="let acordo of acordos">
           <td><input
             type="checkbox"
@@ -59,13 +59,16 @@
           </td>
         </tr>
       </tbody>
+      <ng-template #semAcordos>
+        <tbody>
+          <tr>
+            <td colspan="12" class="text-center">Nenhum acordo cadastrado.</td>
+          </tr>
+        </tbody>
+      </ng-template>
     </table>
   </div>
 </div>
-  <ng-template #semAcordos>
-    <p class="text-center">Nenhum acordo cadastrado.</p>
-  </ng-template>
-
 </div>
 
 

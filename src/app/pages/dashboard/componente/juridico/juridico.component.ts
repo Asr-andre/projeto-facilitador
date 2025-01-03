@@ -63,11 +63,25 @@ export class JuridicoComponent implements OnInit, OnChanges {
   }
 
   public controleBotao() {
+    if (this.formProcesso.invalid) {
+      this.marcarCamposComoTocados(this.formProcesso);
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
     if(this.editar == false) {
       this.cadastrarProcesso();
     } else {
       this.editarProcesso();
     }
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 
   public obterProcessos() {

@@ -24,7 +24,7 @@
           <th>Usuário</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="tituloPgRet.length > 0; else semPg">
         <tr *ngFor="let titulo of tituloPgRet">
           <td>{{ titulo.id_titulo }}</td>
           <td>{{ titulo.numero_contrato }}</td>
@@ -43,6 +43,13 @@
           <td>{{ titulo.user_baixa }}</td>
         </tr>
       </tbody>
+      <ng-template #semPg>
+        <tbody>
+          <tr>
+            <td colspan="15" class="text-center">Nenhum pagamento/ retirada cadastrado.</td>
+          </tr>
+        </tbody>
+      </ng-template>
     </table>
 </div>
 

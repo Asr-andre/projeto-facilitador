@@ -66,7 +66,8 @@
         <div class="col-md-4">
           <div class="mb-1">
             <label for="numero_processo" class="form-label">Número do processo</label>
-            <input type="text" id="numero_processo" formControlName="numero_processo" class="form-control form-control-pad form-control-sm" mask="0000000-00.0000.0.00.0000" placeholder="0000000-00.0000.0.00.0000">
+            <input type="text" id="numero_processo" formControlName="numero_processo" class="form-control form-control-pad form-control-sm" mask="0000000-00.0000.0.00.0000" placeholder="0000000-00.0000.0.00.0000"
+            [ngClass]="{'is-invalid': formProcesso.get('numero_processo').invalid && formProcesso.get('numero_processo').touched}">
           </div>
         </div>
         <div class="col-md-3">

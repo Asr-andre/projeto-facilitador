@@ -112,7 +112,7 @@
                   <th sortable="descricao_acao" (sort)="ordenar($event)" scope="col">Ultimo Acionamento</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody  *ngIf="dadosFiltrados.length > 0; else semCliente">
                 <tr
                   *ngFor="let devedor of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }"
                   [ngClass]="{'selected': devedorSelecionado === devedor, 'table-row': true}"
@@ -125,6 +125,13 @@
                   <td>{{ devedor.descricao_acao }}</td>
                 </tr>
               </tbody>
+              <ng-template #semCliente>
+                <tbody>
+                  <tr>
+                    <td colspan="6" class="text-center">Nenhum cliente localizado.</td>
+                  </tr>
+                </tbody>
+              </ng-template>
             </table>
 
             <div class="d-flex justify-content-between align-items-center mt-3 text-small">

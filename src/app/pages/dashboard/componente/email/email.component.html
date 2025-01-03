@@ -22,7 +22,7 @@
           <th scope="col" style="width: 50%">Prioritario</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="emails?.emails.length > 0; else semEmail">
         <tr *ngFor="let email of emails?.emails">
           <td><i *ngIf="email.situacao === 'A'" class="fas fa-envelope envelope-icon" (click)="abrirEmailModal(email.email)" ngbTooltip="Enviar Email"></i></td>
           <td>{{ email.email }}</td>
@@ -32,6 +32,13 @@
         </tr>
       </tbody>
     </table>
+    <ng-template #semEmail>
+      <tbody>
+        <tr>
+          <td colspan="11" class="text-center">Nenhum email cadastrado.</td>
+        </tr>
+      </tbody>
+    </ng-template>
   </div>
 </div>
 

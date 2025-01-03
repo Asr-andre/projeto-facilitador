@@ -19,7 +19,7 @@
           <th>Usúario</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="acionamentos.length > 0; else semAcionamentos">
         <tr *ngFor="let acionamento of acionamentos">
           <td>{{ acionamento.id_acionamento }}</td>
           <td>{{ acionamento.descricao }}</td>
@@ -30,7 +30,7 @@
               placement="top"
               container="body"
             >
-              {{ mostraConteudoTruncado(acionamento.mensagem, 30) }}
+              {{ mostraConteudoTruncado(acionamento.mensagem, 40) }}
             </span>
           </td>
           <td>{{ acionamento.fone }}</td>
@@ -39,6 +39,13 @@
           <td>{{ acionamento.usuario }}</td>
         </tr>
       </tbody>
+      <ng-template #semAcionamentos>
+        <tbody>
+          <tr>
+            <td colspan="8" class="text-center">Nenhum acionamento cadastrado.</td>
+          </tr>
+        </tbody>
+      </ng-template>
     </table>
 </div>
 <ng-template #acaoDeCobrancaModal let-modal>
