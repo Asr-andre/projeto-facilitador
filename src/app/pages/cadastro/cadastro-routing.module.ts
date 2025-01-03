@@ -9,6 +9,7 @@ import { EmailContaComponent } from './email-conta/email-conta.component';
 import { FormulaComponent } from './formula/formula.component';
 import { SmsComponent } from './sms/sms.component';
 import { ClienteComponent } from './cliente/cliente.component';
+import { IndiceComponent } from './indice/indice.component';
 
 
 const routes: Routes = [
@@ -38,6 +39,9 @@ const routes: Routes = [
     },
     {
       path: 'cliente', component: ClienteComponent
+    },
+    {
+      path: 'indice', component: IndiceComponent
     }
 ];
 

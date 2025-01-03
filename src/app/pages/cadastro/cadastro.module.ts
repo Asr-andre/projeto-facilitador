@@ -35,6 +35,7 @@ import { SmsComponent } from "./sms/sms.component";
 import { ClienteComponent } from "./cliente/cliente.component";
 import { LogsComponent } from "../relatorios/logs/logs.component";
 import { MascaraCpfCnpjDirective } from "src/app/core/directive/mascara-cpf-cnpj.directive";
+import { IndiceComponent } from "./indice/indice.component";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { MascaraCpfCnpjDirective } from "src/app/core/directive/mascara-cpf-cnpj
     FormulaComponent,
     SmsComponent,
     ClienteComponent,
-    LogsComponent
+    LogsComponent,
+    IndiceComponent
   ],
   imports: [
     CommonModule,

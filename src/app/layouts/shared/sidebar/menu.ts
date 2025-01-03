@@ -96,6 +96,12 @@ import { MenuItem } from "./menu.model";
           link: "/cadastro/formula",
           parentId: 8,
         },
+        {
+          id: 17,
+          label: "MENUITEMS.CADASTRO.LIST.INDICE",
+          link: "/cadastro/indice",
+          parentId: 8,
+        },
       ].filter(item => item.show !== false), // Filtra subItems para remover aqueles com show === false
     },
     {
