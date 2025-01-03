@@ -91,6 +91,7 @@ export class ClienteComponent {
   }
 
   pesquisaClientes(): void {
+    this.mostrarCardCliente = false;
     if (!this.textoPesquisa.trim()) {
       this._alert.warning('Por favor, insira um cpf ou nome para a pesquisa o cliente.');
       return;

@@ -12,28 +12,32 @@
             <div class="col-md-2 d-flex align-items-center justify-content-center">
               <div class="d-flex align-items-center">
                 <i class="fas fa-sms font-size-24" style="color: #1DA1F2; margin-right: 5px;"></i>
-                <p class="text-truncate font-size-13 mb-0"><strong>Sms:</strong> {{ qtdeSms }} / {{ totalSms | currency:'BRL'}}</p>
+                <p class="text-truncate font-size-13 mb-0"><strong>Sms:</strong> {{ qtdeSms }} / {{ totalSms |
+                  currency:'BRL'}}</p>
               </div>
             </div>
 
             <div class="col-md-2 d-flex align-items-center justify-content-center">
               <div class="d-flex align-items-center">
                 <i class="fab fa-whatsapp whatsapp-icon font-size-24" style="color: #25D366; margin-right: 5px;"></i>
-                <p class="text-truncate font-size-13 mb-0"><strong>Whatsapp:</strong> {{ qtdeWhatsapp }} / {{ totalWhatsapp | currency:'BRL'}}</p>
+                <p class="text-truncate font-size-13 mb-0"><strong>Whatsapp:</strong> {{ qtdeWhatsapp }} / {{
+                  totalWhatsapp | currency:'BRL'}}</p>
               </div>
             </div>
 
             <div class="col-md-2 d-flex align-items-center justify-content-center">
               <div class="d-flex align-items-center">
                 <i class="fas fa-envelope font-size-24" style="color: #FFA500; margin-right: 5px;"></i>
-                <p class="text-truncate font-size-13 mb-0"><strong>Email:</strong> {{ qtdeEmail }} / {{ totalEmail | currency:'BRL' }}</p>
+                <p class="text-truncate font-size-13 mb-0"><strong>Email:</strong> {{ qtdeEmail }} / {{ totalEmail |
+                  currency:'BRL' }}</p>
               </div>
             </div>
 
             <div class="col-md-2 d-flex align-items-center justify-content-center">
               <div class="d-flex align-items-center">
                 <i class="fas fa-credit-card font-size-24" style="color: #5664d2; margin-right: 5px;"></i>
-                <p class="text-truncate font-size-13 mb-0"><strong>Utilizado:</strong> {{ totalUtilizado | currency:'BRL' }}</p>
+                <p class="text-truncate font-size-13 mb-0"><strong>Utilizado:</strong> {{ totalUtilizado |
+                  currency:'BRL' }}</p>
               </div>
             </div>
 
@@ -45,7 +49,8 @@
             </div>
 
             <div class="col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-              <button type="button" class="btn btn-warning btn-sm d-flex align-items-center" (click)="this.abrirCreditoModal()">
+              <button type="button" class="btn btn-warning btn-sm d-flex align-items-center"
+                (click)="this.abrirCreditoModal()">
                 <i class="fas fa-money-bill-wave" style="margin-right: 5px;"></i>
                 Solicitar Saldo
               </button>
@@ -66,11 +71,13 @@
             <div class="col-md-3 mb-2">
               <form [formGroup]="formFila">
                 <div class="input-group">
-                  <select id="contratanteSelect" class="form-control form-control-sm" formControlName="id_fila" (focus)="obterFilas()">
+                  <select id="contratanteSelect" class="form-control form-control-sm" formControlName="id_fila"
+                    (focus)="obterFilas()">
                     <option value="0">Selecione a Fila</option>
                     <option *ngFor="let fila of filas" [value]="fila.id_fila">{{ fila.descricao }}</option>
                   </select>
-                  <button class="btn btn-secondary btn-sm" (click)="filaCliente()" [disabled]="formFila.get('id_fila')?.value <= 0" ngbTooltip="Carregar Fila">
+                  <button class="btn btn-secondary btn-sm" (click)="filaCliente()"
+                    [disabled]="formFila.get('id_fila')?.value <= 0" ngbTooltip="Carregar Fila">
                     <i class=" fas fa-check-circle"></i>
                   </button>
                 </div>
@@ -78,22 +85,21 @@
             </div>
 
             <div class="col-md-3" style="padding-left: 0px;">
-              <select id="contratanteSelect" class="form-control form-control-sm" [(ngModel)]="tipoPesquisa"
-                placeholder="Tipo">
+              <select id="contratanteSelect" class="form-control form-control-sm" [(ngModel)]="tipoPesquisa" placeholder="Tipo">
                 <option value="nome">Selecione</option>
                 <option value="nome">Nome</option>
                 <option value="cpf">CPF</option>
               </select>
             </div>
             <div class="col-md-3" style="padding-left: 0px;padding-right: 5px;">
-              <input type="text" class="form-control form-control-sm" placeholder="Pesquisar"
-                [(ngModel)]="textoPesquisa" />
+              <input type="text" class="form-control form-control-sm" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" />
             </div>
             <div class="col-md-3 " style="padding-left: 0px;">
               <div class="d-flex align-items-center">
                 <input type="checkbox" id="mostrarSemDivida" [(ngModel)]="mostrarSemDivida"
                   ngbTooltip="Mostrar clientes sem dívidas" />
-                <button class="btn btn-primary btn-sm ms-2" (click)="pesquisaCliente()" [disabled]="formFila.get('id_fila')?.value > 0">
+                <button class="btn btn-primary btn-sm ms-2" (click)="pesquisaCliente()"
+                  [disabled]="formFila.get('id_fila')?.value > 0">
                   <i class="fas fa-search"></i> Pesquisar
                 </button>
               </div>
@@ -101,7 +107,8 @@
           </div>
 
           <div class="table-responsive">
-            <table class="table table-sm table-hover font-size-13 tabelaOrdenada" style="white-space: nowrap; overflow-x: auto;">
+            <table class="table table-sm table-hover font-size-13 tabelaOrdenada"
+              style="white-space: nowrap; overflow-x: auto;">
               <thead class="tabela-custom table-td-scroll">
                 <tr>
                   <th sortable="fantasia" (sort)="ordenar($event)" scope="col">Credor</th>
@@ -112,7 +119,7 @@
                   <th sortable="descricao_acao" (sort)="ordenar($event)" scope="col">Ultimo Acionamento</th>
                 </tr>
               </thead>
-              <tbody  *ngIf="dadosFiltrados.length > 0; else semCliente">
+              <tbody *ngIf="dadosFiltrados.length > 0; else semCliente">
                 <tr
                   *ngFor="let devedor of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }"
                   [ngClass]="{'selected': devedorSelecionado === devedor, 'table-row': true}"
@@ -239,15 +246,15 @@
 
 <ng-template #Telefone>
   <div class="mt-3 font-size-13">
-    <app-telefone [idCliente]="devedorSelecionado?.id_cliente"
-      [idContratante]="devedorSelecionado?.id_contratante" [nomeCliente]="devedorSelecionado.nome" (dadosEnviado)="atualizarCards()"></app-telefone>
+    <app-telefone [idCliente]="devedorSelecionado?.id_cliente" [idContratante]="devedorSelecionado?.id_contratante"
+      [nomeCliente]="devedorSelecionado.nome" (dadosEnviado)="atualizarCards()"></app-telefone>
   </div>
 </ng-template>
 
 <ng-template #Email>
   <div class="mt-3 font-size-13">
-    <app-email [idCliente]="devedorSelecionado?.id_cliente"
-      [idContratante]="devedorSelecionado?.id_contratante" (dadosEnviado)="atualizarCards()"></app-email>
+    <app-email [idCliente]="devedorSelecionado?.id_cliente" [idContratante]="devedorSelecionado?.id_contratante"
+      (dadosEnviado)="atualizarCards()"></app-email>
   </div>
 </ng-template>
 
