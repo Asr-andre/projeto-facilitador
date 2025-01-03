@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Indice } from 'src/app/core/models/cadastro/indice.model';
+import { IndiceService } from 'src/app/core/services/indice.service';
 
 @Component({
   selector: 'app-indice',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './indice.component.scss'
 })
 export class IndiceComponent implements OnInit {
+  public listarIndice: Indice [] = [];
 
-  constructor() {}
+  constructor(
+    private _indiceService: IndiceService
+  ) {}
 
   ngOnInit(): void {
 
   }
+
 }
