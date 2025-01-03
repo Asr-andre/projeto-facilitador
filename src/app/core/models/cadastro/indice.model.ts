@@ -7,7 +7,7 @@ export class RetornoIndice {
   success: string;
   msg: string;
   indice: string;
-  dados: Indice
+  dados: Indice[]
   }
 
   export class Indice {
