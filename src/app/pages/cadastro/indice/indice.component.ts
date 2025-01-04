@@ -221,10 +221,11 @@ export class IndiceComponent implements OnInit {
 
     public validarEntradaDecimal(event: KeyboardEvent): void {
       const char = event.key;
-      const regex = /^[0-9,]$/;
+      const input = (event.target as HTMLInputElement).value;
+      const regex = /^[0-9,-]$/;
 
-      // Permite apenas números e a vírgula
-      if (!regex.test(char)) {
+      // Permite apenas números, a vírgula e o símbolo de menos no início
+      if (!regex.test(char) || (char === '-' && input.length > 0)) {
         event.preventDefault();
       }
     }
@@ -232,8 +233,14 @@ export class IndiceComponent implements OnInit {
     public formatarValor(event: any): void {
       let valor = event.target.value;
 
-      // Substitui pontos por vírgulas e remove caracteres não numéricos, exceto a vírgula
-      valor = valor.replace(/[^\d,]/g, '');
+      // Substitui pontos por vírgulas e remove caracteres não numéricos, exceto a vírgula e o menos
+      valor = valor.replace(/[^-\d,]/g, '');
+
+      // Garante que o símbolo de menos seja apenas no início
+      if (valor.includes('-')) {
+        const partes = valor.split('-');
+        valor = '-' + partes.join('').replace(/-/g, ''); // Remove outros traços
+      }
 
       // Remove vírgulas extras
       const partes = valor.split(',');

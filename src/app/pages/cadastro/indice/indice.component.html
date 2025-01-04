@@ -68,7 +68,8 @@
                   <td class="text-start"> {{ formatToBR(dado.data) }} </td>
                   <td class="text-center"> {{ dado.valor / 100 | percent: '1.2-2' }} </td>
                   <td class="text-center">
-                    <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abriModalEditar(modalGenerico, dado)"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar"
+                      (click)="abriModalEditar(modalGenerico, dado)"><i class="fas fa-edit"></i></button>
                   </td>
                 </tr>
               </tbody>
@@ -119,7 +120,7 @@
         <div class="col-md-4 form-group">
           <label for="indice" class="form-label">Indice</label>
           <select id="contratanteSelect" class="form-control form-control-sm" formControlName="indice"
-          [ngClass]="{'is-invalid': formModal.get('indice').invalid && formModal.get('indice').touched}">
+            [ngClass]="{'is-invalid': formModal.get('indice').invalid && formModal.get('indice').touched}">
             <option value="">Selecione</option>
             <option value="INPC">INPC</option>
             <option value="IPCA">IPCA</option>
@@ -135,9 +136,8 @@
         </div>
         <div class="col-md-4 form-group">
           <label for="senha" class="form-label">valor</label>
-          <input class="form-control form-control-sm mb-1" id="valor" formControlName="valor" type="text" (keypress)="validarEntradaDecimal($event)"
-          (input)="formatarValor($event)"
-            placeholder="0,00"
+          <input class="form-control form-control-sm mb-1" id="valor" formControlName="valor" type="text"
+            (keypress)="validarEntradaDecimal($event)" (input)="formatarValor($event)" placeholder="0,00"
             [ngClass]="{'is-invalid': formModal.get('valor').invalid && formModal.get('valor').touched}">
         </div>
       </div>
