@@ -1,158 +1,164 @@
-<div class="container-fluid">
-  <div class="loading-overlay-pagina" *ngIf="loading">
-    <div class="spinner-border text-primary m-1" role="status">
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body" style="padding-bottom: 0px;">
-          <div class="d-flex">
-            <div class="flex-1 overflow-hidden">
-              <div class="d-flex justify-content-between align-items-center">
-                <h4 class="card-title m-0">
-                  <i class="fas fa-chart-line"></i> Indice Financeiro
-                </h4>
-                <button class="btn btn-success btn-sm" (click)="abriModalCadastro(modalGenerico)">
-                  <i class="fas fa-plus"></i><strong> Cadastrar</strong>
-                </button>
-              </div>
-              <hr>
-            </div>
-          </div>
-
-          <div class="d-flex justify-content-between align-items-center" style="font-size: 11px;">
-            <div class="col-md-1 mb-2">
-              <form [formGroup]="formIndice">
-                <div class="input-group">
-                  <select id="contratanteSelect" class="form-control form-control-sm" formControlName="indice">
-                    <option value="INPC">INPC</option>
-                    <option value="IPCA">IPCA</option>
-                    <option value="INCC">INCC</option>
-                    <option value="IGPM">IGPM</option>
-                    <option value="TR">TR</option>
-                  </select>
-                  <button class="btn btn-secondary btn-sm" (click)="obterIndice()">
-                    <i class=" fas fa-check-circle"></i>
-                  </button>
-                </div>
-              </form>
-            </div>
-
-
-            <div style="font-size: 10px;">
-              <div class="dataTables_filter text-md-end">
-                <label class="d-inline-flex align-items-center">
-                  <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;"
-                    [(ngModel)]="textoPesquisa" (input)="filtrar()" placeholder="Pesquisar" />
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div class="table-responsive">
-            <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
-              <thead class="tabela-custom">
-                <tr>
-                  <th class="text-start" sortable="indice" (sort)="ordenar($event)">Indice</th>
-                  <th class="text-start" sortable="data" (sort)="ordenar($event)">Data</th>
-                  <th class="text-center" sortable="valor" (sort)="ordenar($event)">Valor</th>
-                  <th class="text-center">Ações</th>
-                </tr>
-              </thead>
-              <tbody *ngIf="dadosFiltrados.length > 0; else semDado">
-                <tr
-                  *ngFor="let dado of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
-                  <td class="text-start"> {{ dado.indice }} </td>
-                  <td class="text-start"> {{ formatToBR(dado.data) }} </td>
-                  <td class="text-center"> {{ dado.valor / 100 | percent: '1.2-2' }} </td>
-                  <td class="text-center">
-                    <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar"
-                      (click)="abriModalEditar(modalGenerico, dado)"><i class="fas fa-edit"></i></button>
-                  </td>
-                </tr>
-              </tbody>
-              <ng-template #semDado>
-                <tbody>
-                  <tr>
-                    <td colspan="12" class="text-center">Nenhum indice cadastrado.</td>
-                  </tr>
-                </tbody>
-              </ng-template>
-            </table>
-            <div class="d-flex justify-content-between align-items-center mt-3 text-small">
-              <div>
-                Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
-                {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
-              </div>
-              <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo"
-                [maxSize]="5" [autoHide]="false" [responsive]="true">
-              </pagination-controls>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="loading-overlay-pagina" *ngIf="loading">
+  <div class="spinner-border text-primary m-1" role="status">
   </div>
 </div>
 
-<ng-template #modalGenerico let-modal>
-  <div class="loading-overlay-card" *ngIf="loadingMin">
-    <div class="spinner-border text-primary m-1" role="status"></div>
-  </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card-body" style="padding-bottom: 8px;">
+        <div class="d-flex">
+          <div class="flex-1 overflow-hidden">
+            <div class="card">
 
-  <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
-    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-chart-line"></i> {{ editar ? 'Editar Indice' :
-      'Cadastrar Indice' }}</h6>
-    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
-      (click)="fechar()"></button>
-  </div>
+              <div class="card-header pt-2 pb-2">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5 class="card-title m-0">
+                      <i class="fas fa-chart-line"></i> Indice Financeiro
+                    </h5>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <button class="btn btn-success btn-sm" (click)="abriModalCadastro(modalGenerico)">
+                      <i class="fas fa-plus"></i><strong> Cadastrar</strong>
+                    </button>
+                  </div>
+                </div>
+              </div>
 
-  <div class="loading-overlay-card" *ngIf="loadingMin">
-    <div class="spinner-border text-primary m-1" role="status">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center" style="font-size: 11px;">
+                  <div class="col-md-1 mb-2">
+                    <form [formGroup]="formIndice">
+                      <div class="input-group">
+                        <select id="contratanteSelect" class="form-control form-control-sm" formControlName="indice">
+                          <option value="INPC">INPC</option>
+                          <option value="IPCA">IPCA</option>
+                          <option value="INCC">INCC</option>
+                          <option value="IGPM">IGPM</option>
+                          <option value="TR">TR</option>
+                        </select>
+                        <button class="btn btn-secondary btn-sm" (click)="obterIndice()">
+                          <i class=" fas fa-check-circle"></i>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div style="font-size: 10px;">
+                    <div class="dataTables_filter text-md-end">
+                      <label class="d-inline-flex align-items-center">
+                        <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;"
+                          [(ngModel)]="textoPesquisa" (input)="filtrar()" placeholder="Pesquisar" />
+                      </label>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+                  <thead class="tabela-custom">
+                    <tr>
+                      <th class="text-start" sortable="indice" (sort)="ordenar($event)">Indice</th>
+                      <th class="text-start" sortable="data" (sort)="ordenar($event)">Data</th>
+                      <th class="text-center" sortable="valor" (sort)="ordenar($event)">Valor</th>
+                      <th class="text-center">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="dadosFiltrados.length > 0; else semDado">
+                    <tr
+                      *ngFor="let dado of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                      <td class="text-start"> {{ dado.indice }} </td>
+                      <td class="text-start"> {{ formatToBR(dado.data) }} </td>
+                      <td class="text-center"> {{ dado.valor / 100 | percent: '1.2-2' }} </td>
+                      <td class="text-center">
+                        <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar"
+                          (click)="abriModalEditar(modalGenerico, dado)"><i class="fas fa-edit"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <ng-template #semDado>
+                    <tbody>
+                      <tr>
+                        <td colspan="12" class="text-center">Nenhum indice cadastrado.</td>
+                      </tr>
+                    </tbody>
+                  </ng-template>
+                </table>
+                <div class="d-flex justify-content-between align-items-center mt-3 text-small">
+                  <div>
+                    Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+                    {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+                  </div>
+                  <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo"
+                    [maxSize]="5" [autoHide]="false" [responsive]="true">
+                  </pagination-controls>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="modal-body modal-padding">
-    <form [formGroup]="formModal">
-      <div class="row">
-        <div class="col-md-4 form-group">
-          <label for="indice" class="form-label">Indice</label>
-          <select id="contratanteSelect" class="form-control form-control-sm" formControlName="indice"
-            [ngClass]="{'is-invalid': formModal.get('indice').invalid && formModal.get('indice').touched}">
-            <option value="">Selecione</option>
-            <option value="INPC">INPC</option>
-            <option value="IPCA">IPCA</option>
-            <option value="INCC">INCC</option>
-            <option value="IGPM">IGPM</option>
-            <option value="TR">TR</option>
-          </select>
-        </div>
-        <div class="col-md-4 form-group">
-          <label for="data" class="form-label">Data</label>
-          <input class="form-control form-control-sm mb-1" formControlName="data" type="date" placeholder="data"
-            [ngClass]="{'is-invalid': formModal.get('data').invalid && formModal.get('data').touched}">
-        </div>
-        <div class="col-md-4 form-group">
-          <label for="senha" class="form-label">valor</label>
-          <input class="form-control form-control-sm mb-1" id="valor" formControlName="valor" type="text"
-            (keypress)="validarEntradaDecimal($event)" (input)="formatarValor($event)" placeholder="0,00"
-            [ngClass]="{'is-invalid': formModal.get('valor').invalid && formModal.get('valor').touched}">
-        </div>
-      </div>
+  <ng-template #modalGenerico let-modal>
+    <div class="loading-overlay-card" *ngIf="loadingMin">
+      <div class="spinner-border text-primary m-1" role="status"></div>
+    </div>
 
-      <div class="d-flex justify-content-end" style="padding-top: 10px;">
-        <button type="submit" class="btn btn-sm me-1" [ngClass]="{
-                                'btn-primary': editar,
-                                'btn-success': !editar
-                              }" (click)="salvarCliente()">
-          <i class="fas fa-save"></i> {{ editar ? 'Atualizar' : 'Salvar' }}
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
-          <i class="fas fa-times"></i> Cancelar
-        </button>
+    <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
+      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-chart-line"></i> {{ editar ? 'Editar Indice' :
+        'Cadastrar Indice' }}</h6>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+        (click)="fechar()"></button>
+    </div>
+
+    <div class="loading-overlay-card" *ngIf="loadingMin">
+      <div class="spinner-border text-primary m-1" role="status">
       </div>
-    </form>
-  </div>
-</ng-template>
+    </div>
+
+    <div class="modal-body modal-padding">
+      <form [formGroup]="formModal">
+        <div class="row">
+          <div class="col-md-4 form-group">
+            <label for="indice" class="form-label">Indice</label>
+            <select id="contratanteSelect" class="form-control form-control-sm" formControlName="indice"
+              [ngClass]="{'is-invalid': formModal.get('indice').invalid && formModal.get('indice').touched}">
+              <option value="">Selecione</option>
+              <option value="INPC">INPC</option>
+              <option value="IPCA">IPCA</option>
+              <option value="INCC">INCC</option>
+              <option value="IGPM">IGPM</option>
+              <option value="TR">TR</option>
+            </select>
+          </div>
+          <div class="col-md-4 form-group">
+            <label for="data" class="form-label">Data</label>
+            <input class="form-control form-control-sm mb-1" formControlName="data" type="date" placeholder="data"
+              [ngClass]="{'is-invalid': formModal.get('data').invalid && formModal.get('data').touched}">
+          </div>
+          <div class="col-md-4 form-group">
+            <label for="senha" class="form-label">valor</label>
+            <input class="form-control form-control-sm mb-1" id="valor" formControlName="valor" type="text"
+              (keypress)="validarEntradaDecimal($event)" (input)="formatarValor($event)" placeholder="0,00"
+              [ngClass]="{'is-invalid': formModal.get('valor').invalid && formModal.get('valor').touched}">
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end" style="padding-top: 10px;">
+          <button type="submit" class="btn btn-sm me-1" [ngClass]="{
+                                  'btn-primary': editar,
+                                  'btn-success': !editar
+                                }" (click)="salvarCliente()">
+            <i class="fas fa-save"></i> {{ editar ? 'Atualizar' : 'Salvar' }}
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
