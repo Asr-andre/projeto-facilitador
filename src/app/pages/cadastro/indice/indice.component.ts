@@ -72,6 +72,14 @@ export class IndiceComponent implements OnInit {
         this.loading = false;
         if (res.success === 'true') {
           this.indice = res.dados;
+
+           // Ordena a coluna data em ordem descendente
+          this.indice.sort((a, b) => {
+            if (a.data < b.data) return 1;
+            if (a.data > b.data) return -1;
+            return 0;
+          });
+
           this.filtrar();
           this.atualizarQuantidadeExibida();
           this.loading = false;
@@ -146,13 +154,13 @@ export class IndiceComponent implements OnInit {
     public abriModalCadastro(content: TemplateRef<any>): void {
       this.form();
       this.editar = false;
-      this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+      this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
     }
 
     public abriModalEditar(content: TemplateRef<any>, dados: IndiceModel): void {
       this.editar = true;
       this.form(dados);
-      this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+      this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
     }
 
     public cadastrarIndice() {
@@ -209,6 +217,32 @@ export class IndiceComponent implements OnInit {
         this.loadingMin = false;
         this._alert.warning("Preencha todos os campos obrigatórios");
       }
+    }
+
+    public validarEntradaDecimal(event: KeyboardEvent): void {
+      const char = event.key;
+      const regex = /^[0-9,]$/;
+
+      // Permite apenas números e a vírgula
+      if (!regex.test(char)) {
+        event.preventDefault();
+      }
+    }
+
+    public formatarValor(event: any): void {
+      let valor = event.target.value;
+
+      // Substitui pontos por vírgulas e remove caracteres não numéricos, exceto a vírgula
+      valor = valor.replace(/[^\d,]/g, '');
+
+      // Remove vírgulas extras
+      const partes = valor.split(',');
+      if (partes.length > 2) {
+        valor = partes[0] + ',' + partes[1].slice(0, 2); // Limita a duas casas decimais
+      }
+
+      event.target.value = valor;
+      this.formModal.get('valor')?.setValue(valor); // Atualiza o valor no formulário
     }
 
     public fechar() {

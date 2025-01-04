@@ -30,6 +30,8 @@
                     <option value="INPC">INPC</option>
                     <option value="IPCA">IPCA</option>
                     <option value="INCC">INCC</option>
+                    <option value="IGPM">IGPM</option>
+                    <option value="TR">TR</option>
                   </select>
                   <button class="btn btn-secondary btn-sm" (click)="obterIndice()">
                     <i class=" fas fa-check-circle"></i>
@@ -106,23 +108,36 @@
       (click)="fechar()"></button>
   </div>
 
+  <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
+
   <div class="modal-body modal-padding">
     <form [formGroup]="formModal">
       <div class="row">
-        <div class="col-md-6 form-group">
+        <div class="col-md-4 form-group">
           <label for="indice" class="form-label">Indice</label>
-          <input class="form-control form-control-sm mb-1" formControlName="indice" type="text" placeholder="indice"
-            required [ngClass]="{'is-invalid': formModal.get('indice').invalid && formModal.get('indice').touched}">
+          <select id="contratanteSelect" class="form-control form-control-sm" formControlName="indice"
+          [ngClass]="{'is-invalid': formModal.get('indice').invalid && formModal.get('indice').touched}">
+            <option value="">Selecione</option>
+            <option value="INPC">INPC</option>
+            <option value="IPCA">IPCA</option>
+            <option value="INCC">INCC</option>
+            <option value="IGPM">IGPM</option>
+            <option value="TR">TR</option>
+          </select>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-4 form-group">
           <label for="data" class="form-label">Data</label>
           <input class="form-control form-control-sm mb-1" formControlName="data" type="date" placeholder="data"
             [ngClass]="{'is-invalid': formModal.get('data').invalid && formModal.get('data').touched}">
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-4 form-group">
           <label for="senha" class="form-label">valor</label>
-          <input class="form-control form-control-sm mb-1" id="valor" formControlName="valor" type="text"
-            placeholder="0.00"
+          <input class="form-control form-control-sm mb-1" id="valor" formControlName="valor" type="text" (keypress)="validarEntradaDecimal($event)"
+          (input)="formatarValor($event)"
+            placeholder="0,00"
             [ngClass]="{'is-invalid': formModal.get('valor').invalid && formModal.get('valor').touched}">
         </div>
       </div>
