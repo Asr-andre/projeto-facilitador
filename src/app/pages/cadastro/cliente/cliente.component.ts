@@ -147,15 +147,16 @@ export class ClienteComponent {
   }
 
   public salvarCliente() {
-    this.formCliente.get('cnpj_cpf')?.enable();
-
     if (this.formCliente.invalid) {
       this.marcarCamposComoTocados(this.formCliente);
       this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
-    this.formCliente.getRawValue();
+      // garante que os campos que estão disabilitados tmb va no envio do form no editar
+      this.formCliente.get('cnpj_cpf')?.enable();
+      this.formCliente.getRawValue();
+
     if (this.editar == true) {
       this.editarCliente();
     } else {
@@ -222,6 +223,7 @@ export class ClienteComponent {
         this.loading = false;
         if (res.success === 'true') {
           this.pesquisaClientes();
+          this.formCliente.get('cnpj_cpf')?.disable();
           this._alert.success(res.msg);
         } else {
           this._alert.warning(res.msg);

@@ -23,4 +23,8 @@ export class IndiceService {
   public editarIndice(request: IndiceModel): Observable<Retorno> {
     return this._http.put<Retorno>(`${this.apiUrl}/editarindices`, request);
   }
+
+  public excluirIndice(request: IndiceModel): Observable<Retorno> {
+    return this._http.delete<Retorno>(`${this.apiUrl}/excluirindices`, request);
+  }
 }

@@ -62,7 +62,7 @@
                       <th class="text-start" sortable="indice" (sort)="ordenar($event)">Indice</th>
                       <th class="text-start" sortable="data" (sort)="ordenar($event)">Data</th>
                       <th class="text-center" sortable="valor" (sort)="ordenar($event)">Valor</th>
-                      <th class="text-center">Ações</th>
+                      <th class="text-end">Ações</th>
                     </tr>
                   </thead>
                   <tbody *ngIf="dadosFiltrados.length > 0; else semDado">
@@ -71,9 +71,11 @@
                       <td class="text-start"> {{ dado.indice }} </td>
                       <td class="text-start"> {{ formatToBR(dado.data) }} </td>
                       <td class="text-center"> {{ dado.valor / 100 | percent: '1.2-2' }} </td>
-                      <td class="text-center">
-                        <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar"
+                      <td class="text-end">
+                        <button class="btn btn-sm btn-primary me-1" ngbTooltip="Editar"
                           (click)="abriModalEditar(modalGenerico, dado)"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger" ngbTooltip="Excluir"
+                          (click)="abrirModalExcluir(modalExcluir, dado)"><i class="fas fa-trash"></i></button>
                       </td>
                     </tr>
                   </tbody>
@@ -160,5 +162,29 @@
           </button>
         </div>
       </form>
+    </div>
+  </ng-template>
+
+  <ng-template #modalExcluir let-modal>
+    <div class="modal-header modal-header-custom" style="background: #dc3545;">
+      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-trash-alt"></i> Excluir Indice</h6>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
+    </div>
+
+    <div class="modal-body modal-padding text-center">
+      <i class="fas fa-trash-alt fa-3x text-danger mb-2"></i> <!-- Reduzindo o espaçamento do ícone -->
+      <p class="mb-1">Tem certeza que deseja excluir o índice: <strong>{{ indiceSelecionado.indice }}</strong>?</p> <!-- Ajuste na margem inferior -->
+      <p class="mb-1">Data: <strong>{{ formatToBR(indiceSelecionado.data) }}</strong></p> <!-- Ajuste na margem inferior -->
+      <p class="mb-1">Valor: <strong>{{ indiceSelecionado.valor / 100 | percent: '1.2-2' }}</strong></p> <!-- Ajuste na margem inferior -->
+    </div>
+
+
+    <div class="d-flex justify-content-end" style="margin-bottom: 10px; margin-right: 10px;">
+      <button type="button" class="btn btn-danger btn-sm me-1" (click)="excluirIndice()">
+        <i class="fas fa-trash-alt"></i> Excluir
+      </button>
+      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+        <i class="fas fa-times"></i> Cancelar
+      </button>
     </div>
   </ng-template>

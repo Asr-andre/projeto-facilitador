@@ -21,7 +21,7 @@ export class RetornoIndice {
 export class IndiceModel {
   indice: string;
   data: string;
-  valor: number;
+  valor?: number;
   user_login: string
 }
 

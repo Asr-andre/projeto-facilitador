@@ -16,6 +16,7 @@ import { IndiceService } from 'src/app/core/services/indice.service';
 })
 export class IndiceComponent implements OnInit {
   public indice: Indice[] = [];
+  public indiceSelecionado: IndiceModel;
   public formIndice: FormGroup;
   public formModal: FormGroup;
   public login = this._auth.getLogin();
@@ -57,10 +58,10 @@ export class IndiceComponent implements OnInit {
 
   public form(dado?: IndiceModel) {
     this.formModal = this._fb.group({
-      indice: [dado?.indice || '', Validators.required],
-      data: [dado?.data ? new Date(dado?.data).toISOString().split('T')[0]
-      : '', Validators.required],
-      valor: [dado?.valor || 0, [Validators.min(0)]],
+      indice: [{ value: dado?.indice || '', disabled: this.editar }, Validators.required],
+      data: [{ value: dado?.data ? new Date(dado?.data).toISOString().split('T')[0]
+      : '', disabled: this.editar }, Validators.required],
+      valor: [dado?.valor ? dado.valor.toString().replace('.', ',') : '0,00', [Validators.min(0)]],
       user_login: [dado?.user_login || this.login, Validators.required]
     });
   }
@@ -136,6 +137,11 @@ export class IndiceComponent implements OnInit {
         return;
       }
 
+        // garante que os campos que estão disabilitados tmb va no envio do form no editar
+        this.formModal.get('indice')?.enable();
+        this.formModal.get('data')?.enable();
+        this.formModal.getRawValue();
+
       if (this.editar == true) {
         this.editarIndice();
       } else {
@@ -152,8 +158,8 @@ export class IndiceComponent implements OnInit {
     }
 
     public abriModalCadastro(content: TemplateRef<any>): void {
-      this.form();
       this.editar = false;
+      this.form();
       this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
     }
 
@@ -163,10 +169,16 @@ export class IndiceComponent implements OnInit {
       this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
     }
 
+    public abrirModalExcluir(content: TemplateRef<any>, dados: IndiceModel): void {
+      this.indiceSelecionado = dados;
+      this._modalService.open(content, { size: 'sm', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    }
+
     public cadastrarIndice() {
       if (this.formModal.valid) {
         const dadosParaEnvio = { ...this.formModal.value };
         dadosParaEnvio.data = this._datePipe.transform(dadosParaEnvio.data, "dd/MM/yyyy");
+        dadosParaEnvio.valor = dadosParaEnvio.valor.replace(',', '.');
 
         this.loadingMin = true;
         this._indiceService.cadastrarIndice(dadosParaEnvio).subscribe((res) => {
@@ -195,6 +207,7 @@ export class IndiceComponent implements OnInit {
       if (this.formModal.valid) {
         const dadosParaEnvio = { ...this.formModal.value };
         dadosParaEnvio.data = this._datePipe.transform(dadosParaEnvio.data, "dd/MM/yyyy");
+        dadosParaEnvio.valor = dadosParaEnvio.valor.replace(',', '.');
 
         this.loadingMin = true;
         this._indiceService.editarIndice(dadosParaEnvio).subscribe((res) => {
@@ -217,6 +230,28 @@ export class IndiceComponent implements OnInit {
         this.loadingMin = false;
         this._alert.warning("Preencha todos os campos obrigatórios");
       }
+    }
+
+    public excluirIndice() {
+      const dadosParaEnvio = { ...this.indiceSelecionado };
+        dadosParaEnvio.data = this._datePipe.transform(dadosParaEnvio.data, "dd/MM/yyyy");
+
+      this.loadingMin = true;
+      this._indiceService.excluirIndice(dadosParaEnvio).subscribe((res) => {
+        if (res.success === "true") {
+          this.loadingMin = false;
+          this.obterIndice();
+          this._alert.success(res.msg);
+          this.fechar();
+        } else {
+          this.loadingMin = false;
+          this._alert.warning(res.msg);
+        }
+      },
+      (error) => {
+        this.loadingMin = false;
+        this._alert.error("Ocorreu um erro ao tentar excluir o indice.");
+      });
     }
 
     public validarEntradaDecimal(event: KeyboardEvent): void {
