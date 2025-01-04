@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, QueryList, TemplateRef, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -38,6 +39,7 @@ export class IndiceComponent implements OnInit {
     private _auth: AuthenticationService,
     private _alert: AlertService,
     private _modalService: NgbModal,
+    private _datePipe: DatePipe,
   ) { }
 
   ngOnInit(): void {
@@ -127,9 +129,9 @@ export class IndiceComponent implements OnInit {
       }
 
       if (this.editar == true) {
-
+        this.editarIndice();
       } else {
-
+        this.cadastrarIndice();
       }
     }
 
@@ -150,8 +152,63 @@ export class IndiceComponent implements OnInit {
     public abriModalEditar(content: TemplateRef<any>, dados: IndiceModel): void {
       this.editar = true;
       this.form(dados);
-      console.log(dados);
       this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    }
+
+    public cadastrarIndice() {
+      if (this.formModal.valid) {
+        const dadosParaEnvio = { ...this.formModal.value };
+        dadosParaEnvio.data = this._datePipe.transform(dadosParaEnvio.data, "dd/MM/yyyy");
+
+        this.loadingMin = true;
+        this._indiceService.cadastrarIndice(dadosParaEnvio).subscribe((res) => {
+          if(res.success === "true") {
+            this.loadingMin = false;
+            this.obterIndice();
+            this._alert.success(res.msg);
+            this.fechar();
+          } else {
+            this.loadingMin = false;
+            this._alert.warning(res.msg);
+          }
+        },
+          (error) => {
+            this.loadingMin = false;
+            this._alert.error("Ocorreu um erro ao tentar cadastrar o indice.");
+          }
+        );
+      } else {
+        this.loadingMin = false;
+        this._alert.warning("Preencha todos os campos obrigatórios");
+      }
+    }
+
+    public editarIndice() {
+      if (this.formModal.valid) {
+        const dadosParaEnvio = { ...this.formModal.value };
+        dadosParaEnvio.data = this._datePipe.transform(dadosParaEnvio.data, "dd/MM/yyyy");
+
+        this.loadingMin = true;
+        this._indiceService.editarIndice(dadosParaEnvio).subscribe((res) => {
+          if(res.success === "true") {
+            this.loadingMin = false;
+            this.obterIndice();
+            this._alert.success(res.msg);
+            this.fechar();
+          } else {
+            this.loadingMin = false;
+            this._alert.warning(res.msg);
+          }
+        },
+          (error) => {
+            this.loadingMin = false;
+            this._alert.error("Ocorreu um erro ao tentar editar o indice.");
+          }
+        );
+      } else {
+        this.loadingMin = false;
+        this._alert.warning("Preencha todos os campos obrigatórios");
+      }
     }
 
     public fechar() {
