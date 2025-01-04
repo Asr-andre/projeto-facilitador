@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppConfig } from './url.base.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { FormulaResponse } from '../models/formula.model';
-import { IndiceRequest, RetornoIndice } from '../models/cadastro/indice.model';
+import { IndiceModel, IndiceRequest, Retorno, RetornoIndice } from '../models/cadastro/indice.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,5 +14,13 @@ export class IndiceService {
 
   public listarIndice(request: IndiceRequest): Observable<RetornoIndice> {
     return this._http.post<RetornoIndice>(`${this.apiUrl}/listarindices`, request);
+  }
+
+  public cadastrarIndice(request: IndiceModel): Observable<Retorno> {
+    return this._http.post<Retorno>(`${this.apiUrl}/inseririndices`, request);
+  }
+
+  public editarIndice(request: IndiceModel): Observable<Retorno> {
+    return this._http.put<Retorno>(`${this.apiUrl}/editarindices`, request);
   }
 }

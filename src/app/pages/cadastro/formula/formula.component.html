@@ -20,7 +20,7 @@
                     <button class="btn btn-success btn-sm" (click)="abriModalCadastro(modalGenerico)"
                       style="padding-top: 2px; padding-bottom: 2px;">
                       <i class="fas fa-plus"></i>
-                       Cadastrar
+                      Cadastrar
                     </button>
                   </div>
                 </div>
@@ -29,21 +29,22 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mt-3" style="font-size: 11px;">
                   <div style="font-size: 11px;">
-                      <select id="itensPorPagina"
-                              [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
-                              style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
-                          <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina" style="font-size: 10px;" >{{ item }}</option>
-                      </select>
-                      <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
+                    <select id="itensPorPagina" [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
+                      style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
+                      <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina" style="font-size: 10px;">{{ item
+                        }}</option>
+                    </select>
+                    <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
                   </div>
                   <div style="font-size: 10px;">
-                      <div class="dataTables_filter text-md-end">
-                          <label class="d-inline-flex align-items-center">
-                              <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
-                          </label>
-                      </div>
+                    <div class="dataTables_filter text-md-end">
+                      <label class="d-inline-flex align-items-center">
+                        <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;"
+                          placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
+                      </label>
+                    </div>
                   </div>
-              </div>
+                </div>
                 <div class="table-responsive">
                   <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
                     <thead class="tabela-custom">
@@ -67,32 +68,34 @@
                         <th sortable="data_cadastro" (sort)="ordenar($event)">Data Cadastro</th>
                         <th sortable="data_alteracao" (sort)="ordenar($event)">Data Alteração</th>
                         <th sortable="user_login" (sort)="ordenar($event)">Usuário</th>
-                        <th >Ações</th>
+                        <th>Ações</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let formula of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                      <tr
+                        *ngFor="let formula of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
                         <td> {{ formula.id_formula }} </td>
                         <td> {{ formula.descricao }} </td>
                         <td> {{ formula.usa_indice }} </td>
-                        <td> {{ formula.fator_multa / 100  | percent: '1.2-2' }} </td>
-                        <td> {{ formula.fator_juros / 100  | percent: '1.2-2' }} </td>
-                        <td> {{ formula.fator_taxa / 100  | percent: '1.2-2' }} </td>
-                        <td> {{ formula.desconto_principal / 100  | percent: '1.2-2' }} </td>
-                        <td> {{ formula.desconto_multa / 100  | percent: '1.2-2' }} </td>
-                        <td> {{ formula.desconto_juros / 100  | percent: '1.2-2' }} </td>
-                        <td> {{ formula.desconto_indice / 100  | percent: '1.2-2' }} </td>
-                        <td> {{ formula.desconto_taxa / 100  | percent: '1.2-2' }} </td>
-                        <td> {{ formula.receita_principal / 100  | percent: '1.2-2' }} </td>
-                        <td> {{ formula.receita_multa / 100  | percent: '1.2-2' }} </td>
-                        <td> {{ formula.receita_juros / 100  | percent: '1.2-2' }} </td>
-                        <td> {{ formula.receita_indice / 100  | percent: '1.2-2' }} </td>
-                        <td> {{ formula.receita_taxa / 100  | percent: '1.2-2' }} </td>
+                        <td> {{ formula.fator_multa / 100 | percent: '1.2-2' }} </td>
+                        <td> {{ formula.fator_juros / 100 | percent: '1.2-2' }} </td>
+                        <td> {{ formula.fator_taxa / 100 | percent: '1.2-2' }} </td>
+                        <td> {{ formula.desconto_principal / 100 | percent: '1.2-2' }} </td>
+                        <td> {{ formula.desconto_multa / 100 | percent: '1.2-2' }} </td>
+                        <td> {{ formula.desconto_juros / 100 | percent: '1.2-2' }} </td>
+                        <td> {{ formula.desconto_indice / 100 | percent: '1.2-2' }} </td>
+                        <td> {{ formula.desconto_taxa / 100 | percent: '1.2-2' }} </td>
+                        <td> {{ formula.receita_principal / 100 | percent: '1.2-2' }} </td>
+                        <td> {{ formula.receita_multa / 100 | percent: '1.2-2' }} </td>
+                        <td> {{ formula.receita_juros / 100 | percent: '1.2-2' }} </td>
+                        <td> {{ formula.receita_indice / 100 | percent: '1.2-2' }} </td>
+                        <td> {{ formula.receita_taxa / 100 | percent: '1.2-2' }} </td>
                         <td> {{ data(formula.data_cadastro) }} </td>
                         <td> {{ data(formula.data_alteracao) }} </td>
                         <td> {{ formula.user_login }} </td>
                         <td>
-                          <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abriModalEditar(modalGenerico, formula)"><i class="fas fa-edit"></i></button>
+                          <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar"
+                            (click)="abriModalEditar(modalGenerico, formula)"><i class="fas fa-edit"></i></button>
                         </td>
                       </tr>
                     </tbody>
@@ -102,12 +105,8 @@
                       Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
                       {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
                     </div>
-                    <pagination-controls (pageChange)="paginaAtual = $event"
-                                          previousLabel="Anterior"
-                                          nextLabel="Próximo"
-                                          [maxSize]="5"
-                                          [autoHide]="false"
-                                          [responsive]="true">
+                    <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior"
+                      nextLabel="Próximo" [maxSize]="5" [autoHide]="false" [responsive]="true">
                     </pagination-controls>
                   </div>
                 </div>
@@ -126,53 +125,63 @@
     </div>
 
     <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
-      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-calculator"></i> {{ editar ? 'Editar Formula' : 'Cadastrar Formula' }} </h6>
-      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
+      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-calculator"></i> {{ editar ? 'Editar Formula' :
+        'Cadastrar Formula' }} </h6>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+        (click)="fechar()"></button>
     </div>
     <div class="modal-body modal-padding">
       <form [formGroup]="formFormula">
         <div class="row">
           <div class="col-md-3">
             <label for="descricao" class="form-label">Descrição</label>
-            <input type="text" id="descricao" class="form-control form-control-sm mb-1" formControlName="descricao" [readonly]="editar"
-            [ngClass]="{'is-invalid': formFormula.get('descricao').invalid && formFormula.get('descricao').touched}"/>
+            <input type="text" id="descricao" class="form-control form-control-sm mb-1" formControlName="descricao"
+              [readonly]="editar"
+              [ngClass]="{'is-invalid': formFormula.get('descricao').invalid && formFormula.get('descricao').touched}" />
           </div>
 
           <div class="col-md-3">
             <label for="multa" class="form-label">Multa (%)</label>
-            <input type="number" id="multa" class="form-control form-control-sm mb-1" formControlName="multa" min="0" (input)="verificarValorNegativo('multa')"/>
+            <input type="number" id="multa" class="form-control form-control-sm mb-1" formControlName="multa" min="0"
+              (input)="verificarValorNegativo('multa')" />
           </div>
 
           <div class="col-md-3">
             <label for="juros" class="form-label">Juros (%)</label>
-            <input type="number" id="juros" class="form-control form-control-sm mb-1" formControlName="juros" min="0" (input)="verificarValorNegativo('juros')"/>
+            <input type="number" id="juros" class="form-control form-control-sm mb-1" formControlName="juros" min="0"
+              (input)="verificarValorNegativo('juros')" />
           </div>
 
           <div class="col-md-3">
             <label for="taxa" class="form-label">Taxa (%)</label>
-            <input type="number" id="taxa" class="form-control form-control-sm mb-1" formControlName="taxa" min="0" (input)="verificarValorNegativo('taxa')" />
+            <input type="number" id="taxa" class="form-control form-control-sm mb-1" formControlName="taxa" min="0"
+              (input)="verificarValorNegativo('taxa')" />
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-3">
             <label for="desconto_principal" class="form-label">Desconto Principal (%)</label>
-            <input type="number" id="desconto_principal" class="form-control form-control-sm mb-1" formControlName="desconto_principal" min="0" (input)="verificarValorNegativo('desconto_principal')" />
+            <input type="number" id="desconto_principal" class="form-control form-control-sm mb-1"
+              formControlName="desconto_principal" min="0" (input)="verificarValorNegativo('desconto_principal')" />
           </div>
 
           <div class="col-md-3">
             <label for="desconto_multa" class="form-label">Desconto Multa (%)</label>
-            <input type="number" id="desconto_multa" class="form-control form-control-sm mb-1" formControlName="desconto_multa" min="0" (input)="verificarValorNegativo('desconto_multa')" />
+            <input type="number" id="desconto_multa" class="form-control form-control-sm mb-1"
+              formControlName="desconto_multa" min="0" (input)="verificarValorNegativo('desconto_multa')" />
           </div>
 
           <div class="col-md-3">
             <label for="desconto_juros" class="form-label">Desconto Juros (%)</label>
-            <input type="number" id="desconto_juros" class="form-control form-control-sm mb-1" formControlName="desconto_juros" min="0" (input)="verificarValorNegativo('desconto_juros')" />
+            <input type="number" id="desconto_juros" class="form-control form-control-sm mb-1"
+              formControlName="desconto_juros" min="0" (input)="verificarValorNegativo('desconto_juros')" />
           </div>
 
           <div class="col-md-3">
             <label for="desconto_taxa" class="form-label">Desconto Taxa (%)</label>
-            <input type="number" id="desconto_taxa" class="form-control form-control-sm mb-1" formControlName="desconto_taxa" min="0" (input)="verificarValorNegativo('desconto_taxa')" />
+            <input type="number" id="desconto_taxa" class="form-control form-control-sm mb-1"
+              formControlName="desconto_taxa" min="0" (input)="verificarValorNegativo('desconto_taxa')" />
           </div>
 
           <div class="col-md-3">
@@ -187,37 +196,44 @@
 
           <div class="col-md-3">
             <label for="desconto_indice" class="form-label">Desconto Indice (%)</label>
-            <input type="number" id="desconto_indice" class="form-control form-control-sm mb-1" formControlName="desconto_indice" min="0" (input)="verificarValorNegativo('desconto_indice')" />
+            <input type="number" id="desconto_indice" class="form-control form-control-sm mb-1"
+              formControlName="desconto_indice" min="0" (input)="verificarValorNegativo('desconto_indice')" />
           </div>
 
           <div class="col-md-3">
             <label for="receita_principal" class="form-label">Receita Principal (%)</label>
-            <input type="number" id="receita_principal" class="form-control form-control-sm mb-1" formControlName="receita_principal" min="0" (input)="verificarValorNegativo('receita_principal')" />
+            <input type="number" id="receita_principal" class="form-control form-control-sm mb-1"
+              formControlName="receita_principal" min="0" (input)="verificarValorNegativo('receita_principal')" />
           </div>
 
           <div class="col-md-3">
             <label for="receita_multa" class="form-label">Receita Multa (%)</label>
-            <input type="number" id="receita_multa" class="form-control form-control-sm mb-1" formControlName="receita_multa" min="0" (input)="verificarValorNegativo('receita_multa')" />
+            <input type="number" id="receita_multa" class="form-control form-control-sm mb-1"
+              formControlName="receita_multa" min="0" (input)="verificarValorNegativo('receita_multa')" />
           </div>
 
           <div class="col-md-3">
             <label for="receita_juros" class="form-label">Receita Juros (%)</label>
-            <input type="number" id="receita_juros" class="form-control form-control-sm mb-1" formControlName="receita_juros" min="0" (input)="verificarValorNegativo('receita_juros')" />
+            <input type="number" id="receita_juros" class="form-control form-control-sm mb-1"
+              formControlName="receita_juros" min="0" (input)="verificarValorNegativo('receita_juros')" />
           </div>
 
           <div class="col-md-3">
             <label for="receita_indice" class="form-label">Receita Indice (%)</label>
-            <input type="number" id="receita_indice" class="form-control form-control-sm mb-1" formControlName="receita_indice" min="0" (input)="verificarValorNegativo('receita_indice')" />
+            <input type="number" id="receita_indice" class="form-control form-control-sm mb-1"
+              formControlName="receita_indice" min="0" (input)="verificarValorNegativo('receita_indice')" />
           </div>
 
           <div class="col-md-3">
             <label for="receita_taxa" class="form-label">Receita Taxa (%)</label>
-            <input type="number" id="receita_taxa" class="form-control form-control-sm mb-1" formControlName="receita_taxa" min="0" (input)="verificarValorNegativo('receita_taxa')" />
+            <input type="number" id="receita_taxa" class="form-control form-control-sm mb-1"
+              formControlName="receita_taxa" min="0" (input)="verificarValorNegativo('receita_taxa')" />
           </div>
 
         </div>
         <div class="d-flex justify-content-end" style="padding-top: 5px;">
-          <button type="submit" class="btn btn-sm me-1" [ngClass]="editar ? 'btn-primary' : 'btn-success'" (click)="controleBotao()">
+          <button type="submit" class="btn btn-sm me-1" [ngClass]="editar ? 'btn-primary' : 'btn-success'"
+            (click)="controleBotao()">
             <i class="fas fa-save"></i> Salvar
           </button>
           <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">

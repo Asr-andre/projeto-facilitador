@@ -34,12 +34,12 @@ import { FormulaComponent } from "./formula/formula.component";
 import { SmsComponent } from "./sms/sms.component";
 import { ClienteComponent } from "./cliente/cliente.component";
 import { LogsComponent } from "../relatorios/logs/logs.component";
-import { MascaraCpfCnpjDirective } from "src/app/core/directive/mascara-cpf-cnpj.directive";
 import { IndiceComponent } from "./indice/indice.component";
+import { MascaraCpfDirective } from "src/app/core/directive/mascara-cpf.directive";
 
 @NgModule({
   declarations: [
-    MascaraCpfCnpjDirective,
+    MascaraCpfDirective,
     EmpresaComponent,
     ContratantesComponent,
     UsuariosComponent,
