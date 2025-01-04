@@ -29,6 +29,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   @Input() numeroDocumento: string | undefined;
   public detalhamentoSelecionado: DetalhamentoModel | null = null;
   public loadingMin: boolean = false;
+  public loading: boolean =false;
   public selecionarTodos: boolean = true;
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
   public login = this._authService.getLogin();
@@ -110,9 +111,10 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
       return;
     }
 
-    this._alertService.timer(true);
+    this.loading = true;
     this._dashboard.obterDevedorPorId(id_cliente, id_contratante).subscribe(
       (detalhamento) => {
+        this.loading = false;
         if (detalhamento && detalhamento.success) {
           this.detalhamentoSelecionado = detalhamento;
           this.titulosFiltrados = this.detalhamentoSelecionado?.parcelas || [];
@@ -120,15 +122,15 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
           if (this.detalhamentoSelecionado.parcelas) {
             this.detalhamentoSelecionado.parcelas.forEach(parcela => {
               parcela.selecionado = true;
-              this._alertService.timer(false);
+              this.loading = false;
             });
           }
-          this._alertService.timer(false);
+          this.loading = false;
         }
       },
       (error) => {
         this._alertService.error('Não foi possível pesquisar o cliente!');
-        this._alertService.timer(false);
+        this.loading = false;
       }
     );
   }
@@ -245,7 +247,6 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
     this._alertService.retirada().then(confirmarRetirada => {
       if (!confirmarRetirada) {
-        // Se o usuário cancelar a ação, simplesmente retorna e não faz nada
         return;
       }
 
@@ -262,16 +263,12 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
         titulos: titulos
       };
 
-      this._alertService.timer(true);
-
       this._simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe(
         (res) => {
-          this._alertService.timer(false);
           this._alertService.success(res.msg);
           this.obterDetalhamentoPorId(this.idCliente, this.idContratante);
         },
         error => {
-          this._alertService.timer(false);
           this._alertService.error('Ocorreu um erro ao realizar a retirada.');
         }
       );

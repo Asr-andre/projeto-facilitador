@@ -107,7 +107,7 @@ export class AlertService {
       showCancelButton: true
     }).then(result => {
       if (result.isConfirmed) {
-        this.swalWithBootstrapButtons.fire('Titulos retirados com sucesso!');
+        this.swalWithBootstrapButtons.fire('Exclusão em execução, aguarde!');
         return true;
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         return false;
