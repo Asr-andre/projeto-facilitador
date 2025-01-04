@@ -233,11 +233,13 @@ export class IndiceComponent implements OnInit {
     }
 
     public excluirIndice() {
-      const dadosParaEnvio = { ...this.indiceSelecionado };
-        dadosParaEnvio.data = this._datePipe.transform(dadosParaEnvio.data, "dd/MM/yyyy");
+      const dadosParaExclusao = { ...this.indiceSelecionado,
+        data: this.formatToBR(this.indiceSelecionado.data),
+        user_login: this.login
+      };
 
       this.loadingMin = true;
-      this._indiceService.excluirIndice(dadosParaEnvio).subscribe((res) => {
+      this._indiceService.excluirIndice(dadosParaExclusao).subscribe((res) => {
         if (res.success === "true") {
           this.loadingMin = false;
           this.obterIndice();

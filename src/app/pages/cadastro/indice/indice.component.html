@@ -171,11 +171,16 @@
       <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
     </div>
 
+    <div class="loading-overlay-card" *ngIf="loadingMin">
+      <div class="spinner-border text-primary m-1" role="status">
+      </div>
+    </div>
+
     <div class="modal-body modal-padding text-center">
-      <i class="fas fa-trash-alt fa-3x text-danger mb-2"></i> <!-- Reduzindo o espaçamento do ícone -->
-      <p class="mb-1">Tem certeza que deseja excluir o índice: <strong>{{ indiceSelecionado.indice }}</strong>?</p> <!-- Ajuste na margem inferior -->
-      <p class="mb-1">Data: <strong>{{ formatToBR(indiceSelecionado.data) }}</strong></p> <!-- Ajuste na margem inferior -->
-      <p class="mb-1">Valor: <strong>{{ indiceSelecionado.valor / 100 | percent: '1.2-2' }}</strong></p> <!-- Ajuste na margem inferior -->
+      <i class="fas fa-trash-alt fa-3x text-danger mb-2"></i>
+      <p class="mb-1">Tem certeza que deseja excluir o índice: <strong>{{ indiceSelecionado.indice }}</strong>?</p>
+      <p class="mb-1">Data: <strong>{{ formatToBR(indiceSelecionado.data) }}</strong></p>
+      <p class="mb-1">Valor: <strong>{{ indiceSelecionado.valor / 100 | percent: '1.2-2' }}</strong></p>
     </div>
 
 
