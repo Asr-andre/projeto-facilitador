@@ -115,38 +115,46 @@
       <div class="row">
         <div class="col-md-3 form-group">
           <label for="tipo_titulo" class="form-label">Tipo de Título</label>
-          <select type="text" class="form-control form-control-pad form-control-sm" formControlName="tipo_titulo" id="tipo_titulo"  name="tipo_titulo">
+          <select type="text" class="form-control form-control-pad form-control-sm" formControlName="tipo_titulo" id="tipo_titulo"  name="tipo_titulo"
+          [ngClass]="{'is-invalid': formTitulo.get('tipo_titulo').invalid && formTitulo.get('tipo_titulo').touched}">
             <option value="">Selecione</option>
               <option *ngFor="let tipo of tipoTitulo" [value]="tipo.id_tipo_titulo">{{ tipo.tipo_titulo }}</option>
           </select>
         </div>
         <div class="col-md-2 form-group">
           <label for="parcela" class="form-label">Parcela</label>
-          <input type="number" class="form-control form-control-pad form-control-sm" formControlName="parcela" id="parcela"  name="parcela" (input)="verificarValorNegativo('parcela')">
+          <input type="number" class="form-control form-control-pad form-control-sm" formControlName="parcela" id="parcela"  name="parcela"
+          [ngClass]="{'is-invalid': formTitulo.get('parcela').invalid && formTitulo.get('parcela').touched}" (input)="verificarValorNegativo('parcela')">
         </div>
         <div class="col-md-2 form-group">
           <label for="plano" class="form-label">Plano</label>
-          <input type="number" class="form-control form-control-pad form-control-sm" formControlName="plano" id="plano"  name="plano" (input)="verificarValorNegativo('plano')">
+          <input type="number" class="form-control form-control-pad form-control-sm" formControlName="plano" id="plano"  name="plano"
+          [ngClass]="{'is-invalid': formTitulo.get('plano').invalid && formTitulo.get('plano').touched}" (input)="verificarValorNegativo('plano')">
         </div>
         <div class="col-md-5 form-group">
           <label for="numero_contrato" class="form-label">Número do Contrato</label>
-          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="numero_contrato" id="numero_contrato"  name="numero_contrato">
+          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="numero_contrato" id="numero_contrato"  name="numero_contrato"
+          [ngClass]="{'is-invalid': formTitulo.get('numero_contrato').invalid && formTitulo.get('numero_contrato').touched}" >
         </div>
         <div class="col-md-4 form-group">
           <label for="numero_documento" class="form-label">Número do Documento</label>
-          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="numero_documento" id="numero_documento"  name="numero_documento">
+          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="numero_documento" id="numero_documento"  name="numero_documento"
+          [ngClass]="{'is-invalid': formTitulo.get('numero_documento').invalid && formTitulo.get('numero_documento').touched}" >
         </div>
-        <div class="col-md-4 form-group">
+        <div class="col-md-3 form-group">
           <label for="produto" class="form-label">Produto</label>
-          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="produto" id="produto"  name="produto">
+          <input type="text" class="form-control form-control-pad form-control-sm" formControlName="produto" id="produto"  name="produto"
+          [ngClass]="{'is-invalid': formTitulo.get('produto').invalid && formTitulo.get('produto').touched}" >
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-3 form-group">
           <label for="vencimento" class="form-label">Vencimento</label>
-          <input type="date" class="form-control form-control-pad form-control-sm" formControlName="vencimento" id="vencimento"  name="vencimento">
+          <input type="date" class="form-control form-control-pad form-control-sm" formControlName="vencimento" id="vencimento"  name="vencimento"
+          [ngClass]="{'is-invalid': formTitulo.get('vencimento').invalid && formTitulo.get('vencimento').touched}" >
         </div>
         <div class="col-md-2 form-group">
           <label for="valor" class="form-label">Valor</label>
-          <input type="number" class="form-control form-control-pad form-control-sm" formControlName="valor" id="valor"  name="valor" (input)="verificarValorNegativo('valor')">
+          <input type="number" class="form-control form-control-pad form-control-sm" formControlName="valor" id="valor"  name="valor"
+          [ngClass]="{'is-invalid': formTitulo.get('valor').invalid && formTitulo.get('valor').touched}" (input)="verificarValorNegativo('valor')">
         </div>
       </div>
     </form>

@@ -290,7 +290,8 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
   public cadastrarTitulo(): void {
     if (!this.formTitulo.valid) {
-      this._alertService.warning('Todos os campos são obrigatórios.');
+      this.marcarCamposComoTocados(this.formTitulo);
+      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
@@ -324,6 +325,14 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
         this._alertService.error('Atenção Título Já Existente, Verifique os Campos Chaves!!!');
       }
     );
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 
   public verificarValorNegativo(campo: string) {
