@@ -25,6 +25,6 @@ export class IndiceService {
   }
 
   public excluirIndice(request: IndiceModel): Observable<Retorno> {
-    return this._http.delete<Retorno>(`${this.apiUrl}/excluirindices`, request);
+    return this._http.post<Retorno>(`${this.apiUrl}/excluirindices`, request);
   }
 }
