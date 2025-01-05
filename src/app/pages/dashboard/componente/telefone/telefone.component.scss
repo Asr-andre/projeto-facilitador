@@ -12,7 +12,14 @@
   padding-right: 2px;
 }
 
-.sms-icon, .whatsapp-icon {
+.whatsapp-icon {
+  cursor: pointer;
+  font-size: 1.2em; /* Aumenta o tamanho dos ícones */
+  margin-right: 6px; /* Adiciona espaço entre os ícones */
+  color: #25D366; /* Define a cor inicial dos ícones */
+}
+
+.sms-icon {
   cursor: pointer;
   font-size: 1.2em; /* Aumenta o tamanho dos ícones */
   margin-right: 6px; /* Adiciona espaço entre os ícones */
