@@ -23,7 +23,7 @@ export class SolicitarCreditosComponent implements OnInit {
   public login = this._authService.getLogin();
   public dadosPixGerado: PixDetails;
   public mostraQrCode: Boolean = false;
-  public loading: Boolean = false;
+  public loadingMin: Boolean = false;
   public desabilitarBotaoPix: Boolean = true;
   public historico: Boolean = false;
   public ocultarBotaoCredito: Boolean = true;
@@ -65,16 +65,16 @@ export class SolicitarCreditosComponent implements OnInit {
 
   public comprarCreditos() {
     if(this.formCreditos.valid) {
-      this.loading = true;
+      this.loadingMin = true;
       this._solicitarCreditosService.gerarPix(this.formCreditos.value).subscribe((res) => {
         if (res.success === "true")  {
           this.dadosPixGerado = res.pix;
           this.mostraQrCode = true;
           this.desabilitarBotaoPix = false;
           this.historico = false;
-          this.loading = false;
+          this.loadingMin = false;
         }else {
-          this.loading = false;
+          this.loadingMin = false;
           this._alertService.warning("Erro na resposta da API:", res.msg || "Mensagem não disponível");
         }
       });
@@ -88,14 +88,16 @@ export class SolicitarCreditosComponent implements OnInit {
     const formValues = this.historicoForm.value;
 
     const dadosParaEnvio = { ...formValues };
-
     dadosParaEnvio.data_inicio = this._datePipe.transform(dadosParaEnvio.data_inicio, "dd/MM/yyyy") || "";
     dadosParaEnvio.data_fim = this._datePipe.transform(dadosParaEnvio.data_fim, "dd/MM/yyyy") || "";
 
+    this.loadingMin = true;
     this._solicitarCreditosService.obterHistorico(dadosParaEnvio).subscribe((res) => {
         this.retornoHistorico = res.data;
+        this.loadingMin = false;
       },
       (error) => {
+        this.loadingMin = false;
         this._alertService.error("Erro ao obter histórico, por favor, tente novamente.", error);
       }
     );
