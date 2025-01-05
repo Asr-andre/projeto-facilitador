@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../../../core/services/auth.service';
 import { Utils } from 'src/app/core/helpers/utils';
+import { AppConfig } from 'src/app/core/config/app.config';
 
 @Component({
   selector: 'app-login',
@@ -16,13 +17,16 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   currentUser: any;
   public loading: boolean = false;
+  public versao: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService
-  ) {}
+  ) {
+    this.versao = AppConfig.versao;
+  }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({

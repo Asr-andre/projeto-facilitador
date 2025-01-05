@@ -20,7 +20,8 @@
                     <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
                     <div class="form-group auth-form-group-custom mb-4">
                       <label for="sigla">Sigla</label>
-                      <input type="text" formControlName="sigla" class="form-control" id="sigla" placeholder="Sigla" [ngClass]="{ 'is-invalid': submitted && f.sigla.errors }">
+                      <input type="text" formControlName="sigla" class="form-control" id="sigla" placeholder="Sigla"
+                        [ngClass]="{ 'is-invalid': submitted && f.sigla.errors }">
                       <div *ngIf="submitted && f.sigla.errors" class="invalid-feedback">
                         <div *ngIf="f.sigla.errors.required">Sigla é obrigatória</div>
                       </div>
@@ -28,7 +29,8 @@
 
                     <div class="form-group auth-form-group-custom mb-4">
                       <label for="login">Login</label>
-                      <input type="text" formControlName="login" class="form-control" id="login" placeholder="Login" [ngClass]="{ 'is-invalid': submitted && f.login.errors }">
+                      <input type="text" formControlName="login" class="form-control" id="login" placeholder="Login"
+                        [ngClass]="{ 'is-invalid': submitted && f.login.errors }">
                       <div *ngIf="submitted && f.login.errors" class="invalid-feedback">
                         <div *ngIf="f.login.errors.required">Login é obrigatório</div>
                       </div>
@@ -37,16 +39,19 @@
                     <div class="form-group auth-form-group-custom mb-4">
                       <label for="senha">Senha</label>
                       <div class="input-wrapper">
-                        <input type="password" formControlName="senha" class="form-control" id="senha" [ngClass]="{ 'is-invalid': submitted && f.senha.errors }" placeholder="Senha" />
+                        <input type="password" formControlName="senha" class="form-control" id="senha"
+                          [ngClass]="{ 'is-invalid': submitted && f.senha.errors }" placeholder="Senha" />
                         <div *ngIf="submitted && f.senha.errors" class="invalid-feedback">
                           <div *ngIf="f.senha.errors.required">Senha é obrigatória</div>
                         </div>
-                        <i class="fas fa-eye-slash" id="iconeOlhoIcon" *ngIf="!submitted || !f.senha.errors" (click)="mostrarSenha('senha', 'iconeOlhoIcon')"></i>
+                        <i class="fas fa-eye-slash" id="iconeOlhoIcon" *ngIf="!submitted || !f.senha.errors"
+                          (click)="mostrarSenha('senha', 'iconeOlhoIcon')"></i>
                       </div>
                     </div>
 
                     <div class="mt-4 text-center">
-                      <button type="submit" class="btn btn-primary w-md waves-effect waves-light"><i class="mdi mdi-login"></i> Entrar</button>
+                      <button type="submit" class="btn btn-primary w-md waves-effect waves-light"><i
+                          class="mdi mdi-login"></i> Entrar</button>
                     </div>
 
                     <div class="mt-4 text-center">
@@ -57,9 +62,12 @@
                       <p>
                         &copy; 2024 Portal Facilitador
                         <br>
+                        Versão: {{ versao }}
+                        <br>
                         <i class="fab fa-whatsapp"></i> WhatsApp: <a href="tel:+5585996233800">85996233800</a>
                         <br>
-                        <i class="fas fa-envelope"></i> Email: <a href="mailto:pedroamaral625&#64;gmail.com">pedroamaral625&#64;gmail.com</a>
+                        <i class="fas fa-envelope"></i> Email: <a
+                          href="mailto:pedroamaral625&#64;gmail.com">pedroamaral625&#64;gmail.com</a>
                       </p>
                     </div>
                   </form>
