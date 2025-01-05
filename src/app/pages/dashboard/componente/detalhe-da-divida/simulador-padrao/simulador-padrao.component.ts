@@ -112,7 +112,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       qtde_parcelas: [1, Validators.required],
       periodicidade: ["M"],
       valor_entrada: [0, Validators.required],
-      vencimento: [""],
+      vencimento: ["", Validators.required],
       titulos: [""],
       user_login: [this.login],
     });
@@ -282,6 +282,12 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   }
 
   public simularAcordo() {
+    if (this.formAcordo.invalid) {
+      this.marcarCamposComoTocados(this.formAcordo);
+      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
     if (this.formAcordo.valid) {
       const dadosParaEnvio = { ...this.formAcordo.value };
       dadosParaEnvio.vencimento = this.datePipe.transform(dadosParaEnvio.vencimento, "dd/MM/yyyy");
@@ -304,6 +310,14 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
         }
       );
     }
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 
   public fecharAcordo() {

@@ -106,26 +106,34 @@
             <div class="row align-items-center">
               <div class="col-md-3" style="font-size: 12px;">
                 <small>Valor da entrada</small>
-                <input type="number" class="form-control form-control-sm" formControlName="valor_entrada">
+                <input type="number" class="form-control form-control-sm" formControlName="valor_entrada"
+                [ngClass]="{'is-invalid': formAcordo.get('valor_entrada').invalid && formAcordo.get('valor_entrada').touched}">
               </div>
+
               <div class="col-md-2" style="font-size: 12px;">
                 <small>Qtde Parcelas</small>
-                <input type="number" class="form-control form-control-sm" formControlName="qtde_parcelas">
+                <input type="number" class="form-control form-control-sm" formControlName="qtde_parcelas"
+                [ngClass]="{'is-invalid': formAcordo.get('qtde_parcelas').invalid && formAcordo.get('qtde_parcelas').touched}">
               </div>
+
               <div class="col-md-3 form-group" style="font-size: 12px;">
                 <small>Tipo</small>
-                <select class="form-control form-control-sm" formControlName="periodicidade">
+                <select class="form-control form-control-sm" formControlName="periodicidade"
+                [ngClass]="{'is-invalid': formAcordo.get('periodicidade').invalid && formAcordo.get('periodicidade').touched}">
                   <option value="M">Mensal</option>
                   <option value="Q">Quinzenal</option>
                   <option value="S">Semanal</option>
                   <option value="D">Diário</option>
                 </select>
               </div>
+
               <div class="col-md-4" style="font-size: 12px;">
                 <small>Data Vencimento</small>
-                <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="vencimento">
+                <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="vencimento"
+                [ngClass]="{'is-invalid': formAcordo.get('vencimento').invalid && formAcordo.get('vencimento').touched}">
               </div>
             </div>
+
             <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px;">
               <button type="submit" class="btn btn-secondary btn-sm" style="padding-bottom: 2px; padding-top: 2px;">
                 <i class="fas fa-handshake"></i> Simular Acordo
@@ -224,7 +232,8 @@
         <div class="mb-3">
           <label for="pixCopiaCola" class="form-label" style="display: inline-flex; align-items: center;">
             Pix Copia e Cola
-            <button class="btn btn-outline-secondary btn-sm" (click)="copiarParaAreasTransferencia(dadosPixGerado?.pixCopiaECola)" style="border: 0; padding: 0; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; margin-left: 5px;">
+            <button class="btn btn-outline-secondary btn-sm" (click)="copiarParaAreasTransferencia(dadosPixGerado?.pixCopiaECola)"
+            style="border: 0; padding: 0; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; margin-left: 5px;">
               <i class="fas fa-copy" style="font-size: 12px;"></i>
             </button>
           </label>
