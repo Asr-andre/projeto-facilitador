@@ -72,10 +72,10 @@
                       <td class="text-start"> {{ formatToBR(dado.data) }} </td>
                       <td class="text-center"> {{ dado.valor / 100 | percent: '1.2-2' }} </td>
                       <td class="text-end">
-                        <button class="btn btn-sm btn-primary me-1" ngbTooltip="Editar"
-                          (click)="abriModalEditar(modalGenerico, dado)"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-sm btn-danger" ngbTooltip="Excluir"
-                          (click)="abrirModalExcluir(modalExcluir, dado)"><i class="fas fa-trash"></i></button>
+                        <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18"
+                          (click)="abriModalEditar(modalGenerico, dado)"></i></a>
+                        <a href="javascript:void(0);" class="text-danger" ngbTooltip="Excluir"><i class="mdi mdi-trash-can font-size-18"
+                          (click)="abrirModalExcluir(modalExcluir, dado)"></i></a>
                       </td>
                     </tr>
                   </tbody>

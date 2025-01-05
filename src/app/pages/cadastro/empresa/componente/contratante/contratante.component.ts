@@ -54,6 +54,8 @@ export class ContratanteComponent implements OnInit, OnChanges {
   }
 
   public cadastrarContratante() {
+    this.marcarCamposComoTocados(this.formContratante);
+
     if (this.formContratante.valid) {
       this._empresaService.cadastrarContratante(this.formContratante.value).subscribe((res: RetornoModel) => {
             if (res && res.success === "true") {
@@ -63,11 +65,19 @@ export class ContratanteComponent implements OnInit, OnChanges {
             }
           },
           (error) => {
-            this._alertService.error("Ocorreu um erro ao tentar cadastrar a empresa.");
+            this._alertService.error("Ocorreu um error ao tentar cadastrar o contratante.");
           }
         );
     } else {
       this._alertService.warning("Preencha todos os campos obrigatórios");
     }
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 }

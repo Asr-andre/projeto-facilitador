@@ -1,117 +1,160 @@
-<div class="row">
-    <div class="col-lg-12">
-      <div class="card">
-        <div class="card-body">
-          <p class="card-title-desc" style="margin-bottom: 0px;">Informe os dados do contratante que será cobrado. {{ idEmpresa }}</p>
-          <hr style="margin-top: 5px;">
-          <form [formGroup]="formContratante">
-            <div class="row">
-              <div class="col-md-2 form-group">
-                <input class="form-control form-control-sm mb-3" formControlName="razao_social" type="text" placeholder="Razão Social" required>
-              </div>
-              <div class="col-md-2 form-group">
-                <input class="form-control form-control-sm mb-3" formControlName="fantasia" type="text" placeholder="Fantasia" required>
-              </div>
-              <div class="col-md-2 form-group">
-                <input class="form-control form-control-sm mb-3" formControlName="cnpj" type="text" placeholder="CNPJ" mask="00.000.000/0000-00">
-              </div>
-              <div class="col-md-3 form-group">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Inscrição municipal">
-              </div>
-              <div class="col-md-3 form-group">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Inscrição estadual">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3 form-group">
-                <input class="form-control form-control-sm mb-3" formControlName="endereco" type="text" placeholder="Rua">
-              </div>
-              <div class="col-md-1 form-group">
-                <input class="form-control form-control-sm mb-3" formControlName="numero" type="text" placeholder="Nº">
-              </div>
-              <div class="col-md-2 form-group">
-                <input class="form-control form-control-sm mb-3" formControlName="complemento" type="text" placeholder="Complemento">
-              </div>
-              <div class="col-md-3 form-group">
-                <input class="form-control form-control-sm mb-3" formControlName="bairro" type="text" placeholder="Bairro">
-              </div>
+<div class="row" *ngIf="idEmpresa">
+  <div class="col-lg-12">
+    <div class="card-body" style="padding-top: 0px; padding-bottom: 0px;">
+      <p class="card-title-desc" style="margin-bottom: 0px;">Informe os dados do contratante que será cobrado. {{
+        idEmpresa }}</p>
+      <hr style="margin-top: 5px;">
+      <form [formGroup]="formContratante">
+        <div class="row">
+          <div class="col-md-2 form-group">
+            <label for="cnpj" class="form-label">Razão Social</label>
+            <input class="form-control form-control-sm mb-3" formControlName="razao_social" type="text"
+              placeholder="Razão Social" required
+              [ngClass]="{'is-invalid': formContratante.get('razao_social').invalid && formContratante.get('razao_social').touched}">
+          </div>
 
-              <div class="col-md-2 form-group">
-                <input class="form-control form-control-sm mb-3" formControlName="cidade" type="text" placeholder="Cidade">
-              </div>
-              <div class="col-md-1 form-group">
-                <select class="form-control form-control-sm mb-3" formControlName="uf" placeholder="UF">
-                  <option value="">--</option>
-                  <option value="AC">AC</option>
-                  <option value="AL">AL</option>
-                  <option value="AM">AM</option>
-                  <option value="AP">AP</option>
-                  <option value="BA">BA</option>
-                  <option value="CE">CE</option>
-                  <option value="DF">DF</option>
-                  <option value="ES">ES</option>
-                  <option value="GO">GO</option>
-                  <option value="MA">MA</option>
-                  <option value="MG">MG</option>
-                  <option value="MS">MS</option>
-                  <option value="MT">MT</option>
-                  <option value="PA">PA</option>
-                  <option value="PB">PB</option>
-                  <option value="PE">PE</option>
-                  <option value="PI">PI</option>
-                  <option value="PR">PR</option>
-                  <option value="RJ">RJ</option>
-                  <option value="RN">RN</option>
-                  <option value="RO">RO</option>
-                  <option value="RR">RR</option>
-                  <option value="RS">RS</option>
-                  <option value="SC">SC</option>
-                  <option value="SR">SE</option>
-                  <option value="SP">SP</option>
-                  <option value="TO">TO</option>
-                </select>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-2 form-group">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Site">
-              </div>
-              <div class="col-md-2 form-group">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Email">
-              </div>
-              <div class="col-md-2 form-group">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Fone Contato" mask="(00) 00000-0000">
-              </div>
-              <div class="col-md-2 form-group">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Responsavel">
-              </div>
-              <div class="col-md-2 form-group">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Cpf Responsavel" mask="000.000.000-00">
-              </div>
-              <div class="col-md-2 form-group">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="RG Responsavel">
-              </div>
-            </div>
+          <div class="col-md-2 form-group">
+            <label for="cnpj" class="form-label">Nome Fantasia</label>
+            <input class="form-control form-control-sm mb-3" formControlName="fantasia" type="text"
+              placeholder="Fantasia" required
+              [ngClass]="{'is-invalid': formContratante.get('fantasia').invalid && formContratante.get('fantasia').touched}">
+          </div>
 
-            <div class="row">
-              <div class="col-md-4 form-group">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Expedidor">
-              </div>
-              <div class="col-md-4 form-group">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="Formula calculo">
-              </div>
-              <div class="col-md-4 form-group">
-                <input class="form-control form-control-sm mb-3" type="text" placeholder="logomarca">
-              </div>
-            </div>
-            <div class="mb-3 mb-0" style="text-align: end;">
-              <div>
-                <button type="submit" class="btn btn-success mb-1 btn-sm me-1" (click)="cadastrarContratante()"><i class=" fas fa-check-circle"></i> Salvar</button>
-                <button type="reset" class="btn btn-danger mb-1 btn-sm"><i class="fas fa-window-close"></i> Cancelar</button>
-              </div>
-            </div>
-          </form>
+          <div class="col-md-2 form-group">
+            <label for="cnpj" class="form-label">Cnpj</label>
+            <input class="form-control form-control-sm mb-3" formControlName="cnpj" type="text" placeholder="CNPJ"
+              mask="00.000.000/0000-00"
+              [ngClass]="{'is-invalid': formContratante.get('cnpj').invalid && formContratante.get('cnpj').touched}">
+          </div>
+
+          <div class="col-md-3 form-group">
+            <label for="cnpj" class="form-label">Incrição Municipal</label>
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Inscrição municipal">
+          </div>
+          <div class="col-md-3 form-group">
+            <label for="cnpj" class="form-label">Inscrição Estadua</label>
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Inscrição estadual">
+          </div>
         </div>
-      </div>
+        <div class="row">
+          <div class="col-md-3 form-group">
+            <label for="cnpj" class="form-label">Endereço</label>
+            <input class="form-control form-control-sm mb-3" formControlName="endereco" type="text" placeholder="Rua">
+          </div>
+          <div class="col-md-1 form-group">
+            <label for="cnpj" class="form-label">Número</label>
+            <input class="form-control form-control-sm mb-3" formControlName="numero" type="text" placeholder="Nº">
+          </div>
+          <div class="col-md-2 form-group">
+            <label for="cnpj" class="form-label">Complemento</label>
+            <input class="form-control form-control-sm mb-3" formControlName="complemento" type="text"
+              placeholder="Complemento">
+          </div>
+          <div class="col-md-3 form-group">
+            <label for="cnpj" class="form-label">Bairro</label>
+            <input class="form-control form-control-sm mb-3" formControlName="bairro" type="text" placeholder="Bairro">
+          </div>
+
+          <div class="col-md-2 form-group">
+            ]<label for="cnpj" class="form-label">Cidade</label>
+            <input class="form-control form-control-sm mb-3" formControlName="cidade" type="text" placeholder="Cidade">
+          </div>
+
+          <div class="col-md-1 form-group">
+            <label for="cnpj" class="form-label">Uf</label>
+            <select class="form-control form-control-sm mb-3" formControlName="uf" placeholder="UF">
+              <option value="">--</option>
+              <option value="AC">AC</option>
+              <option value="AL">AL</option>
+              <option value="AM">AM</option>
+              <option value="AP">AP</option>
+              <option value="BA">BA</option>
+              <option value="CE">CE</option>
+              <option value="DF">DF</option>
+              <option value="ES">ES</option>
+              <option value="GO">GO</option>
+              <option value="MA">MA</option>
+              <option value="MG">MG</option>
+              <option value="MS">MS</option>
+              <option value="MT">MT</option>
+              <option value="PA">PA</option>
+              <option value="PB">PB</option>
+              <option value="PE">PE</option>
+              <option value="PI">PI</option>
+              <option value="PR">PR</option>
+              <option value="RJ">RJ</option>
+              <option value="RN">RN</option>
+              <option value="RO">RO</option>
+              <option value="RR">RR</option>
+              <option value="RS">RS</option>
+              <option value="SC">SC</option>
+              <option value="SR">SE</option>
+              <option value="SP">SP</option>
+              <option value="TO">TO</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2 form-group">
+            <label for="cnpj" class="form-label">Site</label>
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Site">
+          </div>
+
+          <div class="col-md-2 form-group">
+            <label for="cnpj" class="form-label">Email</label>
+            <input class="form-control form-control-sm mb-3" type="email" placeholder="Email">
+          </div>
+
+          <div class="col-md-2 form-group">
+            <label for="cnpj" class="form-label">Fone Contato</label>
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Fone Contato"
+              mask="(00) 00000-0000">
+          </div>
+
+          <div class="col-md-2 form-group">
+            <label for="cnpj" class="form-label">Responsavel</label>
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Responsavel">
+          </div>
+
+          <div class="col-md-2 form-group">
+            <label for="cnpj" class="form-label">Cpf Responsavel</label>
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Cpf Responsavel"
+              mask="000.000.000-00">
+          </div>
+
+          <div class="col-md-2 form-group">
+            <label for="cnpj" class="form-label">RG Responsavel</label>
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="RG Responsavel">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 form-group">
+            <label for="cnpj" class="form-label">Orgão Expedidor</label>
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Expedidor">
+          </div>
+
+          <div class="col-md-4 form-group">
+            <label for="cnpj" class="form-label">Formula calculo</label>
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="Formula calculo">
+          </div>
+
+          <div class="col-md-4 form-group">
+            <label for="cnpj" class="form-label">Logo</label>
+            <input class="form-control form-control-sm mb-3" type="text" placeholder="logomarca">
+          </div>
+        </div>
+
+        <div class="mb-3 mb-0" style="text-align: end;">
+          <div>
+            <button type="submit" class="btn btn-success mb-1 btn-sm me-1" (click)="cadastrarContratante()"><i
+                class="fas fa-save"></i> Salvar</button>
+            <button type="reset" class="btn btn-outline-secondary btn-sm mb-1"><i class="fas fa-times"></i>
+              Cancelar</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
+</div>

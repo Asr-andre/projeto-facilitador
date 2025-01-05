@@ -57,7 +57,7 @@
                       <th sortable="centro_custo" (sort)="ordenar($event)">Centro de Custo</th>
                       <th sortable="ativo" (sort)="ordenar($event)">Ativo</th>
                       <th sortable="gera_acionamento" (sort)="ordenar($event)">Gera Acionamento</th>
-                      <th>Ações</th>
+                      <th class="text-end">Ações</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -70,8 +70,9 @@
                       <td>{{ perfil.centro_custo }}</td>
                       <td>{{ perfil.ativo === 'S' ? 'Sim' : 'Não' }}</td>
                       <td>{{ perfil.gera_acionamento === 'S' ? 'Sim' : 'Não' }}</td>
-                      <td>
-                        <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abriModalEditar(modalGenerico, perfil)"><i class="fas fa-edit"></i></button>
+                      <td class="text-end">
+                        <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18"
+                          (click)="abriModalEditar(modalGenerico, perfil)"></i></a>
                       </td>
                     </tr>
                   </tbody>

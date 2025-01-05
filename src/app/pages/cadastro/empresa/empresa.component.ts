@@ -48,22 +48,34 @@ export class EmpresaComponent implements OnInit {
   }
 
   public cadastrarEmpresa() {
+    this.marcarCamposComoTocados(this.formEmpresa);
 
+    if (this.formEmpresa.valid) {
       this._empresaService.cadastrarEmpresa(this.formEmpresa.value).subscribe((res: RetornoModel) => {
-          if (res && res.success === 'true') {
-            this._alertService.success(res.msg);
-            this.idEmpresaEmit.emit(res.id_empresa);
-            this.siglaEmit.emit(res.sigla);
-            this.idEmpresa = res.id_empresa;
-            this.sigla = res.sigla;
-          } else {
-            this._alertService.warning(res.msg);
-          }
-        },
+        if (res && res.success === 'true') {
+          this._alertService.success(res.msg);
+          this.idEmpresaEmit.emit(res.id_empresa);
+          this.siglaEmit.emit(res.sigla);
+          this.idEmpresa = res.id_empresa;
+          this.sigla = res.sigla;
+        } else {
+          this._alertService.warning(res.msg);
+        }
+      },
         (error) => {
-          this._alertService.error('Ocorreu um erro ao tentar cadastrar a empresa.');
+          this._alertService.error("Ocorreu um error ao tentar cadastrar a empresa.");
         }
       );
+    } else {
+      this._alertService.warning("Preencha todos os campos obrigatórios");
+    }
+  }
 
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 }

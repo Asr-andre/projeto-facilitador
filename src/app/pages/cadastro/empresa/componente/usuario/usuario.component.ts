@@ -52,6 +52,8 @@ export class UsuarioComponent implements OnInit, OnChanges {
   }
 
   public cadastrarUsuario() {
+    this.marcarCamposComoTocados(this.formUsuario);
+
     if (this.formUsuario.valid) {
       this._empresaService.cadastrarUsuario(this.formUsuario.value).subscribe((res: RetornoModel) => {
           if (res && res.success === "true") {
@@ -61,11 +63,19 @@ export class UsuarioComponent implements OnInit, OnChanges {
           }
         },
         (error) => {
-          this._alertService.error( "Ocorreu um erro ao tentar cadastrar o usuário." );
+          this._alertService.error( "Ocorreu um error ao tentar cadastrar o usuário." );
         }
       );
     } else {
       this._alertService.warning("Preencha todos os campos obrigatórios");
     }
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 }

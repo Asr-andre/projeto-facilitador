@@ -60,7 +60,7 @@
                         <th sortable="id_formula" (sort)="ordenar($event)">Id Fórmula</th>
                         <th sortable="data_cadastro" (sort)="ordenar($event)">Data Cadastro</th>
                         <th sortable="ativo" (sort)="ordenar($event)">Ativo</th>
-                        <th >Ações</th>
+                        <th class="text-end">Ações</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -77,8 +77,9 @@
                         <td>{{ contratante.id_formula }}</td>
                         <td>{{ data(contratante.data_cadastro) }}</td>
                         <td>{{ contratante.ativo === 'S' ? 'Sim' : 'Não' }}</td>
-                        <td>
-                          <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="abriModalEditar(modalGenerico, contratante)"><i class="fas fa-edit"></i></button>
+                        <td class="text-end">
+                          <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18"
+                            (click)="abriModalEditar(modalGenerico, contratante)"></i></a>
                         </td>
                       </tr>
                     </tbody>

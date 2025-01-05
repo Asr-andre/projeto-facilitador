@@ -56,7 +56,7 @@
                       <th sortable="ssl" (sort)="ordenar($event)">SSL</th>
                       <th sortable="tls" (sort)="ordenar($event)">TLS</th>
                       <th sortable="data_cadastro" (sort)="ordenar($event)">Data Cadastro</th>
-                      <th>Ações</th>
+                      <th class="text-end">Ações</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -69,8 +69,9 @@
                       <td>{{ dado.ssl === 'S' ? 'Sim' : 'Não' }}</td>
                       <td>{{ dado.tls === 'S' ? 'Sim' : 'Não' }}</td>
                       <td>{{ data(dado.data_cadastro) }}</td>
-                      <td>
-                        <button class="btn btn-sm btn-primary mr2" ngbTooltip="Editar" (click)="modalEditar(modalGenerico, dado)"><i class="fas fa-edit"></i></button>
+                      <td class="text-end">
+                        <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18"
+                          (click)="modalEditar(modalGenerico, dado)"></i></a>
                       </td>
                     </tr>
                   </tbody>
