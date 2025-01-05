@@ -37,6 +37,8 @@ export class AcordoComponent implements OnInit, OnChanges {
   }
 
   public  listarAcordos(): void {
+    if (!this.idCliente) return;
+
     const requisicao: AcordoRequisicaoModel = {
       id_empresa: this.idEmpresa,
       id_contratante: this.idContratante,

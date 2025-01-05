@@ -132,6 +132,8 @@ export class DashboardComponent implements OnInit {
   }
 
   public obterDadosDosCards(): void {
+    if (!this.idEmpresa) return;
+
     const requisicao: RequisicaoCardsModel = {
       id_empresa: this.idEmpresa,
     }

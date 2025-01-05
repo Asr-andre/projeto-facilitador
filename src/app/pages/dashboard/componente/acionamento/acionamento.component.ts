@@ -105,6 +105,8 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   }
 
   public listarAcoesCobranca(): void {
+    if (!this.idEmpresa) return;
+
     if (this.idEmpresa) {
       const requisicao: RequisicaoAcaoCobrancaModel = {
         id_empresa: this.idEmpresa,

@@ -85,6 +85,8 @@ export class JuridicoComponent implements OnInit, OnChanges {
   }
 
   public obterProcessos() {
+    if (!this.idCliente) return;
+
     const request = {
       id_empresa: this.idEmpresa,
       id_cliente: this.idCliente,

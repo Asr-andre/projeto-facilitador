@@ -77,6 +77,8 @@ export class TelefoneComponent implements OnInit, OnChanges {
   }
 
   public carregarTelefones(idCliente: number): void {
+    if (!idCliente) return;
+
     this.loadingMin = true;
     this._telefoneService.obterTelefonesPorCliente(idCliente).subscribe((telefones) => {
       this.telefones = telefones;

@@ -40,6 +40,8 @@ export class BoletoPixComponent implements OnInit, OnChanges {
   }
 
   public obterBoeltoPix() {
+    if (!this.idCliente) return;
+
     const request = {
       id_cliente: this.idCliente!,
       id_empresa: this.idEmpresa,

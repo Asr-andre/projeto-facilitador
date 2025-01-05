@@ -178,20 +178,41 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     return Utils.dataBrasil(data);
   }
 
+  public filtrarTitulos() {
+    if (this.filtroSelecionado === 'todos') {
+      this.titulosFiltrados = this.detalhamentoSelecionado.parcelas;
+      this.verificarSelecao();
+    } else if (this.filtroSelecionado === 'acordo') {
+      this.titulosFiltrados = this.detalhamentoSelecionado.parcelas.filter(parcela => parcela.numero_contrato.startsWith('ACD'));
+      this.verificarSelecao();
+    } else if (this.filtroSelecionado === 'semAcordo') {
+      this.titulosFiltrados = this.detalhamentoSelecionado.parcelas.filter(parcela => !parcela.numero_contrato.startsWith('ACD'));
+      this.verificarSelecao();
+    }
+  }
+
+  public verificarSelecao() {
+    if (this.titulosFiltrados && this.titulosFiltrados.length) {
+      // Verifica se todos os itens filtrados estão selecionados
+      this.selecionarTodos = this.titulosFiltrados.every(parcela => parcela.selecionado);
+    } else {
+      // Se não houver títulos filtrados, não marca "Selecionar Todos"
+      this.selecionarTodos = false;
+    }
+  }
+
+  // Marca ou desmarca todos os itens visíveis de acordo com o filtro
   public marcaTodos(event: any) {
     this.selecionarTodos = event.target.checked;
-    if (this.titulosFiltrados && this.titulosFiltrados) {
+
+    // Marca ou desmarca todos os itens filtrados
+    if (this.titulosFiltrados && this.titulosFiltrados.length) {
       this.titulosFiltrados.forEach(parcela => {
         parcela.selecionado = this.selecionarTodos;
       });
     }
-    this.verificarSelecao();
-  }
 
-  public verificarSelecao() {
-    if (this.detalhamentoSelecionado && this.detalhamentoSelecionado.parcelas) {
-      this.selecionarTodos = this.detalhamentoSelecionado.parcelas.every(parcela => parcela.selecionado);
-    }
+    this.verificarSelecao();
   }
 
   public simularNegociacao(): void {
@@ -199,7 +220,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
       return;
     }
 
-    const titulosSelecionados = this.detalhamentoSelecionado.parcelas
+    const titulosSelecionados = this.titulosFiltrados
       .filter(parcela => parcela.selecionado)
       .map(parcela => parcela.id_titulo)
       .join(',');
@@ -273,16 +294,6 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
         }
       );
     });
-  }
-
-  public filtrarTitulos() {
-    if (this.filtroSelecionado === 'todos') {
-      this.titulosFiltrados = this.detalhamentoSelecionado.parcelas;
-    } else if (this.filtroSelecionado === 'acordo') {
-      this.titulosFiltrados = this.detalhamentoSelecionado.parcelas.filter(parcela => parcela.numero_contrato.startsWith('ACD'));
-    } else if (this.filtroSelecionado === 'semAcordo') {
-      this.titulosFiltrados = this.detalhamentoSelecionado.parcelas.filter(parcela => !parcela.numero_contrato.startsWith('ACD'));
-    }
   }
 
   public cadastrarTitulo(): void {

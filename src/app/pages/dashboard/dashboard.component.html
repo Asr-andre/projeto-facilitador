@@ -48,13 +48,14 @@
               </div>
             </div>
 
-            <div class="col-md-2 d-flex align-items-center justify-content-end" style="padding-right: 0px;">
-              <button type="button" class="btn btn-warning btn-sm d-flex align-items-center"
-                (click)="this.abrirCreditoModal()">
-                <i class="fas fa-money-bill-wave" style="margin-right: 5px;"></i>
-                Solicitar Saldo
-              </button>
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
+              <div class="modal-title" style="cursor: pointer;" (click)="this.abrirCreditoModal()">
+                <p class="text-truncate mb-0" style="font-size: 13px; display: flex; align-items: center;">
+                  <img src="assets/images/pix.svg" style="width: 20px; height: 20px; margin-right: 5px;"> Créditos
+                </p>
+              </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -230,8 +231,11 @@
     </div>
     <div class="col-lg-12">
       <div class="card h-100" style="top: 20px;">
-        <app-acionamento [idCliente]="devedorSelecionado?.id_cliente"
-          [idContratante]="devedorSelecionado?.id_contratante" (clienteAcionado)="atualizar()"></app-acionamento>
+        <app-acionamento
+          [idCliente]="devedorSelecionado?.id_cliente"
+          [idContratante]="devedorSelecionado?.id_contratante"
+          (clienteAcionado)="atualizar()">
+        </app-acionamento>
       </div>
     </div>
   </div>
@@ -239,53 +243,71 @@
 
 <ng-template #DetalheDaDivida>
   <div class="mt-3 font-size-13">
-    <app-detalhe-da-divida [idCliente]="devedorSelecionado?.id_cliente"
-      [idContratante]="devedorSelecionado?.id_contratante"></app-detalhe-da-divida>
+    <app-detalhe-da-divida
+      [idCliente]="devedorSelecionado?.id_cliente"
+      [idContratante]="devedorSelecionado?.id_contratante">
+    </app-detalhe-da-divida>
   </div>
 </ng-template>
 
 <ng-template #Telefone>
   <div class="mt-3 font-size-13">
-    <app-telefone [idCliente]="devedorSelecionado?.id_cliente" [idContratante]="devedorSelecionado?.id_contratante"
-      [nomeCliente]="devedorSelecionado.nome" (dadosEnviado)="atualizarCards()"></app-telefone>
+    <app-telefone
+      [idCliente]="devedorSelecionado?.id_cliente"
+      [idContratante]="devedorSelecionado?.id_contratante"
+      [nomeCliente]="devedorSelecionado?.nome"
+      (dadosEnviado)="atualizarCards()">
+    </app-telefone>
   </div>
 </ng-template>
 
 <ng-template #Email>
   <div class="mt-3 font-size-13">
-    <app-email [idCliente]="devedorSelecionado?.id_cliente" [idContratante]="devedorSelecionado?.id_contratante"
+    <app-email
+      [idCliente]="devedorSelecionado?.id_cliente"
+      [idContratante]="devedorSelecionado?.id_contratante"
       (dadosEnviado)="atualizarCards()"></app-email>
   </div>
 </ng-template>
 
 <ng-template #Endereco>
   <div class="mt-3 font-size-13">
-    <app-endereco [idCliente]="devedorSelecionado?.id_cliente"></app-endereco>
+    <app-endereco
+      [idCliente]="devedorSelecionado?.id_cliente">
+  </app-endereco>
   </div>
 </ng-template>
 
 <ng-template #acordo>
   <div class="mt-3 font-size-13">
-    <app-acordo [idCliente]="devedorSelecionado?.id_cliente"
-      [idContratante]="devedorSelecionado?.id_contratante"></app-acordo>
+    <app-acordo
+      [idCliente]="devedorSelecionado?.id_cliente"
+      [idContratante]="devedorSelecionado?.id_contratante">
+    </app-acordo>
   </div>
 </ng-template>
 
 <ng-template #TitilosPr>
   <div class="mt-3 font-size-13">
-    <app-titulos-pg-ret [idCliente]="devedorSelecionado?.id_cliente"
-      [idContratante]="devedorSelecionado?.id_contratante"></app-titulos-pg-ret>
+    <app-titulos-pg-ret
+      [idCliente]="devedorSelecionado?.id_cliente"
+      [idContratante]="devedorSelecionado?.id_contratante">
+    </app-titulos-pg-ret>
   </div>
 </ng-template>
 
 <ng-template #BoletosPix>
   <div class="mt-3 font-size-13">
-    <app-boleto-pix [idCliente]="devedorSelecionado?.id_cliente"></app-boleto-pix>
+    <app-boleto-pix
+      [idCliente]="devedorSelecionado?.id_cliente">
+  </app-boleto-pix>
   </div>
 </ng-template>
 
 <ng-template #Juridico>
   <div class="mt-3 font-size-13">
-    <app-juridico [idCliente]="devedorSelecionado?.id_cliente"></app-juridico>
+    <app-juridico
+      [idCliente]="devedorSelecionado?.id_cliente">
+  </app-juridico>
   </div>
 </ng-template>

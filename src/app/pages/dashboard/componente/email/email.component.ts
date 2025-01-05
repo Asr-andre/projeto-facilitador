@@ -63,6 +63,8 @@ export class EmailComponent implements OnInit, OnChanges{
   }
 
   public carregarEmails(idCliente: number): void {
+    if (!idCliente) return;
+
     this.loadingMin = true;
     this._emailService.obterEmailPorCliente(idCliente).subscribe((res) => {
       this.emails = res;

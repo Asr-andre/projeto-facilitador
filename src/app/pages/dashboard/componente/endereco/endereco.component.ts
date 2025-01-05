@@ -87,6 +87,8 @@ export class EnderecoComponent implements OnInit, OnChanges {
   }
 
   public obterEnderecos(): void {
+    if (!this.idCliente) return;
+
     const request = { id_cliente: this.idCliente! };
 
     this.loadingMin = true;

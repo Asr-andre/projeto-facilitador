@@ -35,6 +35,8 @@ export class TitulosPgRetComponent implements OnInit, OnChanges {
   }
 
   public obterTitulosPagos() {
+    if (!this.idCliente) return;
+
     const request = {
       id_empresa: this.idEmpresa,
       id_contratante: this.idContratante!,
