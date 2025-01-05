@@ -125,7 +125,7 @@ export class AlertService {
       showCancelButton: true
     }).then(result => {
       if (result.isConfirmed) {
-        this.swalWithBootstrapButtons.fire('Quebra de acordo efetuada com sucesso!');
+        this.swalWithBootstrapButtons.fire('Quebra em execução, aguarde!');
         return true;
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         return false;
@@ -143,7 +143,7 @@ export class AlertService {
       showCancelButton: true
     }).then(result => {
       if (result.isConfirmed) {
-        this.swalWithBootstrapButtons.fire('Baixa efetuada com sucesso!');
+        this.swalWithBootstrapButtons.fire('Baixa em execução, aguarde!');
         return true;
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         return false;
