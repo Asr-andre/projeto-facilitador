@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Utils } from 'src/app/core/helpers/utils';
-import { TitulosPgRetResponseModel, TituloModel } from 'src/app/core/models/titulos.pg.ret.model';
+import { TituloModel } from 'src/app/core/models/titulos.pg.ret.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { TitulosPgRetService } from 'src/app/core/services/titulos.pg.ret.service';

@@ -17,9 +17,6 @@
     "CHAT": {
       "TEXT": "Chat"
     },
-    "FILA": {
-      "TEXT": "Fila"
-    },
     "CADASTRO": {
       "TEXT": "Cadastro",
       "LIST": {
@@ -34,6 +31,9 @@
         "SMS": "Sms",
         "SMS-WHATSAPP": "WhatsApp"
       }
+    },
+    "FILA": {
+      "TEXT": "Fila"
     },
     "RELATORIOS": {
       "TEXT": "Relatórios",
