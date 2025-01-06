@@ -253,6 +253,6 @@ export class JuridicoComponent implements OnInit, OnChanges {
 
   public copiarParaAreasTransferencia(valor) {
     Utils.CopyAreaTransfer(valor);
-    this._alert.success('Obs copiado para area de transferência!');
+    this._alert.copiado();
   }
 }

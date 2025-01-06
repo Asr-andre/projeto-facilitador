@@ -151,4 +151,21 @@ export class AlertService {
       return false;
     });
   }
+
+  copiado(): Promise<boolean> {
+    this.swalWithBootstrapButtons.fire({
+      title: 'Copiado para a área de transferência!',
+      timer: 2000,
+      timerProgressBar: true,
+      showConfirmButton: false
+    });
+
+    // Retorna uma Promise que resolve após 4 segundos
+    return new Promise<boolean>(resolve => {
+      setTimeout(() => {
+        resolve(true);
+      }, 2000);
+    });
+  }
+
 }

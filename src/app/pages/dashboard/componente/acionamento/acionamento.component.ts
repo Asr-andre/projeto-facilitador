@@ -198,7 +198,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
 
   public copiarParaAreasTransferencia(valor) {
     Utils.CopyAreaTransfer(valor);
-    this._alertService.success('Acionamento copiado para area de transferência!');
+    this._alertService.copiado();
   }
 
   public fechar() {
