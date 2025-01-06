@@ -55,6 +55,23 @@ export class AlertService {
     });
   }
 
+  warningCustome(message: string, title: string = 'Atenção!'): Promise<boolean> {
+    return this.swalWithBootstrapButtons.fire({
+      title: title,
+      html: message,
+      icon: 'warning',
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true
+    }).then(result => {
+      if (result.isConfirmed) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
   question(message: string, title: string = 'Tem certesa que deseja proceguir com a ação?') {
     this.swalWithBootstrapButtons.fire({
       title: title,

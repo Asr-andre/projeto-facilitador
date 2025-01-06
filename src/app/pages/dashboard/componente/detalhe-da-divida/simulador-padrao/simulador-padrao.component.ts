@@ -344,8 +344,11 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   }
 
   public gerarPixBoleto() {
-      const confirmar = confirm(`Você deseja gerar um PIX com o valor total atualizado de R$ ${this.formGerarPixBoleto.get('valor_boleto')?.value}?`);
+    const valorBoleto = this.formGerarPixBoleto.get('valor_boleto')?.value;
 
+    this._alertService.warningCustome(
+      `Você deseja gerar um PIX com o valor total atualizado de <br><strong>R$${valorBoleto}</strong>?`
+    ).then(confirmar => {
       if (confirmar) {
         this._geracaoPixService.gerarPixBoleto(this.formGerarPixBoleto.value).subscribe((res) => {
           if (res.success === "true") {
@@ -357,6 +360,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
           }
         });
       }
+    });
   }
 
   public copiarParaAreasTransferencia(valor) {
