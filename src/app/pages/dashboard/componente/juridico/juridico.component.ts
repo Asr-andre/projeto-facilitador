@@ -144,7 +144,6 @@ export class JuridicoComponent implements OnInit, OnChanges {
 
   public abriModalEditar(content: TemplateRef<any>, dados: ProcessoModel): void {
     this.editar = true;
-    console.log(dados);
     this.obterMovimentacao();
     this.inicializarFormProcesso(dados);
     this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });

@@ -90,9 +90,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public obterDevedores(filtros: any): void {
-    console.log(filtros);
     this.loading = true;
-
     this._dashboard.obterDevedores(filtros).subscribe((res: RespostaDevedorModel) => {
       if (res && res.success === "true") {
         this.listarDevedores = res.clientes;
