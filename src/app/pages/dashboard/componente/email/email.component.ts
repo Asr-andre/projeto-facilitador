@@ -86,6 +86,12 @@ export class EmailComponent implements OnInit, OnChanges{
   }
 
   public cadastrarEmail(modal: any): void {
+    if (this.formEmail.invalid) {
+      this.marcarCamposComoTocados(this.formEmail);
+      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
     if (this.formEmail.valid) {
       this.loadingMin = true;
       this._emailService.cadastrarEmail(this.formEmail.value).subscribe((res) => {
@@ -107,5 +113,13 @@ export class EmailComponent implements OnInit, OnChanges{
     } else {
       this._alertService.warning("Preencha todos os campos obrigatórios");
     }
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 }

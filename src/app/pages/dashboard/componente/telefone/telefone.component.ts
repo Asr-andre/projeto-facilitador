@@ -69,11 +69,25 @@ export class TelefoneComponent implements OnInit, OnChanges {
   }
 
   public controleBotao() {
+    if (this.telefoneForm.invalid) {
+      this.marcarCamposComoTocados(this.telefoneForm);
+      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
     if(this.editar == false) {
       this.cadastrarTelefone();
     } else {
       this.editarTelefone();
     }
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 
   public carregarTelefones(idCliente: number): void {

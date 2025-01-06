@@ -22,6 +22,7 @@ export class WhatsappComponent implements OnInit {
   public maxCaractere: number = 4096;
   public msg: PerfilWhatsappModel[] = [];
   public idPerfilWhatsapp = 1;
+  public loadingMin: boolean = false;
 
   public mensagem: string = '';
 
@@ -101,14 +102,18 @@ export class WhatsappComponent implements OnInit {
 
   public enviarMensagem(): void {
     if (this.whatsappForm.valid) {
+      this.loadingMin = true;
       this._whatsappService.enviarMensagem(this.whatsappForm.value).subscribe(() => {
+        this.loadingMin = false;
         this._alertService.success('Mensagem enviada com sucesso!');
         this.fechaModal();
       }, () => {
+        this.loadingMin = false;
         this._alertService.error('Erro ao enviar mensagem.');
       });
     } else {
-      this._alertService.warning('Preencha todos os campos obrigatórios.');
+      this.loadingMin = false;
+      this._alertService.warning('Todos oa campos são obrigatórios.');
     }
   }
 
@@ -124,7 +129,7 @@ export class WhatsappComponent implements OnInit {
       window.open(url, '_blank');
       this.fechaModal();
     } else {
-      this._alertService.warning('Digite a mensagem que deseja enviar');
+      this._alertService.warning('Todos oa campos são obrigatórios.');
     }
   }
 

@@ -47,13 +47,20 @@
     <h5 class="modal-title" style="color: #ffffff"><i class="fas fa-at"></i> Cadastrar Email</h5>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
+
+  <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
+
   <div class="modal-body modal-padding">
     <form [formGroup]="formEmail" (ngSubmit)="cadastrarEmail(modal)">
       <div class="row">
         <div class="col-md-12" style="padding-right: 3px;">
           <div class="mb-1">
             <label for="email" class="form-label">Email</label>
-            <input type="email" id="email" formControlName="email" class="form-control form-control-pad form-control-sm" required>
+            <input type="email" id="email" formControlName="email" class="form-control form-control-pad form-control-sm" required
+            [ngClass]="{'is-invalid': formEmail.get('email').invalid && formEmail.get('email').touched}">
           </div>
         </div>
       </div>
