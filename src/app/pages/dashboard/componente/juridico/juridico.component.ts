@@ -49,13 +49,23 @@ export class JuridicoComponent implements OnInit, OnChanges {
       id_empresa: [this.idEmpresa],
       id_cliente: [this.idCliente],
       numero_processo: [dado?.numero_processo, Validators.required],
-      data_entrada_processo: [dado?.data_entrada_processo || ""],
+      data_entrada_processo:
+      [
+        dado?.data_entrada_processo
+          ? this._datePipe.transform(new Date(dado.data_entrada_processo.replace('Z', '')), 'yyyy-MM-dd')
+          : ''
+      ],
       tipo_acao: [dado?.tipo_acao || ""],
       comarca: [dado?.comarca || ""],
       vara: [dado?.vara || ""],
       adv_causa: [dado?.adv_causa || ""],
       adv_contrario: [dado?.adv_contrario || ""],
-      data_audiencia: [dado?.data_audiencia || ""],
+      data_audiencia:
+      [
+        dado?.data_audiencia
+          ? this._datePipe.transform(new Date(dado.data_audiencia.replace('Z', '')), 'yyyy-MM-ddTHH:mm:ss')
+          : ''
+      ],
       ultimo_andamento: [dado?.ultimo_andamento || ""],
       obs: [dado?.obs || ""],
       user_login: [this.login]
@@ -134,6 +144,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
 
   public abriModalEditar(content: TemplateRef<any>, dados: ProcessoModel): void {
     this.editar = true;
+    console.log(dados);
     this.obterMovimentacao();
     this.inicializarFormProcesso(dados);
     this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
