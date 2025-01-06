@@ -10,6 +10,7 @@ import { FormulaComponent } from './formula/formula.component';
 import { SmsComponent } from './sms/sms.component';
 import { ClienteComponent } from './cliente/cliente.component';
 import { IndiceComponent } from './indice/indice.component';
+import { EmailPerfilComponent } from './email-perfil/email-perfil.component';
 
 
 const routes: Routes = [
@@ -42,6 +43,9 @@ const routes: Routes = [
     },
     {
       path: 'indice', component: IndiceComponent
+    },
+    {
+      path: 'email-perfil', component: EmailPerfilComponent
     }
 ];
 
