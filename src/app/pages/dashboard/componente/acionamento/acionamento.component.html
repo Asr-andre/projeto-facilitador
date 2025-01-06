@@ -25,10 +25,11 @@
           <td>{{ acionamento.descricao }}</td>
           <td>{{ data(acionamento.data_acio) }}</td>
           <td>
-            <span
+            <span style="cursor: pointer"
               [ngbTooltip]="acionamento.mensagem"
               placement="top"
               container="body"
+              (click)="copiarParaAreasTransferencia(acionamento.mensagem)"
             >
               {{ mostraConteudoTruncado(acionamento.mensagem, 40) }}
             </span>

@@ -196,6 +196,10 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     acionamento[campo + '_visivel'] = this.mostraConteudoTruncado(acionamento[campo], limite); // Volta ao texto truncado
   }
 
+  public copiarParaAreasTransferencia(valor) {
+    Utils.CopyAreaTransfer(valor);
+    this._alertService.success('Acionamento copiado para area de transferência!');
+  }
 
   public fechar() {
     this.formAcionamento.reset();

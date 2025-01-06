@@ -236,6 +236,23 @@ export class JuridicoComponent implements OnInit, OnChanges {
   }
 
   public data(data) {
-      return Utils.formatarDataParaExibicao(data);
-    }
+    return Utils.formatarDataParaExibicao(data);
+  }
+
+  public mostraConteudoTruncado(texto: string, limite: number): string {
+    return texto.length > limite ? texto.substring(0, limite) + '...' : texto;
+  }
+
+  public exibirConteudoCompleto(acionamento: any, campo: string): void {
+    acionamento[campo + '_visivel'] = acionamento[campo]; // Mostra o texto completo
+  }
+
+  public ocultarConteudoTruncado(acionamento: any, campo: string, limite: number): void {
+    acionamento[campo + '_visivel'] = this.mostraConteudoTruncado(acionamento[campo], limite); // Volta ao texto truncado
+  }
+
+  public copiarParaAreasTransferencia(valor) {
+    Utils.CopyAreaTransfer(valor);
+    this._alert.success('Obs copiado para area de transferência!');
+  }
 }
