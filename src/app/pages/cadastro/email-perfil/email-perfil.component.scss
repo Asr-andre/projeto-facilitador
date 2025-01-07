@@ -8,3 +8,16 @@
 .text-small {
   font-size: 11px;
 }
+
+.custom-quill-editor {
+  width: 100%; /* Ocupa 100% da largura do pai */
+  height: 200px; /* Ajuste o valor conforme a necessidade */
+}
+
+.variable-item {
+  font-size: 0.775rem; /* Texto menor */
+  margin-bottom: 0.20rem; /* Reduz espaço entre os itens */
+}
+.alert-info {
+  padding: 5px; /* Ajusta o padding da caixa de alerta */
+}

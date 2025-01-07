@@ -37,6 +37,7 @@ import { LogsComponent } from "../relatorios/logs/logs.component";
 import { IndiceComponent } from "./indice/indice.component";
 import { MascaraCpfDirective } from "src/app/core/directive/mascara-cpf.directive";
 import { EmailPerfilComponent } from "./email-perfil/email-perfil.component";
+import { QuillModule } from "ngx-quill";
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { EmailPerfilComponent } from "./email-perfil/email-perfil.component";
     OrderTableModule,
     TitulosModule,
     NgbTooltipModule,
+    QuillModule.forRoot(),
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

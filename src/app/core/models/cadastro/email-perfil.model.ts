@@ -20,3 +20,18 @@ export class MensagemEmailPerfil {
   user_login: string;
   user_ip: string;
 }
+
+export class RequisicaoPerfilEmail {
+  id_emailtexto?: number;
+  id_empresa: number;
+  descricao: string;
+  mensagem: string;
+  user_login: string;
+}
+
+export class RetornoPerfilEmail {
+  success: string;
+  msg: string;
+  id_empresa: string;
+  id_emailtexto?: string;
+}

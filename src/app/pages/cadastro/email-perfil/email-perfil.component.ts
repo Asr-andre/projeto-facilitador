@@ -1,9 +1,9 @@
 import { Component, OnInit, QueryList, TemplateRef, ViewChildren } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
-import { MensagemEmailPerfil, RequisicaoEmailPerfil } from 'src/app/core/models/cadastro/email-perfil.model';
+import { MensagemEmailPerfil, RequisicaoEmailPerfil, RequisicaoPerfilEmail } from 'src/app/core/models/cadastro/email-perfil.model';
 import { Indice } from 'src/app/core/models/cadastro/indice.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
@@ -22,6 +22,7 @@ export class EmailPerfilComponent implements OnInit {
   public loading: boolean = false;
   public mensages: MensagemEmailPerfil[] = [];
   public editar: boolean = false;
+  public formEmailPerfil: FormGroup;
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -33,6 +34,30 @@ export class EmailPerfilComponent implements OnInit {
   public direcaoOrdenacao: { [key: string]: string } = {};
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<Indice>>;
 
+  toolbarOptions = [
+    ['bold', 'italic', 'underline', 'strike'],        // Negrito, Itálico, Sublinhado, Tachado
+    [{ 'header': 1 }, { 'header': 2 }],               // Cabeçalhos H1 e H2
+    [{ 'font': [] }],                                 // Fonte
+    [{ 'size': [] }],                                 // Tamanhos de texto
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],     // Listas ordenadas e não ordenadas
+    [{ 'indent': '-1'}, { 'indent': '+1' }],          // Indentação
+    [{ 'align': [] }],                                // Alinhamento
+    [{ 'color': [] }, { 'background': [] }],          // Cor do texto e fundo
+    ['blockquote', 'code-block'],                     // Bloco de citação e código
+    [{ 'script': 'sub' }, { 'script': 'super' }],     // Subscrito e Sobrescrito
+    [{ 'direction': 'rtl' }],                         // Direção do texto (direita para esquerda)
+    //['link', 'image', 'video'],                      // Remover essas funcionalidades
+    ['clean']                                         // Limpar formatação
+  ];
+
+  public dado = {
+    nome: '@clientes_nome',
+    cpf: '@clientes_cpf',
+    endereco: '@clientes_endereco',
+    fantasia: '@contratante_fantasia',
+    razaoSocial: '@contratante_razao_social'
+  };
+
   constructor(
     private _emailPerfil: EmailPerfilService,
     private _formBuilder: FormBuilder,
@@ -43,6 +68,30 @@ export class EmailPerfilComponent implements OnInit {
 
   ngOnInit(): void {
     this.obterEmailPerfil();
+    this.inicializarFormEmailPerfil();
+  }
+
+  public inicializarFormEmailPerfil(dado?: RequisicaoPerfilEmail) {
+    this.formEmailPerfil = this._formBuilder.group({
+      id_emailtexto: [dado?.id_emailtexto || ""],
+      id_empresa: [this.idEmpresa, Validators.required],
+      descricao: [dado?.descricao || "", Validators.required],
+      mensagem: [dado?.mensagem || "", Validators.required],
+      user_login: [this.login, Validators.required],
+    });
+  }
+
+  public controleBotao() {
+    if (this.formEmailPerfil.invalid) {
+      this._alert.warning('Todos os campos são obrigatorio!');
+      return;
+    }
+
+    if (this.editar == true) {
+      this.editarMsg();
+    } else {
+      this.cadastrarMsg();
+    }
   }
 
   public obterEmailPerfil() {
@@ -101,22 +150,85 @@ export class EmailPerfilComponent implements OnInit {
 
   public abriModalCadastro(content: TemplateRef<any>): void {
     this.editar = false;
-
+    this.inicializarFormEmailPerfil();
     this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
-  public abriModalEditar(content: TemplateRef<any>, dados: RequisicaoEmailPerfil): void {
+  public abriModalEditar(content: TemplateRef<any>, dados: RequisicaoPerfilEmail): void {
     this.editar = true;
-
+    this.inicializarFormEmailPerfil(dados);
     this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
+  public cadastrarMsg() {
+    this.loadingMin = true;
+    this._emailPerfil.cadastrarEmailPerfil(this.formEmailPerfil.value).subscribe((res) => {
+      this.loadingMin = false;
+      if (res.success === 'true') {
+        this.obterEmailPerfil();
+        this.fechar();
+        this._alert.success(res.msg);
+        this.loadingMin = false;
+      } else {
+        this.loadingMin = false;
+        this._alert.warning(res.msg);
+      }
+      (error) => {
+        this.loadingMin = false;
+        this._alert.error("Ocorreu um error.", error);
+      }
+    });
+  }
+
+  public editarMsg() {
+    this.loadingMin = true;
+    this._emailPerfil.editarEmailPerfil(this.formEmailPerfil.value).subscribe((res) => {
+      this.loadingMin = false;
+      if (res.success === 'true') {
+        this.obterEmailPerfil();
+        this.fechar();
+        this._alert.success(res.msg);
+        this.loadingMin = false;
+      } else {
+        this.loadingMin = false;
+        this._alert.warning(res.msg);
+      }
+      (error) => {
+        this.loadingMin = false;
+        this._alert.error("Ocorreu um error.", error);
+      }
+    });
   }
 
   public data(data) {
     return Utils.formatarDataParaExibicao(data);
   }
 
-  public fechar() {
+  public inserirVariavel(variavel: string) {
+    const mensagemAtual = this.formEmailPerfil.get('mensagem')?.value || '';
+    const novaMensagem = `${mensagemAtual} ${variavel}`.trim();
+    this.formEmailPerfil.get('mensagem')?.setValue(novaMensagem);
+  }
 
+  public mostraConteudoTruncado(texto: string, limite: number): string {
+    return texto.length > limite ? texto.substring(0, limite) + '...' : texto;
+  }
+
+  public exibirConteudoCompleto(acionamento: any, campo: string): void {
+    acionamento[campo + '_visivel'] = acionamento[campo]; // Mostra o texto completo
+  }
+
+  public ocultarConteudoTruncado(acionamento: any, campo: string, limite: number): void {
+    acionamento[campo + '_visivel'] = this.mostraConteudoTruncado(acionamento[campo], limite); // Volta ao texto truncado
+  }
+
+  public copiarParaAreasTransferencia(valor) {
+    Utils.CopyAreaTransfer(valor);
+    this._alert.copiado();
+  }
+
+  public fechar() {
+    this.formEmailPerfil.reset;
     this._modal.dismissAll();
   }
 }
