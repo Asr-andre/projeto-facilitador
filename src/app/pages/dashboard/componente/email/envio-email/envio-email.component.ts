@@ -25,7 +25,6 @@ export class EnvioEmailComponent implements OnInit {
   public mensagemEmail: string = '';
   private arquivoSelecionado: File | null = null;
   public loadingMin: boolean = false;
-  public loading: boolean = false;
   public carregandoEnvio: boolean = false;
 
   toolbarOptions = [
@@ -57,7 +56,6 @@ export class EnvioEmailComponent implements OnInit {
 
   ngOnInit(): void {
     this.inicializarFormularioEnvioEmail();
-    this.obterEmailPerfil();
   }
 
   public inicializarFormularioEnvioEmail(): void {
@@ -115,6 +113,8 @@ export class EnvioEmailComponent implements OnInit {
       id_contratante: idContratante,
       destinatario: email
     });
+
+    this.obterEmailPerfil();
     this._modalService.open(this.modalEmailRef, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
@@ -139,19 +139,22 @@ export class EnvioEmailComponent implements OnInit {
   }
 
   private enviarEmailComAnexo(): void {
+    this.loadingMin = true;
     this._emailService.envioEmailUnitario(this.formularioEnvioEmail.value).subscribe({
       next: (res) => {
+        this.loadingMin = false;
         if (res.success === 'true') {
-          this._modalService.dismissAll();
           this._alert.success(res.msg);
-          this.resetarCampos();
+          this.fechar();
           this.dadosEnviado.emit();
+          this.loadingMin = false;
         } else {
-          this.resetarCampos();
+          this.loadingMin = false;
           this._alert.warning(res.msg);
         }
       },
       error: (error) => {
+        this.loadingMin = false;
         this._alert.warning("Voce Não Tem Créditos Suficiente Para Esse Envio, Contate o Administrador do Sistema!", error.msg);
       }
     });
