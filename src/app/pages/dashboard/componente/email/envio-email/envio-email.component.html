@@ -5,11 +5,20 @@
     </h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
   </div>
+
+  <div class="loading-overlay-pagina" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
+
   <div class="modal-body modal-padding">
     <form [formGroup]="formularioEnvioEmail">
       <div class="col-md-12 form-group">
         <label class="form-label">Asunto</label>
-        <input type="text" class="form-control form-control-sm mb-2"  formControlName="assunto" placeholder="Digite o assunto">
+        <select class="form-control form-control-sm" formControlName="assunto" (change)="atualizarMensagem($event)" style="margin-bottom: 10px;">
+          <option value="">Selecionar Mensagens</option>
+          <option *ngFor="let item of mensages" [value]="item.mensagem">{{ item.descricao }}</option>
+        </select>
       </div>
       <div class="col-md-12 form-group">
         <quill-editor

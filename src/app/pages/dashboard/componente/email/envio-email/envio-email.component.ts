@@ -5,6 +5,8 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { EmailService } from 'src/app/core/services/email.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { EmailPerfilService } from 'src/app/core/services/cadastro/email.perfil.service';
+import { MensagemEmailPerfil, RequisicaoEmailPerfil } from 'src/app/core/models/cadastro/email-perfil.model';
 
 @Component({
   selector: 'app-envio-email',
@@ -14,11 +16,16 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export class EnvioEmailComponent implements OnInit {
   @Output() dadosEnviado = new EventEmitter<void>();
   @ViewChild('emailModal') modalEmailRef: TemplateRef<any>;
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public login = this._auth.getLogin();
+  public mensages: MensagemEmailPerfil[] = [];
   public destinatarioEmail: string = '';
   public formularioEnvioEmail: FormGroup;
   public assuntoEmail: string = '';
   public mensagemEmail: string = '';
   private arquivoSelecionado: File | null = null;
+  public loadingMin: boolean = false;
+  public loading: boolean = false;
   public carregandoEnvio: boolean = false;
 
   toolbarOptions = [
@@ -43,28 +50,63 @@ export class EnvioEmailComponent implements OnInit {
     private _modalService: NgbModal,
     private _formBuilder: FormBuilder,
     private _emailService: EmailService,
-    private _alertService: AlertService,
-    private _authService: AuthenticationService,
+    private _alert: AlertService,
+    private _auth: AuthenticationService,
+    private _emailPerfil: EmailPerfilService,
   ) { }
 
   ngOnInit(): void {
     this.inicializarFormularioEnvioEmail();
+    this.obterEmailPerfil();
   }
 
   public inicializarFormularioEnvioEmail(): void {
     this.formularioEnvioEmail = this._formBuilder.group({
-      id_empresa: [Number(this._authService.getIdEmpresa())],
+      id_empresa: [this.idEmpresa],
       id_contratante: [''],
       id_cliente: [''],
       destinatario: [''],
       assunto: ['', Validators.required],
       mensagem: [''],
       anexo: [''],
-      user_login: [this._authService.getLogin()]
+      user_login: [this.login]
     });
   }
 
+  public obterEmailPerfil() {
+    const requisicao: RequisicaoEmailPerfil = {
+      id_empresa: this.idEmpresa,
+      user_login: this.login,
+    }
 
+    if (!requisicao) return;
+    this.loadingMin = true;
+    this._emailPerfil.obterEmailPerfil(requisicao).subscribe({
+      next: (res) => {
+        this.loadingMin = false;
+        if (res.success === 'true') {
+          this.mensages = res.mensagens;
+          this.loadingMin = false;
+        } else {
+          this.loadingMin = false;
+          this._alert.warning(res.msg);
+        }
+        (error) => {
+          this.loadingMin = false;
+          this._alert.error("Ocorreu um error.", error);
+        }
+      }
+    });
+  };
+
+  public atualizarMensagem(event: Event): void {
+    const selectedMessage = (event.target as HTMLSelectElement).value;
+    const mensagemControl = this.formularioEnvioEmail.get('mensagem');
+
+    if (mensagemControl) {
+      mensagemControl.setValue(selectedMessage);
+    }
+  }
 
   public abrirModalEmail(email: string, idCliente: number | undefined, idContratante: number | undefined): void {
     this.destinatarioEmail = email;
@@ -78,7 +120,7 @@ export class EnvioEmailComponent implements OnInit {
 
   public enviarEmail(): void {
     if (this.formularioEnvioEmail.invalid) {
-      this._alertService.warning('O campo assunto é mensagem são obrigatório.');
+      this._alert.warning('O campo assunto é mensagem são obrigatório.');
       return;
     }
 
@@ -101,16 +143,16 @@ export class EnvioEmailComponent implements OnInit {
       next: (res) => {
         if (res.success === 'true') {
           this._modalService.dismissAll();
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.resetarCampos();
           this.dadosEnviado.emit();
         } else {
           this.resetarCampos();
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
       error: (error) => {
-        this._alertService.warning("Voce Não Tem Créditos Suficiente Para Esse Envio, Contate o Administrador do Sistema!", error.msg);
+        this._alert.warning("Voce Não Tem Créditos Suficiente Para Esse Envio, Contate o Administrador do Sistema!", error.msg);
       }
     });
   }
@@ -149,7 +191,7 @@ export class EnvioEmailComponent implements OnInit {
       if (extensao.toLowerCase() === 'pdf') {
         this.arquivoSelecionado = arquivo;
       } else {
-        this._alertService.warning('Apenas arquivos PDF são permitidos.');
+        this._alert.warning('Apenas arquivos PDF são permitidos.');
         input.value = '';
       }
     }
