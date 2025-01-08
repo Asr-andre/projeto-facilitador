@@ -126,7 +126,7 @@ export class SolicitarCreditosComponent implements OnInit {
 
   public copiarParaAreasTransferencia(valor) {
     Utils.CopyAreaTransfer(valor);
-    this._alertService.success('Código Pix copiado com sucesso!');
+    this._alertService.copiado();
   }
 
   public atualizarDadosPix(pixCopiaCola: string, imgPix: string) {

@@ -117,7 +117,6 @@
                   <th sortable="cnpj_cpf" (sort)="ordenar($event)" scope="col">Cpf</th>
                   <th sortable="nome" (sort)="ordenar($event)" scope="col">Nome</th>
                   <th sortable="soma_titulos_nao_pagos" (sort)="ordenar($event)" scope="col">Valor Divida</th>
-                  <th sortable="descricao_acao" (sort)="ordenar($event)" scope="col">Ultimo Acionamento</th>
                 </tr>
               </thead>
               <tbody *ngIf="dadosFiltrados.length > 0; else semCliente">
@@ -127,10 +126,14 @@
                   (click)="selecionarDevedor(devedor)">
                   <td>{{ devedor.fantasia }}</td>
                   <td>{{ devedor.id_cliente }}</td>
-                  <td>{{ mascararCpfCnpj(devedor.cnpj_cpf) }}</td>
+                  <td>
+                    <span style="cursor: pointer" [ngbTooltip]="'Clique para copiar o CPF'" placement="top" container="body"
+                      (click)="copiarParaAreasTransferencia(devedor.cnpj_cpf)">
+                      {{ mascararCpfCnpj(devedor.cnpj_cpf) }}
+                  </span>
+                  </td>
                   <td>{{ devedor.nome}}</td>
                   <td>{{ devedor.soma_titulos_nao_pagos | currency:'BRL' }}</td>
-                  <td>{{ devedor.descricao_acao }}</td>
                 </tr>
               </tbody>
               <ng-template #semCliente>

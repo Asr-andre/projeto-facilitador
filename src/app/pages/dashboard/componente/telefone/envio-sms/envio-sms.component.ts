@@ -78,6 +78,7 @@ export class EnvioSmsComponent implements OnInit {
       id_contratante: idContratante,
       fone: fone
     });
+    this.resetarCampos();
     this._modalService.open(this.modalEmailRef, { size: 'ms', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
@@ -129,5 +130,10 @@ export class EnvioSmsComponent implements OnInit {
     this.formEnvioSms.patchValue({
       mensagem: '',
     });
+  }
+
+  public fechar() {
+    this.resetarCampos();
+    this._modalService.dismissAll();
   }
 }

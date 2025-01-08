@@ -210,6 +210,11 @@ export class DashboardComponent implements OnInit {
     return Utils.formatarDataParaExibicao(data);
   }
 
+  public copiarParaAreasTransferencia(valor) {
+    Utils.CopyAreaTransfer(valor);
+    this._alertService.copiado();
+  }
+
   public abrirCreditoModal(): void {
     this.SolicitarCreditosComponent.abrirModaSolicitarCredito();
   }
