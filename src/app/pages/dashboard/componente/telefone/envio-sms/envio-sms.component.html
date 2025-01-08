@@ -1,8 +1,3 @@
-<div class="loading-overlay-pagina" *ngIf="loading">
-  <div class="spinner-border text-primary m-1" role="status">
-  </div>
-</div>
-
 <ng-template #smsModal let-modal>
   <div class="modal-header modal-header-custom" style="background: #3e4988; margin: 0">
     <h6 class="modal-title" style="color: #ffffff">
@@ -10,8 +5,22 @@
     </h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
+
+  <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
+
   <div class="modal-body modal-padding">
     <form [formGroup]="formEnvioSms">
+      <div class="col-md-12 form-group">
+        <label class="form-label">Asunto</label>
+        <select class="form-control form-control-sm" (change)="capturarMsg($event)" style="margin-bottom: 10px;">
+          <option value="">Selecionar Mensagens</option>
+          <option *ngFor="let item of sms" [value]="item.id_perfilsms">{{ item.titulo }}</option>
+        </select>
+      </div>
+
       <textarea class="form-control" [(ngModel)]="mensagem" (input)="contarCaracteres()" formControlName="mensagem" placeholder="Digite sua mensagem" rows="4" required=""></textarea>
 
       <div class="d-flex justify-content-between align-items-center" style="padding-top: 5px;">

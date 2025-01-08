@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PerfilSms } from 'src/app/core/models/sms.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { SmsService } from 'src/app/core/services/sms.service';
@@ -14,10 +15,11 @@ export class EnvioSmsComponent implements OnInit {
   @Output() dadosEnviado = new EventEmitter<void>();
   @ViewChild('smsModal') modalEmailRef: TemplateRef<any>;
   public foneDestinatario: string = '';
+  public sms: PerfilSms [] = [];
   public formEnvioSms: FormGroup;
   public maxCaractere: number = 160;
   public mensagem: string = '';
-  public loading: boolean = false;
+  public loadingMin: boolean = false;
   public idEmpresa = Number(this._authService.getIdEmpresa());
   public login = this._authService.getLogin();
 
@@ -45,7 +47,31 @@ export class EnvioSmsComponent implements OnInit {
     });
   }
 
+  public obterPerfilSms() {
+    const dados = {
+      id_empresa: this.idEmpresa,
+      id_perfilsms: 0,
+      user_login: this.login
+    }
+
+    this.loadingMin = true;
+    this._smsService.listarPerfilSms(dados).subscribe((res) => {
+      if(res.success === "true") {
+        this.sms = res.perfil_sms;
+        this.loadingMin = false;
+      } else {
+        this.loadingMin = false;
+        this._alertService.error(res.msg);
+      }
+      (error) => {
+        this.loadingMin = false;
+        this._alertService.error("Ocorreu um error.", error);
+      }
+    });
+  }
+
   public abrirModalSms(fone: string, idCliente: number | undefined, idContratante: number | undefined): void {
+    this.obterPerfilSms();
     this.foneDestinatario = fone;
     this.formEnvioSms.patchValue({
       id_cliente: idCliente,
@@ -55,15 +81,25 @@ export class EnvioSmsComponent implements OnInit {
     this._modalService.open(this.modalEmailRef, { size: 'ms', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
+  public capturarMsg(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const mensagemId = Number(selectElement.value);
+    const mensagemSelecionada = this.sms.find(item => item.id_perfilsms === mensagemId);
+
+    if (mensagemSelecionada) {
+      this.formEnvioSms.get('mensagem')?.setValue(mensagemSelecionada.mensagem);
+    }
+  }
+
   public enviarSms(): void {
     if (this.formEnvioSms.valid) {
-      this.loading = true;
+      this.loadingMin = true;
 
       const mensagemSemQuebraLinha = this.formEnvioSms.get('mensagem')?.value.replace(/\n/g, '');
       this.formEnvioSms.patchValue({ mensagem: mensagemSemQuebraLinha });
 
       this._smsService.envioSmsUnitario(this.formEnvioSms.value).subscribe((res) => {
-        this.loading = false;
+        this.loadingMin = false;
         if (res.success === 'true') {
           this.dadosEnviado.emit();
           this._modalService.dismissAll();
@@ -73,11 +109,11 @@ export class EnvioSmsComponent implements OnInit {
           this._alertService.warning(res.msg);
         }
       }, error => {
-        this.loading = false;
+        this.loadingMin = false;
         this._alertService.error('Erro ao enviar SMS. Tente novamente.');
       });
     } else {
-      this.loading = false;
+      this.loadingMin = false;
       this._alertService.warning('Digite uma mensagem para enviar');
     }
   }
