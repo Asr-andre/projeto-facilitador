@@ -17,7 +17,8 @@
                     <h5 class="mb-0"><i class="fas fa-sms"></i> Mensagens - Sms </h5>
                   </div>
                   <div class="col-md-6 text-end">
-                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;" (click)="abriModalCadastro(modalGenerico)">
+                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;"
+                      (click)="abriModalCadastro(modalGenerico)">
                       <i class="fas fa-plus"></i>
                       Cadastrar
                     </button>
@@ -28,66 +29,71 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mt-3" style="font-size: 11px;">
                   <div style="font-size: 11px;">
-                      <select id="itensPorPagina"
-                              [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
-                              style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
-                          <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina" style="font-size: 10px;" >{{ item }}</option>
-                      </select>
-                      <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
+                    <select id="itensPorPagina" [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
+                      style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
+                      <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina" style="font-size: 10px;">{{ item
+                        }}</option>
+                    </select>
+                    <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
                   </div>
                   <div style="font-size: 10px;">
-                      <div class="dataTables_filter text-md-end">
-                          <label class="d-inline-flex align-items-center">
-                              <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
-                          </label>
-                      </div>
+                    <div class="dataTables_filter text-md-end">
+                      <label class="d-inline-flex align-items-center">
+                        <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;"
+                          placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
+                      </label>
+                    </div>
                   </div>
-              </div>
+                </div>
 
-              <div class="table-responsive">
-                <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
-                  <thead class="tabela-custom">
-                    <tr>
-                      <th sortable="id_perfilsms" (sort)="ordenar($event)">Id</th>
-                      <th sortable="sigla" (sort)="ordenar($event)">Sigla</th>
-                      <th sortable="titulo" (sort)="ordenar($event)">Título</th>
-                      <th sortable="empresa" (sort)="ordenar($event)">Empresa</th>
-                      <th sortable="host" (sort)="ordenar($event)">Host</th>
-                      <th sortable="usuario" (sort)="ordenar($event)">Usúario</th>
-                      <th sortable="mensagem" (sort)="ordenar($event)">Mensagem</th>
-                      <th sortable="gera_acionamento" (sort)="ordenar($event)">Gera Acionamento</th>
-                      <th class="text-end">Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let perfil of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
-                      <td>{{ perfil.id_perfilsms }}</td>
-                      <td>{{ perfil.sigla }}</td>
-                      <td>{{ perfil.titulo }}</td>
-                      <td>{{ perfil.empresa }}</td>
-                      <td>{{ perfil.host }}</td>
-                      <td>{{ perfil.usuario }}</td>
-                      <td>{{ perfil.mensagem }}</td>
-                      <td>{{ perfil.gera_acionamento === 'S' ? 'Sim' : 'Não' }}</td>
-                      <td class="text-end">
-                        <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18"
-                          (click)="abriModalEditar(modalGenerico, perfil)"></i></a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="d-flex justify-content-between align-items-center mt-3 text-small">
-                  <div>
-                    Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
-                    {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+                <div class="table-responsive">
+                  <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+                    <thead class="tabela-custom">
+                      <tr>
+                        <th sortable="id_perfilsms" (sort)="ordenar($event)">Id</th>
+                        <th sortable="sigla" (sort)="ordenar($event)">Sigla</th>
+                        <th sortable="titulo" (sort)="ordenar($event)">Título</th>
+                        <th sortable="empresa" (sort)="ordenar($event)">Empresa</th>
+                        <th sortable="host" (sort)="ordenar($event)">Host</th>
+                        <th sortable="usuario" (sort)="ordenar($event)">Usúario</th>
+                        <th sortable="mensagem" (sort)="ordenar($event)">Mensagem</th>
+                        <th sortable="gera_acionamento" (sort)="ordenar($event)">Gera Acionamento</th>
+                        <th class="text-end">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let perfil of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                        <td>{{ perfil.id_perfilsms }}</td>
+                        <td>{{ perfil.sigla }}</td>
+                        <td>{{ perfil.titulo }}</td>
+                        <td>{{ perfil.empresa }}</td>
+                        <td>{{ perfil.host }}</td>
+                        <td>{{ perfil.usuario }}</td>
+                        <td>
+                          <span style="cursor: pointer" [ngbTooltip]="perfil.mensagem" placement="top" container="body"
+                            (click)="copiarParaAreasTransferencia(perfil.mensagem)">
+                            {{ mostraConteudoTruncado(perfil.mensagem, 70) }}
+                          </span>
+                        </td>
+                        <td>{{ perfil.gera_acionamento === 'S' ? 'Sim' : 'Não' }}</td>
+                        <td class="text-end">
+                          <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i
+                              class="mdi mdi-pencil font-size-18"
+                              (click)="abriModalEditar(modalGenerico, perfil)"></i></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between align-items-center mt-3 text-small">
+                    <div>
+                      Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+                      {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+                    </div>
+                    <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior"
+                      nextLabel="Próximo" [maxSize]="5" [autoHide]="false" [responsive]="true">
+                    </pagination-controls>
                   </div>
-                  <pagination-controls (pageChange)="paginaAtual = $event"
-                                        previousLabel="Anterior"
-                                        nextLabel="Próximo"
-                                        [maxSize]="5"
-                                        [autoHide]="false"
-                                        [responsive]="true">
-                  </pagination-controls>
                 </div>
               </div>
             </div>
@@ -96,87 +102,120 @@
       </div>
     </div>
   </div>
-</div>
 
-<ng-template #modalGenerico let-modal>
-  <div class="loading-overlay-card" *ngIf="loadingMin">
-    <div class="spinner-border text-primary m-1" role="status">
+  <ng-template #modalGenerico let-modal>
+    <div class="loading-overlay-card" *ngIf="loadingMin">
+      <div class="spinner-border text-primary m-1" role="status">
+      </div>
     </div>
-  </div>
 
-  <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
-    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-sms"></i> {{ editar ? 'Editar Sms' : 'Cadastrar Sms' }} </h6>
-    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
-  </div>
-  <div class="modal-body modal-padding">
-    <form [formGroup]="smsForm">
-      <div class="row">
-        <div class="col-md-6 form-group">
-          <label for="empresa" class="form-label">Empresa</label>
-        <input type="text" id="empresa" class="form-control form-control-sm mb-1" formControlName="empresa" placeholder="Empresa"
-        [ngClass]="{'is-invalid': smsForm.get('empresa').invalid && smsForm.get('empresa').touched}">
-      </div>
+    <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
+      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-sms"></i> {{ editar ? 'Editar Sms' : 'Cadastrar
+        Sms' }} </h6>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+        (click)="fechar()"></button>
+    </div>
+    <div class="modal-body modal-padding">
+      <form [formGroup]="smsForm">
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label for="empresa" class="form-label">Empresa</label>
+            <input type="text" id="empresa" class="form-control form-control-sm mb-1" formControlName="empresa"
+              placeholder="Empresa"
+              [ngClass]="{'is-invalid': smsForm.get('empresa').invalid && smsForm.get('empresa').touched}">
+          </div>
 
-      <div class="col-md-6 form-group">
-        <label for="host" class="form-label">Host</label>
-        <input type="text" id="host" class="form-control form-control-sm mb-1" formControlName="host" placeholder="Host"
-        [ngClass]="{'is-invalid': smsForm.get('host').invalid && smsForm.get('host').touched}">
-      </div>
+          <div class="col-md-6 form-group">
+            <label for="host" class="form-label">Host</label>
+            <input type="text" id="host" class="form-control form-control-sm mb-1" formControlName="host"
+              placeholder="Host" [ngClass]="{'is-invalid': smsForm.get('host').invalid && smsForm.get('host').touched}">
+          </div>
 
-      <div class="col-md-6 form-group">
-        <label for="usuario" class="form-label">Usúario</label>
-        <input type="text" id="usuario" class="form-control form-control-sm mb-1" formControlName="usuario" placeholder="Usuário"
-        [ngClass]="{'is-invalid': smsForm.get('usuario').invalid && smsForm.get('usuario').touched}">
-      </div>
+          <div class="col-md-6 form-group">
+            <label for="usuario" class="form-label">Usúario</label>
+            <input type="text" id="usuario" class="form-control form-control-sm mb-1" formControlName="usuario"
+              placeholder="Usuário"
+              [ngClass]="{'is-invalid': smsForm.get('usuario').invalid && smsForm.get('usuario').touched}">
+          </div>
 
-      <div class="col-md-6 form-group">
-        <label for="senha" class="form-label">Senha</label>
-        <input type="password" id="senha" class="form-control form-control-sm mb-1" formControlName="senha" placeholder="Senha"
-        [ngClass]="{'is-invalid': smsForm.get('senha').invalid && smsForm.get('senha').touched}">
-        <i class="fas fa-eye-slash" id="iconeOlhoIcon" (click)="mostrarSenha('senha', 'iconeOlhoIcon')" style="padding-right: 5px;"></i>
-      </div>
+          <div class="col-md-6 form-group">
+            <label for="senha" class="form-label">Senha</label>
+            <input type="password" id="senha" class="form-control form-control-sm mb-1" formControlName="senha"
+              placeholder="Senha"
+              [ngClass]="{'is-invalid': smsForm.get('senha').invalid && smsForm.get('senha').touched}">
+            <i class="fas fa-eye-slash" id="iconeOlhoIcon" (click)="mostrarSenha('senha', 'iconeOlhoIcon')"
+              style="padding-right: 5px;"></i>
+          </div>
 
-      <div class="col-md-6 form-group">
-        <label for="sigla" class="form-label">Sigla</label>
-        <input type="text" id="sigla" class="form-control form-control-sm mb-1" formControlName="sigla" placeholder="Sigla"
-        [ngClass]="{'is-invalid': smsForm.get('sigla').invalid && smsForm.get('sigla').touched}">
-      </div>
+          <div class="col-md-6 form-group">
+            <label for="sigla" class="form-label">Sigla</label>
+            <input type="text" id="sigla" class="form-control form-control-sm mb-1" formControlName="sigla"
+              placeholder="Sigla"
+              [ngClass]="{'is-invalid': smsForm.get('sigla').invalid && smsForm.get('sigla').touched}">
+          </div>
 
-      <div class="col-md-6 form-group">
-        <label for="gera_acionamento" class="form-label">Gerar Acionamento</label>
-        <select class="form-control form-control-sm mb-1" formControlName="gera_acionamento" placeholder="Gerar Acionamento"
-        [ngClass]="{'is-invalid': smsForm.get('gera_acionamento').invalid && smsForm.get('gera_acionamento').touched}">
-          <option value="">Gerar Acionamento</option>
-          <option value="S">Sim</option>
-          <option value="N">Não</option>
-        </select>
-      </div>
+          <div class="col-md-6 form-group">
+            <label for="gera_acionamento" class="form-label">Gerar Acionamento</label>
+            <select class="form-control form-control-sm mb-1" formControlName="gera_acionamento"
+              placeholder="Gerar Acionamento"
+              [ngClass]="{'is-invalid': smsForm.get('gera_acionamento').invalid && smsForm.get('gera_acionamento').touched}">
+              <option value="">Gerar Acionamento</option>
+              <option value="S">Sim</option>
+              <option value="N">Não</option>
+            </select>
+          </div>
 
-      <div class="col-md-12 form-group">
-        <label for="titulo" class="form-label">Titulo do Sms</label>
-        <input type="text" id="titulo" class="form-control form-control-sm mb-1" formControlName="titulo" placeholder="Titulo"
-        [ngClass]="{'is-invalid': smsForm.get('titulo').invalid && smsForm.get('titulo').touched}">
-      </div>
+          <div class="col-md-12 form-group">
+            <label for="titulo" class="form-label">Titulo do Sms</label>
+            <input type="text" id="titulo" class="form-control form-control-sm mb-1" formControlName="titulo"
+              placeholder="Titulo"
+              [ngClass]="{'is-invalid': smsForm.get('titulo').invalid && smsForm.get('titulo').touched}">
+          </div>
 
-      <div class="col-md-12 form-group">
-        <label for="mensagem" class="form-label">Mensagem</label>
-        <textarea id="mensagem" class="form-control form-control-sm mb-1" rows="4" (input)="contarCaracteres()" formControlName="mensagem"
-        [ngClass]="{'is-invalid': smsForm.get('mensagem').invalid && smsForm.get('mensagem').touched}">
+          <div class="col-md-12 form-group">
+            <label for="mensagem" class="form-label">Mensagem</label>
+            <textarea id="mensagem" class="form-control form-control-sm mb-1" rows="4" (input)="contarCaracteres()"
+              formControlName="mensagem"
+              [ngClass]="{'is-invalid': smsForm.get('mensagem').invalid && smsForm.get('mensagem').touched}">
       </textarea>
-      </div>
-    </div>
-
-      <div class="d-flex justify-content-between align-items-center" style="padding-top: 5px;">
-        <small>{{ smsForm.get('mensagem')?.value?.length || 0 }}/{{maxCaractere}} caracteres</small>
-        <div>
-          <button type="submit" class="btn btn-sm me-1" [ngClass]="editar ? 'btn-primary' : 'btn-success'" (click)="controleBotao()">
-            <i class="fas fa-save"></i> Salvar
-          </button>
-          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
-            <i class="fas fa-times"></i> Cancelar
-          </button>
+          </div>
         </div>
-      </div>
-    </form>
-  </div>
-</ng-template>
+
+        <div class="col-md-12 form-group">
+          <label class="form-label">Variáveis disponíveis</label>
+          <div class="alert alert-info" role="alert">
+            <div class="row">
+              <div class="col-md-6">
+                <p class="variable-item" (click)="inserirVariavel(dado.nome)" style="cursor: pointer;"
+                  ngbTooltip="Nome do cliente"><strong>{{ dado.nome}}</strong></p>
+                <p class="variable-item" (click)="inserirVariavel(dado.cpf)" style="cursor: pointer;"
+                  ngbTooltip="CPF do cliente"><strong>{{ dado.cpf }}</strong></p>
+                <p class="variable-item" (click)="inserirVariavel(dado.endereco)" style="cursor: pointer;"
+                  ngbTooltip="Endereço do cliente"><strong>{{ dado.endereco }}</strong></p>
+              </div>
+              <div class="col-md-6">
+                <p class="variable-item" (click)="inserirVariavel(dado.fantasia)" style="cursor: pointer;"
+                  ngbTooltip="Nome fantasia"><strong>{{ dado.fantasia }}</strong></p>
+                <p class="variable-item" (click)="inserirVariavel(dado.razaoSocial)" style="cursor: pointer;"
+                  ngbTooltip="Razão social"><strong>{{ dado.razaoSocial }}</strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center" style="padding-top: 5px;">
+          <small>{{ smsForm.get('mensagem')?.value?.length || 0 }}/{{maxCaractere}} caracteres</small>
+          <div>
+            <button type="submit" class="btn btn-sm me-1" [ngClass]="editar ? 'btn-primary' : 'btn-success'"
+              (click)="controleBotao()">
+              <i class="fas fa-save"></i> Salvar
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+              <i class="fas fa-times"></i> Cancelar
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </ng-template>

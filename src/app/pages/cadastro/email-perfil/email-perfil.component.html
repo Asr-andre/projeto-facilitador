@@ -17,7 +17,8 @@
                     <h5 class="mb-0"><i class="fas fa-inbox me-2"></i> Email - Perfil </h5>
                   </div>
                   <div class="col-md-6 text-end">
-                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;" (click)="abriModalCadastro(modalGenerico)">
+                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;"
+                      (click)="abriModalCadastro(modalGenerico)">
                       <i class="fas fa-plus"></i>
                       Cadastrar
                     </button>
@@ -28,76 +29,72 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mt-3" style="font-size: 11px;">
                   <div style="font-size: 11px;">
-                      <select id="itensPorPagina"
-                              [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
-                              style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
-                          <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina" style="font-size: 10px;" >{{ item }}</option>
-                      </select>
-                      <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
+                    <select id="itensPorPagina" [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
+                      style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
+                      <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina" style="font-size: 10px;">{{ item
+                        }}</option>
+                    </select>
+                    <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
                   </div>
                   <div style="font-size: 10px;">
-                      <div class="dataTables_filter text-md-end">
-                          <label class="d-inline-flex align-items-center">
-                              <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
-                          </label>
-                      </div>
+                    <div class="dataTables_filter text-md-end">
+                      <label class="d-inline-flex align-items-center">
+                        <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;"
+                          placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
+                      </label>
+                    </div>
                   </div>
-              </div>
+                </div>
 
-              <div class="table-responsive">
-                <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
-                  <thead class="tabela-custom">
-                    <tr>
-                      <th sortable="id_emailtexto" (sort)="ordenar($event)">Id</th>
-                      <th sortable="descricao" (sort)="ordenar($event)">Descrição</th>
-                      <th sortable="mensagem" (sort)="ordenar($event)">Mensagem</th>
-                      <th sortable="data_cadastro" (sort)="ordenar($event)">Data Cadastro</th>
-                      <th sortable="user_login" (sort)="ordenar($event)">Usúario</th>
-                      <th class="text-end">Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody *ngIf="dadosFiltrados.length > 0; else sem">
-                    <tr *ngFor="let dado of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
-                      <td>{{ dado.id_emailtexto }}</td>
-                      <td>{{ dado.descricao }}</td>
-                      <td>
-                        <span style="cursor: pointer"
-                          [ngbTooltip]="dado.mensagem"
-                          placement="top"
-                          container="body"
-                          (click)="copiarParaAreasTransferencia(dado.mensagem)"
-                        >
-                          {{ mostraConteudoTruncado(dado.mensagem, 70) }}
-                        </span>
-                      </td>
-                      <td>{{ data(dado.data_cadastro) }}</td>
-                      <td>{{ dado.user_login }}</td>
-                      <td class="text-end">
-                        <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18"
-                          (click)="abriModalEditar(modalGenerico, dado)"></i></a>
-                      </td>
-                    </tr>
-                  </tbody>
-                  <ng-template #sem>
-                    <tbody>
+                <div class="table-responsive">
+                  <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+                    <thead class="tabela-custom">
                       <tr>
-                        <td colspan="6" class="text-center">Nenhum perfil cadastrado.</td>
+                        <th sortable="id_emailtexto" (sort)="ordenar($event)">Id</th>
+                        <th sortable="descricao" (sort)="ordenar($event)">Descrição</th>
+                        <th sortable="mensagem" (sort)="ordenar($event)">Mensagem</th>
+                        <th sortable="data_cadastro" (sort)="ordenar($event)">Data Cadastro</th>
+                        <th sortable="user_login" (sort)="ordenar($event)">Usúario</th>
+                        <th class="text-end">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="dadosFiltrados.length > 0; else sem">
+                      <tr
+                        *ngFor="let dado of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                        <td>{{ dado.id_emailtexto }}</td>
+                        <td>{{ dado.descricao }}</td>
+                        <td>
+                          <span style="cursor: pointer" [ngbTooltip]="dado.mensagem" placement="top" container="body"
+                            (click)="copiarParaAreasTransferencia(dado.mensagem)">
+                            {{ mostraConteudoTruncado(dado.mensagem, 70) }}
+                          </span>
+                        </td>
+                        <td>{{ data(dado.data_cadastro) }}</td>
+                        <td>{{ dado.user_login }}</td>
+                        <td class="text-end">
+                          <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i
+                              class="mdi mdi-pencil font-size-18"
+                              (click)="abriModalEditar(modalGenerico, dado)"></i></a>
+                        </td>
                       </tr>
                     </tbody>
-                  </ng-template>
-                </table>
-                <div class="d-flex justify-content-between align-items-center mt-3 text-small">
-                  <div>
-                    Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
-                    {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+                    <ng-template #sem>
+                      <tbody>
+                        <tr>
+                          <td colspan="6" class="text-center">Nenhum perfil cadastrado.</td>
+                        </tr>
+                      </tbody>
+                    </ng-template>
+                  </table>
+                  <div class="d-flex justify-content-between align-items-center mt-3 text-small">
+                    <div>
+                      Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+                      {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+                    </div>
+                    <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior"
+                      nextLabel="Próximo" [maxSize]="5" [autoHide]="false" [responsive]="true">
+                    </pagination-controls>
                   </div>
-                  <pagination-controls (pageChange)="paginaAtual = $event"
-                                        previousLabel="Anterior"
-                                        nextLabel="Próximo"
-                                        [maxSize]="5"
-                                        [autoHide]="false"
-                                        [responsive]="true">
-                  </pagination-controls>
                 </div>
               </div>
             </div>
@@ -106,69 +103,66 @@
       </div>
     </div>
   </div>
-</div>
 
-<ng-template #modalGenerico let-modal>
-  <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
-    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-inbox me-2"></i>  {{ editar ? 'Editar Email - Perfil' : 'Cadastrar Email - Perfil' }}
-    </h6>
-    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
-      (click)="fechar()">
-    </button>
-  </div>
-
-  <div class="loading-overlay-card" *ngIf="loadingMin">
-    <div class="spinner-border text-primary m-1" role="status">
+  <ng-template #modalGenerico let-modal>
+    <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
+      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-inbox me-2"></i> {{ editar ? 'Editar Email -
+        Perfil' : 'Cadastrar Email - Perfil' }}
+      </h6>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()">
+      </button>
     </div>
-  </div>
 
-  <div class="modal-body modal-padding">
-    <form [formGroup]="formEmailPerfil">
-      <div class="col-md-12 form-group">
-        <label class="form-label">Asunto</label>
-        <input type="text" class="form-control form-control-sm mb-2"  formControlName="descricao" placeholder="Digite a descricao"
-        >
+    <div class="loading-overlay-card" *ngIf="loadingMin">
+      <div class="spinner-border text-primary m-1" role="status">
       </div>
-      <div class="col-md-12 form-group">
-        <quill-editor
-          class="custom-quill-editor"
-          placeholder="Digite sua mensagem"
-          formControlName="mensagem"
-          [modules]="{ toolbar: toolbarOptions }">
-        </quill-editor>
-      </div>
-      <div class="col-md-12 form-group">
-        <label class="form-label">Variáveis disponíveis</label>
-        <div class="alert alert-info" role="alert">
-          <div class="row">
-            <div class="col-md-6">
-              <p class="variable-item"
-                (click)="inserirVariavel(dado.nome)" style="cursor: pointer;"><strong>{{ dado.nome}}</strong> - Nome do cliente</p>
-              <p class="variable-item"
-                (click)="inserirVariavel(dado.cpf)" style="cursor: pointer;"><strong>{{ dado.cpf }}</strong> - CPF do cliente</p>
-              <p class="variable-item"
-                (click)="inserirVariavel(dado.endereco)" style="cursor: pointer;"><strong>{{ dado.endereco }}</strong> - Endereço do cliente</p>
-            </div>
-            <div class="col-md-6">
-              <p class="variable-item"
-              (click)="inserirVariavel(dado.fantasia)" style="cursor: pointer;"><strong>{{ dado.fantasia }}</strong> - Nome fantasia</p>
-              <p class="variable-item"
-              (click)="inserirVariavel(dado.razaoSocial)" style="cursor: pointer;"><strong>{{ dado.razaoSocial }}</strong> - Razão social</p>
+    </div>
+
+    <div class="modal-body modal-padding">
+      <form [formGroup]="formEmailPerfil">
+        <div class="col-md-12 form-group">
+          <label class="form-label">Asunto</label>
+          <input type="text" class="form-control form-control-sm mb-2" formControlName="descricao"
+            placeholder="Digite a descricao">
+        </div>
+        <div class="col-md-12 form-group">
+          <quill-editor class="custom-quill-editor" placeholder="Digite sua mensagem" formControlName="mensagem"
+            [modules]="{ toolbar: toolbarOptions }">
+          </quill-editor>
+        </div>
+
+        <div class="col-md-12 form-group">
+          <label class="form-label">Variáveis disponíveis</label>
+          <div class="alert alert-info" role="alert">
+            <div class="row">
+              <div class="col-md-6">
+                <p class="variable-item" (click)="inserirVariavel(dado.nome)" style="cursor: pointer;"
+                  ngbTooltip="Nome do cliente"><strong>{{ dado.nome}}</strong></p>
+                <p class="variable-item" (click)="inserirVariavel(dado.cpf)" style="cursor: pointer;"
+                  ngbTooltip="CPF do cliente"><strong>{{ dado.cpf }}</strong></p>
+                <p class="variable-item" (click)="inserirVariavel(dado.endereco)" style="cursor: pointer;"
+                  ngbTooltip="Endereço do cliente"><strong>{{ dado.endereco }}</strong></p>
+              </div>
+              <div class="col-md-6">
+                <p class="variable-item" (click)="inserirVariavel(dado.fantasia)" style="cursor: pointer;"
+                  ngbTooltip="Nome fantasia"><strong>{{ dado.fantasia }}</strong></p>
+                <p class="variable-item" (click)="inserirVariavel(dado.razaoSocial)" style="cursor: pointer;"
+                  ngbTooltip="Razão social"><strong>{{ dado.razaoSocial }}</strong></p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="d-flex justify-content-end align-items-center" style="margin-top: 5px;">
-        <button type="submit" class="btn btn-sm me-1"
-        [ngClass]="{ 'btn-primary': editar, 'btn-success': !editar }" (click)="controleBotao()">
-          <i class="fas fa-save"></i> {{ editar ? 'Atualizar' : 'Salvar' }}
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
-          <i class="fas fa-times"></i> Cancelar
-        </button>
-      </div>
+        <div class="d-flex justify-content-end align-items-center" style="margin-top: 5px;">
+          <button type="submit" class="btn btn-sm me-1" [ngClass]="{ 'btn-primary': editar, 'btn-success': !editar }"
+            (click)="controleBotao()">
+            <i class="fas fa-save"></i> {{ editar ? 'Atualizar' : 'Salvar' }}
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </div>
       </form>
 
-  </div>
-</ng-template>
+    </div>
+  </ng-template>

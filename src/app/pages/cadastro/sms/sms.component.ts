@@ -34,6 +34,14 @@ export class SmsComponent implements OnInit {
   public direcaoOrdenacao: { [key: string]: string } = {};
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<PerfilSms>>;
 
+  public dado = {
+    nome: '@clientes_nome',
+    cpf: '@clientes_cpf',
+    endereco: '@clientes_endereco',
+    fantasia: '@contratante_fantasia',
+    razaoSocial: '@contratante_razao_social'
+  };
+
   constructor(
     private _smsService: SmsService,
     private _formBuilder: FormBuilder,
@@ -212,5 +220,28 @@ export class SmsComponent implements OnInit {
       const truncada = mensagemControl.value.substring(0, this.maxCaractere);
       mensagemControl.setValue(truncada);
     }
+  }
+
+  public inserirVariavel(variavel: string) {
+    const mensagemAtual = this.smsForm.get('mensagem')?.value || '';
+    const novaMensagem = `${mensagemAtual} ${variavel}`.trim();
+    this.smsForm.get('mensagem')?.setValue(novaMensagem);
+  }
+
+  public mostraConteudoTruncado(texto: string, limite: number): string {
+    return texto.length > limite ? texto.substring(0, limite) + '...' : texto;
+  }
+
+  public exibirConteudoCompleto(msg: any, campo: string): void {
+    msg[campo + '_visivel'] = msg[campo]; // Mostra o texto completo
+  }
+
+  public ocultarConteudoTruncado(msg: any, campo: string, limite: number): void {
+    msg[campo + '_visivel'] = this.mostraConteudoTruncado(msg[campo], limite); // Volta ao texto truncado
+  }
+
+  public copiarParaAreasTransferencia(valor) {
+    Utils.CopyAreaTransfer(valor);
+    this._alertService.copiado();
   }
 }
