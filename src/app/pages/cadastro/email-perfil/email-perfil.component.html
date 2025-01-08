@@ -133,7 +133,7 @@
 
         <div class="col-md-12 form-group">
           <label class="form-label">Variáveis disponíveis</label>
-          <div class="alert alert-info" role="alert">
+          <div [ngClass]="editar ? 'alert alert-info' : 'alert alert-success'" role="alert">
             <div class="row">
               <div class="col-md-4">
                 <p class="variable-item" (click)="inserirVariavel(dado.nome)" style="cursor: pointer;"

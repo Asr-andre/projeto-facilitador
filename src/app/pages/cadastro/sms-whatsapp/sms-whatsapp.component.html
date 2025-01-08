@@ -173,8 +173,11 @@
       <div class="d-flex justify-content-between align-items-center" style="padding-top: 5px;">
         <small>{{ mensagemForm.get('mensagem')?.value?.length || 0 }}/{{maxCaractere}} caracteres</small>
         <div>
-          <button type="submit" class="btn btn-sm me-1" [ngClass]="editar ? 'btn-primary' : 'btn-success'" (click)="controleBotao()">
-            <i class="fas fa-save"></i> Salvar
+          <button type="submit" class="btn btn-sm me-1" [ngClass]="{
+                'btn-primary': editar,
+                'btn-success': !editar
+              }" (click)="controleBotao()">
+              <i class="fas fa-save"></i> {{ editar ? 'Atualizar' : 'Salvar' }}
           </button>
           <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
             <i class="fas fa-times"></i> Cancelar
