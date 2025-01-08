@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
+import { variavel } from 'src/app/core/helpers/variaveis';
 import { MensagemEmailPerfil, RequisicaoEmailPerfil, RequisicaoPerfilEmail } from 'src/app/core/models/cadastro/email-perfil.model';
 import { Indice } from 'src/app/core/models/cadastro/indice.model';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -23,6 +24,7 @@ export class EmailPerfilComponent implements OnInit {
   public mensages: MensagemEmailPerfil[] = [];
   public editar: boolean = false;
   public formEmailPerfil: FormGroup;
+  public dado: typeof variavel;
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -50,14 +52,6 @@ export class EmailPerfilComponent implements OnInit {
     ['clean']                                         // Limpar formatação
   ];
 
-  public dado = {
-    nome: '@clientes_nome',
-    cpf: '@clientes_cpf',
-    endereco: '@clientes_endereco',
-    fantasia: '@contratante_fantasia',
-    razaoSocial: '@contratante_razao_social'
-  };
-
   constructor(
     private _emailPerfil: EmailPerfilService,
     private _formBuilder: FormBuilder,
@@ -67,6 +61,7 @@ export class EmailPerfilComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.dado = variavel;
     this.obterEmailPerfil();
     this.inicializarFormEmailPerfil();
   }

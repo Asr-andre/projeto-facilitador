@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OrdenarPeloHeaderTabela, SortEvent, compararParaOrdenar } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
+import { variavel } from 'src/app/core/helpers/variaveis';
 import { PerfilSms } from 'src/app/core/models/sms.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
@@ -23,6 +24,7 @@ export class SmsComponent implements OnInit {
   public loadingMin: boolean = false;
   public maxCaractere: number = 160;
   public mensagem: string = '';
+  public dado: typeof variavel; // Usa o tipo da variável exportada
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -34,13 +36,7 @@ export class SmsComponent implements OnInit {
   public direcaoOrdenacao: { [key: string]: string } = {};
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<PerfilSms>>;
 
-  public dado = {
-    nome: '@clientes_nome',
-    cpf: '@clientes_cpf',
-    endereco: '@clientes_endereco',
-    fantasia: '@contratante_fantasia',
-    razaoSocial: '@contratante_razao_social'
-  };
+
 
   constructor(
     private _smsService: SmsService,
@@ -51,6 +47,7 @@ export class SmsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.dado = variavel; // Atribui o valor exportado
     this.obterPerfilSms();
     this.inicializarMensagemForm();
   }

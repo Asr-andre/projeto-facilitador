@@ -187,17 +187,25 @@
             <div class="row">
               <div class="col-md-6">
                 <p class="variable-item" (click)="inserirVariavel(dado.nome)" style="cursor: pointer;"
-                  ngbTooltip="Nome do cliente"><strong>{{ dado.nome}}</strong></p>
+                  ngbTooltip="Nome completo do cliente"><strong>{{ dado.nome}}</strong>
+                </p>
+                <p class="variable-item" (click)="inserirVariavel(dado.primeiro_nome)" style="cursor: pointer;"
+                  ngbTooltip="Primeiro nome do cliente"><strong>{{ dado.primeiro_nome}}</strong>
+                </p>
                 <p class="variable-item" (click)="inserirVariavel(dado.cpf)" style="cursor: pointer;"
-                  ngbTooltip="CPF do cliente"><strong>{{ dado.cpf }}</strong></p>
-                <p class="variable-item" (click)="inserirVariavel(dado.endereco)" style="cursor: pointer;"
-                  ngbTooltip="Endereço do cliente"><strong>{{ dado.endereco }}</strong></p>
+                  ngbTooltip="CPF do cliente"><strong>{{ dado.cpf }}</strong>
+                </p>
               </div>
               <div class="col-md-6">
+                <p class="variable-item" (click)="inserirVariavel(dado.endereco)" style="cursor: pointer;"
+                  ngbTooltip="Endereço do cliente"><strong>{{ dado.endereco }}</strong>
+                </p>
                 <p class="variable-item" (click)="inserirVariavel(dado.fantasia)" style="cursor: pointer;"
-                  ngbTooltip="Nome fantasia"><strong>{{ dado.fantasia }}</strong></p>
+                  ngbTooltip="Nome fantasia"><strong>{{ dado.fantasia }}</strong>
+                </p>
                 <p class="variable-item" (click)="inserirVariavel(dado.razaoSocial)" style="cursor: pointer;"
-                  ngbTooltip="Razão social"><strong>{{ dado.razaoSocial }}</strong></p>
+                  ngbTooltip="Razão social"><strong>{{ dado.razaoSocial }}</strong>
+                </p>
               </div>
             </div>
           </div>
