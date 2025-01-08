@@ -15,11 +15,12 @@
     <form [formGroup]="formularioEnvioEmail">
       <div class="col-md-12 form-group">
         <label class="form-label">Asunto</label>
-        <select class="form-control form-control-sm" [(ngModel)]="asuntoSelecionado" (change)="atualizarMensagem($event)" style="margin-bottom: 10px;">
+        <select class="form-control form-control-sm" formControlName="assunto" (change)="capturarMsg($event)" style="margin-bottom: 10px;">
           <option value="">Selecionar Mensagens</option>
           <option *ngFor="let item of mensages" [value]="item.id_emailtexto">{{ item.descricao }}</option>
         </select>
       </div>
+
       <div class="col-md-12 form-group">
         <quill-editor
           class="custom-quill-editor"

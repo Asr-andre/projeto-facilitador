@@ -18,6 +18,8 @@ export class EnvioSmsComponent implements OnInit {
   public maxCaractere: number = 160;
   public mensagem: string = '';
   public loading: boolean = false;
+  public idEmpresa = Number(this._authService.getIdEmpresa());
+  public login = this._authService.getLogin();
 
   constructor(
     private _modalService: NgbModal,
@@ -34,12 +36,12 @@ export class EnvioSmsComponent implements OnInit {
 
   public inicializarFormSms() {
     this.formEnvioSms = this._formBuilder.group({
-      id_empresa: [Number(this._authService.getIdEmpresa())],
+      id_empresa: [this.idEmpresa],
       id_contratante: [''],
       id_cliente: [''],
       fone: [''],
       mensagem: ['', Validators.required],
-      user_login: [this._authService.getLogin()]
+      user_login: [this.login]
     });
   }
 

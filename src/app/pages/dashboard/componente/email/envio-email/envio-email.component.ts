@@ -26,7 +26,7 @@ export class EnvioEmailComponent implements OnInit {
   private arquivoSelecionado: File | null = null;
   public loadingMin: boolean = false;
   public carregandoEnvio: boolean = false;
-  public asuntoSelecionado: string = "";
+  public assuntoSelecionado: string = "";
 
   toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],        // Negrito, Itálico, Sublinhado, Tachado
@@ -98,19 +98,6 @@ export class EnvioEmailComponent implements OnInit {
     });
   };
 
-  atualizarMensagem(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    const mensagemId = Number(selectElement.value); // Obtém o ID da mensagem selecionada
-
-    const mensagemSelecionada = this.mensages.find(item => item.id_emailtexto === mensagemId);
-
-    if (mensagemSelecionada) {
-      this.formularioEnvioEmail.get('assunto')?.setValue(mensagemSelecionada.descricao);
-      this.formularioEnvioEmail.get('mensagem')?.setValue(mensagemSelecionada.mensagem);
-      this.asuntoSelecionado = mensagemSelecionada.descricao;
-    }
-  }
-
   public abrirModalEmail(email: string, idCliente: number | undefined, idContratante: number | undefined): void {
     this.destinatarioEmail = email;
     this.formularioEnvioEmail.patchValue({
@@ -123,8 +110,19 @@ export class EnvioEmailComponent implements OnInit {
     this._modalService.open(this.modalEmailRef, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
+  public capturarMsg(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const mensagemId = Number(selectElement.value); // Obtém o ID da mensagem selecionada
+    const mensagemSelecionada = this.mensages.find(item => item.id_emailtexto === mensagemId);
+
+    if (mensagemSelecionada) {
+      this.formularioEnvioEmail.get('mensagem')?.setValue(mensagemSelecionada.mensagem);
+      this.assuntoSelecionado = mensagemSelecionada.descricao;
+    }
+  }
+
   public enviarEmail(): void {
-    if (this.formularioEnvioEmail.invalid) {
+        if (this.formularioEnvioEmail.invalid) {
       this._alert.warning('O campo assunto é mensagem são obrigatório.');
       return;
     }
@@ -144,8 +142,11 @@ export class EnvioEmailComponent implements OnInit {
   }
 
   private enviarEmailComAnexo(): void {
+    const dadosParaEnvio = { ...this.formularioEnvioEmail.value };
+          dadosParaEnvio.assunto = this.assuntoSelecionado
+
     this.loadingMin = true;
-    this._emailService.envioEmailUnitario(this.formularioEnvioEmail.value).subscribe({
+    this._emailService.envioEmailUnitario(dadosParaEnvio).subscribe({
       next: (res) => {
         this.loadingMin = false;
         if (res.success === 'true') {
