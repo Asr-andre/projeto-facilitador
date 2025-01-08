@@ -110,6 +110,13 @@ export class EmailPerfilComponent implements OnInit {
           this.filtrar();
           this.atualizarQuantidadeExibida();
           this.loading = false;
+
+          this.mensages.sort((a, b) => {
+            if (a.id_emailtexto < b.id_emailtexto) return 1;
+            if (a.id_emailtexto > b.id_emailtexto) return -1;
+            return 0;
+        });
+
         } else {
           this.loading = false;
           this._alert.warning(res.msg);
