@@ -26,6 +26,7 @@ export class EnvioEmailComponent implements OnInit {
   private arquivoSelecionado: File | null = null;
   public loadingMin: boolean = false;
   public carregandoEnvio: boolean = false;
+  public asuntoSelecionado: string = "";
 
   toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],        // Negrito, Itálico, Sublinhado, Tachado
@@ -97,12 +98,16 @@ export class EnvioEmailComponent implements OnInit {
     });
   };
 
-  public atualizarMensagem(event: Event): void {
-    const selectedMessage = (event.target as HTMLSelectElement).value;
-    const mensagemControl = this.formularioEnvioEmail.get('mensagem');
+  atualizarMensagem(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const mensagemId = Number(selectElement.value); // Obtém o ID da mensagem selecionada
 
-    if (mensagemControl) {
-      mensagemControl.setValue(selectedMessage);
+    const mensagemSelecionada = this.mensages.find(item => item.id_emailtexto === mensagemId);
+
+    if (mensagemSelecionada) {
+      this.formularioEnvioEmail.get('assunto')?.setValue(mensagemSelecionada.descricao);
+      this.formularioEnvioEmail.get('mensagem')?.setValue(mensagemSelecionada.mensagem);
+      this.asuntoSelecionado = mensagemSelecionada.descricao;
     }
   }
 
