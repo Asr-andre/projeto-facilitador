@@ -73,11 +73,13 @@
             <div class="col-md-3">
               <form [formGroup]="formFila">
                 <div class="input-group">
-                  <select id="contratanteSelect" class="form-control form-control-sm" formControlName="id_fila" (focus)="obterFilas()">
+                  <select id="contratanteSelect" class="form-control form-control-sm" formControlName="id_fila"
+                    (focus)="obterFilas()">
                     <option value="0">Selecione a Fila</option>
                     <option *ngFor="let fila of filas" [value]="fila.id_fila">{{ fila.descricao }}</option>
                   </select>
-                  <button class="btn btn-secondary btn-sm" (click)="filaCliente()" [disabled]="formFila.get('id_fila')?.value <= 0" ngbTooltip="Carregar Fila">
+                  <button class="btn btn-secondary btn-sm" (click)="filaCliente()"
+                    [disabled]="formFila.get('id_fila')?.value <= 0" ngbTooltip="Carregar Fila">
                     <i class="fas fa-check-circle"></i>
                   </button>
                 </div>
@@ -95,12 +97,14 @@
 
             <!-- Campo de Texto -->
             <div class="col-md-3">
-              <input type="text" class="form-control form-control-sm" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" />
+              <input type="text" class="form-control form-control-sm" placeholder="Pesquisar"
+                [(ngModel)]="textoPesquisa" />
             </div>
 
             <!-- Checkbox e Botão -->
             <div class="col-md-3 d-flex align-items-center">
-              <input type="checkbox" id="mostrarSemDivida" [(ngModel)]="mostrarSemDivida" ngbTooltip="Mostrar clientes sem dívidas" />
+              <input type="checkbox" id="mostrarSemDivida" [(ngModel)]="mostrarSemDivida"
+                ngbTooltip="Mostrar clientes sem dívidas" />
               <button class="btn btn-primary btn-sm ms-2" (click)="pesquisaCliente()">Pesquisar</button>
             </div>
           </div>
@@ -142,18 +146,16 @@
                 </tbody>
               </ng-template>
             </table>
-
-            <div class="d-flex justify-content-between align-items-center mt-3 text-small">
-              <div>
-                Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
-                {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
-              </div>
-              <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo"
-                [maxSize]="5" [autoHide]="false" [responsive]="true">
-              </pagination-controls>
-            </div>
           </div>
-
+          <div class="d-flex justify-content-between align-items-center mt-1 text-small">
+            <div>
+              Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+              {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+            </div>
+            <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo"
+              [maxSize]="5" [autoHide]="false" [responsive]="true">
+            </pagination-controls>
+          </div>
         </div>
       </div>
     </div>
