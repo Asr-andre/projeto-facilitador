@@ -98,6 +98,30 @@ export class EnvioEmailComponent implements OnInit {
     });
   };
 
+  public substituirVariaveisNaMensagem(): void {
+    // Obtendo os dados do localStorage
+    const dadosCliente = JSON.parse(localStorage.getItem('dadosCliente') || '{}');
+
+    // Verificando se os dados existem
+    if (!dadosCliente || Object.keys(dadosCliente).length === 0) {
+      this._alert.warning('Os dados do cliente não foram encontrados no localStorage.');
+      return;
+    }
+
+    // Obtendo a mensagem original
+    let mensagemOriginal = this.formularioEnvioEmail.get('mensagem')?.value || '';
+
+    // Substituindo as variáveis na mensagem
+    mensagemOriginal = mensagemOriginal
+      .replace(/@clientes_nome/g, dadosCliente.nome || '')
+      .replace(/@clientes_cpf/g, dadosCliente.cpf || '')
+      .replace(/@clientes_endereco/g, dadosCliente.endereco || '')
+      .replace(/@contratante_fantasia/g, dadosCliente.credor || '');
+
+    // Atualizando o campo de mensagem no formulário
+    this.formularioEnvioEmail.get('mensagem')?.setValue(mensagemOriginal);
+  }
+
   public abrirModalEmail(email: string, idCliente: number | undefined, idContratante: number | undefined): void {
     this.destinatarioEmail = email;
     this.formularioEnvioEmail.patchValue({
@@ -106,6 +130,7 @@ export class EnvioEmailComponent implements OnInit {
       destinatario: email
     });
 
+    this.substituirVariaveisNaMensagem();
     this.obterEmailPerfil();
     this._modalService.open(this.modalEmailRef, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
@@ -118,6 +143,7 @@ export class EnvioEmailComponent implements OnInit {
     if (mensagemSelecionada) {
       this.formularioEnvioEmail.get('mensagem')?.setValue(mensagemSelecionada.mensagem);
       this.assuntoSelecionado = mensagemSelecionada.descricao;
+      this.substituirVariaveisNaMensagem();
     }
   }
 
@@ -126,6 +152,8 @@ export class EnvioEmailComponent implements OnInit {
       this._alert.warning('O campo assunto é mensagem são obrigatório.');
       return;
     }
+
+    this.substituirVariaveisNaMensagem();
 
     if (this.arquivoSelecionado) {
       this.converterParaBase64(this.arquivoSelecionado).then(base64 => {

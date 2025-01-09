@@ -69,11 +69,13 @@ export class DashboardComponent implements OnInit {
   }
 
   public filaCliente(): void {
+    localStorage.removeItem('dadosCliente');
     const filtros = this.construirFiltros(this.formFila.get("id_fila")?.value || 0);
     this.obterDevedores(filtros);
   }
 
   public pesquisaCliente(): void {
+    localStorage.removeItem('dadosCliente');
     const filtros = this.construirFiltros(0);
     this.obterDevedores(filtros);
   }

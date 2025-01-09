@@ -70,6 +70,30 @@ export class EnvioSmsComponent implements OnInit {
     });
   }
 
+  public substituirVariaveisNaMensagem(): void {
+    // Obtendo os dados do localStorage
+    const dadosCliente = JSON.parse(localStorage.getItem('dadosCliente') || '{}');
+
+    // Verificando se os dados existem
+    if (!dadosCliente || Object.keys(dadosCliente).length === 0) {
+      this._alertService.warning('Os dados do cliente não foram encontrados no localStorage.');
+      return;
+    }
+
+    // Obtendo a mensagem original
+    let mensagemOriginal = this.formEnvioSms.get('mensagem')?.value || '';
+
+    // Substituindo as variáveis na mensagem
+    mensagemOriginal = mensagemOriginal
+      .replace(/@clientes_nome/g, dadosCliente.nome || '')
+      .replace(/@clientes_cpf/g, dadosCliente.cpf || '')
+      .replace(/@clientes_endereco/g, dadosCliente.endereco || '')
+      .replace(/@contratante_fantasia/g, dadosCliente.credor || '');
+
+    // Atualizando o campo de mensagem no formulário
+    this.formEnvioSms.get('mensagem')?.setValue(mensagemOriginal);
+  }
+
   public abrirModalSms(fone: string, idCliente: number | undefined, idContratante: number | undefined): void {
     this.obterPerfilSms();
     this.foneDestinatario = fone;
@@ -89,13 +113,14 @@ export class EnvioSmsComponent implements OnInit {
 
     if (mensagemSelecionada) {
       this.formEnvioSms.get('mensagem')?.setValue(mensagemSelecionada.mensagem);
+      this.substituirVariaveisNaMensagem();
     }
   }
 
   public enviarSms(): void {
     if (this.formEnvioSms.valid) {
       this.loadingMin = true;
-
+      this.substituirVariaveisNaMensagem();
       const mensagemSemQuebraLinha = this.formEnvioSms.get('mensagem')?.value.replace(/\n/g, '');
       this.formEnvioSms.patchValue({ mensagem: mensagemSemQuebraLinha });
 
