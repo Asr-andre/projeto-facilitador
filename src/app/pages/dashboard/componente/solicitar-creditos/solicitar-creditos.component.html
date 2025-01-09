@@ -14,7 +14,7 @@
 
   <div class="modal-body modal-padding" style="padding-top: 2px;">
     <form [formGroup]="formCreditos">
-      <div class="row mb-3">
+      <div class="row mb-2">
         <div class="col">
           <label for="tipoCredito" class="form-label">Tipo de Crédito</label>
           <select id="tipoCredito" class="form-control form-control-sm" formControlName="servico">
@@ -36,7 +36,7 @@
       </div>
 
       <div *ngIf="mostraQrCode">
-        <div class="mb-3">
+        <div class="mb-0">
           <label for="qrCode" class="form-label">QR Code</label>
           <div class="row">
             <div class="col-6 text-center">
@@ -52,7 +52,7 @@
           </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-1">
           <label for="pixCopiaCola" class="form-label" style="display: inline-flex; align-items: center;">
             Pix Copia e Cola
             <button class="btn btn-outline-secondary btn-sm"
