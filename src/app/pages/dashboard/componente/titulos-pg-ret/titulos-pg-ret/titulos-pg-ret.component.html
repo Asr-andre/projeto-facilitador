@@ -3,53 +3,56 @@
   </div>
 </div>
 
-<div class="table-responsive" style="margin-top: 10px; max-height: 400px; overflow-y: auto;">
-  <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
-    <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
-        <tr>
-          <th>Id</th>
-          <th>Contrato</th>
-          <th>Vencimento</th>
-          <th>Pagamento</th>
-          <th>Tipo</th>
-          <th>Valor</th>
-          <th>Multa</th>
-          <th>Juros</th>
-          <th>Taxa</th>
-          <th>Desc. Principal</th>
-          <th>Desc. Multa</th>
-          <th>Desc. Juros</th>
-          <th>Desc. Taxa</th>
-          <th>Valor Pago</th>
-          <th>Usuário</th>
-        </tr>
-      </thead>
-      <tbody *ngIf="tituloPgRet.length > 0; else semPg">
-        <tr *ngFor="let titulo of tituloPgRet">
-          <td>{{ titulo.id_titulo }}</td>
-          <td>{{ titulo.numero_contrato }}</td>
-          <td>{{ dataBrasil(titulo.vencimento) }}</td>
-          <td>{{ data(titulo.pagamento) }}</td>
-          <td>{{ titulo.tipo_baixa }}</td>
-          <td>{{ titulo.valor | currency: 'BRL' }}</td>
-          <td>{{ titulo.valor_multa | currency: 'BRL' }}</td>
-          <td>{{ titulo.valor_juros | currency: 'BRL' }}</td>
-          <td>{{ titulo.valor_taxa | currency: 'BRL' }}</td>
-          <td>{{ titulo.desc_principal | currency: 'BRL' }}</td>
-          <td>{{ titulo.desc_multa | currency: 'BRL' }}</td>
-          <td>{{ titulo.desc_juros | currency: 'BRL' }}</td>
-          <td>{{ titulo.desc_taxa | currency: 'BRL' }}</td>
-          <td>{{ titulo.valor_pago | currency: 'BRL' }}</td>
-          <td>{{ titulo.user_baixa }}</td>
-        </tr>
-      </tbody>
-      <ng-template #semPg>
-        <tbody>
+<div class="card-body" style="padding: 2px 0;">
+  <div class="table-responsive" style="margin-top: 10px; max-height: 450px; overflow-y: auto;">
+    <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+      <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
           <tr>
-            <td colspan="15" class="text-center">Nenhum pagamento/ retirada cadastrado.</td>
+            <th>Id</th>
+            <th>Contrato</th>
+            <th>Vencimento</th>
+            <th>Pagamento</th>
+            <th>Tipo</th>
+            <th>Valor</th>
+            <th>Multa</th>
+            <th>Juros</th>
+            <th>Taxa</th>
+            <th>Desc. Principal</th>
+            <th>Desc. Multa</th>
+            <th>Desc. Juros</th>
+            <th>Desc. Taxa</th>
+            <th>Valor Pago</th>
+            <th>Usuário</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="tituloPgRet.length > 0; else semPg">
+          <tr *ngFor="let titulo of tituloPgRet">
+            <td>{{ titulo.id_titulo }}</td>
+            <td>{{ titulo.numero_contrato }}</td>
+            <td>{{ dataBrasil(titulo.vencimento) }}</td>
+            <td>{{ data(titulo.pagamento) }}</td>
+            <td>{{ titulo.tipo_baixa }}</td>
+            <td>{{ titulo.valor | currency: 'BRL' }}</td>
+            <td>{{ titulo.valor_multa | currency: 'BRL' }}</td>
+            <td>{{ titulo.valor_juros | currency: 'BRL' }}</td>
+            <td>{{ titulo.valor_taxa | currency: 'BRL' }}</td>
+            <td>{{ titulo.desc_principal | currency: 'BRL' }}</td>
+            <td>{{ titulo.desc_multa | currency: 'BRL' }}</td>
+            <td>{{ titulo.desc_juros | currency: 'BRL' }}</td>
+            <td>{{ titulo.desc_taxa | currency: 'BRL' }}</td>
+            <td>{{ titulo.valor_pago | currency: 'BRL' }}</td>
+            <td>{{ titulo.user_baixa }}</td>
           </tr>
         </tbody>
-      </ng-template>
-    </table>
+        <ng-template #semPg>
+          <tbody>
+            <tr>
+              <td colspan="15" class="text-center">Nenhum pagamento/ retirada cadastrado.</td>
+            </tr>
+          </tbody>
+        </ng-template>
+      </table>
+  </div>
 </div>
+
 

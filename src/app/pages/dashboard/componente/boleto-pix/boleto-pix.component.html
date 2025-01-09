@@ -3,49 +3,52 @@
   </div>
 </div>
 
-    <div class="table-responsive" style="margin-top: 10px; max-height: 400px; overflow-y: auto;">
-      <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
-        <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
+<div class="card-body" style="padding: 2px 0;">
+  <div class="table-responsive" style="margin-top: 10px; max-height: 450px; overflow-y: auto;">
+    <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+      <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
+        <tr>
+          <th sortable="id_boleto" (sort)="ordenar($event)" scope="col">Id</th>
+          <th sortable="nosso_numero" (sort)="ordenar($event)" scope="col">Nosso Número</th>
+          <th sortable="valor_boleto" (sort)="ordenar($event)" scope="col">Valor</th>
+          <th sortable="data_vencimento" (sort)="ordenar($event)" scope="col">Vencimento</th>
+          <th sortable="situacao" (sort)="ordenar($event)" scope="col">Situação</th>
+          <th sortable="data_emissao" (sort)="ordenar($event)" scope="col">Data Emissão</th>
+          <th sortable="user_login" (sort)="ordenar($event)" scope="col">Usuario</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="dadosFiltrados.length > 0; else semBoletos">
+        <tr *ngFor="let item of dadosFiltrados">
+          <td>{{ item.id_boleto }}</td>
+          <td>{{ item.nosso_numero }}</td>
+          <td>{{ item.valor_boleto | currency: 'BRL':'symbol':'1.2-2'  }}</td>
+          <td>{{ item.data_vencimento | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            <div class="badge font-size-10"
+            [ngClass]="{
+                  'bg-success-subtle text-success': item.situacao === 'CONCLUIDA',
+                  'bg-danger-subtle text-danger': item.situacao === 'EXPIRADO',
+                  'bg-warning-subtle text-warning':item.situacao === 'ATIVA'}">
+                  {{ situacao(item.situacao) }}
+            </div>
+          </td>
+          <td>{{ data(item.data_emissao)  }}</td>
+          <td>{{ item.user_login }}</td>
+          <td><i class="fas fa-file-alt" ngbTooltip="Títulos Negociado"></i></td>
+        </tr>
+      </tbody>
+      <ng-template #semBoletos>
+        <tbody>
           <tr>
-            <th sortable="id_boleto" (sort)="ordenar($event)" scope="col">Id</th>
-            <th sortable="nosso_numero" (sort)="ordenar($event)" scope="col">Nosso Número</th>
-            <th sortable="valor_boleto" (sort)="ordenar($event)" scope="col">Valor</th>
-            <th sortable="data_vencimento" (sort)="ordenar($event)" scope="col">Vencimento</th>
-            <th sortable="situacao" (sort)="ordenar($event)" scope="col">Situação</th>
-            <th sortable="data_emissao" (sort)="ordenar($event)" scope="col">Data Emissão</th>
-            <th sortable="user_login" (sort)="ordenar($event)" scope="col">Usuario</th>
-            <th scope="col">Ações</th>
-          </tr>
-        </thead>
-        <tbody *ngIf="dadosFiltrados.length > 0; else semBoletos">
-          <tr *ngFor="let item of dadosFiltrados">
-            <td>{{ item.id_boleto }}</td>
-            <td>{{ item.nosso_numero }}</td>
-            <td>{{ item.valor_boleto | currency: 'BRL':'symbol':'1.2-2'  }}</td>
-            <td>{{ item.data_vencimento | date: 'dd/MM/yyyy' }}</td>
-            <td>
-              <div class="badge font-size-10"
-              [ngClass]="{
-                    'bg-success-subtle text-success': item.situacao === 'CONCLUIDA',
-                    'bg-danger-subtle text-danger': item.situacao === 'EXPIRADO',
-                    'bg-warning-subtle text-warning':item.situacao === 'ATIVA'}">
-                    {{ situacao(item.situacao) }}
-              </div>
-            </td>
-            <td>{{ data(item.data_emissao)  }}</td>
-            <td>{{ item.user_login }}</td>
-            <td><i class="fas fa-file-alt" ngbTooltip="Títulos Negociado"></i></td>
+            <td colspan="8" class="text-center">Nenhum boleto cadastrado.</td>
           </tr>
         </tbody>
-        <ng-template #semBoletos>
-          <tbody>
-            <tr>
-              <td colspan="8" class="text-center">Nenhum boleto cadastrado.</td>
-            </tr>
-          </tbody>
-        </ng-template>
-      </table>
-    </div>
+      </ng-template>
+    </table>
+  </div>
+</div>
+
 
 
 

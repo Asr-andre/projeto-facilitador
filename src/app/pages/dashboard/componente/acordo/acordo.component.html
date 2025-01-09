@@ -2,73 +2,75 @@
   <div class="spinner-border text-primary m-1" role="status">
   </div>
 </div>
-
-<div class="table-responsive" >
-  <div>
-  <div class="table-responsive" style="margin-top: 10px; max-height: 400px; overflow-y: auto;">
-    <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
-      <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">id</th>
-          <th scope="col">Valor do acordo</th>
-          <th scope="col">Data do acordo</th>
-          <th scope="col">Qtde parc orig</th>
-          <th scope="col">Qtde parc acordo</th>
-          <th scope="col">Valor entrada</th>
-          <th scope="col">Valor parcela</th>
-          <th scope="col">Vencimento primaira parcela</th>
-          <th scope="col">% Pagamento</th>
-          <th scope="col">Status</th>
-          <th scope="col">Ações</th>
-        </tr>
-      </thead>
-      <tbody *ngIf="acordos.length > 0; else semAcordos">
-        <tr *ngFor="let acordo of acordos">
-          <td><input
-            type="checkbox"
-            (change)="toggleSelecao(acordo.id_acordo, $event.target.checked)"
-          /></td>
-          <td> {{ acordo.id_acordo }} </td>
-          <td> {{ acordo.valor_acordo | currency:'BRL' }} </td>
-          <td> {{ data(acordo.data_acordo) }} </td>
-          <td> {{ acordo.qtde_parcelas_originais }} </td>
-          <td> {{ acordo.qtde_parcelas }} </td>
-          <td> {{ acordo.valor_entrada | currency:'BRL' }} </td>
-          <td> {{ acordo.valor_parcela | currency:'BRL' }} </td>
-          <td> {{ dataBrasil(acordo.venc_primeira_parcela) }} </td>
-          <td> <ngb-progressbar [value]="acordo.percem_pago" showValue="true"></ngb-progressbar> </td>
-          <td>
-            <div class="badge font-size-10"
-            [ngClass]="{
-                  'bg-success-subtle text-success': acordo.status === 'A',
-                  'bg-danger-subtle text-danger': acordo.status === 'C'}">
-                  {{ status(acordo.status) }}
-            </div>
-          </td>
-          <td>
-            <div class="dropup float-end" ngbDropdown>
-              <a href="javascript: void(0);" class="dropdown-toggle arrow-none card-drop" ngbDropdownToggle data-toggle="dropdown" aria-expanded="false">
-                <i class="mdi mdi-dots-vertical"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
-                <a href="javascript:void(0);" class="dropdown-item" (click)="gerarConfissaoDivida()"><i class="fas fa-file-pdf"></i> Confissão Divida</a>
-                <a href="javascript:void(0);" class="dropdown-item" *ngIf="acordo.percem_pago == 0 && acordo.status !== 'C'" (click)="quebraAcordo(acordo)"><i class="fas fa-file-excel"></i> Quebra Acordo</a>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-      <ng-template #semAcordos>
-        <tbody>
+<div class="card-body" style="padding: 2px 0;">
+  <div class="table-responsive" >
+    <div>
+    <div class="table-responsive" style="margin-top: 10px; max-height: 450px; overflow-y: auto;">
+      <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+        <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
           <tr>
-            <td colspan="12" class="text-center">Nenhum acordo cadastrado.</td>
+            <th scope="col">#</th>
+            <th scope="col">id</th>
+            <th scope="col">Valor do acordo</th>
+            <th scope="col">Data do acordo</th>
+            <th scope="col">Qtde parc orig</th>
+            <th scope="col">Qtde parc acordo</th>
+            <th scope="col">Valor entrada</th>
+            <th scope="col">Valor parcela</th>
+            <th scope="col">Vencimento primaira parcela</th>
+            <th scope="col">% Pagamento</th>
+            <th scope="col">Status</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="acordos.length > 0; else semAcordos">
+          <tr *ngFor="let acordo of acordos">
+            <td><input
+              type="checkbox"
+              (change)="toggleSelecao(acordo.id_acordo, $event.target.checked)"
+            /></td>
+            <td> {{ acordo.id_acordo }} </td>
+            <td> {{ acordo.valor_acordo | currency:'BRL' }} </td>
+            <td> {{ data(acordo.data_acordo) }} </td>
+            <td> {{ acordo.qtde_parcelas_originais }} </td>
+            <td> {{ acordo.qtde_parcelas }} </td>
+            <td> {{ acordo.valor_entrada | currency:'BRL' }} </td>
+            <td> {{ acordo.valor_parcela | currency:'BRL' }} </td>
+            <td> {{ dataBrasil(acordo.venc_primeira_parcela) }} </td>
+            <td> <ngb-progressbar [value]="acordo.percem_pago" showValue="true"></ngb-progressbar> </td>
+            <td>
+              <div class="badge font-size-10"
+              [ngClass]="{
+                    'bg-success-subtle text-success': acordo.status === 'A',
+                    'bg-danger-subtle text-danger': acordo.status === 'C'}">
+                    {{ status(acordo.status) }}
+              </div>
+            </td>
+            <td>
+              <div class="dropup float-end" ngbDropdown>
+                <a href="javascript: void(0);" class="dropdown-toggle arrow-none card-drop" ngbDropdownToggle data-toggle="dropdown" aria-expanded="false">
+                  <i class="mdi mdi-dots-vertical"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                  <a href="javascript:void(0);" class="dropdown-item" (click)="gerarConfissaoDivida()"><i class="fas fa-file-pdf"></i> Confissão Divida</a>
+                  <a href="javascript:void(0);" class="dropdown-item" *ngIf="acordo.percem_pago == 0 && acordo.status !== 'C'" (click)="quebraAcordo(acordo)"><i class="fas fa-file-excel"></i> Quebra Acordo</a>
+                </div>
+              </div>
+            </td>
           </tr>
         </tbody>
-      </ng-template>
-    </table>
+        <ng-template #semAcordos>
+          <tbody>
+            <tr>
+              <td colspan="12" class="text-center">Nenhum acordo cadastrado.</td>
+            </tr>
+          </tbody>
+        </ng-template>
+      </table>
+    </div>
   </div>
-</div>
+  </div>
+
 </div>
 
 
