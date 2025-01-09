@@ -110,16 +110,19 @@ export class EnvioEmailComponent implements OnInit {
 
     // Obtendo a mensagem original
     let mensagemOriginal = this.formularioEnvioEmail.get('mensagem')?.value || '';
+    const primeiroNome = dadosCliente.nome ? dadosCliente.nome.split(' ')[0] : '';
 
     // Substituindo as variáveis na mensagem
     mensagemOriginal = mensagemOriginal
       .replace(/@clientes_nome/g, dadosCliente.nome || '')
-      .replace(/@clientes_cpf/g, dadosCliente.cpf || '')
-      .replace(/@clientes_endereco/g, dadosCliente.endereco || '')
-      .replace(/@contratante_fantasia/g, dadosCliente.credor || '');
+      .replace(/@clientes_cpf/g, dadosCliente.cnpj_cpf || '')
+      .replace(/@contratante_fantasia/g, dadosCliente.fantasia || '')
+      .replace(/@contratante_razao_social/g, dadosCliente.razao_social || '')
+      .replace(/@cliente_primeiro_nome/g, primeiroNome  || '');
 
     // Atualizando o campo de mensagem no formulário
     this.formularioEnvioEmail.get('mensagem')?.setValue(mensagemOriginal);
+    console.log(primeiroNome);
   }
 
   public abrirModalEmail(email: string, idCliente: number | undefined, idContratante: number | undefined): void {

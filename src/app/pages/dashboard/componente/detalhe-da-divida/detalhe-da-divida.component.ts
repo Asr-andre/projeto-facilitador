@@ -126,15 +126,6 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
             });
           }
           this.loading = false;
-
-          const clienteData = {
-            nome: detalhamento.nome,
-            cpf: detalhamento.cpf,
-            bairro: detalhamento.bairro,
-            credor: detalhamento.credor,
-            endereco: detalhamento.endereco
-          };
-          localStorage.setItem('dadosCliente', JSON.stringify(clienteData));
         }
       },
       (error) => {

@@ -165,6 +165,14 @@ export class DashboardComponent implements OnInit {
 
   public selecionarDevedor(devedor: DevedorModel): void {
     this.devedorSelecionado = devedor;
+    const clienteData = {
+      nome: this.devedorSelecionado.nome,
+      cnpj_cpf: this.devedorSelecionado.cnpj_cpf,
+      fantasia: this.devedorSelecionado.fantasia,
+      razao_social: this.devedorSelecionado.razao_social
+    };
+
+    localStorage.setItem('dadosCliente', JSON.stringify(clienteData));
   }
 
   public atualizarQuantidadeExibida() {

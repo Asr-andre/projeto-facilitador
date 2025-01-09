@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import {
+  NgbCollapseModule,
   NgbDatepickerModule,
   NgbModule,
   NgbTooltipModule,
@@ -78,6 +79,7 @@ import { QuillModule } from "ngx-quill";
     TitulosModule,
     NgbTooltipModule,
     QuillModule.forRoot(),
+    NgbCollapseModule
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

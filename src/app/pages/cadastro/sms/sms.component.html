@@ -183,7 +183,7 @@
 
         <div class="col-md-12 form-group">
           <label class="form-label">Variáveis disponíveis</label>
-          <div [ngClass]="editar ? 'alert alert-info' : 'alert alert-success'" role="alert">
+          <div [ngClass]="editar ? 'alert alert-info' : 'alert alert-success'" style="padding-top: 5px; padding-bottom: 5px;">
             <div class="row">
               <div class="col-md-6">
                 <p class="variable-item" (click)="inserirVariavel(dado.nome)" style="cursor: pointer;"
@@ -198,7 +198,8 @@
               </div>
               <div class="col-md-6">
                 <p class="variable-item" (click)="inserirVariavel(dado.endereco)" style="cursor: pointer;"
-                  ngbTooltip="Endereço do cliente"><strong>{{ dado.endereco }}</strong>
+                  ngbTooltip="Esta variável representa o endereço do cliente. Importante: ela é usada apenas para envio em massa, não funcionará em envios unitários.">
+                  <strong>{{ dado.endereco }}</strong>
                 </p>
                 <p class="variable-item" (click)="inserirVariavel(dado.fantasia)" style="cursor: pointer;"
                   ngbTooltip="Nome fantasia"><strong>{{ dado.fantasia }}</strong>

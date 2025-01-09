@@ -20,6 +20,7 @@ export class DevedorModel {
   nome: string;
   id_contratante: number;
   fantasia: string;
+  razao_social: string;
   soma_titulos_nao_pagos: number | null;
   data_acionamento: string;
   descricao_acao: string;

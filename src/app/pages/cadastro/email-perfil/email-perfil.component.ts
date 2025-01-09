@@ -25,6 +25,7 @@ export class EmailPerfilComponent implements OnInit {
   public editar: boolean = false;
   public formEmailPerfil: FormGroup;
   public dado: typeof variavel;
+  public isCollapsed = true;
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
