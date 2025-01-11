@@ -69,11 +69,15 @@ export class WhatsappComponent implements OnInit {
       user_login: this.login
     }
 
+    this.loadingMin = true;
     this._smsWhatsAppService.obterMsg(dados).subscribe((res) => {
+      this.loadingMin = false;
       if (res.success === "true") {
+        this.loadingMin = false;
         this.msg = res.perfil_whatsapp;
       } else {
-        this._alertService.error(res.msg);
+        this.loadingMin = false;
+        this._alertService.warning(res.msg);
       }
     });
   }
@@ -153,5 +157,4 @@ export class WhatsappComponent implements OnInit {
       }
     }
   }
-
 }
