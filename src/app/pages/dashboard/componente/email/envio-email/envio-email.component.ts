@@ -122,7 +122,6 @@ export class EnvioEmailComponent implements OnInit {
 
     // Atualizando o campo de mensagem no formulário
     this.formularioEnvioEmail.get('mensagem')?.setValue(mensagemOriginal);
-    console.log(primeiroNome);
   }
 
   public abrirModalEmail(email: string, idCliente: number | undefined, idContratante: number | undefined): void {
