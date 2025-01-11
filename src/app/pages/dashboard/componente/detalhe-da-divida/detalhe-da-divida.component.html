@@ -69,6 +69,7 @@
         <th>Valor</th>
         <th>Juros</th>
         <th>Multa</th>
+        <th>Indice</th>
         <th>Taxa</th>
         <th>Total</th>
       </tr>
@@ -87,6 +88,7 @@
         <td>{{ prestacao.valor | currency:'BRL' }}</td>
         <td>{{ prestacao.valor_juros | currency:'BRL' }}</td>
         <td>{{ prestacao.valor_multa | currency:'BRL' }}</td>
+        <td>{{ prestacao.valor_indice | currency:'BRL' }}</td>
         <td>{{ prestacao.valor_taxa | currency:'BRL' }}</td>
         <td>{{ prestacao.saldo_devedor | currency:'BRL' }}</td>
         <!-- <td>{{ calcularTotalAtualizado(prestacao) | currency:'BRL' }}</td> -->
@@ -96,6 +98,7 @@
         <td><strong>{{ calcularTotal('valor') | currency:'BRL' }}</strong></td>
         <td><strong>{{ calcularTotal('valor_juros') | currency:'BRL' }}</strong></td>
         <td><strong>{{ calcularTotal('valor_multa') | currency:'BRL' }}</strong></td>
+        <td><strong>{{ calcularTotal('valor_indice') | currency:'BRL' }}</strong></td>
         <td><strong>{{ calcularTotal('valor_taxa') | currency:'BRL' }}</strong></td>
         <td><strong>{{ calcularTotal('saldo_devedor') | currency:'BRL' }}</strong></td>
         <!-- <td><strong>{{ calcularTotal('valorTotalAtualizado') | currency:'BRL' }}</strong></td> -->

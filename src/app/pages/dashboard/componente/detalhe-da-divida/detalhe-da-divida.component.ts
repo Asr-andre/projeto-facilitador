@@ -1,3 +1,4 @@
+import { Indice } from './../../../../core/models/cadastro/indice.model';
 import { Validators } from '@angular/forms';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { DetalhamentoModel } from 'src/app/core/models/detalhamento.model';
@@ -150,10 +151,12 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
           return total + this.calcularTotalAtualizado(prestacao);
         }
         return total + (prestacao[coluna] || 0);
+
       }, 0);
     }
     return 0;
   }
+
   public calcularQuantidadeTitulos(): number {
     return this.titulosFiltrados ? this.titulosFiltrados.length : 0;
   }
@@ -162,6 +165,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     return (prestacao.valor || 0) +
       (prestacao.valor_juros || 0) +
       (prestacao.valor_multa || 0) +
+      (prestacao.valor_indice || 0) +
       (prestacao.valor_taxa || 0);
   }
 
@@ -256,6 +260,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
         id_titulo: titulo.id_titulo,
         valor: titulo.valor,
         valor_multa: titulo.valor_multa = 0,
+        valor_indice: titulo.valor_indice = 0,
         valor_juros: titulo.valor_juros = 0,
         valor_taxa: titulo.valor_taxa = 0,
         valor_atualizado: titulo.valor

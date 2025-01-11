@@ -9,6 +9,7 @@ export class Prestacao {
   public valor: number;
   public valor_juros: number | null;
   public valor_multa: number | null;
+  public valor_indice: number | null;
   public valor_taxa: number | null;
   public saldo_devedor: number;
   public selecionado?: boolean;

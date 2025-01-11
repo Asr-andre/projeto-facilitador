@@ -33,8 +33,8 @@
             </div>
             <div class="col-md-2" style="font-size: 12px;">
               <small>Indice {{ (originalIndice / 100) | percent:'1.0-0' }}</small>
-              <input type="number" class="form-control form-control-sm" formControlName="desc_indice" min="0"
-              [max]="originalIndice" (input)="validarDesconto($event, 'desc_indice')">
+              <input type="number" class="form-control form-control-sm" formControlName="desconto_indice" min="0"
+              [max]="originalIndice" (input)="validarDesconto($event, 'desconto_indice')">
             </div>
             <div class="col-md-2" style="font-size: 12px;">
               <small>Taxa: {{ (originalTaxa / 100) | percent:'1.0-0' }}</small>

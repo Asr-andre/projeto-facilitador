@@ -94,7 +94,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       desconto_principal: ["0", Validators.min(0)],
       desconto_multa: ["0", Validators.min(0)],
       desconto_juros: ["0", Validators.min(0)],
-      desc_indice: ["0", Validators.min(0)],
+      desconto_indice: ["0", Validators.min(0)],
       desconto_taxa: ["0", Validators.min(0)],
       data_atualizacao: [""],
       titulos: [""],
@@ -141,6 +141,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
         data_vencimento: [this.datePipe.transform(titulo.vencimento, 'dd/MM/yyyy')!, Validators.required],
         valor: [titulo.valor.toFixed(2), Validators.required],
         valor_multa: [titulo.valor_multa.toFixed(2), Validators.required],
+        valor_indice: [titulo.valor_indice.toFixed(2), Validators.required],
         valor_juros: [titulo.valor_juros.toFixed(2), Validators.required],
         valor_taxa: [titulo.valor_taxa.toFixed(2), Validators.required],
         valor_atualizado: [titulo.valor_atualizado.toFixed(2), Validators.required],
@@ -158,7 +159,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     this.formSimulador();
     this.originalPrincipal = data.desconto_principal;
     this.originalMulta = data.desconto_multa;
-    this.originalMulta = data.valor_indice;
+    this.originalIndice = data.desconto_indice;
     this.originalJuros = data.desconto_juros;
     this.originalTaxa = data.desconto_taxa;
 
