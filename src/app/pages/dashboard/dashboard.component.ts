@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
   public formFila: FormGroup;
 
   public paginaAtual: number = 1;
-  public itensPorPagina: number = 15;
+  public itensPorPagina: number = 14;
   public dadosFiltrados: DevedorModel[] = [];
   public textoPesquisa: string = "";
   public totalRegistros: number = 0;
