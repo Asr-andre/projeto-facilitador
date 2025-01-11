@@ -1,4 +1,4 @@
-<div class="loading-overlay-pagina" *ngIf="loading">
+<div class="loading-overlay-card" *ngIf="loadingMin">
   <div class="spinner-border text-primary m-1" role="status">
   </div>
 </div>
@@ -8,8 +8,18 @@
 </div>
 
 <div class="row pt-1 brder">
-  <div class="col-md-4"><b>Nome:</b> {{ detalhamentoSelecionado?.nome }}</div>
-  <div class="col-md-4"><b>CPF:</b> {{ formatarCPF(detalhamentoSelecionado?.cpf) }}</div>
+  <div class="col-md-4"><b>Nome:</b>
+    <span style="cursor: pointer" [ngbTooltip]="'Clique para copiar o nome'" placement="top" container="body"
+      (click)="copiarParaAreasTransferencia(detalhamentoSelecionado?.nome)">
+      {{ detalhamentoSelecionado?.nome }}
+    </span>
+  </div>
+  <div class="col-md-4"><b>CPF:</b>
+    <span style="cursor: pointer" [ngbTooltip]="'Clique para copiar o CPF'" placement="top" container="body"
+      (click)="copiarParaAreasTransferencia(detalhamentoSelecionado?.cpf)">
+      {{ formatarCPF(detalhamentoSelecionado?.cpf) }}
+    </span>
+  </div>
   <div class="col-md-4"><b>RG:</b> {{ formatarCPF(detalhamentoSelecionado?.rg) }}</div>
 </div>
 <div class="row pt-1 brder">

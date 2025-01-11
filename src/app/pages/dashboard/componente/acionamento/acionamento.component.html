@@ -1,4 +1,9 @@
 <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+  <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
+
   <h6 style="font-family: 'helvetica'; margin: 0;">Acionamentos</h6>
   <button class="btn btn-success mb-1 btn-sm" style="text-align: right;" (click)="abriracaoDeCobrancaModal(acaoDeCobrancaModal)">
     <i class="fas fa-plus"></i><strong> Incluir Acionamento</strong>
@@ -56,6 +61,12 @@
     </h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
   </div>
+
+  <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
+
   <div class="modal-body modal-padding">
     <form [formGroup]="formAcionamento">
       <div class="row">

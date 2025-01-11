@@ -75,11 +75,11 @@
                 <div class="input-group">
                   <select id="contratanteSelect" class="form-control form-control-sm" formControlName="id_fila"
                     (focus)="obterFilas()">
-                    <option value="0">Selecione a Fila</option>
+                    <option value="0">Selecione</option>
                     <option *ngFor="let fila of filas" [value]="fila.id_fila">{{ fila.descricao }}</option>
                   </select>
                   <button class="btn btn-secondary btn-sm" (click)="filaCliente()"
-                    [disabled]="formFila.get('id_fila')?.value <= 0" ngbTooltip="Carregar Fila">
+                    [disabled]="formFila.get('id_fila')?.value <= 0">
                     <i class="fas fa-check-circle"></i>
                   </button>
                 </div>
@@ -89,9 +89,9 @@
             <!-- Tipo de Pesquisa -->
             <div class="col-md-3">
               <select class="form-control form-control-sm" [(ngModel)]="tipoPesquisa">
-                <option value="nome">Selecione</option>
+                <option value="nome">Pesquisar por</option>
                 <option value="nome">Nome</option>
-                <option value="cpf">CPF</option>
+                <option value="cpf">Cpf</option>
               </select>
             </div>
 
@@ -128,12 +128,7 @@
                   (click)="selecionarDevedor(devedor)">
                   <td>{{ devedor.fantasia }}</td>
                   <td>{{ devedor.id_cliente }}</td>
-                  <td>
-                    <span style="cursor: pointer" [ngbTooltip]="'Clique para copiar o CPF'" placement="top"
-                      container="body" (click)="copiarParaAreasTransferencia(devedor.cnpj_cpf)">
-                      {{ mascararCpfCnpj(devedor.cnpj_cpf) }}
-                    </span>
-                  </td>
+                  <td> {{ mascararCpfCnpj(devedor.cnpj_cpf) }}</td>
                   <td>{{ devedor.nome}}</td>
                   <td>{{ devedor.soma_titulos_nao_pagos | currency:'BRL' }}</td>
                 </tr>

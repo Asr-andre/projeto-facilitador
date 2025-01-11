@@ -29,6 +29,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   public formAcionamento: FormGroup;
   public conteudoCompleto: string = "";
   public textoVisivel: string = ''; // Armazena o texto atualmente visível
+  public loadingMin: boolean = false;
 
 
   private updateSubject: Subject<void> = new Subject<void>();
@@ -42,7 +43,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     private _formBuilder: FormBuilder,
     private _datePipe: DatePipe
   ) {
-    this.updateSubject.pipe(debounceTime(300)).subscribe(() => this.listarAcionamentos());
+    this.updateSubject.pipe(debounceTime(900)).subscribe(() => this.listarAcionamentos());
   }
 
   ngOnInit(): void {
@@ -90,14 +91,19 @@ export class AcionamentoComponent implements OnChanges, OnInit {
         id_cliente: this.idCliente,
       };
 
+      this.loadingMin = true;
       this._acionamentoService.listarAcionamentos(requisicao).subscribe((res) => {
+        this.loadingMin = false;
         if (res.success) {
+          this.loadingMin = false;
           this.acionamentos = res.acionamentos;
         } else {
+          this.loadingMin = false;
           this._alertService.error(res.msg);
         }
       },
         (error) => {
+          this.loadingMin = false;
           this._alertService.error("Erro ao listar acionamentos");
         }
       );
@@ -112,14 +118,19 @@ export class AcionamentoComponent implements OnChanges, OnInit {
         id_empresa: this.idEmpresa,
       };
 
+      this.loadingMin = true;
       this._acaoCobrancaService.listarAcoesCobranca(requisicao).subscribe((res) => {
+        this.loadingMin = false;
         if (res.success) {
+          this.loadingMin = false;
           this.acoesCobranca = res.contratantes;
         } else {
+          this.loadingMin = false;
           this._alertService.error(res.msg);
         }
       },
         (error) => {
+          this.loadingMin = false;
           this._alertService.error("Erro ao listar ações de cobrança");
         }
       );

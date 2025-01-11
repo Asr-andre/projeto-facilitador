@@ -58,16 +58,17 @@
 </div>
 
 <ng-template #modalGenerico let-modal>
-  <div class="loading-overlay-card" *ngIf="loadingMin">
-    <div class="spinner-border text-primary m-1" role="status">
-    </div>
-  </div>
-
   <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
     <h6 class="modal-title" style="color: #ffffff"><i class="fab fa-whatsapp"></i>  {{ editar ? 'Editar Endereço' : 'Cadastrar Endereço' }} </h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
       (click)="fechar()"></button>
   </div>
+
+  <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
+
   <div class="modal-body modal-padding">
     <form [formGroup]="formEndereco">
       <div class="row">

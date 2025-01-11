@@ -21,3 +21,51 @@
 .alert-info {
   padding: 5px; /* Ajusta o padding da caixa de alerta */
 }
+
+::ng-deep quill-editor {
+  .ql-toolbar.ql-snow,
+  .ql-container.ql-snow {
+    border-color: #e2e8f0; /* Substitua $gray-200 por um valor hexadecimal */
+    background: #f7fafc; /* Substitua $gray-100 por um valor hexadecimal */
+  }
+
+  .ql-container {
+    min-height: 120px;
+  }
+
+  .ql-toolbar.ql-snow {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .ql-toolbar.ql-snow {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+  }
+
+  .ql-container.ql-snow {
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+  }
+
+  &.rounded {
+    .ql-toolbar.ql-snow {
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
+
+    .ql-container.ql-snow {
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+  }
+}
+
+.custom-quill-editor {
+  width: 100%; /* Ocupa 100% da largura do pai */
+  height: 200px; /* Ajuste o valor conforme a necessidade */
+}
+
+.form-control-sm {
+  background-color: #f7fafc;
+}

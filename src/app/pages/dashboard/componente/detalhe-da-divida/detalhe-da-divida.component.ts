@@ -119,10 +119,10 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     };
 
 
-    this.loading = true;
+    this.loadingMin = true;
     this._dashboard.obterDevedorPorId(requisicao).subscribe(
       (detalhamento) => {
-        this.loading = false;
+        this.loadingMin = false;
         if (detalhamento && detalhamento.success) {
           this.detalhamentoSelecionado = detalhamento;
           this.titulosFiltrados = this.detalhamentoSelecionado?.parcelas || [];
@@ -133,12 +133,12 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
               this.loading = false;
             });
           }
-          this.loading = false;
+          this.loadingMin = false;
         }
       },
       (error) => {
         this._alertService.error('Não foi possível pesquisar o cliente!');
-        this.loading = false;
+        this.loadingMin = false;
       }
     );
   }
@@ -361,6 +361,11 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     if (valor <= 0) {
       this.formTitulo.get(campo)?.setValue(0);
     }
+  }
+
+  public copiarParaAreasTransferencia(valor) {
+    Utils.CopyAreaTransfer(valor);
+    this._alertService.copiado();
   }
 
   public fechar() {
