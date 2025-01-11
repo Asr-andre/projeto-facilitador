@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DevedorModel, RequisicaoDevedorModel, RespostaDevedorModel } from '../models/devedor.model';
-import { DetalhamentoModel } from '../models/detalhamento.model';
+import { DetalhamentoModel, RequisicaoDetalhamentoModel } from '../models/detalhamento.model';
 import { AppConfig } from './url.base.service';
 import { AuthenticationService } from './auth.service';
 import { RequisicaoCardsModel, RespostaCardsModel } from '../models/cards.dashboard.model';
@@ -23,10 +23,8 @@ export class DashboardService {
     return this._http.post<RespostaDevedorModel>(`${this.apiUrl}/listarcliente`, dados);
   }
 
-  public obterDevedorPorId(id_cliente: number, id_contratante: number): Observable<DetalhamentoModel> {
-    const idEmpresa = parseInt(this._authService.getIdEmpresa(), 10);
-    const requestBody = { id_empresa: idEmpresa, id_cliente, id_contratante };
-    return this._http.post<DetalhamentoModel>(`${this.apiUrl}/tituloscliente`, requestBody);
+  public obterDevedorPorId(dados: RequisicaoDetalhamentoModel): Observable<DetalhamentoModel> {
+    return this._http.post<DetalhamentoModel>(`${this.apiUrl}/tituloscliente`, dados);
   }
 
   public obterCards(empresa: RequisicaoCardsModel): Observable<RespostaCardsModel> {

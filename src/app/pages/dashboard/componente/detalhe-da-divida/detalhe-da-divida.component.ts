@@ -112,8 +112,15 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
       return;
     }
 
+    const requisicao = {
+      id_cliente: id_cliente,
+      id_empresa: this.idEmpresa,
+      id_contratante: id_contratante,
+    };
+
+
     this.loading = true;
-    this._dashboard.obterDevedorPorId(id_cliente, id_contratante).subscribe(
+    this._dashboard.obterDevedorPorId(requisicao).subscribe(
       (detalhamento) => {
         this.loading = false;
         if (detalhamento && detalhamento.success) {

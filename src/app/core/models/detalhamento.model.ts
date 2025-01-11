@@ -32,3 +32,9 @@ export class DetalhamentoModel {
   public email: string;
   public parcelas: Prestacao[];
 }
+
+export class RequisicaoDetalhamentoModel {
+  id_cliente: number;
+  id_contratante: number;
+  id_empresa: number
+}

@@ -29,6 +29,22 @@
     font-size: 11px !important;
 }
 
+/* Aplica estilos diretamente ao pagination-controls */
+::ng-deep pagination-controls {
+  margin-bottom: 0px !important;
+}
+
+/* Verifica estilos internos relacionados a ngx-pagination */
+::ng-deep .ngx-pagination {
+  margin-bottom: 0px !important;
+}
+
+/* Aplica estilo global caso o encapsulamento seja o problema */
+pagination-controls {
+  margin-bottom: 0px !important;
+}
+
+
 .text-small {
   font-size: 11px;
 }
