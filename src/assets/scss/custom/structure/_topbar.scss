@@ -1,6 +1,6 @@
-// 
+//
 // _header.scss
-// 
+//
 
 #page-topbar {
     position: fixed;
@@ -142,11 +142,11 @@
         position: absolute;
         display: inline-block;
         height: 6px;
-        width: 6px;    
+        width: 6px;
         background-color: $danger;
         border-radius: 50%;
         top: 20px;
-        right: 14px;   
+        right: 14px;
     }
 }
 
@@ -197,7 +197,7 @@
 }
 
 body[data-topbar="dark"] {
-    #page-topbar { 
+    #page-topbar {
         background-color: var(--#{$prefix}header-dark-bg);
     }
     .navbar-header {
@@ -214,7 +214,7 @@ body[data-topbar="dark"] {
 
     .header-item {
         color: var(--#{$prefix}header-dark-item-color);
-    
+
         &:hover {
             color: var(--#{$prefix}header-dark-item-color);
         }
@@ -223,7 +223,7 @@ body[data-topbar="dark"] {
     .header-profile-user {
         background-color: rgba($white, 0.25);
     }
-    
+
     .noti-icon {
         i {
             color: var(--#{$prefix}header-dark-item-color);
@@ -239,7 +239,7 @@ body[data-topbar="dark"] {
     }
 
     .app-search {
-    
+
         .form-control {
             background-color: var(--#{$prefix}topbar-search-bg);
             color: $white;
@@ -292,21 +292,21 @@ body[data-layout="horizontal"] {
     .page-content {
         margin-top: $header-height;
         padding: calc(55px + #{$grid-gutter-width}) calc(#{$grid-gutter-width} / 2) $footer-height calc(#{$grid-gutter-width} / 2);
-    }    
+    }
 }
 
-@media (max-width: 992px) { 
+@media (max-width: 992px) {
     body[data-layout="horizontal"] {
         .page-content {
             margin-top: 15px;
-        }    
+        }
     }
 }
 
 
 
 body[data-topbar="colored"] {
-    #page-topbar { 
+    #page-topbar {
         background-color:var(--#{$prefix}header-colored-bg);
     }
     .navbar-header {
@@ -323,7 +323,7 @@ body[data-topbar="colored"] {
 
     .header-item {
         color: var(--#{$prefix}header-dark-item-color);
-    
+
         &:hover {
             color: var(--#{$prefix}header-dark-item-color);
         }
@@ -332,7 +332,7 @@ body[data-topbar="colored"] {
     .header-profile-user {
         background-color: rgba($white, 0.25);
     }
-    
+
     .noti-icon {
         i {
             color: var(--#{$prefix}header-dark-item-color);
@@ -348,7 +348,7 @@ body[data-topbar="colored"] {
     }
 
     .app-search {
-    
+
         .form-control {
             background-color: var(--#{$prefix}topbar-search-bg);
             color: $white;
