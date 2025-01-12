@@ -1,106 +1,130 @@
-<div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
-  <div class="loading-overlay-card" *ngIf="loadingMin">
-    <div class="spinner-border text-primary m-1" role="status">
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12" style="padding-right: 5px; padding-left: 5px;">
+      <div class="card-body"  style="padding-top: 20px;">
+        <div class="d-flex">
+          <div class="flex-1 overflow-hidden">
+            <div class="card">
+              <div class="card-header pt-2 pb-2">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5 class="mb-0"><i class="fas fa-bell acionamento-icon"></i> Acionamentos </h5>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 4px; padding-right: 5px !important;"
+                    (click)="abriracaoDeCobrancaModal(acaoDeCobrancaModal)">
+                      <i class="fas fa-plus"></i>
+                      Incluir Acionamento
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-body" style="padding: 5px;">
+                <div class="loading-overlay-card" *ngIf="loadingMin">
+                  <div class="spinner-border text-primary m-1" role="status">
+                  </div>
+                </div>
+
+                <div class="table-responsive font-size-12" style="margin-top: 10px; max-height: 300px; white-space: nowrap; overflow: auto; padding-left: 4px;padding-right: 4px;">
+                  <table class="table table-sm table-hover">
+                    <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
+                      <tr>
+                        <th>Id</th>
+                        <th>Descrição</th>
+                        <th>Data</th>
+                        <th>Mensagem</th>
+                        <th>Fone</th>
+                        <th>Proximo Acionamento</th>
+                        <th>Titulo</th>
+                        <th>Usúario</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="acionamentos.length > 0; else semAcionamentos">
+                      <tr *ngFor="let acionamento of acionamentos">
+                        <td>{{ acionamento.id_acionamento }}</td>
+                        <td>{{ acionamento.descricao }}</td>
+                        <td>{{ data(acionamento.data_acio) }}</td>
+                        <td>
+                          <span style="cursor: pointer"
+                            [ngbTooltip]="acionamento.mensagem"
+                            placement="top"
+                            container="body"
+                            (click)="copiarParaAreasTransferencia(acionamento.mensagem)"
+                          >
+                            {{ mostraConteudoTruncado(acionamento.mensagem, 40) }}
+                          </span>
+                        </td>
+                        <td>{{ acionamento.fone }}</td>
+                        <td>{{ data(acionamento.data_prox_acio) }}</td>
+                        <td>{{ acionamento.titulo }}</td>
+                        <td>{{ acionamento.usuario }}</td>
+                      </tr>
+                    </tbody>
+                    <ng-template #semAcionamentos>
+                      <tbody>
+                        <tr>
+                          <td colspan="8" class="text-center">Nenhum acionamento cadastrado.</td>
+                        </tr>
+                      </tbody>
+                    </ng-template>
+                  </table>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <h6 style="font-family: 'helvetica'; margin: 0;">Acionamentos</h6>
-  <button class="btn btn-success mb-1 btn-sm" style="text-align: right;" (click)="abriracaoDeCobrancaModal(acaoDeCobrancaModal)">
-    <i class="fas fa-plus"></i><strong> Incluir Acionamento</strong>
-  </button>
-</div>
-<hr style="margin-top: 0px; margin-bottom: 0px;">
-<div class="table-responsive font-size-12" style="margin-top: 10px; max-height: 300px; white-space: nowrap; overflow: auto; padding-left: 10px;padding-right: 2px;">
-    <table class="table table-sm table-hover">
-      <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
-        <tr>
-          <th>Id</th>
-          <th>Descrição</th>
-          <th>Data</th>
-          <th>Mensagem</th>
-          <th>Fone</th>
-          <th>Proximo Acionamento</th>
-          <th>Titulo</th>
-          <th>Usúario</th>
-        </tr>
-      </thead>
-      <tbody *ngIf="acionamentos.length > 0; else semAcionamentos">
-        <tr *ngFor="let acionamento of acionamentos">
-          <td>{{ acionamento.id_acionamento }}</td>
-          <td>{{ acionamento.descricao }}</td>
-          <td>{{ data(acionamento.data_acio) }}</td>
-          <td>
-            <span style="cursor: pointer"
-              [ngbTooltip]="acionamento.mensagem"
-              placement="top"
-              container="body"
-              (click)="copiarParaAreasTransferencia(acionamento.mensagem)"
-            >
-              {{ mostraConteudoTruncado(acionamento.mensagem, 40) }}
+  <ng-template #acaoDeCobrancaModal let-modal>
+    <div class="modal-header modal-header-custom" style="background: #3e4988; margin: 0">
+      <h6 class="modal-title" style="color: #ffffff">
+        <i class="fas fa-bell acionamento-icon"></i> Incluir acionamento
+      </h6>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
+    </div>
+
+    <div class="loading-overlay-card" *ngIf="loadingMin">
+      <div class="spinner-border text-primary m-1" role="status">
+      </div>
+    </div>
+
+    <div class="modal-body modal-padding">
+      <form [formGroup]="formAcionamento">
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label for="id_acao" class="form-label">Selecione uma ação</label>
+            <select class="form-control form-control-sm mb-1" formControlName="id_acao"
+            [ngClass]="{'is-invalid': formAcionamento.get('id_acao').invalid && formAcionamento.get('id_acao').touched}">
+              <option *ngFor="let acao of acoesCobranca" [value]="acao.id_acao">{{ acao.descricao }}</option>
+            </select>
+
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label for="dataHora" class="form-label">Agendar para:</label>
+            <span style="font-size: 8px; color: green; text-align: justify;">
+              {{ formAcionamento.value.data_prox_acio }}
             </span>
-          </td>
-          <td>{{ acionamento.fone }}</td>
-          <td>{{ data(acionamento.data_prox_acio) }}</td>
-          <td>{{ acionamento.titulo }}</td>
-          <td>{{ acionamento.usuario }}</td>
-        </tr>
-      </tbody>
-      <ng-template #semAcionamentos>
-        <tbody>
-          <tr>
-            <td colspan="8" class="text-center">Nenhum acionamento cadastrado.</td>
-          </tr>
-        </tbody>
-      </ng-template>
-    </table>
-</div>
-<ng-template #acaoDeCobrancaModal let-modal>
-  <div class="modal-header modal-header-custom" style="background: #3e4988; margin: 0">
-    <h6 class="modal-title" style="color: #ffffff">
-      <i class="fas fa-bell acionamento-icon"></i> Incluir acionamento
-    </h6>
-    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
-  </div>
+            <input type="datetime-local" class="form-control form-control-sm mb-2" id="dataHora" formControlName="data_prox_acio" />
+          </div>
+          <div class="col-md-12 form-group">
+            <textarea class="form-control form-control-sm mb-2" formControlName="mensagem" placeholder="Digite sua mensagem" rows="5"
+            [ngClass]="{'is-invalid': formAcionamento.get('mensagem').invalid && formAcionamento.get('mensagem').touched}"></textarea>
+          </div>
+        </div>
 
-  <div class="loading-overlay-card" *ngIf="loadingMin">
-    <div class="spinner-border text-primary m-1" role="status">
+        <div class="d-flex justify-content-end align-items-center" style="margin-top: 5px;">
+          <button type="button" class="btn btn-success btn-sm me-1" (click)="enviarAcionamento()">
+            <i class="fas fa-save"></i> Salvar
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </div>
+      </form>
     </div>
-  </div>
-
-  <div class="modal-body modal-padding">
-    <form [formGroup]="formAcionamento">
-      <div class="row">
-        <div class="col-md-6 form-group">
-          <label for="id_acao" class="form-label">Selecione uma ação</label>
-          <select class="form-control form-control-sm mb-1" formControlName="id_acao"
-          [ngClass]="{'is-invalid': formAcionamento.get('id_acao').invalid && formAcionamento.get('id_acao').touched}">
-            <option *ngFor="let acao of acoesCobranca" [value]="acao.id_acao">{{ acao.descricao }}</option>
-          </select>
-
-        </div>
-
-        <div class="col-md-6 form-group">
-          <label for="dataHora" class="form-label">Agendar para:</label>
-          <span style="font-size: 8px; color: green; text-align: justify;">
-            {{ formAcionamento.value.data_prox_acio }}
-          </span>
-          <input type="datetime-local" class="form-control form-control-sm mb-2" id="dataHora" formControlName="data_prox_acio" />
-        </div>
-        <div class="col-md-12 form-group">
-          <textarea class="form-control form-control-sm mb-2" formControlName="mensagem" placeholder="Digite sua mensagem" rows="5"
-          [ngClass]="{'is-invalid': formAcionamento.get('mensagem').invalid && formAcionamento.get('mensagem').touched}"></textarea>
-        </div>
-      </div>
-
-      <div class="d-flex justify-content-end align-items-center" style="margin-top: 5px;">
-        <button type="button" class="btn btn-success btn-sm me-1" (click)="enviarAcionamento()">
-          <i class="fas fa-save"></i> Salvar
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
-          <i class="fas fa-times"></i> Cancelar
-        </button>
-      </div>
-    </form>
-  </div>
-</ng-template>
-
+  </ng-template>

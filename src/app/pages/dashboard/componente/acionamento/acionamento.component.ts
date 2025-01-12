@@ -171,17 +171,22 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       acionamento.data_prox_acio = '';
     }
 
+    this.loadingMin = true;
     this._acionamentoService.inserirAcionamento(acionamento).subscribe((res) => {
+      this.loadingMin = false;
       if (res.success) {
+        this.loadingMin = false;
         this._alertService.success(res.msg);
         this.listarAcionamentos();
         this.clienteAcionado.emit();
         this.fechar();
       } else {
+        this.loadingMin = false;
         this._alertService.error(res.msg);
       }
     },
       (error) => {
+        this.loadingMin = false;
         this._alertService.error("Erro ao inserir acionamento");
       }
     );
