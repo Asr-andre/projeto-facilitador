@@ -68,6 +68,13 @@ export class ImportacaoComponent implements OnInit {
       if (res.success === "true") {
         this.loading = false;
         this.importacoes = res.dados;
+         // Ordena a coluna data em ordem descendente
+         this.importacoes.sort((a, b) => {
+          if (a.id_remessa < b.id_remessa) return 1;
+          if (a.id_remessa > b.id_remessa) return -1;
+          return 0;
+        });
+
         this.filtrar();
         this.atualizarQuantidadeExibida();
       } else {

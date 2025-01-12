@@ -74,7 +74,7 @@ export class IndiceComponent implements OnInit {
         if (res.success === 'true') {
           this.indice = res.dados;
 
-           // Ordena a coluna data em ordem descendente
+          // Ordena a coluna data em ordem descendente
           this.indice.sort((a, b) => {
             if (a.data < b.data) return 1;
             if (a.data > b.data) return -1;
