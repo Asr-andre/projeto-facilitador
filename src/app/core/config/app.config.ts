@@ -1,3 +1,3 @@
 export const AppConfig = {
-  versao: '1.0.000001'
+  versao: '1.0.000002'
 };

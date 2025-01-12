@@ -1,0 +1,112 @@
+<div class="container-fluid">
+  <app-pagetitle title="Apex charts" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Filtrar Acionamentos</h4>
+          <div class="row">
+            <div class="col-md-2 form-group">
+              <select class="form-control form-control-sm">
+                <option value="0">Selecione o Contratante</option>
+
+              </select>
+            </div>
+            <div class="col-md-2 form-group">
+              <select class="form-control form-control-sm">
+                <option value="0">Selecione o Contratante</option>
+
+              </select>
+            </div>
+            <div class="col-md-2 form-group">
+              <select class="form-control form-control-sm">
+                <option value="0">Selecione o Contratante</option>
+
+              </select>
+            </div>
+
+            <div class="col-md-2 form-group d-flex align-items-end">
+              <button type="submit" class="btn btn-secondary btn-sm w-100" ><i class="fas fa-search"></i> Pesquisar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="loading-overlay-card" *ngIf="loadingMin">
+          <div class="spinner-border text-primary m-1" role="status">
+          </div>
+        </div>
+
+        <div class="card-body">
+          <h4 class="card-title">Acionamentos</h4>
+          <div class="table-responsive" style="margin-top: 10px; max-height: 380px; overflow-y: auto;">
+            <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+              <thead class="tabela-custom"  style="position: sticky; top: 0; z-index: 1;">
+                <tr>
+                  <th class="text-start">Usúario</th>
+                  <th class="text-start">Descricao</th>
+                  <th class="text-center">Total</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="acionamentos.length > 0; else semDado">
+                <tr
+                  *ngFor="let dado of acionamentos">
+                  <td class="text-start"> {{ dado.login }} </td>
+                  <td class="text-start"> {{ dado.descricao }} </td>
+                  <td class="text-center"> {{ dado.total }} </td>
+                </tr>
+              </tbody>
+              <ng-template #semDado>
+                <tbody>
+                  <tr>
+                    <td colspan="12" class="text-center">Nenhum indice cadastrado.</td>
+                  </tr>
+                </tbody>
+              </ng-template>
+            </table>
+
+          </div>
+        </div>
+      </div>
+      <!--end card-->
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="loading-overlay-card" *ngIf="loadingMin">
+          <div class="spinner-border text-primary m-1" role="status">
+          </div>
+        </div>
+
+        <div class="card-body">
+          <h4 class="card-title mb-4">Grafico</h4>
+          <!-- Column Chart with Datalabels -->
+          <apx-chart class="apex-charts" dir="ltr"
+                [series]="columnlabelChart.series"
+                [chart]="columnlabelChart.chart"
+                [plotOptions]="columnlabelChart.plotOptions"
+                [yaxis]="columnlabelChart.yaxis"
+                [title]="columnlabelChart.title"
+                [stroke]="columnlabelChart.stroke"
+                [dataLabels]="columnlabelChart.dataLabels"
+                [xaxis]="columnlabelChart.xaxis"
+                [legend]="columnlabelChart.legend"
+                [colors]="columnlabelChart.colors"
+                [fill]="columnlabelChart.fill">
+          </apx-chart>
+
+        </div>
+      </div>
+      <!--end card-->
+    </div>
+  </div>
+  <!-- end row -->
+
+</div> <!-- container-fluid -->

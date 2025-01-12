@@ -6,11 +6,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RelatoriosRoutingModule } from './relatorios.routing.module';
 import { FinanceiroComponent } from './financeiro/financeiro.component';
 import { OrderTableModule } from 'src/app/core/helpers/conf-tabela/order-table.module';
-
+import { AcionamentosSinteticoComponent } from './acionamentos/acionamentos-sintetico.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
 
-  declarations: [DashboardComponent, FinanceiroComponent],
+  declarations: [DashboardComponent, FinanceiroComponent, AcionamentosSinteticoComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -20,6 +22,8 @@ import { OrderTableModule } from 'src/app/core/helpers/conf-tabela/order-table.m
     NgbModule,
     NgbModule,
     OrderTableModule,
+    NgApexchartsModule,
+    NgxPaginationModule,
   ],
   providers: [
 

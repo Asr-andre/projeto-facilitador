@@ -117,18 +117,24 @@ import { MenuItem } from "./menu.model";
       subItems: [
         {
           id: 1,
+          label: "MENUITEMS.RELATORIOS.LIST.ACIONAMENTO",
+          link: "/relatorios/acionamentos",
+          parentId: 7,
+        },
+        {
+          id: 2,
           label: "MENUITEMS.RELATORIOS.LIST.DASHBOARD",
           link: "/relatorios/dashboard",
           parentId: 7,
         },
         {
-          id: 2,
+          id: 3,
           label: "MENUITEMS.RELATORIOS.LIST.FINANCEIRO",
           link: "/relatorios/financeiro",
           parentId: 7,
         },
         {
-          id: 3,
+          id: 4,
           label: "MENUITEMS.RELATORIOS.LIST.LOGS",
           link: "/relatorios/logs",
           parentId: 7,

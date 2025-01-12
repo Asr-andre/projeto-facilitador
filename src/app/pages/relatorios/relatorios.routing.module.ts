@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { FinanceiroComponent } from "./financeiro/financeiro.component";
 import { LogsComponent } from "./logs/logs.component";
+import { AcionamentosSinteticoComponent } from "./acionamentos/acionamentos-sintetico.component";
 
 const routes: Routes = [
   {
@@ -14,7 +15,10 @@ const routes: Routes = [
     component: FinanceiroComponent,
   },
     {
-      path: 'logs', component: LogsComponent
+      path: 'logs', component: LogsComponent,
+    },
+    {
+      path: 'acionamentos', component: AcionamentosSinteticoComponent,
     }
 ];
 

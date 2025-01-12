@@ -1,12 +1,7 @@
 import { DatePipe } from "@angular/common";
-import { Component, OnInit, QueryList, TemplateRef, ViewChildren } from "@angular/core";
+import { Component, OnInit, TemplateRef } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import {
-  compararParaOrdenar,
-  OrdenarPeloHeaderTabela,
-  SortEvent,
-} from "src/app/core/helpers/conf-tabela/ordenacao-tabela";
 import { Utils } from "src/app/core/helpers/utils";
 import { ContratanteModel } from "src/app/core/models/cadastro/contratante.model";
 import { PerfilWhatsappModel } from "src/app/core/models/cadastro/sms.whatsapp.model";

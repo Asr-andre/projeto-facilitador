@@ -39,6 +39,7 @@
     "RELATORIOS": {
       "TEXT": "Relatórios",
       "LIST": {
+        "ACIONAMENTO": "Acionamentos",
         "DASHBOARD": "Dashboard",
         "FINANCEIRO": "Financeiro",
         "LOGS": "Logs"
