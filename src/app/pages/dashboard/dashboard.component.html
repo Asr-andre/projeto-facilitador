@@ -147,7 +147,7 @@
               Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
               {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
             </div>
-            <pagination-controls class="custom-pagination"  (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo">
+            <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo">
             </pagination-controls>
           </div>
         </div>

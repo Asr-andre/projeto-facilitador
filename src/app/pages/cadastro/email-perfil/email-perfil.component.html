@@ -27,7 +27,7 @@
               </div>
 
               <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mt-3" style="font-size: 11px;">
+                <div class="d-flex justify-content-between align-items-center" style="font-size: 11px;">
                   <div style="font-size: 11px;">
                     <select id="itensPorPagina" [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
                       style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="table-responsive">
-                  <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+                  <table class="table table-sm table-hover font-size-12 tabelaOrdenada" style="margin-bottom: 8px;">
                     <thead class="tabela-custom">
                       <tr>
                         <th sortable="id_emailtexto" (sort)="ordenar($event)">Id</th>
@@ -86,7 +86,7 @@
                       </tbody>
                     </ng-template>
                   </table>
-                  <div class="d-flex justify-content-between align-items-center mt-3 text-small">
+                  <div class="d-flex justify-content-between align-items-center text-small">
                     <div>
                       Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
                       {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
