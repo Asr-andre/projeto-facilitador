@@ -46,10 +46,35 @@ ngOnInit(): void {
   public iniciarForm(): void {
     this.formFiltros = this._formBuilder.group({
       id_empresa: [this.idEmpresa, Validators.required],
-      data_inicio: ["", Validators.required],
-      data_fim: ["", Validators.required],
+      data_inicio: [this.primeirDiaMes(), Validators.required],
+      data_fim: [this.ultimoDiaMes(), Validators.required],
       user_login: [this.login, Validators.required],
     });
+  }
+
+  private primeirDiaMes() {
+    var data = new Date();
+    var mes = data.getMonth() + 1;
+    var ano = data.getFullYear();
+
+    if (mes <= 9) {
+      return ano + '-0' + mes + '-' + '01';
+    }
+
+    return ano + '-' + mes + '-' + '01';
+  }
+
+  private ultimoDiaMes(): string {
+    let today = new Date();
+
+    // Defina a data para o primeiro dia do próximo mês
+    let primeiroDiaProximoMes = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+
+    primeiroDiaProximoMes.setDate(primeiroDiaProximoMes.getDate() - 1);
+
+    let data = primeiroDiaProximoMes.toISOString().split('T')[0];
+
+    return data;
   }
 
   public obterFiltros() {

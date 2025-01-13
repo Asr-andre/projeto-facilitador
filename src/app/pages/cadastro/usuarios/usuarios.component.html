@@ -60,7 +60,7 @@
                         <th class="text-end">Ações</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody *ngIf="dadosFiltrados.length > 0; else semDado">
                       <tr
                         *ngFor="let usuario of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
                         <td>{{ usuario.id_usuario }}</td>
@@ -78,6 +78,13 @@
                       </tr>
                     </tbody>
                   </table>
+                  <ng-template #semDado>
+                    <tbody>
+                      <tr>
+                        <td colspan="9" class="text-center">Nenhum dado para exibir.</td>
+                      </tr>
+                    </tbody>
+                  </ng-template>
                   <div class="d-flex justify-content-between align-items-center text-small">
                     <div>
                       Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até

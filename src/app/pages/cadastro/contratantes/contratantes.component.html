@@ -63,7 +63,7 @@
                         <th class="text-end">Ações</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody  *ngIf="dadosFiltrados.length > 0; else sem">
                       <tr *ngFor="let contratante of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
                         <td>{{ contratante.id_contratante }}</td>
                         <td>{{ contratante.fantasia }}</td>
@@ -84,6 +84,13 @@
                       </tr>
                     </tbody>
                   </table>
+                  <ng-template #sem>
+                    <tbody>
+                      <tr>
+                        <td colspan="13" class="text-center">Nenhum dado para exibir.</td>
+                      </tr>
+                    </tbody>
+                  </ng-template>
                   <div class="d-flex justify-content-between align-items-center text-small">
                     <div>
                       Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
@@ -122,12 +129,14 @@
           <div class="col-md-5 form-group">
             <label for="razao_social" class="form-label">Razao Social</label>
             <input class="form-control form-control-sm mb-1" formControlName="razao_social" type="text"
-              placeholder="Razão Social" required>
+              placeholder="Razão Social"
+              [ngClass]="{'is-invalid': formContratante.get('razao_social').invalid && formContratante.get('razao_social').touched}">
           </div>
           <div class="col-md-4 form-group">
             <label for="fantasia" class="form-label">Fantasia</label>
             <input class="form-control form-control-sm mb-1" formControlName="fantasia" type="text"
-              placeholder="Fantasia" required>
+              placeholder="Fantasia"
+              [ngClass]="{'is-invalid': formContratante.get('fantasia').invalid && formContratante.get('fantasia').touched}">
           </div>
           <div class="col-md-3 form-group">
             <label for="cnpj" class="form-label">Cnpj</label>

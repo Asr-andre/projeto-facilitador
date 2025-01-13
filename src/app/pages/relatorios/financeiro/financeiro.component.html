@@ -19,7 +19,7 @@
                 </div>
               </div>
 
-              <div class="card-body">
+              <div class="card-body" style="padding-top: 6px;">
                 <ul ngbNav #nav="ngbNav" class="nav-tabs" [activeId]="ativaAba">
                   <li [ngbNavItem]="1" (click)="ativarAba()">
                     <a ngbNavLink>
@@ -123,7 +123,7 @@
                                   <th sortable="repasse" (sort)="ordenar($event)" scope="col">Repasse</th>
                                 </tr>
                               </thead>
-                              <tbody>
+                              <tbody *ngIf="dadosFiltrados.length > 0; else semDado">
                                 <tr *ngFor="let item of dadosFiltrados">
                                   <td>{{ item.fantasia }}</td>
                                   <td>{{ item.nome }}</td>
@@ -155,9 +155,25 @@
                                   <td style="font-weight: bold;">{{ valorTotalJuros | currency: 'BRL':'symbol':'1.2-2' }}</td>
                                   <td style="font-weight: bold;">{{ valorTotalMulta | currency: 'BRL':'symbol':'1.2-2' }}</td>
                                   <td style="font-weight: bold;">{{ valorTotalTaxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td style="font-weight: bold;">{{ valorDescPrincipal | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td style="font-weight: bold;">{{ valorDescMulta | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td style="font-weight: bold;">{{ valorDescJuros | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td style="font-weight: bold;">{{ valorReceitaPrincipal | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td style="font-weight: bold;">{{ valorReceitaMulta | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td style="font-weight: bold;">{{ valorReceitaJuros | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td style="font-weight: bold;">{{ valorReceitaTaxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td style="font-weight: bold;">{{ valorComissao | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                                  <td style="font-weight: bold;">{{ valorRepasse | currency: 'BRL':'symbol':'1.2-2' }}</td>
                                 </tr>
                               </tbody>
                             </table>
+                            <ng-template #semDado>
+                              <tbody>
+                                <tr>
+                                  <td colspan="21" class="text-center">Nenhum dado para exibição.</td>
+                                </tr>
+                              </tbody>
+                            </ng-template>
                           </div>
                         </div>
                       </section>

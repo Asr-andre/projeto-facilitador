@@ -19,7 +19,7 @@
                 </div>
               </div>
 
-              <div class="card-body">
+              <div class="card-body"  style="padding-top: 6px;">
                 <ul ngbNav #nav="ngbNav" class="nav-tabs" [activeId]="ativaAba">
                   <li [ngbNavItem]="1" (click)="ativarAba()">
                     <a ngbNavLink>
@@ -261,7 +261,7 @@
                                   <th>Dias Sem Acionamento</th>
                                 </tr>
                               </thead>
-                              <tbody>
+                              <tbody *ngIf="dadosFiltrados.length > 0; else semDado">
                                 <tr
                                   *ngFor="let cliente of dadosFiltrados">
                                   <td><input type="checkbox" [(ngModel)]="cliente.selecionado" (change)="verificarSelecao()"></td>
@@ -296,6 +296,13 @@
                                 </tr>
                               </tbody>
                             </table>
+                            <ng-template #semDado>
+                              <tbody>
+                                <tr>
+                                  <td colspan="15" class="text-center">Nenhum dado para exibir.</td>
+                                </tr>
+                              </tbody>
+                            </ng-template>
                           </div>
                         </div>
                       </section>

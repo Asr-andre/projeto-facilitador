@@ -283,11 +283,25 @@ export class ContratantesComponent implements OnInit {
   }
 
   public controleBotao() {
+    if (this.formContratante.invalid) {
+      this.marcarCamposComoTocados(this.formContratante);
+      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
     if(this.editar == false) {
       this.cadastrarContratante();
     } else {
       this.editarContratante();
     }
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 
   public cadastrarContratante(){

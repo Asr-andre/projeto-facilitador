@@ -39,6 +39,16 @@ export class FinanceiroComponent {
   public valorTotalMulta: number = 0;
   public valorTotalTaxa: number = 0;
 
+  public valorDescPrincipal: number = 0;
+  public valorDescMulta: number = 0;
+  public valorDescJuros: number = 0;
+  public valorReceitaPrincipal: number = 0;
+  public valorReceitaMulta: number = 0;
+  public valorReceitaJuros: number = 0;
+  public valorReceitaTaxa: number = 0;
+  public valorComissao: number = 0;
+  public valorRepasse: number = 0;
+
   constructor(
     private _financeiroService: FinanceiroService,
     private _contratanteService: ContratanteService,
@@ -59,10 +69,35 @@ export class FinanceiroComponent {
     this.formFiltros = this._formBuilder.group({
       id_empresa: [this.idEmpresa, Validators.required],
       id_contratante: ["0"],
-      data_inicio: ["", Validators.required],
-      data_fim: ["", Validators.required],
+      data_inicio: [this.primeirDiaMes(), Validators.required],
+      data_fim: [this.ultimoDiaMes(), Validators.required],
       user_login: [this.login, Validators.required],
     });
+  }
+
+  private primeirDiaMes() {
+    var data = new Date();
+    var mes = data.getMonth() + 1;
+    var ano = data.getFullYear();
+
+    if (mes <= 9) {
+      return ano + '-0' + mes + '-' + '01';
+    }
+
+    return ano + '-' + mes + '-' + '01';
+  }
+
+  private ultimoDiaMes(): string {
+    let today = new Date();
+
+    // Defina a data para o primeiro dia do próximo mês
+    let primeiroDiaProximoMes = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+
+    primeiroDiaProximoMes.setDate(primeiroDiaProximoMes.getDate() - 1);
+
+    let data = primeiroDiaProximoMes.toISOString().split('T')[0];
+
+    return data;
   }
 
   public exportExcel() {
@@ -107,6 +142,16 @@ export class FinanceiroComponent {
     this.valorTotalJuros = this.dadosFiltrados.reduce((sum, item) => sum + (item.valor_juros || 0), 0);
     this.valorTotalMulta = this.dadosFiltrados.reduce((sum, item) => sum + (item.valor_multa || 0), 0);
     this.valorTotalTaxa = this.dadosFiltrados.reduce((sum, item) => sum + (item.valor_taxa || 0), 0);
+    this.valorDescPrincipal = this.dadosFiltrados.reduce((sum, item) => sum + (item.desc_principal || 0), 0);
+    this.valorDescMulta = this.dadosFiltrados.reduce((sum, item) => sum + (item.desc_multa || 0), 0);
+    this.valorDescJuros = this.dadosFiltrados.reduce((sum, item) => sum + (item.desc_juros || 0), 0);
+    this.valorReceitaPrincipal = this.dadosFiltrados.reduce((sum, item) => sum + (item.receita_principal || 0), 0);
+    this.valorReceitaMulta = this.dadosFiltrados.reduce((sum, item) => sum + (item.receita_multa || 0), 0);
+    this.valorReceitaJuros = this.dadosFiltrados.reduce((sum, item) => sum + (item.receita_juros || 0), 0);
+    this.valorReceitaTaxa = this.dadosFiltrados.reduce((sum, item) => sum + (item.receita_taxa || 0), 0);
+    this.valorComissao = this.dadosFiltrados.reduce((sum, item) => sum + (item.comissao || 0), 0);
+    this.valorRepasse = this.dadosFiltrados.reduce((sum, item) => sum + (item.repasse || 0), 0);
+
   }
 
   public obterContratantes() {
