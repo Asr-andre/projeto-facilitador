@@ -1,4 +1,9 @@
 <div class="container-fluid">
+  <div class="loading-overlay-pagina" *ngIf="loading">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
@@ -24,7 +29,7 @@
 
               <div class="col-md-2 form-group">
                 <label for="id_contratante" class="form-label">Contratante</label>
-                <select type="text" class="form-control form-control-sm" formControlName="id_contratante">
+                <select type="text" class="form-control form-control-sm" formControlName="id_contratante" (focus)="carregarContratantes()">
                   <option value="0">Selecione</option>
                   <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">
                     {{ contratante.fantasia }}
@@ -46,13 +51,18 @@
               </div>
 
               <div class="col-md-2 form-group">
-                <label for="id_usuario" class="form-label">Id do Usuário <i
+                <label for="id_usuario" class="form-label">Usuário <i
                   class="fas fa-info-circle text-info ms-1"
                   style="cursor: pointer;"
-                  ngbTooltip="Informe o ID do usuário para realizar a pesquisa. Caso contrário, serão exibidos os acionamentos de todos os usuários."
+                  ngbTooltip="Slecione um usuário para realizar a pesquisa. Caso contrário, serão exibidos os acionamentos de todos os usuários."
                   placement="left">
                 </i></label>
-                <input type="text" id="id_usuario" class="form-control form-control-sm" formControlName="id_usuario"/>
+                <select type="text" class="form-control form-control-sm" formControlName="id_usuario" (focus)="carregarUsuarios()">
+                  <option value="0">Selecione</option>
+                  <option *ngFor="let usuario of usuarios" [value]="usuario.id_usuario">
+                    {{ usuario.login }}
+                  </option>
+                </select>
               </div>
 
               <div class="col-md-2 form-group d-flex align-items-end">

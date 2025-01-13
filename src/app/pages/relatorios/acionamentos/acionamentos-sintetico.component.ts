@@ -11,6 +11,8 @@ import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model
 import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
 import { Utils } from 'src/app/core/helpers/utils';
 import { ExcelService } from 'src/app/core/services/excel.service';
+import { UsuarioModel } from 'src/app/core/models/cadastro/usuario.model';
+import { UsuarioService } from 'src/app/core/services/cadastro/usuario.service';
 
 @Component({
   selector: 'app-acionamentos-sintetico',
@@ -39,10 +41,16 @@ export class AcionamentosSinteticoComponent implements OnInit {
   public login = this._auth.getLogin();
   public acio_sintetico: AcionamentoModel[] = [];
   public acio_Analitico: AcionamentoAnaliticoModel[] = [];
-  public contratantes: ContratanteModel[] = [];
+
   public loadingMin: boolean = false;
+  public loading: boolean = false;
   public exibirCard: boolean = false;
   public tipoRelatorio: string = '0'; // Inicializa como '0' (nenhuma seleção)
+
+  public usuarios: UsuarioModel[];
+  public contratantes: ContratanteModel[] = [];
+  public contratantesCarregados = false;
+  public usuariosCarregados = false;
 
   constructor(
     private _acionamentoService: AcionamentoService,
@@ -51,11 +59,11 @@ export class AcionamentosSinteticoComponent implements OnInit {
     private _alert: AlertService,
     private _datePipe: DatePipe,
     private _contratante: ContratanteService,
-    private _excelService: ExcelService
+    private _excelService: ExcelService,
+    private _usuarioService: UsuarioService,
   ) { }
 
   ngOnInit() {
-    this.obterContratantes();
     this.iniciarForm();
   }
 
@@ -69,6 +77,18 @@ export class AcionamentosSinteticoComponent implements OnInit {
       user_login: [this.login],
       tipo: ['', Validators.required]
     });
+  }
+
+  carregarContratantes(): void {
+    if (!this.contratantesCarregados) {
+      this.obterContratantes();
+    }
+  }
+
+  carregarUsuarios(): void {
+    if (!this.usuariosCarregados) {
+      this.obterUsuarios();
+    }
   }
 
   public pesquisar() {
@@ -132,6 +152,19 @@ export class AcionamentosSinteticoComponent implements OnInit {
 
   public exportExcel() {
     this._excelService.exportAsExcelFile(this.acio_Analitico, 'exportacaoAcionamentoAnalitico');
+  }
+
+  public obterUsuarios() {
+    this.loading = true;
+    this._usuarioService.obterUsuariosPorEmpresa(this.idEmpresa).subscribe((res) => {
+      this.usuarios = res.contratantes;
+      this.loading = false;
+      this.usuariosCarregados = true;
+    },
+    (error) => {
+      this._alert.error('Ocorreu um erro ao obter os usuários.');
+      this.loading = false;
+    });
   }
 
   public obterAcionamentosSintetico() {
@@ -200,13 +233,14 @@ export class AcionamentosSinteticoComponent implements OnInit {
   }
 
   public obterContratantes() {
-    this.loadingMin = true;
+    this.loading = true;
     this._contratante.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
-      this.loadingMin = false;
+      this.loading = false;
       this.contratantes = res.contratantes;
+      this.contratantesCarregados = true;
     },
       (error) => {
-        this.loadingMin = false;
+        this.loading = false;
         this._alert.error('Ocorreu um erro ao obter os contratantes.');
       }
     );
