@@ -24,9 +24,8 @@
 
               <div class="col-md-2 form-group">
                 <label for="id_contratante" class="form-label">Contratante</label>
-                <select type="text" class="form-control form-control-sm" formControlName="id_contratante"
-                  [ngClass]="{'is-invalid': formPesquisar.get('id_contratante').invalid && formPesquisar.get('id_contratante').touched}">
-                  <option value="">Selecione</option>
+                <select type="text" class="form-control form-control-sm" formControlName="id_contratante">
+                  <option value="0">Selecione</option>
                   <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">
                     {{ contratante.fantasia }}
                   </option>
