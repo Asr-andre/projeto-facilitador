@@ -9,6 +9,7 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
 import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
+import { Utils } from 'src/app/core/helpers/utils';
 
 @Component({
   selector: 'app-acionamentos-sintetico',
@@ -211,4 +212,10 @@ export class AcionamentosSinteticoComponent implements OnInit {
     this.splineAreaChart = splineAreaChart;
     this.dashedLineChart = dashedLineChart;
   }
+
+  public data(data) {
+      if(data) {
+        return Utils.formatarDataParaExibicao(data);
+      }
+    }
 }
