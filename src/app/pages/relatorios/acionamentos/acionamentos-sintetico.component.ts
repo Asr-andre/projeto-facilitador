@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChartType } from './apex.model';
 import { barChart, basicColumChart, basicRadialBarChart, columnlabelChart, dashedLineChart, donutChart, lineColumAreaChart, linewithDataChart, simplePieChart, splineAreaChart } from './data';
 import { AcionamentoService } from 'src/app/core/services/relatorio/acionamento.service';
-import { AcionamentoModel } from 'src/app/core/models/relatorio/acionamento.model';
+import { AcionamentoAnaliticoModel, AcionamentoModel } from 'src/app/core/models/relatorio/acionamento.model';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -35,7 +35,8 @@ export class AcionamentosSinteticoComponent implements OnInit {
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
   public idUsuario: number = Number(this._auth.getCurrentUser() || 0);
   public login = this._auth.getLogin();
-  public acionamentos: AcionamentoModel[] = [];
+  public acio_sintetico: AcionamentoModel[] = [];
+  public acio_Analitico: AcionamentoAnaliticoModel[] = [];
   public contratantes: ContratanteModel[] = [];
   public loadingMin: boolean = false;
   public exibirCard: boolean = false;
@@ -59,6 +60,7 @@ export class AcionamentosSinteticoComponent implements OnInit {
     this.formPesquisar = this._fb.group({
       id_empresa: [this.idEmpresa],
       id_contratante: ['', Validators.required],
+      id_usuario: [this.idUsuario],
       data_inicio: [''],
       data_fim: [''],
       user_login: [this.login],
@@ -80,9 +82,9 @@ export class AcionamentosSinteticoComponent implements OnInit {
       this.exibirCard = true;
 
       if (tipoRelatorio === '1') {
-        console.log("Relatório analítico selecionado");
+        this.obterAcionamentosAnalitico()
+
       } else if (tipoRelatorio === '2') {
-        this.obterAcionamentosSintetico();
         this.obterAcionamentosSintetico();
         this._fetchData();
       }
@@ -101,14 +103,6 @@ export class AcionamentosSinteticoComponent implements OnInit {
   }
 
   public obterAcionamentosSintetico() {
-    const dados = {
-      id_empresa: 1,
-      id_contratante: 1,
-      data_inicio: '01/12/2024',
-      data_fim: '31/12/2024',
-      user_login: 'Paulo'
-    }
-
     const dadosParaEnvio = { ...this.formPesquisar.value };
       dadosParaEnvio.data_inicio = this._datePipe.transform(dadosParaEnvio.data_inicio, "dd/MM/yyyy");
       dadosParaEnvio.data_fim = this._datePipe.transform(dadosParaEnvio.data_fim, "dd/MM/yyyy");
@@ -118,15 +112,47 @@ export class AcionamentosSinteticoComponent implements OnInit {
       next: (res) => {
         this.loadingMin = false;
         if (res.success === 'true') {
-          this.acionamentos = res.dados;
+          this.acio_sintetico = res.dados;
 
           // Ordena a coluna data em ordem descendente
-          this.acionamentos.sort((a, b) => {
+          this.acio_sintetico.sort((a, b) => {
             if (a.login < b.login) return 1;
             if (a.login > b.login) return -1;
             return 0;
           });
           this._fetchData();
+          this.loadingMin = false;
+        } else {
+          this.loadingMin = false;
+          this._alert.warning(res.msg);
+        }
+        (error) => {
+          this.loadingMin = false;
+          this._alert.error("Ocorreu um error.", error);
+        }
+      }
+    });
+  }
+
+  public obterAcionamentosAnalitico() {
+    const dadosParaEnvio = { ...this.formPesquisar.value };
+      dadosParaEnvio.data_inicio = this._datePipe.transform(dadosParaEnvio.data_inicio, "dd/MM/yyyy");
+      dadosParaEnvio.data_fim = this._datePipe.transform(dadosParaEnvio.data_fim, "dd/MM/yyyy");
+
+    this.loadingMin = true;
+    this._acionamentoService.obterAcionamentosAnalitico(dadosParaEnvio).subscribe({
+      next: (res) => {
+        this.loadingMin = false;
+        if (res.success === 'true') {
+          this.acio_Analitico = res.dados;
+
+          // Ordena a coluna data em ordem descendente
+          this.acio_Analitico.sort((a, b) => {
+            if (a.data_acio < b.data_acio) return 1;
+            if (a.data_acio > b.data_acio) return -1;
+            return 0;
+          });
+
           this.loadingMin = false;
         } else {
           this.loadingMin = false;
@@ -161,11 +187,11 @@ export class AcionamentosSinteticoComponent implements OnInit {
       series: [
         {
           name: "Total",
-          data: this.acionamentos.map(acionamento => acionamento.total), // Pega os totais dos acionamentos
+          data: this.acio_sintetico.map(acionamento => acionamento.total), // Pega os totais dos acionamentos
         }
       ],
       xaxis: {
-        categories: this.acionamentos.map(acionamento => acionamento.descricao) // Usa a descrição como eixo X
+        categories: this.acio_sintetico.map(acionamento => acionamento.descricao) // Usa a descrição como eixo X
       },
       title: {
         text: '', // Define o título como vazio para remover o texto
