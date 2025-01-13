@@ -4,9 +4,11 @@ import { barChart, basicColumChart, basicRadialBarChart, columnlabelChart, dashe
 import { AcionamentoService } from 'src/app/core/services/relatorio/acionamento.service';
 import { AcionamentoModel } from 'src/app/core/models/relatorio/acionamento.model';
 import { DatePipe } from '@angular/common';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
+import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
 
 @Component({
   selector: 'app-acionamentos-sintetico',
@@ -29,8 +31,15 @@ export class AcionamentosSinteticoComponent implements OnInit {
   splineAreaChart: ChartType;
   dashedLineChart: ChartType;
 
+  public formPesquisar: FormGroup;
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public idUsuario: number = Number(this._auth.getCurrentUser() || 0);
+  public login = this._auth.getLogin();
   public acionamentos: AcionamentoModel[] = [];
+  public contratantes: ContratanteModel[] = [];
   public loadingMin: boolean = false;
+  public exibirCard: boolean = false;
+  public tipoRelatorio: string = '0'; // Inicializa como '0' (nenhuma seleção)
 
   constructor(
     private _acionamentoService: AcionamentoService,
@@ -38,20 +47,58 @@ export class AcionamentosSinteticoComponent implements OnInit {
     private _auth: AuthenticationService,
     private _alert: AlertService,
     private _datePipe: DatePipe,
+    private _contratante: ContratanteService,
   ) { }
 
   ngOnInit() {
-    this.obterAcionamentosSintetico();
-
-    /**
-     * Fethches the chart data
-     */
-    this._fetchData();
+    this.obterContratantes();
+    this.iniciarForm();
   }
 
-  /**
-   * Fetches the chart data
-   */
+  public iniciarForm() {
+    this.formPesquisar = this._fb.group({
+      id_empresa: [this.idEmpresa],
+      id_contratante: ['', Validators.required],
+      data_inicio: [''],
+      data_fim: [''],
+      user_login: [this.login],
+      tipo: ['', Validators.required]
+    });
+  }
+
+  pesquisar() {
+    if (this.formPesquisar.invalid) {
+      this.marcarCamposComoTocados(this.formPesquisar);
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
+    const tipoRelatorio = this.formPesquisar.value.tipo;
+    this.tipoRelatorio = tipoRelatorio;
+
+    if (tipoRelatorio === '1' || tipoRelatorio === '2') {
+      this.exibirCard = true;
+
+      if (tipoRelatorio === '1') {
+        console.log("Relatório analítico selecionado");
+      } else if (tipoRelatorio === '2') {
+        this.obterAcionamentosSintetico();
+        this.obterAcionamentosSintetico();
+        this._fetchData();
+      }
+    } else {
+      this.exibirCard = false;
+      this._alert.warning('Selecione um tipo de relatório antes de pesquisar.');
+    }
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
+  }
 
   public obterAcionamentosSintetico() {
     const dados = {
@@ -62,8 +109,12 @@ export class AcionamentosSinteticoComponent implements OnInit {
       user_login: 'Paulo'
     }
 
+    const dadosParaEnvio = { ...this.formPesquisar.value };
+      dadosParaEnvio.data_inicio = this._datePipe.transform(dadosParaEnvio.data_inicio, "dd/MM/yyyy");
+      dadosParaEnvio.data_fim = this._datePipe.transform(dadosParaEnvio.data_fim, "dd/MM/yyyy");
+
     this.loadingMin = true;
-    this._acionamentoService.obterAcionamentosSintetico(dados).subscribe({
+    this._acionamentoService.obterAcionamentosSintetico(dadosParaEnvio).subscribe({
       next: (res) => {
         this.loadingMin = false;
         if (res.success === 'true') {
@@ -89,10 +140,24 @@ export class AcionamentosSinteticoComponent implements OnInit {
     });
   }
 
+  public obterContratantes() {
+    this.loadingMin = true;
+    this._contratante.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
+      this.loadingMin = false;
+      this.contratantes = res.contratantes;
+    },
+      (error) => {
+        this.loadingMin = false;
+        this._alert.error('Ocorreu um erro ao obter os contratantes.');
+      }
+    );
+  }
+
   private _fetchData() {
     this.linewithDataChart = linewithDataChart;
     this.basicColumChart = basicColumChart;
-    this.columnlabelChart = { ...columnlabelChart, // Preserva as configurações existentes do gráfico
+    this.columnlabelChart = {
+      ...columnlabelChart, // Preserva as configurações existentes do gráfico
       series: [
         {
           name: "Total",

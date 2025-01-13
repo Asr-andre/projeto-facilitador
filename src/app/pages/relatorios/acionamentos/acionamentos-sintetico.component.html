@@ -1,54 +1,72 @@
 <div class="container-fluid">
-  <app-pagetitle title="Apex charts" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
-
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
-        <div class="card-body">
-          <h4 class="card-title mb-4">Filtrar Acionamentos</h4>
-          <div class="row">
-            <div class="col-md-2 form-group">
-              <select class="form-control form-control-sm">
-                <option value="0">Selecione o Contratante</option>
-
-              </select>
-            </div>
-            <div class="col-md-2 form-group">
-              <select class="form-control form-control-sm">
-                <option value="0">Selecione o Contratante</option>
-
-              </select>
-            </div>
-            <div class="col-md-2 form-group">
-              <select class="form-control form-control-sm">
-                <option value="0">Selecione o Contratante</option>
-
-              </select>
-            </div>
-
-            <div class="col-md-2 form-group d-flex align-items-end">
-              <button type="submit" class="btn btn-secondary btn-sm w-100" ><i class="fas fa-search"></i> Pesquisar
-              </button>
-            </div>
+        <div class="card-header pt-2 pb-2">
+          <div class="col-md-12">
+            <h5 class="mb-0"><i class="fas fa-bell acionamento-icon"></i> Filtrar Acionamentos </h5>
           </div>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="formPesquisar">
+            <div class="row">
+
+              <div class="col-md-2 form-group">
+                <label for="tipo" class="form-label">Tipo do Relatorio</label>
+                <select class="form-control form-control-sm" formControlName="tipo"
+                  [ngClass]="{'is-invalid': formPesquisar.get('tipo').invalid && formPesquisar.get('tipo').touched}">
+                  <option value="">Selecione</option>
+                  <option value="1">Analitico</option>
+                  <option value="2">Sintetico</option>
+                </select>
+              </div>
+
+              <div class="col-md-2 form-group">
+                <label for="id_contratante" class="form-label">Contratante</label>
+                <select type="text" class="form-control form-control-sm" formControlName="id_contratante"
+                  [ngClass]="{'is-invalid': formPesquisar.get('id_contratante').invalid && formPesquisar.get('id_contratante').touched}">
+                  <option value="">Selecione</option>
+                  <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">
+                    {{ contratante.fantasia }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-2 form-group">
+                <label for="data_inicio" class="form-label">Data Inicio</label>
+                <input type="date" id="data_inicio" class="form-control form-control-sm"
+                  formControlName="data_inicio" />
+              </div>
+
+              <div class="col-md-2 form-group">
+                <label for="data_fim" class="form-label">Data Fim</label>
+                <input type="date" id="data_fim" class="form-control form-control-sm" formControlName="data_fim" />
+              </div>
+
+              <div class="col-md-2 form-group d-flex align-items-end">
+                <button type="submit" class="btn btn-secondary btn-sm w-100" (click)="pesquisar()"><i
+                    class="fas fa-search"></i> Pesquisar
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-lg-6">
+  <div class="row" *ngIf="exibirCard && tipoRelatorio === '2'">
+    <div class="col-lg-4">
       <div class="card">
         <div class="loading-overlay-card" *ngIf="loadingMin">
           <div class="spinner-border text-primary m-1" role="status">
           </div>
         </div>
-
         <div class="card-body">
-          <h4 class="card-title">Acionamentos</h4>
+          <h4 class="card-title">Acionamentos Sintetico</h4>
           <div class="table-responsive" style="margin-top: 10px; max-height: 380px; overflow-y: auto;">
             <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
-              <thead class="tabela-custom"  style="position: sticky; top: 0; z-index: 1;">
+              <thead class="tabela-custom" style="position: sticky; top: 0; z-index: 1;">
                 <tr>
                   <th class="text-start">Usúario</th>
                   <th class="text-start">Descricao</th>
@@ -56,8 +74,7 @@
                 </tr>
               </thead>
               <tbody *ngIf="acionamentos.length > 0; else semDado">
-                <tr
-                  *ngFor="let dado of acionamentos">
+                <tr *ngFor="let dado of acionamentos">
                   <td class="text-start"> {{ dado.login }} </td>
                   <td class="text-start"> {{ dado.descricao }} </td>
                   <td class="text-center"> {{ dado.total }} </td>
@@ -66,19 +83,17 @@
               <ng-template #semDado>
                 <tbody>
                   <tr>
-                    <td colspan="12" class="text-center">Nenhum indice cadastrado.</td>
+                    <td colspan="12" class="text-center">Nenhum Acionamento para exibir.</td>
                   </tr>
                 </tbody>
               </ng-template>
             </table>
-
           </div>
         </div>
       </div>
-      <!--end card-->
     </div>
 
-    <div class="col-lg-6">
+    <div class="col-lg-8">
       <div class="card">
         <div class="loading-overlay-card" *ngIf="loadingMin">
           <div class="spinner-border text-primary m-1" role="status">
@@ -87,26 +102,14 @@
 
         <div class="card-body">
           <h4 class="card-title mb-4">Grafico</h4>
-          <!-- Column Chart with Datalabels -->
-          <apx-chart class="apex-charts" dir="ltr"
-                [series]="columnlabelChart.series"
-                [chart]="columnlabelChart.chart"
-                [plotOptions]="columnlabelChart.plotOptions"
-                [yaxis]="columnlabelChart.yaxis"
-                [title]="columnlabelChart.title"
-                [stroke]="columnlabelChart.stroke"
-                [dataLabels]="columnlabelChart.dataLabels"
-                [xaxis]="columnlabelChart.xaxis"
-                [legend]="columnlabelChart.legend"
-                [colors]="columnlabelChart.colors"
-                [fill]="columnlabelChart.fill">
+          <apx-chart class="apex-charts" dir="ltr" [series]="columnlabelChart.series" [chart]="columnlabelChart.chart"
+            [plotOptions]="columnlabelChart.plotOptions" [yaxis]="columnlabelChart.yaxis"
+            [title]="columnlabelChart.title" [stroke]="columnlabelChart.stroke"
+            [dataLabels]="columnlabelChart.dataLabels" [xaxis]="columnlabelChart.xaxis"
+            [legend]="columnlabelChart.legend" [colors]="columnlabelChart.colors" [fill]="columnlabelChart.fill">
           </apx-chart>
-
         </div>
       </div>
-      <!--end card-->
     </div>
   </div>
-  <!-- end row -->
-
-</div> <!-- container-fluid -->
+</div>
