@@ -64,8 +64,8 @@ export class AcionamentosSinteticoComponent implements OnInit {
       id_empresa: [this.idEmpresa],
       id_contratante: ['', Validators.required],
       id_usuario: [this.idUsuario],
-      data_inicio: [''],
-      data_fim: [''],
+      data_inicio: ['', Validators.required],
+      data_fim: ['', Validators.required],
       user_login: [this.login],
       tipo: ['', Validators.required]
     });
