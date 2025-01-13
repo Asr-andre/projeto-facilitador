@@ -181,8 +181,8 @@ export class AcionamentosSinteticoComponent implements OnInit {
 
           // Ordena a coluna data em ordem descendente
           this.acio_sintetico.sort((a, b) => {
-            if (a.login < b.login) return 1;
-            if (a.login > b.login) return -1;
+            if (a.total < b.total) return 1;
+            if (a.total > b.total) return -1;
             return 0;
           });
 
