@@ -22,7 +22,7 @@
               <div class="card-body" style="padding-top: 6px;">
                 <ul ngbNav #nav="ngbNav" class="nav-tabs" [activeId]="ativaAba">
                   <li [ngbNavItem]="1" (click)="ativarAba()">
-                    <a ngbNavLink>
+                    <a ngbNavLink  class="link-filtros">
                       <b><i class="fas fa-filter"></i> Filtros</b>
                     </a>
                     <ng-template ngbNavContent>
@@ -65,7 +65,7 @@
                     </ng-template>
                   </li>
                   <li [ngbNavItem]="2">
-                    <a ngbNavLink>
+                    <a ngbNavLink class="link-filtros">
                       <b><i class="fas fa-file-alt"></i> Resultado</b>
                     </a>
                     <ng-template ngbNavContent>

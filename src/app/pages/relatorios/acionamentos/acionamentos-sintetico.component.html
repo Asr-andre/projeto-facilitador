@@ -45,6 +45,16 @@
                 [ngClass]="{'is-invalid': formPesquisar.get('data_fim').invalid && formPesquisar.get('data_fim').touched}"/>
               </div>
 
+              <div class="col-md-2 form-group">
+                <label for="id_usuario" class="form-label">Id do Usuário <i
+                  class="fas fa-info-circle text-info ms-1"
+                  style="cursor: pointer;"
+                  ngbTooltip="Informe o ID do usuário para realizar a pesquisa. Caso contrário, serão exibidos os acionamentos de todos os usuários."
+                  placement="left">
+                </i></label>
+                <input type="text" id="id_usuario" class="form-control form-control-sm" formControlName="id_usuario"/>
+              </div>
+
               <div class="col-md-2 form-group d-flex align-items-end">
                 <button type="submit" class="btn btn-secondary btn-sm w-100" (click)="pesquisar()"><i
                     class="fas fa-search"></i> Pesquisar

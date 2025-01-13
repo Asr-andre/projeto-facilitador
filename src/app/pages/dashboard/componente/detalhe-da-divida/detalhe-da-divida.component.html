@@ -4,7 +4,7 @@
 </div>
 
 <div class="row brder">
-  <div class="col-md-5 detalhamento-texto">Credor: <strong><span>{{ formatarIniciais(detalhamentoSelecionado?.credor) }}</span></strong></div>
+  <div class="col-md-5 detalhamento-texto">Credor: <strong><span>{{ detalhamentoSelecionado?.credor }}</span></strong></div>
 </div>
 
 <div class="row pt-1 brder">
@@ -12,7 +12,7 @@
     <strong>
       <span style="cursor: pointer" [ngbTooltip]="'Clique para copiar o nome'" placement="top" container="body"
         (click)="copiarParaAreasTransferencia(detalhamentoSelecionado?.nome)">
-        {{ formatarIniciais(detalhamentoSelecionado?.nome) }}
+        {{ detalhamentoSelecionado?.nome }}
       </span>
     </strong>
   </div>

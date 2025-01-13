@@ -63,7 +63,7 @@ export class AcionamentosSinteticoComponent implements OnInit {
     this.formPesquisar = this._fb.group({
       id_empresa: [this.idEmpresa],
       id_contratante: ['0'],
-      id_usuario: [this.idUsuario],
+      id_usuario: ['0'],
       data_inicio: [this.primeirDiaMes(), Validators.required],
       data_fim: [this.ultimoDiaMes(), Validators.required],
       user_login: [this.login],
