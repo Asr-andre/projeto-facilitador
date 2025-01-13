@@ -64,14 +64,14 @@ export class AcionamentosSinteticoComponent implements OnInit {
       id_empresa: [this.idEmpresa],
       id_contratante: ['0'],
       id_usuario: [this.idUsuario],
-      data_inicio: ['', Validators.required],
-      data_fim: ['', Validators.required],
+      data_inicio: [this.primeirDiaMes(), Validators.required],
+      data_fim: [this.ultimoDiaMes(), Validators.required],
       user_login: [this.login],
       tipo: ['', Validators.required]
     });
   }
 
-  pesquisar() {
+  public pesquisar() {
     if (this.formPesquisar.invalid) {
       this.marcarCamposComoTocados(this.formPesquisar);
       this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
@@ -105,6 +105,31 @@ export class AcionamentosSinteticoComponent implements OnInit {
     });
   }
 
+  private primeirDiaMes() {
+    var data = new Date();
+    var mes = data.getMonth() + 1;
+    var ano = data.getFullYear();
+
+    if (mes <= 9) {
+      return ano + '-0' + mes + '-' + '01';
+    }
+
+    return ano + '-' + mes + '-' + '01';
+  }
+
+  private ultimoDiaMes(): string {
+    let today = new Date();
+
+    // Defina a data para o primeiro dia do próximo mês
+    let primeiroDiaProximoMes = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+
+    primeiroDiaProximoMes.setDate(primeiroDiaProximoMes.getDate() - 1);
+
+    let data = primeiroDiaProximoMes.toISOString().split('T')[0];
+
+    return data;
+  }
+
   public exportExcel() {
     this._excelService.exportAsExcelFile(this.acio_Analitico, 'exportacaoAcionamentoAnalitico');
   }
@@ -127,6 +152,7 @@ export class AcionamentosSinteticoComponent implements OnInit {
             if (a.login > b.login) return -1;
             return 0;
           });
+
           this._fetchData();
           this.loadingMin = false;
         } else {
@@ -189,8 +215,7 @@ export class AcionamentosSinteticoComponent implements OnInit {
   private _fetchData() {
     this.linewithDataChart = linewithDataChart;
     this.basicColumChart = basicColumChart;
-    this.columnlabelChart = {
-      ...columnlabelChart, // Preserva as configurações existentes do gráfico
+    this.columnlabelChart = { ...columnlabelChart, // Preserva as configurações existentes do gráfico
       series: [
         {
           name: "Total",
