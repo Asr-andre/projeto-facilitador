@@ -368,6 +368,22 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     this._alertService.copiado();
   }
 
+  public tipoPessoa(dado: string): string {
+    if(!dado) return '';
+
+    return dado.length === 11 ? '[ PF ]' : dado.length === 14 ? '[ PJ ];' : '';
+  }
+
+  public formatarIniciais(texto: string): string {
+    if (!texto) return '';
+    return texto
+      .toLowerCase()
+      .split(' ')
+      .map((palavra) => palavra.charAt(0).toUpperCase() + palavra.slice(1))
+      .join(' ');
+  }
+
+
   public fechar() {
     this._modalService.dismissAll();
     this.formTitulo.reset();

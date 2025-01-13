@@ -4,33 +4,39 @@
 </div>
 
 <div class="row brder">
-  <div class="col-md-5"><strong>Credor:</strong> <span> {{ detalhamentoSelecionado?.credor }}</span></div>
+  <div class="col-md-5 detalhamento-texto">Credor: <strong><span>{{ formatarIniciais(detalhamentoSelecionado?.credor) }}</span></strong></div>
 </div>
 
 <div class="row pt-1 brder">
-  <div class="col-md-4"><b>Nome:</b>
-    <span style="cursor: pointer" [ngbTooltip]="'Clique para copiar o nome'" placement="top" container="body"
-      (click)="copiarParaAreasTransferencia(detalhamentoSelecionado?.nome)">
-      {{ detalhamentoSelecionado?.nome }}
-    </span>
+  <div class="col-md-4 detalhamento-texto">Nome:
+    <strong>
+      <span style="cursor: pointer" [ngbTooltip]="'Clique para copiar o nome'" placement="top" container="body"
+        (click)="copiarParaAreasTransferencia(detalhamentoSelecionado?.nome)">
+        {{ formatarIniciais(detalhamentoSelecionado?.nome) }}
+      </span>
+    </strong>
   </div>
-  <div class="col-md-4"><b>CPF:</b>
-    <span style="cursor: pointer" [ngbTooltip]="'Clique para copiar o CPF'" placement="top" container="body"
-      (click)="copiarParaAreasTransferencia(detalhamentoSelecionado?.cpf)">
-      {{ formatarCPF(detalhamentoSelecionado?.cpf) }}
-    </span>
+  <div class="col-md-4 detalhamento-texto">CPF/CNPJ:
+    <strong>
+      <span style="cursor: pointer" [ngbTooltip]="'Clique para copiar o CPF'" placement="top" container="body"
+        (click)="copiarParaAreasTransferencia(detalhamentoSelecionado?.cpf)">
+        {{ formatarCPF(detalhamentoSelecionado?.cpf) }} - {{ tipoPessoa(detalhamentoSelecionado?.cpf) }}
+      </span>
+    </strong>
   </div>
-  <div class="col-md-4"><b>RG:</b> {{ formatarCPF(detalhamentoSelecionado?.rg) }}</div>
+  <div class="col-md-4 detalhamento-texto">RG: <strong>
+      {{ formatarCPF(detalhamentoSelecionado?.rg) }}
+    </strong>
+  </div>
 </div>
 <div class="row pt-1 brder">
-  <div class="col-md-6"><b>Rua: </b> {{ detalhamentoSelecionado?.endereco }}</div>
-  <div class="col-md-2"><b>Número: </b> {{ detalhamentoSelecionado?.numero }}</div>
-  <div class="col-md-4"><b>Complemento: </b> {{ detalhamentoSelecionado?.complemento }}</div>
+  <div class="col-md-6 detalhamento-texto">Rua: <strong> {{ formatarIniciais(detalhamentoSelecionado?.endereco) }} </strong></div>
+  <div class="col-md-2 detalhamento-texto">Número: <strong> {{ detalhamentoSelecionado?.numero }}</strong></div>
+  <div class="col-md-4 detalhamento-texto">Complemento: <strong> {{ formatarIniciais(detalhamentoSelecionado?.complemento) }}</strong></div>
 </div>
 <div class="row pt-1 brder">
-  <div class="col-md-4"><b>Bairro: </b> {{ detalhamentoSelecionado?.bairro }}</div>
-  <div class="col-md-4"><b>Cidade:</b> {{ detalhamentoSelecionado?.cidade }}</div>
-  <div class="col-md-4"><b>Uf: </b> {{ detalhamentoSelecionado?.uf }}</div>
+  <div class="col-md-4 detalhamento-texto">Bairro: <strong> {{ formatarIniciais(detalhamentoSelecionado?.bairro) }}</strong></div>
+  <div class="col-md-4 detalhamento-texto">Cidade: <strong> {{ formatarIniciais(detalhamentoSelecionado?.cidade) }} - {{ detalhamentoSelecionado?.uf }}</strong></div>
 </div>
 
 <div class="d-flex justify-content-between align-items-center" style="margin-top: 10px;">
@@ -84,7 +90,7 @@
         <th>Total</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf="titulosFiltrados.length > 0; else semDado">
       <tr *ngFor="let prestacao of titulosFiltrados">
         <td>
           <input type="checkbox" [(ngModel)]="prestacao.selecionado" (change)="verificarSelecao()">
@@ -115,6 +121,13 @@
       </tr>
     </tbody>
   </table>
+  <ng-template #semDado>
+    <tbody>
+      <tr>
+        <td colspan="13" class="text-center">Nenhum dado para exibir.</td>
+      </tr>
+    </tbody>
+  </ng-template>
 </div>
 <app-simulador-padrao [idCliente]="idCliente" [idContratante]="idContratante"
   [numeroContrato]="obterPrimeiroContratoSelecionado()" [numeroDocumento]="numeroDocumento"

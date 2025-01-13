@@ -12,7 +12,7 @@
             <div class="col-md-2 d-flex align-items-center justify-content-center">
               <div class="d-flex align-items-center">
                 <i class="fas fa-sms font-size-24" style="color: #1DA1F2; margin-right: 5px;"></i>
-                <p class="text-truncate font-size-13 mb-0"><strong>Sms:</strong> {{ qtdeSms }} / {{ totalSms |
+                <p class="text-truncate card-texto font-size-13 mb-0"><strong>Sms:</strong> {{ qtdeSms }} / {{ totalSms |
                   currency:'BRL'}}</p>
               </div>
             </div>
@@ -20,7 +20,7 @@
             <div class="col-md-2 d-flex align-items-center justify-content-center">
               <div class="d-flex align-items-center">
                 <i class="fab fa-whatsapp whatsapp-icon font-size-24" style="color: #25D366; margin-right: 5px;"></i>
-                <p class="text-truncate font-size-13 mb-0"><strong>Whatsapp:</strong> {{ qtdeWhatsapp }} / {{
+                <p class="text-truncate card-texto font-size-13 mb-0"><strong>Whatsapp:</strong> {{ qtdeWhatsapp }} / {{
                   totalWhatsapp | currency:'BRL'}}</p>
               </div>
             </div>
@@ -28,7 +28,7 @@
             <div class="col-md-2 d-flex align-items-center justify-content-center">
               <div class="d-flex align-items-center">
                 <i class="fas fa-envelope font-size-24" style="color: #FFA500; margin-right: 5px;"></i>
-                <p class="text-truncate font-size-13 mb-0"><strong>Email:</strong> {{ qtdeEmail }} / {{ totalEmail |
+                <p class="text-truncate card-texto font-size-13 mb-0"><strong>Email:</strong> {{ qtdeEmail }} / {{ totalEmail |
                   currency:'BRL' }}</p>
               </div>
             </div>
@@ -36,7 +36,7 @@
             <div class="col-md-2 d-flex align-items-center justify-content-center">
               <div class="d-flex align-items-center">
                 <i class="fas fa-credit-card font-size-24" style="color: #5664d2; margin-right: 5px;"></i>
-                <p class="text-truncate font-size-13 mb-0"><strong>Utilizado:</strong> {{ totalUtilizado |
+                <p class="text-truncate card-texto font-size-13 mb-0"><strong>Utilizado:</strong> {{ totalUtilizado |
                   currency:'BRL' }}</p>
               </div>
             </div>
@@ -44,13 +44,13 @@
             <div class="col-md-2 d-flex align-items-center justify-content-center">
               <div class="d-flex align-items-center">
                 <i class="fas fa-university font-size-24" style="color: #5664d2; margin-right: 5px;"></i>
-                <p class="text-truncate font-size-13 mb-0"><strong>Saldo:</strong> {{ saldo | currency:'BRL' }}</p>
+                <p class="text-truncate card-texto font-size-13 mb-0"><strong>Saldo:</strong> {{ saldo | currency:'BRL' }}</p>
               </div>
             </div>
 
             <div class="col-md-2 d-flex align-items-center justify-content-center">
               <div class="modal-title" style="cursor: pointer;" (click)="this.abrirCreditoModal()">
-                <p class="text-truncate mb-0" style="font-size: 13px; display: flex; align-items: center;">
+                <p class="text-truncate card-texto  mb-0" style="font-size: 13px; display: flex; align-items: center;">
                   <img src="assets/images/pix.svg" style="width: 24px; height: 24px; margin-right: 5px;"> Créditos
                 </p>
               </div>
