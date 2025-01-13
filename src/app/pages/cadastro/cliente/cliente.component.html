@@ -27,7 +27,8 @@
             <div class="flex-1 overflow-hidden">
               <div class="d-flex justify-content-left mb-3">
                 <input type="text" class="form-control form-control-sm me-2" [(ngModel)]="textoPesquisa"
-                  placeholder="Pesquisar cliente existente..." style="width: 400px;">
+                  placeholder="Pesquisar cliente existente..." style="width: 400px;"
+                  [ngClass]="{'is-invalid': campoInvalido}" (blur)="validarCampo()">
                 <button type="button" class="btn btn-secondary btn-sm" (click)="pesquisaClientes()"><i
                     class="fas fa-search me-2"></i> Pesquisar </button>
               </div>

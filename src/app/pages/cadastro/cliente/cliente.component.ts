@@ -31,6 +31,7 @@ export class ClienteComponent {
   public editar: boolean = true;
   public cep = new CepModel();
   public textoPesquisa: string = "";
+  public campoInvalido: boolean = false;
 
   constructor(
     private _retornoCep: ConsultaCepService,
@@ -97,6 +98,7 @@ export class ClienteComponent {
   pesquisaClientes(): void {
     this.mostrarCardCliente = false;
     if (!this.textoPesquisa.trim()) {
+      this.validarCampo();
       this._alert.warning('Por favor, insira um cpf ou nome para a pesquisa o cliente.');
       return;
     }
@@ -135,6 +137,11 @@ export class ClienteComponent {
       }
     });
   }
+
+  public validarCampo() {
+    this.campoInvalido = !this.textoPesquisa || this.textoPesquisa.trim().length === 0;
+  }
+
 
   public obterContratantes() {
     this._contratante.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
