@@ -10,6 +10,7 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
 import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
 import { Utils } from 'src/app/core/helpers/utils';
+import { ExcelService } from 'src/app/core/services/excel.service';
 
 @Component({
   selector: 'app-acionamentos-sintetico',
@@ -50,6 +51,7 @@ export class AcionamentosSinteticoComponent implements OnInit {
     private _alert: AlertService,
     private _datePipe: DatePipe,
     private _contratante: ContratanteService,
+    private _excelService: ExcelService
   ) { }
 
   ngOnInit() {
@@ -101,6 +103,10 @@ export class AcionamentosSinteticoComponent implements OnInit {
       controle?.markAsTouched();
       controle?.updateValueAndValidity();
     });
+  }
+
+  public exportExcel() {
+    this._excelService.exportAsExcelFile(this.acio_Analitico, 'exportacaoAcionamentoAnalitico');
   }
 
   public obterAcionamentosSintetico() {
