@@ -7,6 +7,7 @@
             <h5 class="mb-0"><i class="fas fa-bell acionamento-icon"></i> Filtrar Acionamentos </h5>
           </div>
         </div>
+
         <div class="card-body">
           <form [formGroup]="formPesquisar">
             <div class="row">
@@ -63,8 +64,16 @@
           <div class="spinner-border text-primary m-1" role="status">
           </div>
         </div>
-        <div class="card-body">
-          <h4 class="card-title">Acionamentos Sintetico</h4>
+
+        <div class="card-header pt-2 pb-2">
+          <div class="row">
+            <div class="col-md-6">
+              <h5 class="mb-0"> Acionamentos Sintetico </h5>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body" style="padding: 10px;">
           <div class="table-responsive" style="margin-top: 10px; max-height: 380px; overflow-y: auto;">
             <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
               <thead class="tabela-custom" style="position: sticky; top: 0; z-index: 1;">
@@ -101,8 +110,15 @@
           </div>
         </div>
 
+        <div class="card-header pt-2 pb-2">
+          <div class="row">
+            <div class="col-md-8">
+              <h5 class="mb-0"> Grafico </h5>
+            </div>
+          </div>
+        </div>
+
         <div class="card-body">
-          <h4 class="card-title mb-4">Grafico</h4>
           <apx-chart class="apex-charts" dir="ltr" [series]="columnlabelChart.series" [chart]="columnlabelChart.chart"
             [plotOptions]="columnlabelChart.plotOptions" [yaxis]="columnlabelChart.yaxis"
             [title]="columnlabelChart.title" [stroke]="columnlabelChart.stroke"
