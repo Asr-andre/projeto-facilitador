@@ -1,0 +1,52 @@
+<div *ngIf="carregandoDados" class="text-center">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Carregando...</span>
+  </div>
+  <p class="mt-2 text-muted">Carregando dados...</p>
+</div>
+
+<div *ngIf="!carregandoDados" class="row">
+  <div class="col-lg-6 mb-4">
+    <div class="card shadow-lg border-0 rounded-3">
+      <div class="card-header">
+        <h5 class="mb-0">Ações Realizadas por Contratante</h5>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+          <table class="table table-sm table-hover table-bordered table-striped">
+            <thead class="bg-light" style="position: sticky; top: 0; background-color: #f8f9fa; z-index: 1;">
+              <tr>
+                <th>Contratante</th>
+                <th>Ação</th>
+                <th>Quantidade</th>
+                <th>Última Data da Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dadosTabela">
+                <td>{{ item.contratante }}</td>
+                <td>{{ item.acao }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>{{ formatarData(item.ultimaData) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6 mb-4">
+    <div class="card shadow-lg border-0 rounded-3">
+      <div class="card-header">
+        <h5 class="mb-0">Quantidade de Ações por Contratante</h5>
+      </div>
+      <div class="card-body p-0">
+        <div class="container-grafico">
+          <apx-chart [series]="opcoesGrafico.series" [chart]="opcoesGrafico.chart" [xaxis]="opcoesGrafico.xaxis"
+            [title]="opcoesGrafico.title"></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

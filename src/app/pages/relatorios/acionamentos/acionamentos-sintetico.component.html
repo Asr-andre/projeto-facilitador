@@ -11,7 +11,8 @@
           <div class="col-md-12">
             <h5 class="mb-0">
               <i class="fas fa-bell acionamento-icon"></i>
-              {{ tipoRelatorio === '2' ? 'Relatório Sintético de Acionamentos' : 'Relatório Analítico de Acionamentos' }}
+              {{ tipoRelatorio === '2' ? 'Relatório Sintético de Acionamentos' : 'Relatório Analítico de Acionamentos'
+              }}
             </h5>
           </div>
         </div>
@@ -27,17 +28,18 @@
                   <option value="">Selecione</option>
                   <option value="1">Analitico</option>
                   <option value="2">Sintetico</option>
+                  <option value="3">Ações Realizadas por Contratante</option>
                 </select>
               </div>
 
               <div class="col-md-2 form-group">
-                <label for="id_contratante" class="form-label">Contratante <i
-                  class="fas fa-info-circle text-info ms-1"
-                  style="cursor: pointer;"
-                  ngbTooltip="Selecione um contratante para realizar a pesquisa. Caso contrário, serão exibidos os acionamentos de todos os contratantes."
-                  placement="left">
-                </i></label>
-                <select type="text" class="form-control form-control-sm" formControlName="id_contratante" (focus)="carregarContratantes()">
+                <label for="id_contratante" class="form-label">Contratante <i class="fas fa-info-circle text-info ms-1"
+                    style="cursor: pointer;"
+                    ngbTooltip="Selecione um contratante para realizar a pesquisa. Caso contrário, serão exibidos os acionamentos de todos os contratantes."
+                    placement="left">
+                  </i></label>
+                <select type="text" class="form-control form-control-sm" formControlName="id_contratante"
+                  (focus)="carregarContratantes()">
                   <option value="0">Selecione</option>
                   <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">
                     {{ contratante.fantasia }}
@@ -47,25 +49,24 @@
 
               <div class="col-md-2 form-group">
                 <label for="data_inicio" class="form-label">Data Inicio</label>
-                <input type="date" id="data_inicio" class="form-control form-control-sm"
-                  formControlName="data_inicio"
-                  [ngClass]="{'is-invalid': formPesquisar.get('data_inicio').invalid && formPesquisar.get('data_inicio').touched}"/>
+                <input type="date" id="data_inicio" class="form-control form-control-sm" formControlName="data_inicio"
+                  [ngClass]="{'is-invalid': formPesquisar.get('data_inicio').invalid && formPesquisar.get('data_inicio').touched}" />
               </div>
 
               <div class="col-md-2 form-group">
                 <label for="data_fim" class="form-label">Data Fim</label>
                 <input type="date" id="data_fim" class="form-control form-control-sm" formControlName="data_fim"
-                [ngClass]="{'is-invalid': formPesquisar.get('data_fim').invalid && formPesquisar.get('data_fim').touched}"/>
+                  [ngClass]="{'is-invalid': formPesquisar.get('data_fim').invalid && formPesquisar.get('data_fim').touched}" />
               </div>
 
               <div class="col-md-2 form-group">
-                <label for="id_usuario" class="form-label">Usuário <i
-                  class="fas fa-info-circle text-info ms-1"
-                  style="cursor: pointer;"
-                  ngbTooltip="Selecione um usuário para realizar a pesquisa. Caso contrário, serão exibidos os acionamentos de todos os usuários."
-                  placement="left">
-                </i></label>
-                <select type="text" class="form-control form-control-sm" formControlName="id_usuario" (focus)="carregarUsuarios()">
+                <label for="id_usuario" class="form-label">Usuário <i class="fas fa-info-circle text-info ms-1"
+                    style="cursor: pointer;"
+                    ngbTooltip="Selecione um usuário para realizar a pesquisa. Caso contrário, serão exibidos os acionamentos de todos os usuários."
+                    placement="left">
+                  </i></label>
+                <select type="text" class="form-control form-control-sm" formControlName="id_usuario"
+                  (focus)="carregarUsuarios()">
                   <option value="0">Selecione</option>
                   <option *ngFor="let usuario of usuarios" [value]="usuario.id_usuario">
                     {{ usuario.login }}
@@ -86,15 +87,16 @@
   </div>
 
   <div *ngIf="tipoRelatorio === '1' && exibirCard">
-    <app-analitico
-          [filtros]="filtros">
+    <app-analitico [filtros]="filtros">
     </app-analitico>
   </div>
 
   <div *ngIf="tipoRelatorio === '2' && exibirCard">
-    <app-sintetico
-          [filtros]="filtros">
+    <app-sintetico [filtros]="filtros">
     </app-sintetico>
   </div>
 
-
+  <div *ngIf="tipoRelatorio === '3' && exibirCard">
+    <app-acoes-realizadas-por-contratante [filtros]="filtros">
+    </app-acoes-realizadas-por-contratante>
+  </div>

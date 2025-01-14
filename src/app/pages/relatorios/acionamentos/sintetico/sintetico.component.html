@@ -1,11 +1,13 @@
-<div class="row">
+<div *ngIf="loadingMin" class="text-center">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Carregando...</span>
+  </div>
+  <p class="mt-2 text-muted">Carregando dados...</p>
+</div>
+
+<div *ngIf="!loadingMin" class="row">
   <div class="col-lg-4">
     <div class="card">
-      <div class="loading-overlay-card" *ngIf="loadingMin">
-        <div class="spinner-border text-primary m-1" role="status">
-        </div>
-      </div>
-
       <div class="card-header pt-2 pb-2">
         <div class="row">
           <div class="col-md-6">
@@ -14,10 +16,10 @@
         </div>
       </div>
 
-      <div class="card-body" style="padding: 10px;">
-        <div class="table-responsive" style="margin-top: 10px; max-height: 380px; overflow-y: auto;">
-          <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
-            <thead class="tabela-custom" style="position: sticky; top: 0; z-index: 1;">
+      <div class="card-body p-0">
+        <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+          <table class="table table-sm table-hover table-bordered table-striped">
+            <thead class="bg-light" style="position: sticky; top: 0; background-color: #f8f9fa; z-index: 1;">
               <tr>
                 <th class="text-start">Descricao</th>
                 <th class="text-center">Total</th>
@@ -44,10 +46,6 @@
 
   <div class="col-lg-8">
     <div class="card">
-      <div class="loading-overlay-card" *ngIf="loadingMin">
-        <div class="spinner-border text-primary m-1" role="status">
-        </div>
-      </div>
 
       <div class="card-header pt-2 pb-2">
         <div class="row">

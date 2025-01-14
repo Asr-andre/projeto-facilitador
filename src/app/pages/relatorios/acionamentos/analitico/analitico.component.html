@@ -1,18 +1,21 @@
-<div class="row">
+<div *ngIf="loadingMin" class="text-center">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Carregando...</span>
+  </div>
+  <p class="mt-2 text-muted">Carregando dados...</p>
+</div>
+
+<div *ngIf="!loadingMin" class="row">
   <div class="col-lg-12">
     <div class="card">
-      <div class="loading-overlay-card" *ngIf="loadingMin">
-        <div class="spinner-border text-primary m-1" role="status">
-        </div>
-      </div>
       <div class="card-header pt-2 pb-2">
         <div class="row">
           <div class="col-md-6">
             <h5 class="mb-0"> Acionamentos Analitico </h5>
           </div>
           <div class="col-md-6 text-end" style="padding-right: 8px;">
-            <button class="btn btn-secondary btn-sm"
-              style="padding-top: 2px; padding-bottom: 2px;" (click)="exportExcel()">
+            <button class="btn btn-secondary btn-sm" style="padding-top: 2px; padding-bottom: 2px;"
+              (click)="exportExcel()">
               <i class="fas fa-download"></i>
               <strong> Exportar para Excel </strong>
             </button>
