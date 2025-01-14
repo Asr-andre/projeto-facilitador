@@ -9,7 +9,10 @@
       <div class="card">
         <div class="card-header pt-2 pb-2">
           <div class="col-md-12">
-            <h5 class="mb-0"><i class="fas fa-bell acionamento-icon"></i> Filtrar Acionamentos </h5>
+            <h5 class="mb-0">
+              <i class="fas fa-bell acionamento-icon"></i>
+              {{ tipoRelatorio === '2' ? 'Relatório Sintético de Acionamentos' : 'Relatório Analítico de Acionamentos' }}
+            </h5>
           </div>
         </div>
 
@@ -28,7 +31,7 @@
               </div>
 
               <div class="col-md-2 form-group">
-                <label for="id_contratante" class="form-label">Usuário <i
+                <label for="id_contratante" class="form-label">Contratante <i
                   class="fas fa-info-circle text-info ms-1"
                   style="cursor: pointer;"
                   ngbTooltip="Selecione um contratante para realizar a pesquisa. Caso contrário, serão exibidos os acionamentos de todos os contratantes."
@@ -94,7 +97,7 @@
         <div class="card-header pt-2 pb-2">
           <div class="row">
             <div class="col-md-6">
-              <h5 class="mb-0"> Acionamentos Sintetico </h5>
+              <h6 class="mb-0">Relatório Sintético </h6>
             </div>
           </div>
         </div>
@@ -104,14 +107,12 @@
             <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
               <thead class="tabela-custom" style="position: sticky; top: 0; z-index: 1;">
                 <tr>
-                  <th class="text-start">Usúario</th>
                   <th class="text-start">Descricao</th>
                   <th class="text-center">Total</th>
                 </tr>
               </thead>
               <tbody *ngIf="acio_sintetico.length > 0; else semDado">
                 <tr *ngFor="let dado of acio_sintetico">
-                  <td class="text-start"> {{ dado.login }} </td>
                   <td class="text-start"> {{ dado.descricao }} </td>
                   <td class="text-center"> {{ dado.total }} </td>
                 </tr>
@@ -139,7 +140,7 @@
         <div class="card-header pt-2 pb-2">
           <div class="row">
             <div class="col-md-8">
-              <h5 class="mb-0"> Grafico </h5>
+              <h6 class="mb-0"> Reflete os dados apresentados na tabela </h6>
             </div>
           </div>
         </div>
