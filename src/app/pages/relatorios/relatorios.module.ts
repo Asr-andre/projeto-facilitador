@@ -9,10 +9,11 @@ import { OrderTableModule } from 'src/app/core/helpers/conf-tabela/order-table.m
 import { AcionamentosSinteticoComponent } from './acionamentos/acionamentos-sintetico.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AnaliticoComponent } from './acionamentos/analitico/analitico.component';
 
 @NgModule({
 
-  declarations: [DashboardComponent, FinanceiroComponent, AcionamentosSinteticoComponent],
+  declarations: [DashboardComponent, FinanceiroComponent, AcionamentosSinteticoComponent, AnaliticoComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="loading-overlay-card" *ngIf="loadingMin">
+        <div class="spinner-border text-primary m-1" role="status">
+        </div>
+      </div>
+      <div class="card-header pt-2 pb-2">
+        <div class="row">
+          <div class="col-md-6">
+            <h5 class="mb-0"> Acionamentos Analitico </h5>
+          </div>
+          <div class="col-md-6 text-end" style="padding-right: 8px;">
+            <button class="btn btn-secondary btn-sm"
+              style="padding-top: 2px; padding-bottom: 2px;" (click)="exportExcel()">
+              <i class="fas fa-download"></i>
+              <strong> Exportar para Excel </strong>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body" style="padding: 10px;">
+        <div class="table-responsive" style="margin-top: 10px; max-height: 600px; overflow-y: auto;">
+          <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
+            <thead class="tabela-custom" style="position: sticky; top: 0; z-index: 1;">
+              <tr>
+                <th>Contratante</th>
+                <th>Cliente</th>
+                <th>Usuário</th>
+                <th>Data Acionamento</th>
+                <th>Data Proximo Acionamento</th>
+                <th>Ação</th>
+                <th>Mensagem</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="acio_Analitico.length > 0; else semDados">
+              <tr *ngFor="let dado of acio_Analitico">
+                <td> {{ dado.contratante }} </td>
+                <td> {{ dado.cliente }} </td>
+                <td> {{ dado.usuario }} </td>
+                <td> {{ data(dado.data_acio) }} </td>
+                <td> {{ data(dado.data_prox_acio) }} </td>
+                <td> {{ dado.acao }} </td>
+                <td> {{ dado.mensagem }} </td>
+              </tr>
+            </tbody>
+            <ng-template #semDados>
+              <tbody>
+                <tr>
+                  <td colspan="12" class="text-center">Nenhum Acionamento para exibir.</td>
+                </tr>
+              </tbody>
+            </ng-template>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
