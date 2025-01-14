@@ -78,6 +78,8 @@
                         <td>{{ data(contratante.data_cadastro) }}</td>
                         <td>{{ contratante.ativo === 'S' ? 'Sim' : 'Não' }}</td>
                         <td class="text-end">
+                          <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Visualizar detalhe do contratante"><i class="mdi mdi-eye font-size-18" style="color: gray"
+                            (click)="abriModalResumo(modalResumo, contratante)"></i></a>
                           <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18"
                             (click)="abriModalEditar(modalGenerico, contratante)"></i></a>
                         </td>
@@ -193,35 +195,35 @@
           </div>
           <div class="col-md-3 form-group">
             <label for="id_perfilemail" class="form-label">Perfil Email</label>
-            <select class="form-control form-control-sm mb-1" formControlName="id_perfilemail">
+            <select class="form-control form-control-sm mb-1" formControlName="id_perfilemail" (focus)="carregarPerfilEmail()">
               <option value="">Selecione</option>
               <option *ngFor="let perfil of emailConta" [value]="perfil.id_perfilemail">{{ perfil.email }}</option>
             </select>
           </div>
           <div class="col-md-3 form-group">
             <label for="id_formula" class="form-label">Formula</label>
-            <select class="form-control form-control-sm mb-1" formControlName="id_formula">
+            <select class="form-control form-control-sm mb-1" formControlName="id_formula" (focus)="carregarFormula()">
               <option value="">Selecione</option>
               <option *ngFor="let perfil of perfilFormula" [value]="perfil.id_formula">{{ perfil.descricao }}</option>
             </select>
           </div>
           <div class="col-md-3 form-group">
             <label for="id_perfilsms" class="form-label">Perfil Sms</label>
-            <select class="form-control form-control-sm mb-1" formControlName="id_perfilsms">
+            <select class="form-control form-control-sm mb-1" formControlName="id_perfilsms" (focus)="carregarSms()">
               <option value="">Selecione</option>
               <option *ngFor="let perfil of perfilSms" [value]="perfil.id_perfilsms">{{ perfil.empresa }}</option>
             </select>
           </div>
           <div class="col-md-3 form-group">
             <label for="id_perfilwhatsapp" class="form-label">Perfil Whatsapp</label>
-            <select class="form-control form-control-sm mb-1" formControlName="id_perfilwhatsapp">
+            <select class="form-control form-control-sm mb-1" formControlName="id_perfilwhatsapp" (focus)="carregarWhatsApp()">
               <option value="">Selecione</option>
               <option *ngFor="let sms of msg" [value]="sms.id_perfilwhatsapp">{{ sms.titulo }}</option>
             </select>
           </div>
           <div class="col-md-3 form-group">
             <label for="id_perfiltextoemailid_perfiltextoemail" class="form-label">Perfil Email Texto</label>
-            <select class="form-control form-control-sm mb-1" formControlName="id_perfiltextoemail">
+            <select class="form-control form-control-sm mb-1" formControlName="id_perfiltextoemail" (focus)="carregarPerfilEmail()">
               <option value="">Selecione</option>
               <option *ngFor="let perfil of emailConta" [value]="perfil.id_perfilemail">{{ perfil.email }}</option>
             </select>
@@ -241,3 +243,59 @@
       </form>
     </div>
   </ng-template>
+
+  <ng-template #modalResumo let-modal>
+    <div class="modal-header modal-header-custom" style="background-color: rgb(124 124 124);">
+      <h6 class="modal-title" style="color: #ffffff">
+        <i class="fas fa-building"></i> {{ titulo }}
+      </h6>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
+    </div>
+
+    <div class="modal-body modal-padding">
+      <div class="container">
+        <h6 class="text-primary border-bottom pb-2 mb-3">Informações Básicas</h6>
+        <div class="row mb-3">
+          <div class="col-md-6  detalhamento-texto">
+            <p style="margin-bottom: 4px;"><strong>Id Contratante:</strong> {{ contratanteSelecionado.id_contratante }}</p>
+            <p style="margin-bottom: 4px;"><strong>CNPJ:</strong> {{ mascararCpfCnpj(contratanteSelecionado.cnpj) }}</p>
+            <p style="margin-bottom: 4px;"><strong>Razão Social:</strong> {{ contratanteSelecionado.razao_social }}</p>
+            <p style="margin-bottom: 4px;"><strong>Fantasia:</strong> {{ contratanteSelecionado.fantasia }}</p>
+            <p style="margin-bottom: 4px;"><strong>Endereço:</strong> {{ contratanteSelecionado.endereco }}, {{ contratanteSelecionado.numero }}</p>
+            <p style="margin-bottom: 4px;"><strong>Complemento:</strong> {{ contratanteSelecionado.complemento }}</p>
+            <p style="margin-bottom: 4px;"><strong>Bairro:</strong> {{ contratanteSelecionado.bairro }}</p>
+            <p style="margin-bottom: 4px;"><strong>Cidade/UF:</strong> {{ contratanteSelecionado.cidade }} / {{ contratanteSelecionado.uf }}</p>
+            <p style="margin-bottom: 4px;"><strong>CEP:</strong> {{ mascararCep(contratanteSelecionado.cep) }}</p>
+          </div>
+          <div class="col-md-6  detalhamento-texto">
+            <p style="margin-bottom: 4px;"><strong>Telefone:</strong> {{ mascararTelefone(contratanteSelecionado.telefone) }}</p>
+            <p style="margin-bottom: 4px;"><strong>Celular:</strong> {{ mascararTelefone(contratanteSelecionado.celular) }}</p>
+            <p style="margin-bottom: 4px;"><strong>Status:</strong> {{ contratanteSelecionado.ativo ? 'Ativo' : 'Inativo' }}</p>
+            <p style="margin-bottom: 4px;"><strong>Código Credor:</strong> {{ contratanteSelecionado.codigo_credor }}</p>
+          </div>
+        </div>
+
+        <h6 class="text-primary border-bottom pb-2 mb-3">Perfis e Configurações</h6>
+        <div class="row">
+          <div class="col-md-6 detalhamento-texto">
+            <p style="margin-bottom: 4px;"><strong>Id Fórmula:</strong> {{ contratanteSelecionado.id_formula }}</p>
+            <p style="margin-bottom: 4px;"><strong>Id Perfil Email:</strong> {{ contratanteSelecionado.id_perfilemail }}</p>
+            <p style="margin-bottom: 4px;"><strong>Id Perfil SMS:</strong> {{ contratanteSelecionado.id_perfilsms }}</p>
+            <p style="margin-bottom: 4px;"><strong>Id Perfil WhatsApp:</strong> {{ contratanteSelecionado.id_perfilwhatsapp }}</p>
+            <p style="margin-bottom: 4px;"><strong>Id Perfil Texto Email:</strong> {{ contratanteSelecionado.id_perfiltextoemail }}</p>
+          </div>
+          <div class="col-md-6  detalhamento-texto">
+            <p style="margin-bottom: 4px;"><strong>Data Cadastro:</strong> {{ data(contratanteSelecionado.data_cadastro) }}</p>
+            <p style="margin-bottom: 4px;"><strong>Data Alteração:</strong> {{ data(contratanteSelecionado.data_alteracao) }}</p>
+            <p style="margin-bottom: 4px;"><strong>User Login:</strong> {{ contratanteSelecionado.user_login }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()"><i class="fas fa-times"></i>
+        Cancelar</button>
+    </div>
+  </ng-template>
+
+

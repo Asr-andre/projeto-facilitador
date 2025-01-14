@@ -79,13 +79,13 @@ export class AcionamentosSinteticoComponent implements OnInit {
     });
   }
 
-  carregarContratantes(): void {
+  public carregarContratantes(): void {
     if (!this.contratantesCarregados) {
       this.obterContratantes();
     }
   }
 
-  carregarUsuarios(): void {
+  public carregarUsuarios(): void {
     if (!this.usuariosCarregados) {
       this.obterUsuarios();
     }

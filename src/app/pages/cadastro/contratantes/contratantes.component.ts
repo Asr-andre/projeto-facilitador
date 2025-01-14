@@ -42,6 +42,9 @@ export class ContratantesComponent implements OnInit {
   public cep = new CepModel();
   public estados = EstadosDoBrasil;
   public editar: boolean = false;
+  public contratanteSelecionado: ContratanteModel; // Um único objeto
+  public titulo: string = '';
+
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -52,6 +55,11 @@ export class ContratantesComponent implements OnInit {
   public qtdRegistrosPorPagina = [10, 25, 50, 100];
   public direcaoOrdenacao: { [key: string]: string } = {};
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<ContratanteModel>>;
+
+  public perfilEmailCarregado = false;
+  public formulaCarregado = false;
+  public smsCarregado = false;
+  public watsAppCarregado = false;
 
   constructor(
     private _retornoCep: ConsultaCepService,
@@ -69,14 +77,6 @@ export class ContratantesComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.loading = true;
     try {
-      await this.obterMsgs();
-      await this.delay(3000);
-      await this.obterEmailConta();
-      await this.delay(3000);
-      await this.obterPerfilSms();
-      await this.delay(3000);
-      await this.obterPerfilFormula();
-      await this.delay(3000);
       await this.obterContratantes();
       await this.inicializarformContratante();
     } catch (error) {
@@ -117,6 +117,35 @@ export class ContratantesComponent implements OnInit {
     });
   }
 
+  public carregarPerfilEmail(): void {
+    if (!this.perfilEmailCarregado) {
+      this.obterEmailConta();
+    }
+  }
+
+  public carregarFormula(): void {
+    if (!this.formulaCarregado) {
+      this.obterPerfilFormula();
+    }
+  }
+
+  public carregarSms(): void {
+    if (!this.smsCarregado) {
+      this.obterPerfilSms();
+    }
+  }
+
+  public carregarWhatsApp(): void {
+    if (!this.watsAppCarregado) {
+      this.obterMsgs();
+    }
+  }
+  public carregarEmail(): void {
+    if (!this.perfilEmailCarregado) {
+      this. obterEmailConta();
+    }
+  }
+
   public viaCep(cep) {
     if(cep) {
       this._retornoCep.consultarCep(cep).then((cep: CepModel) => {
@@ -153,6 +182,7 @@ export class ContratantesComponent implements OnInit {
 
         if (res.success === "true") {
           this.emailConta = res.perfil;
+          this.perfilEmailCarregado = true;
           resolve();
         } else {
           this._alertService.error(res.msg);
@@ -181,6 +211,7 @@ export class ContratantesComponent implements OnInit {
 
         if (res.success === "true") {
           this.msg = res.perfil_whatsapp;
+          this.watsAppCarregado = true;
           resolve();
         } else {
           this._alertService.error(res.msg);
@@ -209,6 +240,7 @@ export class ContratantesComponent implements OnInit {
 
         if (res.success === "true") {
           this.perfilSms = res.perfil_sms;
+          this.smsCarregado = true;
           resolve();
         } else {
           this._alertService.error(res.msg);
@@ -237,6 +269,7 @@ export class ContratantesComponent implements OnInit {
 
         if (res.success === "true") {
           this.perfilFormula = res.formulas;
+          this.formulaCarregado = true
           resolve();
         } else {
           this._alertService.error(res.msg);
@@ -335,6 +368,12 @@ export class ContratantesComponent implements OnInit {
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
+  public abriModalResumo(modalResumo: any, contratanteSelecionado: ContratanteModel): void {
+    this.titulo = 'Detalhes do Contratante';
+    this.contratanteSelecionado = contratanteSelecionado;
+    this._modalService.open(modalResumo, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
   public editarContratante() {
 
       this.loadingMin = true;
@@ -380,6 +419,13 @@ export class ContratantesComponent implements OnInit {
 
   public data(data) {
     return Utils.formatarDataParaExibicao(data);
+  }
+
+  public mascararTelefone(numero: string): string {
+    if (numero) {
+      return Utils.formatarTelefone(numero);
+    }
+    return numero;
   }
 
   public fechar() {
