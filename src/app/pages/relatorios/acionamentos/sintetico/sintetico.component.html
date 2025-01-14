@@ -6,14 +6,11 @@
 </div>
 
 <div *ngIf="!loadingMin" class="row">
-  <div class="col-lg-4">
-    <div class="card">
-      <div class="card-header pt-2 pb-2">
-        <div class="row">
-          <div class="col-md-6">
-            <h6 class="mb-0">Relatório Sintético </h6>
-          </div>
-        </div>
+  <div class="col-lg-4 mb-4">
+    <div class="card shadow-lg border-0 rounded-3">
+      <div class="card-header">
+        <h5 class="mb-0"><i class="fas fa-filter resultados-icon"></i>
+           Relatório Sintético </h5>
       </div>
 
       <div class="card-body p-0">
@@ -44,31 +41,24 @@
     </div>
   </div>
 
-  <div class="col-lg-8">
-    <div class="card">
-
-      <div class="card-header pt-2 pb-2">
-        <div class="row">
-          <div class="col-md-8">
-            <h6 class="mb-0">O grafico reflete os dados apresentados na tabela </h6>
-          </div>
-        </div>
+  <div class="col-lg-8 mb-4">
+    <div class="card shadow-lg border-0 rounded-3">
+      <div class="card-header">
+        <h5 class="mb-0">O grafico reflete os dados apresentado na tabela!</h5>
       </div>
-
-      <div class="card-body">
+      <div class="card-body p-0">
+        <div class="container-grafico">
         <div *ngIf="columnlabelChart?.series?.length > 0">
           <apx-chart class="apex-charts" dir="ltr" [series]="columnlabelChart.series" [chart]="columnlabelChart.chart"
-          [plotOptions]="columnlabelChart.plotOptions" [yaxis]="columnlabelChart.yaxis"
-          [title]="columnlabelChart.title" [stroke]="columnlabelChart.stroke"
-          [dataLabels]="columnlabelChart.dataLabels" [xaxis]="columnlabelChart.xaxis"
-          [legend]="columnlabelChart.legend" [colors]="columnlabelChart.colors" [fill]="columnlabelChart.fill">
-        </apx-chart>
+            [plotOptions]="columnlabelChart.plotOptions" [yaxis]="columnlabelChart.yaxis" [title]="columnlabelChart.title"
+            [stroke]="columnlabelChart.stroke" [dataLabels]="columnlabelChart.dataLabels" [xaxis]="columnlabelChart.xaxis"
+            [legend]="columnlabelChart.legend" [colors]="columnlabelChart.colors" [fill]="columnlabelChart.fill">
+          </apx-chart>
         </div>
+    </div>
 
-        <div *ngIf="!columnlabelChart?.series?.length">
-          <p class="text-center">Nenhum gráfico disponível para os dados apresentados.</p>
-        </div>
-      </div>
+    <div *ngIf="!columnlabelChart?.series?.length">
+      <p class="text-center">Nenhum gráfico disponível para os dados apresentados.</p>
     </div>
   </div>
 </div>

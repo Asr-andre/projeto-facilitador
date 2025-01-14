@@ -7,11 +7,12 @@
 
 <div *ngIf="!loadingMin" class="row">
   <div class="col-lg-12">
-    <div class="card">
+    <div class="card shadow-lg border-0 rounded-3">
       <div class="card-header pt-2 pb-2">
         <div class="row">
           <div class="col-md-6">
-            <h5 class="mb-0"> Acionamentos Analitico </h5>
+            <h5 class="mb-0"><i class="fas fa-filter resultados-icon"></i>
+               Acionamentos Analitico </h5>
           </div>
           <div class="col-md-6 text-end" style="padding-right: 8px;">
             <button class="btn btn-secondary btn-sm" style="padding-top: 2px; padding-bottom: 2px;"
@@ -23,20 +24,19 @@
         </div>
       </div>
 
-      <div class="card-body" style="padding: 10px;">
-        <div class="table-responsive" style="margin-top: 10px; max-height: 600px; overflow-y: auto;">
-          <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
-            <thead class="tabela-custom" style="position: sticky; top: 0; z-index: 1;">
+      <div class="card-body p-0">
+        <div class="table-responsive" style="max-height: 600px; overflow-y: auto;">
+          <table class="table table-sm table-hover table-bordered table-striped">
+            <thead class="bg-light" style="position: sticky; top: 0; background-color: #f8f9fa; z-index: 1;">
               <tr>
-                <th>Contratante</th>
-                <th>Cliente</th>
-                <th>Usuário</th>
-                <th>Data Acionamento</th>
-                <th>Data Proximo Acionamento</th>
-                <th>Ação</th>
-                <th>Mensagem</th>
+                <th class="no-wrap">Contratante</th>
+                <th class="no-wrap">Cliente</th>
+                <th class="no-wrap">Usuário</th>
+                <th class="no-wrap">Data Acionamento</th>
+                <th class="no-wrap">Data Proximo Acionamento</th>
+                <th class="no-wrap">Ação</th>
+                <th class="no-wrap">Mensagem</th>
               </tr>
-            </thead>
             <tbody *ngIf="acio_Analitico.length > 0; else semDados">
               <tr *ngFor="let dado of acio_Analitico">
                 <td> {{ dado.contratante }} </td>
