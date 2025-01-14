@@ -264,10 +264,11 @@
             <p style="margin-bottom: 4px;"><strong>Endereço:</strong> {{ contratanteSelecionado.endereco }}, {{ contratanteSelecionado.numero }}</p>
             <p style="margin-bottom: 4px;"><strong>Complemento:</strong> {{ contratanteSelecionado.complemento }}</p>
             <p style="margin-bottom: 4px;"><strong>Bairro:</strong> {{ contratanteSelecionado.bairro }}</p>
-            <p style="margin-bottom: 4px;"><strong>Cidade/UF:</strong> {{ contratanteSelecionado.cidade }} / {{ contratanteSelecionado.uf }}</p>
-            <p style="margin-bottom: 4px;"><strong>CEP:</strong> {{ mascararCep(contratanteSelecionado.cep) }}</p>
+
           </div>
           <div class="col-md-6  detalhamento-texto">
+            <p style="margin-bottom: 4px;"><strong>Cidade/UF:</strong> {{ contratanteSelecionado.cidade }} / {{ contratanteSelecionado.uf }}</p>
+            <p style="margin-bottom: 4px;"><strong>CEP:</strong> {{ mascararCep(contratanteSelecionado.cep) }}</p>
             <p style="margin-bottom: 4px;"><strong>Telefone:</strong> {{ mascararTelefone(contratanteSelecionado.telefone) }}</p>
             <p style="margin-bottom: 4px;"><strong>Celular:</strong> {{ mascararTelefone(contratanteSelecionado.celular) }}</p>
             <p style="margin-bottom: 4px;"><strong>Status:</strong> {{ contratanteSelecionado.ativo ? 'Ativo' : 'Inativo' }}</p>
@@ -287,7 +288,7 @@
           <div class="col-md-6  detalhamento-texto">
             <p style="margin-bottom: 4px;"><strong>Data Cadastro:</strong> {{ data(contratanteSelecionado.data_cadastro) }}</p>
             <p style="margin-bottom: 4px;"><strong>Data Alteração:</strong> {{ data(contratanteSelecionado.data_alteracao) }}</p>
-            <p style="margin-bottom: 4px;"><strong>User Login:</strong> {{ contratanteSelecionado.user_login }}</p>
+            <p style="margin-bottom: 4px;"><strong>Login:</strong> {{ contratanteSelecionado.user_login }}</p>
           </div>
         </div>
       </div>
