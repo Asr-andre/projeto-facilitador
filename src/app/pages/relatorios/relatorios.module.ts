@@ -10,10 +10,11 @@ import { AcionamentosSinteticoComponent } from './acionamentos/acionamentos-sint
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AnaliticoComponent } from './acionamentos/analitico/analitico.component';
+import { SinteticoComponent } from './acionamentos/sintetico/sintetico.component';
 
 @NgModule({
 
-  declarations: [DashboardComponent, FinanceiroComponent, AcionamentosSinteticoComponent, AnaliticoComponent],
+  declarations: [DashboardComponent, FinanceiroComponent, AcionamentosSinteticoComponent, AnaliticoComponent, SinteticoComponent],
   imports: [
     CommonModule,
     FormsModule,

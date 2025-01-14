@@ -85,82 +85,16 @@
     </div>
   </div>
 
-  <!-- Relatorio sintetico-->
-  <div class="row" *ngIf="exibirCard && tipoRelatorio === '2'">
-    <div class="col-lg-4">
-      <div class="card">
-        <div class="loading-overlay-card" *ngIf="loadingMin">
-          <div class="spinner-border text-primary m-1" role="status">
-          </div>
-        </div>
-
-        <div class="card-header pt-2 pb-2">
-          <div class="row">
-            <div class="col-md-6">
-              <h6 class="mb-0">Relatório Sintético </h6>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-body" style="padding: 10px;">
-          <div class="table-responsive" style="margin-top: 10px; max-height: 380px; overflow-y: auto;">
-            <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
-              <thead class="tabela-custom" style="position: sticky; top: 0; z-index: 1;">
-                <tr>
-                  <th class="text-start">Descricao</th>
-                  <th class="text-center">Total</th>
-                </tr>
-              </thead>
-              <tbody *ngIf="acio_sintetico.length > 0; else semDado">
-                <tr *ngFor="let dado of acio_sintetico">
-                  <td class="text-start"> {{ dado.descricao }} </td>
-                  <td class="text-center"> {{ dado.total }} </td>
-                </tr>
-              </tbody>
-              <ng-template #semDado>
-                <tbody>
-                  <tr>
-                    <td colspan="3" class="text-center">Nenhum dado para exibir.</td>
-                  </tr>
-                </tbody>
-              </ng-template>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-8">
-      <div class="card">
-        <div class="loading-overlay-card" *ngIf="loadingMin">
-          <div class="spinner-border text-primary m-1" role="status">
-          </div>
-        </div>
-
-        <div class="card-header pt-2 pb-2">
-          <div class="row">
-            <div class="col-md-8">
-              <h6 class="mb-0">O grafico reflete os dados apresentados na tabela </h6>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-body">
-          <apx-chart class="apex-charts" dir="ltr" [series]="columnlabelChart.series" [chart]="columnlabelChart.chart"
-            [plotOptions]="columnlabelChart.plotOptions" [yaxis]="columnlabelChart.yaxis"
-            [title]="columnlabelChart.title" [stroke]="columnlabelChart.stroke"
-            [dataLabels]="columnlabelChart.dataLabels" [xaxis]="columnlabelChart.xaxis"
-            [legend]="columnlabelChart.legend" [colors]="columnlabelChart.colors" [fill]="columnlabelChart.fill">
-          </apx-chart>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div *ngIf="tipoRelatorio === '1' && exibirCard">
     <app-analitico
           [filtros]="filtros">
     </app-analitico>
+  </div>
+
+  <div *ngIf="tipoRelatorio === '2' && exibirCard">
+    <app-sintetico
+          [filtros]="filtros">
+    </app-sintetico>
   </div>
 
 
