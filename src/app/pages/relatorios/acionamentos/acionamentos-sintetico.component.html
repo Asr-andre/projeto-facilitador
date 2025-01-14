@@ -27,7 +27,8 @@
                   <option value="">Selecione</option>
                   <option value="1">Analitico</option>
                   <option value="2">Sintetico</option>
-                  <option value="3">Ações Realizadas por Contratante</option>
+                  <option value="3">Ações realizadas por contratante</option>
+                  <option value="4">Ações realizadas por usuário</option>
                 </select>
               </div>
 
@@ -98,4 +99,9 @@
   <div *ngIf="tipoRelatorio === '3' && exibirCard">
     <app-acoes-realizadas-por-contratante [filtros]="filtros">
     </app-acoes-realizadas-por-contratante>
+  </div>
+
+  <div *ngIf="tipoRelatorio === '4' && exibirCard">
+    <app-acoes-realizadas-por-usuario [filtros]="filtros">
+    </app-acoes-realizadas-por-usuario>
   </div>

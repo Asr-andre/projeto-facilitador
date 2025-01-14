@@ -12,11 +12,19 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AnaliticoComponent } from './acionamentos/analitico/analitico.component';
 import { SinteticoComponent } from './acionamentos/sintetico/sintetico.component';
 import { AcoesRealizadasPorContratanteComponent } from './acionamentos/acoes-realizadas-por-contratante/acoes-realizadas-por-contratante.component';
+import { AcoesRealizadasPorUsuarioComponent } from './acionamentos/acoes-realizadas-por-usuario/acoes-realizadas-por-usuario.component';
 
 @NgModule({
 
   declarations: [
-    DashboardComponent, FinanceiroComponent, AcionamentosSinteticoComponent, AnaliticoComponent, SinteticoComponent, AcoesRealizadasPorContratanteComponent],
+    DashboardComponent,
+    FinanceiroComponent,
+    AcionamentosSinteticoComponent,
+    AnaliticoComponent,
+    SinteticoComponent,
+    AcoesRealizadasPorContratanteComponent,
+    AcoesRealizadasPorUsuarioComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,

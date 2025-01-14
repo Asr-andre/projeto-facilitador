@@ -89,6 +89,11 @@ export class AcionamentosSinteticoComponent implements OnInit {
       this.filtros = this.formPesquisar.value;
     }
 
+    else if (this.tipoRelatorio === '4') {
+      this.exibirCard = true;
+      this.filtros = this.formPesquisar.value;
+    }
+
     else {
       this.exibirCard = false;
       this._alert.warning('Selecione um tipo de relatório antes de pesquisar.');
