@@ -22,6 +22,7 @@
                   <i class="mdi mdi-dots-vertical"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                  <a href="javascript:void(0);" class="dropdown-item" style="padding-left: 10px; padding-right: 10px; padding-top: 2px;padding-bottom: 2px; font-size: 13px;" (click)="abrirModalRelatorio(modalResumo)"><i class="fas fa-file-pdf"></i> Relatório</a>
                   <a href="javascript:void(0);" class="dropdown-item" style="padding-left: 10px; padding-right: 10px; padding-top: 2px;padding-bottom: 2px; font-size: 13px;" (click)="gerarPDF()"><i class="fas fa-file-pdf"></i> Exportar Pdf</a>
                   <a href="javascript:void(0);" class="dropdown-item" style="padding-left: 10px; padding-right: 10px;padding-top: 2px;padding-bottom: 2px; font-size: 13px;" (click)="exportExcel()"><i class="fas fa-file-excel"></i> Exporta Excel</a>
                 </div>
@@ -39,7 +40,7 @@
       </div>
 
       <div class="card-body p-0">
-        <div class="table-responsive" style="max-height: 600px; overflow-y: auto;" id="conteudoPDF">
+        <div class="table-responsive" style="max-height: 600px; overflow-y: auto;">
           <table class="table table-sm table-hover table-bordered table-striped">
             <thead class="bg-light" style="position: sticky; top: 0; background-color: #f8f9fa; z-index: 1;">
               <tr>
@@ -121,3 +122,86 @@
     </div>
   </div>
 </div>
+
+<ng-template #modalResumo let-modal>
+  <div class="modal-header modal-header-custom" style="background-color: rgb(124, 124, 124);">
+    <h6 class="modal-title" style="color: #ffffff">
+      <i class="fas fa-building"></i> Relatório Financeiro
+    </h6>
+    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
+  </div>
+
+  <div class="modal-body modal-padding" id="conteudoPDF">
+    <div class="container">
+      <h5 class="text-center mb-4">Resumo Financeiro</h5>
+      <div class="row mb-3">
+        <div class="col-6"><strong>Fantasia:</strong> teste</div>
+        <div class="col-6"><strong>Nome:</strong> teste 2</div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-6"><strong>CNPJ/CPF:</strong> 75675757</div>
+        <div class="col-6"><strong>Contrato:</strong> 456546546</div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-6"><strong>Produto:</strong> energia</div>
+        <div class="col-6"><strong>Número Documento:</strong> 12345</div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-6"><strong>Data Pagamento:</strong> 10/12/2024</div>
+        <div class="col-6"><strong>Valor Pago:</strong> 100</div>
+      </div>
+      <hr>
+      <h6 class="text-center mb-3">Detalhes Financeiros</h6>
+      <table class="table table-sm table-bordered">
+        <thead class="table-light">
+          <tr>
+            <th>Descrição</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Valor Original</td>
+            <td>1500</td>
+          </tr>
+          <tr>
+            <td>Valor Juros</td>
+            <td>15</td>
+          </tr>
+          <tr>
+            <td>Valor Multa</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Valor Taxa</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>Desconto Principal</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Receita Principal</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>Comissão</td>
+            <td>15</td>
+          </tr>
+          <tr>
+            <td>Repasse</td>
+            <td>2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+    <button type="button" class="btn btn-outline-primary btn-sm" (click)="gerarPDF()"><i class="fas fa-print"></i>
+      Imprimir PDF</button>
+    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()"><i class="fas fa-times"></i>
+      Cancelar</button>
+  </div>
+</ng-template>
+

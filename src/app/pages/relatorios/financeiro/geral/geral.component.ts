@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, QueryList, SimpleChanges, TemplateRef, ViewChildren } from '@angular/core';
 import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
 import { TituloLiquidado } from 'src/app/core/models/financeiro.model';
@@ -9,6 +9,7 @@ import { ExcelService } from 'src/app/core/services/excel.service';
 import { FinanceiroService } from 'src/app/core/services/financeiro.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-geral',
@@ -49,7 +50,8 @@ export class GeralComponent implements OnInit, OnChanges {
     private _auth: AuthenticationService,
     private _datePipe: DatePipe,
     private _alertService: AlertService,
-    private _excelService: ExcelService
+    private _excelService: ExcelService,
+    private _modalService: NgbModal
 
   ) { }
 
@@ -63,11 +65,32 @@ export class GeralComponent implements OnInit, OnChanges {
     }
   }
 
+  gerarPDF(): void {
+    // Seleciona o elemento HTML que você quer converter em PDF
+    const elemento = document.getElementById('conteudoPDF');
+
+    if (elemento) {
+      html2canvas(elemento).then((canvas) => {
+        const imagemData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+
+        // Ajusta a imagem ao tamanho do PDF
+        const larguraPDF = pdf.internal.pageSize.getWidth();
+        const alturaPDF = (canvas.height * larguraPDF) / canvas.width;
+
+        pdf.addImage(imagemData, 'PNG', 0, 0, larguraPDF, alturaPDF);
+        pdf.save('detalhamento_geral.pdf'); // Nome do arquivo gerado
+      });
+    } else {
+      console.error('Elemento não encontrado!');
+    }
+  }
+
   public exportExcel() {
     this._excelService.exportAsExcelFile(this.dadosFiltrados, 'exportacaoPagamentos');
   }
 
-  public gerarPDF(): void {
+  public gerarPDFPaisagem(): void {
     // Seleciona o elemento HTML que você quer converter em PDF
     const elemento = document.getElementById('conteudoPDF');
 
@@ -87,6 +110,11 @@ export class GeralComponent implements OnInit, OnChanges {
       console.error('Elemento não encontrado!');
     }
   }
+
+  public abrirModalRelatorio(content: TemplateRef<any>): void {
+
+      this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    }
 
   public relatorioGeral() {
     if (this.filtros) {
@@ -156,5 +184,9 @@ export class GeralComponent implements OnInit, OnChanges {
 
   public filtrar(): void {
     this.dadosFiltrados = Utils.filtrar(this.resultFiltros, this.textoPesquisa);
+  }
+
+  public fechar() {
+    this._modalService.dismissAll();
   }
 }
