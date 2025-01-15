@@ -1,195 +1,74 @@
-<div class="loading-overlay-pagina" *ngIf="loading">
-  <div class="d-flex flex-column align-items-center justify-content-center">
-    <div class="spinner-border text-primary m-2" role="status">
-      <span class="sr-only">Carregando...</span>
-    </div>
-    <p class="mt-2 text-muted text-center">Carregando dados...</p>
-  </div>
-</div>
-
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card-body" style="padding-bottom: 8px;">
-        <div class="d-flex">
-          <div class="flex-1 overflow-hidden">
-            <div class="card">
+  <div class="loading-overlay-pagina" *ngIf="loading">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
 
-              <div class="card-header pt-2 pb-2">
-                <div class="row">
-                  <div class="col-md-6">
-                    <h5 class="mb-0"><i class="fas fa-calculator"></i> Relatório Financeiro </h5>
-                  </div>
-                </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header pt-2 pb-2">
+          <div class="col-md-12">
+            <h5 class="mb-0">
+              <i class="fas fa-chart-bar acionamento-icon"></i>
+              Relatórios Financeiro
+            </h5>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="formPesquisar">
+            <div class="row">
+
+              <div class="col-md-2 form-group">
+                <label for="tipo" class="form-label">Tipo do Relatorio</label>
+                <select class="form-control form-control-sm" formControlName="tipo"
+                  [ngClass]="{'is-invalid': formPesquisar.get('tipo').invalid && formPesquisar.get('tipo').touched}">
+                  <option value="">Selecione</option>
+                  <option value="1">Geral</option>
+                </select>
               </div>
 
-              <div class="card-body" style="padding-top: 6px;">
-                <ul ngbNav #nav="ngbNav" class="nav-tabs" [activeId]="ativaAba">
-                  <li [ngbNavItem]="1" (click)="ativarAba()">
-                    <a ngbNavLink  class="link-filtros">
-                      <b><i class="fas fa-filter"></i> Filtros</b>
-                    </a>
-                    <ng-template ngbNavContent>
-                      <form [formGroup]="formFiltros">
-                        <div class="col-md-6">
-                          <div class="row" style="margin-bottom: 10px;">
-                            <div class="col-md-6 form-group">
-                              <select class="form-control form-control-sm" formControlName="id_contratante">
-                                <option value="0">Selecione o Contratante</option>
-                                <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">
-                                  {{ contratante.fantasia }}</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-6">
-                              <div class="card mb-2" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
-                                <h6 style="text-align: center; font-weight: bold;">Período de Pagamento</h6>
-                                <div class="row">
-                                  <div class="col-md-6">
-                                    <input type="date" class="form-control form-control-sm" formControlName="data_inicio"
-                                      placeholder="Inicial">
-                                  </div>
-                                  <div class="col-md-6">
-                                    <input type="date" class="form-control form-control-sm" formControlName="data_fim"
-                                      placeholder="Final">
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </form>
+              <div class="col-md-2 form-group">
+                <label for="id_contratante" class="form-label">Contratante <i class="fas fa-info-circle text-info ms-1"
+                    style="cursor: pointer;"
+                    ngbTooltip="Selecione um contratante para realizar a pesquisa. Caso contrário, serão exibidos os acionamentos de todos os contratantes."
+                    placement="left">
+                  </i></label>
+                <select type="text" class="form-control form-control-sm" formControlName="id_contratante"
+                  (focus)="carregarContratantes()">
+                  <option value="0">Selecione</option>
+                  <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">
+                    {{ contratante.fantasia }}
+                  </option>
+                </select>
+              </div>
 
-                      <div class="col-md-12 d-flex justify-content-end align-items-end">
-                        <button type="submit" class="btn btn-secondary btn-sm" (click)="obterFiltros()" [disabled]="!this.formFiltros.valid">
-                          <i class="fas fa-search"></i> Filtrar Pagamentos
-                        </button>
-                      </div>
-                    </ng-template>
-                  </li>
-                  <li [ngbNavItem]="2">
-                    <a ngbNavLink class="link-filtros">
-                      <b><i class="fas fa-file-alt"></i> Resultado</b>
-                    </a>
-                    <ng-template ngbNavContent>
-                      <section style="white-space: nowrap; overflow: auto;">
-                        <div style="font-size: 10px;">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <!-- Botão de Exportação (lado esquerdo) -->
-                            <button
-                              class="btn btn-success m-1"
-                              (click)="exportExcel()"
-                              ngbTooltip="Exportar Dados para Excel"
-                              placement="right"
-                              style="padding-bottom: 2px; padding-top: 2px;">
-                              <i class="fas fa-download"></i>
-                            </button>
+              <div class="col-md-2 form-group">
+                <label for="data_inicio" class="form-label">Data Inicio</label>
+                <input type="date" id="data_inicio" class="form-control form-control-sm" formControlName="data_inicio"
+                  [ngClass]="{'is-invalid': formPesquisar.get('data_inicio').invalid && formPesquisar.get('data_inicio').touched}" />
+              </div>
 
-                            <!-- Campo de Pesquisa (lado direito) -->
-                            <div class="dataTables_filter">
-                              <label class="d-inline-flex align-items-center" style="margin-bottom: 0px;">
-                                <input
-                                  type="text"
-                                  class="form-control form-control-sm ms-2"
-                                  placeholder="Pesquisar"
-                                  [(ngModel)]="textoPesquisa"
-                                  (input)="filtrar()" />
-                              </label>
-                            </div>
-                          </div>
-                      </div>
-                        <div class="card-body" style="padding-top: 0; padding-bottom: 0px; padding-right: 0; padding-left: 0;">
-                          <div class="table-responsive" style="margin-top: 10px; max-height: 550px; overflow-y: auto;">
-                            <table class="table table-sm table-hover font-size-12 tabelaOrdenada">
-                              <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
-                                <tr>
-                                  <th sortable="fantasia" (sort)="ordenar($event)" scope="col">Fantasia</th>
-                                  <th sortable="nome" (sort)="ordenar($event)" scope="col">Nome</th>
-                                  <th sortable="cnpj_cpf" (sort)="ordenar($event)" scope="col">CNPJ/CPF</th>
-                                  <th sortable="numero_contrato" (sort)="ordenar($event)" scope="col">Contrato</th>
-                                  <th sortable="produto" (sort)="ordenar($event)" scope="col">Produto</th>
-                                  <th sortable="numero_documento" (sort)="ordenar($event)" scope="col">Número Documento</th>
-                                  <th sortable="pagamento" (sort)="ordenar($event)" scope="col">Data Pagamento</th>
-                                  <th sortable="valor_pago" (sort)="ordenar($event)" scope="col">Valor Pago</th>
-                                  <th sortable="valor_original" (sort)="ordenar($event)" scope="col">Valor Original</th>
-                                  <th sortable="valor_juros" (sort)="ordenar($event)" scope="col">Valor Juros</th>
-                                  <th sortable="valor_multa" (sort)="ordenar($event)" scope="col">Valor Multa</th>
-                                  <th sortable="valor_taxa" (sort)="ordenar($event)" scope="col">Valor Taxa</th>
-                                  <th sortable="desc_principal" (sort)="ordenar($event)" scope="col">Desc Principal</th>
-                                  <th sortable="desc_multa" (sort)="ordenar($event)" scope="col">Desc Multa</th>
-                                  <th sortable="desc_juros" (sort)="ordenar($event)" scope="col">Desc Juros</th>
-                                  <th sortable="receita_principal" (sort)="ordenar($event)" scope="col">Receita Principipal</th>
-                                  <th sortable="receita_multa" (sort)="ordenar($event)" scope="col">Receita Multa</th>
-                                  <th sortable="receita_juros" (sort)="ordenar($event)" scope="col">Receita Juros</th>
-                                  <th sortable="receita_taxa" (sort)="ordenar($event)" scope="col">Receita Taxa</th>
-                                  <th sortable="comissao" (sort)="ordenar($event)" scope="col">Comissão</th>
-                                  <th sortable="repasse" (sort)="ordenar($event)" scope="col">Repasse</th>
-                                </tr>
-                              </thead>
-                              <tbody *ngIf="dadosFiltrados.length > 0; else semDado">
-                                <tr *ngFor="let item of dadosFiltrados">
-                                  <td>{{ item.fantasia }}</td>
-                                  <td>{{ item.nome }}</td>
-                                  <td>{{ item.cnpj_cpf }}</td>
-                                  <td>{{ item.numero_contrato }}</td>
-                                  <td>{{ item.produto }}</td>
-                                  <td>{{ item.numero_documento }}</td>
-                                  <td>{{ item.pagamento | date: 'dd/MM/yyyy' }}</td>
-                                  <td>{{ item.valor_pago | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td>{{ item.valor_original | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td>{{ item.valor_juros | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td>{{ item.valor_multa | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td>{{ item.valor_taxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td>{{ item.desc_principal | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td>{{ item.desc_multa | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td>{{ item.desc_juros | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td>{{ item.receita_principal | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td>{{ item.receita_multa | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td>{{ item.receita_juros | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td>{{ item.receita_taxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td>{{ item.comissao | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td>{{ item.repasse | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                </tr>
-                                <tr class="tabela-custom">
-                                  <td colspan="6" style="text-align: right; font-weight: bold;">Total Pagamentos:</td>
-                                  <td style="font-weight: bold;">{{ totalPagamentos }}</td>
-                                  <td style="font-weight: bold;">{{ valorTotalPago | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td style="font-weight: bold;">{{ valorTotalOriginal | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td style="font-weight: bold;">{{ valorTotalJuros | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td style="font-weight: bold;">{{ valorTotalMulta | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td style="font-weight: bold;">{{ valorTotalTaxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td style="font-weight: bold;">{{ valorDescPrincipal | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td style="font-weight: bold;">{{ valorDescMulta | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td style="font-weight: bold;">{{ valorDescJuros | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td style="font-weight: bold;">{{ valorReceitaPrincipal | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td style="font-weight: bold;">{{ valorReceitaMulta | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td style="font-weight: bold;">{{ valorReceitaJuros | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td style="font-weight: bold;">{{ valorReceitaTaxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td style="font-weight: bold;">{{ valorComissao | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                  <td style="font-weight: bold;">{{ valorRepasse | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            <ng-template #semDado>
-                              <tbody>
-                                <tr>
-                                  <td colspan="21" class="text-center">Nenhum dado para exibição.</td>
-                                </tr>
-                              </tbody>
-                            </ng-template>
-                          </div>
-                        </div>
-                      </section>
-                    </ng-template>
-                  </li>
-                </ul>
-                <div [ngbNavOutlet]="nav" class="mt-2"></div>
+              <div class="col-md-2 form-group">
+                <label for="data_fim" class="form-label">Data Fim</label>
+                <input type="date" id="data_fim" class="form-control form-control-sm" formControlName="data_fim"
+                  [ngClass]="{'is-invalid': formPesquisar.get('data_fim').invalid && formPesquisar.get('data_fim').touched}" />
+              </div>
+
+              <div class="col-md-2 form-group d-flex align-items-end">
+                <button type="submit" class="btn btn-secondary btn-sm w-100" (click)="pesquisar()"><i
+                    class="fas fa-search"></i> Pesquisar
+                </button>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
 
+  <div *ngIf="tipoRelatorio === '1' && exibirCard">
+    <app-geral [filtros]="filtros">
+    </app-geral>
+  </div>

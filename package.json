@@ -47,6 +47,8 @@
     "file-saver": "^2.0.5",
     "firebase": "^10.7.1",
     "fullcalendar": "^6.1.10",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
     "leaflet": "^1.9.4",
     "metismenujs": "^1.4.0",
     "ng-apexcharts": "^1.8.0",

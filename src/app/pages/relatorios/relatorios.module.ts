@@ -13,6 +13,7 @@ import { AnaliticoComponent } from './acionamentos/analitico/analitico.component
 import { SinteticoComponent } from './acionamentos/sintetico/sintetico.component';
 import { AcoesRealizadasPorContratanteComponent } from './acionamentos/acoes-realizadas-por-contratante/acoes-realizadas-por-contratante.component';
 import { AcoesRealizadasPorUsuarioComponent } from './acionamentos/acoes-realizadas-por-usuario/acoes-realizadas-por-usuario.component';
+import { GeralComponent } from './financeiro/geral/geral.component';
 
 @NgModule({
 
@@ -23,7 +24,8 @@ import { AcoesRealizadasPorUsuarioComponent } from './acionamentos/acoes-realiza
     AnaliticoComponent,
     SinteticoComponent,
     AcoesRealizadasPorContratanteComponent,
-    AcoesRealizadasPorUsuarioComponent
+    AcoesRealizadasPorUsuarioComponent,
+    GeralComponent
   ],
   imports: [
     CommonModule,

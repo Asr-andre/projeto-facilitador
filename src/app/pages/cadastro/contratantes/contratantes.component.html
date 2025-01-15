@@ -252,7 +252,7 @@
       <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
     </div>
 
-    <div class="modal-body modal-padding">
+    <div class="modal-body modal-padding" id="conteudoPDF">
       <div class="container">
         <h6 class="text-primary border-bottom pb-2 mb-3">Informações Básicas</h6>
         <div class="row mb-3">
@@ -294,6 +294,8 @@
       </div>
     </div>
     <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+      <button type="button" class="btn btn-outline-primary btn-sm" (click)="gerarPDF()"><i class="fas fa-print"></i>
+        imprimir Pdf</button>
       <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()"><i class="fas fa-times"></i>
         Cancelar</button>
     </div>

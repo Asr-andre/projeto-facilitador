@@ -20,6 +20,8 @@ import { SmsService } from 'src/app/core/services/sms.service';
 import { PerfilSms } from 'src/app/core/models/sms.model';
 import { FormulaService } from 'src/app/core/services/formula.service';
 import { Formula } from 'src/app/core/models/formula.model';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-contratantes',
@@ -83,6 +85,27 @@ export class ContratantesComponent implements OnInit {
       this._alertService.error("Ocorreu um erro ao carregar os dados.");
     } finally {
       this.loading = false;
+    }
+  }
+
+  gerarPDF(): void {
+    // Seleciona o elemento HTML que você quer converter em PDF
+    const elemento = document.getElementById('conteudoPDF');
+
+    if (elemento) {
+      html2canvas(elemento).then((canvas) => {
+        const imagemData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+
+        // Ajusta a imagem ao tamanho do PDF
+        const larguraPDF = pdf.internal.pageSize.getWidth();
+        const alturaPDF = (canvas.height * larguraPDF) / canvas.width;
+
+        pdf.addImage(imagemData, 'PNG', 0, 0, larguraPDF, alturaPDF);
+        pdf.save('detalhamento_contratante.pdf'); // Nome do arquivo gerado
+      });
+    } else {
+      console.error('Elemento não encontrado!');
     }
   }
 

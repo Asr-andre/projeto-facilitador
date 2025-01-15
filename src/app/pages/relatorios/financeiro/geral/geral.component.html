@@ -1,0 +1,123 @@
+<div *ngIf="loadingMin" class="text-center">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Carregando...</span>
+  </div>
+  <p class="mt-2 text-muted">Carregando dados...</p>
+</div>
+
+<div *ngIf="!loadingMin" class="row">
+  <div class="col-lg-12">
+    <div class="card shadow-lg border-0 rounded-3">
+      <div class="card-header pt-2 pb-2">
+        <div class="row">
+          <div class="col-md-6">
+            <h5 class="mb-0"><i class="fas fa-filter resultados-icon"></i>
+               Acionamentos Analitico </h5>
+          </div>
+
+          <div class="col-md-6 text-end">
+            <label class="d-inline-flex align-items-center">
+              <div class="dropup float-end" ngbDropdown>
+                <a href="javascript: void(0);" class="dropdown-toggle arrow-none card-drop" ngbDropdownToggle data-toggle="dropdown" aria-expanded="false">
+                  <i class="mdi mdi-dots-vertical"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                  <a href="javascript:void(0);" class="dropdown-item" style="padding-left: 10px; padding-right: 10px; padding-top: 2px;padding-bottom: 2px; font-size: 13px;" (click)="gerarPDF()"><i class="fas fa-file-pdf"></i> Exportar Pdf</a>
+                  <a href="javascript:void(0);" class="dropdown-item" style="padding-left: 10px; padding-right: 10px;padding-top: 2px;padding-bottom: 2px; font-size: 13px;" (click)="exportExcel()"><i class="fas fa-file-excel"></i> Exporta Excel</a>
+                </div>
+              </div>
+
+              <input
+                type="text"
+                class="form-control form-control-sm ms-2"
+                placeholder="Pesquisar"
+                [(ngModel)]="textoPesquisa"
+                (input)="filtrar()" />
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body p-0">
+        <div class="table-responsive" style="max-height: 600px; overflow-y: auto;" id="conteudoPDF">
+          <table class="table table-sm table-hover table-bordered table-striped">
+            <thead class="bg-light" style="position: sticky; top: 0; background-color: #f8f9fa; z-index: 1;">
+              <tr>
+                <th sortable="fantasia" (sort)="ordenar($event)" scope="col">Fantasia</th>
+                <th sortable="nome" (sort)="ordenar($event)" scope="col">Nome</th>
+                <th sortable="cnpj_cpf" (sort)="ordenar($event)" scope="col">CNPJ/CPF</th>
+                <th sortable="numero_contrato" (sort)="ordenar($event)" scope="col">Contrato</th>
+                <th sortable="produto" (sort)="ordenar($event)" scope="col">Produto</th>
+                <th sortable="numero_documento" (sort)="ordenar($event)" scope="col">Número Documento</th>
+                <th sortable="pagamento" (sort)="ordenar($event)" scope="col">Data Pagamento</th>
+                <th sortable="valor_pago" (sort)="ordenar($event)" scope="col">Valor Pago</th>
+                <th sortable="valor_original" (sort)="ordenar($event)" scope="col">Valor Original</th>
+                <th sortable="valor_juros" (sort)="ordenar($event)" scope="col">Valor Juros</th>
+                <th sortable="valor_multa" (sort)="ordenar($event)" scope="col">Valor Multa</th>
+                <th sortable="valor_taxa" (sort)="ordenar($event)" scope="col">Valor Taxa</th>
+                <th sortable="desc_principal" (sort)="ordenar($event)" scope="col">Desc Principal</th>
+                <th sortable="desc_multa" (sort)="ordenar($event)" scope="col">Desc Multa</th>
+                <th sortable="desc_juros" (sort)="ordenar($event)" scope="col">Desc Juros</th>
+                <th sortable="receita_principal" (sort)="ordenar($event)" scope="col">Receita Principipal</th>
+                <th sortable="receita_multa" (sort)="ordenar($event)" scope="col">Receita Multa</th>
+                <th sortable="receita_juros" (sort)="ordenar($event)" scope="col">Receita Juros</th>
+                <th sortable="receita_taxa" (sort)="ordenar($event)" scope="col">Receita Taxa</th>
+                <th sortable="comissao" (sort)="ordenar($event)" scope="col">Comissão</th>
+                <th sortable="repasse" (sort)="ordenar($event)" scope="col">Repasse</th>
+              </tr>
+              <tbody *ngIf="dadosFiltrados.length > 0; else semDado">
+                <tr *ngFor="let item of dadosFiltrados">
+                  <td>{{ item.fantasia }}</td>
+                  <td>{{ item.nome }}</td>
+                  <td>{{ item.cnpj_cpf }}</td>
+                  <td>{{ item.numero_contrato }}</td>
+                  <td>{{ item.produto }}</td>
+                  <td>{{ item.numero_documento }}</td>
+                  <td>{{ item.pagamento | date: 'dd/MM/yyyy' }}</td>
+                  <td>{{ item.valor_pago | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td>{{ item.valor_original | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td>{{ item.valor_juros | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td>{{ item.valor_multa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td>{{ item.valor_taxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td>{{ item.desc_principal | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td>{{ item.desc_multa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td>{{ item.desc_juros | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td>{{ item.receita_principal | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td>{{ item.receita_multa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td>{{ item.receita_juros | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td>{{ item.receita_taxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td>{{ item.comissao | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td>{{ item.repasse | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                </tr>
+                <tr class="tabela-custom">
+                  <td colspan="6" style="text-align: right; font-weight: bold;">Total Pagamentos:</td>
+                  <td style="font-weight: bold;">{{ totalPagamentos }}</td>
+                  <td style="font-weight: bold;">{{ valorTotalPago | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorTotalOriginal | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorTotalJuros | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorTotalMulta | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorTotalTaxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorDescPrincipal | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorDescMulta | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorDescJuros | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorReceitaPrincipal | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorReceitaMulta | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorReceitaJuros | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorReceitaTaxa | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorComissao | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorRepasse | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                </tr>
+              </tbody>
+          </table>
+          <ng-template #semDado>
+            <tbody>
+              <tr>
+                <td colspan="21" class="text-center">Nenhum dado para exibição.</td>
+              </tr>
+            </tbody>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
