@@ -177,6 +177,39 @@
         </div>
       </div>
 
+      <div class="col-md-12 form-group">
+        <label class="form-label">Variáveis disponíveis</label>
+        <div [ngClass]="editar ? 'alert alert-info' : 'alert alert-success'" style="padding-top: 5px; padding-bottom: 5px;">
+          <div class="row">
+            <div class="col-md-4">
+              <p class="variable-item" (click)="inserirVariavel(dado.nome)" style="cursor: pointer;"
+                ngbTooltip="Nome completo do cliente"><strong>{{ dado.nome}}</strong>
+              </p>
+              <p class="variable-item" (click)="inserirVariavel(dado.cpf)" style="cursor: pointer;"
+                ngbTooltip="CPF do cliente"><strong>{{ dado.cpf }}</strong>
+              </p>
+            </div>
+            <div class="col-md-4">
+              <p class="variable-item" (click)="inserirVariavel(dado.primeiro_nome)" style="cursor: pointer;"
+                ngbTooltip="Primeiro nome do cliente"><strong>{{ dado.primeiro_nome}}</strong>
+              </p>
+              <p class="variable-item" (click)="inserirVariavel(dado.endereco)" style="cursor: pointer;"
+                ngbTooltip="Esta variável representa o endereço do cliente. Importante: ela é usada apenas para envio em massa, não funcionará em envios unitários.">
+                <strong>{{ dado.endereco }}</strong>
+              </p>
+            </div>
+            <div class="col-md-4">
+              <p class="variable-item" (click)="inserirVariavel(dado.fantasia)" style="cursor: pointer;"
+                ngbTooltip="Nome fantasia"><strong>{{ dado.fantasia }}</strong>
+              </p>
+              <p class="variable-item" (click)="inserirVariavel(dado.razaoSocial)" style="cursor: pointer;"
+                ngbTooltip="Razão social"><strong>{{ dado.razaoSocial }}</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="d-flex justify-content-between align-items-center" style="padding-top: 5px;">
         <small>{{ mensagemForm.get('mensagem')?.value?.length || 0 }}/{{maxCaractere}} caracteres</small>
         <div>

@@ -1,4 +1,12 @@
 .destaque {
-  background-color: #f1f1f1;  /* Cor de fundo suave para destacar a linha */
-  font-weight: bold;           /* Deixa o texto em negrito */
+  background-color: #cce5ff !important;
+  font-weight: bold;
+}
+
+.table-row:hover {
+  cursor: pointer;
+}
+
+.selected {
+  background-color: #cce5ff !important;
 }

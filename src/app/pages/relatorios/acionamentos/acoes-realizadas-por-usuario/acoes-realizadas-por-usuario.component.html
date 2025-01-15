@@ -25,7 +25,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of dadosTabela" (click)="atualizarGraficoPorUsuario(item.usuario)" style="cursor: pointer">
+              <tr *ngFor="let item of dadosTabela"
+              (click)="atualizarGraficoPorUsuario(item.usuario)" style="cursor: pointer">
                 <td>{{ item.usuario }}</td>  <!-- Alterado para exibir o nome do usuário -->
                 <td>{{ item.acao }}</td>
                 <td>{{ item.quantidade }}</td>

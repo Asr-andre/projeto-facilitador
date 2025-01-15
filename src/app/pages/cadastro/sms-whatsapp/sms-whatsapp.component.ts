@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OrdenarPeloHeaderTabela, SortEvent, compararParaOrdenar } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
+import { variavel } from 'src/app/core/helpers/variaveis';
 import { CadastroMensagemModel, PerfilWhatsappModel } from 'src/app/core/models/cadastro/sms.whatsapp.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
@@ -24,6 +25,7 @@ export class SmsWhatsappComponent implements OnInit {
   public editar: boolean = false;
   public maxCaractere: number = 4096;
   public mensagem: string = '';
+  public dado: typeof variavel;
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -44,6 +46,7 @@ export class SmsWhatsappComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.dado = variavel;
     this.obterMsgs();
     this.inicializarMensagemForm();
   }
@@ -201,5 +204,28 @@ export class SmsWhatsappComponent implements OnInit {
 
   public mostrarSenha(campoId: string, iconeId: string): void {
     Utils.alternarVisibilidadeSenha(campoId, iconeId);
+  }
+
+  public inserirVariavel(variavel: string) {
+    const mensagemAtual = this.mensagemForm.get('mensagem')?.value || '';
+    const novaMensagem = `${mensagemAtual} ${variavel}`.trim();
+    this.mensagemForm.get('mensagem')?.setValue(novaMensagem);
+  }
+
+  public mostraConteudoTruncado(texto: string, limite: number): string {
+    return texto.length > limite ? texto.substring(0, limite) + '...' : texto;
+  }
+
+  public exibirConteudoCompleto(acionamento: any, campo: string): void {
+    acionamento[campo + '_visivel'] = acionamento[campo]; // Mostra o texto completo
+  }
+
+  public ocultarConteudoTruncado(acionamento: any, campo: string, limite: number): void {
+    acionamento[campo + '_visivel'] = this.mostraConteudoTruncado(acionamento[campo], limite); // Volta ao texto truncado
+  }
+
+  public copiarParaAreasTransferencia(valor) {
+    Utils.CopyAreaTransfer(valor);
+    this._alertService.copiado();
   }
 }

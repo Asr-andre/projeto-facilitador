@@ -23,6 +23,7 @@ export class WhatsappComponent implements OnInit {
   public msg: PerfilWhatsappModel[] = [];
   public idPerfilWhatsapp = 1;
   public loadingMin: boolean = false;
+  public assuntoSelecionado: string = "";
 
   public mensagem: string = '';
 
@@ -82,17 +83,64 @@ export class WhatsappComponent implements OnInit {
     });
   }
 
+  public substituirVariaveisNaMensagem(): void {
+    // Obtendo os dados do cliente do localStorage
+    const dadosCliente = JSON.parse(localStorage.getItem('dadosCliente') || '{}');
+
+    // Verificando se os dados existem
+    if (!dadosCliente || Object.keys(dadosCliente).length === 0) {
+      this._alertService.warning('Os dados do cliente não foram encontrados no localStorage.');
+      return;
+    }
+
+    // Obtendo o array de mensagens do formulário
+    const whatsArray = this.whatsappForm.get('whats') as FormArray;
+    const mensagemControl = whatsArray.at(0).get('mensagem');
+
+    if (!mensagemControl) {
+      this._alertService.error('Erro ao acessar o campo de mensagem no formulário.');
+      return;
+    }
+
+    // Obtendo a mensagem original
+    let mensagemOriginal = mensagemControl.value || '';
+    const primeiroNome = dadosCliente.nome ? dadosCliente.nome.split(' ')[0] : '';
+
+    // Substituindo as variáveis na mensagem
+    mensagemOriginal = mensagemOriginal
+      .replace(/@clientes_nome/g, dadosCliente.nome || '')
+      .replace(/@clientes_cpf/g, dadosCliente.cnpj_cpf || '')
+      .replace(/@contratante_fantasia/g, dadosCliente.fantasia || '')
+      .replace(/@contratante_razao_social/g, dadosCliente.razao_social || '')
+      .replace(/@cliente_primeiro_nome/g, primeiroNome || '');
+
+    // Atualizando o campo de mensagem no formulário
+    mensagemControl.setValue(mensagemOriginal);
+  }
+
+
   public atualizarMensagem(event: Event): void {
     const selectedMessage = (event.target as HTMLSelectElement).value;
-    const mensagemControl = this.whatsappForm.get('whats.0.mensagem');
+
+    if (!selectedMessage) {
+      this._alertService.warning('Selecione uma mensagem válida.');
+      return;
+    }
+
+    const whatsArray = this.whatsappForm.get('whats') as FormArray;
+    const mensagemControl = whatsArray.at(0).get('mensagem');
 
     if (mensagemControl) {
       mensagemControl.setValue(selectedMessage);
+      this.substituirVariaveisNaMensagem();
+    } else {
+      this._alertService.error('Erro ao atualizar a mensagem.');
     }
   }
 
 
   public abrirModalWhatsapp(telefone: string): void {
+    this.substituirVariaveisNaMensagem();
     this.obterMsgs();
     if (telefone) {
       this.telefoneCliente = this.limparNumero(telefone);
@@ -106,6 +154,7 @@ export class WhatsappComponent implements OnInit {
 
   public enviarMensagem(): void {
     if (this.whatsappForm.valid) {
+      this.substituirVariaveisNaMensagem();
       this.loadingMin = true;
       this._whatsappService.enviarMensagem(this.whatsappForm.value).subscribe(() => {
         this.loadingMin = false;
@@ -122,6 +171,7 @@ export class WhatsappComponent implements OnInit {
   }
 
   public enviarApiWhatsApp(): void {
+    this.substituirVariaveisNaMensagem();
     const mensagemControl = this.whatsappForm.get('whats.0.mensagem');
     const telefone = this.limparNumero(this.telefoneCliente);
     const telefoneEncoded = encodeURIComponent(telefone);
