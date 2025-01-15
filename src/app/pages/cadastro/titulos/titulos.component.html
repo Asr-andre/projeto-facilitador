@@ -21,14 +21,21 @@
         <div class="card-body" style="padding-bottom: 8px;">
           <div class="d-flex">
             <div class="flex-1 overflow-hidden">
-              <div class="d-flex justify-content-left mb-3">
-                <input type="text" class="form-control form-control-sm me-2" placeholder="Pesquisar cliente existente..." style="width: 400px;">
-                <select class="form-control form-control-sm me-2" [(ngModel)]="contratanteSelecionado" style="width: 200px;">
-                  <option value="">Selecione</option>
-                  <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">{{ contratante.fantasia }}</option>
-                </select>
-                <button type="button" class="btn btn-secondary btn-sm" (click)="selecionarContratante()"><i class="fas fa-check"></i> Selecionar</button>
-              </div>
+              <form [formGroup]="formPesquisa">
+                <div class="d-flex justify-content-left mb-3">
+                  <input type="text" class="form-control form-control-sm me-2" formControlName="id_cliente"
+                    placeholder="Pesquisar cliente existente..." style="width: 400px;">
+                  <select class="form-control form-control-sm me-2" formControlName="id_contratante"
+                    style="width: 200px;"
+                    [ngClass]="{'is-invalid': formPesquisa.get('id_contratante').invalid && formPesquisa.get('id_contratante').touched}">
+                    <option value="">Selecione</option>
+                    <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">{{
+                      contratante.fantasia }}</option>
+                  </select>
+                  <button type="button" class="btn btn-secondary btn-sm" (click)="selecionarContratante()"><i
+                      class="fas fa-check"></i> Selecionar</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -37,38 +44,16 @@
   </div>
 </div>
 
-<div class="container-fluid" *ngIf="exibirTelaCadastroCliente">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body" style="padding-bottom: 8px;">
-          <div class="d-flex">
-            <div class="flex-1 overflow-hidden">
-              <div>
-              <app-cliente-contratante [idContratante]="idContratante" (idCliente)="onClienteImportado($event)"></app-cliente-contratante>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="container-fluid" *ngIf="exibirTelaCadastroTitulos">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body" style="padding-bottom: 8px;">
-          <div class="d-flex">
-            <div class="flex-1 overflow-hidden">
-              <div>
-                <app-cliente-titulos [idCliente]="idCliente" [idContratante]="idContratante"></app-cliente-titulos>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  <app-cliente-contratante
+    *ngIf="exibirTelaCadastroCliente"
+    [idContratante]="idContratante"
+    (idCliente)="onClienteImportado($event)">
+  </app-cliente-contratante>
+
+  <app-cliente-titulos
+    *ngIf="exibirTelaCadastroTitulos"
+    [idCliente]="idCliente"
+    [idContratante]="idContratante">
+  </app-cliente-titulos>
+

@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ContratanteModel } from "src/app/core/models/cadastro/contratante.model";
 import { AlertService } from "src/app/core/services/alert.service";
 import { AuthenticationService } from "src/app/core/services/auth.service";
@@ -12,28 +13,37 @@ import { ContratanteService } from "src/app/core/services/cadastro/contratante.s
 export class TitulosComponent implements OnInit {
   public contratantes: ContratanteModel [] = [];
   public contratanteSelecionado: number;
-  public exibirTelaCadastroCliente: boolean = false;
-  public exibirTelaCadastroTitulos: boolean = false;
-  public idEmpresa: number;
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public exibirTelaCadastroCliente: boolean = true;
+  public exibirTelaCadastroTitulos: boolean = true;
   public idContratante: number;
   public idCliente: number;
   public loading: boolean;
+  public formPesquisa: FormGroup;
 
 
   constructor(
     private _contratanteService: ContratanteService,
-    private _authenticationService: AuthenticationService,
-    private _alertService: AlertService
+    private _auth: AuthenticationService,
+    private _alertService: AlertService,
+    private _fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.idEmpresa = Number(this._authenticationService.getIdEmpresa());
-    this.obterContratantes(this.idEmpresa);
+    this.obterContratantes();
+    this.iniciarForm();
   }
 
-  public obterContratantes(idEmpresa: number) {
+  public iniciarForm() {
+    this.formPesquisa = this._fb.group({
+      id_cliente: [],
+      id_contratante: ['',Validators.required]
+    })
+  }
+
+  public obterContratantes() {
     this.loading = true;
-    this._contratanteService.obterContratantePorEmpresa(idEmpresa).subscribe((res) => {
+    this._contratanteService.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
       this.contratantes = res.contratantes;
       this.loading = false;
     },
@@ -45,8 +55,25 @@ export class TitulosComponent implements OnInit {
   }
 
   public selecionarContratante(): void {
-    this.idContratante = this.contratanteSelecionado;
+    if (this.formPesquisa.invalid) {
+      this.marcarCamposComoTocados(this.formPesquisa);
+      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this.exibirTelaCadastroCliente = false;
+      this.exibirTelaCadastroTitulos = false;
+      return;
+    }
+
+    const dadosParaEnvio = { ...this.formPesquisa.value };
+    this.idContratante =  dadosParaEnvio.id_contratante
     this.exibirTelaCadastroCliente = true;
+  }
+
+  private marcarCamposComoTocados(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsTouched();
+      controle?.updateValueAndValidity();
+    });
   }
 
   public onClienteImportado(idCliente: number): void {
