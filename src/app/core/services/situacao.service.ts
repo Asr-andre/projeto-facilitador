@@ -17,4 +17,8 @@ export class SituacaoService {
   public obterSituacao(dado: RequisicaoSituacaoModel): Observable<RetornoSituacaoModel> {
     return this._http.post<RetornoSituacaoModel>(`${this.apiUrl}/listarsituacoes`, dado);
   }
+
+  public atualizarSituacao(dado: RequisicaoSituacaoModel): Observable<RetornoSituacaoModel> {
+    return this._http.post<RetornoSituacaoModel>(`${this.apiUrl}/atualizasituacao`, dado);
+  }
 }

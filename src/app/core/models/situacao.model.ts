@@ -1,4 +1,6 @@
 export class RequisicaoSituacaoModel {
+  id_cliente?: number;
+  situacao?: string;
   user_login: string;
 }
 

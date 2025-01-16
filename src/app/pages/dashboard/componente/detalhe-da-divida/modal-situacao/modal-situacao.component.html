@@ -1,24 +1,28 @@
 <ng-template #modalSituacao let-modal>
-  <div class="modal-header modal-header-custom" style="background: #1cbb8c;">
-    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-hourglass-half"></i> Cadastrar Situação </h6>
+  <div class="modal-header modal-header-custom" style="background: #5664d2;">
+    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-hourglass-half"></i> Atualizar Situação </h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
       (click)="fechar()"></button>
   </div>
 
   <div class="modal-body modal-padding">
-    <div class="col-md-12 form-group">
-      <label for="id_contratante" class="form-label">Atualizar Situacao</label>
-      <select class="form-control form-control-sm">
-        <option value="">Selecione</option>
-        <option *ngFor="let situacao of situacao" [value]="situacao.descricao">
-          {{ situacao.descricao }}
-        </option>
-      </select>
+    <form [formGroup]="formSituacao">
+      <div class="col-md-12 form-group">
+        <label for="id_contratante" class="form-label">Situação</label>
+        <select class="form-control form-control-sm" formControlName="situacao">
+          <option value="">Selecione</option>
+          <option *ngFor="let situacao of situacao" [value]="situacao.descricao">
+            {{ situacao.descricao }}
+          </option>
+        </select>
+      </div>
+    </form>
     </div>
-  </div>
+
+
   <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
-    <button type="button" class="btn btn-success btn-sm"><i class="fas fa-save"></i>
-      Salvar</button>
+    <button type="button" class="btn btn-primary btn-sm" (click)="atualizarSituacao()"><i class="fas fa-save"></i>
+      Atualizar</button>
     <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()"><i class="fas fa-times"></i>
       Cancelar</button>
   </div>

@@ -144,8 +144,10 @@
     (clienteAtualizado)="atualizarDetalhamento()">
 </app-simulador-padrao>
 
-<app-modal-situacao>
-
+<app-modal-situacao
+    [idCliente]="idCliente"
+    [clienteSituacao]="detalhamentoSelecionado?.situacao"
+    (clienteAtualizado)="atualizarDetalhamento()">
 </app-modal-situacao>
 
 <ng-template #tituloModal let-modal>
