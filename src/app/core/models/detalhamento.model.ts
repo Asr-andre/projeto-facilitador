@@ -30,6 +30,7 @@ export class DetalhamentoModel {
   public uf: string;
   public fone: string;
   public email: string;
+  public situacao: string;
   public parcelas: Prestacao[];
 }
 
