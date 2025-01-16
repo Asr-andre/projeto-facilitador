@@ -37,7 +37,12 @@
 <div class="row pt-1 brder">
   <div class="col-md-3 detalhamento-texto">Bairro: <strong> {{ formatarIniciais(detalhamentoSelecionado?.bairro) }}</strong></div>
   <div class="col-md-3 detalhamento-texto">Cidade: <strong> {{ formatarIniciais(detalhamentoSelecionado?.cidade) }} - {{ detalhamentoSelecionado?.uf }}</strong></div>
-  <div class="col-md-6 detalhamento-texto">Situação: <strong> {{ formatarIniciais(detalhamentoSelecionado?.situacao) }}</strong></div>
+  <div class="col-md-6 detalhamento-texto">Situação: <strong>
+    <span style="cursor: pointer" [ngbTooltip]="'Atualizar situação'" placement="top" container="body"
+      (click)="abriModalSituacao()">{{ formatarIniciais(detalhamentoSelecionado?.situacao) }}
+      </span>
+    </strong>
+  </div>
 </div>
 
 <div class="d-flex justify-content-between align-items-center" style="margin-top: 10px;">
@@ -60,9 +65,6 @@
       <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" ngbDropdownMenu>
         <a class="dropdown-item" href="javascript: void(0);" (click)="abriModalTitulo(tituloModal)">
           <i class="fas fa-list"></i> Cadastrar Titulo
-        </a>
-        <a class="dropdown-item" href="javascript: void(0);" (click)="abriModalSituacao()">
-          <i class="fas fa-hourglass-half"></i> Situação
         </a>
         <a class="dropdown-item" href="javascript: void(0);" (click)="simularNegociacao()">
           <i class="fas fa-calculator"></i> Simulador
