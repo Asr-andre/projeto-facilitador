@@ -60,6 +60,9 @@
         <a class="dropdown-item" href="javascript: void(0);" (click)="abriModalTitulo(tituloModal)">
           <i class="fas fa-list"></i> Cadastrar Titulo
         </a>
+        <a class="dropdown-item" href="javascript: void(0);" (click)="abriModalSituacao()">
+          <i class="fas fa-hourglass-half"></i> Situação
+        </a>
         <a class="dropdown-item" href="javascript: void(0);" (click)="simularNegociacao()">
           <i class="fas fa-calculator"></i> Simulador
         </a>
@@ -129,10 +132,18 @@
     </tbody>
   </ng-template>
 </div>
-<app-simulador-padrao [idCliente]="idCliente" [idContratante]="idContratante"
-  [numeroContrato]="obterPrimeiroContratoSelecionado()" [numeroDocumento]="numeroDocumento"
-  (clienteAtualizado)="atualizarDetalhamento()">
+
+<app-simulador-padrao
+    [idCliente]="idCliente"
+    [idContratante]="idContratante"
+    [numeroContrato]="obterPrimeiroContratoSelecionado()"
+    [numeroDocumento]="numeroDocumento"
+    (clienteAtualizado)="atualizarDetalhamento()">
 </app-simulador-padrao>
+
+<app-modal-situacao>
+
+</app-modal-situacao>
 
 <ng-template #tituloModal let-modal>
   <div class="modal-header modal-header-custom" style="background: #1cbb8c;">

@@ -16,6 +16,7 @@ import { TipoTituloService } from 'src/app/core/services/tipo.titulo.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
 import { CadastrarTituloRequest } from 'src/app/core/models/cadastro/cliente.model';
+import { ModalSituacaoComponent } from './modal-situacao/modal-situacao.component';
 
 @Component({
   selector: 'app-detalhe-da-divida',
@@ -24,6 +25,7 @@ import { CadastrarTituloRequest } from 'src/app/core/models/cadastro/cliente.mod
 })
 export class DetalheDaDividaComponent implements OnInit, OnChanges {
   @ViewChild(SimuladorPadraoComponent) SimuladorPadraoComponent: SimuladorPadraoComponent;
+  @ViewChild(ModalSituacaoComponent) ModalSituacaoComponent: ModalSituacaoComponent;
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
   @Input() numeroContrato: string | undefined;
@@ -383,6 +385,9 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
       .join(' ');
   }
 
+  public abriModalSituacao(): void {
+    this.ModalSituacaoComponent.abriModalSituacao();
+  }
 
   public fechar() {
     this._modalService.dismissAll();

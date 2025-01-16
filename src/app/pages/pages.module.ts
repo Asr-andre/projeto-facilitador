@@ -42,6 +42,7 @@ import { BoletoPixComponent } from "./dashboard/componente/boleto-pix/boleto-pix
 import { ChatComponent } from "./chat/chat.component";
 import { QuillModule } from 'ngx-quill';
 import { JuridicoComponent } from "./dashboard/componente/juridico/juridico.component";
+import { ModalSituacaoComponent } from "./dashboard/componente/detalhe-da-divida/modal-situacao/modal-situacao.component";
 
 registerLocaleData(localePt);
 @NgModule({
@@ -55,6 +56,7 @@ registerLocaleData(localePt);
     EnvioEmailComponent,
     EnvioSmsComponent,
     SimuladorPadraoComponent,
+    ModalSituacaoComponent,
     TitulosPgRetComponent,
     EnderecoComponent,
     AcordoComponent,
