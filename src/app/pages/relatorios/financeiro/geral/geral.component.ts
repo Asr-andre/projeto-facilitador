@@ -65,7 +65,7 @@ export class GeralComponent implements OnInit, OnChanges {
     }
   }
 
-  gerarPDF(): void {
+  public gerarPDF(): void {
     // Seleciona o elemento HTML que você quer converter em PDF
     const elemento = document.getElementById('conteudoPDF');
 
@@ -113,8 +113,8 @@ export class GeralComponent implements OnInit, OnChanges {
 
   public abrirModalRelatorio(content: TemplateRef<any>): void {
 
-      this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
-    }
+    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
 
   public relatorioGeral() {
     if (this.filtros) {

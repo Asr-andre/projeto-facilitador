@@ -12,7 +12,7 @@
         <div class="row">
           <div class="col-md-6">
             <h5 class="mb-0"><i class="fas fa-filter resultados-icon"></i>
-               Acionamentos Analitico </h5>
+               Relatório Geral </h5>
           </div>
 
           <div class="col-md-6 text-end">
@@ -23,7 +23,6 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
                   <a href="javascript:void(0);" class="dropdown-item" style="padding-left: 10px; padding-right: 10px; padding-top: 2px;padding-bottom: 2px; font-size: 13px;" (click)="abrirModalRelatorio(modalResumo)"><i class="fas fa-file-pdf"></i> Relatório</a>
-                  <a href="javascript:void(0);" class="dropdown-item" style="padding-left: 10px; padding-right: 10px; padding-top: 2px;padding-bottom: 2px; font-size: 13px;" (click)="gerarPDF()"><i class="fas fa-file-pdf"></i> Exportar Pdf</a>
                   <a href="javascript:void(0);" class="dropdown-item" style="padding-left: 10px; padding-right: 10px;padding-top: 2px;padding-bottom: 2px; font-size: 13px;" (click)="exportExcel()"><i class="fas fa-file-excel"></i> Exporta Excel</a>
                 </div>
               </div>
@@ -131,7 +130,7 @@
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
   </div>
 
-  <div class="modal-body modal-padding" id="conteudoPDF">
+  <div class="modal-body modal-padding" id="conteudoPDF" style="font-size: 11px;">
     <div class="container">
       <h5 class="text-center mb-4">Resumo Financeiro</h5>
       <div class="row mb-3">

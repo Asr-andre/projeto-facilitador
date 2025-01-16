@@ -30,11 +30,9 @@ export class FinanceiroComponent {
   public contratantesCarregados = false;
 
   constructor(
-    private _financeiroService: FinanceiroService,
     private _contratanteService: ContratanteService,
     private _auth: AuthenticationService,
     private _formBuilder: FormBuilder,
-    private _datePipe: DatePipe,
     private _alert: AlertService,
 
   ) { }
@@ -64,14 +62,17 @@ export class FinanceiroComponent {
     const tipoRelatorio = this.formPesquisar.value.tipo;
     this.tipoRelatorio = tipoRelatorio;
 
-    if (this.tipoRelatorio === '1') {
-      this.exibirCard = true;
-      this.filtros = this.formPesquisar.value;
-    }
+    switch (tipoRelatorio) {
+      case '1':
+      case '2':
+        this.exibirCard = true;
+        this.filtros = this.formPesquisar.value;
+        break;
 
-    else {
-      this.exibirCard = false;
-      this._alert.warning('Selecione um tipo de relatório antes de pesquisar.');
+      default:
+        this.exibirCard = false;
+        this._alert.warning('Selecione um tipo de relatório antes de pesquisar.');
+        break;
     }
   }
 

@@ -14,6 +14,7 @@ import { SinteticoComponent } from './acionamentos/sintetico/sintetico.component
 import { AcoesRealizadasPorContratanteComponent } from './acionamentos/acoes-realizadas-por-contratante/acoes-realizadas-por-contratante.component';
 import { AcoesRealizadasPorUsuarioComponent } from './acionamentos/acoes-realizadas-por-usuario/acoes-realizadas-por-usuario.component';
 import { GeralComponent } from './financeiro/geral/geral.component';
+import { PrestacaoContasComponent } from './financeiro/prestacao-contas/prestacao-contas.component';
 
 @NgModule({
 
@@ -25,7 +26,8 @@ import { GeralComponent } from './financeiro/geral/geral.component';
     SinteticoComponent,
     AcoesRealizadasPorContratanteComponent,
     AcoesRealizadasPorUsuarioComponent,
-    GeralComponent
+    GeralComponent,
+    PrestacaoContasComponent
   ],
   imports: [
     CommonModule,

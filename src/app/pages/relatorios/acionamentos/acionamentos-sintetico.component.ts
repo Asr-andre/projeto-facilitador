@@ -74,29 +74,19 @@ export class AcionamentosSinteticoComponent implements OnInit {
     const tipoRelatorio = this.formPesquisar.value.tipo;
     this.tipoRelatorio = tipoRelatorio;
 
-    if (this.tipoRelatorio === '1') {
-      this.exibirCard = true;
-      this.filtros = this.formPesquisar.value;
-    }
+    switch (tipoRelatorio) {
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+        this.exibirCard = true;
+        this.filtros = this.formPesquisar.value;
+        break;
 
-    else if (this.tipoRelatorio === '2') {
-      this.exibirCard = true;
-      this.filtros = this.formPesquisar.value;
-    }
-
-    else if (this.tipoRelatorio === '3') {
-      this.exibirCard = true;
-      this.filtros = this.formPesquisar.value;
-    }
-
-    else if (this.tipoRelatorio === '4') {
-      this.exibirCard = true;
-      this.filtros = this.formPesquisar.value;
-    }
-
-    else {
-      this.exibirCard = false;
-      this._alert.warning('Selecione um tipo de relatório antes de pesquisar.');
+      default:
+        this.exibirCard = false;
+        this._alert.warning('Selecione um tipo de relatório antes de pesquisar.');
+        break;
     }
   }
 

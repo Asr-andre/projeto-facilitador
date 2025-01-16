@@ -26,6 +26,7 @@
                   [ngClass]="{'is-invalid': formPesquisar.get('tipo').invalid && formPesquisar.get('tipo').touched}">
                   <option value="">Selecione</option>
                   <option value="1">Geral</option>
+                  <option value="2">Prestação de contas</option>
                 </select>
               </div>
 
@@ -71,4 +72,9 @@
   <div *ngIf="tipoRelatorio === '1' && exibirCard">
     <app-geral [filtros]="filtros">
     </app-geral>
+  </div>
+
+  <div *ngIf="tipoRelatorio === '2' && exibirCard">
+    <app-prestacao-contas [filtros]="filtros">
+    </app-prestacao-contas>
   </div>
