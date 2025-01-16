@@ -1,22 +1,16 @@
-import { DatePipe } from '@angular/common';
-import { Component, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
-import { Utils } from 'src/app/core/helpers/utils';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
-import { TituloLiquidado } from 'src/app/core/models/financeiro.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
-import { ExcelService } from 'src/app/core/services/excel.service';
-import { FinanceiroService } from 'src/app/core/services/financeiro.service';
 
 @Component({
   selector: 'app-financeiro',
   templateUrl: './financeiro.component.html',
   styleUrl: './financeiro.component.scss'
 })
-export class FinanceiroComponent {
+export class FinanceiroComponent implements OnInit  {
   public contratantes: ContratanteModel [] = [];
   public formPesquisar: FormGroup;
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);

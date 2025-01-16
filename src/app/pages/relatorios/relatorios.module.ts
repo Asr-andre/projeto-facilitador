@@ -15,6 +15,8 @@ import { AcoesRealizadasPorContratanteComponent } from './acionamentos/acoes-rea
 import { AcoesRealizadasPorUsuarioComponent } from './acionamentos/acoes-realizadas-por-usuario/acoes-realizadas-por-usuario.component';
 import { GeralComponent } from './financeiro/geral/geral.component';
 import { PrestacaoContasComponent } from './financeiro/prestacao-contas/prestacao-contas.component';
+import { LogsGeralComponent } from './logs/logs-geral/logs-geral.component';
+import { LogsComponent } from './logs/logs.component';
 
 @NgModule({
 
@@ -27,7 +29,9 @@ import { PrestacaoContasComponent } from './financeiro/prestacao-contas/prestaca
     AcoesRealizadasPorContratanteComponent,
     AcoesRealizadasPorUsuarioComponent,
     GeralComponent,
-    PrestacaoContasComponent
+    PrestacaoContasComponent,
+    LogsComponent,
+    LogsGeralComponent
   ],
   imports: [
     CommonModule,

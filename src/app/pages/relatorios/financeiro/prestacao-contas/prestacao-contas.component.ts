@@ -38,7 +38,6 @@ export class PrestacaoContasComponent implements OnInit, OnChanges  {
 
     ngOnChanges(changes: SimpleChanges): void {
       if (changes['filtros'] && this.filtros) {
-        console.log(`Estes são os dados do filtro ${this.filtros}`);
       }
     }
 

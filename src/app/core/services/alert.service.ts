@@ -185,4 +185,20 @@ export class AlertService {
     });
   }
 
+  impressaoDocumento(): Promise<boolean> {
+    this.swalWithBootstrapButtons.fire({
+      title: 'Aguarde, o documento está sendo gerado...',
+      timer: 2000,
+      timerProgressBar: true,
+      showConfirmButton: false
+    });
+
+    // Retorna uma Promise que resolve após 4 segundos
+    return new Promise<boolean>(resolve => {
+      setTimeout(() => {
+        resolve(true);
+      }, 2000);
+    });
+  }
+
 }

@@ -52,7 +52,6 @@ import { QuillModule } from "ngx-quill";
     FormulaComponent,
     SmsComponent,
     ClienteComponent,
-    LogsComponent,
     IndiceComponent,
     EmailPerfilComponent
   ],

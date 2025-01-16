@@ -65,10 +65,11 @@ export class GeralComponent implements OnInit, OnChanges {
     }
   }
 
-  public gerarPDF(): void {
+  public async gerarPDF(): Promise<void> {
     // Seleciona o elemento HTML que você quer converter em PDF
     const elemento = document.getElementById('conteudoPDF');
 
+    await this._alertService.impressaoDocumento();
     if (elemento) {
       html2canvas(elemento).then((canvas) => {
         const imagemData = canvas.toDataURL('image/png');
@@ -86,7 +87,8 @@ export class GeralComponent implements OnInit, OnChanges {
     }
   }
 
-  public exportExcel() {
+  public async exportExcel(): Promise<void> {
+    await this._alertService.impressaoDocumento();
     this._excelService.exportAsExcelFile(this.dadosFiltrados, 'exportacaoPagamentos');
   }
 
