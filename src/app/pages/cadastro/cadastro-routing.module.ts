@@ -11,41 +11,42 @@ import { SmsComponent } from './sms/sms.component';
 import { ClienteComponent } from './cliente/cliente.component';
 import { IndiceComponent } from './indice/indice.component';
 import { EmailPerfilComponent } from './email-perfil/email-perfil.component';
+import { AuthGuard } from 'src/app/core/guards/auth.guard';
 
 
 const routes: Routes = [
     {
-      path: 'empresa', component: EmpresaComponent
+      path: 'empresa', component: EmpresaComponent, canActivate: [AuthGuard]
     },
     {
-      path: 'contratantes', component: ContratantesComponent
+      path: 'contratantes', component: ContratantesComponent, canActivate: [AuthGuard]
     },
     {
-      path: 'usuarios', component: UsuariosComponent
+      path: 'usuarios', component: UsuariosComponent, canActivate: [AuthGuard]
     },
     {
-      path: 'titulos', component: TitulosComponent
+      path: 'titulos', component: TitulosComponent, canActivate: [AuthGuard]
     },
     {
-      path: 'sms-whatsapp', component: SmsWhatsappComponent
+      path: 'sms-whatsapp', component: SmsWhatsappComponent, canActivate: [AuthGuard]
     },
     {
-      path: 'email-conta', component: EmailContaComponent
+      path: 'email-conta', component: EmailContaComponent, canActivate: [AuthGuard]
     },
     {
-      path: 'formula', component: FormulaComponent
+      path: 'formula', component: FormulaComponent, canActivate: [AuthGuard]
     },
     {
-      path: 'sms', component: SmsComponent
+      path: 'sms', component: SmsComponent, canActivate: [AuthGuard]
     },
     {
-      path: 'cliente', component: ClienteComponent
+      path: 'cliente', component: ClienteComponent, canActivate: [AuthGuard]
     },
     {
-      path: 'indice', component: IndiceComponent
+      path: 'indice', component: IndiceComponent, canActivate: [AuthGuard]
     },
     {
-      path: 'email-perfil', component: EmailPerfilComponent
+      path: 'email-perfil', component: EmailPerfilComponent, canActivate: [AuthGuard]
     }
 ];
 

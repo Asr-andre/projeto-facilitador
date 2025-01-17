@@ -4,21 +4,22 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { FinanceiroComponent } from "./financeiro/financeiro.component";
 import { LogsComponent } from "./logs/logs.component";
 import { AcionamentosSinteticoComponent } from "./acionamentos/acionamentos-sintetico.component";
+import { AuthGuard } from "src/app/core/guards/auth.guard";
 
 const routes: Routes = [
   {
     path: "dashboard",
-    component: DashboardComponent,
+    component: DashboardComponent, canActivate: [AuthGuard]
   },
   {
     path: "financeiro",
-    component: FinanceiroComponent,
+    component: FinanceiroComponent, canActivate: [AuthGuard]
   },
     {
-      path: 'logs', component: LogsComponent,
+      path: 'logs', component: LogsComponent, canActivate: [AuthGuard]
     },
     {
-      path: 'acionamentos', component: AcionamentosSinteticoComponent,
+      path: 'acionamentos', component: AcionamentosSinteticoComponent, canActivate: [AuthGuard]
     }
 ];
 
