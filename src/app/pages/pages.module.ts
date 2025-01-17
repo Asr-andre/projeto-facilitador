@@ -13,11 +13,8 @@ import {
   NgbTimepickerModule,
   NgbModule,
 } from "@ng-bootstrap/ng-bootstrap";
-import { NgApexchartsModule } from "ng-apexcharts";
 import { NgPipesModule } from "ngx-pipes";
-import { FullCalendarModule } from "@fullcalendar/angular";
 import { DndModule } from "ngx-drag-drop";
-import { LeafletModule } from "@asymmetrik/ngx-leaflet";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { AcionamentoComponent } from "./dashboard/componente/acionamento/acionamento.component";
@@ -34,7 +31,6 @@ import { EnderecoComponent } from "./dashboard/componente/endereco/endereco.comp
 import { AcordoComponent } from "./dashboard/componente/acordo/acordo.component";
 import { FilaComponent } from "./fila/fila.component";
 import { CarteiraDeClientesComponent } from "./carteira-de-clientes/carteira-de-clientes.component";
-import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 import { SolicitarCreditosComponent } from "./dashboard/componente/solicitar-creditos/solicitar-creditos.component";
 import { BoletoPixComponent } from "./dashboard/componente/boleto-pix/boleto-pix.component";
 import { ChatComponent } from "./chat/chat.component";
@@ -73,10 +69,7 @@ registerLocaleData(localePt);
     NgbNavModule,
     NgbDropdownModule,
     NgbTooltipModule,
-    NgApexchartsModule,
     DndModule,
-    FullCalendarModule,
-    LeafletModule,
     WidgetModule,
     SimplebarAngularModule,
     NgxPaginationModule,
@@ -86,7 +79,6 @@ registerLocaleData(localePt);
     NgbTimepickerModule,
     NgbDatepickerModule,
     NgbModule,
-    CKEditorModule,
     QuillModule.forRoot(),
   ],
   providers: [
