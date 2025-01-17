@@ -24,11 +24,9 @@ import { RelatoriosRoutingModule } from './relatorios.routing.module';
     AcionamentoModule,
     DashboardModule,
     LogsModule,
-    NgbDatepickerModule,
     NgbModule,
     OrderTableModule,
     NgApexchartsModule,
-    NgxPaginationModule,
   ],
   providers: [
 

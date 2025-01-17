@@ -8,13 +8,7 @@ import {
   NgbModule,
   NgbTooltipModule,
 } from "@ng-bootstrap/ng-bootstrap";
-import { CdkStepperModule } from "@angular/cdk/stepper";
-import { NgStepperModule } from "angular-ng-stepper";
 import { NgxMaskDirective, NgxMaskPipe } from "ngx-mask";
-import { NgSelectModule } from "@ng-select/ng-select";
-import { UiSwitchModule } from "ngx-ui-switch";
-import { ColorPickerModule } from "ngx-color-picker";
-import { DropzoneModule } from "ngx-dropzone-wrapper";
 import { UiModule } from "../../shared/ui/ui.module";
 import { EmpresaComponent } from "./empresa/empresa.component";
 import { CadastroRoutingModule } from "./cadastro-routing.module";
@@ -56,16 +50,10 @@ import { QuillModule } from "ngx-quill";
     ReactiveFormsModule,
     CadastroRoutingModule,
     UiModule,
-    CdkStepperModule,
-    NgStepperModule,
     NgxMaskDirective,
     NgxMaskPipe,
-    NgSelectModule,
-    UiSwitchModule,
-    ColorPickerModule,
     NgbDatepickerModule,
     NgbModule,
-    DropzoneModule,
     EmpresaModule,
     NgxPaginationModule,
     OrderTableModule,
