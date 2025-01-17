@@ -142,6 +142,11 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   }
 
   public abriracaoDeCobrancaModal(modal): void {
+    if (!this.idCliente) {
+      this._alertService.warning('Por favor selecione um cliente!');
+      return;
+    }
+
     this.formAcionamento.patchValue({
       id_cliente: this.idCliente,
       id_contratante: this.idContratante,
