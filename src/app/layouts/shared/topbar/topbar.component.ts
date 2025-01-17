@@ -178,8 +178,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
    * Logout the user
    */
   logout() {
-
-
     const dados = {
       id_empresa: this.idEmpresa,
       user_login: this.login,
@@ -189,17 +187,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this._logoutService.logout(dados).subscribe((res) => {
       if(res.success === 'true') {
         localStorage.clear();
-        this._auth.logout();
         this.router.navigate(['/account/login']);
       }
     });
-
-    if (environment.defaultauth === 'firebase') {
-      this._auth.logout();
-    } else {
-      this.authFackservice.logout();
-    }
-    this.router.navigate(['/account/login']);
 
   }
 
