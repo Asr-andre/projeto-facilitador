@@ -39,7 +39,7 @@
   <div class="col-md-3 detalhamento-texto">Cidade: <strong> {{ formatarIniciais(detalhamentoSelecionado?.cidade) }} - {{ detalhamentoSelecionado?.uf }}</strong></div>
   <div class="col-md-6 detalhamento-texto">
     <span style="cursor: pointer" [ngbTooltip]="'Atualizar situação'" placement="top" container="body"
-      (click)="abriModalSituacao(detalhamentoSelecionado?.situacao)">Situação: </span>
+      (click)="abriModalSituacao()">Situação: </span>
     <strong>
     {{ formatarIniciais(detalhamentoSelecionado?.situacao) }}
     </strong>

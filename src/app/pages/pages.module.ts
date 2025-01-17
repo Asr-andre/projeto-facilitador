@@ -25,12 +25,10 @@ import { WhatsappComponent } from "./dashboard/componente/telefone/whatsapp/what
 import { TelefoneComponent } from "./dashboard/componente/telefone/telefone.component";
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from "ngx-mask";
 import { EmailComponent } from "./dashboard/componente/email/email.component";
-import { DetalheDaDividaComponent } from "./dashboard/componente/detalhe-da-divida/detalhe-da-divida.component";
 import { OrderTableModule } from "../core/helpers/conf-tabela/order-table.module";
 import { EnvioEmailComponent } from "./dashboard/componente/email/envio-email/envio-email.component";
 import { EnvioSmsComponent } from "./dashboard/componente/telefone/envio-sms/envio-sms.component";
 import localePt from '@angular/common/locales/pt';
-import { SimuladorPadraoComponent } from "./dashboard/componente/detalhe-da-divida/simulador-padrao/simulador-padrao.component";
 import { TitulosPgRetComponent } from "./dashboard/componente/titulos-pg-ret/titulos-pg-ret/titulos-pg-ret.component";
 import { EnderecoComponent } from "./dashboard/componente/endereco/endereco.component";
 import { AcordoComponent } from "./dashboard/componente/acordo/acordo.component";
@@ -42,21 +40,18 @@ import { BoletoPixComponent } from "./dashboard/componente/boleto-pix/boleto-pix
 import { ChatComponent } from "./chat/chat.component";
 import { QuillModule } from 'ngx-quill';
 import { JuridicoComponent } from "./dashboard/componente/juridico/juridico.component";
-import { ModalSituacaoComponent } from "./dashboard/componente/detalhe-da-divida/modal-situacao/modal-situacao.component";
+import { DetalheModule } from "./dashboard/componente/detalhe-da-divida/detalhe.da.divida.module";
 
 registerLocaleData(localePt);
 @NgModule({
   declarations: [
     DashboardComponent,
-    DetalheDaDividaComponent,
     AcionamentoComponent,
     WhatsappComponent,
     TelefoneComponent,
     EmailComponent,
     EnvioEmailComponent,
     EnvioSmsComponent,
-    SimuladorPadraoComponent,
-    ModalSituacaoComponent,
     TitulosPgRetComponent,
     EnderecoComponent,
     AcordoComponent,
@@ -69,6 +64,7 @@ registerLocaleData(localePt);
   ],
   imports: [
     CommonModule,
+    DetalheModule,
     FormsModule,
     ReactiveFormsModule,
     PagesRoutingModule,
