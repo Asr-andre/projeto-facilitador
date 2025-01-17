@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../../../core/services/auth.service';
 import { Utils } from 'src/app/core/helpers/utils';
-import { AppConfig } from 'src/app/core/config/app.config';
+import { Versao } from 'src/app/core/config/app.config';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService
   ) {
-    this.versao = AppConfig.versao;
+    this.versao = Versao.versao;
   }
 
   ngOnInit() {

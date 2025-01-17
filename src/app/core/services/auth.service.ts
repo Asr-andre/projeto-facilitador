@@ -46,7 +46,7 @@ export class AuthenticationService {
     sessionStorage.removeItem(this.siglaKey);
     sessionStorage.removeItem(this.loginKey);
     sessionStorage.removeItem(this.idEmpresaKey);
-    localStorage.removeItem('dadosCliente');
+    sessionStorage.removeItem('dadosCliente');
   }
 
   public getCurrentUser(): any {

@@ -11,6 +11,8 @@ import { AuthenticationService } from "src/app/core/services/auth.service";
 import { DashboardService } from "src/app/core/services/dashboard.service";
 import { FilaService } from "src/app/core/services/fila.service";
 import { SolicitarCreditosComponent } from "./componente/solicitar-creditos/solicitar-creditos.component";
+import * as CryptoJS from 'crypto-js';
+import { Versao } from "src/app/core/config/app.config";
 
 @Component({
   selector: "app-dashboard",
@@ -172,7 +174,14 @@ export class DashboardComponent implements OnInit {
       razao_social: this.devedorSelecionado.razao_social
     };
 
-    localStorage.setItem('dadosCliente', JSON.stringify(clienteData));
+    // Chave de criptografia
+    const chaveSecreta = Versao.chaveSecreta;
+
+    // Criptografar os dados
+    const clienteDataCriptografado = CryptoJS.AES.encrypt(JSON.stringify(clienteData), chaveSecreta).toString();
+    sessionStorage.setItem('dadosCliente', clienteDataCriptografado);
+
+    //localStorage.setItem('dadosCliente', JSON.stringify(clienteData));
   }
 
   public atualizarQuantidadeExibida() {

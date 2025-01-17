@@ -7,6 +7,8 @@ import { EmailService } from 'src/app/core/services/email.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { EmailPerfilService } from 'src/app/core/services/cadastro/email.perfil.service';
 import { MensagemEmailPerfil, RequisicaoEmailPerfil } from 'src/app/core/models/cadastro/email-perfil.model';
+import * as CryptoJS from 'crypto-js';
+import { Versao } from 'src/app/core/config/app.config';
 
 @Component({
   selector: 'app-envio-email',
@@ -33,8 +35,8 @@ export class EnvioEmailComponent implements OnInit {
     [{ 'header': 1 }, { 'header': 2 }],               // Cabeçalhos H1 e H2
     [{ 'font': [] }],                                 // Fonte
     [{ 'size': [] }],                                 // Tamanhos de texto
-    [{ 'list': 'ordered'}, { 'list': 'bullet' }],     // Listas ordenadas e não ordenadas
-    [{ 'indent': '-1'}, { 'indent': '+1' }],          // Indentação
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }],     // Listas ordenadas e não ordenadas
+    [{ 'indent': '-1' }, { 'indent': '+1' }],          // Indentação
     [{ 'align': [] }],                                // Alinhamento
     [{ 'color': [] }, { 'background': [] }],          // Cor do texto e fundo
     //['blockquote', 'code-block'],                     // Bloco de citação e código
@@ -99,29 +101,45 @@ export class EnvioEmailComponent implements OnInit {
   };
 
   public substituirVariaveisNaMensagem(): void {
-    // Obtendo os dados do localStorage
-    const dadosCliente = JSON.parse(localStorage.getItem('dadosCliente') || '{}');
+    // Chave de criptografia usada no armazenamento
+    const chaveSecreta = Versao.chaveSecreta;
 
-    // Verificando se os dados existem
-    if (!dadosCliente || Object.keys(dadosCliente).length === 0) {
+    // Obtendo os dados criptografados do localStorage
+    const dadosCriptografados = sessionStorage.getItem('dadosCliente');
+
+    if (!dadosCriptografados) {
       this._alert.warning('Os dados do cliente não foram encontrados no localStorage.');
       return;
     }
 
-    // Obtendo a mensagem original
-    let mensagemOriginal = this.formularioEnvioEmail.get('mensagem')?.value || '';
-    const primeiroNome = dadosCliente.nome ? dadosCliente.nome.split(' ')[0] : '';
+    try {
+      // Descriptografando os dados
+      const bytes = CryptoJS.AES.decrypt(dadosCriptografados, chaveSecreta);
+      const dadosCliente = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
-    // Substituindo as variáveis na mensagem
-    mensagemOriginal = mensagemOriginal
-      .replace(/@clientes_nome/g, dadosCliente.nome || '')
-      .replace(/@clientes_cpf/g, dadosCliente.cnpj_cpf || '')
-      .replace(/@contratante_fantasia/g, dadosCliente.fantasia || '')
-      .replace(/@contratante_razao_social/g, dadosCliente.razao_social || '')
-      .replace(/@cliente_primeiro_nome/g, primeiroNome  || '');
+      // Verificando se os dados existem
+      if (!dadosCliente || Object.keys(dadosCliente).length === 0) {
+        this._alert.warning('Os dados do cliente não foram encontrados no localStorage.');
+        return;
+      }
 
-    // Atualizando o campo de mensagem no formulário
-    this.formularioEnvioEmail.get('mensagem')?.setValue(mensagemOriginal);
+      // Obtendo a mensagem original
+      let mensagemOriginal = this.formularioEnvioEmail.get('mensagem')?.value || '';
+      const primeiroNome = dadosCliente.nome ? dadosCliente.nome.split(' ')[0] : '';
+
+      // Substituindo as variáveis na mensagem
+      mensagemOriginal = mensagemOriginal
+        .replace(/@clientes_nome/g, dadosCliente.nome || '')
+        .replace(/@clientes_cpf/g, dadosCliente.cnpj_cpf || '')
+        .replace(/@contratante_fantasia/g, dadosCliente.fantasia || '')
+        .replace(/@contratante_razao_social/g, dadosCliente.razao_social || '')
+        .replace(/@cliente_primeiro_nome/g, primeiroNome || '');
+
+      // Atualizando o campo de mensagem no formulário
+      this.formularioEnvioEmail.get('mensagem')?.setValue(mensagemOriginal);
+    } catch (error) {
+      this._alert.error('Ocorreu um erro ao descriptografar os dados do cliente.');
+    }
   }
 
   public abrirModalEmail(email: string, idCliente: number | undefined, idContratante: number | undefined): void {
@@ -150,7 +168,7 @@ export class EnvioEmailComponent implements OnInit {
   }
 
   public enviarEmail(): void {
-        if (this.formularioEnvioEmail.invalid) {
+    if (this.formularioEnvioEmail.invalid) {
       this._alert.warning('O campo assunto é mensagem são obrigatório.');
       return;
     }
@@ -173,7 +191,7 @@ export class EnvioEmailComponent implements OnInit {
 
   private enviarEmailComAnexo(): void {
     const dadosParaEnvio = { ...this.formularioEnvioEmail.value };
-          dadosParaEnvio.assunto = this.assuntoSelecionado
+    dadosParaEnvio.assunto = this.assuntoSelecionado
 
     this.loadingMin = true;
     this._emailService.envioEmailUnitario(dadosParaEnvio).subscribe({

@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { DevedorModel, RequisicaoDevedorModel, RespostaDevedorModel } from '../models/devedor.model';
+import { RequisicaoDevedorModel, RespostaDevedorModel } from '../models/devedor.model';
 import { DetalhamentoModel, RequisicaoDetalhamentoModel } from '../models/detalhamento.model';
 import { AppConfig } from './url.base.service';
 import { AuthenticationService } from './auth.service';

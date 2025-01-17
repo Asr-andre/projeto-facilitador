@@ -14,7 +14,7 @@ import { AlertaModel } from 'src/app/core/models/sininho.model';
 import { Utils } from 'src/app/core/helpers/utils';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { LogoutService } from 'src/app/core/services/logout.service';
-import { AppConfig } from 'src/app/core/config/app.config';
+import { Versao } from 'src/app/core/config/app.config';
 
 @Component({
   selector: 'app-topbar',
@@ -57,7 +57,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
     private _sininhoService: SininhoService,
     private _logoutService: LogoutService
   ) {
-    this.versao = AppConfig.versao;
+    this.versao = Versao.versao;
   }
 
   @Output() mobileMenuButtonClicked = new EventEmitter();
