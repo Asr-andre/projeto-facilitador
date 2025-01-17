@@ -13,21 +13,29 @@ export class AppComponent {
 
   constructor(private _auth: AuthenticationService) {}
 
-  @HostListener('window:beforeunload', ['$event'])
-  unloadNotification(event: any): void {
-    // Verifica se o evento é devido a um fechamento de aba ou navegador
-    if (!this.isPageReload()) {
-      this.sendLogout(event);
+  ngOnInit() {
+    // Marcar que a página foi carregada (não recarregada)
+    if (!sessionStorage.getItem('isPageReloaded')) {
+      sessionStorage.setItem('isPageReloaded', 'false');
     }
   }
 
-  private isPageReload(): boolean {
-    // Verifica se é uma atualização (reload) da página
-    const navigationEntries = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
-    const isReload = navigationEntries.length > 0 && navigationEntries[0].type === 'reload';
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification(event: any): void {
+    // Verifica se o evento é causado por um fechamento de aba/navegador
+    if (sessionStorage.getItem('isPageReloaded') === 'false') {
+      // Verifica se a página está sendo fechada e não recarregada
+      this.sendLogout(event);
+    }
 
-    // Se for um reload, retorna true, caso contrário false
-    return isReload;
+    // Marca que o evento 'beforeunload' ocorreu, para evitar o disparo em reloads
+    sessionStorage.setItem('isPageReloaded', 'true');
+  }
+
+  @HostListener('window:unload', ['$event'])
+  onUnload(event: any): void {
+    // Limpa a flag quando a página está prestes a ser fechada
+    sessionStorage.removeItem('isPageReloaded');
   }
 
   private sendLogout(event: any): void {
