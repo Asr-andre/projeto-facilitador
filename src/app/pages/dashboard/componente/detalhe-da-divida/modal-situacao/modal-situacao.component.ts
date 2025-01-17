@@ -30,24 +30,21 @@ export class ModalSituacaoComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    this.inicializarForm();
+
   }
 
   public inicializarForm() {
     this.formSituacao = this._formBuilder.group({
       id_cliente: [''],
-      situacao: [''],
+      situacao: [this.clienteSituacao],
       user_login: ['']
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.inicializarForm();
     if (changes['clienteSituacao'] && changes['clienteSituacao'].currentValue !== undefined) {
       this.formSituacao.patchValue({ situacao: changes['clienteSituacao'].currentValue });
-    }
-
-    if (changes['idCliente'] && changes['idCliente'].currentValue !== undefined) {
-      console.log('idCliente atualizado:', changes['idCliente'].currentValue);
     }
   }
 
@@ -114,6 +111,7 @@ export class ModalSituacaoComponent implements OnInit, OnChanges {
 
 
   public fechar() {
+    this.formSituacao.reset();
     this._modalService.dismissAll();
   }
 }

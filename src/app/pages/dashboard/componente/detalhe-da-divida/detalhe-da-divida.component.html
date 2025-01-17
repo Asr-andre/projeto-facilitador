@@ -37,10 +37,11 @@
 <div class="row pt-1 brder">
   <div class="col-md-3 detalhamento-texto">Bairro: <strong> {{ formatarIniciais(detalhamentoSelecionado?.bairro) }}</strong></div>
   <div class="col-md-3 detalhamento-texto">Cidade: <strong> {{ formatarIniciais(detalhamentoSelecionado?.cidade) }} - {{ detalhamentoSelecionado?.uf }}</strong></div>
-  <div class="col-md-6 detalhamento-texto">Situação: <strong>
+  <div class="col-md-6 detalhamento-texto">
     <span style="cursor: pointer" [ngbTooltip]="'Atualizar situação'" placement="top" container="body"
-      (click)="abriModalSituacao()">{{ formatarIniciais(detalhamentoSelecionado?.situacao) }}
-      </span>
+      (click)="abriModalSituacao(detalhamentoSelecionado?.situacao)">Situação: </span>
+    <strong>
+    {{ formatarIniciais(detalhamentoSelecionado?.situacao) }}
     </strong>
   </div>
 </div>

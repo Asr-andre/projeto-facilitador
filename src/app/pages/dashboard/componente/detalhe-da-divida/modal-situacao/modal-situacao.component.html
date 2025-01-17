@@ -10,7 +10,6 @@
       <div class="col-md-12 form-group">
         <label for="id_contratante" class="form-label">Situação</label>
         <select class="form-control form-control-sm" formControlName="situacao">
-          <option value="">Selecione</option>
           <option *ngFor="let situacao of situacao" [value]="situacao.descricao">
             {{ situacao.descricao }}
           </option>

@@ -385,7 +385,11 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
       .join(' ');
   }
 
-  public abriModalSituacao(): void {
+  public abriModalSituacao(dado: string): void {
+    if (!dado) {
+      this._alertService.warning('Por favor selecione um cliente antes de atualizar a situação');
+      return;
+    }
     this.ModalSituacaoComponent.abriModalSituacao();
   }
 
