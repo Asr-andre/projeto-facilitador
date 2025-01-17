@@ -40,6 +40,10 @@ export class AuthenticationService {
     );
   }
 
+  sair(): Observable<any> {
+    return this.http.post(this.apiUrl, {}); // Você pode enviar o ID do usuário ou outros dados, se necessário
+  }
+
   public logout(): void {
     // Limpar usuário, sigla e login do localStorage ao fazer logout
     sessionStorage.removeItem(this.id_usuario);
