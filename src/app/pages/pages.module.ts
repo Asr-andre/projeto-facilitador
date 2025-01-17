@@ -69,7 +69,6 @@ registerLocaleData(localePt);
     NgbNavModule,
     NgbDropdownModule,
     NgbTooltipModule,
-    DndModule,
     WidgetModule,
     SimplebarAngularModule,
     NgxPaginationModule,
