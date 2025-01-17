@@ -1,4 +1,3 @@
-import { Indice } from './../../../../core/models/cadastro/indice.model';
 import { Validators } from '@angular/forms';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { DetalhamentoModel } from 'src/app/core/models/detalhamento.model';
@@ -385,8 +384,8 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
       .join(' ');
   }
 
-  public abriModalSituacao(dado: string): void {
-    if (!dado) {
+  public abriModalSituacao(): void {
+    if (!this.idCliente) {
       this._alertService.warning('Por favor selecione um cliente antes de atualizar a situação');
       return;
     }
