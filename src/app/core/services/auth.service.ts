@@ -25,10 +25,10 @@ export class AuthenticationService {
       map(response => {
         if (response['success'] === 'true') {
           // Armazenar usuário, sigla e login no localStorage
-          localStorage.setItem(this.id_usuario, JSON.stringify(response.id_usuario));
-          localStorage.setItem(this.siglaKey, sigla);
-          localStorage.setItem(this.loginKey, login);
-          localStorage.setItem(this.idEmpresaKey, response['id_empresa']);
+          sessionStorage.setItem(this.id_usuario, JSON.stringify(response.id_usuario));
+          sessionStorage.setItem(this.siglaKey, sigla);
+          sessionStorage.setItem(this.loginKey, login);
+          sessionStorage.setItem(this.idEmpresaKey, response['id_empresa']);
           return response;
         } else {
           throw new Error(response['msg: '] || 'Erro ao tentar autenticar.');
@@ -42,27 +42,28 @@ export class AuthenticationService {
 
   public logout(): void {
     // Limpar usuário, sigla e login do localStorage ao fazer logout
-    localStorage.removeItem(this.id_usuario);
-    localStorage.removeItem(this.siglaKey);
-    localStorage.removeItem(this.loginKey);
-    localStorage.removeItem(this.idEmpresaKey);
+    sessionStorage.removeItem(this.id_usuario);
+    sessionStorage.removeItem(this.siglaKey);
+    sessionStorage.removeItem(this.loginKey);
+    sessionStorage.removeItem(this.idEmpresaKey);
+    localStorage.removeItem('dadosCliente');
   }
 
   public getCurrentUser(): any {
     // Obter usuário do localStorage
-    const user = localStorage.getItem(this.id_usuario);
+    const user = sessionStorage.getItem(this.id_usuario);
     return user ? JSON.parse(user) : null;
   }
 
   public getSigla(): string {
-    return localStorage.getItem(this.siglaKey);
+    return sessionStorage.getItem(this.siglaKey);
   }
 
   public getLogin(): string {
-    return localStorage.getItem(this.loginKey);
+    return sessionStorage.getItem(this.loginKey);
   }
 
   public getIdEmpresa(): string {
-    return localStorage.getItem(this.idEmpresaKey);
+    return sessionStorage.getItem(this.idEmpresaKey);
   }
 }
