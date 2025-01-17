@@ -33,6 +33,7 @@ export class CarteiraClienteModel {
   cidade: string;
   uf: string;
   id_fila: number;
+  situacao: string;
   dias_sem_acionamento: number;
   public selecionado?: boolean;
 }

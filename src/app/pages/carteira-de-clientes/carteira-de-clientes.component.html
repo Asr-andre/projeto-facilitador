@@ -263,6 +263,7 @@
                                   <th>Data Último Acionamento</th>
                                   <th>Ação</th>
                                   <th>Dias Sem Acionamento</th>
+                                  <th>Situacao</th>
                                 </tr>
                               </thead>
                               <tbody *ngIf="dadosFiltrados.length > 0; else semDado">
@@ -283,20 +284,21 @@
                                   <td>{{ data(cliente.data_ultimo_acionamento) }}</td>
                                   <td>{{ cliente.acao }}</td>
                                   <td>{{ cliente.dias_sem_acionamento }}</td>
+                                  <td>{{ cliente.situacao }}</td>
                                 </tr>
                                 <tr class="tabela-custom">
                                   <td colspan="5"><strong>Total de Clientes: {{ totalClientes }}</strong></td>
                                   <td></td>
                                   <td></td>
                                   <td>{{ valorTotal | currency:'BRL':'symbol':'1.2-2' }}</td>
-                                  <td colspan="7"></td>
+                                  <td colspan="8"></td>
                                 </tr>
                                 <tr class="tabela-custom">
                                   <td colspan="5"><strong>Total de Clientes Selecionados: {{ totalClientesSelecionados }}</strong></td>
                                   <td></td>
                                   <td></td>
                                   <td>{{ valorTotalSelecionado | currency:'BRL':'symbol':'1.2-2' }}</td>
-                                  <td colspan="7"></td>
+                                  <td colspan="8"></td>
                                 </tr>
                               </tbody>
                             </table>
