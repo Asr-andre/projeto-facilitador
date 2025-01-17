@@ -92,6 +92,11 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   }
 
   public abriModalTitulo(content: TemplateRef<any>): void {
+    if (!this.idCliente) {
+      this._alertService.warning('Por favor selecione um cliente!');
+      return;
+    }
+
     this.inicializarformTitulo();
     this.obterTipoTitulo();
     this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
@@ -228,6 +233,11 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   }
 
   public simularNegociacao(): void {
+    if (!this.idCliente) {
+      this._alertService.warning('Por favor selecione um cliente!');
+      return;
+    }
+
     if (!this.idCliente || !this.idContratante || !this.detalhamentoSelecionado) {
       return;
     }
@@ -258,7 +268,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
   public retiradas(): void {
     if (!this.detalhamentoSelecionado?.parcelas) {
-      this._alertService.error('Nenhum título selecionado para retirada.');
+      this._alertService.warning('Nenhum título selecionado para retirada.');
       return;
     }
 
