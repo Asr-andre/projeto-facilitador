@@ -18,3 +18,17 @@ export class Recibos {
   titulos: string;
   data_cadastro: string;
 }
+
+//imprimir recibo
+export class RequisicaoReciboImprimirModel {
+  id_cliente: number;
+  id_recibo: string;
+  user_login: string;
+}
+
+export class RequisicaoRetornoImprimirModel {
+  success: string;
+  msg: string;
+  id_empresa: string;
+  base64: string;
+}

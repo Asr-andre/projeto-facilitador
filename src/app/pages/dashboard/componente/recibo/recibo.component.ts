@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
-import { Recibos } from 'src/app/core/models/recibo.nodel';
+import { Recibos } from 'src/app/core/models/recibo.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ReciboService } from 'src/app/core/services/recibo.service';
@@ -49,18 +49,20 @@ export class ReciboComponent implements OnInit, OnChanges {
     };
 
     this.loadingMin = true;
-    this._reciboService.obterRecibos(request).subscribe((res) => {
-      if (res.success === 'true') {
-        this.recibos = res.recibos;
-        this.dadosFiltrados = res.recibos;
+    this._reciboService.obterRecibos(request).subscribe(
+      (res) => {
+        if (res.success === 'true') {
+          this.recibos = res.recibos;
+          this.dadosFiltrados = res.recibos;
+        } else {
+          this._alert.warning(res.msg);
+        }
         this.loadingMin = false;
-      } else {
-        this._alert.warning(res.msg);
-      }
-    },
+      },
       (error) => {
         this.loadingMin = false;
-        this._alert.error('Erro ao obter os boletos.',error);
+        const mensagemErro = error.error?.message || 'Erro ao obter os recibos. Por favor, tente novamente.';
+        this._alert.error(mensagemErro);
       }
     );
   }
@@ -88,6 +90,36 @@ export class ReciboComponent implements OnInit, OnChanges {
     } else {
       this.idsSelecionados = this.idsSelecionados.filter((item) => item !== id); // Remove o ID da lista
     }
+  }
+
+  public imprimirRecibo(): void {
+    if (this.idsSelecionados.length === 0) {
+      this._alert.info(`Nenhum recibo selecionado!`);
+      return;
+    }
+
+    this.idsSelecionados.forEach((idRecibo) => {
+      const dadosSelecionado = {
+        id_cliente: this.idCliente,
+        id_recibo: idRecibo,
+        user_login: this.login,
+      };
+
+      this.loadingMin = true;
+      this._alert.impressaoDocumento();
+      this._reciboService.imprimirRecibos(dadosSelecionado).subscribe(
+        (res) => {
+          var link = "data:application/pdf;base64, " + res.base64;
+          fetch(link).then(res => res.blob()).then(res => window.open(URL.createObjectURL(res), '_blank'));
+          this._alert.success(res.msg);
+          this.loadingMin = false;
+        },
+        (error) => {
+          this.loadingMin = false;
+          this._alert.error(`Erro ao gerar confissão de dívida para o acordo: ${idRecibo}`, error);
+        }
+      );
+    });
   }
 
   public status(status: string): string {

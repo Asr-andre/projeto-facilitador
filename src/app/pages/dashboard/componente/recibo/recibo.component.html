@@ -39,8 +39,9 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
                   <a href="javascript:void(0);" class="dropdown-item"
-                    style="padding-left: 10px; padding-right: 10px; padding-top: 2px;padding-bottom: 2px; font-size: 12px;">
-                    <i class="fas fa-file-alt"></i> Gerar recibo</a>
+                    style="padding-left: 10px; padding-right: 10px; padding-top: 2px;padding-bottom: 2px; font-size: 12px;"
+                    *ngIf="recibo.cancel !== 'S'" (click)="imprimirRecibo()">
+                    <i class="fas fa-print"></i> Imprimir recibo</a>
                   <a href="javascript:void(0);" class="dropdown-item"
                     style="padding-left: 10px; padding-right: 10px;padding-top: 2px;padding-bottom: 2px; font-size: 12px;">
                     <i class="fas fa-times"></i> Cancelar</a>
