@@ -221,6 +221,14 @@
                 <ng-template [ngTemplateOutlet]="Juridico"></ng-template>
               </ng-template>
             </li>
+            <li [ngbNavItem]="9">
+              <a ngbNavLink class="nav-link custom-nav-link">
+                <span class="d-none d-sm-block"><i class="fas fa-file-alt"></i> Recibo</span>
+              </a>
+              <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="Recibo"></ng-template>
+              </ng-template>
+            </li>
           </ul>
           <div [ngbNavOutlet]="nav"></div>
         </div>
@@ -292,5 +300,12 @@
   <div class="mt-3 font-size-13">
     <app-juridico [idCliente]="devedorSelecionado?.id_cliente">
     </app-juridico>
+  </div>
+</ng-template>
+
+<ng-template #Recibo>
+  <div class="mt-3 font-size-13">
+    <app-recibo [idCliente]="devedorSelecionado?.id_cliente">
+    </app-recibo>
   </div>
 </ng-template>

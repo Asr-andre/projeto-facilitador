@@ -34,6 +34,7 @@ import { ChatComponent } from "./chat/chat.component";
 import { QuillModule } from 'ngx-quill';
 import { JuridicoComponent } from "./dashboard/componente/juridico/juridico.component";
 import { DetalheModule } from "./dashboard/componente/detalhe-da-divida/detalhe.da.divida.module";
+import { ReciboComponent } from "./dashboard/componente/recibo/recibo.component";
 
 registerLocaleData(localePt);
 @NgModule({
@@ -53,7 +54,8 @@ registerLocaleData(localePt);
     SolicitarCreditosComponent,
     BoletoPixComponent,
     ChatComponent,
-    JuridicoComponent
+    JuridicoComponent,
+    ReciboComponent
   ],
   imports: [
     CommonModule,
