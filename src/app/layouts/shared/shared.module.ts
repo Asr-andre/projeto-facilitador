@@ -13,12 +13,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TopbarComponent } from './topbar/topbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { HorizontaltopbarComponent } from './horizontaltopbar/horizontaltopbar.component';
-import { HorizontalnavbarComponent } from './horizontalnavbar/horizontalnavbar.component';
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
-  declarations: [TopbarComponent, FooterComponent, SidebarComponent, HorizontaltopbarComponent, HorizontalnavbarComponent],
+  declarations: [TopbarComponent, FooterComponent, SidebarComponent],
   imports: [
     CommonModule,
     TranslateModule,
@@ -28,7 +26,7 @@ import { HorizontalnavbarComponent } from './horizontalnavbar/horizontalnavbar.c
     RouterModule,
     NgbNavModule
   ],
-  exports: [TopbarComponent, FooterComponent, SidebarComponent, HorizontaltopbarComponent, HorizontalnavbarComponent],
+  exports: [TopbarComponent, FooterComponent, SidebarComponent],
   providers: [LanguageService]
 })
 export class SharedModule { }

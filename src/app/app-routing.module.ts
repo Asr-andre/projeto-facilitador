@@ -9,7 +9,7 @@ const routes: Routes = [
   // Rota protegida pela autenticação
   { path: '', component: LayoutComponent, loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule), canActivate: [AuthGuard] },
   { path: 'pages', loadChildren: () => import('./extrapages/extrapages.module').then(m => m.ExtrapagesModule), canActivate: [AuthGuard] },
-  { path: '**', redirectTo: 'account' }
+  { path: '**', redirectTo: 'pages/404', pathMatch: 'full' } // Redireciona para a página 404
 ];
 
 @NgModule({

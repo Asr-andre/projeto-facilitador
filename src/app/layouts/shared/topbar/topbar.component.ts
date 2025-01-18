@@ -4,7 +4,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../../core/services/auth.service';
-import { AuthfakeauthenticationService } from '../../../core/services/authfake.service';
 import { LanguageService } from '../../../core/services/language.service';
 import { environment } from '../../../../environments/environment';
 import { ChatVisibilidadeService } from 'src/app/core/services/chat.flutuante.service';
@@ -50,7 +49,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
   private document: any,
     private router: Router,
     private _auth: AuthenticationService,
-    private authFackservice: AuthfakeauthenticationService,
     public languageService: LanguageService,
     public cookiesService: CookieService,
     private chatVisibilidadeService: ChatVisibilidadeService,

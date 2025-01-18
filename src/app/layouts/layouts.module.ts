@@ -7,14 +7,14 @@ import { SharedModule } from './shared/shared.module';
 import { SimplebarAngularModule } from 'simplebar-angular';
 
 import { VerticalComponent } from './vertical/vertical.component';
-import { HorizontalComponent } from './horizontal/horizontal.component';
+
 import { LayoutComponent } from './layout/layout.component';
 import { ChatFlutuanteComponent } from './shared/chat-flutuante/chat-flutuante.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  declarations: [VerticalComponent, HorizontalComponent, LayoutComponent, ChatFlutuanteComponent],
+  declarations: [VerticalComponent,  LayoutComponent, ChatFlutuanteComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -23,6 +23,6 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     NgbTooltipModule,
   ],
-  exports: [VerticalComponent, HorizontalComponent, ChatFlutuanteComponent]
+  exports: [VerticalComponent,  ChatFlutuanteComponent]
 })
 export class LayoutsModule { }
