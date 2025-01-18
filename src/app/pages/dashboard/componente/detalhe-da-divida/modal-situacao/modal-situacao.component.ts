@@ -108,8 +108,6 @@ export class ModalSituacaoComponent implements OnInit, OnChanges {
       });
   }
 
-
-
   public fechar() {
     this.formSituacao.reset();
     this._modalService.dismissAll();
