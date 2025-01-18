@@ -5,6 +5,11 @@
       (click)="fechar()"></button>
   </div>
 
+  <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
+
   <div class="modal-body modal-padding">
     <form [formGroup]="formSituacao">
       <div class="col-md-12 form-group">

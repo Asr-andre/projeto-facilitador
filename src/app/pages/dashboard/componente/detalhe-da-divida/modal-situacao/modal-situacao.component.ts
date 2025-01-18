@@ -86,7 +86,7 @@ export class ModalSituacaoComponent implements OnInit, OnChanges {
   }
 
   public atualizarSituacao() {
-       if (!this.formSituacao.value) {
+       if (!this.formSituacao.valid) {
       this._alert.warning('Algo deu errado, verifique o log.');
       return;
     }
