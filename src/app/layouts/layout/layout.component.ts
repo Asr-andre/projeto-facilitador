@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
 import { EventService } from '../../core/services/event.service';
-
 import { LAYOUT_VERTICAL, LAYOUT_HORIZONTAL } from './layouts.model';
 
 @Component({

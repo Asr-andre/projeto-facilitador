@@ -4,6 +4,7 @@ import {
   UntypedFormGroup,
   Validators,
 } from "@angular/forms";
+import { Versao } from "src/app/core/config/app.config";
 import { PasswordResetService } from "src/app/core/services/password.reset.service";
 
 @Component({
@@ -18,11 +19,14 @@ export class PasswordresetComponent implements OnInit, AfterViewInit {
   loading = false;
   mensagem: string | null = null;
   success: boolean = false;
+  public versao: string;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
     private _passwordResetService: PasswordResetService
-  ) {}
+  ) {
+    this.versao = Versao.versao;
+  }
 
   ngOnInit() {
     document.body.removeAttribute("data-layout");

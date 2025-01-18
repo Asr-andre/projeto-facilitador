@@ -9,7 +9,6 @@ import {
   NgbTooltipModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { NgxMaskDirective, NgxMaskPipe } from "ngx-mask";
-import { UiModule } from "../../shared/ui/ui.module";
 import { EmpresaComponent } from "./empresa/empresa.component";
 import { CadastroRoutingModule } from "./cadastro-routing.module";
 import { ContratantesComponent } from "./contratantes/contratantes.component";
@@ -49,7 +48,6 @@ import { QuillModule } from "ngx-quill";
     FormsModule,
     ReactiveFormsModule,
     CadastroRoutingModule,
-    UiModule,
     NgxMaskDirective,
     NgxMaskPipe,
     NgbDatepickerModule,

@@ -7,8 +7,6 @@ import { SimuladorPadraoComponent } from './simulador-padrao/simulador-padrao.co
 import { DetalheDaDividaComponent } from './detalhe-da-divida.component';
 import { NgxMaskPipe } from 'ngx-mask';
 import { NgPipesModule } from 'ngx-pipes';
-import { UiModule } from 'src/app/shared/ui/ui.module';
-
 
 @NgModule({
   declarations: [
@@ -21,7 +19,6 @@ import { UiModule } from 'src/app/shared/ui/ui.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    UiModule,
     NgPipesModule,
     NgbDropdownModule,
     NgbTooltipModule,

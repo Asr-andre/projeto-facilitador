@@ -1,8 +1,6 @@
 import { LOCALE_ID, NgModule } from "@angular/core";
 import { CommonModule, DatePipe, registerLocaleData } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { UiModule } from "../shared/ui/ui.module";
-import { WidgetModule } from "../shared/widget/widget.module";
 import { PagesRoutingModule } from "./pages-routing.module";
 import { SimplebarAngularModule } from "simplebar-angular";
 import {
@@ -14,7 +12,6 @@ import {
   NgbModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { NgPipesModule } from "ngx-pipes";
-import { DndModule } from "ngx-drag-drop";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { AcionamentoComponent } from "./dashboard/componente/acionamento/acionamento.component";
@@ -64,12 +61,10 @@ registerLocaleData(localePt);
     FormsModule,
     ReactiveFormsModule,
     PagesRoutingModule,
-    UiModule,
     NgPipesModule,
     NgbNavModule,
     NgbDropdownModule,
     NgbTooltipModule,
-    WidgetModule,
     SimplebarAngularModule,
     NgxPaginationModule,
     NgxMaskDirective,
