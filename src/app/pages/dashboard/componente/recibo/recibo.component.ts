@@ -116,7 +116,8 @@ export class ReciboComponent implements OnInit, OnChanges {
         },
         (error) => {
           this.loadingMin = false;
-          this._alert.error(`Erro ao gerar confissão de dívida para o acordo: ${idRecibo}`, error);
+          const mensagemErro = error.error?.message || 'Erro ao imprimir os recibos. Por favor, tente novamente.';
+          this._alert.error(mensagemErro);
         }
       );
     });
