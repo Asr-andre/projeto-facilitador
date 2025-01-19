@@ -105,17 +105,14 @@ export class ReciboComponent implements OnInit, OnChanges {
         user_login: this.login,
       };
 
-      this.loadingMin = true;
       this._alert.impressaoDocumento();
       this._reciboService.imprimirRecibos(dadosSelecionado).subscribe(
         (res) => {
           var link = "data:application/pdf;base64, " + res.base64;
           fetch(link).then(res => res.blob()).then(res => window.open(URL.createObjectURL(res), '_blank'));
           this._alert.success(res.msg);
-          this.loadingMin = false;
         },
         (error) => {
-          this.loadingMin = false;
           const mensagemErro = error.error?.message || 'Erro ao imprimir os recibos. Por favor, tente novamente.';
           this._alert.error(mensagemErro);
         }

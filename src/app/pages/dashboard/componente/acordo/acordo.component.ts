@@ -86,16 +86,14 @@ export class AcordoComponent implements OnInit, OnChanges {
         user_login: this.login,
       };
 
-      this.loadingMin = true;
+      this._alertService.impressaoDocumento();
       this._acordoService.imprimirConfissaoDivida(dadosSelecionado).subscribe(
         (res) => {
           var link = "data:application/pdf;base64, " + res.base64;
           fetch(link).then(res => res.blob()).then(res => window.open(URL.createObjectURL(res), '_blank'));
           this._alertService.success(res.msg);
-          this.loadingMin = false;
         },
         (error) => {
-          this.loadingMin = false;
           this._alertService.error(`Erro ao gerar confissão de dívida para o acordo: ${idAcordo}`, error);
         }
       );
