@@ -10,6 +10,7 @@ export class TituloModel {
   numero_contrato: string;
   vencimento: string;
   pagamento: string;
+  id_recibo: number;
   tipo_baixa: string;
   valor: number;
   valor_multa: number;

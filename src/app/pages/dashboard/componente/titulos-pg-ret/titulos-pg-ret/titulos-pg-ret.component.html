@@ -13,6 +13,7 @@
             <th>Vencimento</th>
             <th>Pagamento</th>
             <th>Tipo</th>
+            <th>Id Recibo</th>
             <th>Valor</th>
             <th>Multa</th>
             <th>Juros</th>
@@ -31,7 +32,16 @@
             <td>{{ titulo.numero_contrato }}</td>
             <td>{{ dataBrasil(titulo.vencimento) }}</td>
             <td>{{ data(titulo.pagamento) }}</td>
-            <td>{{ titulo.tipo_baixa }}</td>
+            <td>
+              <div class="badge font-size-10"
+              [ngClass]="{
+                    'bg-success-subtle text-success': titulo.tipo_baixa === 'P',
+                    'bg-danger-subtle text-danger': titulo.tipo_baixa === 'R',
+                    'bg-warning-subtle text-warning':titulo.tipo_baixa === 'A'}">
+                    {{ tipo(titulo.tipo_baixa) }}
+              </div>
+            </td>
+            <td>{{ titulo.id_recibo }}</td>
             <td>{{ titulo.valor | currency: 'BRL' }}</td>
             <td>{{ titulo.valor_multa | currency: 'BRL' }}</td>
             <td>{{ titulo.valor_juros | currency: 'BRL' }}</td>

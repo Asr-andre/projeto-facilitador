@@ -28,7 +28,14 @@
             <td> {{ recibo.id_recibo }} </td>
             <td> {{ dataBrasil(recibo.data_recibo) }} </td>
             <td> {{ recibo.valor_recibo | currency:'BRL' }} </td>
-            <td> {{ status(recibo.cancel) }} </td>
+            <td>
+              <div class="badge font-size-10"
+              [ngClass]="{
+                    'bg-success-subtle text-success': recibo.cancel === 'N',
+                    'bg-danger-subtle text-danger': recibo.cancel === 'S' }">
+                    {{ status(recibo.cancel) }}
+              </div>
+            </td>
             <td> {{ recibo.titulos }} </td>
             <td> {{ data(recibo.data_cadastro) }} </td>
             <td>
@@ -43,8 +50,9 @@
                     *ngIf="recibo.cancel !== 'S'" (click)="imprimirRecibo()">
                     <i class="fas fa-print"></i> Imprimir recibo</a>
                   <a href="javascript:void(0);" class="dropdown-item"
-                    style="padding-left: 10px; padding-right: 10px;padding-top: 2px;padding-bottom: 2px; font-size: 12px;">
-                    <i class="fas fa-times"></i> Cancelar</a>
+                    style="padding-left: 10px; padding-right: 10px;padding-top: 2px;padding-bottom: 2px; font-size: 12px;"
+                    (click)="cancelarRecibo(recibo)">
+                    <i class="fas fa-times"></i> Cancelar Recibo</a>
                 </div>
               </div>
             </td>

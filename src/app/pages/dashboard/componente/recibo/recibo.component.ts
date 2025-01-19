@@ -123,6 +123,41 @@ export class ReciboComponent implements OnInit, OnChanges {
     });
   }
 
+  async cancelarRecibo(recibo: any) {
+    const solicitacao = {
+      id_cliente: this.idCliente,
+      id_recibo: recibo.id_recibo,
+      user_login: this.login
+    };
+
+    /*
+    if (acordo.percentualPago == 0 && acordo.status !== 'C') {
+      this._alertService.warning('Acordo não pode ser quebrado');
+      return;
+    }
+    */
+
+    const confirmarCancelamento = await this._alert.cancelarRecibo();
+    if (!confirmarCancelamento) {
+      return;
+    }
+
+    this.loadingMin = true;
+    try {
+      const resposta = await this._reciboService.cancelarRecibos(solicitacao).toPromise();
+      this.loadingMin = false;
+      if (resposta.success) {
+        this._alert.success(resposta.msg);
+        this.obterRecibos();
+      } else {
+        this._alert.warning(resposta.msg);
+      }
+    } catch (error) {
+      this.loadingMin = false;
+      this._alert.error('Erro ao cancelar o recibo', error);
+    }
+  }
+
   public status(status: string): string {
     switch (status) {
       case 'S':

@@ -56,6 +56,19 @@ export class TitulosPgRetComponent implements OnInit, OnChanges {
     );
   }
 
+  public tipo(tipo: string): string {
+    switch (tipo) {
+      case 'P':
+        return 'Pagamento';
+      case 'R':
+        return 'Retirada';
+        case 'A':
+        return 'Acordo';
+      default:
+        return tipo;
+    }
+  }
+
   public data(data) {
     return Utils.formatarDataParaExibicao(data);
   }

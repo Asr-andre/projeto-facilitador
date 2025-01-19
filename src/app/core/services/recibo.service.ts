@@ -30,6 +30,12 @@ export class ReciboService {
       .pipe(catchError(this.handleError));
   }
 
+  public cancelarRecibos(dados: RequisicaoReciboImprimirModel): Observable<RequisicaoRetornoImprimirModel> {
+    return this._http
+      .post<RequisicaoRetornoImprimirModel>(`${this.apiUrl}/cancelarrecibo`, dados)
+      .pipe(catchError(this.handleError));
+  }
+
   // Método para tratar erros
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'Ocorreu um erro desconhecido.';

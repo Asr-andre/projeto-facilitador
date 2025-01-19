@@ -151,6 +151,24 @@ export class AlertService {
     });
   }
 
+  cancelarRecibo(): Promise<boolean> {
+    return this.swalWithBootstrapButtons.fire({
+      title: 'Você deseja cancelar o recibo selecionado?',
+      icon: 'warning',
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.swalWithBootstrapButtons.fire('Cancelamento em execução, aguarde!');
+        return true;
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        return false;
+      }
+      return false;
+    });
+  }
+
   baixarPg(): Promise<boolean> {
     return this.swalWithBootstrapButtons.fire({
       title: 'Você deseja baixar todos os titulos selecionados?',
