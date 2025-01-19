@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -34,32 +34,26 @@ export function createTranslateLoader(http: HttpClient): any {
 }
 
 registerLocaleData(localePt);
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    PagesModule,
-    LayoutsModule,
-    FormsModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpClient]
-      }
-    }),
-  ],
-  providers: [
-    { provide: LOCALE_ID, useValue: 'pt-BR' },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        PagesModule,
+        LayoutsModule,
+        FormsModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: createTranslateLoader,
+                deps: [HttpClient]
+            }
+        })], providers: [
+        { provide: LOCALE_ID, useValue: 'pt-BR' },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule { }
