@@ -8,7 +8,6 @@ import { EnderecoModel, EnderecoResponseModel } from 'src/app/core/models/endere
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { EnderecoService } from 'src/app/core/services/endereco.service';
-import { dA } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'app-endereco',
