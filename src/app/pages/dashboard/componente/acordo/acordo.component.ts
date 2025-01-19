@@ -13,8 +13,8 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 export class AcordoComponent implements OnInit, OnChanges {
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
-  public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
-  public login = this._authService.getLogin();
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public login = this._auth.getLogin();
   public loadingMin: boolean = false;
   public acordos: AcordoModel[] = [];
 
@@ -22,8 +22,8 @@ export class AcordoComponent implements OnInit, OnChanges {
 
   constructor(
     private _acordoService: AcordoService,
-    private _authService: AuthenticationService,
-    private _alertService: AlertService,
+    private _auth: AuthenticationService,
+    private _alert: AlertService,
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +45,7 @@ export class AcordoComponent implements OnInit, OnChanges {
       id_cliente: this.idCliente,
       user_login: this.login
     };
+
     this.loadingMin = true;
     this._acordoService.listarAcordos(requisicao).subscribe(
       (res: AcordoRespostaModel) => {
@@ -65,15 +66,15 @@ export class AcordoComponent implements OnInit, OnChanges {
 
   public toggleSelecao(id: string, selecionado: boolean): void {
     if (selecionado) {
-      this.idsSelecionados.push(id); // Adiciona o ID à lista
+      this.idsSelecionados.push(id);
     } else {
-      this.idsSelecionados = this.idsSelecionados.filter((item) => item !== id); // Remove o ID da lista
+      this.idsSelecionados = this.idsSelecionados.filter((item) => item !== id);
     }
   }
 
   public gerarConfissaoDivida(): void {
     if (this.idsSelecionados.length === 0) {
-      this._alertService.info(`Nenhum acordo selecionado!`);
+      this._alert.info(`Nenhum acordo selecionado!`);
       return;
     }
 
@@ -86,15 +87,15 @@ export class AcordoComponent implements OnInit, OnChanges {
         user_login: this.login,
       };
 
-      this._alertService.impressaoDocumento();
+      this._alert.impressaoDocumento();
       this._acordoService.imprimirConfissaoDivida(dadosSelecionado).subscribe(
         (res) => {
           var link = "data:application/pdf;base64, " + res.base64;
           fetch(link).then(res => res.blob()).then(res => window.open(URL.createObjectURL(res), '_blank'));
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
         },
         (error) => {
-          this._alertService.error(`Erro ao gerar confissão de dívida para o acordo: ${idAcordo}`, error);
+          this._alert.error(`Erro ao gerar confissão de dívida para o acordo: ${idAcordo}`, error);
         }
       );
     });
@@ -107,31 +108,21 @@ export class AcordoComponent implements OnInit, OnChanges {
       user_login: this.login
     };
 
-    /*
-    if (acordo.percentualPago == 0 && acordo.status !== 'C') {
-      this._alertService.warning('Acordo não pode ser quebrado');
-      return;
-    }
-    */
-
-    const confirmarRetirada = await this._alertService.quebra();
-    if (!confirmarRetirada) {
+    const confirmarQuebra = await this._alert.quebra();
+    if (!confirmarQuebra) {
       return;
     }
 
-    this.loadingMin = true;
     try {
       const resposta = await this._acordoService.quebraAcordo(solicitacao).toPromise();
-      this.loadingMin = false;
       if (resposta.success) {
-        this._alertService.success(resposta.msg);
+        this._alert.success(resposta.msg);
         this.listarAcordos();
       } else {
-        this._alertService.warning(resposta.msg);
+        this._alert.warning(resposta.msg);
       }
     } catch (error) {
-      this.loadingMin = false;
-      this._alertService.error('Erro ao quebrar o acordo', error);
+      this._alert.error('Erro ao quebrar o acordo', error);
     }
   }
 
@@ -147,7 +138,7 @@ export class AcordoComponent implements OnInit, OnChanges {
     switch (tipo) {
       case 'A': return 'Ativo';
       case 'C': return 'Cancelado';
-      default: return 'Desconhecido';
+      default: return tipo;
     }
   }
 }

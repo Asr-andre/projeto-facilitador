@@ -86,9 +86,9 @@ export class ReciboComponent implements OnInit, OnChanges {
 
   public toggleSelecao(id: string, selecionado: boolean): void {
     if (selecionado) {
-      this.idsSelecionados.push(id); // Adiciona o ID à lista
+      this.idsSelecionados.push(id);
     } else {
-      this.idsSelecionados = this.idsSelecionados.filter((item) => item !== id); // Remove o ID da lista
+      this.idsSelecionados = this.idsSelecionados.filter((item) => item !== id);
     }
   }
 
@@ -127,22 +127,13 @@ export class ReciboComponent implements OnInit, OnChanges {
       user_login: this.login
     };
 
-    /*
-    if (acordo.percentualPago == 0 && acordo.status !== 'C') {
-      this._alertService.warning('Acordo não pode ser quebrado');
-      return;
-    }
-    */
-
     const confirmarCancelamento = await this._alert.cancelarRecibo();
     if (!confirmarCancelamento) {
       return;
     }
 
-    this.loadingMin = true;
     try {
       const resposta = await this._reciboService.cancelarRecibos(solicitacao).toPromise();
-      this.loadingMin = false;
       if (resposta.success) {
         this._alert.success(resposta.msg);
         this.obterRecibos();
@@ -150,7 +141,6 @@ export class ReciboComponent implements OnInit, OnChanges {
         this._alert.warning(resposta.msg);
       }
     } catch (error) {
-      this.loadingMin = false;
       this._alert.error('Erro ao cancelar o recibo', error);
     }
   }

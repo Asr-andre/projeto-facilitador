@@ -130,7 +130,7 @@ export class TelefoneComponent implements OnInit, OnChanges {
       case 'A': return 'Ativo';
       case 'P': return 'Positivo';
       case 'N': return 'Negativo';
-      default: return 'Desconhecido';
+      default: return status;
     }
   }
 

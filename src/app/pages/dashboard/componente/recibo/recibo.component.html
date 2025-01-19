@@ -49,10 +49,20 @@
                     style="padding-left: 10px; padding-right: 10px; padding-top: 2px;padding-bottom: 2px; font-size: 12px;"
                     *ngIf="recibo.cancel !== 'S'" (click)="imprimirRecibo()">
                     <i class="fas fa-print"></i> Imprimir recibo</a>
-                  <a href="javascript:void(0);" class="dropdown-item"
-                    style="padding-left: 10px; padding-right: 10px;padding-top: 2px;padding-bottom: 2px; font-size: 12px;"
+
+                    <a href="javascript:void(0);" class="dropdown-item"
+                    style="padding-left: 10px; padding-right: 10px; padding-top: 2px; padding-bottom: 2px; font-size: 12px;"
+                    *ngIf="recibo.cancel !== 'S'"
                     (click)="cancelarRecibo(recibo)">
-                    <i class="fas fa-times"></i> Cancelar Recibo</a>
+                    <i class="fas fa-times"></i> Cancelar Recibo
+                 </a>
+
+                 <!-- Informação de recibo já cancelado -->
+                 <span class="dropdown-item text-muted"
+                       style="padding-left: 10px; padding-right: 10px; padding-top: 2px; padding-bottom: 2px; font-size: 12px;"
+                       *ngIf="recibo.cancel === 'S'">
+                    <i class="fas fa-check"></i> Recibo já cancelado
+                 </span>
                 </div>
               </div>
             </td>

@@ -34,7 +34,16 @@
           <td>{{ telefone.fone }}</td>
           <td><div class="editable-field">{{ tipoTelefone(telefone.tipo) }}</div></td>
           <td> <div>{{ telefone.prioritario === 'S' ? 'Sim' : 'Não' }}</div> </td>
-          <td> <div class="editable-field">{{ statusTelefone(telefone.status_fone) }}</div> </td>
+          <td>
+            <div class="badge font-size-10"
+                 [ngClass]="{
+                   'bg-success-subtle text-success': telefone.status_fone === 'A',
+                   'bg-primary-subtle text-primary': telefone.status_fone === 'P',
+                   'bg-danger-subtle text-danger': telefone.status_fone === 'N'
+                 }">
+              {{ statusTelefone(telefone.status_fone) }}
+            </div>
+          </td>
           <td>{{ telefone.whatsapp === 'S' ? 'Sim' : 'Não' }}</td>
           <td>{{ telefone.obs_fone }}</td>
           <td>
