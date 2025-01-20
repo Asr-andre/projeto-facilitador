@@ -96,12 +96,12 @@
 
                           <div class="col-md-4 form-group">
                             <label for="nome" class="form-label">Nome</label>
-                            <input type="text" id="nome" class="form-control form-control-sm" formControlName="nome" />
+                            <input type="text" id="nome" class="form-control form-control-sm" formControlName="nome" placeholder="Nome"/>
                           </div>
 
                           <div class="col-md-2 form-group">
                             <label for="tipo_pessoa" class="form-label">Tipo Pessoa</label>
-                            <select id="tipo_pessoa" class="form-control form-control-sm" formControlName="tipo_pessoa">
+                            <select id="tipo_pessoa" class="form-control form-control-sm" formControlName="tipo_pessoa" placeholder="Tipo pessoa">
                               <option value="">Selecione</option>
                               <option value="F">Física</option>
                               <option value="J">Jurídica</option>
@@ -111,48 +111,48 @@
                           <div class="col-md-2 form-group">
                             <label for="cnpj_cpf" class="form-label">CNPJ/CPF</label>
                             <input type="text" id="cnpj_cpf" class="form-control form-control-sm" formControlName="cnpj_cpf" mascaraCpf
-                            [ngClass]="{'is-invalid': formCliente.get('cnpj_cpf').invalid && formCliente.get('cnpj_cpf').touched, 'edit-mode': editar}"/>
+                            [ngClass]="{'is-invalid': formCliente.get('cnpj_cpf').invalid && formCliente.get('cnpj_cpf').touched, 'edit-mode': editar}" placeholder="Cnpj/Cpf"/>
                           </div>
 
                           <div class="col-md-2 form-group">
                             <label for="rg" class="form-label">RG</label>
-                            <input type="text" id="rg" class="form-control form-control-sm" formControlName="rg" />
+                            <input type="text" id="rg" class="form-control form-control-sm" formControlName="rg" placeholder="Rg"/>
                           </div>
 
                           <div class="col-md-2 form-group">
                             <label for="orgao_expedidor" class="form-label">Órgão Expedidor</label>
-                            <input type="text" id="orgao_expedidor" class="form-control form-control-sm" formControlName="orgao_expedidor" />
+                            <input type="text" id="orgao_expedidor" class="form-control form-control-sm" formControlName="orgao_expedidor" placeholder="Órgão Expedidor"/>
                           </div>
 
                           <div class="col-md-2 form-group">
                             <label for="cep" class="form-label">CEP</label>
                             <input type="text" id="cep" class="form-control form-control-sm" formControlName="cep" mask="00000-000" (blur)="viaCep($event.target.value)"
-                            [ngClass]="{'is-invalid': formCliente.get('cep').invalid && formCliente.get('cep').touched}">
+                            [ngClass]="{'is-invalid': formCliente.get('cep').invalid && formCliente.get('cep').touched}" placeholder="Cep">
                           </div>
 
                           <div class="col-md-4 form-group">
                             <label for="endereco" class="form-label">Endereço</label>
-                            <input type="text" id="endereco" class="form-control form-control-sm" formControlName="endereco" [value]="cep?.endereco" (input)="cep.endereco = $event.target.value"/>
+                            <input type="text" id="endereco" class="form-control form-control-sm" formControlName="endereco" [value]="cep?.endereco" (input)="cep.endereco = $event.target.value" placeholder="Endereço"/>
                           </div>
 
                           <div class="col-md-2 form-group">
                             <label for="numero" class="form-label">Número</label>
-                            <input type="text" id="numero" class="form-control form-control-sm" formControlName="numero" />
+                            <input type="text" id="numero" class="form-control form-control-sm" formControlName="numero" placeholder="Número"/>
                           </div>
 
                           <div class="col-md-2 form-group">
                             <label for="complemento" class="form-label">Complemento</label>
-                            <input type="text" id="complemento" class="form-control form-control-sm" formControlName="complemento" [value]="cep?.complemento" (input)="cep.complemento = $event.target.value"/>
+                            <input type="text" id="complemento" class="form-control form-control-sm" formControlName="complemento" [value]="cep?.complemento" (input)="cep.complemento = $event.target.value" placeholder="Complemento"/>
                           </div>
 
                           <div class="col-md-6 form-group">
                             <label for="bairro" class="form-label">Bairro</label>
-                            <input type="text" id="bairro" class="form-control form-control-sm" formControlName="bairro" [value]="cep?.bairro" (input)="cep.bairro = $event.target.value"/>
+                            <input type="text" id="bairro" class="form-control form-control-sm" formControlName="bairro" [value]="cep?.bairro" (input)="cep.bairro = $event.target.value" placeholder="Bairro"/>
                           </div>
 
                           <div class="col-md-4 form-group">
                             <label for="cidade" class="form-label">Cidade</label>
-                            <input type="text" id="cidade" class="form-control form-control-sm" formControlName="cidade" [value]="cep?.cidade" (input)="cep.cidade = $event.target.value"/>
+                            <input type="text" id="cidade" class="form-control form-control-sm" formControlName="cidade" [value]="cep?.cidade" (input)="cep.cidade = $event.target.value" placeholder="Cidade"/>
                           </div>
 
                           <div class="col-md-2 form-group">
@@ -200,38 +200,38 @@
 
                           <div class="col-md-3 form-group">
                             <label for="pai" class="form-label">Nome do Pai</label>
-                            <input type="text" id="pai" class="form-control form-control-sm" formControlName="pai" />
+                            <input type="text" id="pai" class="form-control form-control-sm" formControlName="pai" placeholder="Nome do pai"/>
                           </div>
 
                           <div class="col-md-3 form-group">
                             <label for="mae" class="form-label">Nome da Mãe</label>
-                            <input type="text" id="mae" class="form-control form-control-sm" formControlName="mae" />
+                            <input type="text" id="mae" class="form-control form-control-sm" formControlName="mae" placeholder="Nome da mae"/>
                           </div>
 
                           <div class="col-md-4 form-group">
                             <label for="conjuge" class="form-label">Cônjuge</label>
-                            <input type="text" id="conjuge" class="form-control form-control-sm" formControlName="conjuge" />
+                            <input type="text" id="conjuge" class="form-control form-control-sm" formControlName="conjuge" placeholder="Conjuge"/>
                           </div>
 
                           <div class="col-md-3 form-group">
                             <label for="trabalho" class="form-label">Trabalho</label>
-                            <input type="text" id="trabalho" class="form-control form-control-sm" formControlName="trabalho" />
+                            <input type="text" id="trabalho" class="form-control form-control-sm" formControlName="trabalho" placeholder="Trabalho"/>
                           </div>
 
                           <div class="col-md-2 form-group">
                             <label for="cargo" class="form-label">Cargo</label>
-                            <input type="text" id="cargo" class="form-control form-control-sm" formControlName="cargo" />
+                            <input type="text" id="cargo" class="form-control form-control-sm" formControlName="cargo" placeholder="Cargo"/>
                           </div>
 
                           <div class="col-md-2 form-group">
                             <label for="valor_renda" class="form-label">Valor Renda</label>
-                            <input type="number" id="valor_renda" class="form-control form-control-sm" formControlName="valor_renda" min="0" (input)="verificarValorNegativo('valor_renda')" />
+                            <input type="number" id="valor_renda" class="form-control form-control-sm" formControlName="valor_renda" min="0" (input)="verificarValorNegativo('valor_renda')" placeholder="Valor renda"/>
                           </div>
 
                           <div class="col-md-3 form-group">
                             <label for="melhor_canal_localizacao" class="form-label">Melhor Canal de Localização</label>
                             <input type="text" id="melhor_canal_localizacao" class="form-control form-control-sm"
-                              formControlName="melhor_canal_localizacao" />
+                              formControlName="melhor_canal_localizacao"  placeholder="Melhor canal localização"/>
                           </div>
 
                           <div class="col-md-2 form-group">

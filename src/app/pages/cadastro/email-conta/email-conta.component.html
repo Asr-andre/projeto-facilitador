@@ -83,19 +83,19 @@
                     </tr>
                   </tbody>
                 </ng-template>
-                <div class="d-flex justify-content-between align-items-center text-small">
-                  <div>
-                    Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
-                    {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
-                  </div>
-                  <pagination-controls (pageChange)="paginaAtual = $event"
-                                        previousLabel="Anterior"
-                                        nextLabel="Próximo"
-                                        [maxSize]="5"
-                                        [autoHide]="false"
-                                        [responsive]="true">
-                  </pagination-controls>
+              </div>
+              <div class="d-flex justify-content-between align-items-center text-small">
+                <div>
+                  Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+                  {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
                 </div>
+                <pagination-controls (pageChange)="paginaAtual = $event"
+                                      previousLabel="Anterior"
+                                      nextLabel="Próximo"
+                                      [maxSize]="5"
+                                      [autoHide]="false"
+                                      [responsive]="true">
+                </pagination-controls>
               </div>
             </div>
           </div>
