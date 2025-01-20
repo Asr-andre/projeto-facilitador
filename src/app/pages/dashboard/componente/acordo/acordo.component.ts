@@ -4,6 +4,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AcordoService } from 'src/app/core/services/acordo.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { ExcelService } from 'src/app/core/services/excel.service';
 
 @Component({
   selector: 'app-acordo',
@@ -24,6 +25,7 @@ export class AcordoComponent implements OnInit, OnChanges {
     private _acordoService: AcordoService,
     private _auth: AuthenticationService,
     private _alert: AlertService,
+    private _excelService: ExcelService,
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +36,11 @@ export class AcordoComponent implements OnInit, OnChanges {
     if (changes.idCliente && !changes.idCliente.firstChange) {
         this.listarAcordos();
     }
+  }
+
+  public exportExcel() {
+    if (!this.acordos) return;
+    this._excelService.exportAsExcelFile(this.acordos, 'exportacaoJuridico');
   }
 
   public  listarAcordos(): void {

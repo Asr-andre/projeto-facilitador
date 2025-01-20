@@ -3,6 +3,7 @@ import { Utils } from 'src/app/core/helpers/utils';
 import { TituloModel } from 'src/app/core/models/titulos.pg.ret.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { ExcelService } from 'src/app/core/services/excel.service';
 import { TitulosPgRetService } from 'src/app/core/services/titulos.pg.ret.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class TitulosPgRetComponent implements OnInit, OnChanges {
     private _titulosPgRetService: TitulosPgRetService,
     private _authService: AuthenticationService,
     private _alertService: AlertService,
+     private _excelService: ExcelService,
   ) { }
 
   ngOnInit(): void {
@@ -32,6 +34,11 @@ export class TitulosPgRetComponent implements OnInit, OnChanges {
     if (changes.idCliente && !changes.idCliente.firstChange) {
       this.obterTitulosPagos();
     }
+  }
+
+  public exportExcel() {
+    if (!this.tituloPgRet) return;
+    this._excelService.exportAsExcelFile(this.tituloPgRet, 'exportacaoBaixas');
   }
 
   public obterTitulosPagos() {

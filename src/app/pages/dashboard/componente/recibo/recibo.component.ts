@@ -4,6 +4,7 @@ import { Utils } from 'src/app/core/helpers/utils';
 import { Recibos } from 'src/app/core/models/recibo.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { ExcelService } from 'src/app/core/services/excel.service';
 import { ReciboService } from 'src/app/core/services/recibo.service';
 
 @Component({
@@ -27,6 +28,7 @@ export class ReciboComponent implements OnInit, OnChanges {
     private _reciboService: ReciboService,
     private _auth: AuthenticationService,
     private _alert: AlertService,
+    private _excelService: ExcelService,
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +39,11 @@ export class ReciboComponent implements OnInit, OnChanges {
     if (changes.idCliente && !changes.idCliente.firstChange) {
       this.obterRecibos();
     }
+  }
+
+  public exportExcel() {
+    if (!this.dadosFiltrados) return;
+    this._excelService.exportAsExcelFile(this.dadosFiltrados, 'exportacaoRecibos');
   }
 
   public obterRecibos() {
