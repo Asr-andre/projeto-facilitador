@@ -10,6 +10,7 @@ import { AcaoCobrancaService } from 'src/app/core/services/acao.cobranca.service
 import { AcionamentoService } from 'src/app/core/services/acionamento.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { ExcelService } from 'src/app/core/services/excel.service';
 
 @Component({
   selector: "app-acionamento",
@@ -41,7 +42,8 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     private _acionamentoService: AcionamentoService,
     private _acaoCobrancaService: AcaoCobrancaService,
     private _formBuilder: FormBuilder,
-    private _datePipe: DatePipe
+    private _datePipe: DatePipe,
+    private _excelService: ExcelService,
   ) {
     this.updateSubject.pipe(debounceTime(900)).subscribe(() => this.listarAcionamentos());
   }
@@ -135,6 +137,11 @@ export class AcionamentoComponent implements OnChanges, OnInit {
         }
       );
     }
+  }
+
+  public exportExcel() {
+    if (!this.acionamentos) return;
+    this._excelService.exportAsExcelFile(this.acionamentos, 'exportacaoAcionamentoAnalitico');
   }
 
   public data(data) {

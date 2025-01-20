@@ -8,16 +8,31 @@
             <div class="card">
               <div class="card-header pt-2 pb-2">
                 <div class="row">
-                  <div class="col-md-6">
-                    <h5 class="mb-0"><i class="fas fa-bell acionamento-icon"></i> Acionamentos </h5>
-                  </div>
-                  <div class="col-md-6 text-end">
-                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 4px; padding-right: 5px !important;"
+                  <div class="col-md-6" style="padding-left: 0px;">
+                    <button class="btn btn-outline-success btn-sm me-2"
                     (click)="abriracaoDeCobrancaModal(acaoDeCobrancaModal)">
                       <i class="fas fa-plus"></i>
                       Incluir Acionamento
                     </button>
+                    <button class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-calendar"></i>
+                      Agenda
+                    </button>
                   </div>
+                  <div class="col-md-6 text-end" style="padding-right: 0px;">
+                    <div class="dropup float-end" ngbDropdown>
+                      <a href="javascript: void(0);" class="dropdown-toggle arrow-none card-drop" ngbDropdownToggle data-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="mdi mdi-dots-vertical"></i>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                        <a href="javascript:void(0);" class="dropdown-item"
+                          style="padding-left: 10px; padding-right: 10px; padding-top: 2px;padding-bottom: 2px; font-size: 12px;"
+                          ><i class="fas fa-print"></i> Exporta Excel</a>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
@@ -27,8 +42,8 @@
                   </div>
                 </div>
 
-                <div class="table-responsive font-size-12" style="margin-top: 10px; max-height: 300px; white-space: nowrap; overflow: auto; padding-left: 4px;padding-right: 4px;">
-                  <table class="table table-sm table-hover">
+                <div class="table-responsive font-size-12" style="overflow: auto; height: 300px;">
+                  <table class="table table-striped">
                     <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
                       <tr>
                         <th>Id</th>
