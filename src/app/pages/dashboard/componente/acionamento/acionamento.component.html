@@ -40,7 +40,7 @@
                 </div>
               </div>
 
-              <div class="card-body" style="padding: 5px;">
+              <div class="card-body" style="padding: 0px;">
                 <div class="table-responsive font-size-12" style="overflow: auto; height: 300px;">
                   <table class="table table-striped">
                     <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
@@ -158,7 +158,7 @@
         </div>
       </div>
       <div *ngIf="!loading && agenda && agenda.length > 0" class="table-responsive">
-        <table class="table table-striped font-size-10" style="overflow: auto;">
+        <table class="table table-striped font-size-11" style="overflow: auto;">
           <thead class="tabela-custom table-td-scroll sticky-header">
             <tr>
               <th>#</th>
@@ -185,12 +185,11 @@
         <p>Nenhum cliente encontrado na agenda.</p>
       </div>
       <div class="d-flex justify-content-end align-items-center" style="margin-top: 0px;">
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()" style="margin-right: 10px; margin-bottom: 10px;">
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()" style="margin-right: 10px;margin-bottom: 10px;padding-top: 2px;padding-bottom: 2px;">
           <i class="fas fa-times"></i> Fechar
         </button>
       </div>
     </div>
-
   </ng-template>
 
 
