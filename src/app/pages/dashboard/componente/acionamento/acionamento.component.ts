@@ -6,10 +6,12 @@ import { Subject, debounceTime } from 'rxjs';
 import { Utils } from 'src/app/core/helpers/utils';
 import { AcionamentoModel, RequisicaoAcionamentoModel } from 'src/app/core/models/acionamento.model';
 import { AcaoCobrancaModel, RequisicaoAcaoCobrancaModel } from 'src/app/core/models/acoes.cobranca.model';
+import { DevedorModel, RespostaDevedorModel } from 'src/app/core/models/devedor.model';
 import { AcaoCobrancaService } from 'src/app/core/services/acao.cobranca.service';
 import { AcionamentoService } from 'src/app/core/services/acionamento.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { ExcelService } from 'src/app/core/services/excel.service';
 
 @Component({
@@ -31,7 +33,8 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   public conteudoCompleto: string = "";
   public textoVisivel: string = ''; // Armazena o texto atualmente visível
   public loadingMin: boolean = false;
-
+  public loading: boolean = false;
+  public agenda: DevedorModel[] = [];
 
   private updateSubject: Subject<void> = new Subject<void>();
 
@@ -44,9 +47,8 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     private _formBuilder: FormBuilder,
     private _datePipe: DatePipe,
     private _excelService: ExcelService,
-  ) {
-    this.updateSubject.pipe(debounceTime(900)).subscribe(() => this.listarAcionamentos());
-  }
+    private _dashboard: DashboardService,
+  ) { }
 
   ngOnInit(): void {
     this.inicializarformAcionamentos();
@@ -69,6 +71,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["idCliente"] || changes["idContratante"]) {
       this.updateSubject.next();
+      this.updateSubject.pipe(debounceTime(900)).subscribe(() => this.listarAcionamentos());
     }
   }
 
@@ -97,7 +100,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       this._acionamentoService.listarAcionamentos(requisicao).subscribe((res) => {
         this.loadingMin = false;
         if (res.success) {
-          this.loadingMin = false;
+          this.loading = false;
           this.acionamentos = res.acionamentos;
         } else {
           this.loadingMin = false;
@@ -137,6 +140,33 @@ export class AcionamentoComponent implements OnChanges, OnInit {
         }
       );
     }
+  }
+
+  public obterAgenda(): void {
+    const requisicao = {
+      cnpj_cpf: '',
+      id_empresa: this.idEmpresa,
+      id_fila: 1,
+      id_usuario: this.idUsuario,
+      mostrar_cliente_sem_dividas: 'N',
+      nome: ''
+    }
+
+    this.loading = true;
+    this._dashboard.obterDevedores(requisicao).subscribe((res: RespostaDevedorModel) => {
+      if (res && res.success === "true") {
+        this.agenda = res.clientes;
+        this.loading = false;
+      } else {
+        this.loading = false;
+        this._alertService.warning(res.msg);
+      }
+    });
+  }
+
+  public abriModalagenda(content: TemplateRef<any>): void {
+    this.obterAgenda();
+    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public exportExcel() {
@@ -227,6 +257,13 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   public copiarParaAreasTransferencia(valor) {
     Utils.CopyAreaTransfer(valor);
     this._alertService.copiado();
+  }
+
+  public mascararCpfCnpj(value: string): string {
+    if (value) {
+      return Utils.formatarDocumento(value);
+    }
+    return value;
   }
 
   public fechar() {

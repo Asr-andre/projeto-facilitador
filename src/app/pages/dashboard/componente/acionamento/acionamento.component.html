@@ -1,3 +1,7 @@
+<div class="loading-overlay-pagina" *ngIf="loadingMin">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
 
 <div class="container-fluid">
   <div class="row">
@@ -14,7 +18,7 @@
                       <i class="fas fa-plus"></i>
                       Incluir Acionamento
                     </button>
-                    <button class="btn btn-outline-secondary btn-sm">
+                    <button class="btn btn-outline-secondary btn-sm" (click)="abriModalagenda(agendaModal)">
                     <i class="fas fa-calendar"></i>
                       Agenda
                     </button>
@@ -28,7 +32,7 @@
                       <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
                         <a href="javascript:void(0);" class="dropdown-item"
                           style="padding-left: 10px; padding-right: 10px; padding-top: 2px;padding-bottom: 2px; font-size: 12px;"
-                          ><i class="fas fa-print"></i> Exporta Excel</a>
+                          (click)="exportExcel()"><i class="fas fa-print"></i> Exporta Excel</a>
                       </div>
                     </div>
                   </div>
@@ -37,11 +41,6 @@
               </div>
 
               <div class="card-body" style="padding: 5px;">
-                <div class="loading-overlay-card" *ngIf="loadingMin">
-                  <div class="spinner-border text-primary m-1" role="status">
-                  </div>
-                </div>
-
                 <div class="table-responsive font-size-12" style="overflow: auto; height: 300px;">
                   <table class="table table-striped">
                     <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
@@ -143,3 +142,55 @@
       </form>
     </div>
   </ng-template>
+
+  <ng-template #agendaModal let-modal>
+    <div class="modal-header modal-header-custom" style="background: #3e4988; margin: 0">
+      <h6 class="modal-title" style="color: #ffffff">
+        <i class="fas fa-calendar"></i> Clientes na Agenda
+      </h6>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
+    </div>
+
+    <div class="modal-body" style="padding: 0px !important;">
+      <div *ngIf="loading" class="text-center">
+        <div class="spinner-border text-primary m-1" role="status">
+          <span class="visually-hidden">Carregando...</span>
+        </div>
+      </div>
+      <div *ngIf="!loading && agenda && agenda.length > 0" class="table-responsive">
+        <table class="table table-striped font-size-10" style="overflow: auto;">
+          <thead class="tabela-custom table-td-scroll sticky-header">
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>CPF/CNPJ</th>
+              <th>Fantasia</th>
+              <th>Data Acionamento</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cliente of agenda; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ cliente.nome }}</td>
+              <td>{{ mascararCpfCnpj(cliente.cnpj_cpf) }}</td>
+              <td>{{ cliente.fantasia }}</td>
+              <td>{{ data(cliente.data_acionamento) }}</td>
+              <td>{{ cliente.descricao_acao }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="!loading && (!agenda || agenda.length === 0)" class="text-center">
+        <p>Nenhum cliente encontrado na agenda.</p>
+      </div>
+      <div class="d-flex justify-content-end align-items-center" style="margin-top: 0px;">
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()" style="margin-right: 10px; margin-bottom: 10px;">
+          <i class="fas fa-times"></i> Fechar
+        </button>
+      </div>
+    </div>
+
+  </ng-template>
+
+

@@ -1,0 +1,17 @@
+.sticky-header th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #f8f9fa; /* Cor de fundo para o cabeçalho */
+  padding: 5px;
+}
+
+.table td,
+.table th {
+  padding: 5px;
+  vertical-align: middle;
+}
+
+.font-size-10 {
+  font-size: 10px;
+}
