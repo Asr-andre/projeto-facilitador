@@ -6,7 +6,6 @@ import { Utils } from 'src/app/core/helpers/utils';
 import { ProcessoModel } from 'src/app/core/models/juridico.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
-import { ExcelService } from 'src/app/core/services/excel.service';
 import { JuridicoService } from 'src/app/core/services/juridico.service';
 
 @Component({
@@ -31,7 +30,6 @@ export class JuridicoComponent implements OnInit, OnChanges {
     private _formBuilder: FormBuilder,
     private _modal: NgbModal,
     private _datePipe: DatePipe,
-    private _excelService: ExcelService,
   ) { }
 
   ngOnInit(): void {
@@ -43,11 +41,6 @@ export class JuridicoComponent implements OnInit, OnChanges {
     if (changes.idCliente && !changes.idCliente.firstChange) {
       this.obterProcessos();
     }
-  }
-
-  public exportExcel() {
-    if (!this.processos) return;
-    this._excelService.exportAsExcelFile(this.processos, 'exportacaoJuridico');
   }
 
   public inicializarFormProcesso(dado?: ProcessoModel) {
