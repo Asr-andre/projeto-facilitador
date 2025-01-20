@@ -32,8 +32,9 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   public formAcionamento: FormGroup;
   public conteudoCompleto: string = "";
   public textoVisivel: string = ''; // Armazena o texto atualmente visível
-  public loadingMin: boolean = false;
-  public loading: boolean = false;
+  public loadingTabela: boolean = false;
+  public loadingAgenda: boolean = false;
+  public loadinAcaoCobanca: boolean = false;
   public agenda: DevedorModel[] = [];
 
   private updateSubject: Subject<void> = new Subject<void>();
@@ -96,19 +97,19 @@ export class AcionamentoComponent implements OnChanges, OnInit {
         id_cliente: this.idCliente,
       };
 
-      this.loadingMin = true;
+      this.loadingTabela = true;
       this._acionamentoService.listarAcionamentos(requisicao).subscribe((res) => {
-        this.loadingMin = false;
+        this.loadingTabela = false;
         if (res.success) {
-          this.loading = false;
+          this.loadingTabela = false;
           this.acionamentos = res.acionamentos;
         } else {
-          this.loadingMin = false;
+          this.loadingTabela = false;
           this._alertService.error(res.msg);
         }
       },
         (error) => {
-          this.loadingMin = false;
+          this.loadingTabela = false;
           this._alertService.error("Erro ao listar acionamentos");
         }
       );
@@ -123,19 +124,19 @@ export class AcionamentoComponent implements OnChanges, OnInit {
         id_empresa: this.idEmpresa,
       };
 
-      this.loadingMin = true;
+      this.loadinAcaoCobanca = true;
       this._acaoCobrancaService.listarAcoesCobranca(requisicao).subscribe((res) => {
-        this.loadingMin = false;
+        this.loadinAcaoCobanca = false;
         if (res.success) {
-          this.loadingMin = false;
+          this.loadinAcaoCobanca = false;
           this.acoesCobranca = res.contratantes;
         } else {
-          this.loadingMin = false;
+          this.loadinAcaoCobanca = false;
           this._alertService.error(res.msg);
         }
       },
         (error) => {
-          this.loadingMin = false;
+          this.loadinAcaoCobanca = false;
           this._alertService.error("Erro ao listar ações de cobrança");
         }
       );
@@ -152,13 +153,13 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       nome: ''
     }
 
-    this.loading = true;
+    this.loadingAgenda = true;
     this._dashboard.obterDevedores(requisicao).subscribe((res: RespostaDevedorModel) => {
       if (res && res.success === "true") {
         this.agenda = res.clientes;
-        this.loading = false;
+        this.loadingAgenda = false;
       } else {
-        this.loading = false;
+        this.loadingAgenda = false;
         this._alertService.warning(res.msg);
       }
     });
@@ -213,22 +214,22 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       acionamento.data_prox_acio = '';
     }
 
-    this.loadingMin = true;
+    this.loadinAcaoCobanca = true;
     this._acionamentoService.inserirAcionamento(acionamento).subscribe((res) => {
-      this.loadingMin = false;
+      this.loadinAcaoCobanca = false;
       if (res.success) {
-        this.loadingMin = false;
+        this.loadinAcaoCobanca = false;
         this._alertService.success(res.msg);
         this.listarAcionamentos();
         this.clienteAcionado.emit();
         this.fechar();
       } else {
-        this.loadingMin = false;
+        this.loadinAcaoCobanca = false;
         this._alertService.error(res.msg);
       }
     },
       (error) => {
-        this.loadingMin = false;
+        this.loadinAcaoCobanca = false;
         this._alertService.error("Erro ao inserir acionamento");
       }
     );

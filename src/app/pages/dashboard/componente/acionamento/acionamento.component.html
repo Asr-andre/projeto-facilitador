@@ -1,7 +1,3 @@
-<div class="loading-overlay-pagina" *ngIf="loadingMin">
-  <div class="spinner-border text-primary m-1" role="status">
-  </div>
-</div>
 
 <div class="container-fluid">
   <div class="row">
@@ -13,12 +9,12 @@
               <div class="card-header pt-2 pb-2">
                 <div class="row">
                   <div class="col-md-6" style="padding-left: 0px;">
-                    <button class="btn btn-outline-success btn-sm me-2"
+                    <button class="btn btn-success btn-sm me-2"
                     (click)="abriracaoDeCobrancaModal(acaoDeCobrancaModal)">
                       <i class="fas fa-plus"></i>
                       Incluir Acionamento
                     </button>
-                    <button class="btn btn-outline-secondary btn-sm" (click)="abriModalagenda(agendaModal)">
+                    <button class="btn btn-secondary btn-sm" (click)="abriModalagenda(agendaModal)">
                     <i class="fas fa-calendar"></i>
                       Agenda
                     </button>
@@ -42,6 +38,11 @@
 
               <div class="card-body" style="padding: 0px;">
                 <div class="table-responsive font-size-12" style="overflow: auto; height: 300px;">
+                  <div class="loading-overlay-card" *ngIf="loadingTabela">
+                    <div class="spinner-border text-primary m-1" role="status">
+                    </div>
+                  </div>
+
                   <table class="table table-striped">
                     <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
                       <tr>
@@ -101,7 +102,7 @@
       <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
     </div>
 
-    <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="loading-overlay-card" *ngIf="loadinAcaoCobanca">
       <div class="spinner-border text-primary m-1" role="status">
       </div>
     </div>
@@ -152,12 +153,11 @@
     </div>
 
     <div class="modal-body" style="padding: 0px !important;">
-      <div *ngIf="loading" class="text-center">
+      <div class="loading-overlay-card" *ngIf="loadingAgenda">
         <div class="spinner-border text-primary m-1" role="status">
-          <span class="visually-hidden">Carregando...</span>
         </div>
       </div>
-      <div *ngIf="!loading && agenda && agenda.length > 0" class="table-responsive">
+      <div *ngIf="!loadingAgenda && agenda && agenda.length > 0" class="table-responsive">
         <table class="table table-striped font-size-11" style="overflow: auto;">
           <thead class="tabela-custom table-td-scroll sticky-header">
             <tr>
@@ -181,7 +181,7 @@
           </tbody>
         </table>
       </div>
-      <div *ngIf="!loading && (!agenda || agenda.length === 0)" class="text-center">
+      <div *ngIf="!loadingAgenda && (!agenda || agenda.length === 0)" class="text-center">
         <p>Nenhum cliente encontrado na agenda.</p>
       </div>
       <div class="d-flex justify-content-end align-items-center" style="margin-top: 0px;">
