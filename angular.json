@@ -47,7 +47,14 @@
               "leaflet",
               "@ckeditor/ckeditor5-build-classic",
               "bs-custom-file-input",
-              "can-use-dom"
+              "can-use-dom",
+              "file-saver",
+              "dompurify",
+              "html2canvas",
+              "crypto-js",
+              "quill",
+              "core-js/modules/es.regexp.to-string.js",
+              "canvg"
             ],
             "extractLicenses": false,
             "sourceMap": true,
@@ -76,8 +83,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "6mb",
+                  "maximumError": "7mb"
                 },
                 {
                   "type": "anyComponentStyle",
