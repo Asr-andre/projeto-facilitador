@@ -75,8 +75,8 @@
                         <td>{{ contratante.cidade }}</td>
                         <td>{{ contratante.uf }}</td>
                         <td>{{ contratante.id_formula }}</td>
-                        <td>{{ data(contratante.data_cadastro) }}</td>
-                        <td>{{ contratante.ativo === 'S' ? 'Sim' : 'Não' }}</td>
+                        <td>{{ contratante.data_cadastro | dataHoraBrasileira }}</td>
+                        <td>{{ contratante.ativo | simNao }}</td>
                         <td class="text-end">
                           <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Visualizar detalhe do contratante"><i class="mdi mdi-eye font-size-18" style="color: gray"
                             (click)="abriModalResumo(modalResumo, contratante)"></i></a>
@@ -143,7 +143,7 @@
           <div class="col-md-3 form-group">
             <label for="cnpj" class="form-label">Cnpj</label>
             <input class="form-control form-control-sm mb-1" formControlName="cnpj" type="text" placeholder="CNPJ"
-              mask="00.000.000/0000-00">
+              mask="00.000.000/0000-00" [ngClass]="{'is-invalid': formContratante.get('cnpj').invalid && formContratante.get('cnpj').touched}">
           </div>
           <div class="col-md-3 form-group">
             <label for="Cep" class="form-label">Cep</label>
@@ -271,7 +271,7 @@
             <p style="margin-bottom: 4px;"><strong>CEP:</strong> {{ mascararCep(contratanteSelecionado.cep) }}</p>
             <p style="margin-bottom: 4px;"><strong>Telefone:</strong> {{ mascararTelefone(contratanteSelecionado.telefone) }}</p>
             <p style="margin-bottom: 4px;"><strong>Celular:</strong> {{ mascararTelefone(contratanteSelecionado.celular) }}</p>
-            <p style="margin-bottom: 4px;"><strong>Status:</strong> {{ contratanteSelecionado.ativo ? 'Ativo' : 'Inativo' }}</p>
+            <p style="margin-bottom: 4px;"><strong>Ativo:</strong> {{ contratanteSelecionado.ativo | simNao  }}</p>
             <p style="margin-bottom: 4px;"><strong>Código Credor:</strong> {{ contratanteSelecionado.codigo_credor }}</p>
           </div>
         </div>
@@ -286,8 +286,8 @@
             <p style="margin-bottom: 4px;"><strong>Id Perfil Texto Email:</strong> {{ contratanteSelecionado.id_perfiltextoemail }}</p>
           </div>
           <div class="col-md-6  detalhamento-texto">
-            <p style="margin-bottom: 4px;"><strong>Data Cadastro:</strong> {{ data(contratanteSelecionado.data_cadastro) }}</p>
-            <p style="margin-bottom: 4px;"><strong>Data Alteração:</strong> {{ data(contratanteSelecionado.data_alteracao) }}</p>
+            <p style="margin-bottom: 4px;"><strong>Data Cadastro:</strong> {{contratanteSelecionado.data_cadastro | dataHoraBrasileira }}</p>
+            <p style="margin-bottom: 4px;"><strong>Data Alteração:</strong> {{ contratanteSelecionado.data_alteracao | dataHoraBrasileira }}</p>
             <p style="margin-bottom: 4px;"><strong>Login:</strong> {{ contratanteSelecionado.user_login }}</p>
           </div>
         </div>

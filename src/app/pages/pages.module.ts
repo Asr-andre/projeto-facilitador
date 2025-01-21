@@ -12,54 +12,32 @@ import {
   NgbModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { NgPipesModule } from "ngx-pipes";
-import { DashboardComponent } from "./dashboard/dashboard.component";
 import { NgxPaginationModule } from "ngx-pagination";
-import { AcionamentoComponent } from "./dashboard/componente/acionamento/acionamento.component";
-import { WhatsappComponent } from "./dashboard/componente/telefone/whatsapp/whatsapp.component";
-import { TelefoneComponent } from "./dashboard/componente/telefone/telefone.component";
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from "ngx-mask";
-import { EmailComponent } from "./dashboard/componente/email/email.component";
 import { OrderTableModule } from "../core/helpers/conf-tabela/order-table.module";
-import { EnvioEmailComponent } from "./dashboard/componente/email/envio-email/envio-email.component";
-import { EnvioSmsComponent } from "./dashboard/componente/telefone/envio-sms/envio-sms.component";
 import localePt from '@angular/common/locales/pt';
-import { TitulosPgRetComponent } from "./dashboard/componente/titulos-pg-ret/titulos-pg-ret/titulos-pg-ret.component";
-import { EnderecoComponent } from "./dashboard/componente/endereco/endereco.component";
-import { AcordoComponent } from "./dashboard/componente/acordo/acordo.component";
 import { FilaComponent } from "./fila/fila.component";
 import { CarteiraDeClientesComponent } from "./carteira-de-clientes/carteira-de-clientes.component";
-import { SolicitarCreditosComponent } from "./dashboard/componente/solicitar-creditos/solicitar-creditos.component";
-import { BoletoPixComponent } from "./dashboard/componente/boleto-pix/boleto-pix.component";
 import { ChatComponent } from "./chat/chat.component";
 import { QuillModule } from 'ngx-quill';
-import { JuridicoComponent } from "./dashboard/componente/juridico/juridico.component";
-import { DetalheModule } from "./dashboard/componente/detalhe-da-divida/detalhe.da.divida.module";
-import { ReciboComponent } from "./dashboard/componente/recibo/recibo.component";
+import { DashboardModule } from "./dashboard/dashboard.module";
+import { CadastroModule } from "./cadastro/cadastro.module";
+import { ProcessamentosModule } from "./processamentos/processamentos.module";
+import { RelatoriosModule } from "./relatorios/relatorios.module";
 
 registerLocaleData(localePt);
 @NgModule({
   declarations: [
-    DashboardComponent,
-    AcionamentoComponent,
-    WhatsappComponent,
-    TelefoneComponent,
-    EmailComponent,
-    EnvioEmailComponent,
-    EnvioSmsComponent,
-    TitulosPgRetComponent,
-    EnderecoComponent,
-    AcordoComponent,
     FilaComponent,
     CarteiraDeClientesComponent,
-    SolicitarCreditosComponent,
-    BoletoPixComponent,
     ChatComponent,
-    JuridicoComponent,
-    ReciboComponent
   ],
   imports: [
     CommonModule,
-    DetalheModule,
+    DashboardModule,
+    CadastroModule,
+    ProcessamentosModule,
+    RelatoriosModule,
     FormsModule,
     ReactiveFormsModule,
     PagesRoutingModule,

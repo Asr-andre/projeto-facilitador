@@ -24,13 +24,13 @@ import { FormulaComponent } from "./formula/formula.component";
 import { SmsComponent } from "./sms/sms.component";
 import { ClienteComponent } from "./cliente/cliente.component";
 import { IndiceComponent } from "./indice/indice.component";
-import { MascaraCpfDirective } from "src/app/core/directive/mascara-cpf.directive";
 import { EmailPerfilComponent } from "./email-perfil/email-perfil.component";
 import { QuillModule } from "ngx-quill";
+import { DiretivasModule } from "src/app/core/directive/directive.module";
+import { PipesModule } from "src/app/core/pipe/pipe.module";
 
 @NgModule({
   declarations: [
-    MascaraCpfDirective,
     EmpresaComponent,
     ContratantesComponent,
     UsuariosComponent,
@@ -44,6 +44,8 @@ import { QuillModule } from "ngx-quill";
     EmailPerfilComponent
   ],
   imports: [
+    DiretivasModule,
+    PipesModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

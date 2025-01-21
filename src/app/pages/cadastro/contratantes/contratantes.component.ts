@@ -13,7 +13,7 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
 import { EmailContaService } from 'src/app/core/services/cadastro/email.conta.service';
 import { ConsultaCepService } from 'src/app/core/services/consulta.cep.service';
-import { lastValueFrom } from 'rxjs';
+import { catchError, finalize, lastValueFrom, of } from 'rxjs';
 import { SmsWhatsAppService } from 'src/app/core/services/cadastro/sms.whatsapp.service';
 import { PerfilWhatsappModel } from 'src/app/core/models/cadastro/sms.whatsapp.model';
 import { SmsService } from 'src/app/core/services/sms.service';
@@ -22,6 +22,7 @@ import { FormulaService } from 'src/app/core/services/formula.service';
 import { Formula } from 'src/app/core/models/formula.model';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: 'app-contratantes',
@@ -33,7 +34,7 @@ export class ContratantesComponent implements OnInit {
   public emailConta: EmailContaModel[] = [];
   public msg: PerfilWhatsappModel[] = [];
   public contratante: ContratanteModel[];
-  public perfilSms: PerfilSms [] = [];
+  public perfilSms: PerfilSms[] = [];
   public perfilFormula: Formula[] = [];
   public idPerfilWhatsapp = 1;
   public idEmpresa = Number(this._auth.getIdEmpresa());
@@ -73,8 +74,9 @@ export class ContratantesComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _modalService: NgbModal,
     private _auth: AuthenticationService,
-    private _alertService: AlertService
-  ) {  }
+    private _alertService: AlertService,
+    private _funcoes: FuncoesService
+  ) { }
 
   async ngOnInit(): Promise<void> {
     this.loading = true;
@@ -165,12 +167,12 @@ export class ContratantesComponent implements OnInit {
   }
   public carregarEmail(): void {
     if (!this.perfilEmailCarregado) {
-      this. obterEmailConta();
+      this.obterEmailConta();
     }
   }
 
   public viaCep(cep) {
-    if(cep) {
+    if (cep) {
       this._retornoCep.consultarCep(cep).then((cep: CepModel) => {
         this.cep = cep;
       });
@@ -340,47 +342,35 @@ export class ContratantesComponent implements OnInit {
 
   public controleBotao() {
     if (this.formContratante.invalid) {
-      this.marcarCamposComoTocados(this.formContratante);
+      this._funcoes.camposInvalidos(this.formContratante);
       this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
-    if(this.editar == false) {
-      this.cadastrarContratante();
-    } else {
-      this.editarContratante();
-    }
+    const metodo = this.editar ? this.editarContratante : this.cadastrarContratante;
+    metodo.call(this);
   }
 
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
-  }
-
-  public cadastrarContratante(){
+  public cadastrarContratante() {
     if (this.formContratante.valid) {
       this.loadingMin = true;
-      this._contratanteService.cadastrarContratante(this.formContratante.value).subscribe((res: RetornoModel) => {
-        if (res && res.success === "true") {
-          this.loadingMin = false;
-          this.obterContratantes();
+
+      this._contratanteService.cadastrarContratante(this.formContratante.value).pipe(
+        finalize(() => this.loadingMin = false),
+        catchError((error) => {
+          this._alertService.error("Ocorreu um erro ao tentar cadastrar o contratante.");
+          return of(null);
+        })
+      ).subscribe((res: RetornoModel) => {
+        if (res?.success === "true") {
           this._alertService.success(res.msg);
+          this.obterContratantes();
           this.fechar();
         } else {
-          this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alertService.warning(res?.msg || 'Erro desconhecido');
         }
-      },
-        (error) => {
-          this.loadingMin = false;
-          this._alertService.error("Ocorreu um erro ao tentar cadastrar o contratante.");
-        }
-      );
+      });
     } else {
-      this.loadingMin = false;
       this._alertService.warning("Preencha todos os campos obrigatórios");
     }
   }
@@ -398,25 +388,23 @@ export class ContratantesComponent implements OnInit {
   }
 
   public editarContratante() {
+    this.loadingMin = true;
 
-      this.loadingMin = true;
-      this._contratanteService.editarContratante(this.formContratante.value).subscribe((res) => {
-        if (res.success) {
-          this.loadingMin = false;
-          this.obterContratantes();
-          this._alertService.success(res.msg);
-          this.fechar();
-        } else {
-          this.loadingMin = false;
-          this._alertService.warning(res.msg);
-        }
-      },
-        (error) => {
-          this.loadingMin = false;
-          this._alertService.error("Ocorreu um erro ao tentar atualizar o contratante.");
-        }
-      );
-
+    this._contratanteService.editarContratante(this.formContratante.value).pipe(
+      finalize(() => this.loadingMin = false),
+      catchError((error) => {
+        this._alertService.error("Ocorreu um erro ao tentar atualizar o contratante.");
+        return of(null);
+      })
+    ).subscribe((res) => {
+      if (res?.success) {
+        this._alertService.success(res.msg);
+        this.obterContratantes();
+        this.fechar();
+      } else {
+        this._alertService.warning(res?.msg || 'Erro desconhecido');
+      }
+    });
   }
 
   public mascararCpfCnpj(value: string): string {
@@ -438,10 +426,6 @@ export class ContratantesComponent implements OnInit {
       return Utils.formatarNumeroResidencia(numero);
     }
     return numero;
-  }
-
-  public data(data) {
-    return Utils.formatarDataParaExibicao(data);
   }
 
   public mascararTelefone(numero: string): string {

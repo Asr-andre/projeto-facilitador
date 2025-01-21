@@ -79,8 +79,6 @@ export class Utils {
     return `${dia}/${mes}/${ano}`;
   }
 
-
-
   public static dataBr(dataIso: string): string {
     if (!dataIso) {
       return '';
@@ -188,10 +186,140 @@ export class Utils {
   }
 
   public static carregarConteudoCompleto(parametro: any, campo: string): string {
-    if(parametro && parametro[campo]) {
+    if (parametro && parametro[campo]) {
       return parametro[campo]
     } else {
       return '';
     }
+  }
+
+  static genId() {
+    let text = '';
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < 5; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+  }
+
+  public static removeCaracteresEspeciais(valor, tipo) {
+    if (valor == undefined || valor == null) return;
+    if ((tipo != 3) && (tipo != 4)) {
+      if (tipo != 6) {
+        if ((tipo != 7) && (tipo != 8) && (tipo != 14) && (tipo != 16)) {
+          return valor.replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, '');
+        } else {
+          return valor;
+        }
+      } else {
+        return valor;
+      }
+
+    } else {
+      return valor;
+    }
+  }
+
+  public static AbrirPdfBase64(bytes) {
+    var link = "data:application/pdf;base64, " + bytes;
+    fetch(link).then(res => res.blob()).then(res => window.open(URL.createObjectURL(res), '_blank'));
+  }
+
+  static isNullOrUndefined<T>(object: T | undefined | null) {
+    return <T>object == undefined && <T>object == null;
+  }
+
+  public static validaTipoPessoa(cpfOuCnpj) {
+    // Remove possíveis formatações como pontos e traços
+    const cleanedCpfOuCnpj = cpfOuCnpj.replace(/[^\d]+/g, '');
+
+    // Todos os CPFs e CNPJs têm 14 dígitos
+    if (cleanedCpfOuCnpj.length === 14) {
+      const primeirosDigitos = cleanedCpfOuCnpj.slice(0, 3);
+      const ultimosOnzeDigitos = cleanedCpfOuCnpj.slice(-11);
+
+      // Verifica se os 3 primeiros dígitos são zeros (possível CPF)
+      if (primeirosDigitos === '000') {
+        // Tenta validar como CPF
+        if (this.validateCPF(ultimosOnzeDigitos)) {
+          return "CPF"; // Retorna CPF se válido
+        }
+      }
+
+      // Se a validação de CPF falhar ou os primeiros dígitos não forem '000', tenta validar como CNPJ
+      if (this.validateCNPJ(cleanedCpfOuCnpj)) {
+        return "CNPJ"; // Retorna CNPJ se válido
+      }
+    }
+
+    return "Inválido"; // Retorna inválido se nenhuma das validações for bem-sucedida
+  }
+
+  public static validateCPF(cpf) {
+    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+      return false;
+    }
+
+    let soma = 0;
+    let resto;
+
+    // Cálculo do primeiro dígito verificador
+    for (let i = 1; i <= 9; i++) {
+      soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    }
+    resto = (soma * 10) % 11;
+    if ((resto === 10) || (resto === 11)) resto = 0;
+    if (resto !== parseInt(cpf.substring(9, 10))) return false;
+
+    soma = 0;
+    // Cálculo do segundo dígito verificador
+    for (let i = 1; i <= 10; i++) {
+      soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    }
+    resto = (soma * 10) % 11;
+    if ((resto === 10) || (resto === 11)) resto = 0;
+    if (resto !== parseInt(cpf.substring(10, 11))) return false;
+
+    return true;
+  }
+
+  // Validação de CNPJ com cálculo dos dígitos verificadores
+  public static validateCNPJ(cnpj) {
+    if (cnpj.length !== 14 || /^(\d)\1{13}$/.test(cnpj)) {
+      return false;
+    }
+
+    let tamanho = cnpj.length - 2;
+    let numeros = cnpj.substring(0, tamanho);
+    const digitos = cnpj.substring(tamanho);
+    let soma = 0;
+    let pos = tamanho - 7;
+
+    // Cálculo do primeiro dígito verificador
+    for (let i = tamanho; i >= 1; i--) {
+      soma += parseInt(numeros.charAt(tamanho - i)) * pos--;
+      if (pos < 2) pos = 9;
+    }
+    let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    if (resultado != parseInt(digitos.charAt(0))) {
+      return false;
+    }
+
+    tamanho++;
+    numeros = cnpj.substring(0, tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+
+    // Cálculo do segundo dígito verificador
+    for (let i = tamanho; i >= 1; i--) {
+      soma += parseInt(numeros.charAt(tamanho - i)) * pos--;
+      if (pos < 2) pos = 9;
+    }
+    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    if (resultado != parseInt(digitos.charAt(1))) {
+      return false;
+    }
+
+    return true;
   }
 }
