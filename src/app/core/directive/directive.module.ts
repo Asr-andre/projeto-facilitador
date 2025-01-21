@@ -13,7 +13,6 @@ import { MostrarSenhaDirective } from './mostra.senha.directive';
 import { PermissaoDirective } from './ocultar.elemento.permissao.directive';
 import { FocoProximoCampoDirective } from './proximo.campo.directive';
 import { MascaraMoedaDirective } from './mascarar.moeda.directive';
-import { MascaraPorcentagemDirective } from './mascarar.porcentagem.directive';
 
 const directive = [
   ClickCorDirective,
