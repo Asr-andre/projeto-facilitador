@@ -29,9 +29,9 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public form: FormGroup;
   public formAcordo: FormGroup;
   public formGerarPixBoleto: FormGroup;
-  public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
-  public sigla = this._authService.getSigla()
-  public login = this._authService.getLogin();
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public sigla = this._auth.getSigla()
+  public login = this._auth.getLogin();
   public habilitarAcordo: boolean = false;
   public simulaAcordo: boolean = false;
   public ocultaBotaoPix: boolean = true;
@@ -60,15 +60,15 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public valor_atualizado_simulador = 0;
 
   constructor(
-    private _geracaoPixService: GeracaoPixService,
-    private fb: FormBuilder,
-    private simuladorService: SimuladorPadraoService,
-    private _authService: AuthenticationService,
-    private datePipe: DatePipe,
+    private _pixService: GeracaoPixService,
+    private _fb: FormBuilder,
+    private _simulador: SimuladorPadraoService,
+    private _auth: AuthenticationService,
+    private _datePipe: DatePipe,
     private _alertService: AlertService,
     private _modalService: NgbModal,
   ) {
-    this.idEmpresa = Number(this._authService.getIdEmpresa()) || 0;
+    this.idEmpresa = Number(this._auth.getIdEmpresa()) || 0;
     this.idCliente = this.idCliente || null;
     this.idContratante = this.idContratante || null;
   }
@@ -86,7 +86,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   }
 
   public formSimulador() {
-    this.form = this.fb.group({
+    this.form = this._fb.group({
       id_empresa: [this.idEmpresa],
       id_contratante: [this.idContratante],
       id_cliente: [this.idCliente],
@@ -103,11 +103,11 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   }
 
   public formsimuladorAcordo() {
-    this.formAcordo = this.fb.group({
+    this.formAcordo = this._fb.group({
       id_empresa: [this.idEmpresa],
       id_contratante: [this.idContratante || null],
       id_cliente: [this.idCliente],
-      data_acordo: [this.datePipe.transform(new Date(), "dd/MM/yyyy")],
+      data_acordo: [this._datePipe.transform(new Date(), "dd/MM/yyyy")],
       valor_acordo: [this.totalGeral],
       qtde_parcelas: [1, Validators.required],
       periodicidade: ["M"],
@@ -119,15 +119,15 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   }
 
   public iniciarFormgerarPixBoleto() {
-    this.formGerarPixBoleto = this.fb.group({
+    this.formGerarPixBoleto = this._fb.group({
       id_empresa: [this.idEmpresa, Validators.required],
       id_contratante: [this.idContratante, Validators.required],
       id_cliente: [this.idCliente, Validators.required],
-      id_usuario: [this._authService.getCurrentUser(), Validators.required], // ID do usuário logado
+      id_usuario: [this._auth.getCurrentUser(), Validators.required], // ID do usuário logado
       user_login: [this.login, Validators.required],
       valor_boleto: [this.valor_atualizado_simulador.toFixed(2), Validators.required],
       servico: ['Pagamento Titulos Via Pix', Validators.required],
-      titulos: this.fb.array([], Validators.required) // Array de títulos
+      titulos: this._fb.array([], Validators.required) // Array de títulos
     });
 
     // Referenciando o FormArray de títulos
@@ -135,10 +135,10 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
 
     // Adicionando os títulos ao FormArray baseado nos dados da simulação
     this.data?.titulos.forEach((titulo) => {
-      titulosArray.push(this.fb.group({
+      titulosArray.push(this._fb.group({
         id_titulo: [titulo.id_titulo, Validators.required],
         numero_contrato: [this.numeroContrato || '', Validators.required],
-        data_vencimento: [this.datePipe.transform(titulo.vencimento, 'dd/MM/yyyy')!, Validators.required],
+        data_vencimento: [this._datePipe.transform(titulo.vencimento, 'dd/MM/yyyy')!, Validators.required],
         valor: [titulo.valor.toFixed(2), Validators.required],
         valor_multa: [titulo.valor_multa.toFixed(2), Validators.required],
         valor_indice: [titulo.valor_indice.toFixed(2), Validators.required],
@@ -164,8 +164,8 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     this.originalTaxa = data.desconto_taxa;
 
     const dataAtualizacao = data.data_atualizacao
-      ? this.datePipe.transform(data.data_atualizacao, "yyyy-MM-dd")
-      : this.datePipe.transform(new Date(), "yyyy-MM-dd");
+      ? this._datePipe.transform(data.data_atualizacao, "yyyy-MM-dd")
+      : this._datePipe.transform(new Date(), "yyyy-MM-dd");
 
     this.form.patchValue({
       id_empresa: this.idEmpresa,
@@ -188,9 +188,9 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
 
   public recalcular(): void {
     const dadosParaEnvio = { ...this.form.value };
-    dadosParaEnvio.data_atualizacao = this.datePipe.transform(dadosParaEnvio.data_atualizacao, "dd/MM/yyyy");
+    dadosParaEnvio.data_atualizacao = this._datePipe.transform(dadosParaEnvio.data_atualizacao, "dd/MM/yyyy");
     this.loadingMin = true;
-    this.simuladorService.recalcularNegociacao(dadosParaEnvio).subscribe(
+    this._simulador.recalcularNegociacao(dadosParaEnvio).subscribe(
       (response: RecalculoRetornoModel) => {
         this.data = response;
         this.loadingMin = false;
@@ -248,7 +248,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       id_contratante: this.idContratante,
       id_cliente: this.idCliente,
       id_acordo: this.numeroContrato,
-      data_negociacao: this.datePipe.transform(this.form.get("data_atualizacao").value, "dd/MM/yyyy")!,
+      data_negociacao: this._datePipe.transform(this.form.get("data_atualizacao").value, "dd/MM/yyyy")!,
       tipo_baixa: "P",
       user_login: this.login,
       titulos: titulos,
@@ -259,7 +259,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
         return;
       }
 
-      this.simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe(
+      this._simulador.baixarTitulosPago(dadosParaEnvio).subscribe(
         (res) => {
           this._alertService.success(res.msg);
           this.clienteAtualizado.emit();
@@ -291,9 +291,9 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
 
     if (this.formAcordo.valid) {
       const dadosParaEnvio = { ...this.formAcordo.value };
-      dadosParaEnvio.vencimento = this.datePipe.transform(dadosParaEnvio.vencimento, "dd/MM/yyyy");
+      dadosParaEnvio.vencimento = this._datePipe.transform(dadosParaEnvio.vencimento, "dd/MM/yyyy");
       this.loadingMin = true;
-      this.simuladorService.simularAcordo(dadosParaEnvio).subscribe(
+      this._simulador.simularAcordo(dadosParaEnvio).subscribe(
         (response) => {
           if (response.success) {
             this.loadingMin = false;
@@ -324,9 +324,9 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public fecharAcordo() {
     if (this.formAcordo.valid) {
       const dadosParaEnvio = { ...this.formAcordo.value };
-      dadosParaEnvio.vencimento = this.datePipe.transform(dadosParaEnvio.vencimento, "dd/MM/yyyy");
+      dadosParaEnvio.vencimento = this._datePipe.transform(dadosParaEnvio.vencimento, "dd/MM/yyyy");
 
-      this.simuladorService.fecharAcordo(dadosParaEnvio).subscribe((res) => {
+      this._simulador.fecharAcordo(dadosParaEnvio).subscribe((res) => {
           if (res.success === 'true') {
             this._alertService.success(res.msg);
             this.clienteAtualizado.emit();
@@ -351,7 +351,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       `Você deseja gerar um PIX com o valor total atualizado de <br><strong>R$${valorBoleto}</strong>?`
     ).then(confirmar => {
       if (confirmar) {
-        this._geracaoPixService.gerarPixBoleto(this.formGerarPixBoleto.value).subscribe((res) => {
+        this._pixService.gerarPixBoleto(this.formGerarPixBoleto.value).subscribe((res) => {
           if (res.success === "true") {
             this.dadosPixGerado = res;
             this.abrirModalPixTitulos();
