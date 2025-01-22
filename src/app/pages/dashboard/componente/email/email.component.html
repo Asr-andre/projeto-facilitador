@@ -28,7 +28,7 @@
           <td>{{ email.email }}</td>
           <td>{{ email.situacao === 'A' ? 'Ativo' : 'Inativo' }}</td>
           <td>{{ email.origem }}  </td>
-          <td>{{ email.ativo === 'S' ? 'Sim' : 'Não' }} </td>
+          <td>{{ email.ativo | simNao}} </td>
         </tr>
       </tbody>
     </table>

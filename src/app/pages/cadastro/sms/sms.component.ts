@@ -7,6 +7,7 @@ import { variavel } from 'src/app/core/helpers/variaveis';
 import { PerfilSms } from 'src/app/core/models/sms.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 import { SmsService } from 'src/app/core/services/sms.service';
 
 @Component({
@@ -43,7 +44,8 @@ export class SmsComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _modalService: NgbModal,
     private _auth: AuthenticationService,
-    private _alertService: AlertService
+    private _alertService: AlertService,
+        private _funcoes: FuncoesService
   ) { }
 
   ngOnInit(): void {
@@ -71,7 +73,7 @@ export class SmsComponent implements OnInit {
 
   public controleBotao() {
     if (this.smsForm.invalid) {
-      this.marcarCamposComoTocados(this.smsForm);
+      this._funcoes.camposInvalidos(this.smsForm);
       this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
@@ -81,14 +83,6 @@ export class SmsComponent implements OnInit {
     } else {
       this.editarSms();
     }
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
   }
 
   public obterPerfilSms() {

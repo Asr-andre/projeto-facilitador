@@ -67,10 +67,10 @@
                         <td>{{ usuario.sigla }}</td>
                         <td>{{ usuario.nome }}</td>
                         <td>{{ usuario.login }}</td>
-                        <td>{{ mascararCpfCnpj(usuario.cpf) }}</td>
+                        <td>{{ usuario.cpf | formatarCpf }}</td>
                         <td>{{ usuario.email }}</td>
-                        <td>{{ mascararTelefone(usuario.fone) }}</td>
-                        <td>{{ usuario.ativo === 'S' ? 'Sim' : 'Não' }}</td>
+                        <td>{{ usuario.fone | telefoneBr }}</td>
+                        <td>{{ usuario.ativo | simNao }}</td>
                         <td  class="text-end">
                           <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18"
                             (click)="abrirModalEditar(modalGenerico, usuario)"></i></a>
@@ -123,14 +123,12 @@
         <div class="row">
           <div class="col-md-6 form-group">
             <label for="nome" class="form-label">Nome</label>
-            <input class="form-control form-control-sm mb-1" formControlName="nome" type="text" placeholder="Nome"
-              required (input)="convertMaisculo(formUsuario.get('nome'))"
+            <input class="form-control form-control-sm mb-1" formControlName="nome" type="text" placeholder="Nome" appMaiuscula
               [ngClass]="{'is-invalid': formUsuario.get('nome').invalid && formUsuario.get('nome').touched}">
           </div>
           <div class="col-md-3 form-group">
             <label for="login" class="form-label">Login</label>
-            <input class="form-control form-control-sm mb-1" formControlName="login" type="text" placeholder="Login"
-              required (input)="convertMaisculo(formUsuario.get('login'))"
+            <input class="form-control form-control-sm mb-1" formControlName="login" type="text" placeholder="Login" appMaiuscula
               [ngClass]="{'is-invalid': formUsuario.get('login').invalid && formUsuario.get('login').touched}">
           </div>
           <div class="col-md-3 form-group">
@@ -146,8 +144,7 @@
           </div>
           <div class="col-md-6 form-group">
             <label for="email" class="form-label">Email</label>
-            <input class="form-control form-control-sm mb-1" formControlName="email" type="email" placeholder="Email"
-              required (input)="converterMinuscula(formUsuario.get('email'))"
+            <input class="form-control form-control-sm mb-1" formControlName="email" type="email" placeholder="Email" appMinuscula
               [ngClass]="{'is-invalid': formUsuario.get('email').invalid && formUsuario.get('email').touched}">
           </div>
           <div class="col-md-4 form-group">

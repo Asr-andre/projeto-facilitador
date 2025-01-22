@@ -6,6 +6,7 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { EmailService } from 'src/app/core/services/email.service';
 import { EnvioEmailComponent } from './envio-email/envio-email.component';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: 'app-email',
@@ -28,7 +29,8 @@ export class EmailComponent implements OnInit, OnChanges{
     private _formBuilder: FormBuilder,
     private _auth: AuthenticationService,
     private _alertService: AlertService,
-    private _modalService: NgbModal
+    private _modalService: NgbModal,
+    private _funcoes: FuncoesService
   ) { }
 
   ngOnInit(): void {
@@ -87,7 +89,7 @@ export class EmailComponent implements OnInit, OnChanges{
 
   public cadastrarEmail(modal: any): void {
     if (this.formEmail.invalid) {
-      this.marcarCamposComoTocados(this.formEmail);
+      this._funcoes.camposInvalidos(this.formEmail);
       this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
@@ -113,13 +115,5 @@ export class EmailComponent implements OnInit, OnChanges{
     } else {
       this._alertService.warning("Preencha todos os campos obrigatórios");
     }
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
   }
 }

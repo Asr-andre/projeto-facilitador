@@ -60,7 +60,7 @@
                       <tr *ngFor="let acionamento of acionamentos">
                         <td>{{ acionamento.id_acionamento }}</td>
                         <td>{{ acionamento.descricao }}</td>
-                        <td>{{ data(acionamento.data_acio) }}</td>
+                        <td>{{ acionamento.data_acio | dataHoraBrasileira }}</td>
                         <td>
                           <span style="cursor: pointer"
                             [ngbTooltip]="acionamento.mensagem"
@@ -71,8 +71,8 @@
                             {{ mostraConteudoTruncado(acionamento.mensagem, 40) }}
                           </span>
                         </td>
-                        <td>{{ acionamento.fone }}</td>
-                        <td>{{ data(acionamento.data_prox_acio) }}</td>
+                        <td>{{ acionamento.fone | telefoneBr }}</td>
+                        <td>{{ acionamento.data_prox_acio | dataHoraBrasileira }}</td>
                         <td>{{ acionamento.titulo }}</td>
                         <td>{{ acionamento.usuario }}</td>
                       </tr>
@@ -173,9 +173,9 @@
             <tr *ngFor="let cliente of agenda; let i = index">
               <td>{{ i + 1 }}</td>
               <td>{{ cliente.nome }}</td>
-              <td>{{ mascararCpfCnpj(cliente.cnpj_cpf) }}</td>
+              <td>{{ cliente.cnpj_cpf | cpfCnpj }}</td>
               <td>{{ cliente.fantasia }}</td>
-              <td>{{ data(cliente.data_acionamento) }}</td>
+              <td>{{ cliente.data_acionamento | dataHoraBrasileira }}</td>
               <td>{{ cliente.descricao_acao }}</td>
             </tr>
           </tbody>

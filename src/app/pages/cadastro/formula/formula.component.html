@@ -90,8 +90,8 @@
                         <td> {{ formula.receita_juros / 100 | percent: '1.2-2' }} </td>
                         <td> {{ formula.receita_indice / 100 | percent: '1.2-2' }} </td>
                         <td> {{ formula.receita_taxa / 100 | percent: '1.2-2' }} </td>
-                        <td> {{ data(formula.data_cadastro) }} </td>
-                        <td> {{ data(formula.data_alteracao) }} </td>
+                        <td> {{ formula.data_cadastro | dataHoraBrasileira  }} </td>
+                        <td> {{ formula.data_alteracao | dataHoraBrasileira  }} </td>
                         <td> {{ formula.user_login }} </td>
                         <td class="text-end">
                           <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18"

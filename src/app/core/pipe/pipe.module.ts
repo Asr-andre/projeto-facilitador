@@ -17,6 +17,8 @@ import { ContemPalavraPipe } from './contem.palavra.chave.pipe';
 import { MascararTextoPipe } from './mascarar.dados.sensiveis.pipe';
 import { DataHoraBrasileiraPipe } from './data.hora.pipe';
 import { SimNaoPipe } from './sim.nao.pipe';
+import { FormatarDocumentoPipe } from './formata.doc.pipe';
+import { FormatarCepPipe } from './cep.pipe';
 
 
 const pipes = [
@@ -36,7 +38,9 @@ const pipes = [
   ContemPalavraPipe,
   MascararTextoPipe,
   DataHoraBrasileiraPipe,
-  SimNaoPipe
+  SimNaoPipe,
+  FormatarDocumentoPipe,
+  FormatarCepPipe
 ];
 
 @NgModule({

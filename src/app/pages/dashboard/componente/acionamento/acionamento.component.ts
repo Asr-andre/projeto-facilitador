@@ -13,6 +13,7 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { ExcelService } from 'src/app/core/services/excel.service';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: "app-acionamento",
@@ -49,6 +50,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     private _datePipe: DatePipe,
     private _excelService: ExcelService,
     private _dashboard: DashboardService,
+    private _funcoes: FuncoesService
   ) { }
 
   ngOnInit(): void {
@@ -175,10 +177,6 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     this._excelService.exportAsExcelFile(this.acionamentos, 'exportacaoAcionamentoAnalitico');
   }
 
-  public data(data) {
-    return Utils.formatarDataParaExibicao(data);
-  }
-
   public abriracaoDeCobrancaModal(modal): void {
     if (!this.idCliente) {
       this._alertService.warning('Por favor selecione um cliente!');
@@ -201,7 +199,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
 
   public enviarAcionamento(): void {
     if (this.formAcionamento.invalid) {
-      this.marcarCamposComoTocados(this.formAcionamento);
+      this._funcoes.camposInvalidos(this.formAcionamento);
       this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
@@ -235,14 +233,6 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     );
   }
 
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
-  }
-
   public mostraConteudoTruncado(texto: string, limite: number): string {
     return texto.length > limite ? texto.substring(0, limite) + '...' : texto;
   }
@@ -258,13 +248,6 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   public copiarParaAreasTransferencia(valor) {
     Utils.CopyAreaTransfer(valor);
     this._alertService.copiado();
-  }
-
-  public mascararCpfCnpj(value: string): string {
-    if (value) {
-      return Utils.formatarDocumento(value);
-    }
-    return value;
   }
 
   public fechar() {

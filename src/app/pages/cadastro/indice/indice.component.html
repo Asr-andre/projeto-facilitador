@@ -69,7 +69,7 @@
                     <tr
                       *ngFor="let dado of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
                       <td class="text-start"> {{ dado.indice }} </td>
-                      <td class="text-start"> {{ formatToBR(dado.data) }} </td>
+                      <td class="text-start"> {{ dado.data | dataBr }} </td>
                       <td class="text-center"> {{ dado.valor / 100 | percent: '1.2-2' }} </td>
                       <td class="text-end">
                         <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18"
@@ -176,7 +176,7 @@
     <div class="modal-body modal-padding text-center">
       <i class="fas fa-trash-alt fa-3x text-danger mb-2"></i>
       <p class="mb-1">Tem certeza que deseja excluir o índice: <strong>{{ indiceSelecionado.indice }}</strong>?</p>
-      <p class="mb-1">Data: <strong>{{ formatToBR(indiceSelecionado.data) }}</strong></p>
+      <p class="mb-1">Data: <strong>{{ indiceSelecionado.data | dataBr }}</strong></p>
       <p class="mb-1">Valor: <strong>{{ indiceSelecionado.valor / 100 | percent: '1.2-2' }}</strong></p>
     </div>
 

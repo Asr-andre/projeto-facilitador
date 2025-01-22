@@ -18,9 +18,6 @@ import { DetalheModule } from "./componente/detalhe-da-divida/detalhe.da.divida.
 import { OrderTableModule } from "src/app/core/helpers/conf-tabela/order-table.module";
 import { QuillModule } from "ngx-quill";
 import { DashboardComponent } from "./dashboard.component";
-import { CarteiraDeClientesComponent } from "../carteira-de-clientes/carteira-de-clientes.component";
-import { ChatComponent } from "../chat/chat.component";
-import { FilaComponent } from "../fila/fila.component";
 import { AcionamentoComponent } from "./componente/acionamento/acionamento.component";
 import { AcordoComponent } from "./componente/acordo/acordo.component";
 import { BoletoPixComponent } from "./componente/boleto-pix/boleto-pix.component";
@@ -34,6 +31,8 @@ import { EnvioSmsComponent } from "./componente/telefone/envio-sms/envio-sms.com
 import { TelefoneComponent } from "./componente/telefone/telefone.component";
 import { WhatsappComponent } from "./componente/telefone/whatsapp/whatsapp.component";
 import { TitulosPgRetComponent } from "./componente/titulos-pg-ret/titulos-pg-ret/titulos-pg-ret.component";
+import { PipesModule } from "src/app/core/pipe/pipe.module";
+import { DiretivasModule } from "src/app/core/directive/directive.module";
 
 
 registerLocaleData(localePt);
@@ -56,6 +55,8 @@ registerLocaleData(localePt);
   ],
   imports: [
     CommonModule,
+    PipesModule,
+    DiretivasModule,
     DetalheModule,
     FormsModule,
     ReactiveFormsModule,

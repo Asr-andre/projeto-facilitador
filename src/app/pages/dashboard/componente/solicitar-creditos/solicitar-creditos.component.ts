@@ -143,8 +143,4 @@ export class SolicitarCreditosComponent implements OnInit {
     this.historico = true;
     this.ocultarBotaoCredito = false;
   }
-
-  public data(data) {
-    return Utils.formatarDataParaExibicao(data);
-  }
 }

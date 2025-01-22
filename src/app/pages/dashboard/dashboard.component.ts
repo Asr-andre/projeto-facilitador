@@ -191,13 +191,6 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  public mascararCpfCnpj(value: string): string {
-    if (value) {
-      return Utils.formatarDocumento(value);
-    }
-    return value;
-  }
-
   public atualizar(): void {
     this.filaCliente();
   }
@@ -223,10 +216,6 @@ export class DashboardComponent implements OnInit {
         return direction === 'asc' ? res : -res;
       });
     }
-  }
-
-  public data(data) {
-    return Utils.formatarDataParaExibicao(data);
   }
 
   public copiarParaAreasTransferencia(valor) {

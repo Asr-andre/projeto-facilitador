@@ -7,6 +7,7 @@ import { Formula, FormulaRequest } from 'src/app/core/models/formula.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { FormulaService } from 'src/app/core/services/formula.service';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: 'app-formula',
@@ -42,7 +43,8 @@ export class FormulaComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _modalService: NgbModal,
     private _auth: AuthenticationService,
-    private _alertService: AlertService
+    private _alertService: AlertService,
+    private _funcoes: FuncoesService
   ) { }
 
   ngOnInit(): void {
@@ -119,7 +121,7 @@ export class FormulaComponent implements OnInit {
 
   public controleBotao() {
     if (this.formFormula.invalid) {
-      this.marcarCamposComoTocados(this.formFormula);
+      this._funcoes.camposInvalidos(this.formFormula);
       this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
@@ -129,14 +131,6 @@ export class FormulaComponent implements OnInit {
     } else {
       this.editarFormula();
     }
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
   }
 
   public abriModalCadastro(content: TemplateRef<any>): void {
@@ -204,12 +198,6 @@ export class FormulaComponent implements OnInit {
   public fechar() {
     this.formFormula.reset();
     this._modalService.dismissAll();
-  }
-
-  public data(data) {
-    if(data) {
-      return Utils.formatarDataParaExibicao(data);
-    }
   }
 
   public verificarValorNegativo(campo: string) {

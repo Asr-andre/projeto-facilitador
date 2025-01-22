@@ -3,11 +3,11 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from 
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EstadosDoBrasil } from 'src/app/core/helpers/estados.brasil';
-import { Utils } from 'src/app/core/helpers/utils';
 import { EnderecoModel, EnderecoResponseModel } from 'src/app/core/models/endereco.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { EnderecoService } from 'src/app/core/services/endereco.service';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: 'app-endereco',
@@ -30,7 +30,8 @@ export class EnderecoComponent implements OnInit, OnChanges {
     private _alertService: AlertService,
     private _formBuilder: FormBuilder,
     private _auth: AuthenticationService,
-    private _modalService: NgbModal
+    private _modalService: NgbModal,
+    private _funcoes: FuncoesService
   ) { }
 
   ngOnInit(): void {
@@ -65,7 +66,7 @@ export class EnderecoComponent implements OnInit, OnChanges {
 
   public controleBotao() {
     if (this.formEndereco.invalid) {
-      this.marcarCamposComoTocados(this.formEndereco);
+      this._funcoes.camposInvalidos(this.formEndereco);
       this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
@@ -75,14 +76,6 @@ export class EnderecoComponent implements OnInit, OnChanges {
     } else {
       this.editarEndereco();
     }
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
   }
 
   public obterEnderecos(): void {
@@ -162,13 +155,6 @@ export class EnderecoComponent implements OnInit, OnChanges {
     } else {
       this._alertService.warning("Preencha todos os campos obrigatórios");
     }
-  }
-
-  public mascararCep(cep: string): string {
-    if (cep) {
-      return Utils.formatarCEP(cep);
-    }
-    return cep;
   }
 
   public fechar() {

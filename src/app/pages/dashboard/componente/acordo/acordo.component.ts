@@ -126,14 +126,6 @@ export class AcordoComponent implements OnInit, OnChanges {
     }
   }
 
-  public dataBrasil(data) {
-    return Utils.dataBrasil(data);
-  }
-
-  public data(data) {
-    return Utils.formatarDataParaExibicao(data);
-  }
-
   public status(tipo: string): string {
     switch (tipo) {
       case 'A': return 'Ativo';

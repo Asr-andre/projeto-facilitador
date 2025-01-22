@@ -31,9 +31,9 @@
           <td>{{ formatarNumeroProcesso(item.numero_processo) }}</td>
           <td> {{ item.comarca }} </td>
           <td>{{ item.vara }}</td>
-          <td>{{ formatToBR(item.data_entrada_processo)}}</td>
+          <td>{{ item.data_entrada_processo | dataBr }}</td>
           <td>{{ item.tipo_acao }}</td>
-          <td>{{ data(item.data_audiencia)}}</td>
+          <td>{{ item.data_audiencia | dataHoraBrasileira}}</td>
           <td>{{ item.user_login }}</td>
           <td>{{ item.ultimo_andamento }}</td>
           <td>

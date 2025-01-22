@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Utils } from 'src/app/core/helpers/utils';
 import { TituloModel } from 'src/app/core/models/titulos.pg.ret.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
@@ -67,13 +66,5 @@ export class TitulosPgRetComponent implements OnInit, OnChanges {
       default:
         return tipo;
     }
-  }
-
-  public data(data) {
-    return Utils.formatarDataParaExibicao(data);
-  }
-
-  public dataBrasil(data) {
-    return Utils.dataBrasil(data);
   }
 }

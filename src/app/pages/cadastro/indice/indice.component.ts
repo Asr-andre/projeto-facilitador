@@ -7,6 +7,7 @@ import { Utils } from 'src/app/core/helpers/utils';
 import { Indice, IndiceModel } from 'src/app/core/models/cadastro/indice.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 import { IndiceService } from 'src/app/core/services/indice.service';
 
 @Component({
@@ -41,6 +42,7 @@ export class IndiceComponent implements OnInit {
     private _alert: AlertService,
     private _modalService: NgbModal,
     private _datePipe: DatePipe,
+    private _funcoes: FuncoesService
   ) { }
 
   ngOnInit(): void {
@@ -132,7 +134,7 @@ export class IndiceComponent implements OnInit {
 
     public salvarCliente() {
       if (this.formModal.invalid) {
-        this.marcarCamposComoTocados(this.formModal);
+        this._funcoes.camposInvalidos(this.formModal);
         this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
         return;
       }
@@ -147,14 +149,6 @@ export class IndiceComponent implements OnInit {
       } else {
         this.cadastrarIndice();
       }
-    }
-
-    private marcarCamposComoTocados(formGroup: FormGroup) {
-      Object.keys(formGroup.controls).forEach((campo) => {
-        const controle = formGroup.get(campo);
-        controle?.markAsTouched();
-        controle?.updateValueAndValidity();
-      });
     }
 
     public abriModalCadastro(content: TemplateRef<any>): void {

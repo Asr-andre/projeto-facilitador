@@ -1,5 +1,5 @@
 import { Component, OnInit, QueryList, TemplateRef, ViewChildren } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
@@ -7,6 +7,7 @@ import { UsuarioModel } from 'src/app/core/models/cadastro/usuario.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { UsuarioService } from 'src/app/core/services/cadastro/usuario.service';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -38,7 +39,8 @@ export class UsuariosComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _modalService: NgbModal,
     private _auth: AuthenticationService,
-    private _alert: AlertService
+    private _alert: AlertService,
+    private _funcoes: FuncoesService
   ) { }
 
   ngOnInit(): void {
@@ -65,7 +67,7 @@ export class UsuariosComponent implements OnInit {
 
   public controleBotao() {
     if (this.formUsuario.invalid) {
-      this.marcarCamposComoTocados(this.formUsuario);
+      this._funcoes.camposInvalidos(this.formUsuario);
       this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
@@ -75,14 +77,6 @@ export class UsuariosComponent implements OnInit {
     } else {
       this.editarUsuario();
     }
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
   }
 
   public obterUsuarios() {
@@ -181,28 +175,6 @@ export class UsuariosComponent implements OnInit {
     } else {
       this._alert.warning("Preencha todos os campos obrigatórios");
     }
-  }
-
-  public mascararCpfCnpj(value: string): string {
-    if (value) {
-      return Utils.formatarDocumento(value);
-    }
-    return value;
-  }
-
-  public mascararTelefone(numero: string): string {
-    if (numero) {
-      return Utils.formatarTelefone(numero);
-    }
-    return numero;
-  }
-
-  public convertMaisculo(campo: AbstractControl) {
-    return Utils.converterMaiuscula(campo);
-  }
-
-  public converterMinuscula(campo: AbstractControl) {
-    return Utils.converterMinuscula(campo);
   }
 
   public fechar() {

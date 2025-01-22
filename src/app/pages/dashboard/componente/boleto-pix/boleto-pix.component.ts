@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges, OnInit, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
-import { Utils } from 'src/app/core/helpers/utils';
 import { BoletoPixModel } from 'src/app/core/models/boletopix.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
@@ -93,9 +92,5 @@ export class BoletoPixComponent implements OnInit, OnChanges {
       default:
         return situacao;
     }
-  }
-
-  public data(data) {
-    return Utils.formatarDataParaExibicao(data);
   }
 }

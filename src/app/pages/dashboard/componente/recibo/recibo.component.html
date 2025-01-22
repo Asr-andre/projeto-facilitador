@@ -26,7 +26,7 @@
               (change)="toggleSelecao(recibo.id_recibo, $event.target.checked)"
             /></td>
             <td> {{ recibo.id_recibo }} </td>
-            <td> {{ dataBrasil(recibo.data_recibo) }} </td>
+            <td> {{ recibo.data_recibo | dataBr }} </td>
             <td> {{ recibo.valor_recibo | currency:'BRL' }} </td>
             <td>
               <div class="badge font-size-10"
@@ -37,7 +37,7 @@
               </div>
             </td>
             <td> {{ recibo.titulos }} </td>
-            <td> {{ data(recibo.data_cadastro) }} </td>
+            <td> {{ recibo.data_cadastro | dataHoraBrasileira }} </td>
             <td>
               <div class="dropup float-end" ngbDropdown>
                 <a href="javascript: void(0);" class="dropdown-toggle arrow-none card-drop" ngbDropdownToggle data-toggle="dropdown"

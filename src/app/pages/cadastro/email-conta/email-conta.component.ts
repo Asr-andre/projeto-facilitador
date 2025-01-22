@@ -7,6 +7,7 @@ import { EmailContaCadastroModel, EmailContaModel } from 'src/app/core/models/ca
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { EmailContaService } from 'src/app/core/services/cadastro/email.conta.service';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: 'app-email-conta',
@@ -37,7 +38,8 @@ export class EmailContaComponent implements OnInit {
     private _auth: AuthenticationService,
     private _alertService: AlertService,
     private _modalService: NgbModal,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _funcoes: FuncoesService
   ) { }
 
   ngOnInit(): void {
@@ -66,24 +68,13 @@ export class EmailContaComponent implements OnInit {
 
   public controleBotao() {
     if (this.emailContaForm.invalid) {
-      this.marcarCamposComoTocados(this.emailContaForm);
+      this._funcoes.camposInvalidos(this.emailContaForm);
       this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
-    if(this.editar == false) {
-      this.cadastrarEmailConta();
-    } else {
-      this.editarEmailConta();
-    }
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
+    const metodo = this.editar ? this.editarEmailConta : this.cadastrarEmailConta;
+    metodo.call(this);
   }
 
   public modalCadastrar(content: TemplateRef<any>): void {
@@ -204,10 +195,6 @@ export class EmailContaComponent implements OnInit {
     } else if (selectedOption === 'tls') {
       this.emailContaForm.get('ssl').setValue('N');
     }
-  }
-
-  public data(data) {
-    return Utils.formatarDataParaExibicao(data);
   }
 
   public mostrarSenha(campoId: string, iconeId: string): void {

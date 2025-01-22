@@ -13,6 +13,9 @@ import { MostrarSenhaDirective } from './mostra.senha.directive';
 import { PermissaoDirective } from './ocultar.elemento.permissao.directive';
 import { FocoProximoCampoDirective } from './proximo.campo.directive';
 import { MascaraMoedaDirective } from './mascarar.moeda.directive';
+import { ConverterTextoDirective } from './convert.maiusculo.directrive';
+import { FormatarDocumentoDirective } from './formatar-cpf.cnpj.directive';
+import { DataMesDirective } from './data-mes.directive';
 
 const directive = [
   ClickCorDirective,
@@ -28,7 +31,10 @@ const directive = [
   MascaraMoedaDirective,
   MostrarSenhaDirective,
   PermissaoDirective,
-  FocoProximoCampoDirective
+  FocoProximoCampoDirective,
+  ConverterTextoDirective,
+  FormatarDocumentoDirective,
+  DataMesDirective
 ];
 
 @NgModule({

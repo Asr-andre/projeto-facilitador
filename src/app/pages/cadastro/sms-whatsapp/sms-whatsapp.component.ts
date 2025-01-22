@@ -8,6 +8,7 @@ import { CadastroMensagemModel, PerfilWhatsappModel } from 'src/app/core/models/
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { SmsWhatsAppService } from 'src/app/core/services/cadastro/sms.whatsapp.service';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: 'app-sms-whatsapp',
@@ -42,7 +43,8 @@ export class SmsWhatsappComponent implements OnInit {
     private _smsWhatsAppService: SmsWhatsAppService,
     private _auth: AuthenticationService,
     private _alertService: AlertService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _funcoes: FuncoesService
   ) { }
 
   ngOnInit(): void {
@@ -71,7 +73,7 @@ export class SmsWhatsappComponent implements OnInit {
 
   public controleBotao() {
     if (this.mensagemForm.invalid) {
-      this.marcarCamposComoTocados(this.mensagemForm);
+      this._funcoes.camposInvalidos(this.mensagemForm);
       this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
@@ -81,14 +83,6 @@ export class SmsWhatsappComponent implements OnInit {
     } else {
       this.editarMsg();
     }
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
   }
 
   public obterMsgs() {

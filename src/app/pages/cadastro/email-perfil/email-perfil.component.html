@@ -68,7 +68,7 @@
                             {{ mostraConteudoTruncado(dado.mensagem, 70) }}
                           </span>
                         </td>
-                        <td>{{ data(dado.data_cadastro) }}</td>
+                        <td>{{ dado.data_cadastro | dataHoraBrasileira  }}</td>
                         <td>{{ dado.user_login }}</td>
                         <td class="text-end">
                           <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i

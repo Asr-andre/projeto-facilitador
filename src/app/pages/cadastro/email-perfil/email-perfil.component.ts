@@ -203,10 +203,6 @@ export class EmailPerfilComponent implements OnInit {
     });
   }
 
-  public data(data) {
-    return Utils.formatarDataParaExibicao(data);
-  }
-
   public inserirVariavel(variavel: string) {
     const mensagemAtual = this.formEmailPerfil.get('mensagem')?.value || '';
     const novaMensagem = `${mensagemAtual} ${variavel}`.trim();

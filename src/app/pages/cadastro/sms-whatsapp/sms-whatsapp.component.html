@@ -68,8 +68,8 @@
                       <td>{{ perfil.empresa }}</td>
                       <td>{{ perfil.host }}</td>
                       <td>{{ perfil.centro_custo }}</td>
-                      <td>{{ perfil.ativo === 'S' ? 'Sim' : 'Não' }}</td>
-                      <td>{{ perfil.gera_acionamento === 'S' ? 'Sim' : 'Não' }}</td>
+                      <td>{{ perfil.ativo | simNao }}</td>
+                      <td>{{ perfil.gera_acionamento | simNao }}</td>
                       <td class="text-end">
                         <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18"
                           (click)="abriModalEditar(modalGenerico, perfil)"></i></a>

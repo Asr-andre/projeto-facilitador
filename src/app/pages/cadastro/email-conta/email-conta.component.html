@@ -66,9 +66,9 @@
                       <td>{{ dado.porta }}</td>
                       <td>{{ dado.smtp_usuario }}</td>
                       <td>{{ dado.tipo_email }}</td>
-                      <td>{{ dado.ssl === 'S' ? 'Sim' : 'Não' }}</td>
-                      <td>{{ dado.tls === 'S' ? 'Sim' : 'Não' }}</td>
-                      <td>{{ data(dado.data_cadastro) }}</td>
+                      <td>{{ dado.ssl | simNao }}</td>
+                      <td>{{ dado.tls | simNao }}</td>
+                      <td>{{ dado.data_cadastro | dataHoraBrasileira }}</td>
                       <td class="text-end">
                         <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18"
                           (click)="modalEditar(modalGenerico, dado)"></i></a>

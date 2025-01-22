@@ -7,6 +7,7 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { TelefoneService } from 'src/app/core/services/telefone.service';
 import { EnvioSmsComponent } from './envio-sms/envio-sms.component';
 import { WhatsappComponent } from './whatsapp/whatsapp.component';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: 'app-telefone',
@@ -32,7 +33,8 @@ export class TelefoneComponent implements OnInit, OnChanges {
     private _formBuilder: FormBuilder,
     private _auth: AuthenticationService,
     private _alertService: AlertService,
-    private _modalService: NgbModal
+    private _modalService: NgbModal,
+    private _funcoes: FuncoesService
   ) { }
 
   ngOnInit(): void {
@@ -70,7 +72,7 @@ export class TelefoneComponent implements OnInit, OnChanges {
 
   public controleBotao() {
     if (this.telefoneForm.invalid) {
-      this.marcarCamposComoTocados(this.telefoneForm);
+      this._funcoes.camposInvalidos(this.telefoneForm);
       this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
@@ -80,14 +82,6 @@ export class TelefoneComponent implements OnInit, OnChanges {
     } else {
       this.editarTelefone();
     }
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
   }
 
   public carregarTelefones(idCliente: number): void {

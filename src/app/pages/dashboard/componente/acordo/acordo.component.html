@@ -31,12 +31,12 @@
             /></td>
             <td> {{ acordo.id_acordo }} </td>
             <td> {{ acordo.valor_acordo | currency:'BRL' }} </td>
-            <td> {{ data(acordo.data_acordo) }} </td>
+            <td> {{ acordo.data_acordo | dataHoraBrasileira }} </td>
             <td> {{ acordo.qtde_parcelas_originais }} </td>
             <td> {{ acordo.qtde_parcelas }} </td>
             <td> {{ acordo.valor_entrada | currency:'BRL' }} </td>
             <td> {{ acordo.valor_parcela | currency:'BRL' }} </td>
-            <td> {{ dataBrasil(acordo.venc_primeira_parcela) }} </td>
+            <td> {{ acordo.venc_primeira_parcela | dataBr }} </td>
             <td> <ngb-progressbar [value]="acordo.percem_pago" showValue="true"></ngb-progressbar> </td>
             <td>
               <div class="badge font-size-10"

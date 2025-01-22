@@ -111,10 +111,6 @@ export class ContratantesComponent implements OnInit {
     }
   }
 
-  private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
   public async inicializarformContratante(dado?: ContratanteModel): Promise<void> {
     this.formContratante = this._formBuilder.group({
       id_contratante: [dado?.id_contratante || ''],

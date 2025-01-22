@@ -34,7 +34,7 @@
           <td> {{ endereco.numero }} </td>
           <td> {{ endereco.complemento }} </td>
           <td> {{ endereco.bairro }} </td>
-          <td> {{ mascararCep(endereco.cep) }} </td>
+          <td> {{ endereco.cep | formatarCep }} </td>
           <td> {{ endereco.cidade }} </td>
           <td> {{ endereco.uf }} </td>
           <td> {{ endereco.tipo }} </td>

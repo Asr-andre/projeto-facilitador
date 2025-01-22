@@ -30,8 +30,8 @@
           <tr *ngFor="let titulo of tituloPgRet">
             <td>{{ titulo.id_titulo }}</td>
             <td>{{ titulo.numero_contrato }}</td>
-            <td>{{ dataBrasil(titulo.vencimento) }}</td>
-            <td>{{ data(titulo.pagamento) }}</td>
+            <td>{{ titulo.vencimento  | dataBr }}</td>
+            <td>{{ titulo.pagamento | dataHoraBrasileira  }}</td>
             <td>
               <div class="badge font-size-10"
               [ngClass]="{

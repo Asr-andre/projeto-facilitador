@@ -23,7 +23,7 @@
           <td>{{ item.id_boleto }}</td>
           <td>{{ item.nosso_numero }}</td>
           <td>{{ item.valor_boleto | currency: 'BRL':'symbol':'1.2-2'  }}</td>
-          <td>{{ item.data_vencimento | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ item.data_vencimento | dataBr }}</td>
           <td>
             <div class="badge font-size-10"
             [ngClass]="{
@@ -33,7 +33,7 @@
                   {{ situacao(item.situacao) }}
             </div>
           </td>
-          <td>{{ data(item.data_emissao)  }}</td>
+          <td>{{ item.data_emissao | dataHoraBrasileira  }}</td>
           <td>{{ item.user_login }}</td>
           <td><i class="fas fa-file-alt" ngbTooltip="Títulos Negociado"></i></td>
         </tr>
