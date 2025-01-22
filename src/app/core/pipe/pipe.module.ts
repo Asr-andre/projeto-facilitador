@@ -22,6 +22,7 @@ import { FormatarCepPipe } from './cep.pipe';
 import { RgPipe } from './rg.pipe';
 import { MascararCpfLgpdPipe } from './cpf.lgpd.pipe';
 import { CalcularIdadePipe } from './calcula.idade.pipe';
+import { DocJuridicoPipe } from './doc.juridico.pipe';
 
 const pipes = [
   ExcerptPipe,
@@ -45,7 +46,8 @@ const pipes = [
   FormatarCepPipe,
   RgPipe,
   MascararCpfLgpdPipe,
-  CalcularIdadePipe
+  CalcularIdadePipe,
+  DocJuridicoPipe
 ];
 
 @NgModule({

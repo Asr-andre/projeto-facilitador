@@ -8,6 +8,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { DiretivasModule } from 'src/app/core/directive/directive.module';
 import { JuridicoComponent } from './juridico.component';
 import { GeralComponent } from './geral/geral.component';
+import { PipesModule } from 'src/app/core/pipe/pipe.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { GeralComponent } from './geral/geral.component';
   imports: [
     CommonModule,
     DiretivasModule,
+    PipesModule,
     FormsModule,
     ReactiveFormsModule,
     NgbDatepickerModule,

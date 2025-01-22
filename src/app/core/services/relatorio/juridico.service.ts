@@ -7,7 +7,7 @@ import { RequisicaoPesquisaModel, RetornoPesquisaModel } from '../../models/rela
 @Injectable({
   providedIn: 'root'
 })
-export class AcionamentoService {
+export class JuridicoService {
   private apiUrl = AppConfig.apiUrl;
 
   constructor(

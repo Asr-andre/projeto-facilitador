@@ -6,6 +6,7 @@ import { Utils } from 'src/app/core/helpers/utils';
 import { ProcessoModel } from 'src/app/core/models/juridico.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 import { JuridicoService } from 'src/app/core/services/juridico.service';
 
 @Component({
@@ -30,6 +31,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
     private _formBuilder: FormBuilder,
     private _modal: NgbModal,
     private _datePipe: DatePipe,
+    private _funcoes: FuncoesService
   ) { }
 
   ngOnInit(): void {
@@ -74,7 +76,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
 
   public controleBotao() {
     if (this.formProcesso.invalid) {
-      this.marcarCamposComoTocados(this.formProcesso);
+      this._funcoes.camposInvalidos(this.formProcesso);
       this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
@@ -84,14 +86,6 @@ export class JuridicoComponent implements OnInit, OnChanges {
     } else {
       this.editarProcesso();
     }
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
   }
 
   public obterProcessos() {
@@ -210,33 +204,6 @@ export class JuridicoComponent implements OnInit, OnChanges {
   public fechar() {
     this.formProcesso.reset();
     this._modal.dismissAll();
-  }
-
-  formatToBR(date: string | null): string {
-    if (!date) return '';
-
-    // Dividir a string de data ISO e usar apenas a parte da data
-    const [year, month, day] = date.split('T')[0].split('-');
-    return `${day}/${month}/${year}`; // Formato dd/MM/yyyy
-  }
-
-
-  formatarNumeroProcesso(numero: string): string {
-    if (!numero) return '';
-
-    // Ajustando o regex para incluir o novo formato
-    const regex = /^(\d{7})(\d{2})(\d{4})(\d{1})(\d{2})(\d{4})$/;
-    const match = numero.match(regex);
-
-    if (match) {
-      return `${match[1]}-${match[2]}.${match[3]}.${match[4]}.${match[5]}.${match[6]}`;
-    }
-
-    return numero;
-  }
-
-  public data(data) {
-    return Utils.formatarDataParaExibicao(data);
   }
 
   public mostraConteudoTruncado(texto: string, limite: number): string {

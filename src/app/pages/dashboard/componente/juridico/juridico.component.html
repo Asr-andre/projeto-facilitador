@@ -28,8 +28,8 @@
       </thead>
       <tbody *ngIf="processos.length > 0; else semProcessos">
         <tr *ngFor="let item of processos">
-          <td>{{ formatarNumeroProcesso(item.numero_processo) }}</td>
-          <td> {{ item.comarca }} </td>
+          <td>{{ item.numero_processo | docJuridico }}</td>
+          <td>{{ item.comarca }}</td>
           <td>{{ item.vara }}</td>
           <td>{{ item.data_entrada_processo | dataBr }}</td>
           <td>{{ item.tipo_acao }}</td>
@@ -101,13 +101,17 @@
         <div class="col-md-3">
           <div class="mb-1">
             <label for="data_audiencia" class="form-label">Data audiência</label>
-            <input type="datetime-local" id="data_audiencia" formControlName="data_audiencia" class="form-control form-control-pad form-control-sm">
+            <input type="datetime-local" id="data_audiencia" formControlName="data_audiencia" class="form-control form-control-pad form-control-sm"
+              [appFormatDate]="dado?.data_audiencia"
+              [dateFormat]="'yyyy-MM-ddTHH:mm:ss'">
           </div>
         </div>
         <div class="col-md-2">
           <div class="mb-1">
             <label for="data_entrada_processo" class="form-label">Data distribuição</label>
-            <input type="date" id="data_entrada_processo" id="dataHora" formControlName="data_entrada_processo" class="form-control form-control-pad form-control-sm">
+            <input type="date" id="data_entrada_processo" id="dataHora" formControlName="data_entrada_processo" class="form-control form-control-pad form-control-sm"
+              [appFormatDate]="dado?.data_entrada_processo"
+              [dateFormat]="'yyyy-MM-dd'">
           </div>
         </div>
         <div class="col-md-3">
