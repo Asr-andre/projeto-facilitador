@@ -29,7 +29,7 @@ export class FilaComponent implements OnInit {
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<any>>;
 
   constructor(
-    private _filaService: FilaService,
+    private _fila: FilaService,
     private _auth: AuthenticationService,
   ) { }
 
@@ -45,7 +45,7 @@ export class FilaComponent implements OnInit {
      user_login: this.user_login
     }
 
-    this._filaService.obterFilas(requisicao).subscribe((res) => {
+    this._fila.obterFilas(requisicao).subscribe((res) => {
       this.filas = res.filas;
       this.filtrar();
       this.atualizarQuantidadeExibida();

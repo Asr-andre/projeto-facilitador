@@ -61,7 +61,7 @@ export class CarteiraDeClientesComponent implements OnInit {
     private _fb: FormBuilder,
     private _datePipe: DatePipe,
     private _modalService: NgbModal,
-    private _filaService: FilaService,
+    private _fila: FilaService,
     private _excelService: ExcelService
   ) { }
 
@@ -139,7 +139,7 @@ export class CarteiraDeClientesComponent implements OnInit {
      user_login: this.login
     }
 
-    this._filaService.obterFilas(requisicao).subscribe((res) => {
+    this._fila.obterFilas(requisicao).subscribe((res) => {
       this.filas = res.filas;
       this.loading = false;
     });

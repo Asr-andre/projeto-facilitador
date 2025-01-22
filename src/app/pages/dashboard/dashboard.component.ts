@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
     private _dashboard: DashboardService,
     private _auth: AuthenticationService,
     private _fb: FormBuilder,
-    private _filaService: FilaService,
+    private _fila: FilaService,
     private _alertService: AlertService
   ) {}
 
@@ -123,7 +123,7 @@ export class DashboardComponent implements OnInit {
     };
 
     this.loading = true;
-    this._filaService.obterFilas(requisicao).subscribe((res) => {
+    this._fila.obterFilas(requisicao).subscribe((res) => {
       if (res && res.success === "true") {
         this.filas = res.filas;
         this.loading = false;
