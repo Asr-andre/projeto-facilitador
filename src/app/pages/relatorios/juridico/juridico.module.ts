@@ -7,12 +7,13 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DiretivasModule } from 'src/app/core/directive/directive.module';
 import { JuridicoComponent } from './juridico.component';
+import { GeralComponent } from './geral/geral.component';
 
 
 @NgModule({
-
   declarations: [
-    JuridicoComponent
+    JuridicoComponent,
+    GeralComponent
    ],
   imports: [
     CommonModule,

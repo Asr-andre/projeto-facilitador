@@ -10,7 +10,6 @@ import { GeralComponent } from './geral/geral.component';
 import { PrestacaoContasComponent } from './prestacao-contas/prestacao-contas.component';
 import { DiretivasModule } from 'src/app/core/directive/directive.module';
 
-
 @NgModule({
 
   declarations: [

@@ -1,1 +1,87 @@
-<p>juridico works!</p>
+<div class="container-fluid">
+  <div class="loading-overlay-pagina" *ngIf="loading">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header pt-2 pb-2">
+          <div class="col-md-12">
+            <h5 class="mb-0">
+              <i class="fas fa-chart-bar acionamento-icon"></i>
+              Relatórios Jurídico
+            </h5>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="formPesquisar">
+            <div class="row">
+
+              <div class="col-md-2 form-group">
+                <label for="tipo" class="form-label">Tipo do Relatório</label>
+                <select class="form-control form-control-sm" formControlName="tipo"
+                  [ngClass]="{'is-invalid': formPesquisar.get('tipo').invalid && formPesquisar.get('tipo').touched}">
+                  <option value="">Selecione</option>
+                  <option value="1">Geral</option>
+                </select>
+              </div>
+
+              <div class="col-md-2 form-group">
+                <label for="id_contratante" class="form-label">Contratante <i class="fas fa-info-circle text-info ms-1"
+                    style="cursor: pointer;"
+                    ngbTooltip="Selecione um contratante para realizar a pesquisa. Caso contrário, serão exibidos todos os contratantes."
+                    placement="left">
+                  </i></label>
+                <select type="text" class="form-control form-control-sm" formControlName="id_contratante"
+                  (focus)="carregarContratantes()">
+                  <option value="0">Selecione</option>
+                  <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">
+                    {{ contratante.fantasia }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-2 form-group">
+                <label for="ultimo_andamento" class="form-label">Data Ultimo Andamento</label>
+                <input type="date" id="ultimo_andamento" class="form-control form-control-sm" formControlName="ultimo_andamento" />
+              </div>
+
+              <div class="col-md-2 form-group">
+                <label for="data_inicio" class="form-label">Data Inicio</label>
+                <input type="date" id="data_inicio" class="form-control form-control-sm" formControlName="data_inicio" appDataMes="inicio"
+                  [ngClass]="{'is-invalid': formPesquisar.get('data_inicio').invalid && formPesquisar.get('data_inicio').touched}" />
+              </div>
+
+              <div class="col-md-2 form-group">
+                <label for="data_fim" class="form-label">Data Fim</label>
+                <input type="date" id="data_fim" class="form-control form-control-sm" formControlName="data_fim" appDataMes="fim"
+                  [ngClass]="{'is-invalid': formPesquisar.get('data_fim').invalid && formPesquisar.get('data_fim').touched}" />
+              </div>
+
+              <div class="col-md-2 form-group">
+                <label for="id_cliente" class="form-label">Cliente
+                  <i class="fas fa-info-circle text-info ms-1"
+                    style="cursor: pointer;" ngbTooltip="Infome o id do cliente para pesquisa" placement="left">
+                  </i>
+                </label>
+                <input type="text" class="form-control form-control-sm" formControlName="id_cliente" apenasNumeros>
+              </div>
+
+            </div>
+          </form>
+          <div style="text-align: end;">
+            <button type="submit" class="btn btn-secondary btn-sm" style="margin-top: 20px; width: 200px;" (click)="pesquisar()"><i
+                class="fas fa-search"></i> Pesquisar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="tipoRelatorio === '1' && exibirCard">
+    <app-geral [filtros]="filtros">
+    </app-geral>
+  </div>
