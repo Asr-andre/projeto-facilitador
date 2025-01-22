@@ -7,6 +7,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { LogsComponent } from './logs.component';
 import { LogsGeralComponent } from './logs-geral/logs-geral.component';
+import { DiretivasModule } from 'src/app/core/directive/directive.module';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { LogsGeralComponent } from './logs-geral/logs-geral.component';
   ],
   imports: [
     CommonModule,
+    DiretivasModule,
     FormsModule,
     ReactiveFormsModule,
     NgbDatepickerModule,

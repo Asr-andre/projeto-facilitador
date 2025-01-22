@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: 'app-logs',
@@ -20,6 +21,7 @@ export class LogsComponent implements OnInit {
     private _auth: AuthenticationService,
     private _formBuilder: FormBuilder,
     private _alert: AlertService,
+    private _funcoes: FuncoesService
 
   ) { }
 
@@ -30,8 +32,8 @@ export class LogsComponent implements OnInit {
   public iniciarForm(): void {
     this.formPesquisar = this._formBuilder.group({
       id_empresa: [this.idEmpresa, Validators.required],
-      data_inicio: [this.primeirDiaMes(), Validators.required],
-      data_fim: [this.ultimoDiaMes(), Validators.required],
+      data_inicio: ['', Validators.required],
+      data_fim: ['', Validators.required],
       user_login: [this.login, Validators.required],
       tipo: ['', Validators.required]
     });
@@ -39,7 +41,7 @@ export class LogsComponent implements OnInit {
 
   public pesquisar() {
     if (this.formPesquisar.invalid) {
-      this.marcarCamposComoTocados(this.formPesquisar);
+      this._funcoes.camposInvalidos(this.formPesquisar);
       this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
@@ -58,37 +60,5 @@ export class LogsComponent implements OnInit {
         this._alert.warning('Selecione um tipo de relatório antes de pesquisar.');
         break;
     }
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
-  }
-
-  private primeirDiaMes() {
-    var data = new Date();
-    var mes = data.getMonth() + 1;
-    var ano = data.getFullYear();
-
-    if (mes <= 9) {
-      return ano + '-0' + mes + '-' + '01';
-    }
-
-    return ano + '-' + mes + '-' + '01';
-  }
-
-  private ultimoDiaMes(): string {
-    let dataDoDia = new Date();
-
-    // Defina a data para o primeiro dia do próximo mês
-    let primeiroDiaProximoMes = new Date(dataDoDia.getFullYear(), dataDoDia.getMonth() + 1, 1);
-    primeiroDiaProximoMes.setDate(primeiroDiaProximoMes.getDate() - 1);
-
-    let data = primeiroDiaProximoMes.toISOString().split('T')[0];
-
-    return data;
   }
 }

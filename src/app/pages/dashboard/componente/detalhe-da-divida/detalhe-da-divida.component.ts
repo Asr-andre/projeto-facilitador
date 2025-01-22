@@ -16,6 +16,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
 import { CadastrarTituloRequest } from 'src/app/core/models/cadastro/cliente.model';
 import { ModalSituacaoComponent } from './modal-situacao/modal-situacao.component';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: 'app-detalhe-da-divida',
@@ -53,7 +54,8 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     private _modalService: NgbModal,
     private _tipoTituloService: TipoTituloService,
     private _formBuilder: FormBuilder,
-    private _clienteService: ClienteService
+    private _clienteService: ClienteService,
+    private _funcoes: FuncoesService
   ) { }
 
   ngOnInit(): void {
@@ -191,10 +193,6 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     return cpfLimpo.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
   }
 
-  public dataBrasil(data) {
-    return Utils.dataBrasil(data);
-  }
-
   public filtrarTitulos() {
     if (this.filtroSelecionado === 'todos') {
       this.titulosFiltrados = this.detalhamentoSelecionado.parcelas;
@@ -321,7 +319,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
   public cadastrarTitulo(): void {
     if (!this.formTitulo.valid) {
-      this.marcarCamposComoTocados(this.formTitulo);
+      this._funcoes.camposInvalidos(this.formTitulo);
       this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
@@ -356,14 +354,6 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
         this._alertService.error('Atenção Título Já Existente, Verifique os Campos Chaves!!!');
       }
     );
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
   }
 
   public verificarValorNegativo(campo: string) {

@@ -10,6 +10,7 @@ import { AcoesRealizadasPorContratanteComponent } from './acoes-realizadas-por-c
 import { AcoesRealizadasPorUsuarioComponent } from './acoes-realizadas-por-usuario/acoes-realizadas-por-usuario.component';
 import { AnaliticoComponent } from './analitico/analitico.component';
 import { SinteticoComponent } from './sintetico/sintetico.component';
+import { DiretivasModule } from 'src/app/core/directive/directive.module';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { SinteticoComponent } from './sintetico/sintetico.component';
   ],
   imports: [
     CommonModule,
+    DiretivasModule,
     FormsModule,
     ReactiveFormsModule,
     NgbDatepickerModule,

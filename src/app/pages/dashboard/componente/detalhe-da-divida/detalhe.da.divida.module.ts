@@ -7,6 +7,7 @@ import { SimuladorPadraoComponent } from './simulador-padrao/simulador-padrao.co
 import { DetalheDaDividaComponent } from './detalhe-da-divida.component';
 import { NgxMaskPipe } from 'ngx-mask';
 import { NgPipesModule } from 'ngx-pipes';
+import { PipesModule } from 'src/app/core/pipe/pipe.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { NgPipesModule } from 'ngx-pipes';
   ],
   imports: [
     CommonModule,
+    PipesModule,
     FormsModule,
     ReactiveFormsModule,
     NgPipesModule,

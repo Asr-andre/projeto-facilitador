@@ -8,6 +8,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GeralComponent } from './geral/geral.component';
 import { PrestacaoContasComponent } from './prestacao-contas/prestacao-contas.component';
+import { DiretivasModule } from 'src/app/core/directive/directive.module';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { PrestacaoContasComponent } from './prestacao-contas/prestacao-contas.co
    ],
   imports: [
     CommonModule,
+    DiretivasModule,
     FormsModule,
     ReactiveFormsModule,
     NgbDatepickerModule,

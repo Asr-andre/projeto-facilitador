@@ -47,13 +47,13 @@
 
               <div class="col-md-2 form-group">
                 <label for="data_inicio" class="form-label">Data Inicio</label>
-                <input type="date" id="data_inicio" class="form-control form-control-sm" formControlName="data_inicio"
+                <input type="date" id="data_inicio" class="form-control form-control-sm" formControlName="data_inicio" appDataMes="inicio"
                   [ngClass]="{'is-invalid': formPesquisar.get('data_inicio').invalid && formPesquisar.get('data_inicio').touched}" />
               </div>
 
               <div class="col-md-2 form-group">
                 <label for="data_fim" class="form-label">Data Fim</label>
-                <input type="date" id="data_fim" class="form-control form-control-sm" formControlName="data_fim"
+                <input type="date" id="data_fim" class="form-control form-control-sm" formControlName="data_fim" appDataMes="fim"
                   [ngClass]="{'is-invalid': formPesquisar.get('data_fim').invalid && formPesquisar.get('data_fim').touched}" />
               </div>
 

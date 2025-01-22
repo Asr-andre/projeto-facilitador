@@ -105,7 +105,7 @@
         <td>{{ prestacao.parcela }}</td>
         <td>{{ prestacao.plano }}</td>
         <td>{{ prestacao.numero_contrato }}</td>
-        <td>{{ dataBrasil(prestacao.vencimento) }}</td>
+        <td>{{ prestacao.vencimento | dataBr }}</td>
         <td>{{ prestacao.produto }}</td>
         <td>{{ prestacao.atraso }}</td>
         <td>{{ prestacao.valor | currency:'BRL' }}</td>

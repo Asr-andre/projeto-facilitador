@@ -113,6 +113,7 @@ export class SolicitarCreditosComponent implements OnInit {
   public fechaModal() {
     this.historico = false;
     this.formCreditos.reset();
+    this.retornoHistorico = [];
     this._modalService.dismissAll();
     this.ocultarBotaoCredito = true;
   }
