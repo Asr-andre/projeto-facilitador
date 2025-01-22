@@ -16,6 +16,8 @@ import { MascaraMoedaDirective } from './mascarar.moeda.directive';
 import { ConverterTextoDirective } from './convert.maiusculo.directrive';
 import { FormatarDocumentoDirective } from './formatar-cpf.cnpj.directive';
 import { DataMesDirective } from './data-mes.directive';
+import { DeixaSomenteLeituraDirective } from './deixa.somente.leitura.diretive';
+import { VerificarValorNegativoDirective } from './verifica.valor.negativo.diretive';
 
 const directive = [
   ClickCorDirective,
@@ -34,7 +36,9 @@ const directive = [
   FocoProximoCampoDirective,
   ConverterTextoDirective,
   FormatarDocumentoDirective,
-  DataMesDirective
+  DataMesDirective,
+  DeixaSomenteLeituraDirective,
+  VerificarValorNegativoDirective
 ];
 
 @NgModule({

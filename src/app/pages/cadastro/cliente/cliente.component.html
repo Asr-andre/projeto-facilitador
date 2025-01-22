@@ -110,8 +110,8 @@
 
                           <div class="col-md-2 form-group">
                             <label for="cnpj_cpf" class="form-label">CNPJ/CPF</label>
-                            <input type="text" id="cnpj_cpf" class="form-control form-control-sm" formControlName="cnpj_cpf" mascaraCpf
-                            [ngClass]="{'is-invalid': formCliente.get('cnpj_cpf').invalid && formCliente.get('cnpj_cpf').touched, 'edit-mode': editar}" placeholder="Cnpj/Cpf"/>
+                            <input type="text" id="cnpj_cpf" class="form-control form-control-sm" formControlName="cnpj_cpf" mascaraCpf [appSomenteLeitura]="editar"
+                            [ngClass]="{'is-invalid': formCliente.get('cnpj_cpf').invalid && formCliente.get('cnpj_cpf').touched}" placeholder="Cnpj/Cpf"/>
                           </div>
 
                           <div class="col-md-2 form-group">
@@ -225,7 +225,7 @@
 
                           <div class="col-md-2 form-group">
                             <label for="valor_renda" class="form-label">Valor Renda</label>
-                            <input type="number" id="valor_renda" class="form-control form-control-sm" formControlName="valor_renda" min="0" (input)="verificarValorNegativo('valor_renda')" placeholder="Valor renda"/>
+                            <input type="number" id="valor_renda" class="form-control form-control-sm" formControlName="valor_renda" min="0" placeholder="Valor renda" appVerificarValorNegativo/>
                           </div>
 
                           <div class="col-md-3 form-group">

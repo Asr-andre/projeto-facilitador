@@ -1,7 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Utils } from 'src/app/core/helpers/utils';
 import { Cliente, ClienteModel} from 'src/app/core/models/cadastro/cliente.model';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
 import { CepModel } from 'src/app/core/models/cep.model';
@@ -58,7 +57,7 @@ export class ClienteComponent {
       identificador: [dado?.identificador || ''],
       nome: [dado?.nome || ''],
       tipo_pessoa: [dado?.tipo_pessoa || ''],
-      cnpj_cpf: [{ value: dado?.cnpj_cpf || '', disabled: this.editar }, [Validators.required]],
+      cnpj_cpf: [ dado?.cnpj_cpf || '', [Validators.required]],
       rg: [dado?.rg || ''],
       orgao_expedidor: [dado?.orgao_expedidor || ''],
       endereco: [dado?.endereco || ''],
@@ -144,7 +143,6 @@ export class ClienteComponent {
     this.campoInvalido = !this.textoPesquisa || this.textoPesquisa.trim().length === 0;
   }
 
-
   public obterContratantes() {
     this._contratante.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
       this.contratantes = res.contratantes;
@@ -161,10 +159,6 @@ export class ClienteComponent {
       this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
-
-      // garante que os campos que estão disabilitados tmb va no envio do form no editar
-      this.formCliente.get('cnpj_cpf')?.enable();
-      this.formCliente.getRawValue();
 
     if (this.editar == true) {
       this.editarCliente();
@@ -255,25 +249,6 @@ export class ClienteComponent {
       }).catch(() => {
         this.cep = null;
       });
-    }
-  }
-
-  public mascararCpfCnpj(value: string): string {
-    if (value) {
-      return Utils.formatarDocumento(value);
-    }
-    return value;
-  }
-
-  public data(data) {
-    return Utils.formatarDataParaExibicao(data);
-  }
-
-  public verificarValorNegativo(campo: string) {
-    const valor = this.formCliente.get(campo)?.value;
-
-    if (valor <= 0) {
-      this.formCliente.get(campo)?.setValue(0);
     }
   }
 }
