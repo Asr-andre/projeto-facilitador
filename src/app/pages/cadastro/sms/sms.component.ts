@@ -41,7 +41,7 @@ export class SmsComponent implements OnInit {
 
   constructor(
     private _smsService: SmsService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _modalService: NgbModal,
     private _auth: AuthenticationService,
     private _alertService: AlertService,
@@ -55,7 +55,7 @@ export class SmsComponent implements OnInit {
   }
 
   public inicializarMensagemForm(dado?: PerfilSms) {
-    this.smsForm = this._formBuilder.group({
+    this.smsForm = this._fb.group({
       id_perfilsms: [dado?.id_perfilsms || 0],
       id_empresa: [this.idEmpresa, Validators.required],
       titulo: [dado?.titulo || '', Validators.required],

@@ -50,7 +50,7 @@ export class EnvioEmailComponent implements OnInit {
 
   constructor(
     private _modalService: NgbModal,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _emailService: EmailService,
     private _alert: AlertService,
     private _auth: AuthenticationService,
@@ -62,7 +62,7 @@ export class EnvioEmailComponent implements OnInit {
   }
 
   public inicializarFormularioEnvioEmail(): void {
-    this.formularioEnvioEmail = this._formBuilder.group({
+    this.formularioEnvioEmail = this._fb.group({
       id_empresa: [this.idEmpresa],
       id_contratante: [''],
       id_cliente: [''],

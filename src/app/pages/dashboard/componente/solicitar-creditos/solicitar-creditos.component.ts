@@ -31,7 +31,7 @@ export class SolicitarCreditosComponent implements OnInit {
 
   constructor(
     private _solicitarCreditosService: SolicitarCreditosService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _auth: AuthenticationService,
     private _alertService: AlertService,
     private _modalService: NgbModal,
@@ -44,7 +44,7 @@ export class SolicitarCreditosComponent implements OnInit {
   }
 
   public iniciarFormCreditos() {
-    this.formCreditos = this._formBuilder.group({
+    this.formCreditos = this._fb.group({
       id_empresa: [this.idEmpresa],
       nome: [this.sigla, Validators.required],
       cpf: ['46419730325', Validators.required],
@@ -55,7 +55,7 @@ export class SolicitarCreditosComponent implements OnInit {
   }
 
   public iniciarFormHistorico() {
-    this.historicoForm = this._formBuilder.group({
+    this.historicoForm = this._fb.group({
       id_empresa: [this.idEmpresa],
       data_inicio: ['', Validators.required],
       data_fim: ['', Validators.required],

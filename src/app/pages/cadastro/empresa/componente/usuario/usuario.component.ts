@@ -21,7 +21,7 @@ export class UsuarioComponent implements OnInit, OnChanges {
   public formUsuario: FormGroup;
 
   constructor(
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _empresaService: EmpresaService,
     private _authenticationService: AuthenticationService,
     private _alertService: AlertService
@@ -38,7 +38,7 @@ export class UsuarioComponent implements OnInit, OnChanges {
   }
 
   inicializarformUsuario() {
-    this.formUsuario = this._formBuilder.group({
+    this.formUsuario = this._fb.group({
       sigla: [this.sigla],
       login: ["", Validators.required],
       senha: ["", Validators.required],

@@ -55,7 +55,7 @@ export class EmailPerfilComponent implements OnInit {
 
   constructor(
     private _emailPerfil: EmailPerfilService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _auth: AuthenticationService,
     private _alert: AlertService,
     private _modal: NgbModal
@@ -68,7 +68,7 @@ export class EmailPerfilComponent implements OnInit {
   }
 
   public inicializarFormEmailPerfil(dado?: RequisicaoPerfilEmail) {
-    this.formEmailPerfil = this._formBuilder.group({
+    this.formEmailPerfil = this._fb.group({
       id_emailtexto: [dado?.id_emailtexto || ""],
       id_empresa: [this.idEmpresa, Validators.required],
       descricao: [dado?.descricao || "", Validators.required],

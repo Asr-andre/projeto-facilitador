@@ -58,7 +58,7 @@ export class CarteiraDeClientesComponent implements OnInit {
     private _smsWhatsAppService: SmsWhatsAppService,
     private _msgLote: WhatsappService,
     private _alertService: AlertService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _datePipe: DatePipe,
     private _modalService: NgbModal,
     private _filaService: FilaService,
@@ -73,7 +73,7 @@ export class CarteiraDeClientesComponent implements OnInit {
   }
 
   public iniciarForm(): void {
-    this.formCarteiraCliente = this._formBuilder.group({
+    this.formCarteiraCliente = this._fb.group({
       id_empresa: [this.idEmpresa, Validators.required],
       id_contratante: ["0"],
       cidade: [""],
@@ -96,7 +96,7 @@ export class CarteiraDeClientesComponent implements OnInit {
   }
 
   public iniciarFormFila(): void {
-    this.formFila = this._formBuilder.group({
+    this.formFila = this._fb.group({
       id_empresa: [this.idEmpresa, Validators.required],
       id_fila:["", Validators.required],
       id_usuario: [this.idUsuario],
@@ -106,7 +106,7 @@ export class CarteiraDeClientesComponent implements OnInit {
   }
 
   public iniciarFormMsgLote() {
-    this.formMsgLote = this._formBuilder.group({
+    this.formMsgLote = this._fb.group({
       id_empresa: [this.idEmpresa, Validators.required],
       id_perfilwhatsapp: ['', Validators.required],
       user_login: [this.login, Validators.required],

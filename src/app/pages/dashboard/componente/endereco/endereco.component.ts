@@ -28,7 +28,7 @@ export class EnderecoComponent implements OnInit, OnChanges {
   constructor(
     private _enderecoService: EnderecoService,
     private _alertService: AlertService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _auth: AuthenticationService,
     private _modalService: NgbModal,
     private _funcoes: FuncoesService
@@ -46,7 +46,7 @@ export class EnderecoComponent implements OnInit, OnChanges {
   }
 
   public inicializarFormEndereco(dado?: EnderecoModel) {
-    this.formEndereco = this._formBuilder.group({
+    this.formEndereco = this._fb.group({
       id_cliente: [this.idCliente],
       id_empresa: [this.idEmpresa],
       id_ender: [dado?.id_ender],

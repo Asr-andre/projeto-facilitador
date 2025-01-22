@@ -28,7 +28,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
     private _juridico: JuridicoService,
     private _auth: AuthenticationService,
     private _alert: AlertService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _modal: NgbModal,
     private _datePipe: DatePipe,
     private _funcoes: FuncoesService
@@ -46,7 +46,7 @@ export class JuridicoComponent implements OnInit, OnChanges {
   }
 
   public inicializarFormProcesso(dado?: ProcessoModel) {
-    this.formProcesso = this._formBuilder.group({
+    this.formProcesso = this._fb.group({
       id_processo: [dado?.id_processo],
       id_empresa: [this.idEmpresa],
       id_cliente: [this.idCliente],

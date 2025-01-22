@@ -22,7 +22,7 @@ export class ModalSituacaoComponent implements OnInit, OnChanges {
   public formSituacao: FormGroup;
 
   constructor(
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _auth: AuthenticationService,
     private _modalService: NgbModal,
     private _situacaoService: SituacaoService,
@@ -34,7 +34,7 @@ export class ModalSituacaoComponent implements OnInit, OnChanges {
   }
 
   public inicializarForm() {
-    this.formSituacao = this._formBuilder.group({
+    this.formSituacao = this._fb.group({
       id_cliente: [''],
       situacao: [this.clienteSituacao],
       user_login: ['']

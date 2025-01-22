@@ -36,7 +36,7 @@ export class UsuariosComponent implements OnInit {
 
   constructor(
     private _usuarioService: UsuarioService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _modalService: NgbModal,
     private _auth: AuthenticationService,
     private _alert: AlertService,
@@ -49,7 +49,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   public inicializarFormUsuario(dado?: UsuarioModel) {
-    this.formUsuario = this._formBuilder.group({
+    this.formUsuario = this._fb.group({
       id_usuario: [dado?.id_usuario || ''],
       id_empresa: [this.idEmpresa],
       sigla: [this.sigla],

@@ -19,7 +19,7 @@ export class LogsComponent implements OnInit {
 
   constructor(
     private _auth: AuthenticationService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _alert: AlertService,
     private _funcoes: FuncoesService
 
@@ -30,7 +30,7 @@ export class LogsComponent implements OnInit {
   }
 
   public iniciarForm(): void {
-    this.formPesquisar = this._formBuilder.group({
+    this.formPesquisar = this._fb.group({
       id_empresa: [this.idEmpresa, Validators.required],
       data_inicio: ['', Validators.required],
       data_fim: ['', Validators.required],

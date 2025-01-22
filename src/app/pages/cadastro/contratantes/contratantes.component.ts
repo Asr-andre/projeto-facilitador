@@ -71,7 +71,7 @@ export class ContratantesComponent implements OnInit {
     private _smsWhatsAppService: SmsWhatsAppService,
     private _smsService: SmsService,
     private _formulaService: FormulaService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _modalService: NgbModal,
     private _auth: AuthenticationService,
     private _alertService: AlertService,
@@ -112,7 +112,7 @@ export class ContratantesComponent implements OnInit {
   }
 
   public async inicializarformContratante(dado?: ContratanteModel): Promise<void> {
-    this.formContratante = this._formBuilder.group({
+    this.formContratante = this._fb.group({
       id_contratante: [dado?.id_contratante || ''],
       id_empresa: [dado?.id_empresa || this.idEmpresa],
       cnpj: [dado?.cnpj || '', Validators.required],

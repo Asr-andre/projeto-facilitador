@@ -46,7 +46,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     private _auth: AuthenticationService,
     private _acionamentoService: AcionamentoService,
     private _acaoCobrancaService: AcaoCobrancaService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _datePipe: DatePipe,
     private _excelService: ExcelService,
     private _dashboard: DashboardService,
@@ -79,7 +79,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   }
 
   public inicializarformAcionamentos() {
-    this.formAcionamento = this._formBuilder.group({
+    this.formAcionamento = this._fb.group({
       id_empresa: [this.idEmpresa],
       id_contratante: [this.idContratante],
       id_cliente: [this.idCliente],

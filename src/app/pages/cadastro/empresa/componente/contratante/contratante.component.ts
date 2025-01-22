@@ -21,7 +21,7 @@ export class ContratanteComponent implements OnInit, OnChanges {
   public formContratante: FormGroup;
 
   constructor(
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _empresaService: EmpresaService,
     private _authenticationService: AuthenticationService,
     private _alertService: AlertService
@@ -38,7 +38,7 @@ export class ContratanteComponent implements OnInit, OnChanges {
   }
 
   inicializarformContratante() {
-    this.formContratante = this._formBuilder.group({
+    this.formContratante = this._fb.group({
       id_empresa: [this.idEmpresa],
       cnpj: ["", Validators.required],
       razao_social: ["", Validators.required],

@@ -38,7 +38,7 @@ export class ClienteComponent {
     private _cliente: ClienteService,
     private _contratante: ContratanteService,
     private _auth: AuthenticationService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _alert: AlertService,
     private _datePipe: DatePipe,
     private _funcoes: FuncoesService
@@ -50,7 +50,7 @@ export class ClienteComponent {
   }
 
   public inicializarFormCliente(dado?: ClienteModel) {
-    this.formCliente = this._formBuilder.group({
+    this.formCliente = this._fb.group({
       id_empresa: [this.idEmpresa],
       id_contratante: [dado?.id_contratante || '', [Validators.required]],
       id_cliente: [dado?.id_cliente || 0],

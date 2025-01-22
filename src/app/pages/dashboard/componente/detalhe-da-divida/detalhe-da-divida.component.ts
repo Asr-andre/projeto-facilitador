@@ -53,7 +53,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     private _datePipe: DatePipe,
     private _modalService: NgbModal,
     private _tipoTituloService: TipoTituloService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _clienteService: ClienteService,
     private _funcoes: FuncoesService
   ) { }
@@ -77,7 +77,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   }
 
   public inicializarformTitulo(dado?: CadastrarTituloRequest) {
-    this.formTitulo = this._formBuilder.group({
+    this.formTitulo = this._fb.group({
       tipo_titulo: [dado?.tipo_titulo || "", Validators.required],
       parcela: [dado?.parcela || "", Validators.required],
       plano: [dado?.plano || "", Validators.required],

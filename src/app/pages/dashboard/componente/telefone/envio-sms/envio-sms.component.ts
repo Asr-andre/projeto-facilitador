@@ -27,7 +27,7 @@ export class EnvioSmsComponent implements OnInit {
 
   constructor(
     private _modalService: NgbModal,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _smsService: SmsService,
     private _alertService: AlertService,
     private _auth: AuthenticationService,
@@ -39,7 +39,7 @@ export class EnvioSmsComponent implements OnInit {
   }
 
   public inicializarFormSms() {
-    this.formEnvioSms = this._formBuilder.group({
+    this.formEnvioSms = this._fb.group({
       id_empresa: [this.idEmpresa],
       id_contratante: [''],
       id_cliente: [''],

@@ -40,7 +40,7 @@ export class FormulaComponent implements OnInit {
 
   constructor(
     private _formulaService: FormulaService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _modalService: NgbModal,
     private _auth: AuthenticationService,
     private _alertService: AlertService,
@@ -53,7 +53,7 @@ export class FormulaComponent implements OnInit {
   }
 
   public inicializarFormFomula(dado?: FormulaRequest) {
-    this.formFormula = this._formBuilder.group({
+    this.formFormula = this._fb.group({
       id_empresa: [dado?.id_empresa || this.idEmpresa],
       descricao: [dado?.descricao || '', Validators.required],
       usa_indice: [dado?.usa_indice || ''],

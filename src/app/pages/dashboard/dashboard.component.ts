@@ -54,7 +54,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private _dashboard: DashboardService,
     private _auth: AuthenticationService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _filaService: FilaService,
     private _alertService: AlertService
   ) {}
@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public inicializarFormFila() {
-    this.formFila = this._formBuilder.group({
+    this.formFila = this._fb.group({
       id_fila: [0],
     });
   }

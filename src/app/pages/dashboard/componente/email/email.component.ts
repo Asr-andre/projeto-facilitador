@@ -26,7 +26,7 @@ export class EmailComponent implements OnInit, OnChanges{
 
   constructor(
     private _emailService: EmailService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _auth: AuthenticationService,
     private _alertService: AlertService,
     private _modalService: NgbModal,
@@ -53,7 +53,7 @@ export class EmailComponent implements OnInit, OnChanges{
   }
 
   public inicializarEmailForm() {
-    this.formEmail = this._formBuilder.group({
+    this.formEmail = this._fb.group({
       id_cliente: [this.idCliente],
       id_empresa: [this.idEmpresa],
       email: ['', [Validators.required, Validators.email]],

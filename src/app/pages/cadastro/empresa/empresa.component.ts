@@ -18,7 +18,7 @@ export class EmpresaComponent implements OnInit {
   public formEmpresa: FormGroup;
 
   constructor(
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _empresaService: EmpresaService,
     private _authenticationService: AuthenticationService,
     private _alertService: AlertService
@@ -29,7 +29,7 @@ export class EmpresaComponent implements OnInit {
   }
 
   inicializarformEmpresa() {
-    this.formEmpresa = this._formBuilder.group({
+    this.formEmpresa = this._fb.group({
       razao_social: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
       fantasia: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
       cnpj: ['', Validators.required],

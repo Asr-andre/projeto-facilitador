@@ -44,7 +44,7 @@ export class ImportacaoComponent implements OnInit {
     private _contratanteService: ContratanteService,
     private _modalService: NgbModal,
     private _auth: AuthenticationService,
-    private _formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _router: Router
   ) { }
 
@@ -54,7 +54,7 @@ export class ImportacaoComponent implements OnInit {
   }
 
   public inicializarForm() {
-    this.formImportacaoArquivo = this._formBuilder.group({
+    this.formImportacaoArquivo = this._fb.group({
       id_empresa: [this.idEmpresa, Validators.required],
       id_contratante: [1, Validators.required],
       user_login: [this.login],
