@@ -49,15 +49,13 @@
               </div>
 
               <div class="col-md-2 form-group">
-                <label for="data_inicio" class="form-label">Data Inicio</label>
-                <input type="date" id="data_inicio" class="form-control form-control-sm" formControlName="data_inicio" appDataMes="inicio"
-                  [ngClass]="{'is-invalid': formPesquisar.get('data_inicio').invalid && formPesquisar.get('data_inicio').touched}" />
+                <label for="data_inicio" class="form-label">Dt Audiência Inicio</label>
+                <input type="date" id="data_inicio" class="form-control form-control-sm" formControlName="data_inicio"/>
               </div>
 
               <div class="col-md-2 form-group">
-                <label for="data_fim" class="form-label">Data Fim</label>
-                <input type="date" id="data_fim" class="form-control form-control-sm" formControlName="data_fim" appDataMes="fim"
-                  [ngClass]="{'is-invalid': formPesquisar.get('data_fim').invalid && formPesquisar.get('data_fim').touched}" />
+                <label for="data_fim" class="form-label">Dt Audiência fim</label>
+                <input type="date" id="data_fim" class="form-control form-control-sm" formControlName="data_fim" />
               </div>
 
               <div class="col-md-2 form-group">
@@ -82,6 +80,6 @@
   </div>
 
   <div *ngIf="tipoRelatorio === '1' && exibirCard">
-    <app-geral [filtros]="filtros">
+    <app-geral [filtros]="filtros" (exibirCard)="exibirRelatorio($event)">
     </app-geral>
   </div>

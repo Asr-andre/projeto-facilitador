@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Utils } from 'src/app/core/helpers/utils';
 import { AcionamentoAnaliticoModel, RequisicaoAcionamentoModel } from 'src/app/core/models/relatorio/acionamento.model';
 import { AlertService } from 'src/app/core/services/alert.service';;
 import { ExcelService } from 'src/app/core/services/excel.service';
@@ -18,7 +17,7 @@ export class AnaliticoComponent implements OnChanges {
   public acio_Analitico: AcionamentoAnaliticoModel[] = [];
 
   constructor(
-    private _acionamentoService: AcionamentoService,
+    private _acionamento: AcionamentoService,
     private _alert: AlertService,
     private _datePipe: DatePipe,
     private _excel: ExcelService,
@@ -36,7 +35,7 @@ export class AnaliticoComponent implements OnChanges {
     dadosParaEnvio.data_fim = this._datePipe.transform(dadosParaEnvio.data_fim, "dd/MM/yyyy");
 
     this.loadingMin = true;
-    this._acionamentoService.obterAcionamentosAnalitico(dadosParaEnvio).subscribe({
+    this._acionamento.obterAcionamentosAnalitico(dadosParaEnvio).subscribe({
       next: (res) => {
         this.loadingMin = false;
         if (res.success === 'true') {
@@ -63,12 +62,6 @@ export class AnaliticoComponent implements OnChanges {
 
   public exportExcel() {
     this._excel.exportAsExcelFile(this.acio_Analitico, 'exportacaoAcionamentoAnalitico');
-  }
-
-  public data(data) {
-    if (data) {
-      return Utils.formatarDataParaExibicao(data);
-    }
   }
 }
 

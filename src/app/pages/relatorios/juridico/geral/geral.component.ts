@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { OrdenarPeloHeaderTabela, SortEvent, compararParaOrdenar } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
 import { Processos } from 'src/app/core/models/relatorio/juridico.model';
@@ -15,6 +15,7 @@ import { JuridicoService } from 'src/app/core/services/relatorio/juridico.servic
 })
 export class GeralComponent implements OnInit, OnChanges {
   @Input() filtros: any;
+  @Output() exibirCard: EventEmitter<boolean> = new EventEmitter<boolean>();
   public loadingMin: boolean = false;
   public idEmpresa = Number(this._auth.getIdEmpresa());
   public resultFiltros: Processos[] = [];;
@@ -64,17 +65,21 @@ export class GeralComponent implements OnInit, OnChanges {
           if (res.success === 'true') {
             this.resultFiltros = res.processos;
             this.dadosFiltrados = res.processos;
+            this.exibirCard.emit(true);
 
           } else {
             this._alert.error('Nenhum resultado encontrado.');
+            this.exibirCard.emit(false);
           }
         },
         (error) => {
           this.loadingMin = false;
+          this.exibirCard.emit(false);
           this._alert.error('Erro ao obter os filtros.');
         }
       );
     } else {
+      this.exibirCard.emit(false);
       this._alert.error('Formulário inválido. Por favor, preencha todos os campos obrigatórios.');
     }
   }

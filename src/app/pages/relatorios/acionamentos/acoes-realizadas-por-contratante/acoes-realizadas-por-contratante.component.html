@@ -29,7 +29,7 @@
                 <td>{{ item.contratante }}</td>
                 <td>{{ item.acao }}</td>
                 <td>{{ item.quantidade }}</td>
-                <td>{{ formatarData(item.ultimaData) }}</td>
+                <td>{{ item.ultimaData | dataHoraBrasileira }}</td>
               </tr>
             </tbody>
           </table>

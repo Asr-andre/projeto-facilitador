@@ -28,7 +28,7 @@ export class SinteticoComponent implements OnChanges {
   dashedLineChart: ChartType;
 
   constructor(
-    private _acionamentoService: AcionamentoService,
+    private _acionamento: AcionamentoService,
     private _alert: AlertService,
     private _datePipe: DatePipe,
   ) { }
@@ -45,7 +45,7 @@ export class SinteticoComponent implements OnChanges {
     dadosParaEnvio.data_fim = this._datePipe.transform(dadosParaEnvio.data_fim, "dd/MM/yyyy");
 
     this.loadingMin = true;
-    this._acionamentoService.obterAcionamentosSintetico(dadosParaEnvio).subscribe({
+    this._acionamento.obterAcionamentosSintetico(dadosParaEnvio).subscribe({
       next: (res) => {
         this.loadingMin = false;
         if (res.success === 'true') {

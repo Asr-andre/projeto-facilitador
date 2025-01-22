@@ -43,10 +43,10 @@ export class JuridicoComponent implements OnInit  {
       id_contratante: ["0"],
       ultimo_andamento: [""],
       id_cliente: ["0"],
-      data_inicio: ['', Validators.required],
-      data_fim: ['', Validators.required],
+      data_inicio: [""],
+      data_fim: [""],
       user_login: [this.login, Validators.required],
-      tipo: ['', Validators.required]
+      tipo: ["", Validators.required]
     });
   }
 
@@ -90,5 +90,9 @@ export class JuridicoComponent implements OnInit  {
         this.loading = false;
       }
     );
+  }
+
+  public exibirRelatorio(status: boolean) {
+    this.exibirCard = status;
   }
 }

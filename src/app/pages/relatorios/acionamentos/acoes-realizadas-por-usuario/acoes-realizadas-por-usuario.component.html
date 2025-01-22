@@ -30,7 +30,7 @@
                 <td>{{ item.usuario }}</td>  <!-- Alterado para exibir o nome do usuário -->
                 <td>{{ item.acao }}</td>
                 <td>{{ item.quantidade }}</td>
-                <td>{{ formatarData(item.ultimaData) }}</td>
+                <td>{{ item.ultimaData | dataHoraBrasileira }}</td>
               </tr>
             </tbody>
           </table>

@@ -56,7 +56,7 @@
                 <tr *ngFor="let item of dadosFiltrados">
                   <td>{{ item.fantasia }}</td>
                   <td>{{ item.nome }}</td>
-                  <td>{{ item.cnpj_cpf }}</td>
+                  <td>{{ item.cnpj_cpf | cpfCnpj }}</td>
                   <td>{{ item.pagamento | dataBr }}</td>
                   <td>{{ item.valor_pago | currency: 'BRL':'symbol':'1.2-2' }}</td>
                   <td>{{ item.valor_original | currency: 'BRL':'symbol':'1.2-2' }}</td>

@@ -11,6 +11,7 @@ import { AcoesRealizadasPorUsuarioComponent } from './acoes-realizadas-por-usuar
 import { AnaliticoComponent } from './analitico/analitico.component';
 import { SinteticoComponent } from './sintetico/sintetico.component';
 import { DiretivasModule } from 'src/app/core/directive/directive.module';
+import { PipesModule } from 'src/app/core/pipe/pipe.module';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { DiretivasModule } from 'src/app/core/directive/directive.module';
   imports: [
     CommonModule,
     DiretivasModule,
+    PipesModule,
     FormsModule,
     ReactiveFormsModule,
     NgbDatepickerModule,

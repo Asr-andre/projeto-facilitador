@@ -23,8 +23,8 @@ export class AcoesRealizadasPorUsuarioComponent implements OnChanges {
 
 
 constructor(
-    private _servicoAcionamento: AcionamentoService,
-    private _servicoAlert: AlertService,
+    private _acionamento: AcionamentoService,
+    private _alert: AlertService,
     private _pipeData: DatePipe,
   ) {
     this.opcoesGrafico = {
@@ -54,19 +54,19 @@ constructor(
     dadosParaEnvio.data_fim = this._pipeData.transform(dadosParaEnvio.data_fim, "dd/MM/yyyy");
 
     this.carregandoDados = true;
-    this._servicoAcionamento.obterAcionamentosAnalitico(dadosParaEnvio).subscribe({
+    this._acionamento.obterAcionamentosAnalitico(dadosParaEnvio).subscribe({
       next: (res) => {
         this.carregandoDados = false;
         if (res.success === 'true') {
           this.acoesAnaliticas = res.dados;
           this.processarDados();
         } else {
-          this._servicoAlert.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
       error: () => {
         this.carregandoDados = false;
-        this._servicoAlert.error('Erro ao carregar os dados.');
+        this._alert.error('Erro ao carregar os dados.');
       }
     });
   }

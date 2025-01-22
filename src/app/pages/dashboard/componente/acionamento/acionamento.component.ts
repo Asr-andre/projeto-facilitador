@@ -44,7 +44,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     private _alert: AlertService,
     private _modal: NgbModal,
     private _auth: AuthenticationService,
-    private _acionamentoService: AcionamentoService,
+    private _acionamento: AcionamentoService,
     private _acaoCobrancaService: AcaoCobrancaService,
     private _fb: FormBuilder,
     private _datePipe: DatePipe,
@@ -100,7 +100,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       };
 
       this.loadingTabela = true;
-      this._acionamentoService.listarAcionamentos(requisicao).subscribe((res) => {
+      this._acionamento.listarAcionamentos(requisicao).subscribe((res) => {
         this.loadingTabela = false;
         if (res.success) {
           this.loadingTabela = false;
@@ -213,7 +213,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     }
 
     this.loadinAcaoCobanca = true;
-    this._acionamentoService.inserirAcionamento(acionamento).subscribe((res) => {
+    this._acionamento.inserirAcionamento(acionamento).subscribe((res) => {
       this.loadinAcaoCobanca = false;
       if (res.success) {
         this.loadinAcaoCobanca = false;

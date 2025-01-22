@@ -42,8 +42,8 @@
                 <td> {{ dado.contratante }} </td>
                 <td> {{ dado.cliente }} </td>
                 <td> {{ dado.usuario }} </td>
-                <td> {{ data(dado.data_acio) }} </td>
-                <td> {{ data(dado.data_prox_acio) }} </td>
+                <td> {{ dado.data_acio | dataHoraBrasileira }} </td>
+                <td> {{ dado.data_prox_acio | dataHoraBrasileira }} </td>
                 <td> {{ dado.acao }} </td>
                 <td> {{ dado.mensagem }} </td>
               </tr>
