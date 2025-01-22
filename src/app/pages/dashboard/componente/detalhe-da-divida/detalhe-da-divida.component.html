@@ -20,28 +20,28 @@
     <strong>
       <span style="cursor: pointer" [ngbTooltip]="'Clique para copiar o CPF'" placement="top" container="body"
         (click)="copiarParaAreasTransferencia(detalhamentoSelecionado?.cpf)">
-        {{ formatarCPF(detalhamentoSelecionado?.cpf) }} - {{ tipoPessoa(detalhamentoSelecionado?.cpf) }}
+        {{ detalhamentoSelecionado?.cpf | cpfCnpj }} - {{ tipoPessoa(detalhamentoSelecionado?.cpf) }}
       </span>
     </strong>
   </div>
   <div class="col-md-4 detalhamento-texto">RG: <strong>
-      {{ formatarCPF(detalhamentoSelecionado?.rg) }}
+      {{ detalhamentoSelecionado?.rg | rg }}
     </strong>
   </div>
 </div>
 <div class="row pt-1 brder">
-  <div class="col-md-4 detalhamento-texto">Rua: <strong> {{ formatarIniciais(detalhamentoSelecionado?.endereco) }} </strong></div>
+  <div class="col-md-4 detalhamento-texto">Rua: <strong> {{ detalhamentoSelecionado?.endereco | convertMaiuscula }} </strong></div>
   <div class="col-md-4 detalhamento-texto">Número: <strong> {{ detalhamentoSelecionado?.numero }}</strong></div>
-  <div class="col-md-4 detalhamento-texto">Complemento: <strong> {{ formatarIniciais(detalhamentoSelecionado?.complemento) }}</strong></div>
+  <div class="col-md-4 detalhamento-texto">Complemento: <strong> {{ detalhamentoSelecionado?.complemento | convertMaiuscula }}</strong></div>
 </div>
 <div class="row pt-1 brder">
-  <div class="col-md-3 detalhamento-texto">Bairro: <strong> {{ formatarIniciais(detalhamentoSelecionado?.bairro) }}</strong></div>
-  <div class="col-md-3 detalhamento-texto">Cidade: <strong> {{ formatarIniciais(detalhamentoSelecionado?.cidade) }} - {{ detalhamentoSelecionado?.uf }}</strong></div>
+  <div class="col-md-3 detalhamento-texto">Bairro: <strong> {{ detalhamentoSelecionado?.bairro | convertMaiuscula }}</strong></div>
+  <div class="col-md-3 detalhamento-texto">Cidade: <strong> {{ detalhamentoSelecionado?.cidade | convertMaiuscula }} - {{ detalhamentoSelecionado?.uf | convertMaiuscula }}</strong></div>
   <div class="col-md-6 detalhamento-texto">
     <span style="cursor: pointer" [ngbTooltip]="'Atualizar situação'" placement="top" container="body"
       (click)="abriModalSituacao()">Situação: </span>
     <strong>
-    {{ formatarIniciais(detalhamentoSelecionado?.situacao) }}
+    {{ detalhamentoSelecionado?.situacao | convertMaiuscula }}
     </strong>
   </div>
 </div>

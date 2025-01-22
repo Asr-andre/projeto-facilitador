@@ -8,6 +8,7 @@ import { DetalheDaDividaComponent } from './detalhe-da-divida.component';
 import { NgxMaskPipe } from 'ngx-mask';
 import { NgPipesModule } from 'ngx-pipes';
 import { PipesModule } from 'src/app/core/pipe/pipe.module';
+import { DiretivasModule } from 'src/app/core/directive/directive.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { PipesModule } from 'src/app/core/pipe/pipe.module';
   imports: [
     CommonModule,
     PipesModule,
+    DiretivasModule,
     FormsModule,
     ReactiveFormsModule,
     NgPipesModule,

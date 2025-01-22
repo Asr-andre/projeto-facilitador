@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'tituloComposto'
+  name: 'convertMaiuscula'
 })
 export class TituloCompostoPipe implements PipeTransform {
   private excecoes = ['de', 'da', 'do', 'dos', 'das', 'e', 'em', 'com', 'a', 'o'];

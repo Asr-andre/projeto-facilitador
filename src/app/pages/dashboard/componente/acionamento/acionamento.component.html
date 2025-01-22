@@ -152,11 +152,12 @@
       <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
     </div>
 
-    <div class="modal-body" style="padding: 0px !important;">
-      <div class="loading-overlay-card" *ngIf="loadingAgenda">
-        <div class="spinner-border text-primary m-1" role="status">
-        </div>
+    <div class="loading-overlay-card" *ngIf="loadingAgenda">
+      <div class="spinner-border text-primary m-1" role="status">
       </div>
+    </div>
+
+    <div class="modal-body" style="padding: 0px !important;">
       <div *ngIf="!loadingAgenda && agenda && agenda.length > 0" class="table-responsive">
         <table class="table table-striped font-size-11" style="overflow: auto;">
           <thead class="tabela-custom table-td-scroll sticky-header">

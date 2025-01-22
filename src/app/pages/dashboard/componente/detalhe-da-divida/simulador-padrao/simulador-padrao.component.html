@@ -43,7 +43,7 @@
             </div>
             <div class="col-md-2" style="font-size: 12px;">
               <small>Data Negociação</small>
-              <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="data_atualizacao">
+              <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="data_atualizacao" appDataMes="hoje">
             </div>
           </div>
           <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px;">
@@ -72,7 +72,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let titulo of data.titulos">
-              <td>{{ dataBrasil(titulo.vencimento) }}</td>
+              <td>{{ titulo.vencimento | dataBr }}</td>
               <td>{{ titulo.atraso }}</td>
               <td scope="col" class="text-right">{{ titulo.valor | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ titulo.valor_juros | currency:'BRL' }}</td>
@@ -129,7 +129,7 @@
 
               <div class="col-md-4" style="font-size: 12px;">
                 <small>Data Vencimento</small>
-                <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="vencimento"
+                <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="vencimento" appDataMes="hoje"
                 [ngClass]="{'is-invalid': formAcordo.get('vencimento').invalid && formAcordo.get('vencimento').touched}">
               </div>
             </div>

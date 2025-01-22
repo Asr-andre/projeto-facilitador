@@ -5,7 +5,7 @@ import { NgControl } from '@angular/forms';
   selector: '[appDataMes]'
 })
 export class DataMesDirective implements OnInit {
-  @Input('appDataMes') tipoData: 'inicio' | 'fim';
+  @Input('appDataMes') tipoData: 'inicio' | 'fim' | 'hoje';
 
   constructor(private el: ElementRef, private renderer: Renderer2, private control: NgControl) {}
 
@@ -20,6 +20,8 @@ export class DataMesDirective implements OnInit {
       dataFormatada = this.primeiroDiaMes();
     } else if (this.tipoData === 'fim') {
       dataFormatada = this.ultimoDiaMes();
+    } else if (this.tipoData === 'hoje') {
+      dataFormatada = this.dataAtual();
     }
 
     // Definir valor no input e atualizar controle do formulário
@@ -41,5 +43,13 @@ export class DataMesDirective implements OnInit {
     const primeiroDiaProximoMes = new Date(today.getFullYear(), today.getMonth() + 1, 1);
     primeiroDiaProximoMes.setDate(primeiroDiaProximoMes.getDate() - 1);
     return primeiroDiaProximoMes.toISOString().split('T')[0];
+  }
+
+  private dataAtual(): string {
+    const today = new Date();
+    const dia = today.getDate();
+    const mes = today.getMonth() + 1;
+    const ano = today.getFullYear();
+    return `${ano}-${mes <= 9 ? '0' + mes : mes}-${dia <= 9 ? '0' + dia : dia}`;
   }
 }

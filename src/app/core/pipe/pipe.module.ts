@@ -19,6 +19,7 @@ import { DataHoraBrasileiraPipe } from './data.hora.pipe';
 import { SimNaoPipe } from './sim.nao.pipe';
 import { FormatarDocumentoPipe } from './formata.doc.pipe';
 import { FormatarCepPipe } from './cep.pipe';
+import { RgPipe } from './rg.pipe';
 
 
 const pipes = [
@@ -40,7 +41,8 @@ const pipes = [
   DataHoraBrasileiraPipe,
   SimNaoPipe,
   FormatarDocumentoPipe,
-  FormatarCepPipe
+  FormatarCepPipe,
+  RgPipe
 ];
 
 @NgModule({

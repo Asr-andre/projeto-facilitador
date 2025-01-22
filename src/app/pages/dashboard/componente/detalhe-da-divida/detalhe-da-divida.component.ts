@@ -184,15 +184,6 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
       (prestacao.valor_taxa || 0);
   }
 
-  public formatarCPF(cpf: string): string {
-    if (!cpf) return '';
-
-    const cpfLimpo = cpf.replace(/\D/g, '');
-    if (cpfLimpo.length !== 11) return cpf;
-
-    return cpfLimpo.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-  }
-
   public filtrarTitulos() {
     if (this.filtroSelecionado === 'todos') {
       this.titulosFiltrados = this.detalhamentoSelecionado.parcelas;
@@ -373,15 +364,6 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     if(!dado) return '';
 
     return dado.length === 11 ? '[ PF ]' : dado.length === 14 ? '[ PJ ];' : '';
-  }
-
-  public formatarIniciais(texto: string): string {
-    if (!texto) return '';
-    return texto
-      .toLowerCase()
-      .split(' ')
-      .map((palavra) => palavra.charAt(0).toUpperCase() + palavra.slice(1))
-      .join(' ');
   }
 
   public abriModalSituacao(): void {
