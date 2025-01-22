@@ -20,6 +20,7 @@ import { SimNaoPipe } from './sim.nao.pipe';
 import { FormatarDocumentoPipe } from './formata.doc.pipe';
 import { FormatarCepPipe } from './cep.pipe';
 import { RgPipe } from './rg.pipe';
+import { MascararCpfLgpdPipe } from './cpf.lgpd.pipe';
 
 
 const pipes = [
@@ -42,7 +43,8 @@ const pipes = [
   SimNaoPipe,
   FormatarDocumentoPipe,
   FormatarCepPipe,
-  RgPipe
+  RgPipe,
+  MascararCpfLgpdPipe
 ];
 
 @NgModule({
