@@ -22,7 +22,7 @@ export class ClienteComponent {
   public contratantes: ContratanteModel [] = [];
   public loading: boolean = false;
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
-  public idUsuario: number = Number(this._auth.getCurrentUser() || 0);
+  public idUsuario: number = Number(this._auth.getIdUsuario() || 0);
   public login = this._auth.getLogin();
   public mostrarTabela: Boolean = false;
   public mostrarCardCliente: Boolean = false;

@@ -16,7 +16,7 @@ import { FuncoesService } from 'src/app/core/services/funcoes.service';
 export class AcionamentosSinteticoComponent implements OnInit {
   public formPesquisar: FormGroup;
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
-  public idUsuario: number = Number(this._auth.getCurrentUser() || 0);
+  public idUsuario: number = Number(this._auth.getIdUsuario() || 0);
   public login = this._auth.getLogin();
   public loadingMin: boolean = false;
   public loading: boolean = false;

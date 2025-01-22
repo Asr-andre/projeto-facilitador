@@ -123,7 +123,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       id_empresa: [this.idEmpresa, Validators.required],
       id_contratante: [this.idContratante, Validators.required],
       id_cliente: [this.idCliente, Validators.required],
-      id_usuario: [this._auth.getCurrentUser(), Validators.required], // ID do usuário logado
+      id_usuario: [this._auth.getIdUsuario(), Validators.required], // ID do usuário logado
       user_login: [this.login, Validators.required],
       valor_boleto: [this.valor_atualizado_simulador.toFixed(2), Validators.required],
       servico: ['Pagamento Titulos Via Pix', Validators.required],

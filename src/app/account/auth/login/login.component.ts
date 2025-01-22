@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
           if (data && data['success'] === 'true') {
             this.loading = false;
             this.router.navigate([this.returnUrl]);
-            this.currentUser = this.authenticationService.getCurrentUser();
+            this.currentUser = this.authenticationService.getIdUsuario();
           } else {
             this.loading = false;
             this.error = data['msg'] || 'Erro ao tentar autenticar.';

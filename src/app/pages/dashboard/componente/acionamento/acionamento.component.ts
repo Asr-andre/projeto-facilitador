@@ -27,7 +27,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   @Output() clienteAcionado = new EventEmitter<void>();
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
   public usuario: string = this._auth.getLogin();
-  public idUsuario: number = Number(this._auth.getCurrentUser() || 0);
+  public idUsuario: number = Number(this._auth.getIdUsuario() || 0);
   public acionamentos: AcionamentoModel[] = [];
   public acoesCobranca: AcaoCobrancaModel[] = [];
   public formAcionamento: FormGroup;

@@ -10,7 +10,7 @@ export class AuthGuard {
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const currentUser = this.authenticationService.getCurrentUser();
+        const currentUser = this.authenticationService.getIdUsuario();
         if (currentUser) {
             // Usuário autenticado, pode acessar a rota
             return true;

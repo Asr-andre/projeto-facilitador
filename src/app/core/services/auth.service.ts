@@ -8,10 +8,9 @@ import { AppConfig } from './url.base.service';
 export class AuthenticationService {
   private apiUrl = AppConfig.apiUrl;
   private id_usuario = 'id_usuario';
-  private siglaKey = 'sigla';
-  private loginKey = 'login';
-  private idEmpresaKey = 'id_empresa';
-  private sessionKey = 'session_key'; // Identificador único de cada sessão
+  private sigla = 'sigla';
+  private loginUsuario = 'login';
+  private idEmpresa = 'id_empresa';
 
   constructor(private http: HttpClient) {}
 
@@ -25,11 +24,10 @@ export class AuthenticationService {
     return this.http.post<any>(loginUrl, { sigla, login, senha }, { headers }).pipe(
       map(response => {
         if (response['success'] === 'true') {
-          // Armazenar usuário, sigla e login no localStorage
           sessionStorage.setItem(this.id_usuario, JSON.stringify(response.id_usuario));
-          sessionStorage.setItem(this.siglaKey, sigla);
-          sessionStorage.setItem(this.loginKey, login);
-          sessionStorage.setItem(this.idEmpresaKey, response['id_empresa']);
+          sessionStorage.setItem(this.sigla, sigla);
+          sessionStorage.setItem(this.loginUsuario, login);
+          sessionStorage.setItem(this.idEmpresa, response['id_empresa']);
           return response;
         } else {
           throw new Error(response['msg: '] || 'Erro ao tentar autenticar.');
@@ -46,29 +44,27 @@ export class AuthenticationService {
   }
 
   public logout(): void {
-    // Limpar usuário, sigla e login do localStorage ao fazer logout
     sessionStorage.removeItem(this.id_usuario);
-    sessionStorage.removeItem(this.siglaKey);
-    sessionStorage.removeItem(this.loginKey);
-    sessionStorage.removeItem(this.idEmpresaKey);
+    sessionStorage.removeItem(this.sigla);
+    sessionStorage.removeItem(this.loginUsuario);
+    sessionStorage.removeItem(this.idEmpresa);
     sessionStorage.removeItem('dadosCliente');
   }
 
-  public getCurrentUser(): any {
-    // Obter usuário do localStorage
+  public getIdUsuario(): any {
     const user = sessionStorage.getItem(this.id_usuario);
     return user ? JSON.parse(user) : null;
   }
 
   public getSigla(): string {
-    return sessionStorage.getItem(this.siglaKey);
+    return sessionStorage.getItem(this.sigla);
   }
 
   public getLogin(): string {
-    return sessionStorage.getItem(this.loginKey);
+    return sessionStorage.getItem(this.loginUsuario);
   }
 
   public getIdEmpresa(): string {
-    return sessionStorage.getItem(this.idEmpresaKey);
+    return sessionStorage.getItem(this.idEmpresa);
   }
 }

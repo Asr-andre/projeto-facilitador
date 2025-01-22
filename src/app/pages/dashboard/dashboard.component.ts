@@ -22,7 +22,7 @@ import { Versao } from "src/app/core/config/app.config";
 export class DashboardComponent implements OnInit {
   @ViewChild(SolicitarCreditosComponent) SolicitarCreditosComponent: SolicitarCreditosComponent;
   public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
-  public idUsuario: number = Number(this._authService.getCurrentUser() || 0);
+  public idUsuario: number = Number(this._authService.getIdUsuario() || 0);
   public login = this._authService.getLogin();
   public listarDevedores: DevedorModel[] = [];
   public filas: FilaModel[] = [];

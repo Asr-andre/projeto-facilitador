@@ -15,7 +15,7 @@ export class FinanceiroComponent implements OnInit  {
   public contratantes: ContratanteModel [] = [];
   public formPesquisar: FormGroup;
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
-  public idUsuario: number = Number(this._auth.getCurrentUser() || 0);
+  public idUsuario: number = Number(this._auth.getIdUsuario() || 0);
   public login = this._auth.getLogin();
   public loadingMin: boolean = false;
   public loading: boolean = false;
