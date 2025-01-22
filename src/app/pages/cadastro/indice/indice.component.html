@@ -123,8 +123,8 @@
         <div class="row">
           <div class="col-md-4 form-group">
             <label for="indice" class="form-label">Indice</label>
-            <select id="contratanteSelect" class="form-control form-control-sm" formControlName="indice"
-              [ngClass]="{'is-invalid': formModal.get('indice').invalid && formModal.get('indice').touched, 'edit-mode': editar}">
+            <select id="contratanteSelect" class="form-control form-control-sm" formControlName="indice" [appSomenteLeitura]="editar"
+              [ngClass]="{'is-invalid': formModal.get('indice').invalid && formModal.get('indice').touched }">
               <option value="">Selecione</option>
               <option value="INPC">INPC</option>
               <option value="IPCA">IPCA</option>
@@ -135,8 +135,8 @@
           </div>
           <div class="col-md-4 form-group">
             <label for="data" class="form-label">Data</label>
-            <input class="form-control form-control-sm mb-1" formControlName="data" type="date" placeholder="data"
-              [ngClass]="{'is-invalid': formModal.get('data').invalid && formModal.get('data').touched, 'edit-mode': editar}">
+            <input class="form-control form-control-sm mb-1" formControlName="data" type="date" placeholder="data" [appSomenteLeitura]="editar"
+              [ngClass]="{'is-invalid': formModal.get('data').invalid && formModal.get('data').touched }">
           </div>
 
           <div class="col-md-4 form-group">

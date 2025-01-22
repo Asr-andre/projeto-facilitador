@@ -24,6 +24,8 @@ pagination-controls {
   font-size: 11px;
 }
 
-.edit-mode {
-  background-color: #cccccc66 !important;
+/* Estilo para campos somente leitura */
+input[readonly], textarea[readonly], select[readonly] {
+  background-color: #cccccc66 !important;  /* Cor de fundo */
+  border: 1px solid #ccc;  /* Borda opcional */
 }

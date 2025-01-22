@@ -1,7 +1,7 @@
 import { Directive, Input, ElementRef, Renderer2, OnChanges, SimpleChanges } from '@angular/core';
 
 @Directive({
-  selector: '[appSomenteLeitura]'
+  selector: '[appSomenteLeitura]' // Aplica a diretiva a qualquer elemento que use "appSomenteLeitura"
 })
 export class DeixaSomenteLeituraDirective implements OnChanges {
   @Input('appSomenteLeitura') somenteLeitura: boolean; // A condição para tornar o campo somente leitura
@@ -9,28 +9,30 @@ export class DeixaSomenteLeituraDirective implements OnChanges {
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 
   ngOnChanges(changes: SimpleChanges) {
+    // Quando a condição de somente leitura mudar, aplicamos ou removemos os estilos
     if (changes['somenteLeitura']) {
       this.toggleReadonly();
     }
   }
 
   private toggleReadonly() {
+    const element = this.el.nativeElement;
+
+    // Aplicando a condição de somente leitura para vários tipos de campos (input, select, etc)
     if (this.somenteLeitura) {
-      // Torna o input somente leitura
-      this.renderer.setAttribute(this.el.nativeElement, 'readonly', 'true');
-
-      // Adiciona a cor de fundo para somente leitura
-      this.renderer.setStyle(this.el.nativeElement, 'background-color', '#f0f0f0'); // Cor mais visível
-      this.renderer.setStyle(this.el.nativeElement, 'color', '#666'); // Cor do texto (opcional, para dar contraste)
-      this.renderer.setStyle(this.el.nativeElement, 'cursor', 'not-allowed'); // Modifica o cursor para mostrar que não pode ser editado
+      if (element.tagName === 'INPUT' || element.tagName === 'SELECT' || element.tagName === 'TEXTAREA') {
+        this.renderer.setAttribute(element, 'readonly', 'true');
+        this.renderer.setStyle(element, 'background-color', '#cccccc66'); // Cor de fundo para indicar somente leitura
+        this.renderer.setStyle(element, 'color', '#666'); // Cor do texto para indicar que é somente leitura
+        this.renderer.setStyle(element, 'cursor', 'not-allowed'); // Cursor de "não permitido"
+      }
     } else {
-      // Remove a propriedade somente leitura
-      this.renderer.removeAttribute(this.el.nativeElement, 'readonly');
-
-      // Remove a cor de fundo
-      this.renderer.removeStyle(this.el.nativeElement, 'background-color');
-      this.renderer.removeStyle(this.el.nativeElement, 'color');
-      this.renderer.removeStyle(this.el.nativeElement, 'cursor');
+      if (element.tagName === 'INPUT' || element.tagName === 'SELECT' || element.tagName === 'TEXTAREA') {
+        this.renderer.removeAttribute(element, 'readonly');
+        this.renderer.removeStyle(element, 'background-color');
+        this.renderer.removeStyle(element, 'color');
+        this.renderer.removeStyle(element, 'cursor');
+      }
     }
   }
 }

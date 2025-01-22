@@ -199,12 +199,4 @@ export class FormulaComponent implements OnInit {
     this.formFormula.reset();
     this._modalService.dismissAll();
   }
-
-  public verificarValorNegativo(campo: string) {
-    const valor = this.formFormula.get(campo)?.value;
-
-    if (valor <= 0) {
-      this.formFormula.get(campo)?.setValue(0);
-    }
-  }
 }
