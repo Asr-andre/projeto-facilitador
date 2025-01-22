@@ -20,7 +20,7 @@ export class ClienteContratanteComponent {
   constructor(
     private servicoEmpresa: EmpresaService,
     private _auth: AuthenticationService,
-    private _alertService: AlertService
+    private _alert: AlertService
   ) {}
 
   public importarCliente(): void {
@@ -50,27 +50,27 @@ export class ClienteContratanteComponent {
             if (res && res.success === 'true') {
               this.loading = false;
               this.idCliente.emit(Number(res.id_cliente));
-              this._alertService.success(res.msg);
+              this._alert.success(res.msg);
             } else if (res && res.success === 'false') {
               this.loading = false;
-              this._alertService.warning(res.msg);
+              this._alert.warning(res.msg);
             }
           },
           (error) => {
             if (error.error && error.error.msg) {
               this.loading = false;
-              this._alertService.error(error.error.msg);
+              this._alert.error(error.error.msg);
             } else {
               this.loading = false;
-              this._alertService.error("Erro ao importar cliente.");
+              this._alert.error("Erro ao importar cliente.");
             }
           }
         );
       } else {
-        this._alertService.error("Cliente não está completamente preenchido.");
+        this._alert.error("Cliente não está completamente preenchido.");
       }
     } else {
-      this._alertService.warning("Nenhuma linha encontrada na tabela.");
+      this._alert.warning("Nenhuma linha encontrada na tabela.");
     }
   }
 

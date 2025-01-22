@@ -26,11 +26,11 @@ export class GeralComponent implements OnInit, OnChanges {
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<Processos>>;
 
   constructor(
-    private _juridicoService: JuridicoService,
+    private _juridico: JuridicoService,
     private _auth: AuthenticationService,
     private _datePipe: DatePipe,
-    private _alertService: AlertService,
-    private _excelService: ExcelService,
+    private _alert: AlertService,
+    private _excel: ExcelService,
 
   ) { }
 
@@ -45,8 +45,8 @@ export class GeralComponent implements OnInit, OnChanges {
   }
 
   public async exportExcel(): Promise<void> {
-    await this._alertService.impressaoDocumento();
-    this._excelService.exportAsExcelFile(this.dadosFiltrados, 'exportacaoProcessos');
+    await this._alert.impressaoDocumento();
+    this._excel.exportAsExcelFile(this.dadosFiltrados, 'exportacaoProcessos');
   }
 
   public relatorioGeral() {
@@ -58,7 +58,7 @@ export class GeralComponent implements OnInit, OnChanges {
 
       this.loadingMin = true;
 
-      this._juridicoService.pesquisarJuridico(dadosParaEnvio).subscribe(
+      this._juridico.pesquisarJuridico(dadosParaEnvio).subscribe(
         (res) => {
           this.loadingMin = false;
           if (res.success === 'true') {
@@ -66,16 +66,16 @@ export class GeralComponent implements OnInit, OnChanges {
             this.dadosFiltrados = res.processos;
 
           } else {
-            this._alertService.error('Nenhum resultado encontrado.');
+            this._alert.error('Nenhum resultado encontrado.');
           }
         },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error('Erro ao obter os filtros.');
+          this._alert.error('Erro ao obter os filtros.');
         }
       );
     } else {
-      this._alertService.error('Formulário inválido. Por favor, preencha todos os campos obrigatórios.');
+      this._alert.error('Formulário inválido. Por favor, preencha todos os campos obrigatórios.');
     }
   }
 

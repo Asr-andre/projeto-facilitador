@@ -39,10 +39,10 @@ export class ImportacaoComponent implements OnInit {
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<ImportacaoDetalhesModel>>;
 
   constructor(
-    private _alertService: AlertService,
+    private _alert: AlertService,
     private _importacaoService: ImportacaoService,
-    private _contratanteService: ContratanteService,
-    private _modalService: NgbModal,
+    private _contratante: ContratanteService,
+    private _modal: NgbModal,
     private _auth: AuthenticationService,
     private _fb: FormBuilder,
     private _router: Router
@@ -79,12 +79,12 @@ export class ImportacaoComponent implements OnInit {
         this.atualizarQuantidadeExibida();
       } else {
         this.loading = false;
-        this._alertService.error(res.msg);
+        this._alert.error(res.msg);
       }
     },
       (error) => {
         this.loading = false;
-        this._alertService.error('Erro ao listar as importações');
+        this._alert.error('Erro ao listar as importações');
       }
     );
   }
@@ -118,15 +118,15 @@ export class ImportacaoComponent implements OnInit {
   public importArquivoModal(modal): void {
     this.obterContratantes();
     this.inicializarForm();
-    this._modalService.open(this.importArquivo, { size: 'ms', ariaLabelledBy: 'modal-basic-title' , backdrop: 'static', keyboard: false });
+    this._modal.open(this.importArquivo, { size: 'ms', ariaLabelledBy: 'modal-basic-title' , backdrop: 'static', keyboard: false });
   }
 
   public obterContratantes() {
-    this._contratanteService.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
+    this._contratante.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
       this.contratantes = res.contratantes;
     },
       (error) => {
-        this._alertService.error('Ocorreu um erro ao obter os contratantes.');
+        this._alert.error('Ocorreu um erro ao obter os contratantes.');
       }
     );
   }
@@ -160,10 +160,10 @@ export class ImportacaoComponent implements OnInit {
     this._importacaoService.uploadFile(file).subscribe(
       () => {
         this.enviarDadosFormulario();
-        this._alertService.success('Arquivo enviado com sucesso');
+        this._alert.success('Arquivo enviado com sucesso');
       },
       (error) => {
-        this._alertService.error('Erro ao enviar o arquivo');
+        this._alert.error('Erro ao enviar o arquivo');
       }
     );
   }
@@ -174,10 +174,10 @@ export class ImportacaoComponent implements OnInit {
       if (arquivo) {
         this.uploadFile(arquivo);
       } else {
-        this._alertService.warning('Nenhum arquivo selecionado');
+        this._alert.warning('Nenhum arquivo selecionado');
       }
     } else {
-      this._alertService.warning('Preencha todos os campos obrigatórios');
+      this._alert.warning('Preencha todos os campos obrigatórios');
     }
   }
 
@@ -187,11 +187,11 @@ export class ImportacaoComponent implements OnInit {
 
     this._importacaoService.enviarDadosFormulario(this.idEmpresa, idContratante, userLogin).subscribe(
       () => {
-        this._alertService.success('Dados do formulário enviados com sucesso');
+        this._alert.success('Dados do formulário enviados com sucesso');
         // Aqui você pode querer fechar o modal ou fazer outras ações
       },
       (error) => {
-        this._alertService.error('Erro ao enviar os dados do formulário');
+        this._alert.error('Erro ao enviar os dados do formulário');
       }
     );
   }

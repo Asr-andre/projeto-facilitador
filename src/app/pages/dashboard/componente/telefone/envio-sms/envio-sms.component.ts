@@ -26,10 +26,10 @@ export class EnvioSmsComponent implements OnInit {
   public login = this._auth.getLogin();
 
   constructor(
-    private _modalService: NgbModal,
+    private _modal: NgbModal,
     private _fb: FormBuilder,
     private _smsService: SmsService,
-    private _alertService: AlertService,
+    private _alert: AlertService,
     private _auth: AuthenticationService,
   ) { }
 
@@ -63,11 +63,11 @@ export class EnvioSmsComponent implements OnInit {
         this.loadingMin = false;
       } else {
         this.loadingMin = false;
-        this._alertService.error(res.msg);
+        this._alert.error(res.msg);
       }
       (error) => {
         this.loadingMin = false;
-        this._alertService.error("Ocorreu um error.", error);
+        this._alert.error("Ocorreu um error.", error);
       }
     });
   }
@@ -80,7 +80,7 @@ export class EnvioSmsComponent implements OnInit {
     const dadosCriptografados = sessionStorage.getItem('dadosCliente');
 
     if (!dadosCriptografados) {
-        this._alertService.warning('Os dados do cliente não foram encontrados no localStorage.');
+        this._alert.warning('Os dados do cliente não foram encontrados no localStorage.');
         return;
     }
 
@@ -91,7 +91,7 @@ export class EnvioSmsComponent implements OnInit {
 
         // Verificando se os dados existem
         if (!dadosCliente || Object.keys(dadosCliente).length === 0) {
-            this._alertService.warning('Os dados do cliente não foram encontrados no localStorage.');
+            this._alert.warning('Os dados do cliente não foram encontrados no localStorage.');
             return;
         }
 
@@ -110,7 +110,7 @@ export class EnvioSmsComponent implements OnInit {
         // Atualizando o campo de mensagem no formulário
         this.formEnvioSms.get('mensagem')?.setValue(mensagemOriginal);
     } catch (error) {
-        this._alertService.error('Ocorreu um erro ao descriptografar os dados do cliente.');
+        this._alert.error('Ocorreu um erro ao descriptografar os dados do cliente.');
     }
 }
 
@@ -123,7 +123,7 @@ export class EnvioSmsComponent implements OnInit {
       fone: fone
     });
     this.resetarCampos();
-    this._modalService.open(this.modalEmailRef, { size: 'ms', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(this.modalEmailRef, { size: 'ms', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public capturarMsg(event: Event): void {
@@ -148,19 +148,19 @@ export class EnvioSmsComponent implements OnInit {
         this.loadingMin = false;
         if (res.success === 'true') {
           this.dadosEnviado.emit();
-          this._modalService.dismissAll();
+          this._modal.dismissAll();
           this.resetarCampos();
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
         } else {
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       }, error => {
         this.loadingMin = false;
-        this._alertService.error('Erro ao enviar SMS. Tente novamente.');
+        this._alert.error('Erro ao enviar SMS. Tente novamente.');
       });
     } else {
       this.loadingMin = false;
-      this._alertService.warning('Digite uma mensagem para enviar');
+      this._alert.warning('Digite uma mensagem para enviar');
     }
   }
 
@@ -179,6 +179,6 @@ export class EnvioSmsComponent implements OnInit {
 
   public fechar() {
     this.resetarCampos();
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 }

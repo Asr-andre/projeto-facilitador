@@ -25,7 +25,7 @@ export class FinanceiroComponent implements OnInit  {
   public contratantesCarregados = false;
 
   constructor(
-    private _contratanteService: ContratanteService,
+    private _contratante: ContratanteService,
     private _auth: AuthenticationService,
     private _fb: FormBuilder,
     private _alert: AlertService,
@@ -80,7 +80,7 @@ export class FinanceiroComponent implements OnInit  {
 
   public obterContratantes() {
     this.loading = true;
-    this._contratanteService.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
+    this._contratante.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
       this.contratantes = res.contratantes;
       this.loading = false;
     },

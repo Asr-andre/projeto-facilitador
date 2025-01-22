@@ -24,7 +24,7 @@ export class ContratanteComponent implements OnInit, OnChanges {
     private _fb: FormBuilder,
     private _empresaService: EmpresaService,
     private _authenticationService: AuthenticationService,
-    private _alertService: AlertService
+    private _alert: AlertService
   ) {}
 
   ngOnInit() {
@@ -59,17 +59,17 @@ export class ContratanteComponent implements OnInit, OnChanges {
     if (this.formContratante.valid) {
       this._empresaService.cadastrarContratante(this.formContratante.value).subscribe((res: RetornoModel) => {
             if (res && res.success === "true") {
-              this._alertService.success(res.msg);
+              this._alert.success(res.msg);
             } else {
-              this._alertService.warning(res.msg);
+              this._alert.warning(res.msg);
             }
           },
           (error) => {
-            this._alertService.error("Ocorreu um error ao tentar cadastrar o contratante.");
+            this._alert.error("Ocorreu um error ao tentar cadastrar o contratante.");
           }
         );
     } else {
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 

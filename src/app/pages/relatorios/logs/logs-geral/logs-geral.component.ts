@@ -32,8 +32,8 @@ export class LogsGeralComponent implements OnInit, OnChanges {
     private _logsService: LogsService,
     private _auth: AuthenticationService,
     private _datePipe: DatePipe,
-    private _alertService: AlertService,
-    private _excelService: ExcelService,
+    private _alert: AlertService,
+    private _excel: ExcelService,
 
   ) { }
 
@@ -48,15 +48,15 @@ export class LogsGeralComponent implements OnInit, OnChanges {
   }
 
   public async exportExcel(): Promise<void> {
-    await this._alertService.impressaoDocumento();
-    this._excelService.exportAsExcelFile(this.dadosFiltrados, 'exportacao_detalhamento_log_geral');
+    await this._alert.impressaoDocumento();
+    this._excel.exportAsExcelFile(this.dadosFiltrados, 'exportacao_detalhamento_log_geral');
   }
 
   public async gerarPDFPaisagem(): Promise<void> {
     // Seleciona o elemento HTML que você quer converter em PDF
     const elemento = document.getElementById('conteudoPDF');
 
-    await this._alertService.impressaoDocumento();
+    await this._alert.impressaoDocumento();
     if (elemento) {
       html2canvas(elemento).then((canvas) => {
         const imagemData = canvas.toDataURL('image/png');
@@ -90,17 +90,17 @@ export class LogsGeralComponent implements OnInit, OnChanges {
           this.resultFiltros = res.logs;
           this.dadosFiltrados = res.logs;
         } else {
-          this._alertService.error('Nenhum resultado encontrado.');
+          this._alert.error('Nenhum resultado encontrado.');
         }
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error('Erro ao obter os filtros.');
+          this._alert.error('Erro ao obter os filtros.');
         }
       );
     } else {
       this.loadingMin = false;
-      this._alertService.error('Preencha todos os campos obrigatórios.');
+      this._alert.error('Preencha todos os campos obrigatórios.');
     }
   }
 

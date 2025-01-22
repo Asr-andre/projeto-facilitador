@@ -34,7 +34,7 @@ export class AcionamentosSinteticoComponent implements OnInit {
     private _auth: AuthenticationService,
     private _alert: AlertService,
     private _contratante: ContratanteService,
-    private _usuarioService: UsuarioService,
+    private _usuario: UsuarioService,
     private _funcoes: FuncoesService
   ) { }
 
@@ -94,7 +94,7 @@ export class AcionamentosSinteticoComponent implements OnInit {
 
   public obterUsuarios() {
     this.loading = true;
-    this._usuarioService.obterUsuariosPorEmpresa(this.idEmpresa).subscribe((res) => {
+    this._usuario.obterUsuariosPorEmpresa(this.idEmpresa).subscribe((res) => {
       this.usuarios = res.contratantes;
       this.loading = false;
       this.usuariosCarregados = true;

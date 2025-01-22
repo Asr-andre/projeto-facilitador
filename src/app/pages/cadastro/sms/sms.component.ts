@@ -42,9 +42,9 @@ export class SmsComponent implements OnInit {
   constructor(
     private _smsService: SmsService,
     private _fb: FormBuilder,
-    private _modalService: NgbModal,
+    private _modal: NgbModal,
     private _auth: AuthenticationService,
-    private _alertService: AlertService,
+    private _alert: AlertService,
         private _funcoes: FuncoesService
   ) { }
 
@@ -74,7 +74,7 @@ export class SmsComponent implements OnInit {
   public controleBotao() {
     if (this.smsForm.invalid) {
       this._funcoes.camposInvalidos(this.smsForm);
-      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
@@ -101,11 +101,11 @@ export class SmsComponent implements OnInit {
         this.atualizarQuantidadeExibida();
       } else {
         this.loading = false;
-        this._alertService.error(res.msg);
+        this._alert.error(res.msg);
       }
       (error) => {
         this.loading = false;
-        this._alertService.error("Ocorreu um error.", error);
+        this._alert.error("Ocorreu um error.", error);
       }
     });
   }
@@ -139,7 +139,7 @@ export class SmsComponent implements OnInit {
   public abriModalCadastro(content: TemplateRef<any>): void {
     this.editar = false;
     this.inicializarMensagemForm();
-    this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastraSms() {
@@ -147,29 +147,29 @@ export class SmsComponent implements OnInit {
       this.loadingMin = true;
       this._smsService.cadastrarSms(this.smsForm.value).subscribe((res) => {
         if (res.success === "true") {
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.fechar();
           this.obterPerfilSms();
           this.loadingMin = false;
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error("Ocorreu um erro ao tentar cadastrao sms.");
+          this._alert.error("Ocorreu um erro ao tentar cadastrao sms.");
         });
     } else {
       this.loadingMin = false;
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
   public abriModalEditar(content: TemplateRef<any>, dado: PerfilSms): void {
     this.editar = true;
     this.inicializarMensagemForm(dado);
-    this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public editarSms() {
@@ -177,28 +177,28 @@ export class SmsComponent implements OnInit {
       this.loadingMin = true;
       this._smsService.editarSms(this.smsForm.value).subscribe((res) => {
         if (res.success === "true") {
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.fechar();
           this.obterPerfilSms();
           this.loadingMin = false;
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error("Ocorreu um erro ao tentar editar sms.");
+          this._alert.error("Ocorreu um erro ao tentar editar sms.");
         });
     } else {
       this.loadingMin = false;
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
   public fechar() {
     this.smsForm.reset();
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 
   public mostrarSenha(campoId: string, iconeId: string): void {
@@ -233,6 +233,6 @@ export class SmsComponent implements OnInit {
 
   public copiarParaAreasTransferencia(valor) {
     Utils.CopyAreaTransfer(valor);
-    this._alertService.copiado();
+    this._alert.copiado();
   }
 }

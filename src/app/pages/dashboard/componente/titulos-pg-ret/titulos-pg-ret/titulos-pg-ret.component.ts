@@ -20,7 +20,7 @@ export class TitulosPgRetComponent implements OnInit, OnChanges {
   constructor(
     private _titulosPgRetService: TitulosPgRetService,
     private _auth: AuthenticationService,
-    private _alertService: AlertService,
+    private _alert: AlertService,
   ) { }
 
   ngOnInit(): void {
@@ -50,7 +50,7 @@ export class TitulosPgRetComponent implements OnInit, OnChanges {
       },
       (error) => {
         this.loadingMin = false;
-        this._alertService.error('Erro ao buscar títulos pagos/retirados.');
+        this._alert.error('Erro ao buscar títulos pagos/retirados.');
       }
     );
   }

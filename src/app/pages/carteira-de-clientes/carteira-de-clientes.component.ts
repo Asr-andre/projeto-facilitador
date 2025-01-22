@@ -52,17 +52,17 @@ export class CarteiraDeClientesComponent implements OnInit {
   valorTotalSelecionado: number = 0;
 
   constructor(
-    private _contratanteService: ContratanteService,
+    private _contratante: ContratanteService,
     private _carteiraDeClienteService: CarteiraDeClienteService,
     private _authenticationService: AuthenticationService,
     private _smsWhatsAppService: SmsWhatsAppService,
     private _msgLote: WhatsappService,
-    private _alertService: AlertService,
+    private _alert: AlertService,
     private _fb: FormBuilder,
     private _datePipe: DatePipe,
-    private _modalService: NgbModal,
+    private _modal: NgbModal,
     private _fila: FilaService,
-    private _excelService: ExcelService
+    private _excel: ExcelService
   ) { }
 
   ngOnInit(): void {
@@ -117,17 +117,17 @@ export class CarteiraDeClientesComponent implements OnInit {
   }
 
   public exportExcel() {
-    this._excelService.exportAsExcelFile(this.dadosFiltrados, 'exportacaoCarteira');
+    this._excel.exportAsExcelFile(this.dadosFiltrados, 'exportacaoCarteira');
   }
 
   public obterContratantes() {
     this.loading = true;
-    this._contratanteService.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
+    this._contratante.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
       this.contratantes = res.contratantes;
       this.loading = false;
     },
       (error) => {
-        this._alertService.error("Ocorreu um erro ao obter os contratantes.");
+        this._alert.error("Ocorreu um erro ao obter os contratantes.");
         this.loading = false;
       }
     );
@@ -156,7 +156,7 @@ export class CarteiraDeClientesComponent implements OnInit {
       if (res.success === "true") {
         this.msg = res.perfil_whatsapp;
       } else {
-        this._alertService.error(res.msg);
+        this._alert.error(res.msg);
       }
     });
   }
@@ -190,7 +190,7 @@ export class CarteiraDeClientesComponent implements OnInit {
       clientes: idsClientesSelecionados.join(',')
     });
 
-    this._modalService.open(content, { size: 'sm', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'sm', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public abrirModalMsgLote(content: TemplateRef<any>): void {
@@ -201,7 +201,7 @@ export class CarteiraDeClientesComponent implements OnInit {
 
 
     this.formMsgLote.patchValue({ clientes: idsSelecionados.join(','), enviar_whatsapp: true });
-    this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public enviarMsgLote() {
@@ -210,20 +210,20 @@ export class CarteiraDeClientesComponent implements OnInit {
       this.loadingMin = true;
       this._msgLote.enviarMensagemLote(this.formMsgLote.value).subscribe((res) => {
         if(res) {
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.fechar();
           this.loadingMin = false;
         }else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       }, (error) => {
         this.loadingMin = false;
-        this._alertService.warning(error);
+        this._alert.warning(error);
       });
     } else {
       this.loadingMin = false;
-      this._alertService.warning("Preencha todos os campos obrigatórios.");
+      this._alert.warning("Preencha todos os campos obrigatórios.");
     }
   }
 
@@ -241,13 +241,13 @@ export class CarteiraDeClientesComponent implements OnInit {
   public enviarClienteParaFila() {
     if (this.formFila.valid) {
       this._carteiraDeClienteService.enviarClienteParaFila(this.formFila.value).subscribe((res) => {
-        this._alertService.success(res.msg);
-        this._modalService.dismissAll();
+        this._alert.success(res.msg);
+        this._modal.dismissAll();
       }, (error) => {
-        this._alertService.warning(error);
+        this._alert.warning(error);
       });
     } else {
-      this._alertService.warning("Preencha todos os campos obrigatórios.");
+      this._alert.warning("Preencha todos os campos obrigatórios.");
     }
   }
 
@@ -282,15 +282,15 @@ export class CarteiraDeClientesComponent implements OnInit {
           this.loading = false;
         } else {
           this.loading = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
         (error) => {
           this.loading = false;
-          this._alertService.error("Ocorreu um erro ao filtra os clientes.", error);
+          this._alert.error("Ocorreu um erro ao filtra os clientes.", error);
         });
     } else {
-      this._alertService.warning("O campo 'Contratante' é obrigatório.");
+      this._alert.warning("O campo 'Contratante' é obrigatório.");
     }
   }
 
@@ -322,6 +322,6 @@ export class CarteiraDeClientesComponent implements OnInit {
 
   public fechar() {
     this.formMsgLote.reset();
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 }

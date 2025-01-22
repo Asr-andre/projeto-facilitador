@@ -24,7 +24,7 @@ export class ModalSituacaoComponent implements OnInit, OnChanges {
   constructor(
     private _fb: FormBuilder,
     private _auth: AuthenticationService,
-    private _modalService: NgbModal,
+    private _modal: NgbModal,
     private _situacaoService: SituacaoService,
     private _alert: AlertService,
   ) { }
@@ -56,7 +56,7 @@ export class ModalSituacaoComponent implements OnInit, OnChanges {
       user_login: this.login,
     });
 
-    this._modalService.open(this.modalSituacao, { size: "sm", ariaLabelledBy: "modal-basic-title", backdrop: "static", keyboard: false, });
+    this._modal.open(this.modalSituacao, { size: "sm", ariaLabelledBy: "modal-basic-title", backdrop: "static", keyboard: false, });
   }
 
   public obterSituacao() {
@@ -110,6 +110,6 @@ export class ModalSituacaoComponent implements OnInit, OnChanges {
 
   public fechar() {
     this.formSituacao.reset();
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 }

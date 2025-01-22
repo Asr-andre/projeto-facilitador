@@ -16,9 +16,9 @@ export class ImportacaoManualComponent implements OnInit {
   public base: Cadastro[] = [];
 
   constructor(
-    private _alertService: AlertService,
+    private _alert: AlertService,
     private _importacaoService: ImportacaoService,
-    private _contratanteService: ContratanteService,
+    private _contratante: ContratanteService,
     private _auth: AuthenticationService,
     private _router: Router
   ) { }

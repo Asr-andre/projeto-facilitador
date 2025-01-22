@@ -46,12 +46,12 @@ export class GeralComponent implements OnInit, OnChanges {
   public valorRepasse: number = 0;
 
   constructor(
-    private _financeiroService: FinanceiroService,
+    private _financeiro: FinanceiroService,
     private _auth: AuthenticationService,
     private _datePipe: DatePipe,
-    private _alertService: AlertService,
-    private _excelService: ExcelService,
-    private _modalService: NgbModal
+    private _alert: AlertService,
+    private _excel: ExcelService,
+    private _modal: NgbModal
 
   ) { }
 
@@ -69,7 +69,7 @@ export class GeralComponent implements OnInit, OnChanges {
     // Seleciona o elemento HTML que você quer converter em PDF
     const elemento = document.getElementById('conteudoPDF');
 
-    await this._alertService.impressaoDocumento();
+    await this._alert.impressaoDocumento();
     if (elemento) {
       html2canvas(elemento).then((canvas) => {
         const imagemData = canvas.toDataURL('image/png');
@@ -88,8 +88,8 @@ export class GeralComponent implements OnInit, OnChanges {
   }
 
   public async exportExcel(): Promise<void> {
-    await this._alertService.impressaoDocumento();
-    this._excelService.exportAsExcelFile(this.dadosFiltrados, 'exportacaoPagamentos');
+    await this._alert.impressaoDocumento();
+    this._excel.exportAsExcelFile(this.dadosFiltrados, 'exportacaoPagamentos');
   }
 
   public gerarPDFPaisagem(): void {
@@ -115,7 +115,7 @@ export class GeralComponent implements OnInit, OnChanges {
 
   public abrirModalRelatorio(content: TemplateRef<any>): void {
 
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public relatorioGeral() {
@@ -127,7 +127,7 @@ export class GeralComponent implements OnInit, OnChanges {
 
       this.loadingMin = true;
 
-      this._financeiroService.obterFiltros(dadosParaEnvio).subscribe(
+      this._financeiro.obterFiltros(dadosParaEnvio).subscribe(
         (res) => {
           this.loadingMin = false;
           if (res.success === 'true') {
@@ -135,16 +135,16 @@ export class GeralComponent implements OnInit, OnChanges {
             this.dadosFiltrados = res.titulos;
             this.calcularTotais();
           } else {
-            this._alertService.error('Nenhum resultado encontrado.');
+            this._alert.error('Nenhum resultado encontrado.');
           }
         },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error('Erro ao obter os filtros.');
+          this._alert.error('Erro ao obter os filtros.');
         }
       );
     } else {
-      this._alertService.error('Formulário inválido. Por favor, preencha todos os campos obrigatórios.');
+      this._alert.error('Formulário inválido. Por favor, preencha todos os campos obrigatórios.');
     }
   }
 
@@ -189,6 +189,6 @@ export class GeralComponent implements OnInit, OnChanges {
   }
 
   public fechar() {
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 }

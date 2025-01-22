@@ -25,7 +25,7 @@ export class BoletoPixComponent implements OnInit, OnChanges {
   constructor(
     private _boletoPixService: BoletoPixService,
     private _auth: AuthenticationService,
-    private _alertService: AlertService,
+    private _alert: AlertService,
   ) { }
 
   ngOnInit(): void {
@@ -54,12 +54,12 @@ export class BoletoPixComponent implements OnInit, OnChanges {
         this.dadosFiltrados = res.boletos;
         this.loadingMin = false;
       } else {
-        this._alertService.warning(res.msg);
+        this._alert.warning(res.msg);
       }
     },
       (error) => {
         this.loadingMin = false;
-        this._alertService.error('Erro ao obter os boletos.',error);
+        this._alert.error('Erro ao obter os boletos.',error);
       }
     );
   }

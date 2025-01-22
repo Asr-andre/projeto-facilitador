@@ -65,8 +65,8 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     private _simulador: SimuladorPadraoService,
     private _auth: AuthenticationService,
     private _datePipe: DatePipe,
-    private _alertService: AlertService,
-    private _modalService: NgbModal,
+    private _alert: AlertService,
+    private _modal: NgbModal,
   ) {
     this.idEmpresa = Number(this._auth.getIdEmpresa()) || 0;
     this.idCliente = this.idCliente || null;
@@ -183,7 +183,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     this.recalcular(); // Recalcula os valores ao abrir o modal
     this.calcularTotais();  // Calcula os totais para atualizar valor_atualizado_simulador
     this.iniciarFormgerarPixBoleto();  // Reinicia o form de créditos após calcular os totais
-    this.modalRef = this._modalService.open(this.modalTemplate, { size: "xl", ariaLabelledBy: "modal-basic-title", backdrop: "static", keyboard: false, });
+    this.modalRef = this._modal.open(this.modalTemplate, { size: "xl", ariaLabelledBy: "modal-basic-title", backdrop: "static", keyboard: false, });
   }
 
   public recalcular(): void {
@@ -199,7 +199,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       },
       (error) => {
         this.loadingMin = false;
-        this._alertService.error("Erro ao recalcular:", error);
+        this._alert.error("Erro ao recalcular:", error);
       }
     );
   }
@@ -254,19 +254,19 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       titulos: titulos,
     };
 
-    this._alertService.baixarPg().then(confirmarPg => {
+    this._alert.baixarPg().then(confirmarPg => {
       if (!confirmarPg) {
         return;
       }
 
       this._simulador.baixarTitulosPago(dadosParaEnvio).subscribe(
         (res) => {
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.clienteAtualizado.emit();
           this.fechaModal();
         },
         (error) => {
-          this._alertService.error("Ocorreu um erro ao realizar a baixa.", error);
+          this._alert.error("Ocorreu um erro ao realizar a baixa.", error);
         }
       );
     });
@@ -285,7 +285,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public simularAcordo() {
     if (this.formAcordo.invalid) {
       this.marcarCamposComoTocados(this.formAcordo);
-      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
@@ -302,12 +302,12 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
             this.simulaAcordo = true;
           } else {
             this.loadingMin = false;
-            this._alertService.error(response.msg);
+            this._alert.error(response.msg);
           }
         },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error("Ocorreu um erro ao simular o acordo.");
+          this._alert.error("Ocorreu um erro ao simular o acordo.");
         }
       );
     }
@@ -328,26 +328,26 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
 
       this._simulador.fecharAcordo(dadosParaEnvio).subscribe((res) => {
           if (res.success === 'true') {
-            this._alertService.success(res.msg);
+            this._alert.success(res.msg);
             this.clienteAtualizado.emit();
             this.fechaModal();
           } else {
-            this._alertService.error(res.msg);
+            this._alert.error(res.msg);
           }
         },
         (error) => {
-          this._alertService.error("Ocorreu um erro ao fechar o acordo.", error);
+          this._alert.error("Ocorreu um erro ao fechar o acordo.", error);
         }
       );
     } else {
-      this._alertService.error("Formulário inválido. Por favor, verifique os campos e tente novamente.");
+      this._alert.error("Formulário inválido. Por favor, verifique os campos e tente novamente.");
     }
   }
 
   public gerarPixBoleto() {
     const valorBoleto = this.formGerarPixBoleto.get('valor_boleto')?.value;
 
-    this._alertService.warningCustome(
+    this._alert.warningCustome(
       `Você deseja gerar um PIX com o valor total atualizado de <br><strong>R$${valorBoleto}</strong>?`
     ).then(confirmar => {
       if (confirmar) {
@@ -357,7 +357,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
             this.abrirModalPixTitulos();
             this.modalRef.dismiss();
           } else {
-            this._alertService.warning("Erro na resposta da API:", res.msg || "Mensagem não disponível");
+            this._alert.warning("Erro na resposta da API:", res.msg || "Mensagem não disponível");
           }
         });
       }
@@ -366,15 +366,15 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
 
   public copiarParaAreasTransferencia(valor) {
     Utils.CopyAreaTransfer(valor);
-    this._alertService.success('Código Pix copiado com sucesso!');
+    this._alert.success('Código Pix copiado com sucesso!');
   }
 
   public abrirModalPixTitulos(): void {
-    this._modalService.open(this.pixTitulos, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' });
+    this._modal.open(this.pixTitulos, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' });
   }
 
   public closeModal() {
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 
   public fechaModal() {

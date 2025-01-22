@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit {
     private _auth: AuthenticationService,
     private _fb: FormBuilder,
     private _fila: FilaService,
-    private _alertService: AlertService
+    private _alert: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -110,7 +110,7 @@ export class DashboardComponent implements OnInit {
         this.loading = false;
       } else {
         this.loading = false;
-        this._alertService.warning(res.msg);
+        this._alert.warning(res.msg);
       }
     });
   }
@@ -128,7 +128,7 @@ export class DashboardComponent implements OnInit {
         this.filas = res.filas;
         this.loading = false;
       }else {
-        this._alertService.warning(res.msg);
+        this._alert.warning(res.msg);
         this.loading = false;
       }
     }, () => this.loading = false);
@@ -220,7 +220,7 @@ export class DashboardComponent implements OnInit {
 
   public copiarParaAreasTransferencia(valor) {
     Utils.CopyAreaTransfer(valor);
-    this._alertService.copiado();
+    this._alert.copiado();
   }
 
   public abrirCreditoModal(): void {

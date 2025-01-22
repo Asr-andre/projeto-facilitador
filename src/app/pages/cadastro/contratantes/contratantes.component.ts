@@ -66,15 +66,15 @@ export class ContratantesComponent implements OnInit {
 
   constructor(
     private _retornoCep: ConsultaCepService,
-    private _contratanteService: ContratanteService,
+    private _contratante: ContratanteService,
     private _emailContaService: EmailContaService,
     private _smsWhatsAppService: SmsWhatsAppService,
     private _smsService: SmsService,
     private _formulaService: FormulaService,
     private _fb: FormBuilder,
-    private _modalService: NgbModal,
+    private _modal: NgbModal,
     private _auth: AuthenticationService,
-    private _alertService: AlertService,
+    private _alert: AlertService,
     private _funcoes: FuncoesService
   ) { }
 
@@ -84,7 +84,7 @@ export class ContratantesComponent implements OnInit {
       await this.obterContratantes();
       await this.inicializarformContratante();
     } catch (error) {
-      this._alertService.error("Ocorreu um erro ao carregar os dados.");
+      this._alert.error("Ocorreu um erro ao carregar os dados.");
     } finally {
       this.loading = false;
     }
@@ -178,12 +178,12 @@ export class ContratantesComponent implements OnInit {
   async obterContratantes(): Promise<void> {
     this.loading = true;
     try {
-      const res = await lastValueFrom(this._contratanteService.obterContratantePorEmpresa(this.idEmpresa));
+      const res = await lastValueFrom(this._contratante.obterContratantePorEmpresa(this.idEmpresa));
       this.contratantes = res.contratantes;
       this.filtrar();
       this.atualizarQuantidadeExibida();
     } catch (error) {
-      this._alertService.error('Ocorreu um erro ao obter os contratantes.');
+      this._alert.error('Ocorreu um erro ao obter os contratantes.');
     } finally {
       this.loading = false;
     }
@@ -206,12 +206,12 @@ export class ContratantesComponent implements OnInit {
           this.perfilEmailCarregado = true;
           resolve();
         } else {
-          this._alertService.error(res.msg);
+          this._alert.error(res.msg);
           reject();
         }
       }, (error) => {
         this.loadingMin = false;
-        this._alertService.error("Ocorreu um erro.", error);
+        this._alert.error("Ocorreu um erro.", error);
         reject();
       });
     });
@@ -235,12 +235,12 @@ export class ContratantesComponent implements OnInit {
           this.watsAppCarregado = true;
           resolve();
         } else {
-          this._alertService.error(res.msg);
+          this._alert.error(res.msg);
           reject();
         }
       }, (error) => {
         this.loadingMin = false;
-        this._alertService.error("Ocorreu um erro.", error);
+        this._alert.error("Ocorreu um erro.", error);
         reject();
       });
     });
@@ -264,12 +264,12 @@ export class ContratantesComponent implements OnInit {
           this.smsCarregado = true;
           resolve();
         } else {
-          this._alertService.error(res.msg);
+          this._alert.error(res.msg);
           reject();
         }
       }, (error) => {
         this.loadingMin = false;
-        this._alertService.error("Ocorreu um erro.", error);
+        this._alert.error("Ocorreu um erro.", error);
         reject();
       });
     });
@@ -293,12 +293,12 @@ export class ContratantesComponent implements OnInit {
           this.formulaCarregado = true
           resolve();
         } else {
-          this._alertService.error(res.msg);
+          this._alert.error(res.msg);
           reject();
         }
       }, (error) => {
         this.loadingMin = false;
-        this._alertService.error("Ocorreu um erro.", error);
+        this._alert.error("Ocorreu um erro.", error);
         reject();
       });
     });
@@ -333,13 +333,13 @@ export class ContratantesComponent implements OnInit {
   public abriModalCadastro(content: TemplateRef<any>): void {
     this.inicializarformContratante();
     this.editar = false;
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public controleBotao() {
     if (this.formContratante.invalid) {
       this._funcoes.camposInvalidos(this.formContratante);
-      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
@@ -351,54 +351,54 @@ export class ContratantesComponent implements OnInit {
     if (this.formContratante.valid) {
       this.loadingMin = true;
 
-      this._contratanteService.cadastrarContratante(this.formContratante.value).pipe(
+      this._contratante.cadastrarContratante(this.formContratante.value).pipe(
         finalize(() => this.loadingMin = false),
         catchError((error) => {
-          this._alertService.error("Ocorreu um erro ao tentar cadastrar o contratante.");
+          this._alert.error("Ocorreu um erro ao tentar cadastrar o contratante.");
           return of(null);
         })
       ).subscribe((res: RetornoModel) => {
         if (res?.success === "true") {
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.obterContratantes();
           this.fechar();
         } else {
-          this._alertService.warning(res?.msg || 'Erro desconhecido');
+          this._alert.warning(res?.msg || 'Erro desconhecido');
         }
       });
     } else {
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
   public abriModalEditar(content: TemplateRef<any>, dados: ContratanteModel): void {
     this.editar = true;
     this.inicializarformContratante(dados);
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public abriModalResumo(modalResumo: any, contratanteSelecionado: ContratanteModel): void {
     this.titulo = 'Detalhes do Contratante';
     this.contratanteSelecionado = contratanteSelecionado;
-    this._modalService.open(modalResumo, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(modalResumo, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public editarContratante() {
     this.loadingMin = true;
 
-    this._contratanteService.editarContratante(this.formContratante.value).pipe(
+    this._contratante.editarContratante(this.formContratante.value).pipe(
       finalize(() => this.loadingMin = false),
       catchError((error) => {
-        this._alertService.error("Ocorreu um erro ao tentar atualizar o contratante.");
+        this._alert.error("Ocorreu um erro ao tentar atualizar o contratante.");
         return of(null);
       })
     ).subscribe((res) => {
       if (res?.success) {
-        this._alertService.success(res.msg);
+        this._alert.success(res.msg);
         this.obterContratantes();
         this.fechar();
       } else {
-        this._alertService.warning(res?.msg || 'Erro desconhecido');
+        this._alert.warning(res?.msg || 'Erro desconhecido');
       }
     });
   }
@@ -433,6 +433,6 @@ export class ContratantesComponent implements OnInit {
 
   public fechar() {
     this.formContratante.reset();
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 }

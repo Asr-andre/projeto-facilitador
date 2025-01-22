@@ -49,7 +49,7 @@ export class EnvioEmailComponent implements OnInit {
   public Editor = ClassicEditor;
 
   constructor(
-    private _modalService: NgbModal,
+    private _modal: NgbModal,
     private _fb: FormBuilder,
     private _emailService: EmailService,
     private _alert: AlertService,
@@ -152,7 +152,7 @@ export class EnvioEmailComponent implements OnInit {
 
     this.substituirVariaveisNaMensagem();
     this.obterEmailPerfil();
-    this._modalService.open(this.modalEmailRef, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(this.modalEmailRef, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public capturarMsg(event: Event): void {
@@ -216,7 +216,7 @@ export class EnvioEmailComponent implements OnInit {
 
   public fechar() {
     this.resetarCampos();
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 
   private resetarCampos() {

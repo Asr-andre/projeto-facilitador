@@ -39,10 +39,10 @@ export class SmsWhatsappComponent implements OnInit {
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<PerfilWhatsappModel>>;
 
   constructor(
-    private _modalService: NgbModal,
+    private _modal: NgbModal,
     private _smsWhatsAppService: SmsWhatsAppService,
     private _auth: AuthenticationService,
-    private _alertService: AlertService,
+    private _alert: AlertService,
     private fb: FormBuilder,
     private _funcoes: FuncoesService
   ) { }
@@ -74,7 +74,7 @@ export class SmsWhatsappComponent implements OnInit {
   public controleBotao() {
     if (this.mensagemForm.invalid) {
       this._funcoes.camposInvalidos(this.mensagemForm);
-      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
@@ -100,7 +100,7 @@ export class SmsWhatsappComponent implements OnInit {
         this.loading = false;
       } else {
         this.loading = false;
-        this._alertService.error(res.msg);
+        this._alert.error(res.msg);
       }
     });
   }
@@ -108,7 +108,7 @@ export class SmsWhatsappComponent implements OnInit {
   public abriModalCadastro(content: TemplateRef<any>): void {
     this.editar = false;
     this.inicializarMensagemForm();
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastraMsg() {
@@ -116,29 +116,29 @@ export class SmsWhatsappComponent implements OnInit {
       this.loadingMin = true;
       this._smsWhatsAppService.cadastrarMsg(this.mensagemForm.value).subscribe((res) => {
         if (res.success === "true") {
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.fechar();
           this.obterMsgs();
           this.loadingMin = false;
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error("Ocorreu um erro ao tentar cadastrar a mensagem.");
+          this._alert.error("Ocorreu um erro ao tentar cadastrar a mensagem.");
         });
     } else {
       this.loadingMin = false;
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
   public abriModalEditar(content: TemplateRef<any>, dados: CadastroMensagemModel): void {
     this.editar = true;
     this.inicializarMensagemForm(dados);
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public editarMsg() {
@@ -146,22 +146,22 @@ export class SmsWhatsappComponent implements OnInit {
       this.loadingMin = true;
       this._smsWhatsAppService.editarMsg(this.mensagemForm.value).subscribe((res) => {
         if (res.success === "true") {
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.fechar();
           this.obterMsgs();
           this.loadingMin = false;
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error("Ocorreu um erro ao tentar editar a mensagem.", error);
+          this._alert.error("Ocorreu um erro ao tentar editar a mensagem.", error);
         });
     } else {
       this.loadingMin = false;
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
@@ -193,7 +193,7 @@ export class SmsWhatsappComponent implements OnInit {
 
   public fechar() {
     this.mensagemForm.reset();
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 
   public mostrarSenha(campoId: string, iconeId: string): void {
@@ -220,6 +220,6 @@ export class SmsWhatsappComponent implements OnInit {
 
   public copiarParaAreasTransferencia(valor) {
     Utils.CopyAreaTransfer(valor);
-    this._alertService.copiado();
+    this._alert.copiado();
   }
 }

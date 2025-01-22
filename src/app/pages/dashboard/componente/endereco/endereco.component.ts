@@ -27,10 +27,10 @@ export class EnderecoComponent implements OnInit, OnChanges {
 
   constructor(
     private _enderecoService: EnderecoService,
-    private _alertService: AlertService,
+    private _alert: AlertService,
     private _fb: FormBuilder,
     private _auth: AuthenticationService,
-    private _modalService: NgbModal,
+    private _modal: NgbModal,
     private _funcoes: FuncoesService
   ) { }
 
@@ -67,7 +67,7 @@ export class EnderecoComponent implements OnInit, OnChanges {
   public controleBotao() {
     if (this.formEndereco.invalid) {
       this._funcoes.camposInvalidos(this.formEndereco);
-      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
@@ -91,7 +91,7 @@ export class EnderecoComponent implements OnInit, OnChanges {
       },
       (error) => {
         this.loadingMin = false;
-        this._alertService.error('Erro ao buscar endereços.');
+        this._alert.error('Erro ao buscar endereços.');
 
       }
     );
@@ -100,13 +100,13 @@ export class EnderecoComponent implements OnInit, OnChanges {
   public abriModalTelefone(content: TemplateRef<any>): void {
     this.editar = false;
     this.inicializarFormEndereco();
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public abriModalEditar(content: TemplateRef<any>, dados: EnderecoModel): void {
     this.editar = true;
     this.inicializarFormEndereco(dados);
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastrarEndereco(): void {
@@ -116,20 +116,20 @@ export class EnderecoComponent implements OnInit, OnChanges {
         if (res.success === 'true') {
           this.obterEnderecos();
          this.fechar();
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.loadingMin = false;
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error('Ocorreu um erro ao tentar cadastrar o endereço.');
+          this._alert.error('Ocorreu um erro ao tentar cadastrar o endereço.');
         }
       );
     } else {
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
@@ -140,25 +140,25 @@ export class EnderecoComponent implements OnInit, OnChanges {
         if (res.success === 'true') {
           this.obterEnderecos();
          this.fechar();
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.loadingMin = false;
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error('Ocorreu um erro ao tentar editar o endereço.');
+          this._alert.error('Ocorreu um erro ao tentar editar o endereço.');
         }
       );
     } else {
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
   public fechar() {
     this.formEndereco.reset();
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 }

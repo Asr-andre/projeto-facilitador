@@ -19,7 +19,7 @@ export class ClienteTitulosComponent implements OnChanges {
   constructor(
     private _clienteTituloService: ClienteTituloService,
     private _auth: AuthenticationService,
-    private _alertService: AlertService
+    private _alert: AlertService
   ) {
     this.adicionarNovaLinha();
   }
@@ -71,10 +71,10 @@ export class ClienteTitulosComponent implements OnChanges {
       if (dadosValidos) {
         this.salvarTitulos(titulos);
       } else {
-        this._alertService.error("Preencha corretamente todos os campos antes de importar os títulos.");
+        this._alert.error("Preencha corretamente todos os campos antes de importar os títulos.");
       }
     } else {
-      this._alertService.warning("Nenhuma linha encontrada na tabela.");
+      this._alert.warning("Nenhuma linha encontrada na tabela.");
     }
   }
 
@@ -83,15 +83,15 @@ export class ClienteTitulosComponent implements OnChanges {
     this._clienteTituloService.cadastrarTitulos(titulos).subscribe((res) => {
       if (res && res.success === 'true') {
         this.loading = false
-        this._alertService.success(res.msg);
+        this._alert.success(res.msg);
       }
     },
       (error) => {
         this.loading = false
-        this._alertService.error("Erro ao cadastrar título", error);
+        this._alert.error("Erro ao cadastrar título", error);
         if (error.error && error.error.message) {
           this.loading = false
-          this._alertService.warning("Detalhes do erro:", error.error.message);
+          this._alert.warning("Detalhes do erro:", error.error.message);
         }
       }
     );
@@ -147,7 +147,7 @@ export class ClienteTitulosComponent implements OnChanges {
       const quantidadeParcelas = parseInt((document.getElementById('quantidadeParcelas') as HTMLInputElement).value, 10);
 
       if (isNaN(quantidadeParcelas) || quantidadeParcelas <= 0) {
-        this._alertService.warning("Insira um número válido de parcelas.");
+        this._alert.warning("Insira um número válido de parcelas.");
         return;
       }
 
@@ -162,7 +162,7 @@ export class ClienteTitulosComponent implements OnChanges {
       }
 
       if (isNaN(vencimentoInicial.getTime())) {
-        this._alertService.warning("Data de vencimento inicial inválida.");
+        this._alert.warning("Data de vencimento inicial inválida.");
         return;
       }
 
@@ -175,7 +175,7 @@ export class ClienteTitulosComponent implements OnChanges {
         novoVencimento.setMonth(vencimentoInicial.getMonth() + i);
 
         if (isNaN(novoVencimento.getTime())) {
-          this._alertService.warning(`Data de vencimento da parcela ${novaParcela} inválida.`);
+          this._alert.warning(`Data de vencimento da parcela ${novaParcela} inválida.`);
           return;
         }
 
@@ -193,7 +193,7 @@ export class ClienteTitulosComponent implements OnChanges {
         });
       }
     } else {
-      this._alertService.warning("Preencha corretamente todos os campos antes de gerar as parcelas.");
+      this._alert.warning("Preencha corretamente todos os campos antes de gerar as parcelas.");
     }
   }
 

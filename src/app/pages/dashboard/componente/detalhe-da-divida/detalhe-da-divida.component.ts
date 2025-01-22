@@ -46,12 +46,12 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
   constructor(
     private _dashboard: DashboardService,
-    private _alertService: AlertService,
+    private _alert: AlertService,
     private _simuladorPadraoService: SimuladorPadraoService,
     private _auth: AuthenticationService,
     private _simuladorService: SimuladorPadraoService,
     private _datePipe: DatePipe,
-    private _modalService: NgbModal,
+    private _modal: NgbModal,
     private _tipoTituloService: TipoTituloService,
     private _fb: FormBuilder,
     private _clienteService: ClienteService,
@@ -95,13 +95,13 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
   public abriModalTitulo(content: TemplateRef<any>): void {
     if (!this.idCliente) {
-      this._alertService.warning('Por favor selecione um cliente!');
+      this._alert.warning('Por favor selecione um cliente!');
       return;
     }
 
     this.inicializarformTitulo();
     this.obterTipoTitulo();
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public obterPrimeiroContratoSelecionado(): string | undefined {
@@ -145,7 +145,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
         }
       },
       (error) => {
-        this._alertService.error('Não foi possível pesquisar o cliente!');
+        this._alert.error('Não foi possível pesquisar o cliente!');
         this.loadingMin = false;
       }
     );
@@ -223,7 +223,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
   public simularNegociacao(): void {
     if (!this.idCliente) {
-      this._alertService.warning('Por favor selecione um cliente!');
+      this._alert.warning('Por favor selecione um cliente!');
       return;
     }
 
@@ -250,14 +250,14 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
         this.SimuladorPadraoComponent.abrirModalSimulado(retorno);
       },
       (error) => {
-        this._alertService.error('Erro ao simular negociação.');
+        this._alert.error('Erro ao simular negociação.');
       }
     );
   }
 
   public retiradas(): void {
     if (!this.detalhamentoSelecionado?.parcelas) {
-      this._alertService.warning('Nenhum título selecionado para retirada.');
+      this._alert.warning('Nenhum título selecionado para retirada.');
       return;
     }
 
@@ -274,11 +274,11 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
       }));
 
     if (titulos.length === 0) {
-      this._alertService.error('Nenhum título selecionado para retirada.');
+      this._alert.error('Nenhum título selecionado para retirada.');
       return;
     }
 
-    this._alertService.retirada().then(confirmarRetirada => {
+    this._alert.retirada().then(confirmarRetirada => {
       if (!confirmarRetirada) {
         return;
       }
@@ -298,11 +298,11 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
       this._simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe(
         (res) => {
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.obterDetalhamentoPorId(this.idCliente, this.idContratante);
         },
         error => {
-          this._alertService.error('Ocorreu um erro ao realizar a retirada.');
+          this._alert.error('Ocorreu um erro ao realizar a retirada.');
         }
       );
     });
@@ -311,12 +311,12 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   public cadastrarTitulo(): void {
     if (!this.formTitulo.valid) {
       this._funcoes.camposInvalidos(this.formTitulo);
-      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
     if (!this.idCliente || !this.idEmpresa || !this.idContratante) {
-      this._alertService.warning('Os dados necessários não estão disponíveis.');
+      this._alert.warning('Os dados necessários não estão disponíveis.');
       return;
     }
 
@@ -332,17 +332,17 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
     this._clienteService.cadastrarTitulos(dadosTitulo).subscribe((res) => {
       if (res.success) {
-        this._alertService.success(res.msg);
+        this._alert.success(res.msg);
         this.atualizarDetalhamento();
         this.fechar();
       } else {
         this.loadingMin = false;
-        this._alertService.warning(res.msg);
+        this._alert.warning(res.msg);
       }
     },
       (error) => {
         this.loadingMin = false;
-        this._alertService.error('Atenção Título Já Existente, Verifique os Campos Chaves!!!');
+        this._alert.error('Atenção Título Já Existente, Verifique os Campos Chaves!!!');
       }
     );
   }
@@ -357,7 +357,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
   public copiarParaAreasTransferencia(valor) {
     Utils.CopyAreaTransfer(valor);
-    this._alertService.copiado();
+    this._alert.copiado();
   }
 
   public tipoPessoa(dado: string): string {
@@ -368,14 +368,14 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
   public abriModalSituacao(): void {
     if (!this.idCliente) {
-      this._alertService.warning('Por favor selecione um cliente antes de atualizar a situação');
+      this._alert.warning('Por favor selecione um cliente antes de atualizar a situação');
       return;
     }
     this.ModalSituacaoComponent.abriModalSituacao();
   }
 
   public fechar() {
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
     this.formTitulo.reset();
   }
 }

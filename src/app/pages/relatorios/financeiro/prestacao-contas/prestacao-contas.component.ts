@@ -26,9 +26,9 @@ export class PrestacaoContasComponent implements OnInit, OnChanges  {
   constructor(
       private _auth: AuthenticationService,
       private _datePipe: DatePipe,
-      private _alertService: AlertService,
-      private _excelService: ExcelService,
-      private _modalService: NgbModal
+      private _alert: AlertService,
+      private _excel: ExcelService,
+      private _modal: NgbModal
 
     ) { }
 
@@ -80,7 +80,7 @@ export class PrestacaoContasComponent implements OnInit, OnChanges  {
 
     public abrirModalRelatorio(content: TemplateRef<any>): void {
 
-        this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+        this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
     }
 
     public exportExcel() {
@@ -92,7 +92,7 @@ export class PrestacaoContasComponent implements OnInit, OnChanges  {
       }
 
     public fechar() {
-      this._modalService.dismissAll();
+      this._modal.dismissAll();
     }
 
 }

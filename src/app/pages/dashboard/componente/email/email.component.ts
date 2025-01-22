@@ -28,8 +28,8 @@ export class EmailComponent implements OnInit, OnChanges{
     private _emailService: EmailService,
     private _fb: FormBuilder,
     private _auth: AuthenticationService,
-    private _alertService: AlertService,
-    private _modalService: NgbModal,
+    private _alert: AlertService,
+    private _modal: NgbModal,
     private _funcoes: FuncoesService
   ) { }
 
@@ -73,7 +73,7 @@ export class EmailComponent implements OnInit, OnChanges{
       this.loadingMin = false;
     },
       (error) => {
-        this._alertService.warning('Erro ao carregar emails:', error);
+        this._alert.warning('Erro ao carregar emails:', error);
         this.loadingMin = false;
       }
     );
@@ -84,13 +84,13 @@ export class EmailComponent implements OnInit, OnChanges{
   }
 
   public abriModalEmail(content: TemplateRef<any>): void {
-    this._modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastrarEmail(modal: any): void {
     if (this.formEmail.invalid) {
       this._funcoes.camposInvalidos(this.formEmail);
-      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
@@ -100,20 +100,20 @@ export class EmailComponent implements OnInit, OnChanges{
         if (res.success === 'true') {
           this.carregarEmails(this.idCliente);
           modal.close();
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.loadingMin = false;
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error('Ocorreu um erro ao tentar cadastrar o email.', error);
+          this._alert.error('Ocorreu um erro ao tentar cadastrar o email.', error);
         }
       );
     } else {
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 }

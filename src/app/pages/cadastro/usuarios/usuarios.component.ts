@@ -35,9 +35,9 @@ export class UsuariosComponent implements OnInit {
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<UsuarioModel>>;
 
   constructor(
-    private _usuarioService: UsuarioService,
+    private _usuario: UsuarioService,
     private _fb: FormBuilder,
-    private _modalService: NgbModal,
+    private _modal: NgbModal,
     private _auth: AuthenticationService,
     private _alert: AlertService,
     private _funcoes: FuncoesService
@@ -81,7 +81,7 @@ export class UsuariosComponent implements OnInit {
 
   public obterUsuarios() {
     this.loading = true;
-    this._usuarioService.obterUsuariosPorEmpresa(this.idEmpresa).subscribe((res) => {
+    this._usuario.obterUsuariosPorEmpresa(this.idEmpresa).subscribe((res) => {
       this.usuarios = res.contratantes;
       this.filtrar();
       this.atualizarQuantidadeExibida();
@@ -122,13 +122,13 @@ export class UsuariosComponent implements OnInit {
   public abrirModalCadastro(content: TemplateRef<any>): void {
     this.editar = false;
     this.inicializarFormUsuario();
-    this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastrarUsuario() {
     if (this.formUsuario.valid) {
       this.loading = true;
-      this._usuarioService.cadastrarUsuario(this.formUsuario.value).subscribe((res) => {
+      this._usuario.cadastrarUsuario(this.formUsuario.value).subscribe((res) => {
         if (res && res.success === "true") {
           this.loading = false;
           this.obterUsuarios();
@@ -151,13 +151,13 @@ export class UsuariosComponent implements OnInit {
   public abrirModalEditar(content: TemplateRef<any>, dados: UsuarioModel): void {
     this.editar = true;
     this.inicializarFormUsuario(dados);
-    this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public editarUsuario() {
     if (this.formUsuario.valid) {
       this.loading = true;
-      this._usuarioService.editarUsuario(this.formUsuario.value).subscribe((res) => {
+      this._usuario.editarUsuario(this.formUsuario.value).subscribe((res) => {
         if (res && res.success === "true") {
           this.loading = false;
           this.obterUsuarios();
@@ -179,7 +179,7 @@ export class UsuariosComponent implements OnInit {
 
   public fechar() {
     this.formUsuario.reset();
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 
   public mostrarSenha(campoId: string, iconeId: string): void {

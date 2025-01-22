@@ -36,8 +36,8 @@ export class EmailContaComponent implements OnInit {
   constructor(
     private _emailContaService: EmailContaService,
     private _auth: AuthenticationService,
-    private _alertService: AlertService,
-    private _modalService: NgbModal,
+    private _alert: AlertService,
+    private _modal: NgbModal,
     private _fb: FormBuilder,
     private _funcoes: FuncoesService
   ) { }
@@ -69,7 +69,7 @@ export class EmailContaComponent implements OnInit {
   public controleBotao() {
     if (this.emailContaForm.invalid) {
       this._funcoes.camposInvalidos(this.emailContaForm);
-      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
@@ -80,7 +80,7 @@ export class EmailContaComponent implements OnInit {
   public modalCadastrar(content: TemplateRef<any>): void {
     this.editar = false;
     this.inicializarForm();
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastrarEmailConta() {
@@ -90,28 +90,28 @@ export class EmailContaComponent implements OnInit {
       this._emailContaService.cadastrarEmailConta(this.emailContaForm.value).subscribe((res) => {
         if(res.success === "true") {
           this.loadingMin = false;
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.obterEmailConta();
           this.fechar();
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
       (error) => {
         this.loadingMin = false;
-        this._alertService.error("Ocorreu um erro ao tentar cadastrar.");
+        this._alert.error("Ocorreu um erro ao tentar cadastrar.");
       });
     } else {
       this.loadingMin = false;
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
   public modalEditar(content: TemplateRef<any>, dado: EmailContaCadastroModel): void {
     this.editar = true;
     this.inicializarForm(dado)
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public editarEmailConta() {
@@ -121,21 +121,21 @@ export class EmailContaComponent implements OnInit {
       this._emailContaService.editarEmailConta(this.emailContaForm.value).subscribe((res) => {
         if(res.success === "true") {
           this.loadingMin = false;
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.obterEmailConta();
           this.fechar();
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
       (error) => {
         this.loadingMin = false;
-        this._alertService.error("Ocorreu um erro ao tentar editar.");
+        this._alert.error("Ocorreu um erro ao tentar editar.");
       });
     } else {
       this.loadingMin = false;
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
@@ -153,7 +153,7 @@ export class EmailContaComponent implements OnInit {
         this.loading = false;
       } else {
         this.loading = false;
-        this._alertService.error(res.msg);
+        this._alert.error(res.msg);
       }
     });
   }
@@ -186,7 +186,7 @@ export class EmailContaComponent implements OnInit {
 
   public fechar() {
     this.emailContaForm.reset();
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 
   public onChangeRadio(selectedOption: string): void {

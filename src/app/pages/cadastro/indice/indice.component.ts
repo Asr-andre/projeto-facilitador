@@ -40,7 +40,7 @@ export class IndiceComponent implements OnInit {
     private _fb: FormBuilder,
     private _auth: AuthenticationService,
     private _alert: AlertService,
-    private _modalService: NgbModal,
+    private _modal: NgbModal,
     private _datePipe: DatePipe,
     private _funcoes: FuncoesService
   ) { }
@@ -154,18 +154,18 @@ export class IndiceComponent implements OnInit {
     public abriModalCadastro(content: TemplateRef<any>): void {
       this.editar = false;
       this.form();
-      this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+      this._modal.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
     }
 
     public abriModalEditar(content: TemplateRef<any>, dados: IndiceModel): void {
       this.editar = true;
       this.form(dados);
-      this._modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+      this._modal.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
     }
 
     public abrirModalExcluir(content: TemplateRef<any>, dados: IndiceModel): void {
       this.indiceSelecionado = dados;
-      this._modalService.open(content, { size: 'sm', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+      this._modal.open(content, { size: 'sm', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
     }
 
     public cadastrarIndice() {
@@ -285,6 +285,6 @@ export class IndiceComponent implements OnInit {
 
     public fechar() {
       this.formModal.reset();
-      this._modalService.dismissAll();
+      this._modal.dismissAll();
     }
 }

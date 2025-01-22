@@ -23,9 +23,9 @@ export class TitulosComponent implements OnInit {
 
 
   constructor(
-    private _contratanteService: ContratanteService,
+    private _contratante: ContratanteService,
     private _auth: AuthenticationService,
-    private _alertService: AlertService,
+    private _alert: AlertService,
     private _fb: FormBuilder
   ) {}
 
@@ -43,12 +43,12 @@ export class TitulosComponent implements OnInit {
 
   public obterContratantes() {
     this.loading = true;
-    this._contratanteService.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
+    this._contratante.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
       this.contratantes = res.contratantes;
       this.loading = false;
     },
       (error) => {
-        this._alertService.error('Ocorreu um erro ao obter os contratantes.');
+        this._alert.error('Ocorreu um erro ao obter os contratantes.');
         this.loading = false;
       }
     );
@@ -57,7 +57,7 @@ export class TitulosComponent implements OnInit {
   public selecionarContratante(): void {
     if (this.formPesquisa.invalid) {
       this.marcarCamposComoTocados(this.formPesquisa);
-      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       this.exibirTelaCadastroCliente = false;
       this.exibirTelaCadastroTitulos = false;
       return;

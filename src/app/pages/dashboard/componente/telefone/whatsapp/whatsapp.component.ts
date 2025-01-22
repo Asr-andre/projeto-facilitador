@@ -38,8 +38,8 @@ export class WhatsappComponent implements OnInit {
     private fb: FormBuilder,
     private _whatsappService: WhatsappService,
     private _auth: AuthenticationService,
-    private _modalService: NgbModal,
-    private _alertService: AlertService,
+    private _modal: NgbModal,
+    private _alert: AlertService,
     private _smsWhatsAppService: SmsWhatsAppService,
   ) { }
 
@@ -80,7 +80,7 @@ export class WhatsappComponent implements OnInit {
         this.msg = res.perfil_whatsapp;
       } else {
         this.loadingMin = false;
-        this._alertService.warning(res.msg);
+        this._alert.warning(res.msg);
       }
     });
   }
@@ -93,7 +93,7 @@ export class WhatsappComponent implements OnInit {
     const dadosCriptografados = sessionStorage.getItem('dadosCliente');
 
     if (!dadosCriptografados) {
-      this._alertService.warning('Os dados do cliente não foram encontrados no localStorage.');
+      this._alert.warning('Os dados do cliente não foram encontrados no localStorage.');
       return;
     }
 
@@ -104,7 +104,7 @@ export class WhatsappComponent implements OnInit {
 
       // Verificando se os dados existem
       if (!dadosCliente || Object.keys(dadosCliente).length === 0) {
-        this._alertService.warning('Os dados do cliente não foram encontrados no localStorage.');
+        this._alert.warning('Os dados do cliente não foram encontrados no localStorage.');
         return;
       }
 
@@ -113,7 +113,7 @@ export class WhatsappComponent implements OnInit {
       const mensagemControl = whatsArray.at(0).get('mensagem');
 
       if (!mensagemControl) {
-        this._alertService.error('Erro ao acessar o campo de mensagem no formulário.');
+        this._alert.error('Erro ao acessar o campo de mensagem no formulário.');
         return;
       }
 
@@ -132,7 +132,7 @@ export class WhatsappComponent implements OnInit {
       // Atualizando o campo de mensagem no formulário
       mensagemControl.setValue(mensagemOriginal);
     } catch (error) {
-      this._alertService.error('Ocorreu um erro ao descriptografar os dados do cliente.');
+      this._alert.error('Ocorreu um erro ao descriptografar os dados do cliente.');
     }
   }
 
@@ -140,7 +140,7 @@ export class WhatsappComponent implements OnInit {
     const selectedMessage = (event.target as HTMLSelectElement).value;
 
     if (!selectedMessage) {
-      this._alertService.warning('Selecione uma mensagem válida.');
+      this._alert.warning('Selecione uma mensagem válida.');
       return;
     }
 
@@ -151,7 +151,7 @@ export class WhatsappComponent implements OnInit {
       mensagemControl.setValue(selectedMessage);
       this.substituirVariaveisNaMensagem();
     } else {
-      this._alertService.error('Erro ao atualizar a mensagem.');
+      this._alert.error('Erro ao atualizar a mensagem.');
     }
   }
 
@@ -162,9 +162,9 @@ export class WhatsappComponent implements OnInit {
       this.telefoneCliente = this.limparNumero(telefone);
       this.inicializarwhatsappForm();
       this.abrirModal = true;
-      this._modalService.open(this.whatsappModal, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+      this._modal.open(this.whatsappModal, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
     } else {
-      this._alertService.warning('Selecione o cliente  para obter o número de telefone.');
+      this._alert.warning('Selecione o cliente  para obter o número de telefone.');
     }
   }
 
@@ -174,15 +174,15 @@ export class WhatsappComponent implements OnInit {
       this.loadingMin = true;
       this._whatsappService.enviarMensagem(this.whatsappForm.value).subscribe(() => {
         this.loadingMin = false;
-        this._alertService.success('Mensagem enviada com sucesso!');
+        this._alert.success('Mensagem enviada com sucesso!');
         this.fechaModal();
       }, () => {
         this.loadingMin = false;
-        this._alertService.error('Erro ao enviar mensagem.');
+        this._alert.error('Erro ao enviar mensagem.');
       });
     } else {
       this.loadingMin = false;
-      this._alertService.warning('Todos oa campos são obrigatórios.');
+      this._alert.warning('Todos oa campos são obrigatórios.');
     }
   }
 
@@ -199,13 +199,13 @@ export class WhatsappComponent implements OnInit {
       window.open(url, '_blank');
       this.fechaModal();
     } else {
-      this._alertService.warning('Todos oa campos são obrigatórios.');
+      this._alert.warning('Todos oa campos são obrigatórios.');
     }
   }
 
   public fechaModal() {
     this.abrirModal = false;
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 
   private limparNumero(telefone: string): string {

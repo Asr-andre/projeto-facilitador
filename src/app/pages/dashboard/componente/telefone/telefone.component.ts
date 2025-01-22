@@ -32,8 +32,8 @@ export class TelefoneComponent implements OnInit, OnChanges {
   constructor(private _telefoneService: TelefoneService,
     private _fb: FormBuilder,
     private _auth: AuthenticationService,
-    private _alertService: AlertService,
-    private _modalService: NgbModal,
+    private _alert: AlertService,
+    private _modal: NgbModal,
     private _funcoes: FuncoesService
   ) { }
 
@@ -73,7 +73,7 @@ export class TelefoneComponent implements OnInit, OnChanges {
   public controleBotao() {
     if (this.telefoneForm.invalid) {
       this._funcoes.camposInvalidos(this.telefoneForm);
-      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
@@ -93,7 +93,7 @@ export class TelefoneComponent implements OnInit, OnChanges {
       this.loadingMin = false;
     },
       (error) => {
-        this._alertService.warning('Erro ao carregar telefones:', error);
+        this._alert.warning('Erro ao carregar telefones:', error);
         this.loadingMin = false;
       }
     );
@@ -131,13 +131,13 @@ export class TelefoneComponent implements OnInit, OnChanges {
   public abriModalTelefone(content: TemplateRef<any>): void {
     this.editar = false;
     this.inicializarTelefoneForm();
-    this._modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public abriModalEditar(content: TemplateRef<any>, dados: TelefoneModel): void {
     this.editar = true;
     this.inicializarTelefoneForm(dados);
-    this._modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastrarTelefone(): void {
@@ -147,20 +147,20 @@ export class TelefoneComponent implements OnInit, OnChanges {
         if (res.success === 'true') {
           this.carregarTelefones(this.idCliente);
          this.fechar();
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.loadingMin = false;
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error('Ocorreu um erro ao tentar cadastrar o telefone.');
+          this._alert.error('Ocorreu um erro ao tentar cadastrar o telefone.');
         }
       );
     } else {
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
@@ -171,20 +171,20 @@ export class TelefoneComponent implements OnInit, OnChanges {
         if (res.success === 'true') {
           this.carregarTelefones(this.idCliente);
          this.fechar();
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.loadingMin = false;
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error('Ocorreu um erro ao tentar atualizar o telefone.');
+          this._alert.error('Ocorreu um erro ao tentar atualizar o telefone.');
         }
       );
     } else {
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
@@ -198,6 +198,6 @@ export class TelefoneComponent implements OnInit, OnChanges {
 
   public fechar() {
     this.telefoneForm.reset();
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 }

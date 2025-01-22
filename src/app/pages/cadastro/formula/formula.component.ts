@@ -41,9 +41,9 @@ export class FormulaComponent implements OnInit {
   constructor(
     private _formulaService: FormulaService,
     private _fb: FormBuilder,
-    private _modalService: NgbModal,
+    private _modal: NgbModal,
     private _auth: AuthenticationService,
-    private _alertService: AlertService,
+    private _alert: AlertService,
     private _funcoes: FuncoesService
   ) { }
 
@@ -84,11 +84,11 @@ export class FormulaComponent implements OnInit {
         this.loading = false;
       } else {
         this.loading = false;
-        this._alertService.warning(res.msg);
+        this._alert.warning(res.msg);
       }
       (error) => {
         this.loadingMin = false;
-        this._alertService.error("Ocorreu um error.", error);
+        this._alert.error("Ocorreu um error.", error);
       }
     });
   }
@@ -122,7 +122,7 @@ export class FormulaComponent implements OnInit {
   public controleBotao() {
     if (this.formFormula.invalid) {
       this._funcoes.camposInvalidos(this.formFormula);
-      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
@@ -136,7 +136,7 @@ export class FormulaComponent implements OnInit {
   public abriModalCadastro(content: TemplateRef<any>): void {
     this.inicializarFormFomula();
     this.editar = false;
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastrarFormula() {
@@ -146,28 +146,28 @@ export class FormulaComponent implements OnInit {
         if(res.success === "true") {
           this.loadingMin = false;
           this.obterFormulas();
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.fechar();
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error("Ocorreu um erro ao tentar cadastrar o contratante.");
+          this._alert.error("Ocorreu um erro ao tentar cadastrar o contratante.");
         }
       );
     } else {
       this.loadingMin = false;
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
   public abriModalEditar(content: TemplateRef<any>, dados: FormulaRequest): void {
     this.editar = true;
     this.inicializarFormFomula(dados)
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public editarFormula() {
@@ -177,26 +177,26 @@ export class FormulaComponent implements OnInit {
         if(res.success === "true") {
           this.loadingMin = false;
           this.obterFormulas();
-          this._alertService.success(res.msg);
+          this._alert.success(res.msg);
           this.fechar();
         } else {
           this.loadingMin = false;
-          this._alertService.warning(res.msg);
+          this._alert.warning(res.msg);
         }
       },
         (error) => {
           this.loadingMin = false;
-          this._alertService.error("Ocorreu um erro ao tentar cadastrar o contratante.");
+          this._alert.error("Ocorreu um erro ao tentar cadastrar o contratante.");
         }
       );
     } else {
       this.loadingMin = false;
-      this._alertService.warning("Preencha todos os campos obrigatórios");
+      this._alert.warning("Preencha todos os campos obrigatórios");
     }
   }
 
   public fechar() {
     this.formFormula.reset();
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 }

@@ -33,8 +33,8 @@ export class SolicitarCreditosComponent implements OnInit {
     private _solicitarCreditosService: SolicitarCreditosService,
     private _fb: FormBuilder,
     private _auth: AuthenticationService,
-    private _alertService: AlertService,
-    private _modalService: NgbModal,
+    private _alert: AlertService,
+    private _modal: NgbModal,
     private _datePipe: DatePipe,
   ) { }
 
@@ -75,11 +75,11 @@ export class SolicitarCreditosComponent implements OnInit {
           this.loadingMin = false;
         }else {
           this.loadingMin = false;
-          this._alertService.warning("Erro na resposta da API:", res.msg || "Mensagem não disponível");
+          this._alert.warning("Erro na resposta da API:", res.msg || "Mensagem não disponível");
         }
       });
     } else {
-      this._alertService.warning("Todos os campos são obrigatórios:");
+      this._alert.warning("Todos os campos são obrigatórios:");
     }
 
   }
@@ -98,7 +98,7 @@ export class SolicitarCreditosComponent implements OnInit {
       },
       (error) => {
         this.loadingMin = false;
-        this._alertService.error("Erro ao obter histórico, por favor, tente novamente.", error);
+        this._alert.error("Erro ao obter histórico, por favor, tente novamente.", error);
       }
     );
   }
@@ -107,14 +107,14 @@ export class SolicitarCreditosComponent implements OnInit {
     this.resetarCampos();
     this.mostraQrCode = false;
     this.iniciarFormHistorico();
-    this._modalService.open(this.creditosModal, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' });
+    this._modal.open(this.creditosModal, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' });
   }
 
   public fechaModal() {
     this.historico = false;
     this.formCreditos.reset();
     this.retornoHistorico = [];
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
     this.ocultarBotaoCredito = true;
   }
 
@@ -127,7 +127,7 @@ export class SolicitarCreditosComponent implements OnInit {
 
   public copiarParaAreasTransferencia(valor) {
     Utils.CopyAreaTransfer(valor);
-    this._alertService.copiado();
+    this._alert.copiado();
   }
 
   public atualizarDadosPix(pixCopiaCola: string, imgPix: string) {

@@ -21,7 +21,7 @@ export class AnaliticoComponent implements OnChanges {
     private _acionamentoService: AcionamentoService,
     private _alert: AlertService,
     private _datePipe: DatePipe,
-    private _excelService: ExcelService,
+    private _excel: ExcelService,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -62,7 +62,7 @@ export class AnaliticoComponent implements OnChanges {
   }
 
   public exportExcel() {
-    this._excelService.exportAsExcelFile(this.acio_Analitico, 'exportacaoAcionamentoAnalitico');
+    this._excel.exportAsExcelFile(this.acio_Analitico, 'exportacaoAcionamentoAnalitico');
   }
 
   public data(data) {

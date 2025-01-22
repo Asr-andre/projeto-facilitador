@@ -41,14 +41,14 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   private updateSubject: Subject<void> = new Subject<void>();
 
   constructor(
-    private _alertService: AlertService,
-    private _modalService: NgbModal,
+    private _alert: AlertService,
+    private _modal: NgbModal,
     private _auth: AuthenticationService,
     private _acionamentoService: AcionamentoService,
     private _acaoCobrancaService: AcaoCobrancaService,
     private _fb: FormBuilder,
     private _datePipe: DatePipe,
-    private _excelService: ExcelService,
+    private _excel: ExcelService,
     private _dashboard: DashboardService,
     private _funcoes: FuncoesService
   ) { }
@@ -107,12 +107,12 @@ export class AcionamentoComponent implements OnChanges, OnInit {
           this.acionamentos = res.acionamentos;
         } else {
           this.loadingTabela = false;
-          this._alertService.error(res.msg);
+          this._alert.error(res.msg);
         }
       },
         (error) => {
           this.loadingTabela = false;
-          this._alertService.error("Erro ao listar acionamentos");
+          this._alert.error("Erro ao listar acionamentos");
         }
       );
     }
@@ -134,12 +134,12 @@ export class AcionamentoComponent implements OnChanges, OnInit {
           this.acoesCobranca = res.contratantes;
         } else {
           this.loadinAcaoCobanca = false;
-          this._alertService.error(res.msg);
+          this._alert.error(res.msg);
         }
       },
         (error) => {
           this.loadinAcaoCobanca = false;
-          this._alertService.error("Erro ao listar ações de cobrança");
+          this._alert.error("Erro ao listar ações de cobrança");
         }
       );
     }
@@ -162,24 +162,24 @@ export class AcionamentoComponent implements OnChanges, OnInit {
         this.loadingAgenda = false;
       } else {
         this.loadingAgenda = false;
-        this._alertService.warning(res.msg);
+        this._alert.warning(res.msg);
       }
     });
   }
 
   public abriModalagenda(content: TemplateRef<any>): void {
     this.obterAgenda();
-    this._modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public exportExcel() {
     if (!this.acionamentos) return;
-    this._excelService.exportAsExcelFile(this.acionamentos, 'exportacaoAcionamentoAnalitico');
+    this._excel.exportAsExcelFile(this.acionamentos, 'exportacaoAcionamentoAnalitico');
   }
 
   public abriracaoDeCobrancaModal(modal): void {
     if (!this.idCliente) {
-      this._alertService.warning('Por favor selecione um cliente!');
+      this._alert.warning('Por favor selecione um cliente!');
       return;
     }
 
@@ -194,13 +194,13 @@ export class AcionamentoComponent implements OnChanges, OnInit {
 
     this.listarAcoesCobranca();
 
-    this._modalService.open(this.modalEmailRef, { size: "lg", ariaLabelledBy: "modal-basic-title",  backdrop: "static", keyboard: false,});
+    this._modal.open(this.modalEmailRef, { size: "lg", ariaLabelledBy: "modal-basic-title",  backdrop: "static", keyboard: false,});
   }
 
   public enviarAcionamento(): void {
     if (this.formAcionamento.invalid) {
       this._funcoes.camposInvalidos(this.formAcionamento);
-      this._alertService.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
@@ -217,18 +217,18 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       this.loadinAcaoCobanca = false;
       if (res.success) {
         this.loadinAcaoCobanca = false;
-        this._alertService.success(res.msg);
+        this._alert.success(res.msg);
         this.listarAcionamentos();
         this.clienteAcionado.emit();
         this.fechar();
       } else {
         this.loadinAcaoCobanca = false;
-        this._alertService.error(res.msg);
+        this._alert.error(res.msg);
       }
     },
       (error) => {
         this.loadinAcaoCobanca = false;
-        this._alertService.error("Erro ao inserir acionamento");
+        this._alert.error("Erro ao inserir acionamento");
       }
     );
   }
@@ -247,11 +247,11 @@ export class AcionamentoComponent implements OnChanges, OnInit {
 
   public copiarParaAreasTransferencia(valor) {
     Utils.CopyAreaTransfer(valor);
-    this._alertService.copiado();
+    this._alert.copiado();
   }
 
   public fechar() {
     this.formAcionamento.reset();
-    this._modalService.dismissAll();
+    this._modal.dismissAll();
   }
 }
