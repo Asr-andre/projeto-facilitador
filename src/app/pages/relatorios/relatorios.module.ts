@@ -9,6 +9,7 @@ import { LogsModule } from './logs/logs.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { RelatoriosRoutingModule } from './relatorios.routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { JuridicoModule } from './juridico/juridico.module';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FinanceiroModule,
     AcionamentoModule,
     DashboardModule,
+    JuridicoModule,
     LogsModule,
     NgbModule,
     OrderTableModule,

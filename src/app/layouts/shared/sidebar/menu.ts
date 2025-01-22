@@ -135,6 +135,12 @@ import { MenuItem } from "./menu.model";
         },
         {
           id: 4,
+          label: "MENUITEMS.RELATORIOS.LIST.JURIDICO",
+          link: "/relatorios/juridico",
+          parentId: 7,
+        },
+        {
+          id: 5,
           label: "MENUITEMS.RELATORIOS.LIST.LOGS",
           link: "/relatorios/logs",
           parentId: 7,

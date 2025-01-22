@@ -5,26 +5,18 @@ import { FinanceiroComponent } from "./financeiro/financeiro.component";
 import { LogsComponent } from "./logs/logs.component";
 import { AcionamentosSinteticoComponent } from "./acionamentos/acionamentos-sintetico.component";
 import { AuthGuard } from "src/app/core/guards/auth.guard";
+import { JuridicoComponent } from "./juridico/juridico.component";
 
 const routes: Routes = [
-  {
-    path: "dashboard",
-    component: DashboardComponent, canActivate: [AuthGuard]
-  },
-  {
-    path: "financeiro",
-    component: FinanceiroComponent, canActivate: [AuthGuard]
-  },
-    {
-      path: 'logs', component: LogsComponent, canActivate: [AuthGuard]
-    },
-    {
-      path: 'acionamentos', component: AcionamentosSinteticoComponent, canActivate: [AuthGuard]
-    }
+  { path: "dashboard", component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: "financeiro",component: FinanceiroComponent, canActivate: [AuthGuard] },
+  { path: "juridico", component: JuridicoComponent, canActivate: [AuthGuard] },
+  { path: 'logs', component: LogsComponent, canActivate: [AuthGuard] },
+  { path: 'acionamentos', component: AcionamentosSinteticoComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class RelatoriosRoutingModule {}
+export class RelatoriosRoutingModule { }
