@@ -10,6 +10,7 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
 import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
 import { ConsultaCepService } from 'src/app/core/services/consulta.cep.service';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: 'app-cliente',
@@ -41,6 +42,7 @@ export class ClienteComponent {
     private _formBuilder: FormBuilder,
     private _alert: AlertService,
     private _datePipe: DatePipe,
+    private _funcoes: FuncoesService
   ) {}
 
   ngOnInit(): void {
@@ -155,7 +157,7 @@ export class ClienteComponent {
 
   public salvarCliente() {
     if (this.formCliente.invalid) {
-      this.marcarCamposComoTocados(this.formCliente);
+      this._funcoes.camposInvalidos(this.formCliente);
       this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
@@ -169,14 +171,6 @@ export class ClienteComponent {
     } else {
       this.cadastrarCliente();
     }
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
   }
 
   public abilitarCadastro() {

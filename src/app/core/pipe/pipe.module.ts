@@ -21,6 +21,8 @@ import { FormatarDocumentoPipe } from './formata.doc.pipe';
 import { FormatarCepPipe } from './cep.pipe';
 import { RgPipe } from './rg.pipe';
 import { MascararCpfLgpdPipe } from './cpf.lgpd.pipe';
+import { CalcularIdadePipe } from './calcula.idade.pipe';
+import { SomenteLeituraDirective } from './campo.somente.leitura.pipe';
 
 
 const pipes = [
@@ -44,7 +46,9 @@ const pipes = [
   FormatarDocumentoPipe,
   FormatarCepPipe,
   RgPipe,
-  MascararCpfLgpdPipe
+  MascararCpfLgpdPipe,
+  CalcularIdadePipe,
+  SomenteLeituraDirective
 ];
 
 @NgModule({

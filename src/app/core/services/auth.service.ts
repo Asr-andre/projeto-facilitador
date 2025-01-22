@@ -11,6 +11,7 @@ export class AuthenticationService {
   private siglaKey = 'sigla';
   private loginKey = 'login';
   private idEmpresaKey = 'id_empresa';
+  private sessionKey = 'session_key'; // Identificador único de cada sessão
 
   constructor(private http: HttpClient) {}
 
