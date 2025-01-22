@@ -21,9 +21,9 @@ import { Versao } from "src/app/core/config/app.config";
 })
 export class DashboardComponent implements OnInit {
   @ViewChild(SolicitarCreditosComponent) SolicitarCreditosComponent: SolicitarCreditosComponent;
-  public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
-  public idUsuario: number = Number(this._authService.getIdUsuario() || 0);
-  public login = this._authService.getLogin();
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public idUsuario: number = Number(this._auth.getIdUsuario() || 0);
+  public login = this._auth.getLogin();
   public listarDevedores: DevedorModel[] = [];
   public filas: FilaModel[] = [];
   public devedorSelecionado: DevedorModel | null = null;
@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private _dashboard: DashboardService,
-    private _authService: AuthenticationService,
+    private _auth: AuthenticationService,
     private _formBuilder: FormBuilder,
     private _filaService: FilaService,
     private _alertService: AlertService

@@ -19,7 +19,7 @@ export class ImportacaoManualComponent implements OnInit {
     private _alertService: AlertService,
     private _importacaoService: ImportacaoService,
     private _contratanteService: ContratanteService,
-    private _authService: AuthenticationService,
+    private _auth: AuthenticationService,
     private _router: Router
   ) { }
 

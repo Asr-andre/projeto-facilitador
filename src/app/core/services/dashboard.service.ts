@@ -15,7 +15,7 @@ export class DashboardService {
 
   constructor(
     private _http: HttpClient,
-    private _authService: AuthenticationService
+    private _auth: AuthenticationService
   ) { }
 
   public obterDevedores(dados: RequisicaoDevedorModel): Observable<RespostaDevedorModel> {

@@ -17,10 +17,10 @@ export class SolicitarCreditosComponent implements OnInit {
   @ViewChild("creditosModal") creditosModal: SolicitarCreditosComponent;
   public formCreditos: FormGroup;
   public historicoForm: FormGroup;
-  public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
-  public idUsuario: number = Number(this._authService.getIdUsuario() || 0);
-  public sigla = this._authService.getSigla();
-  public login = this._authService.getLogin();
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public idUsuario: number = Number(this._auth.getIdUsuario() || 0);
+  public sigla = this._auth.getSigla();
+  public login = this._auth.getLogin();
   public dadosPixGerado: PixDetails;
   public mostraQrCode: Boolean = false;
   public loadingMin: Boolean = false;
@@ -32,7 +32,7 @@ export class SolicitarCreditosComponent implements OnInit {
   constructor(
     private _solicitarCreditosService: SolicitarCreditosService,
     private _formBuilder: FormBuilder,
-    private _authService: AuthenticationService,
+    private _auth: AuthenticationService,
     private _alertService: AlertService,
     private _modalService: NgbModal,
     private _datePipe: DatePipe,

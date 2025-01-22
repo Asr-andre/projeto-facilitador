@@ -12,8 +12,8 @@ import { BoletoPixService } from 'src/app/core/services/boletopix.service';
 })
 export class BoletoPixComponent implements OnInit, OnChanges {
   @Input() idCliente: number | undefined;
-  public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
-  public login = this._authService.getLogin();
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public login = this._auth.getLogin();
   public loadingMin: boolean =false;
   public boletos: BoletoPixModel[] = [];
 
@@ -24,7 +24,7 @@ export class BoletoPixComponent implements OnInit, OnChanges {
 
   constructor(
     private _boletoPixService: BoletoPixService,
-    private _authService: AuthenticationService,
+    private _auth: AuthenticationService,
     private _alertService: AlertService,
   ) { }
 

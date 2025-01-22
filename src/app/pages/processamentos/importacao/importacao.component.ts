@@ -19,8 +19,8 @@ import { Router } from '@angular/router';
 })
 export class ImportacaoComponent implements OnInit {
   @ViewChild('importacaoArquivoModal') importArquivo: TemplateRef<any>;
-  public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
-  public login: string = this._authService.getLogin();
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public login: string = this._auth.getLogin();
   public importacoes: ImportacaoDetalhesModel[] = [];
   public formImportacaoArquivo: FormGroup;
   public formImportacaoManual: FormGroup;
@@ -43,7 +43,7 @@ export class ImportacaoComponent implements OnInit {
     private _importacaoService: ImportacaoService,
     private _contratanteService: ContratanteService,
     private _modalService: NgbModal,
-    private _authService: AuthenticationService,
+    private _auth: AuthenticationService,
     private _formBuilder: FormBuilder,
     private _router: Router
   ) { }

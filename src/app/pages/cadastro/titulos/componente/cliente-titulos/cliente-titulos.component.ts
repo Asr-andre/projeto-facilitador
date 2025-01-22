@@ -18,7 +18,7 @@ export class ClienteTitulosComponent implements OnChanges {
 
   constructor(
     private _clienteTituloService: ClienteTituloService,
-    private _authService: AuthenticationService,
+    private _auth: AuthenticationService,
     private _alertService: AlertService
   ) {
     this.adicionarNovaLinha();
@@ -61,10 +61,10 @@ export class ClienteTitulosComponent implements OnChanges {
           produto: produto,
           vencimento: vencimento,
           valor: valor.toFixed(2),
-          id_empresa: Number(this._authService.getIdEmpresa()),
+          id_empresa: Number(this._auth.getIdEmpresa()),
           id_contratante: Number(this.idContratante),
           id_cliente: Number(this.idCliente),
-          user_login: this._authService.getLogin()
+          user_login: this._auth.getLogin()
         });
       });
 
@@ -131,10 +131,10 @@ export class ClienteTitulosComponent implements OnChanges {
           produto: dadosLinha[5].trim(),
           vencimento: dadosLinha[6].trim(),
           valor: dadosLinha[7].trim(),
-          id_empresa: Number(this._authService.getIdEmpresa()),
+          id_empresa: Number(this._auth.getIdEmpresa()),
           id_contratante: Number(this.idContratante),
           id_cliente: Number(this.idCliente),
-          user_login: this._authService.getLogin()
+          user_login: this._auth.getLogin()
         });
       }
     }
@@ -220,10 +220,10 @@ export class ClienteTitulosComponent implements OnChanges {
         produto: produto,
         vencimento: vencimento,
         valor: valor,
-        id_empresa: Number(this._authService.getIdEmpresa()),
+        id_empresa: Number(this._auth.getIdEmpresa()),
         id_contratante: Number(this.idContratante),
         id_cliente: Number(this.idCliente),
-        user_login: this._authService.getLogin()
+        user_login: this._auth.getLogin()
       });
     });
   }
@@ -238,10 +238,10 @@ export class ClienteTitulosComponent implements OnChanges {
       produto: '',
       vencimento: '',
       valor: '',
-      id_empresa: Number(this._authService.getIdEmpresa()),
+      id_empresa: Number(this._auth.getIdEmpresa()),
       id_contratante: Number(this.idContratante),
       id_cliente: Number(this.idCliente),
-      user_login: this._authService.getLogin()
+      user_login: this._auth.getLogin()
     });
   }
 

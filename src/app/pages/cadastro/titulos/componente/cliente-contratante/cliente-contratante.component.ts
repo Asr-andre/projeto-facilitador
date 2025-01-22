@@ -19,7 +19,7 @@ export class ClienteContratanteComponent {
 
   constructor(
     private servicoEmpresa: EmpresaService,
-    private _authService: AuthenticationService,
+    private _auth: AuthenticationService,
     private _alertService: AlertService
   ) {}
 
@@ -28,7 +28,7 @@ export class ClienteContratanteComponent {
     const linha = this.tabelaClientes.nativeElement.querySelector('tbody tr');
 
     if (linha) {
-      this.cliente.id_empresa = Number(this._authService.getIdEmpresa());
+      this.cliente.id_empresa = Number(this._auth.getIdEmpresa());
       this.cliente.id_contratante = Number(this.idContratante);
       this.cliente.cnpj_cpf = linha.querySelector('.cnpj_cpf').textContent.trim();
       this.cliente.rg = linha.querySelector('.rg').textContent.trim();
@@ -43,7 +43,7 @@ export class ClienteContratanteComponent {
       this.cliente.fone_celular = linha.querySelector('.fone_celular').textContent.trim();
       this.cliente.fone_comercial = linha.querySelector('.fone_comercial').textContent.trim();
       this.cliente.fone_residencial = linha.querySelector('.fone_residencial').textContent.trim();
-      this.cliente.user_login = this._authService.getLogin();
+      this.cliente.user_login = this._auth.getLogin();
 
       if (this.clientePreenchido(this.cliente)) {
         this.servicoEmpresa.importarClientes(this.cliente).subscribe((res) => {

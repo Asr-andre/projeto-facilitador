@@ -15,8 +15,8 @@ export class FilaComponent implements OnInit {
   public loading: boolean =false;
   public filas: FilaModel[]=[];
   public loadingMin: boolean = false;
-  public id_empresa = Number(this._authService.getIdEmpresa());
-  public user_login = this._authService.getLogin();
+  public id_empresa = Number(this._auth.getIdEmpresa());
+  public user_login = this._auth.getLogin();
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -30,7 +30,7 @@ export class FilaComponent implements OnInit {
 
   constructor(
     private _filaService: FilaService,
-    private _authService: AuthenticationService,
+    private _auth: AuthenticationService,
   ) { }
 
   ngOnInit(): void {

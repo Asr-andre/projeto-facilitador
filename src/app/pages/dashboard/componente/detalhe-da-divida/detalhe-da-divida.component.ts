@@ -34,8 +34,8 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   public loadingMin: boolean = false;
   public loading: boolean =false;
   public selecionarTodos: boolean = true;
-  public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
-  public login = this._authService.getLogin();
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public login = this._auth.getLogin();
   public tipoTitulo: TipoTituloModel;
   public formTitulo: FormGroup;
 
@@ -48,7 +48,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     private _dashboard: DashboardService,
     private _alertService: AlertService,
     private _simuladorPadraoService: SimuladorPadraoService,
-    private _authService: AuthenticationService,
+    private _auth: AuthenticationService,
     private _simuladorService: SimuladorPadraoService,
     private _datePipe: DatePipe,
     private _modalService: NgbModal,

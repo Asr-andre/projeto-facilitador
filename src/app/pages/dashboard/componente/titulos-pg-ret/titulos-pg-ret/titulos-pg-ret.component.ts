@@ -12,14 +12,14 @@ import { TitulosPgRetService } from 'src/app/core/services/titulos.pg.ret.servic
 export class TitulosPgRetComponent implements OnInit, OnChanges {
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
-  public idEmpresa: number = Number(this._authService.getIdEmpresa() || 0);
-  public login = this._authService.getLogin();
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
+  public login = this._auth.getLogin();
   public tituloPgRet: TituloModel[] = [];
   public loadingMin: boolean = false;
 
   constructor(
     private _titulosPgRetService: TitulosPgRetService,
-    private _authService: AuthenticationService,
+    private _auth: AuthenticationService,
     private _alertService: AlertService,
   ) { }
 

@@ -22,15 +22,15 @@ export class EnvioSmsComponent implements OnInit {
   public maxCaractere: number = 160;
   public mensagem: string = '';
   public loadingMin: boolean = false;
-  public idEmpresa = Number(this._authService.getIdEmpresa());
-  public login = this._authService.getLogin();
+  public idEmpresa = Number(this._auth.getIdEmpresa());
+  public login = this._auth.getLogin();
 
   constructor(
     private _modalService: NgbModal,
     private _formBuilder: FormBuilder,
     private _smsService: SmsService,
     private _alertService: AlertService,
-    private _authService: AuthenticationService,
+    private _auth: AuthenticationService,
   ) { }
 
 
