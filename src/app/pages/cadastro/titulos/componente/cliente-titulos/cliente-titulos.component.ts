@@ -17,7 +17,7 @@ export class ClienteTitulosComponent implements OnChanges {
   @ViewChild("tabelaClienteTitulos") tabelaClienteTitulos: ElementRef;
 
   constructor(
-    private _clienteTituloService: ClienteTituloService,
+    private _clienteTitulo: ClienteTituloService,
     private _auth: AuthenticationService,
     private _alert: AlertService
   ) {
@@ -80,7 +80,7 @@ export class ClienteTitulosComponent implements OnChanges {
 
   private salvarTitulos(titulos: any[]): void {
     this.loading = true;
-    this._clienteTituloService.cadastrarTitulos(titulos).subscribe((res) => {
+    this._clienteTitulo.cadastrarTitulos(titulos).subscribe((res) => {
       if (res && res.success === 'true') {
         this.loading = false
         this._alert.success(res.msg);

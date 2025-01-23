@@ -10,6 +10,7 @@ import { RetornoModel } from "src/app/core/models/retorno.model";
 import { AlertService } from "src/app/core/services/alert.service";
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { EmpresaService } from "src/app/core/services/cadastro/empresa.service";
+import { FuncoesService } from "src/app/core/services/funcoes.service";
 
 @Component({
   selector: "app-usuario",
@@ -22,9 +23,10 @@ export class UsuarioComponent implements OnInit, OnChanges {
 
   constructor(
     private _fb: FormBuilder,
-    private _empresaService: EmpresaService,
-    private _authenticationService: AuthenticationService,
-    private _alert: AlertService
+    private _empresa: EmpresaService,
+    private _auth: AuthenticationService,
+    private _alert: AlertService,
+    private _funcoes: FuncoesService
   ) {}
 
   ngOnInit() {
@@ -47,15 +49,15 @@ export class UsuarioComponent implements OnInit, OnChanges {
       email: ["", [Validators.required, Validators.email]],
       tipo: [""],
       fone: [""],
-      user_login: [this._authenticationService.getLogin()],
+      user_login: [this._auth.getLogin()],
     });
   }
 
   public cadastrarUsuario() {
-    this.marcarCamposComoTocados(this.formUsuario);
+    this._funcoes.camposInvalidos(this.formUsuario);
 
     if (this.formUsuario.valid) {
-      this._empresaService.cadastrarUsuario(this.formUsuario.value).subscribe((res: RetornoModel) => {
+      this._empresa.cadastrarUsuario(this.formUsuario.value).subscribe((res: RetornoModel) => {
           if (res && res.success === "true") {
             this._alert.success(res.msg);
           } else {
@@ -69,13 +71,5 @@ export class UsuarioComponent implements OnInit, OnChanges {
     } else {
       this._alert.warning("Preencha todos os campos obrigatórios");
     }
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
   }
 }

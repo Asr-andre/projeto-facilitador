@@ -25,7 +25,7 @@ export class ModalSituacaoComponent implements OnInit, OnChanges {
     private _fb: FormBuilder,
     private _auth: AuthenticationService,
     private _modal: NgbModal,
-    private _situacaoService: SituacaoService,
+    private _situacao: SituacaoService,
     private _alert: AlertService,
   ) { }
 
@@ -70,7 +70,7 @@ export class ModalSituacaoComponent implements OnInit, OnChanges {
     }
 
     this.loadingMin = true;
-    this._situacaoService.obterSituacao(requisicao).subscribe((res) => {
+    this._situacao.obterSituacao(requisicao).subscribe((res) => {
       if (res.success == 'true') {
         this.situacao = res.dados;
         this.loadingMin = false;
@@ -92,7 +92,7 @@ export class ModalSituacaoComponent implements OnInit, OnChanges {
     }
 
     this.loadingMin = true;
-    this._situacaoService.atualizarSituacao(this.formSituacao.value).subscribe((res) => {
+    this._situacao.atualizarSituacao(this.formSituacao.value).subscribe((res) => {
       if (res.success == 'true') {
         this.loadingMin = false;
         this.fechar();

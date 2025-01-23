@@ -40,7 +40,7 @@ export class ImportacaoComponent implements OnInit {
 
   constructor(
     private _alert: AlertService,
-    private _importacaoService: ImportacaoService,
+    private _importacao: ImportacaoService,
     private _contratante: ContratanteService,
     private _modal: NgbModal,
     private _auth: AuthenticationService,
@@ -64,7 +64,7 @@ export class ImportacaoComponent implements OnInit {
 
   public listarImportacoesRealizadas(): void {
     this.loading = true;
-    this._importacaoService.listarImportacoesRealizada(this.idEmpresa).subscribe((res) => {
+    this._importacao.listarImportacoesRealizada(this.idEmpresa).subscribe((res) => {
       if (res.success === "true") {
         this.loading = false;
         this.importacoes = res.dados;
@@ -157,7 +157,7 @@ export class ImportacaoComponent implements OnInit {
   }
 
   public uploadFile(file: File) {
-    this._importacaoService.uploadFile(file).subscribe(
+    this._importacao.uploadFile(file).subscribe(
       () => {
         this.enviarDadosFormulario();
         this._alert.success('Arquivo enviado com sucesso');
@@ -185,7 +185,7 @@ export class ImportacaoComponent implements OnInit {
     const idContratante = this.formImportacaoArquivo.get('id_contratante').value;
     const userLogin = this.formImportacaoArquivo.get('user_login').value;
 
-    this._importacaoService.enviarDadosFormulario(this.idEmpresa, idContratante, userLogin).subscribe(
+    this._importacao.enviarDadosFormulario(this.idEmpresa, idContratante, userLogin).subscribe(
       () => {
         this._alert.success('Dados do formulário enviados com sucesso');
         // Aqui você pode querer fechar o modal ou fazer outras ações

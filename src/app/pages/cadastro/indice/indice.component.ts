@@ -36,7 +36,7 @@ export class IndiceComponent implements OnInit {
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<Indice>>;
 
   constructor(
-    private _indiceService: IndiceService,
+    private _indice: IndiceService,
     private _fb: FormBuilder,
     private _auth: AuthenticationService,
     private _alert: AlertService,
@@ -70,7 +70,7 @@ export class IndiceComponent implements OnInit {
 
   public obterIndice() {
     this.loading = true;
-    this._indiceService.listarIndice(this.formIndice.value).subscribe({
+    this._indice.listarIndice(this.formIndice.value).subscribe({
       next: (res) => {
         this.loading = false;
         if (res.success === 'true') {
@@ -175,7 +175,7 @@ export class IndiceComponent implements OnInit {
         dadosParaEnvio.valor = dadosParaEnvio.valor.replace(',', '.');
 
         this.loadingMin = true;
-        this._indiceService.cadastrarIndice(dadosParaEnvio).subscribe((res) => {
+        this._indice.cadastrarIndice(dadosParaEnvio).subscribe((res) => {
           if(res.success === "true") {
             this.loadingMin = false;
             this.obterIndice();
@@ -204,7 +204,7 @@ export class IndiceComponent implements OnInit {
         dadosParaEnvio.valor = dadosParaEnvio.valor.replace(',', '.');
 
         this.loadingMin = true;
-        this._indiceService.editarIndice(dadosParaEnvio).subscribe((res) => {
+        this._indice.editarIndice(dadosParaEnvio).subscribe((res) => {
           if(res.success === "true") {
             this.loadingMin = false;
             this.obterIndice();
@@ -233,7 +233,7 @@ export class IndiceComponent implements OnInit {
       };
 
       this.loadingMin = true;
-      this._indiceService.excluirIndice(dadosParaExclusao).subscribe((res) => {
+      this._indice.excluirIndice(dadosParaExclusao).subscribe((res) => {
         if (res.success === "true") {
           this.loadingMin = false;
           this.obterIndice();

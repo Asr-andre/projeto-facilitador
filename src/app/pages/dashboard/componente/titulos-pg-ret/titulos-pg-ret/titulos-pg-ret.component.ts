@@ -18,7 +18,7 @@ export class TitulosPgRetComponent implements OnInit, OnChanges {
   public loadingMin: boolean = false;
 
   constructor(
-    private _titulosPgRetService: TitulosPgRetService,
+    private _baixas: TitulosPgRetService,
     private _auth: AuthenticationService,
     private _alert: AlertService,
   ) { }
@@ -44,7 +44,7 @@ export class TitulosPgRetComponent implements OnInit, OnChanges {
     };
 
     this.loadingMin = true;
-    this._titulosPgRetService.obterTitulosPagosRet(request).subscribe((res) => {
+    this._baixas.obterTitulosPagosRet(request).subscribe((res) => {
         this.tituloPgRet = res.titulos;
         this.loadingMin = false;
       },

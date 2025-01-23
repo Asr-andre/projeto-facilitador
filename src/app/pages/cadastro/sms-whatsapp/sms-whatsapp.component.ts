@@ -40,10 +40,10 @@ export class SmsWhatsappComponent implements OnInit {
 
   constructor(
     private _modal: NgbModal,
-    private _smsWhatsAppService: SmsWhatsAppService,
+    private _smsWhatsApp: SmsWhatsAppService,
     private _auth: AuthenticationService,
     private _alert: AlertService,
-    private fb: FormBuilder,
+    private _fb: FormBuilder,
     private _funcoes: FuncoesService
   ) { }
 
@@ -54,7 +54,7 @@ export class SmsWhatsappComponent implements OnInit {
   }
 
   public inicializarMensagemForm(dado?: CadastroMensagemModel) {
-    this.mensagemForm = this.fb.group({
+    this.mensagemForm = this._fb.group({
       id_perfilwhatsapp: [dado?.id_perfilwhatsapp || ''],
       id_empresa: [this.idEmpresa, Validators.required],
       titulo: [dado?.titulo || '', Validators.required],
@@ -92,7 +92,7 @@ export class SmsWhatsappComponent implements OnInit {
       user_login: this.login
     }
     this.loading = true;
-    this._smsWhatsAppService.obterMsg(dados).subscribe((res) => {
+    this._smsWhatsApp.obterMsg(dados).subscribe((res) => {
       if (res.success === "true") {
         this.msg = res.perfil_whatsapp;
         this.filtrar();
@@ -114,7 +114,7 @@ export class SmsWhatsappComponent implements OnInit {
   public cadastraMsg() {
     if (this.mensagemForm.valid) {
       this.loadingMin = true;
-      this._smsWhatsAppService.cadastrarMsg(this.mensagemForm.value).subscribe((res) => {
+      this._smsWhatsApp.cadastrarMsg(this.mensagemForm.value).subscribe((res) => {
         if (res.success === "true") {
           this._alert.success(res.msg);
           this.fechar();
@@ -144,7 +144,7 @@ export class SmsWhatsappComponent implements OnInit {
   public editarMsg() {
     if (this.mensagemForm.valid) {
       this.loadingMin = true;
-      this._smsWhatsAppService.editarMsg(this.mensagemForm.value).subscribe((res) => {
+      this._smsWhatsApp.editarMsg(this.mensagemForm.value).subscribe((res) => {
         if (res.success === "true") {
           this._alert.success(res.msg);
           this.fechar();

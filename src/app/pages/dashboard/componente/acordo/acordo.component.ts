@@ -21,7 +21,7 @@ export class AcordoComponent implements OnInit, OnChanges {
   public idsSelecionados: string[] = [];
 
   constructor(
-    private _acordoService: AcordoService,
+    private _acordo: AcordoService,
     private _auth: AuthenticationService,
     private _alert: AlertService,
   ) { }
@@ -47,7 +47,7 @@ export class AcordoComponent implements OnInit, OnChanges {
     };
 
     this.loadingMin = true;
-    this._acordoService.listarAcordos(requisicao).subscribe(
+    this._acordo.listarAcordos(requisicao).subscribe(
       (res: AcordoRespostaModel) => {
         if (res.success === 'true') {
           this.acordos = res.acordos;
@@ -88,7 +88,7 @@ export class AcordoComponent implements OnInit, OnChanges {
       };
 
       this._alert.impressaoDocumento();
-      this._acordoService.imprimirConfissaoDivida(dadosSelecionado).subscribe(
+      this._acordo.imprimirConfissaoDivida(dadosSelecionado).subscribe(
         (res) => {
           var link = "data:application/pdf;base64, " + res.base64;
           fetch(link).then(res => res.blob()).then(res => window.open(URL.createObjectURL(res), '_blank'));
@@ -114,7 +114,7 @@ export class AcordoComponent implements OnInit, OnChanges {
     }
 
     try {
-      const resposta = await this._acordoService.quebraAcordo(solicitacao).toPromise();
+      const resposta = await this._acordo.quebraAcordo(solicitacao).toPromise();
       if (resposta.success) {
         this._alert.success(resposta.msg);
         this.listarAcordos();

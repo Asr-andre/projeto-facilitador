@@ -23,7 +23,7 @@ export class BoletoPixComponent implements OnInit, OnChanges {
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<BoletoPixModel>>;
 
   constructor(
-    private _boletoPixService: BoletoPixService,
+    private _boletoPix: BoletoPixService,
     private _auth: AuthenticationService,
     private _alert: AlertService,
   ) { }
@@ -48,7 +48,7 @@ export class BoletoPixComponent implements OnInit, OnChanges {
     };
 
     this.loadingMin = true;
-    this._boletoPixService.obterBoletoPix(request).subscribe((res) => {
+    this._boletoPix.obterBoletoPix(request).subscribe((res) => {
       if (res.success === 'true') {
         this.boletos = res.boletos;
         this.dadosFiltrados = res.boletos;

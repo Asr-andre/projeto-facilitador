@@ -26,7 +26,7 @@ export class EnderecoComponent implements OnInit, OnChanges {
   public conteudoCompleto: string;
 
   constructor(
-    private _enderecoService: EnderecoService,
+    private _endereco: EnderecoService,
     private _alert: AlertService,
     private _fb: FormBuilder,
     private _auth: AuthenticationService,
@@ -84,7 +84,7 @@ export class EnderecoComponent implements OnInit, OnChanges {
     const request = { id_cliente: this.idCliente! };
 
     this.loadingMin = true;
-    this._enderecoService.obterEnderecos(request).subscribe(
+    this._endereco.obterEnderecos(request).subscribe(
       (res: EnderecoResponseModel) => {
         this.enderecos = res.enderecos;
         this.loadingMin = false;
@@ -112,7 +112,7 @@ export class EnderecoComponent implements OnInit, OnChanges {
   public cadastrarEndereco(): void {
     if (this.formEndereco.valid) {
       this.loadingMin = true;
-      this._enderecoService.cadastrarEndereco(this.formEndereco.value).subscribe((res) => {
+      this._endereco.cadastrarEndereco(this.formEndereco.value).subscribe((res) => {
         if (res.success === 'true') {
           this.obterEnderecos();
          this.fechar();
@@ -136,7 +136,7 @@ export class EnderecoComponent implements OnInit, OnChanges {
   public editarEndereco(): void {
     if (this.formEndereco.valid) {
       this.loadingMin = true;
-      this._enderecoService.editarEndereco(this.formEndereco.value).subscribe((res) => {
+      this._endereco.editarEndereco(this.formEndereco.value).subscribe((res) => {
         if (res.success === 'true') {
           this.obterEnderecos();
          this.fechar();

@@ -47,14 +47,13 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   constructor(
     private _dashboard: DashboardService,
     private _alert: AlertService,
-    private _simuladorPadraoService: SimuladorPadraoService,
+    private _simulador: SimuladorPadraoService,
     private _auth: AuthenticationService,
-    private _simuladorService: SimuladorPadraoService,
     private _datePipe: DatePipe,
     private _modal: NgbModal,
-    private _tipoTituloService: TipoTituloService,
+    private _tipoTitulo: TipoTituloService,
     private _fb: FormBuilder,
-    private _clienteService: ClienteService,
+    private _cliente: ClienteService,
     private _funcoes: FuncoesService
   ) { }
 
@@ -152,7 +151,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   }
 
   public obterTipoTitulo() {
-    this._tipoTituloService.obterTipoTitulo().subscribe((res) => {
+    this._tipoTitulo.obterTipoTitulo().subscribe((res) => {
       if (res) {
         this.tipoTitulo = res;
       }
@@ -245,7 +244,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
       titulos: titulosSelecionados
     };
 
-    this._simuladorPadraoService.simularNegociacao(requisicao).subscribe(
+    this._simulador.simularNegociacao(requisicao).subscribe(
       (retorno: SimulacaoRetornoModel) => {
         this.SimuladorPadraoComponent.abrirModalSimulado(retorno);
       },
@@ -296,7 +295,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
         titulos: titulos
       };
 
-      this._simuladorService.baixarTitulosPago(dadosParaEnvio).subscribe(
+      this._simulador.baixarTitulosPago(dadosParaEnvio).subscribe(
         (res) => {
           this._alert.success(res.msg);
           this.obterDetalhamentoPorId(this.idCliente, this.idContratante);
@@ -330,7 +329,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
     this.loadingMin = true;
 
-    this._clienteService.cadastrarTitulos(dadosTitulo).subscribe((res) => {
+    this._cliente.cadastrarTitulos(dadosTitulo).subscribe((res) => {
       if (res.success) {
         this._alert.success(res.msg);
         this.atualizarDetalhamento();

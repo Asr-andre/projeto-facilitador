@@ -25,7 +25,7 @@ export class EmailComponent implements OnInit, OnChanges{
   public formEmail: FormGroup;
 
   constructor(
-    private _emailService: EmailService,
+    private _email: EmailService,
     private _fb: FormBuilder,
     private _auth: AuthenticationService,
     private _alert: AlertService,
@@ -68,7 +68,7 @@ export class EmailComponent implements OnInit, OnChanges{
     if (!idCliente) return;
 
     this.loadingMin = true;
-    this._emailService.obterEmailPorCliente(idCliente).subscribe((res) => {
+    this._email.obterEmailPorCliente(idCliente).subscribe((res) => {
       this.emails = res;
       this.loadingMin = false;
     },
@@ -96,7 +96,7 @@ export class EmailComponent implements OnInit, OnChanges{
 
     if (this.formEmail.valid) {
       this.loadingMin = true;
-      this._emailService.cadastrarEmail(this.formEmail.value).subscribe((res) => {
+      this._email.cadastrarEmail(this.formEmail.value).subscribe((res) => {
         if (res.success === 'true') {
           this.carregarEmails(this.idCliente);
           modal.close();

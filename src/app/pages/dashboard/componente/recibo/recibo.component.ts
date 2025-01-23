@@ -24,7 +24,7 @@ export class ReciboComponent implements OnInit, OnChanges {
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<Recibos>>;
 
   constructor(
-    private _reciboService: ReciboService,
+    private _recibo: ReciboService,
     private _auth: AuthenticationService,
     private _alert: AlertService,
   ) { }
@@ -49,7 +49,7 @@ export class ReciboComponent implements OnInit, OnChanges {
     };
 
     this.loadingMin = true;
-    this._reciboService.obterRecibos(request).subscribe(
+    this._recibo.obterRecibos(request).subscribe(
       (res) => {
         if (res.success === 'true') {
           this.recibos = res.recibos;
@@ -106,7 +106,7 @@ export class ReciboComponent implements OnInit, OnChanges {
       };
 
       this._alert.impressaoDocumento();
-      this._reciboService.imprimirRecibos(dadosSelecionado).subscribe(
+      this._recibo.imprimirRecibos(dadosSelecionado).subscribe(
         (res) => {
           var link = "data:application/pdf;base64, " + res.base64;
           fetch(link).then(res => res.blob()).then(res => window.open(URL.createObjectURL(res), '_blank'));
@@ -133,7 +133,7 @@ export class ReciboComponent implements OnInit, OnChanges {
     }
 
     try {
-      const resposta = await this._reciboService.cancelarRecibos(solicitacao).toPromise();
+      const resposta = await this._recibo.cancelarRecibos(solicitacao).toPromise();
       if (resposta.success) {
         this._alert.success(resposta.msg);
         this.obterRecibos();

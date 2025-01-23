@@ -51,7 +51,7 @@ export class EnvioEmailComponent implements OnInit {
   constructor(
     private _modal: NgbModal,
     private _fb: FormBuilder,
-    private _emailService: EmailService,
+    private _email: EmailService,
     private _alert: AlertService,
     private _auth: AuthenticationService,
     private _emailPerfil: EmailPerfilService,
@@ -194,7 +194,7 @@ export class EnvioEmailComponent implements OnInit {
     dadosParaEnvio.assunto = this.assuntoSelecionado
 
     this.loadingMin = true;
-    this._emailService.envioEmailUnitario(dadosParaEnvio).subscribe({
+    this._email.envioEmailUnitario(dadosParaEnvio).subscribe({
       next: (res) => {
         this.loadingMin = false;
         if (res.success === 'true') {

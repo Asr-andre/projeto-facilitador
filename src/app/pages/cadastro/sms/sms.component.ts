@@ -40,12 +40,12 @@ export class SmsComponent implements OnInit {
 
 
   constructor(
-    private _smsService: SmsService,
+    private _sms: SmsService,
     private _fb: FormBuilder,
     private _modal: NgbModal,
     private _auth: AuthenticationService,
     private _alert: AlertService,
-        private _funcoes: FuncoesService
+    private _funcoes: FuncoesService
   ) { }
 
   ngOnInit(): void {
@@ -93,7 +93,7 @@ export class SmsComponent implements OnInit {
     }
 
     this.loading = true;
-    this._smsService.listarPerfilSms(dados).subscribe((res) => {
+    this._sms.listarPerfilSms(dados).subscribe((res) => {
       if(res.success === "true") {
         this.sms = res.perfil_sms;
         this.loading = false;
@@ -145,7 +145,7 @@ export class SmsComponent implements OnInit {
   public cadastraSms() {
     if (this.smsForm.valid) {
       this.loadingMin = true;
-      this._smsService.cadastrarSms(this.smsForm.value).subscribe((res) => {
+      this._sms.cadastrarSms(this.smsForm.value).subscribe((res) => {
         if (res.success === "true") {
           this._alert.success(res.msg);
           this.fechar();
@@ -175,7 +175,7 @@ export class SmsComponent implements OnInit {
   public editarSms() {
     if (this.smsForm.valid) {
       this.loadingMin = true;
-      this._smsService.editarSms(this.smsForm.value).subscribe((res) => {
+      this._sms.editarSms(this.smsForm.value).subscribe((res) => {
         if (res.success === "true") {
           this._alert.success(res.msg);
           this.fechar();

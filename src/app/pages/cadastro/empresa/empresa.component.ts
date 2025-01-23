@@ -4,6 +4,7 @@ import { RetornoModel } from 'src/app/core/models/retorno.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { EmpresaService } from 'src/app/core/services/cadastro/empresa.service';
+import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: 'app-empresa',
@@ -19,9 +20,10 @@ export class EmpresaComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private _empresaService: EmpresaService,
-    private _authenticationService: AuthenticationService,
-    private _alert: AlertService
+    private _empresa: EmpresaService,
+    private _auth: AuthenticationService,
+    private _alert: AlertService,
+    private _funcoes: FuncoesService
   ) { }
 
   ngOnInit() {
@@ -43,15 +45,15 @@ export class EmpresaComponent implements OnInit {
       email: ['',Validators.required],
       celular: [''],
       nome_responsavel: [''],
-      user_login: [this._authenticationService.getLogin()],
+      user_login: [this._auth.getLogin()],
     });
   }
 
   public cadastrarEmpresa() {
-    this.marcarCamposComoTocados(this.formEmpresa);
+    this._funcoes.camposInvalidos(this.formEmpresa);
 
     if (this.formEmpresa.valid) {
-      this._empresaService.cadastrarEmpresa(this.formEmpresa.value).subscribe((res: RetornoModel) => {
+      this._empresa.cadastrarEmpresa(this.formEmpresa.value).subscribe((res: RetornoModel) => {
         if (res && res.success === 'true') {
           this._alert.success(res.msg);
           this.idEmpresaEmit.emit(res.id_empresa);
@@ -69,13 +71,5 @@ export class EmpresaComponent implements OnInit {
     } else {
       this._alert.warning("Preencha todos os campos obrigatórios");
     }
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
   }
 }

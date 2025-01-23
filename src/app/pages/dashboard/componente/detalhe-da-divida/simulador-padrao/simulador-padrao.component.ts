@@ -60,7 +60,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public valor_atualizado_simulador = 0;
 
   constructor(
-    private _pixService: GeracaoPixService,
+    private _pix: GeracaoPixService,
     private _fb: FormBuilder,
     private _simulador: SimuladorPadraoService,
     private _auth: AuthenticationService,
@@ -351,7 +351,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       `Você deseja gerar um PIX com o valor total atualizado de <br><strong>R$${valorBoleto}</strong>?`
     ).then(confirmar => {
       if (confirmar) {
-        this._pixService.gerarPixBoleto(this.formGerarPixBoleto.value).subscribe((res) => {
+        this._pix.gerarPixBoleto(this.formGerarPixBoleto.value).subscribe((res) => {
           if (res.success === "true") {
             this.dadosPixGerado = res;
             this.abrirModalPixTitulos();

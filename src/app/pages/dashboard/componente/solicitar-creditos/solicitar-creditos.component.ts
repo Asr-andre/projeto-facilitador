@@ -30,7 +30,7 @@ export class SolicitarCreditosComponent implements OnInit {
   public retornoHistorico: HistoricoItem [] = [];
 
   constructor(
-    private _solicitarCreditosService: SolicitarCreditosService,
+    private _solicitarCreditos: SolicitarCreditosService,
     private _fb: FormBuilder,
     private _auth: AuthenticationService,
     private _alert: AlertService,
@@ -66,7 +66,7 @@ export class SolicitarCreditosComponent implements OnInit {
   public comprarCreditos() {
     if(this.formCreditos.valid) {
       this.loadingMin = true;
-      this._solicitarCreditosService.gerarPix(this.formCreditos.value).subscribe((res) => {
+      this._solicitarCreditos.gerarPix(this.formCreditos.value).subscribe((res) => {
         if (res.success === "true")  {
           this.dadosPixGerado = res.pix;
           this.mostraQrCode = true;
@@ -92,7 +92,7 @@ export class SolicitarCreditosComponent implements OnInit {
     dadosParaEnvio.data_fim = this._datePipe.transform(dadosParaEnvio.data_fim, "dd/MM/yyyy") || "";
 
     this.loadingMin = true;
-    this._solicitarCreditosService.obterHistorico(dadosParaEnvio).subscribe((res) => {
+    this._solicitarCreditos.obterHistorico(dadosParaEnvio).subscribe((res) => {
         this.retornoHistorico = res.data;
         this.loadingMin = false;
       },

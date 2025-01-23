@@ -17,7 +17,7 @@ export class ImportacaoManualComponent implements OnInit {
 
   constructor(
     private _alert: AlertService,
-    private _importacaoService: ImportacaoService,
+    private _importacao: ImportacaoService,
     private _contratante: ContratanteService,
     private _auth: AuthenticationService,
     private _router: Router
@@ -28,7 +28,7 @@ export class ImportacaoManualComponent implements OnInit {
   }
 
   loadImportacaoManual(): void {
-    this._importacaoService.loadImportacaoManual().subscribe(
+    this._importacao.loadImportacaoManual().subscribe(
       (data: Cadastro[]) => {
         this.base = data;
       },
@@ -41,5 +41,4 @@ export class ImportacaoManualComponent implements OnInit {
   public cancelar() {
     this._router.navigate(['/processamentos/importacao']);
   }
-
 }

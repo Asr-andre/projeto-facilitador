@@ -18,7 +18,7 @@ import { ChatVisibilidadeService } from 'src/app/core/services/chat.flutuante.se
 export class ChatComponent implements OnInit, OnDestroy {
   private pollingInterval = 60000; // 30 segundos
   private pollingSubscription: Subscription;
-  public idEmpresa: number = Number(this.auth.getIdEmpresa() || 0);
+  public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
   public resMsg: AlertaModel[] = [];
   chatSelecionado: any; // Item atualmente selecionado
 
@@ -45,11 +45,12 @@ export class ChatComponent implements OnInit, OnDestroy {
   status: string;
   image: string;
 
-  constructor(public formBuilder: UntypedFormBuilder,
+  constructor(
+    public _formBuilder: UntypedFormBuilder,
     private _sininhoService: SininhoService,
-    private chatVisibilidadeService: ChatVisibilidadeService,
-    private auth: AuthenticationService,
-    private fb: FormBuilder,
+    private _chatVisibilidade: ChatVisibilidadeService,
+    private _auth: AuthenticationService,
+    private _fb: FormBuilder,
   ) {
   }
 
@@ -57,7 +58,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.monitorarMsg();
     this.inicializarForChat();
 
-    this.formData = this.formBuilder.group({
+    this.formData = this._formBuilder.group({
       message: ['', [Validators.required]],
     });
 
@@ -67,7 +68,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   inicializarForChat() {
-    this.envioMensagemForm = this.fb.group({
+    this.envioMensagemForm = this._fb.group({
       numero: [this.telefone, [Validators.required]],
       canal: [this.canal],
       mensagem: ['', Validators.required],
@@ -83,7 +84,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   carregarMensagens(telefone: string, canal: string): void {
     this.loading = true;
-    this.chatVisibilidadeService.obterHistoricoChat(telefone, canal).subscribe(
+    this._chatVisibilidade.obterHistoricoChat(telefone, canal).subscribe(
       (response) => {
         if (response.success === 'true') {
           this.loading = false;
@@ -140,7 +141,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         time: currentDate.getHours() + ':' + currentDate.getMinutes()
       });
 
-      this.formData = this.formBuilder.group({
+      this.formData = this._formBuilder.group({
         message: null
       });
     }

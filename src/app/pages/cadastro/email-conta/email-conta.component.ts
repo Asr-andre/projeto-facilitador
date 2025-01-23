@@ -34,7 +34,7 @@ export class EmailContaComponent implements OnInit {
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<EmailContaModel>>;
 
   constructor(
-    private _emailContaService: EmailContaService,
+    private _emailConta: EmailContaService,
     private _auth: AuthenticationService,
     private _alert: AlertService,
     private _modal: NgbModal,
@@ -87,7 +87,7 @@ export class EmailContaComponent implements OnInit {
     if(this.emailContaForm.valid) {
       this.loadingMin = true;
 
-      this._emailContaService.cadastrarEmailConta(this.emailContaForm.value).subscribe((res) => {
+      this._emailConta.cadastrarEmailConta(this.emailContaForm.value).subscribe((res) => {
         if(res.success === "true") {
           this.loadingMin = false;
           this._alert.success(res.msg);
@@ -118,7 +118,7 @@ export class EmailContaComponent implements OnInit {
     if(this.emailContaForm.valid) {
       this.loadingMin = true;
 
-      this._emailContaService.editarEmailConta(this.emailContaForm.value).subscribe((res) => {
+      this._emailConta.editarEmailConta(this.emailContaForm.value).subscribe((res) => {
         if(res.success === "true") {
           this.loadingMin = false;
           this._alert.success(res.msg);
@@ -145,7 +145,7 @@ export class EmailContaComponent implements OnInit {
       id_perfilemail: 0
     }
     this.loading = true;
-    this._emailContaService.obterEmailConta(dados).subscribe((res) => {
+    this._emailConta.obterEmailConta(dados).subscribe((res) => {
       if(res.success === "true") {
         this.emailConta = res.perfil;
         this.filtrar();

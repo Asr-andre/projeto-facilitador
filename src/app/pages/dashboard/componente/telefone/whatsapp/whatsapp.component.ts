@@ -35,12 +35,12 @@ export class WhatsappComponent implements OnInit {
   public callbackRetorno = 'http://portal.facilitadorsistemas.com.br:3000/retornobestmessage';
 
   constructor(
-    private fb: FormBuilder,
-    private _whatsappService: WhatsappService,
+    private _fb: FormBuilder,
+    private _whatsapp: WhatsappService,
     private _auth: AuthenticationService,
     private _modal: NgbModal,
     private _alert: AlertService,
-    private _smsWhatsAppService: SmsWhatsAppService,
+    private _smsWhatsApp: SmsWhatsAppService,
   ) { }
 
   ngOnInit(): void {
@@ -48,12 +48,12 @@ export class WhatsappComponent implements OnInit {
   }
 
   public inicializarwhatsappForm() {
-    this.whatsappForm = this.fb.group({
+    this.whatsappForm = this._fb.group({
       id_empresa: [this.idEmpresa, Validators.required],
       centrocusto: [this.centrocusto, Validators.required],
       user_login: [this.login, Validators.required],
-      whats: this.fb.array([
-        this.fb.group({
+      whats: this._fb.array([
+        this._fb.group({
           numero: [this.telefoneCliente, Validators.required],
           mensagem: ['', Validators.required],
           idCustom: [this.idEmpresa, Validators.required],
@@ -73,7 +73,7 @@ export class WhatsappComponent implements OnInit {
     }
 
     this.loadingMin = true;
-    this._smsWhatsAppService.obterMsg(dados).subscribe((res) => {
+    this._smsWhatsApp.obterMsg(dados).subscribe((res) => {
       this.loadingMin = false;
       if (res.success === "true") {
         this.loadingMin = false;
@@ -172,7 +172,7 @@ export class WhatsappComponent implements OnInit {
     if (this.whatsappForm.valid) {
       this.substituirVariaveisNaMensagem();
       this.loadingMin = true;
-      this._whatsappService.enviarMensagem(this.whatsappForm.value).subscribe(() => {
+      this._whatsapp.enviarMensagem(this.whatsappForm.value).subscribe(() => {
         this.loadingMin = false;
         this._alert.success('Mensagem enviada com sucesso!');
         this.fechaModal();

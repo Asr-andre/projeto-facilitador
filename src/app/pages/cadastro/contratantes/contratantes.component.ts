@@ -67,10 +67,10 @@ export class ContratantesComponent implements OnInit {
   constructor(
     private _retornoCep: ConsultaCepService,
     private _contratante: ContratanteService,
-    private _emailContaService: EmailContaService,
-    private _smsWhatsAppService: SmsWhatsAppService,
-    private _smsService: SmsService,
-    private _formulaService: FormulaService,
+    private _emailConta: EmailContaService,
+    private _smsWhatsApp: SmsWhatsAppService,
+    private _sms: SmsService,
+    private _formula: FormulaService,
     private _fb: FormBuilder,
     private _modal: NgbModal,
     private _auth: AuthenticationService,
@@ -198,7 +198,7 @@ export class ContratantesComponent implements OnInit {
     this.loadingMin = true;
 
     return new Promise((resolve, reject) => {
-      this._emailContaService.obterEmailConta(dados).subscribe((res) => {
+      this._emailConta.obterEmailConta(dados).subscribe((res) => {
         this.loadingMin = false;
 
         if (res.success === "true") {
@@ -227,7 +227,7 @@ export class ContratantesComponent implements OnInit {
     this.loadingMin = true;
 
     return new Promise((resolve, reject) => {
-      this._smsWhatsAppService.obterMsg(dados).subscribe((res) => {
+      this._smsWhatsApp.obterMsg(dados).subscribe((res) => {
         this.loadingMin = false;
 
         if (res.success === "true") {
@@ -256,7 +256,7 @@ export class ContratantesComponent implements OnInit {
     this.loadingMin = true;
 
     return new Promise((resolve, reject) => {
-      this._smsService.listarPerfilSms(dados).subscribe((res) => {
+      this._sms.listarPerfilSms(dados).subscribe((res) => {
         this.loadingMin = false;
 
         if (res.success === "true") {
@@ -285,7 +285,7 @@ export class ContratantesComponent implements OnInit {
     this.loadingMin = true;
 
     return new Promise((resolve, reject) => {
-      this._formulaService.listarFormulas(dados).subscribe((res) => {
+      this._formula.listarFormulas(dados).subscribe((res) => {
         this.loadingMin = false;
 
         if (res.success === "true") {

@@ -45,7 +45,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     private _modal: NgbModal,
     private _auth: AuthenticationService,
     private _acionamento: AcionamentoService,
-    private _acaoCobrancaService: AcaoCobrancaService,
+    private _acaoCobranca: AcaoCobrancaService,
     private _fb: FormBuilder,
     private _datePipe: DatePipe,
     private _excel: ExcelService,
@@ -127,7 +127,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       };
 
       this.loadinAcaoCobanca = true;
-      this._acaoCobrancaService.listarAcoesCobranca(requisicao).subscribe((res) => {
+      this._acaoCobranca.listarAcoesCobranca(requisicao).subscribe((res) => {
         this.loadinAcaoCobanca = false;
         if (res.success) {
           this.loadinAcaoCobanca = false;

@@ -39,7 +39,7 @@ export class FormulaComponent implements OnInit {
   }
 
   constructor(
-    private _formulaService: FormulaService,
+    private _formula: FormulaService,
     private _fb: FormBuilder,
     private _modal: NgbModal,
     private _auth: AuthenticationService,
@@ -76,7 +76,7 @@ export class FormulaComponent implements OnInit {
 
   public obterFormulas() {
     this.loading = true;
-    this._formulaService.listarFormulas(this.dados).subscribe((res) => {
+    this._formula.listarFormulas(this.dados).subscribe((res) => {
       if (res.success === "true") {
         this.formulas = res.formulas;
         this.filtrar();
@@ -142,7 +142,7 @@ export class FormulaComponent implements OnInit {
   public cadastrarFormula() {
     if (this.formFormula.valid) {
       this.loadingMin = true;
-      this._formulaService.cadastrarFormula(this.formFormula.value).subscribe((res) => {
+      this._formula.cadastrarFormula(this.formFormula.value).subscribe((res) => {
         if(res.success === "true") {
           this.loadingMin = false;
           this.obterFormulas();
@@ -173,7 +173,7 @@ export class FormulaComponent implements OnInit {
   public editarFormula() {
     if (this.formFormula.valid) {
       this.loadingMin = true;
-      this._formulaService.editarFormula(this.formFormula.value).subscribe((res) => {
+      this._formula.editarFormula(this.formFormula.value).subscribe((res) => {
         if(res.success === "true") {
           this.loadingMin = false;
           this.obterFormulas();

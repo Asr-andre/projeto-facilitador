@@ -10,6 +10,7 @@ import { RetornoModel } from "src/app/core/models/retorno.model";
 import { AlertService } from "src/app/core/services/alert.service";
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { EmpresaService } from "src/app/core/services/cadastro/empresa.service";
+import { FuncoesService } from "src/app/core/services/funcoes.service";
 
 @Component({
   selector: "app-contratante",
@@ -22,9 +23,10 @@ export class ContratanteComponent implements OnInit, OnChanges {
 
   constructor(
     private _fb: FormBuilder,
-    private _empresaService: EmpresaService,
-    private _authenticationService: AuthenticationService,
-    private _alert: AlertService
+    private _empresa: EmpresaService,
+    private _auth: AuthenticationService,
+    private _alert: AlertService,
+    private _funcoes: FuncoesService
   ) {}
 
   ngOnInit() {
@@ -49,15 +51,15 @@ export class ContratanteComponent implements OnInit, OnChanges {
       bairro: [""],
       cidade: [""],
       uf: [""],
-      user_login: [this._authenticationService.getLogin()],
+      user_login: [this._auth.getLogin()],
     });
   }
 
   public cadastrarContratante() {
-    this.marcarCamposComoTocados(this.formContratante);
+    this._funcoes.camposInvalidos(this.formContratante);
 
     if (this.formContratante.valid) {
-      this._empresaService.cadastrarContratante(this.formContratante.value).subscribe((res: RetornoModel) => {
+      this._empresa.cadastrarContratante(this.formContratante.value).subscribe((res: RetornoModel) => {
             if (res && res.success === "true") {
               this._alert.success(res.msg);
             } else {
@@ -71,13 +73,5 @@ export class ContratanteComponent implements OnInit, OnChanges {
     } else {
       this._alert.warning("Preencha todos os campos obrigatórios");
     }
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
   }
 }

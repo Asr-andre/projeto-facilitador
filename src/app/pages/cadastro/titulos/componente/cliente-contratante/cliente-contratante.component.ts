@@ -18,7 +18,7 @@ export class ClienteContratanteComponent {
   public loading: boolean = false;
 
   constructor(
-    private servicoEmpresa: EmpresaService,
+    private _empresa: EmpresaService,
     private _auth: AuthenticationService,
     private _alert: AlertService
   ) {}
@@ -46,7 +46,7 @@ export class ClienteContratanteComponent {
       this.cliente.user_login = this._auth.getLogin();
 
       if (this.clientePreenchido(this.cliente)) {
-        this.servicoEmpresa.importarClientes(this.cliente).subscribe((res) => {
+        this._empresa.importarClientes(this.cliente).subscribe((res) => {
             if (res && res.success === 'true') {
               this.loading = false;
               this.idCliente.emit(Number(res.id_cliente));

@@ -28,7 +28,7 @@ export class EnvioSmsComponent implements OnInit {
   constructor(
     private _modal: NgbModal,
     private _fb: FormBuilder,
-    private _smsService: SmsService,
+    private _sms: SmsService,
     private _alert: AlertService,
     private _auth: AuthenticationService,
   ) { }
@@ -57,7 +57,7 @@ export class EnvioSmsComponent implements OnInit {
     }
 
     this.loadingMin = true;
-    this._smsService.listarPerfilSms(dados).subscribe((res) => {
+    this._sms.listarPerfilSms(dados).subscribe((res) => {
       if(res.success === "true") {
         this.sms = res.perfil_sms;
         this.loadingMin = false;
@@ -144,7 +144,7 @@ export class EnvioSmsComponent implements OnInit {
       const mensagemSemQuebraLinha = this.formEnvioSms.get('mensagem')?.value.replace(/\n/g, '');
       this.formEnvioSms.patchValue({ mensagem: mensagemSemQuebraLinha });
 
-      this._smsService.envioSmsUnitario(this.formEnvioSms.value).subscribe((res) => {
+      this._sms.envioSmsUnitario(this.formEnvioSms.value).subscribe((res) => {
         this.loadingMin = false;
         if (res.success === 'true') {
           this.dadosEnviado.emit();

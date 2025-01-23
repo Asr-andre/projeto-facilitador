@@ -27,9 +27,9 @@ export class CarteiraDeClientesComponent implements OnInit {
   public formFila: FormGroup;
   public formMsgLote: FormGroup;
   public carteiraDeClientes: CarteiraClienteModel[] = [];
-  public idEmpresa = Number(this._authenticationService.getIdEmpresa());
+  public idEmpresa = Number(this._auth.getIdEmpresa());
   public contratanteSelecionado: number;
-  public login = this._authenticationService.getLogin();
+  public login = this._auth.getLogin();
   public filtros: boolean = false;
   public loading: boolean =false;
   public ativaAba: number = 1;
@@ -53,9 +53,9 @@ export class CarteiraDeClientesComponent implements OnInit {
 
   constructor(
     private _contratante: ContratanteService,
-    private _carteiraDeClienteService: CarteiraDeClienteService,
-    private _authenticationService: AuthenticationService,
-    private _smsWhatsAppService: SmsWhatsAppService,
+    private _carteira: CarteiraDeClienteService,
+    private _auth: AuthenticationService,
+    private _smsWhatsApp: SmsWhatsAppService,
     private _msgLote: WhatsappService,
     private _alert: AlertService,
     private _fb: FormBuilder,
@@ -152,7 +152,7 @@ export class CarteiraDeClientesComponent implements OnInit {
       user_login: this.login
     }
 
-    this._smsWhatsAppService.obterMsg(dados).subscribe((res) => {
+    this._smsWhatsApp.obterMsg(dados).subscribe((res) => {
       if (res.success === "true") {
         this.msg = res.perfil_whatsapp;
       } else {
@@ -240,7 +240,7 @@ export class CarteiraDeClientesComponent implements OnInit {
 
   public enviarClienteParaFila() {
     if (this.formFila.valid) {
-      this._carteiraDeClienteService.enviarClienteParaFila(this.formFila.value).subscribe((res) => {
+      this._carteira.enviarClienteParaFila(this.formFila.value).subscribe((res) => {
         this._alert.success(res.msg);
         this._modal.dismissAll();
       }, (error) => {
@@ -271,7 +271,7 @@ export class CarteiraDeClientesComponent implements OnInit {
       dadosParaEnvio.periodo_importacao_inicial = this._datePipe.transform(dadosParaEnvio.periodo_importacao_inicial, "dd/MM/yyyy") || "";
       dadosParaEnvio.periodo_importacao_final = this._datePipe.transform(dadosParaEnvio.periodo_importacao_final, "dd/MM/yyyy") || "";
 
-      this._carteiraDeClienteService.obterCarteiradeCliente(dadosParaEnvio).subscribe((res) => {
+      this._carteira.obterCarteiradeCliente(dadosParaEnvio).subscribe((res) => {
         if (res.success === "true") {
           this.carteiraDeClientes = res.clientes;
           this.calcularTotalClientes(); // Calcula o total de IDs de clientes
