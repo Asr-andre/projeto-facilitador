@@ -44,25 +44,18 @@ export class PrestacaoContasComponent implements OnInit, OnChanges  {
   public valorReceitaTaxa: number = 0;
   public valorComissao: number = 0;
   public valorRepasse: number = 0;
-
-  registros = [
-    { cpf: '46419730325', nomeCliente: 'PEDRO SOUZA AMARAL', vencimento: '09/07/2024', dtPago: '06/01/2024', parcPla: '01/12', valorPrincipal: 525.00, valorPago: 600.00, comissao: 75.00, repasse: 525.00 },
-    { cpf: '46419730325', nomeCliente: 'PEDRO SOUZA AMARAL', vencimento: '09/07/2024', dtPago: '06/01/2024', parcPla: '02/12', valorPrincipal: 525.00, valorPago: 590.00, comissao: 65.00, repasse: 525.00 },
-    { cpf: '12314569874', nomeCliente: 'André da Silva Botelho Júnior', vencimento: '09/01/2023', dtPago: '06/01/2024', parcPla: '01/01', valorPrincipal: 80.00, valorPago: 100.00, comissao: 20.00, repasse: 80.00 }
-  ];
+  public nomeEmpresa: string = '';
 
   constructor(
       private _financeiro: FinanceiroService,
       private _auth: AuthenticationService,
       private _datePipe: DatePipe,
       private _alert: AlertService,
-      private _excel: ExcelService,
       private _modal: NgbModal
-  
+
     ) { }
 
   ngOnInit(): void {
-
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -71,20 +64,28 @@ export class PrestacaoContasComponent implements OnInit, OnChanges  {
       }
     }
 
+    atualizarNomeEmpresa(): void {
+      if (this.dadosFiltrados && this.dadosFiltrados.length > 0) {
+        this.nomeEmpresa = this.dadosFiltrados[0].fantasia || '';
+      } else {
+        this.nomeEmpresa = '';
+      }
+    }
+
     get totalPrincipal() {
-      return this.registros.reduce((total, registro) => total + registro.valorPrincipal, 0);
+      return this.dadosFiltrados.reduce((total, dadosFiltrados) => total + dadosFiltrados.valor_original, 0);
     }
 
     get totalPago() {
-      return this.registros.reduce((total, registro) => total + registro.valorPago, 0);
+      return this.dadosFiltrados.reduce((total, dadosFiltrados) => total + dadosFiltrados.valor_pago, 0);
     }
 
     get totalComissao() {
-      return this.registros.reduce((total, registro) => total + registro.comissao, 0);
+      return this.dadosFiltrados.reduce((total, dadosFiltrados) => total + dadosFiltrados.comissao, 0);
     }
 
     get totalRepasse() {
-      return this.registros.reduce((total, registro) => total + registro.repasse, 0);
+      return this.dadosFiltrados.reduce((total, dadosFiltrados) => total + dadosFiltrados.repasse, 0);
     }
 
     public gerarPDF(): void {
@@ -120,13 +121,12 @@ export class PrestacaoContasComponent implements OnInit, OnChanges  {
     public relatorioGeral() {
         if (this.filtros) {
           const dadosParaEnvio = { ...this.filtros };
-          console.log(this.filtros)
-    
+
           dadosParaEnvio.data_inicio = this._datePipe.transform(dadosParaEnvio.data_inicio, "dd/MM/yyyy") || "";
           dadosParaEnvio.data_fim = this._datePipe.transform(dadosParaEnvio.data_fim, "dd/MM/yyyy") || "";
-    
+
           this.loadingMin = true;
-    
+
           this._financeiro.obterFiltros(dadosParaEnvio).subscribe(
             (res) => {
               this.loadingMin = false;
@@ -134,6 +134,7 @@ export class PrestacaoContasComponent implements OnInit, OnChanges  {
                 this.resultFiltros = res.titulos;
                 this.dadosFiltrados = res.titulos;
                 this.calcularTotais();
+                this.atualizarNomeEmpresa();
               } else {
                 this._alert.error('Nenhum resultado encontrado.');
               }
@@ -147,7 +148,7 @@ export class PrestacaoContasComponent implements OnInit, OnChanges  {
           this._alert.error('Formulário inválido. Por favor, preencha todos os campos obrigatórios.');
         }
       }
-    
+
       public calcularTotais(): void {
         this.totalPagamentos = this.dadosFiltrados.length;
         this.valorTotalPago = this.dadosFiltrados.reduce((sum, item) => sum + (item.valor_pago || 0), 0);
@@ -164,16 +165,16 @@ export class PrestacaoContasComponent implements OnInit, OnChanges  {
         this.valorReceitaTaxa = this.dadosFiltrados.reduce((sum, item) => sum + (item.receita_taxa || 0), 0);
         this.valorComissao = this.dadosFiltrados.reduce((sum, item) => sum + (item.comissao || 0), 0);
         this.valorRepasse = this.dadosFiltrados.reduce((sum, item) => sum + (item.repasse || 0), 0);
-    
+
       }
-    
+
       public ordenar({ column, direction }: SortEvent<TituloLiquidado>) {
         this.headers.forEach(header => {
           if (header.sortable !== column) {
             header.direction = '';
           }
         });
-    
+
         if (direction === '' || column === '') {
           this.dadosFiltrados = this.resultFiltros;
         } else {
@@ -183,11 +184,11 @@ export class PrestacaoContasComponent implements OnInit, OnChanges  {
           });
         }
       }
-    
+
       public filtrar(): void {
         this.dadosFiltrados = Utils.filtrar(this.resultFiltros, this.textoPesquisa);
       }
-    
+
     public fechar() {
       this._modal.dismissAll();
     }

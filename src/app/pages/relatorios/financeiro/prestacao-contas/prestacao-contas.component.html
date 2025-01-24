@@ -94,7 +94,7 @@
   <!-- Corpo do Modal -->
   <div class="modal-body" style="font-size: 10px; line-height: 1.4; padding: 15px; top: 20px;" id="conteudoPDF">
     <h5 class="text-center" style="font-weight: bold; margin-bottom: 20px;">MODELO DE PRESTAÇÃO DE CONTAS</h5>
-    <p style="margin-bottom: 5px;"><strong>Nome da Empresa:</strong> ONZE TELECOM</p>
+    <p style="margin-bottom: 5px;"><strong>Nome da Empresa:</strong> {{ nomeEmpresa }}</p>
 
     <!-- Tabela Principal -->
     <table class="table" style="font-size: 10px; text-align: center; margin-top: 10px;">
@@ -112,14 +112,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let registro of registros">
-          <td>{{ registro.cpf }}</td>
-          <td >{{ registro.nomeCliente }}</td>
-          <td>{{ registro.vencimento }}</td>
-          <td >{{ registro.dtPago }}</td>
-          <td>{{ registro.parcPla }}</td>
-          <td>{{ registro.valorPrincipal | currency:'BRL' }}</td>
-          <td>{{ registro.valorPago | currency:'BRL' }}</td>
+        <tr *ngFor="let registro of dadosFiltrados">
+          <td>{{ registro.cnpj_cpf | cpfCnpj }}</td>
+          <td >{{ registro.nome }}</td>
+          <td>{{ registro.vencimento | dataBr }}</td>
+          <td >{{ registro.pagamento | dataBr }}</td>
+          <td>{{ registro.parcela }}/{{ registro.plano}}</td>
+          <td>{{ registro.valor_original | currency: 'BRL':'symbol':'1.2-2' }}</td>
+          <td>{{ registro.valor_pago | currency:'BRL' }}</td>
           <td>{{ registro.comissao | currency:'BRL' }}</td>
           <td>{{ registro.repasse | currency:'BRL' }}</td>
         </tr>
