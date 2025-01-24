@@ -35,8 +35,7 @@
                     ngbTooltip="Selecione um contratante para realizar a pesquisa. Caso contrário, serão exibidos todos os contratantes."
                     placement="left">
                   </i></label>
-                <select type="text" class="form-control form-control-sm" formControlName="id_contratante"
-                  (focus)="carregarContratantes()">
+                <select type="text" class="form-control form-control-sm" formControlName="id_contratante">
                   <option value="0">Selecione</option>
                   <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">
                     {{ contratante.fantasia }}

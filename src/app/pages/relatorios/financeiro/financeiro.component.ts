@@ -35,6 +35,7 @@ export class FinanceiroComponent implements OnInit  {
 
   ngOnInit(): void {
     this.iniciarForm();
+    this.obterContratantes();
   }
 
   public iniciarForm(): void {
@@ -69,12 +70,6 @@ export class FinanceiroComponent implements OnInit  {
         this.exibirCard = false;
         this._alert.warning('Selecione um tipo de relatório antes de pesquisar.');
         break;
-    }
-  }
-
-  public carregarContratantes(): void {
-    if (!this.contratantesCarregados) {
-      this.obterContratantes();
     }
   }
 
