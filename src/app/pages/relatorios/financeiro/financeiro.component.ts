@@ -59,8 +59,8 @@ export class FinanceiroComponent implements OnInit  {
     this.tipoRelatorio = tipoRelatorio;
 
     switch (tipoRelatorio) {
-      case '1':
-      case '2':
+      case 'R':
+      case 'C':
         this.exibirCard = true;
         this.filtros = this.formPesquisar.value;
         break;

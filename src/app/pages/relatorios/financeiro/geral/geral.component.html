@@ -49,6 +49,10 @@
                 <th sortable="numero_contrato" (sort)="ordenar($event)" scope="col">Contrato</th>
                 <th sortable="produto" (sort)="ordenar($event)" scope="col">Produto</th>
                 <th sortable="numero_documento" (sort)="ordenar($event)" scope="col">Número Documento</th>
+                <th sortable="id_recibo" (sort)="ordenar($event)" scope="col">Id Recibo</th>
+                <th sortable="vencimento" (sort)="ordenar($event)" scope="col">Vencimento</th>
+                <th sortable="parcela" (sort)="ordenar($event)" scope="col">Parcela</th>
+                <th sortable="plano" (sort)="ordenar($event)" scope="col">Plano</th>
                 <th sortable="pagamento" (sort)="ordenar($event)" scope="col">Data Pagamento</th>
                 <th sortable="valor_pago" (sort)="ordenar($event)" scope="col">Valor Pago</th>
                 <th sortable="valor_original" (sort)="ordenar($event)" scope="col">Valor Original</th>
@@ -73,6 +77,10 @@
                   <td>{{ item.numero_contrato }}</td>
                   <td>{{ item.produto }}</td>
                   <td>{{ item.numero_documento }}</td>
+                  <td>{{ item.id_recibo }}</td>
+                  <td>{{ item.vencimento | dataBr }}</td>
+                  <td>{{ item.parcela }}</td>
+                  <td>{{ item.plano }}</td>
                   <td>{{ item.pagamento | dataBr }}</td>
                   <td>{{ item.valor_pago | currency: 'BRL':'symbol':'1.2-2' }}</td>
                   <td>{{ item.valor_original | currency: 'BRL':'symbol':'1.2-2' }}</td>
@@ -90,7 +98,7 @@
                   <td>{{ item.repasse | currency: 'BRL':'symbol':'1.2-2' }}</td>
                 </tr>
                 <tr class="tabela-custom">
-                  <td colspan="6" style="text-align: right; font-weight: bold;">Total Pagamentos:</td>
+                  <td colspan="10" style="text-align: right; font-weight: bold;">Total Pagamentos:</td>
                   <td style="font-weight: bold;">{{ totalPagamentos }}</td>
                   <td style="font-weight: bold;">{{ valorTotalPago | currency: 'BRL':'symbol':'1.2-2' }}</td>
                   <td style="font-weight: bold;">{{ valorTotalOriginal | currency: 'BRL':'symbol':'1.2-2' }}</td>

@@ -46,7 +46,9 @@
                 <th sortable="fantasia" (sort)="ordenar($event)" scope="col">Fantasia</th>
                 <th sortable="nome" (sort)="ordenar($event)" scope="col">Nome</th>
                 <th sortable="cnpj_cpf" (sort)="ordenar($event)" scope="col">CNPJ/CPF</th>
+                <th sortable="vencimento" (sort)="ordenar($event)" scope="col">Vencimento</th>
                 <th sortable="pagamento" (sort)="ordenar($event)" scope="col">Data Pagamento</th>
+                <th sortable="pagamento" (sort)="ordenar($event)" scope="col">Parc/Pla</th>
                 <th sortable="valor_pago" (sort)="ordenar($event)" scope="col">Valor Pago</th>
                 <th sortable="valor_original" (sort)="ordenar($event)" scope="col">Valor Original</th>
                 <th sortable="comissao" (sort)="ordenar($event)" scope="col">Comissão</th>
@@ -57,7 +59,9 @@
                   <td>{{ item.fantasia }}</td>
                   <td>{{ item.nome }}</td>
                   <td>{{ item.cnpj_cpf | cpfCnpj }}</td>
+                  <td>{{ item.vencimento | dataBr }}</td>
                   <td>{{ item.pagamento | dataBr }}</td>
+                  <td>{{ item.parcela }}/{{ item.plano}}</td>
                   <td>{{ item.valor_pago | currency: 'BRL':'symbol':'1.2-2' }}</td>
                   <td>{{ item.valor_original | currency: 'BRL':'symbol':'1.2-2' }}</td>
                   <td>{{ item.comissao | currency: 'BRL':'symbol':'1.2-2' }}</td>

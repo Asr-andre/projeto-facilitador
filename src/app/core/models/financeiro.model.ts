@@ -1,9 +1,11 @@
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 export class RequisicaoTitulosLiquidados {
   id_empresa: number;
   id_contratante: number;
   data_inicio: string;
   data_fim: string;
   user_login: string;
+  tipo: string;
 }
 
 export class TituloLiquidado {
@@ -29,6 +31,10 @@ export class TituloLiquidado {
   receita_taxa: number;
   comissao: number;
   repasse: number;
+  id_recibo: number;
+  vencimento: string;
+  parcela: number;
+  plano: number;
 }
 
 export class RetornoTitulosLiquidados {
