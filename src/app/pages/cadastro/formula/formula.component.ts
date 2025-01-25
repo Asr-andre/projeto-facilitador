@@ -95,6 +95,19 @@ export class FormulaComponent implements OnInit {
     });
   }
 
+  public validarEntrada(event: KeyboardEvent) {
+    const input = event.target as HTMLInputElement;
+    const value = Number(input.value + event.key);
+
+    if (!/^\d$/.test(event.key) && event.key !== 'Backspace') {
+      event.preventDefault();
+    }
+
+    if (value < 0 || value > 100) {
+      event.preventDefault();
+    }
+  }
+
   public filtrar(): void {
     this.dadosFiltrados = Utils.filtrar(this.formulas, this.textoPesquisa);
     this.totalRegistros = this.dadosFiltrados.length;
