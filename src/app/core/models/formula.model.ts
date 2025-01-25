@@ -38,6 +38,8 @@ export class FormulaRequest {
   id_empresa: number;
   descricao: string;
   usa_indice?: string;
+  usa_adicional?: string;
+  fator_adicional: number;
   fator_multa: number;
   fator_juros: number;
   fator_taxa: number;
