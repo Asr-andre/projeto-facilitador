@@ -38,6 +38,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public dadosSimulacao: any;
   public dadosPixGerado: GerarPixResponse;
   public loadingMin: boolean =false;
+  public permitirValorAdicional: string = '';
 
   @Output() clienteAtualizado = new EventEmitter<void>();
 
@@ -46,6 +47,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public totalIndice: number = 0;
   public totalTaxa: number = 0;
   public totalGeral: number = 0;
+  public totalAdicional: number = 0;
   public totalValor: number = 0;
 
   public totalAcordo: number = 0;
@@ -91,6 +93,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       id_contratante: [this.idContratante],
       id_cliente: [this.idCliente],
       id_acordo: [],
+      valor_adicional: ['0', [Validators.min(0), Validators.max(100), Validators.required]],
       desconto_principal: ["0", Validators.min(0)],
       desconto_multa: ["0", Validators.min(0)],
       desconto_juros: ["0", Validators.min(0)],
@@ -154,7 +157,21 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     });
   }
 
+  public validarEntrada(event: KeyboardEvent) {
+    const input = event.target as HTMLInputElement;
+    const value = Number(input.value + event.key);
+
+    if (!/^\d$/.test(event.key) && event.key !== 'Backspace') {
+      event.preventDefault();
+    }
+
+    if (value < 0 || value > 100) {
+      event.preventDefault();
+    }
+  }
+
   public abrirModalSimulado(data: any): void {
+    this.permitirValorAdicional = data.usa_adicional?.trim() || '';
     this.data = data;
     this.formSimulador();
     this.originalPrincipal = data.desconto_principal;
@@ -210,6 +227,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     this.totalIndice = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_indice, 0);
     this.totalMulta = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_multa, 0);
     this.totalTaxa = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_taxa, 0);
+    this.totalAdicional = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_adicional, 0);
     this.totalGeral = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_atualizado,0);
 
     this.valor_atualizado_simulador = this.totalGeral !== 0 ? this.totalGeral : this.totalValor;

@@ -50,6 +50,7 @@ export class TituloRecalculoModel {
   id_titulo: number;
   vencimento: string;
   valor: number;
+  valor_adicional: number;
   desc_principal: number;
   valor_multa: number;
   desc_multa: number;

@@ -18,6 +18,7 @@ import { FormatarDocumentoDirective } from './formatar-cpf.cnpj.directive';
 import { DataMesDirective } from './data-mes.directive';
 import { DeixaSomenteLeituraDirective } from './deixa.somente.leitura.diretive';
 import { VerificarValorNegativoDirective } from './verifica.valor.negativo.diretive';
+import { SomenteLeituraDirective } from './somente.leitura.s.n.directive';
 
 const directive = [
   ClickCorDirective,
@@ -38,7 +39,8 @@ const directive = [
   FormatarDocumentoDirective,
   DataMesDirective,
   DeixaSomenteLeituraDirective,
-  VerificarValorNegativoDirective
+  VerificarValorNegativoDirective,
+  SomenteLeituraDirective
 ];
 
 @NgModule({

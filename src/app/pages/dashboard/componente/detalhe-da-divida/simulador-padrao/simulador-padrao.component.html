@@ -21,31 +21,43 @@
               <input type="number" class="form-control form-control-sm" formControlName="desconto_principal" min="0"
                 [max]="originalPrincipal" (input)="validarDesconto($event, 'Principal')">
             </div>
-            <div class="col-md-2" style="font-size: 12px;">
+
+            <div class="col-md-1" style="font-size: 12px;">
               <small>Multa: {{ (originalMulta / 100) | percent:'1.0-0' }}</small>
               <input type="number" class="form-control form-control-sm" formControlName="desconto_multa" min="0"
                 [max]="originalMulta" (input)="validarDesconto($event, 'Multa')">
             </div>
-            <div class="col-md-2" style="font-size: 12px;">
+
+            <div class="col-md-1" style="font-size: 12px;">
               <small>Juros: {{ (originalJuros / 100) | percent:'1.0-0' }}</small>
               <input type="number" class="form-control form-control-sm" formControlName="desconto_juros" min="0"
                 [max]="originalJuros" (input)="validarDesconto($event, 'Juros')">
             </div>
+
             <div class="col-md-2" style="font-size: 12px;">
               <small>Indice {{ (originalIndice / 100) | percent:'1.0-0' }}</small>
               <input type="number" class="form-control form-control-sm" formControlName="desconto_indice" min="0"
               [max]="originalIndice" (input)="validarDesconto($event, 'desconto_indice')">
             </div>
+
             <div class="col-md-2" style="font-size: 12px;">
               <small>Taxa: {{ (originalTaxa / 100) | percent:'1.0-0' }}</small>
               <input type="number" class="form-control form-control-sm" formControlName="desconto_taxa" min="0"
                 [max]="originalTaxa" (input)="validarDesconto($event, 'Taxa')">
             </div>
+
+            <div class="col-md-2" style="font-size: 12px;">
+              <small>Valor Adicional </small>
+              <input type="number" class="form-control form-control-sm" formControlName="valor_adicional" min="0" (keypress)="validarEntrada($event)"
+                [max]="100" [appLeitura]="permitirValorAdicional">
+            </div>
+
             <div class="col-md-2" style="font-size: 12px;">
               <small>Data Negociação</small>
               <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="data_atualizacao" appDataMes="hoje">
             </div>
           </div>
+
           <div class="col-md-12 d-flex justify-content-end button-group" style="font-size: 12px; margin-top: 5px;">
             <button type="submit" class="btn btn-primary btn-sm me-1" style="padding-bottom: 2px; padding-top: 2px;" (click)="recalcular()">
               <i class="fas fa-redo-alt"></i> Recalcular
@@ -67,6 +79,7 @@
               <th scope="col" class="text-right">Multa</th>
               <th scope="col" class="text-right">Indice</th>
               <th>Taxa</th>
+              <th>Valor Adicional</th>
               <th scope="col" class="text-right">Valor Atualizado</th>
             </tr>
           </thead>
@@ -79,6 +92,7 @@
               <td scope="col" class="text-right">{{ titulo.valor_multa | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ titulo.valor_indice | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ titulo.valor_taxa | currency:'BRL' }}</td>
+              <td scope="col" class="text-right">{{ titulo.valor_adicional | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ titulo.valor_atualizado | currency:'BRL' }}</td>
             </tr>
             <tr *ngIf="data.titulos.length > 0" class="tabela-custom">
@@ -88,6 +102,7 @@
               <td scope="col" class="text-right">{{ totalMulta | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ totalIndice | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ totalTaxa | currency:'BRL' }}</td>
+              <td scope="col" class="text-right">{{ totalAdicional | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ totalGeral | currency:'BRL' }}</td>
             </tr>
           </tbody>
@@ -141,6 +156,7 @@
             </div>
           </div>
         </div>
+
         <div *ngIf="simulaAcordo && data">
           <h4 style="text-align: center;">Detalhamento do Acordo</h4>
           <div style="overflow: auto; margin-top: 5px;">

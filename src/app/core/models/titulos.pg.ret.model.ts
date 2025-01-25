@@ -14,6 +14,8 @@ export class TituloModel {
   tipo_baixa: string;
   valor: number;
   valor_multa: number;
+  valor_adicional: number;
+  valor_indice: number;
   valor_juros: number;
   valor_taxa: number;
   desc_principal: number;
