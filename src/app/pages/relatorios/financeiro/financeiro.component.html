@@ -68,12 +68,12 @@
     </div>
   </div>
 
-  <div *ngIf="tipoRelatorio === 'R' && exibirCard">
+  <div *ngIf="tipoRelatorio === 'C' && exibirCard">
     <app-geral [filtros]="filtros">
     </app-geral>
   </div>
 
-  <div *ngIf="tipoRelatorio === 'C' && exibirCard">
+  <div *ngIf="tipoRelatorio === 'R' && exibirCard">
     <app-prestacao-contas [filtros]="filtros">
     </app-prestacao-contas>
   </div>
