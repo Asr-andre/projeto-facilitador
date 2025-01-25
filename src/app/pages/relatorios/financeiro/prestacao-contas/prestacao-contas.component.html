@@ -92,43 +92,43 @@
   </div>
 
   <!-- Corpo do Modal -->
-  <div class="modal-body" style="font-size: 10px; line-height: 1.4; padding: 15px; top: 20px;" id="conteudoPDF">
-    <h5 class="text-center" style="font-weight: bold; margin-bottom: 20px;">MODELO DE PRESTAÇÃO DE CONTAS</h5>
+  <div class="modal-body" style="font-size: 8px; line-height: 1.4; padding: 15px; top: 20px;" id="conteudoPDF">
+    <h5 class="text-center" style="font-weight: bold; margin-bottom: 20px;">PRESTAÇÃO DE CONTAS</h5>
     <p style="margin-bottom: 5px;"><strong>Nome da Empresa:</strong> {{ nomeEmpresa }}</p>
 
     <!-- Tabela Principal -->
-    <table class="table" style="font-size: 10px; text-align: center; margin-top: 10px;">
+    <table class="table" style="font-size: 8px; text-align: center; margin-top: 10px;">
       <thead style="background-color: #ffffff; font-weight: bold;">
         <tr>
-          <th>CPF</th>
-          <th>Nome Cliente</th>
-          <th>Vencimento</th>
-          <th>Dt Pago</th>
-          <th>Parc/Pla</th>
-          <th>Valor Principal</th>
-          <th>Valor Pago</th>
-          <th>Comissão</th>
-          <th>Repasse</th>
+          <th class="text-nowrap" scope="row" style="padding: 3px;">CPF</th>
+          <th class="text-nowrap" scope="row" style="padding: 3px;">Nome Cliente</th>
+          <th style="padding: 3px;">Vencimento</th>
+          <th style="padding: 3px;">Dt Pago</th>
+          <th style="padding: 3px;">Parc/Pla</th>
+          <th style="padding: 3px;">Valor Principal</th>
+          <th style="padding: 3px;">Valor Pago</th>
+          <th style="padding: 3px;">Comissão</th>
+          <th style="padding: 3px;">Repasse</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let registro of dadosFiltrados">
-          <td>{{ registro.cnpj_cpf | cpfCnpj }}</td>
-          <td >{{ registro.nome }}</td>
-          <td>{{ registro.vencimento | dataBr }}</td>
-          <td >{{ registro.pagamento | dataBr }}</td>
-          <td>{{ registro.parcela }}/{{ registro.plano}}</td>
-          <td>{{ registro.valor_original | currency: 'BRL':'symbol':'1.2-2' }}</td>
-          <td>{{ registro.valor_pago | currency:'BRL' }}</td>
-          <td>{{ registro.comissao | currency:'BRL' }}</td>
-          <td>{{ registro.repasse | currency:'BRL' }}</td>
+          <td class="text-nowrap" scope="row" style="padding: 3px; text-align: start;">{{ registro.cnpj_cpf | cpfCnpj }}</td>
+          <td class="text-nowrap" scope="row" style="padding: 3px; text-align: start;">{{ registro.nome }}</td>
+          <td style="padding: 3px;">{{ registro.vencimento | dataBr }}</td>
+          <td style="padding: 3px;">{{ registro.pagamento | dataBr }}</td>
+          <td style="padding: 3px;">{{ registro.parcela }}/{{ registro.plano}}</td>
+          <td style="padding: 3px;">{{ registro.valor_original | currency: 'BRL':'symbol':'1.2-2' }}</td>
+          <td style="padding: 3px;">{{ registro.valor_pago | currency:'BRL' }}</td>
+          <td style="padding: 3px;">{{ registro.comissao | currency:'BRL' }}</td>
+          <td style="padding: 3px;">{{ registro.repasse | currency:'BRL' }}</td>
         </tr>
       </tbody>
     </table>
 
     <!-- Totais -->
     <div class="totais mt-4" style="text-align: left; margin-top: 20px;">
-      <table class="table table-bordered" style="font-size: 10px; border: 1px solid #000; width: 30%; float: left;">
+      <table class="table table-bordered" style="font-size: 8px; border: 1px solid #000; width: 30%; float: left;">
         <tbody>
           <tr>
             <td style="border: 1px solid #000; font-weight: bold; padding-top: 4px;padding-bottom: 4px;">Total Principal:</td>

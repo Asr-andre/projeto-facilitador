@@ -3,7 +3,6 @@ import { Component, Input, OnChanges, OnInit, QueryList, SimpleChanges, Template
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
-import { ExcelService } from 'src/app/core/services/excel.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
