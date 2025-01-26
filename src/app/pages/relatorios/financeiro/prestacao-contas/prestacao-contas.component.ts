@@ -35,16 +35,6 @@ export class PrestacaoContasComponent implements OnInit, OnChanges {
   public valorTotalMulta: number = 0;
   public valorTotalTaxa: number = 0;
 
-  public valorDescPrincipal: number = 0;
-  public valorDescMulta: number = 0;
-  public valorDescJuros: number = 0;
-  public valorReceitaPrincipal: number = 0;
-  public valorReceitaMulta: number = 0;
-  public valorReceitaJuros: number = 0;
-  public valorReceitaTaxa: number = 0;
-  public valorComissao: number = 0;
-  public valorRepasse: number = 0;
-
   constructor(
     private _financeiro: FinanceiroService,
     private _auth: AuthenticationService,
