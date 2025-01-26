@@ -48,8 +48,7 @@
 
             <div class="col-md-2" style="font-size: 12px;">
               <small>Valor Adicional </small>
-              <input type="number" class="form-control form-control-sm" formControlName="valor_adicional" min="0" (keypress)="validarEntrada($event)"
-                [max]="100" [appLeitura]="permitirValorAdicional">
+              <input type="number" class="form-control form-control-sm" formControlName="valor_adicional"  [appLeitura]="permitirValorAdicional">
             </div>
 
             <div class="col-md-2" style="font-size: 12px;">

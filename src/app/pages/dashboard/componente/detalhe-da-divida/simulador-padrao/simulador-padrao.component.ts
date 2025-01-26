@@ -93,7 +93,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       id_contratante: [this.idContratante],
       id_cliente: [this.idCliente],
       id_acordo: [],
-      valor_adicional: ['0', [Validators.min(0), Validators.max(100), Validators.required]],
+      valor_adicional: ['0'],
       desconto_principal: ["0", Validators.min(0)],
       desconto_multa: ["0", Validators.min(0)],
       desconto_juros: ["0", Validators.min(0)],
