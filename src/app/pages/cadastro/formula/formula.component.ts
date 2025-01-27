@@ -58,7 +58,7 @@ export class FormulaComponent implements OnInit {
       descricao: [dado?.descricao || '', Validators.required],
       usa_indice: [dado?.usa_indice || ''],
       usa_adicional: [dado?.usa_adicional || ''],
-      fator_adicional: [dado?.fator_adicional || ''],
+      fator_adicional: [dado?.fator_adicional || 0],
       multa: [dado?.fator_multa || 0, [Validators.min(0)]],
       juros: [dado?.fator_juros || 0, [Validators.min(0)]],
       taxa: [dado?.fator_taxa || 0, [Validators.min(0)]],
