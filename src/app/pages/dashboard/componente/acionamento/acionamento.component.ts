@@ -69,12 +69,13 @@ export class AcionamentoComponent implements OnChanges, OnInit {
         this.formAcionamento.get('data_prox_acio')?.setValue(null); // Limpa o valor
       }
     });
+
+    this.updateSubject.pipe(debounceTime(900)).subscribe(() => this.listarAcionamentos());
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["idCliente"] || changes["idContratante"]) {
       this.updateSubject.next();
-      this.updateSubject.pipe(debounceTime(900)).subscribe(() => this.listarAcionamentos());
     }
   }
 
