@@ -181,7 +181,7 @@ export class ClienteComponent {
     }
 
       const dadosParaEnvio = { ...this.formCliente.value };
-      dadosParaEnvio.vencimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
+      dadosParaEnvio.data_nascimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
 
     this.loading = true;
 
@@ -209,7 +209,7 @@ export class ClienteComponent {
     }
 
     const dadosParaEnvio = { ...this.formCliente.value };
-      dadosParaEnvio.vencimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
+      dadosParaEnvio.data_nascimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
 
     this.loading = true;
 

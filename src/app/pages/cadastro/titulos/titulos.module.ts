@@ -10,6 +10,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ClienteContratanteComponent } from './componente/cliente-contratante/cliente-contratante.component';
 import { ClienteTitulosComponent } from './componente/cliente-titulos/cliente-titulos.component';
+import { DiretivasModule } from 'src/app/core/directive/directive.module';
 
 @NgModule({
 
@@ -22,7 +23,8 @@ import { ClienteTitulosComponent } from './componente/cliente-titulos/cliente-ti
     NgxMaskDirective,
     NgxMaskPipe,
     NgSelectModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
+    DiretivasModule
   ],
   providers: [
     provideNgxMask()

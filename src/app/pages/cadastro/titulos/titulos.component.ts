@@ -4,6 +4,7 @@ import { ContratanteModel } from "src/app/core/models/cadastro/contratante.model
 import { AlertService } from "src/app/core/services/alert.service";
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { ContratanteService } from "src/app/core/services/cadastro/contratante.service";
+import { FuncoesService } from "src/app/core/services/funcoes.service";
 
 @Component({
   selector: "app-titulos",
@@ -14,7 +15,7 @@ export class TitulosComponent implements OnInit {
   public contratantes: ContratanteModel [] = [];
   public contratanteSelecionado: number;
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
-  public exibirTelaCadastroCliente: boolean = true;
+  public exibirTelaCadastroCliente: boolean = false;
   public exibirTelaCadastroTitulos: boolean = true;
   public idContratante: number;
   public idCliente: number;
@@ -26,7 +27,8 @@ export class TitulosComponent implements OnInit {
     private _contratante: ContratanteService,
     private _auth: AuthenticationService,
     private _alert: AlertService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _funcoes: FuncoesService
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +58,7 @@ export class TitulosComponent implements OnInit {
 
   public selecionarContratante(): void {
     if (this.formPesquisa.invalid) {
-      this.marcarCamposComoTocados(this.formPesquisa);
+      this._funcoes.camposInvalidos(this.formPesquisa);
       this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
       this.exibirTelaCadastroCliente = false;
       this.exibirTelaCadastroTitulos = false;
@@ -66,14 +68,6 @@ export class TitulosComponent implements OnInit {
     const dadosParaEnvio = { ...this.formPesquisa.value };
     this.idContratante =  dadosParaEnvio.id_contratante
     this.exibirTelaCadastroCliente = true;
-  }
-
-  private marcarCamposComoTocados(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      controle?.updateValueAndValidity();
-    });
   }
 
   public onClienteImportado(idCliente: number): void {

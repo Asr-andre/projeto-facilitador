@@ -19,6 +19,7 @@ import { DataMesDirective } from './data-mes.directive';
 import { DeixaSomenteLeituraDirective } from './deixa.somente.leitura.diretive';
 import { VerificarValorNegativoDirective } from './verifica.valor.negativo.diretive';
 import { SomenteLeituraDirective } from './somente.leitura.s.n.directive';
+import { LimitarCaracteresDirective } from './bloquear.td.directive';
 
 const directive = [
   ClickCorDirective,
@@ -40,7 +41,8 @@ const directive = [
   DataMesDirective,
   DeixaSomenteLeituraDirective,
   VerificarValorNegativoDirective,
-  SomenteLeituraDirective
+  SomenteLeituraDirective,
+  LimitarCaracteresDirective
 ];
 
 @NgModule({
