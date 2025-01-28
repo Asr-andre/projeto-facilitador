@@ -28,6 +28,7 @@ import { EmailPerfilComponent } from "./email-perfil/email-perfil.component";
 import { QuillModule } from "ngx-quill";
 import { DiretivasModule } from "src/app/core/directive/directive.module";
 import { PipesModule } from "src/app/core/pipe/pipe.module";
+import { ClientesModule } from "./clientes/clientes.module";
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { PipesModule } from "src/app/core/pipe/pipe.module";
     NgbDatepickerModule,
     NgbModule,
     EmpresaModule,
+    ClientesModule,
     NgxPaginationModule,
     OrderTableModule,
     TitulosModule,

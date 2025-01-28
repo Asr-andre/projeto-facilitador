@@ -12,6 +12,7 @@ import { ClienteComponent } from './cliente/cliente.component';
 import { IndiceComponent } from './indice/indice.component';
 import { EmailPerfilComponent } from './email-perfil/email-perfil.component';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
+import { ClientesComponent } from './clientes/clientes.component';
 
 
 const routes: Routes = [
@@ -47,6 +48,9 @@ const routes: Routes = [
     },
     {
       path: 'email-perfil', component: EmailPerfilComponent, canActivate: [AuthGuard]
+    },
+    {
+      path: 'clientes', component: ClientesComponent, canActivate: [AuthGuard]
     }
 ];
 
