@@ -1,15 +1,18 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Cliente, ClienteModel} from 'src/app/core/models/cadastro/cliente.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Cliente, ClienteModel } from 'src/app/core/models/cadastro/cliente.model';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
 import { CepModel } from 'src/app/core/models/cep.model';
+import { TipoTituloModel } from 'src/app/core/models/tipo.titulo.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
 import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
 import { ConsultaCepService } from 'src/app/core/services/consulta.cep.service';
 import { FuncoesService } from 'src/app/core/services/funcoes.service';
+import { TipoTituloService } from 'src/app/core/services/tipo.titulo.service';
 
 @Component({
   selector: 'app-cliente',
@@ -19,7 +22,7 @@ import { FuncoesService } from 'src/app/core/services/funcoes.service';
 export class ClienteComponent {
   public listarCliente: Cliente[] = [];
   public clienteSelecionado: Cliente | null = null;
-  public contratantes: ContratanteModel [] = [];
+  public contratantes: ContratanteModel[] = [];
   public loading: boolean = false;
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
   public idUsuario: number = Number(this._auth.getIdUsuario() || 0);
@@ -32,6 +35,12 @@ export class ClienteComponent {
   public cep = new CepModel();
   public textoPesquisa: string = "";
   public campoInvalido: boolean = false;
+  public loadingMin: boolean = false;
+
+  public tipoTitulo: TipoTituloModel;
+  public formTitulo: FormGroup;
+  public idContratante: string = '';
+  public idCliente: string = '';
 
   constructor(
     private _retornoCep: ConsultaCepService,
@@ -41,12 +50,17 @@ export class ClienteComponent {
     private _fb: FormBuilder,
     private _alert: AlertService,
     private _datePipe: DatePipe,
-    private _funcoes: FuncoesService
-  ) {}
+    private _funcoes: FuncoesService,
+    private _tipoTitulo: TipoTituloService,
+    private _modal: NgbModal,
+    private _fbT: FormBuilder,
+
+  ) { }
 
   ngOnInit(): void {
     this.obterContratantes();
     this.inicializarFormCliente();
+    this.inicializarformTitulo();
   }
 
   public inicializarFormCliente(dado?: ClienteModel) {
@@ -57,7 +71,7 @@ export class ClienteComponent {
       identificador: [dado?.identificador || ''],
       nome: [dado?.nome || ''],
       tipo_pessoa: [dado?.tipo_pessoa || ''],
-      cnpj_cpf: [ dado?.cnpj_cpf || '', [Validators.required]],
+      cnpj_cpf: [dado?.cnpj_cpf || '', [Validators.required]],
       rg: [dado?.rg || ''],
       orgao_expedidor: [dado?.orgao_expedidor || ''],
       endereco: [dado?.endereco || ''],
@@ -88,12 +102,53 @@ export class ClienteComponent {
     });
   }
 
+  public inicializarformTitulo() {
+    this.formTitulo = this._fbT.group({
+      tipo_titulo: ["", Validators.required],
+      parcela: ["", Validators.required],
+      plano: ["", Validators.required],
+      numero_contrato: ["", Validators.required],
+      numero_documento: ["", Validators.required],
+      vencimento: ["", Validators.required],
+      produto: ["", Validators.required],
+      valor: ["", Validators.required],
+      id_contratante: [this.idContratante],
+      id_empresa: [this.idEmpresa],
+      id_cliente: [this.idCliente],
+      user_login: [this.login]
+    });
+  }
+
+  public abriModalTitulo(content: TemplateRef<any>): void {
+    if (!this.idCliente) {
+      this._alert.warning('Por favor selecione um cliente!');
+      return;
+    }
+
+    this.idContratante = this.formCliente.get('id_contratante')?.value || this.clienteSelecionado.id_cliente;
+    this.idCliente = String(this.clienteSelecionado.id_cliente) || this.idContratante;
+
+    this.inicializarformTitulo();
+    this.obterTipoTitulo();
+    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
   public selecionarcliente(cliente: Cliente): void {
     this.mostrarCardCliente = true;
+    this.idCliente = String(cliente.id_cliente);
+    this.idContratante = String(cliente.id_contratante)
     this.title = "Atualizar Dados do Cliente"
     this.clienteSelecionado = cliente;
     this.inicializarFormCliente(cliente)
     this.editar = true;
+  }
+
+  public obterTipoTitulo() {
+    this._tipoTitulo.obterTipoTitulo().subscribe((res) => {
+      if (res) {
+        this.tipoTitulo = res;
+      }
+    });
   }
 
   pesquisaClientes(): void {
@@ -180,8 +235,8 @@ export class ClienteComponent {
       return;
     }
 
-      const dadosParaEnvio = { ...this.formCliente.value };
-      dadosParaEnvio.data_nascimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
+    const dadosParaEnvio = { ...this.formCliente.value };
+    dadosParaEnvio.data_nascimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
 
     this.loading = true;
 
@@ -190,8 +245,9 @@ export class ClienteComponent {
         this.loading = false;
         if (res.success === 'true') {
           this._alert.success(res.msg);
-          this.cancela();
+          this.idCliente = res.id_cliente;
         } else {
+          this.loading = false;
           this._alert.warning(res.msg);
         }
       },
@@ -209,7 +265,7 @@ export class ClienteComponent {
     }
 
     const dadosParaEnvio = { ...this.formCliente.value };
-      dadosParaEnvio.data_nascimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
+    dadosParaEnvio.data_nascimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
 
     this.loading = true;
 
@@ -231,11 +287,50 @@ export class ClienteComponent {
     });
   }
 
-  public cancela() {
-    this.mostrarCardCliente = false;
-    this.mostrarTabela =false;
-    this.formCliente.reset();
-    this.editar = true;
+  public verificarValorNegativo(campo: string) {
+    const valor = this.formTitulo.get(campo)?.value;
+
+    if (valor <= 0) {
+      this.formTitulo.get(campo)?.setValue(0);
+    }
+  }
+
+  public cadastrarTitulo(): void {
+    if (!this.formTitulo.valid) {
+      this._funcoes.camposInvalidos(this.formTitulo);
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
+    if (!this.idCliente || !this.idEmpresa || !this.idContratante) {
+      this._alert.warning('Os dados necessários não estão disponíveis.');
+      return;
+    }
+
+    const dadosTitulo = {
+      ...this.formTitulo.value,
+      id_empresa: this.idEmpresa,
+      id_cliente: this.idCliente,
+      id_contratante: this.idContratante,
+      vencimento: this._datePipe.transform(this.formTitulo.value.vencimento, 'dd/MM/yyyy') || ''
+    };
+
+    this.loadingMin = true;
+
+    this._cliente.cadastrarTitulos(dadosTitulo).subscribe((res) => {
+      if (res.success) {
+        this._alert.success(res.msg);
+        this.fechar();
+      } else {
+        this.loadingMin = false;
+        this._alert.warning(res.msg);
+      }
+    },
+      (error) => {
+        this.loadingMin = false;
+        this._alert.error('Atenção Título Já Existente, Verifique os Campos Chaves!!!');
+      }
+    );
   }
 
   public viaCep(cep: string): void {
@@ -250,5 +345,22 @@ export class ClienteComponent {
         this.cep = null;
       });
     }
+  }
+
+  public cancela() {
+    this.mostrarCardCliente = false;
+    this.mostrarTabela = false;
+    this.formCliente.reset();
+    this.formTitulo.reset()
+    this.idContratante = '';
+    this.idCliente = '';
+    this.editar = true;
+  }
+
+  public fechar() {
+    this._modal.dismissAll();
+    this.formTitulo.reset();
+    this.idContratante = '';
+    this.idCliente = '';
   }
 }

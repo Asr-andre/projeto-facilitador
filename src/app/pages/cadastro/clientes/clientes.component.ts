@@ -1,9 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { Component, QueryList, ViewChildren } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { OrdenarPeloHeaderTabela } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
-import { Cliente } from 'src/app/core/models/cadastro/cliente.model';
+import { Cliente, Titulo } from 'src/app/core/models/cadastro/cliente.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
@@ -16,7 +15,10 @@ import { FuncoesService } from 'src/app/core/services/funcoes.service';
 })
 export class ClientesComponent {
   public listarCliente: Cliente[] = [];
+  public listarTitulos: any[] = [];
   public clienteSelecionado: Cliente | null = null;
+  public tituloSelecionado: any[] = [];
+  public titulo: any | null = null;
   public textoPesquisa: string = "";
   public campoInvalido: boolean = false;
   public loading: boolean = false;
@@ -35,6 +37,13 @@ export class ClientesComponent {
   public totalRegistrosExibidos: number = 0;
   public qtdRegistrosPorPagina = [10, 25, 50, 100];
   public direcaoOrdenacao: { [key: string]: string } = {};
+
+  public paginaAtualT: number = 1;
+  public itensPorPaginaT: number = 5;
+  public totalRegistrosT: number = 0;
+  public totalRegistrosExibidosT: number = 0;
+  public qtdRegistrosPorPaginaT = [10, 25, 50, 100];
+  public direcaoOrdenacaoT: { [key: string]: string } = {};
 
   constructor(
     private _cliente: ClienteService,
@@ -73,6 +82,8 @@ export class ClientesComponent {
         if (res.success === 'true' && res.cliente && res.cliente.length > 0) {
           this.listarCliente = res.cliente || [];
           this.dadosFiltrados = res.cliente || [];
+          this.listarTitulos = res.titulos || [];
+          console.log(this.listarTitulos)
           this.appListaCliente = true;
           this.filtrar();
           this.atualizarQuantidadeExibida();
@@ -82,6 +93,7 @@ export class ClientesComponent {
             return 0;
           })
         } else {
+          this.appListaCliente = false;
           this.listarCliente = [];
           this._alert.warning("Cliente não localizado")
         }
@@ -96,7 +108,13 @@ export class ClientesComponent {
 
   public selecionarcliente(cliente: Cliente): void {
     this.clienteSelecionado = cliente;
+
+    this.tituloSelecionado = this.listarTitulos.filter(
+      (titulo: Titulo) => titulo.id_cliente === cliente.id_cliente
+    );
   }
+
+
 
   public validarCampo() {
     this.campoInvalido = !this.textoPesquisa || this.textoPesquisa.trim().length === 0;

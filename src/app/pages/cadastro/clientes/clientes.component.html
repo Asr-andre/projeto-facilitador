@@ -70,11 +70,11 @@
                   <table class="table table-sm table-hover font-size-12 tabelaOrdenada" style="margin-bottom: 8px;">
                     <thead class="tabela-custom">
                       <tr>
-                        <th sortable="fantasia" scope="col">Id Contratante</th>
-                        <th sortable="id_cliente" scope="col">Id</th>
-                        <th sortable="cnpj_cpf" scope="col">Cpf</th>
-                        <th sortable="nome" scope="col">Nome</th>
-                        <th sortable="soma_titulos_nao_pagos" scope="col">Data cadastro</th>
+                        <th>Id Contratante</th>
+                        <th>Id Cliente</th>
+                        <th>Cpf</th>
+                        <th>Nome</th>
+                        <th>Data cadastro</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -102,6 +102,69 @@
               </div>
 
               <ng-template #semCliente>
+                <p class="text-center">Nenhum cliente encontrado.</p>
+              </ng-template>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+
+        <div class="card-body" style="padding-top: 10px;">
+          <div class="d-flex justify-content-between align-items-center" style="padding-top: 10px;">
+            <h4 class="card-title m-0">
+              <i class="fas fa-list"></i> Lista de Titulos
+            </h4>
+          </div>
+          <hr>
+
+            <div class="row">
+              <div class="col-md-12" *ngIf="tituloSelecionado.length > 0; else sem">
+                <div class="table-responsive">
+                  <table class="table table-sm table-hover font-size-12 tabelaOrdenada" style="margin-bottom: 8px;">
+                    <thead class="tabela-custom">
+                      <tr>
+                        <th>ID Título</th>
+                        <th>Número Documento</th>
+                        <th>Número Contrato</th>
+                        <th>Parcela</th>
+                        <th>Vencimento</th>
+                        <th>Valor Original</th>
+                        <th>Saldo Devedor</th>
+                        <th>Valor Atualizado</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let titulo of tituloSelecionado | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                        <td>{{ titulo.id_titulo }}</td>
+                        <td>{{ titulo.numero_documento }}</td>
+                        <td>{{ titulo.numero_contrato }}</td>
+                        <td>{{ titulo.parcela }}</td>
+                        <td>{{ titulo.vencimento | date: 'dd/MM/yyyy' }}</td>
+                        <td>{{ titulo.valor_original | currency: 'BRL' }}</td>
+                        <td>{{ titulo.saldo_devedor | currency: 'BRL' }}</td>
+                        <td>{{ titulo.valor_atualizado | currency: 'BRL' }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="d-flex justify-content-between align-items-center text-small">
+                  <div>
+                    Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+                    {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+                  </div>
+                  <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior"
+                    nextLabel="Próximo" [maxSize]="5" [autoHide]="false" [responsive]="true">
+                  </pagination-controls>
+                </div>
+              </div>
+
+              <ng-template #sem>
                 <p class="text-center">Nenhum cliente encontrado.</p>
               </ng-template>
             </div>

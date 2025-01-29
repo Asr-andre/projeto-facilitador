@@ -132,6 +132,7 @@ export class Retorno {
   success: string;
   msg: string;
   cliente: Cliente[];
+  titulos: Titulo[];
 }
 
 // modelo para o cadsatro de cliente na tela de detalhamento de cliente
