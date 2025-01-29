@@ -1,7 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Cliente, ClienteModel } from 'src/app/core/models/cadastro/cliente.model';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
 import { CepModel } from 'src/app/core/models/cep.model';
@@ -15,11 +14,14 @@ import { FuncoesService } from 'src/app/core/services/funcoes.service';
 import { TipoTituloService } from 'src/app/core/services/tipo.titulo.service';
 
 @Component({
-  selector: 'app-cliente',
-  templateUrl: './cliente.component.html',
-  styleUrl: './cliente.component.scss'
+  selector: 'app-editar',
+  templateUrl: './editar.component.html',
+  styleUrl: './editar.component.scss'
 })
-export class ClienteComponent implements OnInit {
+export class EditarComponent implements OnInit {
+  @Output() fecharEditar = new EventEmitter<void>();
+  @Output() clienteAtualizado = new EventEmitter<string>();
+  @Input() dadosCliente: Cliente | null = null;
   public listarCliente: Cliente[] = [];
   public clienteSelecionado: Cliente | null = null;
   public contratantes: ContratanteModel[] = [];
@@ -27,20 +29,15 @@ export class ClienteComponent implements OnInit {
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
   public idUsuario: number = Number(this._auth.getIdUsuario() || 0);
   public login = this._auth.getLogin();
-  public mostrarTabela: Boolean = false;
-  public mostrarCardCliente: Boolean = false;
   public formCliente: FormGroup;
-  public title: string = '';
-  public editar: boolean = true;
   public cep = new CepModel();
-  public textoPesquisa: string = "";
-  public campoInvalido: boolean = false;
   public loadingMin: boolean = false;
+  public ativaAba: number = 1;
+  public editar: boolean = true;
 
   public tipoTitulo: TipoTituloModel;
   public formTitulo: FormGroup;
-  public idContratante: string = '';
-  public idCliente: string = '';
+
 
   constructor(
     private _retornoCep: ConsultaCepService,
@@ -52,14 +49,13 @@ export class ClienteComponent implements OnInit {
     private _datePipe: DatePipe,
     private _funcoes: FuncoesService,
     private _tipoTitulo: TipoTituloService,
-    private _modal: NgbModal,
     private _fbT: FormBuilder,
 
   ) { }
 
   ngOnInit(): void {
     this.obterContratantes();
-    this.inicializarFormCliente();
+    this.inicializarFormCliente(this.dadosCliente);
     this.inicializarformTitulo();
   }
 
@@ -112,35 +108,20 @@ export class ClienteComponent implements OnInit {
       vencimento: ["", Validators.required],
       produto: ["", Validators.required],
       valor: ["", Validators.required],
-      id_contratante: [this.idContratante],
+      id_contratante: [this.dadosCliente.id_contratante],
       id_empresa: [this.idEmpresa],
-      id_cliente: [this.idCliente],
+      id_cliente: [this.dadosCliente.id_cliente],
       user_login: [this.login]
     });
   }
 
-  public abriModalTitulo(content: TemplateRef<any>): void {
-    if (!this.idCliente) {
-      this._alert.warning('Por favor selecione um cliente!');
-      return;
-    }
-
-    this.idContratante = this.formCliente.get('id_contratante')?.value || this.clienteSelecionado.id_contratante;
-    this.idCliente = this.idCliente || this.idCliente;
-
-    this.inicializarformTitulo();
-    this.obterTipoTitulo();
-    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  public ativarAba() {
+    this.ativaAba = 1;
   }
 
-  public selecionarcliente(cliente: Cliente): void {
-    this.mostrarCardCliente = true;
-    this.idCliente = String(cliente.id_cliente);
-    this.idContratante = String(cliente.id_contratante)
-    this.title = "Atualizar Dados do Cliente"
-    this.clienteSelecionado = cliente;
-    this.inicializarFormCliente(cliente)
-    this.editar = true;
+  public ativaAba2() {
+    this.ativaAba = 2;
+    this.obterTipoTitulo();
   }
 
   public obterTipoTitulo() {
@@ -151,53 +132,6 @@ export class ClienteComponent implements OnInit {
     });
   }
 
-  pesquisaClientes(): void {
-    this.mostrarCardCliente = false;
-    if (!this.textoPesquisa.trim()) {
-      this.validarCampo();
-      this._alert.warning('Por favor, insira um cpf ou nome para a pesquisa o cliente.');
-      return;
-    }
-
-    const texto = this.textoPesquisa.replace(/[.\-\/]/g, '').trim();
-    const dados = {
-      id_empresa: this.idEmpresa,
-      user_login: this.login,
-      nome: '',
-      cnpj_cpf: ''
-    };
-
-    if (isNaN(Number(texto))) {
-      dados.nome = texto;
-    } else {
-      dados.cnpj_cpf = texto;
-    }
-
-    this.loading = true;
-
-    this._cliente.pesquisarCliente(dados).subscribe({
-      next: (res) => {
-        if (res.success === 'true' && res.cliente && res.cliente.length > 0) {
-          this.listarCliente = res.cliente || [];
-          this.mostrarTabela = true;
-        } else {
-          this.cancela()
-          this.listarCliente = [];
-          this._alert.warning("Cliente não localizado")
-        }
-        this.loading = false;
-      },
-      error: (err) => {
-        this._alert.error('Erro ao pesquisar clientes:', err);
-        this.loading = false;
-      }
-    });
-  }
-
-  public validarCampo() {
-    this.campoInvalido = !this.textoPesquisa || this.textoPesquisa.trim().length === 0;
-  }
-
   public obterContratantes() {
     this._contratante.obterContratantePorEmpresa(this.idEmpresa).subscribe((res) => {
       this.contratantes = res.contratantes;
@@ -206,57 +140,6 @@ export class ClienteComponent implements OnInit {
         this._alert.error('Ocorreu um erro ao obter os contratantes.');
       }
     );
-  }
-
-  public salvarCliente() {
-    if (this.formCliente.invalid) {
-      this._funcoes.camposInvalidos(this.formCliente);
-      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
-      return;
-    }
-
-    if (this.editar == true) {
-      this.editarCliente();
-    } else {
-      this.cadastrarCliente();
-    }
-  }
-
-  public abilitarCadastro() {
-    this.editar = false;
-    this.mostrarCardCliente = true;
-    this.title = "Cadastrar Dados do Cliente"
-    this.inicializarFormCliente();
-  }
-
-  public cadastrarCliente() {
-    if (this.formCliente.invalid) {
-      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
-      return;
-    }
-
-    const dadosParaEnvio = { ...this.formCliente.value };
-    dadosParaEnvio.data_nascimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
-    dadosParaEnvio.cnpj_cpf = dadosParaEnvio.cnpj_cpf.replace(/[.\-\/]/g, '').trim();
-
-    this.loading = true;
-
-    this._cliente.cadastrarCliente(dadosParaEnvio).subscribe({
-      next: (res) => {
-        this.loading = false;
-        if (res.success === 'true') {
-          this._alert.success(res.msg);
-          this.idCliente = res.id_cliente;
-        } else {
-          this.loading = false;
-          this._alert.warning(res.msg);
-        }
-      },
-      error: (err) => {
-        this.loading = false;
-        this._alert.error('Ocorreu um erro ao tentar cadastrar o cliente:', err);
-      }
-    });
   }
 
   public editarCliente(): void {
@@ -275,8 +158,8 @@ export class ClienteComponent implements OnInit {
       next: (res) => {
         this.loading = false;
         if (res.success === 'true') {
-          this.pesquisaClientes();
-          this.formCliente.get('cnpj_cpf')?.disable();
+          this.clienteAtualizado.emit(this.formCliente.get('cnpj_cpf')?.value);
+          this.ativaAba2();
           this._alert.success(res.msg);
         } else {
           this._alert.warning(res.msg);
@@ -304,16 +187,8 @@ export class ClienteComponent implements OnInit {
       return;
     }
 
-    if (!this.idCliente || !this.idEmpresa || !this.idContratante) {
-      this._alert.warning('Os dados necessários não estão disponíveis.');
-      return;
-    }
-
     const dadosTitulo = {
       ...this.formTitulo.value,
-      id_empresa: this.idEmpresa,
-      id_cliente: this.idCliente,
-      id_contratante: this.idContratante,
       vencimento: this._datePipe.transform(this.formTitulo.value.vencimento, 'dd/MM/yyyy') || ''
     };
 
@@ -321,8 +196,10 @@ export class ClienteComponent implements OnInit {
 
     this._cliente.cadastrarTitulos(dadosTitulo).subscribe((res) => {
       if (res.success) {
+        this.loadingMin = false;
+        this.clienteAtualizado.emit(this.formCliente.get('cnpj_cpf')?.value);
+        this.fecharEditar.emit();
         this._alert.success(res.msg);
-        this.fechar();
       } else {
         this.loadingMin = false;
         this._alert.warning(res.msg);
@@ -349,20 +226,9 @@ export class ClienteComponent implements OnInit {
     }
   }
 
-  public cancela() {
-    this.mostrarCardCliente = false;
-    this.mostrarTabela = false;
+  public fechar() {
     this.formCliente.reset();
     this.formTitulo.reset()
-    this.idContratante = '';
-    this.idCliente = '';
-    this.editar = true;
-  }
-
-  public fechar() {
-    this._modal.dismissAll();
-    this.formTitulo.reset();
-    this.idContratante = '';
-    this.idCliente = '';
+    this.fecharEditar.emit();
   }
 }

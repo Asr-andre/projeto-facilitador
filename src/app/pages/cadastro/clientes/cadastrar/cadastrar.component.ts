@@ -1,8 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Cliente, ClienteModel } from 'src/app/core/models/cadastro/cliente.model';
+import { Cliente } from 'src/app/core/models/cadastro/cliente.model';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
 import { CepModel } from 'src/app/core/models/cep.model';
 import { TipoTituloModel } from 'src/app/core/models/tipo.titulo.model';
@@ -19,7 +18,7 @@ import { TipoTituloService } from 'src/app/core/services/tipo.titulo.service';
   templateUrl: './cadastrar.component.html',
   styleUrl: './cadastrar.component.scss'
 })
-export class CadastrarComponent {
+export class CadastrarComponent implements OnInit  {
   @Output() fecharCadastro = new EventEmitter<void>();
   @Output() clienteCadastrado = new EventEmitter<string>();
   public listarCliente: Cliente[] = [];

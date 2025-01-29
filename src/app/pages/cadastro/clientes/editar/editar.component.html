@@ -1,0 +1,276 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header pt-2 pb-2">
+          <div class="row">
+            <div class="col-md-6">
+              <h5 class="mb-0"><i class="far fa-address-card"></i> Atualizar Cliente/ Titulos </h5>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul ngbNav #nav="ngbNav" [activeId]="ativaAba" class="nav-tabs">
+            <li [ngbNavItem]="1" (click)="ativarAba()">
+              <a ngbNavLink class="nav-link custom-nav-link">
+                <span><i class="fas fa-user-check"></i> Cliente</span>
+              </a>
+              <ng-template ngbNavContent style="margin-top: 6px;">
+                <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2" (click)="ativaAba2()">
+              <a ngbNavLink class="nav-link custom-nav-link">
+                <span><i class="fas fa-file-invoice-dollar"></i> Titulos</span>
+              </a>
+              <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="TabContent1"></ng-template>
+              </ng-template>
+            </li>
+          </ul>
+          <div [ngbNavOutlet]="nav"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #TabContent>
+    <form [formGroup]="formCliente">
+      <div class="row">
+        <div class="col-md-2 form-group">
+          <label for="id_contratante" class="form-label">Contratante</label>
+          <select class="form-control form-control-sm" formControlName="id_contratante"
+          [ngClass]="{'is-invalid': formCliente.get('id_contratante').invalid && formCliente.get('id_contratante').touched}">
+            <option value="">Selecione</option>
+            <option *ngFor="let contratante of contratantes" [value]="contratante.id_contratante">
+              {{ contratante.fantasia }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-4 form-group">
+          <label for="nome" class="form-label">Nome</label>
+          <input type="text" id="nome" class="form-control form-control-sm" formControlName="nome" placeholder="Nome"/>
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label for="tipo_pessoa" class="form-label">Tipo Pessoa</label>
+          <select id="tipo_pessoa" class="form-control form-control-sm" formControlName="tipo_pessoa" placeholder="Tipo pessoa">
+            <option value="">Selecione</option>
+            <option value="F">Física</option>
+            <option value="J">Jurídica</option>
+          </select>
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label for="cnpj_cpf" class="form-label">CNPJ/CPF</label>
+          <input type="text" id="cnpj_cpf" class="form-control form-control-sm" formControlName="cnpj_cpf" mascaraCpfCnpj [appSomenteLeitura]="editar"
+          [ngClass]="{'is-invalid': formCliente.get('cnpj_cpf').invalid && formCliente.get('cnpj_cpf').touched}" placeholder="Cnpj/Cpf"/>
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label for="rg" class="form-label">RG</label>
+          <input type="text" id="rg" class="form-control form-control-sm" formControlName="rg" placeholder="Rg"/>
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label for="orgao_expedidor" class="form-label">Órgão Expedidor</label>
+          <input type="text" id="orgao_expedidor" class="form-control form-control-sm" formControlName="orgao_expedidor" placeholder="Órgão Expedidor"/>
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label for="cep" class="form-label">CEP</label>
+          <input type="text" id="cep" class="form-control form-control-sm" formControlName="cep" mask="00000-000" (blur)="viaCep($event.target.value)"
+          [ngClass]="{'is-invalid': formCliente.get('cep').invalid && formCliente.get('cep').touched}" placeholder="Cep">
+        </div>
+
+        <div class="col-md-4 form-group">
+          <label for="endereco" class="form-label">Endereço</label>
+          <input type="text" id="endereco" class="form-control form-control-sm" formControlName="endereco" [value]="cep?.endereco" (input)="cep.endereco = $event.target.value" placeholder="Endereço"/>
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label for="numero" class="form-label">Número</label>
+          <input type="text" id="numero" class="form-control form-control-sm" formControlName="numero" placeholder="Número"/>
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label for="complemento" class="form-label">Complemento</label>
+          <input type="text" id="complemento" class="form-control form-control-sm" formControlName="complemento" [value]="cep?.complemento" (input)="cep.complemento = $event.target.value" placeholder="Complemento"/>
+        </div>
+
+        <div class="col-md-6 form-group">
+          <label for="bairro" class="form-label">Bairro</label>
+          <input type="text" id="bairro" class="form-control form-control-sm" formControlName="bairro" [value]="cep?.bairro" (input)="cep.bairro = $event.target.value" placeholder="Bairro"/>
+        </div>
+
+        <div class="col-md-4 form-group">
+          <label for="cidade" class="form-label">Cidade</label>
+          <input type="text" id="cidade" class="form-control form-control-sm" formControlName="cidade" [value]="cep?.cidade" (input)="cep.cidade = $event.target.value" placeholder="Cidade"/>
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label for="uf" class="form-label">UF</label>
+          <select class="form-control form-control-sm" formControlName="uf" placeholder="UF" [value]="cep?.uf" (input)="cep.uf = $event.target.value">
+            <option value="">--</option>
+            <option value="AC">AC</option>
+            <option value="AL">AL</option>
+            <option value="AM">AM</option>
+            <option value="AP">AP</option>
+            <option value="BA">BA</option>
+            <option value="CE">CE</option>
+            <option value="DF">DF</option>
+            <option value="ES">ES</option>
+            <option value="GO">GO</option>
+            <option value="MA">MA</option>
+            <option value="MG">MG</option>
+            <option value="MS">MS</option>
+            <option value="MT">MT</option>
+            <option value="PA">PA</option>
+            <option value="PB">PB</option>
+            <option value="PE">PE</option>
+            <option value="PI">PI</option>
+            <option value="PR">PR</option>
+            <option value="RJ">RJ</option>
+            <option value="RN">RN</option>
+            <option value="RO">RO</option>
+            <option value="RR">RR</option>
+            <option value="RS">RS</option>
+            <option value="SC">SC</option>
+            <option value="SR">SE</option>
+            <option value="SP">SP</option>
+            <option value="TO">TO</option>
+          </select>
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label for="sexo" class="form-label">Sexo</label>
+          <select id="sexo" class="form-control form-control-sm" formControlName="sexo">
+            <option value="">Selecione</option>
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+          </select>
+        </div>
+
+        <div class="col-md-3 form-group">
+          <label for="pai" class="form-label">Nome do Pai</label>
+          <input type="text" id="pai" class="form-control form-control-sm" formControlName="pai" placeholder="Nome do pai"/>
+        </div>
+
+        <div class="col-md-3 form-group">
+          <label for="mae" class="form-label">Nome da Mãe</label>
+          <input type="text" id="mae" class="form-control form-control-sm" formControlName="mae" placeholder="Nome da mae"/>
+        </div>
+
+        <div class="col-md-4 form-group">
+          <label for="conjuge" class="form-label">Cônjuge</label>
+          <input type="text" id="conjuge" class="form-control form-control-sm" formControlName="conjuge" placeholder="Conjuge"/>
+        </div>
+
+        <div class="col-md-3 form-group">
+          <label for="trabalho" class="form-label">Trabalho</label>
+          <input type="text" id="trabalho" class="form-control form-control-sm" formControlName="trabalho" placeholder="Trabalho"/>
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label for="cargo" class="form-label">Cargo</label>
+          <input type="text" id="cargo" class="form-control form-control-sm" formControlName="cargo" placeholder="Cargo"/>
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label for="valor_renda" class="form-label">Valor Renda</label>
+          <input type="number" id="valor_renda" class="form-control form-control-sm" formControlName="valor_renda" min="0" placeholder="Valor renda" appVerificarValorNegativo/>
+        </div>
+
+        <div class="col-md-3 form-group">
+          <label for="melhor_canal_localizacao" class="form-label">Melhor Canal de Localização</label>
+          <input type="text" id="melhor_canal_localizacao" class="form-control form-control-sm"
+            formControlName="melhor_canal_localizacao"  placeholder="Melhor canal localização"/>
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label for="data_nascimento" class="form-label">Data de Nascimento</label>
+          <input type="date" id="data_nascimento" class="form-control form-control-sm" formControlName="data_nascimento" />
+        </div>
+
+        <div class="d-flex justify-content-end mt-3">
+          <button type="submit" class="btn btn-sm btn-primary me-1" (click)="editarCliente()">
+            <i class="fas fa-save"></i> Atualizar
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #TabContent1>
+      <form [formGroup]="formTitulo">
+        <div class="row" style="margin-top: 6px;">
+          <div class="col-md-3 form-group">
+            <label for="tipo_titulo" class="form-label">Tipo de Título</label>
+            <select type="text" class="form-control form-control-pad form-control-sm" formControlName="tipo_titulo"
+              id="tipo_titulo" name="tipo_titulo"
+              [ngClass]="{'is-invalid': formTitulo.get('tipo_titulo').invalid && formTitulo.get('tipo_titulo').touched}">
+              <option value="">Selecione</option>
+              <option *ngFor="let tipo of tipoTitulo" [value]="tipo.id_tipo_titulo">{{ tipo.tipo_titulo }}</option>
+            </select>
+          </div>
+          <div class="col-md-2 form-group">
+            <label for="parcela" class="form-label">Parcela</label>
+            <input type="number" class="form-control form-control-pad form-control-sm" formControlName="parcela"
+              id="parcela" name="parcela"
+              [ngClass]="{'is-invalid': formTitulo.get('parcela').invalid && formTitulo.get('parcela').touched}"
+              (input)="verificarValorNegativo('parcela')">
+          </div>
+          <div class="col-md-2 form-group">
+            <label for="plano" class="form-label">Plano</label>
+            <input type="number" class="form-control form-control-pad form-control-sm" formControlName="plano" id="plano"
+              name="plano" [ngClass]="{'is-invalid': formTitulo.get('plano').invalid && formTitulo.get('plano').touched}"
+              (input)="verificarValorNegativo('plano')">
+          </div>
+          <div class="col-md-5 form-group">
+            <label for="numero_contrato" class="form-label">Número do Contrato</label>
+            <input type="text" class="form-control form-control-pad form-control-sm" formControlName="numero_contrato"
+              id="numero_contrato" name="numero_contrato"
+              [ngClass]="{'is-invalid': formTitulo.get('numero_contrato').invalid && formTitulo.get('numero_contrato').touched}">
+          </div>
+          <div class="col-md-4 form-group">
+            <label for="numero_documento" class="form-label">Número do Documento</label>
+            <input type="text" class="form-control form-control-pad form-control-sm" formControlName="numero_documento"
+              id="numero_documento" name="numero_documento"
+              [ngClass]="{'is-invalid': formTitulo.get('numero_documento').invalid && formTitulo.get('numero_documento').touched}">
+          </div>
+          <div class="col-md-3 form-group">
+            <label for="produto" class="form-label">Produto</label>
+            <input type="text" class="form-control form-control-pad form-control-sm" formControlName="produto"
+              id="produto" name="produto"
+              [ngClass]="{'is-invalid': formTitulo.get('produto').invalid && formTitulo.get('produto').touched}">
+          </div>
+          <div class="col-md-3 form-group">
+            <label for="vencimento" class="form-label">Vencimento</label>
+            <input type="date" class="form-control form-control-pad form-control-sm" formControlName="vencimento"
+              id="vencimento" name="vencimento"
+              [ngClass]="{'is-invalid': formTitulo.get('vencimento').invalid && formTitulo.get('vencimento').touched}">
+          </div>
+          <div class="col-md-2 form-group">
+            <label for="valor" class="form-label">Valor</label>
+            <input type="number" class="form-control form-control-pad form-control-sm" formControlName="valor" id="valor"
+              name="valor" [ngClass]="{'is-invalid': formTitulo.get('valor').invalid && formTitulo.get('valor').touched}"
+              (input)="verificarValorNegativo('valor')">
+          </div>
+
+          <div class="d-flex justify-content-end mt-3">
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary me-1" (click)="cadastrarTitulo()">
+              <i class="fas fa-save"></i> Salva
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+              <i class="fas fa-times"></i> Cancelar
+            </button>
+          </div>
+        </div>
+      </form>
+  </ng-template>

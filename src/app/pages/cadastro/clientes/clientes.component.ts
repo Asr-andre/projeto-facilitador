@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Cliente, Titulo } from 'src/app/core/models/cadastro/cliente.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
@@ -10,6 +10,7 @@ import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
   styleUrl: './clientes.component.scss'
 })
 export class ClientesComponent {
+  public clienteParaEdicao: Cliente | null = null;
   public listarCliente: Cliente[] = [];
   public listarTitulos: any[] = [];
   public clienteSelecionado: Cliente | null = null;
@@ -23,6 +24,7 @@ export class ClientesComponent {
   public login = this._auth.getLogin();
 
   public cadastrarCliente: boolean = false;
+  public editarCliente: boolean = false;
   public appPesquisar: boolean = true;
   public appListaCliente: boolean = false;
 
@@ -63,6 +65,7 @@ export class ClientesComponent {
       this.tituloSelecionado = []
     } else {
       dados.cnpj_cpf = texto;
+      this.tituloSelecionado = []
     }
 
     this.loading = true;
@@ -74,9 +77,9 @@ export class ClientesComponent {
           this.dadosFiltrados = res.cliente || [];
           this.listarTitulos = res.titulos || [];
 
-          //this.tituloSelecionado = this.listarTitulos.filter(
-          //  (titulo: Titulo) => this.listarCliente.some(cliente => cliente.id_cliente === titulo.id_cliente)
-          //);
+          this.tituloSelecionado = this.listarTitulos.filter(
+            (titulo: Titulo) => this.listarCliente.some(cliente => cliente.id_cliente === titulo.id_cliente)
+          );
 
           this.appListaCliente = true;
           this.atualizarQuantidadeExibida();
@@ -123,6 +126,18 @@ export class ClientesComponent {
 
   public fecharCadastro() {
     this.cadastrarCliente = false;
+    this.appPesquisar = true;
+  }
+
+  public editar(cliente: Cliente) {
+    this.editarCliente = true;
+    this.appPesquisar = false;
+    this.appListaCliente = false
+    this.clienteParaEdicao = cliente;
+  }
+
+  public fecharEditar() {
+    this.editarCliente = false;;
     this.appPesquisar = true;
   }
 }

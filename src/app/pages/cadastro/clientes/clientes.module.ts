@@ -9,11 +9,13 @@ import { DiretivasModule } from "src/app/core/directive/directive.module";
 import { PipesModule } from "src/app/core/pipe/pipe.module";
 import { ClientesComponent } from "./clientes.component";
 import { CadastrarComponent } from "./cadastrar/cadastrar.component";
+import { EditarComponent } from "./editar/editar.component";
 
 @NgModule({
   declarations: [
     ClientesComponent,
-    CadastrarComponent
+    CadastrarComponent,
+    EditarComponent
   ],
   imports: [
     DiretivasModule,

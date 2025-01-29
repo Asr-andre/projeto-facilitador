@@ -1,0 +1,5 @@
+/* Estilo para campos somente leitura */
+input[readonly] {
+  background-color: #cccccc66 !important;  /* Cor de fundo */
+  border: 1px solid #ccc;  /* Borda opcional */
+}
