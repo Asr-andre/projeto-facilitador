@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { finalize } from 'rxjs';
 import { Cliente } from 'src/app/core/models/cadastro/cliente.model';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
 import { CepModel } from 'src/app/core/models/cep.model';
@@ -30,7 +31,6 @@ export class CadastrarComponent implements OnInit  {
   public login = this._auth.getLogin();
   public formCliente: FormGroup;
   public cep = new CepModel();
-  public loadingMin: boolean = false;
   public ativaAba: number = 1;
 
   public tipoTitulo: TipoTituloModel;
@@ -144,26 +144,23 @@ export class CadastrarComponent implements OnInit  {
       return;
     }
 
-    const dadosParaEnvio = { ...this.formCliente.value };
-    dadosParaEnvio.data_nascimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
-    dadosParaEnvio.cnpj_cpf = dadosParaEnvio.cnpj_cpf.replace(/[.\-\/]/g, '').trim();
+    const dadosParaEnvio = { ...this.formCliente.value,
+      data_nascimento: this._datePipe.transform(this.formCliente.value.data_nascimento, "dd/MM/yyyy"),
+      cnpj_cpf: this.formCliente.value.cnpj_cpf.replace(/[.\-\/]/g, '').trim()
+    };
 
     this.loading = true;
-
-    this._cliente.cadastrarCliente(dadosParaEnvio).subscribe({
+    this._cliente.cadastrarCliente(dadosParaEnvio).pipe(finalize(() => { this.loading = false; })).subscribe({
       next: (res) => {
-        this.loading = false;
         if (res.success === 'true') {
           this._alert.success(res.msg);
           this.ativaAba2();
           this.idCliente = res.id_cliente;
         } else {
-          this.loading = false;
           this._alert.warning(res.msg);
         }
       },
       error: (err) => {
-        this.loading = false;
         this._alert.error('Ocorreu um erro ao tentar cadastrar o cliente:', err);
       }
     });
@@ -192,24 +189,21 @@ export class CadastrarComponent implements OnInit  {
       vencimento: this._datePipe.transform(this.formTitulo.value.vencimento, 'dd/MM/yyyy') || ''
     };
 
-    this.loadingMin = true;
-
-    this._cliente.cadastrarTitulos(dadosTitulo).subscribe((res) => {
-      if (res.success) {
-        this.loadingMin = false;
-        this.clienteCadastrado.emit(this.formCliente.get('cnpj_cpf')?.value);
-        this.fecharCadastro.emit();
-        this._alert.success(res.msg);
-      } else {
-        this.loadingMin = false;
-        this._alert.warning(res.msg);
+    this.loading = true;
+    this._cliente.cadastrarTitulos(dadosTitulo).pipe(finalize(() => { this.loading = false; })).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.clienteCadastrado.emit(this.formCliente.get('cnpj_cpf')?.value);
+          this.fecharCadastro.emit();
+          this._alert.success(res.msg);
+        } else {
+          this._alert.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this._alert.error('Atenção ocorreu um erro ao tentar cadastrar o Título, Verifique os Campos Chaves!!!', err);
       }
-    },
-      (error) => {
-        this.loadingMin = false;
-        this._alert.error('Atenção Título Já Existente, Verifique os Campos Chaves!!!');
-      }
-    );
+    });
   }
 
   public viaCep(cep: string): void {

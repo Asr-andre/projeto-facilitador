@@ -96,26 +96,25 @@ export class DashboardComponent implements OnInit {
 
   public obterDevedores(filtros: any): void {
     this.loading = true;
-    this._dashboard.obterDevedores(filtros).pipe( finalize(() => { this.loading = false; })).subscribe({
-        next: (res) => {
-            if (res && res.success === "true") {
-                this.listarDevedores = res.clientes;
-                this.dadosFiltrados = res.clientes;
-                this.totalRegistros = this.dadosFiltrados.length;
-                this.atualizarQuantidadeExibida();
+    this._dashboard.obterDevedores(filtros).pipe(finalize(() => { this.loading = false; })).subscribe({
+      next: (res) => {
+        if (res && res.success === "true") {
+          this.listarDevedores = res.clientes;
+          this.dadosFiltrados = res.clientes;
+          this.totalRegistros = this.dadosFiltrados.length;
+          this.atualizarQuantidadeExibida();
 
-                // Seleciona automaticamente o primeiro devedor, se existir
-                if (this.listarDevedores.length > 0) {
-                    this.selecionarDevedor(this.listarDevedores[0]);
-                }
-            } else {
-                this._alert.warning(res.msg);
-            }
-        },
-        error: (err) => {
-            // Tratamento de erro
-            this._alert.error('Erro ao carregar devedores.', err);
+          // Seleciona automaticamente o primeiro devedor, se existir
+          if (this.listarDevedores.length > 0) {
+            this.selecionarDevedor(this.listarDevedores[0]);
+          }
+        } else {
+          this._alert.warning(res.msg);
         }
+      },
+      error: (err) => {
+        this._alert.error('Erro ao carregar devedores.', err);
+      }
     });
   }
 
@@ -127,15 +126,18 @@ export class DashboardComponent implements OnInit {
     };
 
     this.loading = true;
-    this._fila.obterFilas(requisicao).subscribe((res) => {
-      if (res && res.success === "true") {
-        this.filas = res.filas;
-        this.loading = false;
-      }else {
-        this._alert.warning(res.msg);
-        this.loading = false;
+    this._fila.obterFilas(requisicao).pipe(finalize(() => { this.loading = false; })).subscribe({
+      next: (res) => {
+        if (res && res.success === "true") {
+          this.filas = res.filas;
+        } else {
+          this._alert.warning(res.msg);
+        }
+      },
+      error: (error) => {
+        this._alert.error("Erro ao buscar filas. Tente novamente.", error);
       }
-    }, () => this.loading = false);
+    });
   }
 
   public obterDadosDosCards(): void {

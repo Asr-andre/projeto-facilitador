@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { finalize } from 'rxjs';
 import { Cliente, ClienteModel } from 'src/app/core/models/cadastro/cliente.model';
 import { ContratanteModel } from 'src/app/core/models/cadastro/contratante.model';
 import { CepModel } from 'src/app/core/models/cep.model';
@@ -22,6 +23,7 @@ export class EditarComponent implements OnInit {
   @Output() fecharEditar = new EventEmitter<void>();
   @Output() clienteAtualizado = new EventEmitter<string>();
   @Input() dadosCliente: Cliente | null = null;
+
   public listarCliente: Cliente[] = [];
   public clienteSelecionado: Cliente | null = null;
   public contratantes: ContratanteModel[] = [];
@@ -31,7 +33,6 @@ export class EditarComponent implements OnInit {
   public login = this._auth.getLogin();
   public formCliente: FormGroup;
   public cep = new CepModel();
-  public loadingMin: boolean = false;
   public ativaAba: number = 1;
   public editar: boolean = true;
 
@@ -148,17 +149,15 @@ export class EditarComponent implements OnInit {
       return;
     }
 
-    const dadosParaEnvio = { ...this.formCliente.value };
-    dadosParaEnvio.data_nascimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
-    dadosParaEnvio.cnpj_cpf = dadosParaEnvio.cnpj_cpf.replace(/[.\-\/]/g, '').trim();
+    const dadosParaEnvio = { ...this.formCliente.value,
+      data_nascimento: this._datePipe.transform(this.formCliente.value.data_nascimento, "dd/MM/yyyy"),
+      cnpj_cpf: this.formCliente.value.cnpj_cpf.replace(/[.\-\/]/g, '').trim()
+    };
 
     this.loading = true;
-
-    this._cliente.editarCliente(dadosParaEnvio).subscribe({
+    this._cliente.editarCliente(dadosParaEnvio).pipe(finalize(() => { this.loading = false; })).subscribe({
       next: (res) => {
-        this.loading = false;
         if (res.success === 'true') {
-          this.clienteAtualizado.emit(this.formCliente.get('cnpj_cpf')?.value);
           this.ativaAba2();
           this._alert.success(res.msg);
         } else {
@@ -166,7 +165,6 @@ export class EditarComponent implements OnInit {
         }
       },
       error: (err) => {
-        this.loading = false;
         this._alert.error('Ocorreu um erro ao tentar editar o cliente:', err);
       }
     });
@@ -192,24 +190,21 @@ export class EditarComponent implements OnInit {
       vencimento: this._datePipe.transform(this.formTitulo.value.vencimento, 'dd/MM/yyyy') || ''
     };
 
-    this.loadingMin = true;
-
-    this._cliente.cadastrarTitulos(dadosTitulo).subscribe((res) => {
-      if (res.success) {
-        this.loadingMin = false;
-        this.clienteAtualizado.emit(this.formCliente.get('cnpj_cpf')?.value);
-        this.fecharEditar.emit();
-        this._alert.success(res.msg);
-      } else {
-        this.loadingMin = false;
-        this._alert.warning(res.msg);
+    this.loading = true;
+    this._cliente.cadastrarTitulos(dadosTitulo).pipe(finalize(() => { this.loading = false; })).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.clienteAtualizado.emit(this.formCliente.get('cnpj_cpf')?.value);
+          this.fecharEditar.emit();
+          this._alert.success(res.msg);
+        } else {
+          this._alert.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this._alert.error('Atenção ocorreu um erro ao tentar cadastrar o Título, Verifique os Campos Chaves!!!', err);
       }
-    },
-      (error) => {
-        this.loadingMin = false;
-        this._alert.error('Atenção Título Já Existente, Verifique os Campos Chaves!!!');
-      }
-    );
+    });
   }
 
   public viaCep(cep: string): void {

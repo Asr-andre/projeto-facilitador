@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
+import { finalize } from 'rxjs';
 import { Cliente, Titulo } from 'src/app/core/models/cadastro/cliente.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
@@ -12,9 +13,9 @@ import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
 export class ClientesComponent {
   public clienteParaEdicao: Cliente | null = null;
   public listarCliente: Cliente[] = [];
-  public listarTitulos: any[] = [];
   public clienteSelecionado: Cliente | null = null;
-  public tituloSelecionado: any[] = [];
+  public listarTitulos: Titulo[] = [];
+  public tituloSelecionado: Titulo[] = [];
   public titulo: any | null = null;
   public textoPesquisa: string = "";
   public campoInvalido: boolean = false;
@@ -48,7 +49,7 @@ export class ClientesComponent {
 
     if (!this.textoPesquisa.trim()) {
       this.validarCampo();
-      this._alert.warning('Por favor, insira um cpf ou nome para a pesquisa o cliente.');
+      this._alert.warning('Por favor, insira um CPF ou nome para pesquisar o cliente.');
       return;
     }
 
@@ -56,26 +57,18 @@ export class ClientesComponent {
     const dados = {
       id_empresa: this.idEmpresa,
       user_login: this.login,
-      nome: '',
-      cnpj_cpf: ''
+      nome: isNaN(Number(texto)) ? texto : '',
+      cnpj_cpf: isNaN(Number(texto)) ? '' : texto
     };
 
-    if (isNaN(Number(texto))) {
-      dados.nome = texto;
-      this.tituloSelecionado = []
-    } else {
-      dados.cnpj_cpf = texto;
-      this.tituloSelecionado = []
-    }
-
+    this.tituloSelecionado = []
     this.loading = true;
-
-    this._cliente.pesquisarCliente(dados).subscribe({
+    this._cliente.pesquisarCliente(dados).pipe(finalize(() => { this.loading = false; })).subscribe({
       next: (res) => {
         if (res.success === 'true' && res.cliente && res.cliente.length > 0) {
-          this.listarCliente = res.cliente || [];
-          this.dadosFiltrados = res.cliente || [];
-          this.listarTitulos = res.titulos || [];
+          this.listarCliente = res.cliente;
+          this.dadosFiltrados = res.cliente;
+          this.listarTitulos = res.titulos;
 
           this.tituloSelecionado = this.listarTitulos.filter(
             (titulo: Titulo) => this.listarCliente.some(cliente => cliente.id_cliente === titulo.id_cliente)
@@ -83,21 +76,15 @@ export class ClientesComponent {
 
           this.appListaCliente = true;
           this.atualizarQuantidadeExibida();
-          this.dadosFiltrados.sort((a, b) => {
-            if (a.id_contratante < b.id_contratante) return 1;
-            if (a.id_contratante > b.id_contratante) return -1;
-            return 0;
-          })
+          this.dadosFiltrados.sort((a, b) => b.id_contratante - a.id_contratante);
         } else {
           this.appListaCliente = false;
-          this.listarCliente = [];
+          this.listarCliente;
           this._alert.warning("Cliente não localizado")
         }
-        this.loading = false;
       },
       error: (err) => {
         this._alert.error('Erro ao pesquisar clientes:', err);
-        this.loading = false;
       }
     });
   }
@@ -137,7 +124,7 @@ export class ClientesComponent {
   }
 
   public fecharEditar() {
-    this.editarCliente = false;;
+    this.editarCliente = false;
     this.appPesquisar = true;
   }
 }
