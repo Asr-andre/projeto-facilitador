@@ -125,8 +125,8 @@ export class ClienteComponent {
       return;
     }
 
-    this.idContratante = this.formCliente.get('id_contratante')?.value || this.clienteSelecionado.id_cliente;
-    this.idCliente = String(this.clienteSelecionado.id_cliente) || this.idContratante;
+    this.idContratante = this.formCliente.get('id_contratante')?.value || this.clienteSelecionado.id_contratante;
+    this.idCliente = this.idCliente || this.idCliente;
 
     this.inicializarformTitulo();
     this.obterTipoTitulo();
