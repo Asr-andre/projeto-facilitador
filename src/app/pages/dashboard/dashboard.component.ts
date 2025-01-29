@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from "src/app/core/helpers/conf-tabela/ordenacao-tabela";
 import { Utils } from "src/app/core/helpers/utils";
 import { RequisicaoCardsModel, RespostaCardsModel } from "src/app/core/models/cards.dashboard.model";
-import { DevedorModel, RespostaDevedorModel } from "src/app/core/models/devedor.model";
+import { DevedorModel } from "src/app/core/models/devedor.model";
 import { FilaModel } from "src/app/core/models/fila.model";
 import { AlertService } from "src/app/core/services/alert.service";
 import { AuthenticationService } from "src/app/core/services/auth.service";
@@ -13,6 +13,7 @@ import { FilaService } from "src/app/core/services/fila.service";
 import { SolicitarCreditosComponent } from "./componente/solicitar-creditos/solicitar-creditos.component";
 import * as CryptoJS from 'crypto-js';
 import { Versao } from "src/app/core/config/app.config";
+import { finalize } from "rxjs";
 
 @Component({
   selector: "app-dashboard",
@@ -95,23 +96,26 @@ export class DashboardComponent implements OnInit {
 
   public obterDevedores(filtros: any): void {
     this.loading = true;
-    this._dashboard.obterDevedores(filtros).subscribe((res: RespostaDevedorModel) => {
-      if (res && res.success === "true") {
-        this.listarDevedores = res.clientes;
-        this.dadosFiltrados = res.clientes;
-        this.totalRegistros = this.dadosFiltrados.length;
-        this.atualizarQuantidadeExibida();
+    this._dashboard.obterDevedores(filtros).pipe( finalize(() => { this.loading = false; })).subscribe({
+        next: (res) => {
+            if (res && res.success === "true") {
+                this.listarDevedores = res.clientes;
+                this.dadosFiltrados = res.clientes;
+                this.totalRegistros = this.dadosFiltrados.length;
+                this.atualizarQuantidadeExibida();
 
-        // Seleciona automaticamente o primeiro devedor, da fila
-        if (this.listarDevedores.length > 0) {
-          this.selecionarDevedor(this.listarDevedores[0]);
-      }
-
-        this.loading = false;
-      } else {
-        this.loading = false;
-        this._alert.warning(res.msg);
-      }
+                // Seleciona automaticamente o primeiro devedor, se existir
+                if (this.listarDevedores.length > 0) {
+                    this.selecionarDevedor(this.listarDevedores[0]);
+                }
+            } else {
+                this._alert.warning(res.msg);
+            }
+        },
+        error: (err) => {
+            // Tratamento de erro
+            this._alert.error('Erro ao carregar devedores.', err);
+        }
     });
   }
 

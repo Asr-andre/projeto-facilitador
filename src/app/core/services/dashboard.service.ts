@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { RequisicaoDevedorModel, RespostaDevedorModel } from '../models/devedor.model';
 import { DetalhamentoModel, RequisicaoDetalhamentoModel } from '../models/detalhamento.model';
 import { AppConfig } from './url.base.service';
-import { AuthenticationService } from './auth.service';
 import { RequisicaoCardsModel, RespostaCardsModel } from '../models/cards.dashboard.model';
 
 @Injectable({
@@ -15,7 +14,6 @@ export class DashboardService {
 
   constructor(
     private _http: HttpClient,
-    private _auth: AuthenticationService
   ) { }
 
   public obterDevedores(dados: RequisicaoDevedorModel): Observable<RespostaDevedorModel> {
