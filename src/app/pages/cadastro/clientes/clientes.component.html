@@ -124,7 +124,7 @@
           <hr>
 
             <div class="row">
-              <div class="col-md-12" *ngIf="tituloSelecionado.length > 0; else sem">
+              <div class="col-md-12">
                 <div class="table-responsive">
                   <table class="table table-sm table-hover font-size-12 tabelaOrdenada" style="margin-bottom: 8px;">
                     <thead class="tabela-custom">
@@ -139,18 +139,25 @@
                         <th>Valor Atualizado</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody *ngIf="tituloSelecionado.length > 0; else sem">
                       <tr *ngFor="let titulo of tituloSelecionado | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
                         <td>{{ titulo.id_titulo }}</td>
                         <td>{{ titulo.numero_documento }}</td>
                         <td>{{ titulo.numero_contrato }}</td>
                         <td>{{ titulo.parcela }}</td>
-                        <td>{{ titulo.vencimento | date: 'dd/MM/yyyy' }}</td>
+                        <td>{{ titulo.vencimento | dataBr }}</td>
                         <td>{{ titulo.valor_original | currency: 'BRL' }}</td>
                         <td>{{ titulo.saldo_devedor | currency: 'BRL' }}</td>
                         <td>{{ titulo.valor_atualizado | currency: 'BRL' }}</td>
                       </tr>
                     </tbody>
+                    <ng-template #sem>
+                      <tbody>
+                        <tr>
+                          <td colspan="8" class="text-center">Nenhum dado para exibir.</td>
+                        </tr>
+                      </tbody>
+                    </ng-template>
                   </table>
                 </div>
                 <div class="d-flex justify-content-between align-items-center text-small">
@@ -163,10 +170,6 @@
                   </pagination-controls>
                 </div>
               </div>
-
-              <ng-template #sem>
-                <p class="text-center">Nenhum cliente encontrado.</p>
-              </ng-template>
             </div>
 
         </div>
