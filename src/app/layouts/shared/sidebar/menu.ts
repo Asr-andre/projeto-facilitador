@@ -44,13 +44,7 @@ import { MenuItem } from "./menu.model";
         {
           id: 2,
           label: "MENUITEMS.CADASTRO.LIST.CLIENTE",
-          link: "/cadastro/cliente",
-          parentId: 5,
-        },
-        {
-          id: 3,
-          label: "MENUITEMS.CADASTRO.LIST.TITULOS",
-          link: "/cadastro/titulos",
+          link: "/cadastro/clientes",
           parentId: 5,
         },
         {
