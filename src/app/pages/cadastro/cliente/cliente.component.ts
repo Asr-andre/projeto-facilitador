@@ -237,6 +237,7 @@ export class ClienteComponent {
 
     const dadosParaEnvio = { ...this.formCliente.value };
     dadosParaEnvio.data_nascimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
+    dadosParaEnvio.cnpj_cpf = dadosParaEnvio.cnpj_cpf.replace(/[.\-\/]/g, '').trim();
 
     this.loading = true;
 
@@ -266,6 +267,7 @@ export class ClienteComponent {
 
     const dadosParaEnvio = { ...this.formCliente.value };
     dadosParaEnvio.data_nascimento = this._datePipe.transform(dadosParaEnvio.data_nascimento, "dd/MM/yyyy");
+    dadosParaEnvio.cnpj_cpf = dadosParaEnvio.cnpj_cpf.replace(/[.\-\/]/g, '').trim();
 
     this.loading = true;
 

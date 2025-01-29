@@ -1,12 +1,8 @@
-import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { Utils } from 'src/app/core/helpers/utils';
 import { Cliente, Titulo } from 'src/app/core/models/cadastro/cliente.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
-import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: 'app-clientes',
@@ -36,25 +32,18 @@ export class ClientesComponent {
   public totalRegistros: number = 0;
   public totalRegistrosExibidos: number = 0;
   public qtdRegistrosPorPagina = [10, 25, 50, 100];
-  public direcaoOrdenacao: { [key: string]: string } = {};
-
-  public paginaAtualT: number = 1;
-  public itensPorPaginaT: number = 5;
-  public totalRegistrosT: number = 0;
-  public totalRegistrosExibidosT: number = 0;
-  public qtdRegistrosPorPaginaT = [10, 25, 50, 100];
-  public direcaoOrdenacaoT: { [key: string]: string } = {};
 
   constructor(
     private _cliente: ClienteService,
     private _auth: AuthenticationService,
-    private _fb: FormBuilder,
     private _alert: AlertService,
-    private _datePipe: DatePipe,
-    private _funcoes: FuncoesService
   ) { }
 
-  pesquisaClientes(): void {
+  pesquisaClientes(cpfCnpj?: string): void {
+    if (cpfCnpj) {
+      this.textoPesquisa = cpfCnpj;
+    }
+
     if (!this.textoPesquisa.trim()) {
       this.validarCampo();
       this._alert.warning('Por favor, insira um cpf ou nome para a pesquisa o cliente.');
@@ -71,6 +60,7 @@ export class ClientesComponent {
 
     if (isNaN(Number(texto))) {
       dados.nome = texto;
+      this.tituloSelecionado = []
     } else {
       dados.cnpj_cpf = texto;
     }
@@ -83,9 +73,12 @@ export class ClientesComponent {
           this.listarCliente = res.cliente || [];
           this.dadosFiltrados = res.cliente || [];
           this.listarTitulos = res.titulos || [];
-          console.log(this.listarTitulos)
+
+          //this.tituloSelecionado = this.listarTitulos.filter(
+          //  (titulo: Titulo) => this.listarCliente.some(cliente => cliente.id_cliente === titulo.id_cliente)
+          //);
+
           this.appListaCliente = true;
-          this.filtrar();
           this.atualizarQuantidadeExibida();
           this.dadosFiltrados.sort((a, b) => {
             if (a.id_contratante < b.id_contratante) return 1;
@@ -114,15 +107,8 @@ export class ClientesComponent {
     );
   }
 
-
-
   public validarCampo() {
     this.campoInvalido = !this.textoPesquisa || this.textoPesquisa.trim().length === 0;
-  }
-
-  public filtrar(): void {
-    this.dadosFiltrados = Utils.filtrar(this.listarCliente, this.textoPesquisa);
-    this.totalRegistros = this.dadosFiltrados.length;
   }
 
   public atualizarQuantidadeExibida() {
@@ -133,5 +119,10 @@ export class ClientesComponent {
     this.cadastrarCliente = true;
     this.appPesquisar = false;
     this.appListaCliente = false
+  }
+
+  public fecharCadastro() {
+    this.cadastrarCliente = false;
+    this.appPesquisar = true;
   }
 }

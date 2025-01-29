@@ -125,9 +125,9 @@
 
             <div class="row">
               <div class="col-md-12">
-                <div class="table-responsive">
+                <div class="table-responsive" style="margin-top: 5px; max-height: 300px; overflow-y: auto;">
                   <table class="table table-sm table-hover font-size-12 tabelaOrdenada" style="margin-bottom: 8px;">
-                    <thead class="tabela-custom">
+                    <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
                       <tr>
                         <th>ID Título</th>
                         <th>Número Documento</th>
@@ -137,10 +137,11 @@
                         <th>Valor Original</th>
                         <th>Saldo Devedor</th>
                         <th>Valor Atualizado</th>
+                        <th>Pago</th>
                       </tr>
                     </thead>
                     <tbody *ngIf="tituloSelecionado.length > 0; else sem">
-                      <tr *ngFor="let titulo of tituloSelecionado | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                      <tr *ngFor="let titulo of tituloSelecionado">
                         <td>{{ titulo.id_titulo }}</td>
                         <td>{{ titulo.numero_documento }}</td>
                         <td>{{ titulo.numero_contrato }}</td>
@@ -149,6 +150,7 @@
                         <td>{{ titulo.valor_original | currency: 'BRL' }}</td>
                         <td>{{ titulo.saldo_devedor | currency: 'BRL' }}</td>
                         <td>{{ titulo.valor_atualizado | currency: 'BRL' }}</td>
+                        <td>{{ titulo.pago | simNao }}</td>
                       </tr>
                     </tbody>
                     <ng-template #sem>
@@ -160,15 +162,6 @@
                     </ng-template>
                   </table>
                 </div>
-                <div class="d-flex justify-content-between align-items-center text-small">
-                  <div>
-                    Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
-                    {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
-                  </div>
-                  <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior"
-                    nextLabel="Próximo" [maxSize]="5" [autoHide]="false" [responsive]="true">
-                  </pagination-controls>
-                </div>
               </div>
             </div>
 
@@ -178,5 +171,8 @@
   </div>
 </div>
 
-<app-cadastrar *ngIf="cadastrarCliente"></app-cadastrar>
+<app-cadastrar *ngIf="cadastrarCliente"
+                (fecharCadastro)="fecharCadastro()"
+                (clienteCadastrado)="pesquisaClientes($event)">
+              </app-cadastrar>
 
