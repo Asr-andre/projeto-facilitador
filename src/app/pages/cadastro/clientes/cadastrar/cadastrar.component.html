@@ -79,7 +79,11 @@
         </div>
 
         <div class="col-md-2 form-group">
-          <label for="cep" class="form-label">CEP</label>
+          <label for="cep" class="form-label">CEP <i class="fas fa-info-circle text-info ms-1"
+            style="cursor: pointer;"
+            ngbTooltip="Preenchimento dos campos de endereço é automático ao informar o CEP valido"
+            placement="top">
+          </i></label>
           <input type="text" id="cep" class="form-control form-control-sm" formControlName="cep" mask="00000-000" (blur)="viaCep($event.target.value)"
           [ngClass]="{'is-invalid': formCliente.get('cep').invalid && formCliente.get('cep').touched}" placeholder="Cep">
         </div>
