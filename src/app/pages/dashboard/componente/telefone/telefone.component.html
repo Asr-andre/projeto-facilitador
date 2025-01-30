@@ -80,8 +80,8 @@
         <div class="col-md-6" style="padding-right: 3px;">
           <div class="mb-1">
             <label for="fone" class="form-label">Número</label>
-            <input type="text" id="fone" formControlName="fone" class="form-control form-control-pad form-control-sm"
-              placeholder="(00) 00000-0000"  mask="(00) 00000-0000" max="11"
+            <input type="text" id="fone" formControlName="fone"
+            class="form-control form-control-pad form-control-sm" placeholder="(00) 00000-0000"  telefoneMask
             [ngClass]="{'is-invalid': telefoneForm.get('fone').invalid && telefoneForm.get('fone').touched}">
           </div>
         </div>

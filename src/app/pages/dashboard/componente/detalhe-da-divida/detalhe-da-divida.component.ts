@@ -27,10 +27,13 @@ import { finalize } from 'rxjs';
 export class DetalheDaDividaComponent implements OnInit, OnChanges {
   @ViewChild(SimuladorPadraoComponent) SimuladorPadraoComponent: SimuladorPadraoComponent;
   @ViewChild(ModalSituacaoComponent) ModalSituacaoComponent: ModalSituacaoComponent;
+
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
   @Input() numeroContrato: string | undefined;
   @Input() numeroDocumento: string | undefined;
+  @Output() atualizarAcionamento = new EventEmitter<any>();
+
   public detalheDevedor: DetalhamentoModel | null = null;
   public loadingMin: boolean = false;
   public loading: boolean =false;
@@ -123,6 +126,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     this._dashboard.obterDevedorPorId(requisicao).pipe(finalize(() => { this.loadingMin = false; })).subscribe({
       next: (detalhamento) => {
         if (detalhamento && detalhamento.success) {
+          this.atualizarAcionamento.emit();
           this.detalheDevedor = detalhamento;
           this.titulosFiltrados = this.detalheDevedor?.parcelas || [];
           this.numeroContrato = detalhamento.parcelas?.[0]?.numero_contrato;

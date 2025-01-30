@@ -20,6 +20,7 @@ import { DeixaSomenteLeituraDirective } from './deixa.somente.leitura.diretive';
 import { VerificarValorNegativoDirective } from './verifica.valor.negativo.diretive';
 import { SomenteLeituraDirective } from './somente.leitura.s.n.directive';
 import { LimitarCaracteresDirective } from './bloquear.td.directive';
+import { TelefoneMaskDirective } from './masacara.telefone.directive';
 
 const directive = [
   ClickCorDirective,
@@ -42,7 +43,8 @@ const directive = [
   DeixaSomenteLeituraDirective,
   VerificarValorNegativoDirective,
   SomenteLeituraDirective,
-  LimitarCaracteresDirective
+  LimitarCaracteresDirective,
+  TelefoneMaskDirective
 ];
 
 @NgModule({

@@ -58,6 +58,7 @@ export class TelefoneComponent implements OnInit, OnChanges {
 
   public inicializarTelefoneForm(dado?: TelefoneModel) {
     this.telefoneForm = this._fb.group({
+      id_fone: [dado?.id_fone || ''],
       id_cliente: this.idCliente,
       id_empresa: [this.idEmpresa],
       fone: [dado?.fone ||'', Validators.required],
@@ -142,8 +143,12 @@ export class TelefoneComponent implements OnInit, OnChanges {
 
   public cadastrarTelefone(): void {
     if (this.telefoneForm.valid) {
+      const dados = { ...this.telefoneForm.value,
+        fone: this.telefoneForm.value.fone.replace(/\D/g, '')
+      }
+
       this.loadingMin = true;
-      this._telefoneService.cadastrarTelefone(this.telefoneForm.value).subscribe((res) => {
+      this._telefoneService.cadastrarTelefone(dados).subscribe((res) => {
         if (res.success === 'true') {
           this.carregarTelefones(this.idCliente);
          this.fechar();
@@ -156,7 +161,7 @@ export class TelefoneComponent implements OnInit, OnChanges {
       },
         (error) => {
           this.loadingMin = false;
-          this._alert.error('Ocorreu um erro ao tentar cadastrar o telefone.');
+          this._alert.error('Ocorreu um erro ao tentar cadastrar o telefone.', error);
         }
       );
     } else {
@@ -166,8 +171,12 @@ export class TelefoneComponent implements OnInit, OnChanges {
 
   public editarTelefone(): void {
     if (this.telefoneForm.valid) {
+      const dados = { ...this.telefoneForm.value,
+        fone: this.telefoneForm.value.fone.replace(/\D/g, '')
+      }
+
       this.loadingMin = true;
-      this._telefoneService.editarTelefone(this.telefoneForm.value).subscribe((res) => {
+      this._telefoneService.editarTelefone(dados).subscribe((res) => {
         if (res.success === 'true') {
           this.carregarTelefones(this.idCliente);
          this.fechar();
@@ -180,7 +189,7 @@ export class TelefoneComponent implements OnInit, OnChanges {
       },
         (error) => {
           this.loadingMin = false;
-          this._alert.error('Ocorreu um erro ao tentar atualizar o telefone.');
+          this._alert.error('Ocorreu um erro ao tentar atualizar o telefone.', error);
         }
       );
     } else {
