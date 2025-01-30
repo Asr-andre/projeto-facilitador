@@ -1,0 +1,48 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.message-received {
+  background: #ffffff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 75%;
+  font-size: 14px;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.message-received .time {
+  font-size: 12px;
+  color: gray;
+  position: absolute;
+  bottom: 2px;
+  right: 8px;
+}
+
+.message-input {
+  position: relative;
+  background: white;
+  padding: 8px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.message-input textarea {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 5px;
+  background: transparent;
+}
+
+.emoji-icon {
+  font-size: 20px;
+  margin-left: 8px;
+  cursor: pointer;
+  color: gray;
+}
