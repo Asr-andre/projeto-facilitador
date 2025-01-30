@@ -4,44 +4,44 @@
 </div>
 
 <div class="row brder">
-  <div class="col-md-5 detalhamento-texto">Credor: <strong><span>{{ detalhamentoSelecionado?.credor }}</span></strong></div>
+  <div class="col-md-5 detalhamento-texto">Credor: <strong><span>{{ detalheDevedor?.credor }}</span></strong></div>
 </div>
 
 <div class="row pt-1 brder">
   <div class="col-md-4 detalhamento-texto">Nome:
     <strong>
       <span style="cursor: pointer" [ngbTooltip]="'Clique para copiar o nome'" placement="top" container="body"
-        (click)="copiarParaAreasTransferencia(detalhamentoSelecionado?.nome)">
-        {{ detalhamentoSelecionado?.nome }}
+        (click)="copiarParaAreasTransferencia(detalheDevedor?.nome)">
+        {{ detalheDevedor?.nome }}
       </span>
     </strong>
   </div>
   <div class="col-md-4 detalhamento-texto">CPF/CNPJ:
     <strong>
       <span style="cursor: pointer" [ngbTooltip]="'Clique para copiar o CPF'" placement="top" container="body"
-        (click)="copiarParaAreasTransferencia(detalhamentoSelecionado?.cpf)">
-        {{ detalhamentoSelecionado?.cpf | cpfCnpj }} - {{ tipoPessoa(detalhamentoSelecionado?.cpf) }}
+        (click)="copiarParaAreasTransferencia(detalheDevedor?.cpf)">
+        {{ detalheDevedor?.cpf | cpfCnpj }} - {{ tipoPessoa(detalheDevedor?.cpf) }}
       </span>
     </strong>
   </div>
   <div class="col-md-4 detalhamento-texto">RG: <strong>
-      {{ detalhamentoSelecionado?.rg | rg }}
+      {{ detalheDevedor?.rg | rg }}
     </strong>
   </div>
 </div>
 <div class="row pt-1 brder">
-  <div class="col-md-4 detalhamento-texto">Rua: <strong> {{ detalhamentoSelecionado?.endereco | convertMaiuscula }} </strong></div>
-  <div class="col-md-4 detalhamento-texto">Número: <strong> {{ detalhamentoSelecionado?.numero }}</strong></div>
-  <div class="col-md-4 detalhamento-texto">Complemento: <strong> {{ detalhamentoSelecionado?.complemento | convertMaiuscula }}</strong></div>
+  <div class="col-md-4 detalhamento-texto">Rua: <strong> {{ detalheDevedor?.endereco | convertMaiuscula }} </strong></div>
+  <div class="col-md-4 detalhamento-texto">Número: <strong> {{ detalheDevedor?.numero }}</strong></div>
+  <div class="col-md-4 detalhamento-texto">Complemento: <strong> {{ detalheDevedor?.complemento | convertMaiuscula }}</strong></div>
 </div>
 <div class="row pt-1 brder">
-  <div class="col-md-3 detalhamento-texto">Bairro: <strong> {{ detalhamentoSelecionado?.bairro | convertMaiuscula }}</strong></div>
-  <div class="col-md-3 detalhamento-texto">Cidade: <strong> {{ detalhamentoSelecionado?.cidade | convertMaiuscula }} - {{ detalhamentoSelecionado?.uf | convertMaiuscula }}</strong></div>
+  <div class="col-md-3 detalhamento-texto">Bairro: <strong> {{ detalheDevedor?.bairro | convertMaiuscula }}</strong></div>
+  <div class="col-md-3 detalhamento-texto">Cidade: <strong> {{ detalheDevedor?.cidade | convertMaiuscula }} - {{ detalheDevedor?.uf | convertMaiuscula }}</strong></div>
   <div class="col-md-6 detalhamento-texto">
     <span style="cursor: pointer" [ngbTooltip]="'Atualizar situação'" placement="top" container="body"
       (click)="abriModalSituacao()">Situação: </span>
     <strong>
-    {{ detalhamentoSelecionado?.situacao | convertMaiuscula }}
+    {{ detalheDevedor?.situacao | convertMaiuscula }}
     </strong>
   </div>
 </div>
@@ -147,7 +147,7 @@
 
 <app-modal-situacao
     [idCliente]="idCliente"
-    [clienteSituacao]="detalhamentoSelecionado?.situacao"
+    [clienteSituacao]="detalheDevedor?.situacao"
     (clienteAtualizado)="atualizarDetalhamento()">
 </app-modal-situacao>
 

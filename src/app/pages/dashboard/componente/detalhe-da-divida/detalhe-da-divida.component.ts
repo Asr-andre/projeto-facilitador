@@ -17,6 +17,7 @@ import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
 import { CadastrarTituloRequest } from 'src/app/core/models/cadastro/cliente.model';
 import { ModalSituacaoComponent } from './modal-situacao/modal-situacao.component';
 import { FuncoesService } from 'src/app/core/services/funcoes.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-detalhe-da-divida',
@@ -30,7 +31,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   @Input() idContratante: number | undefined;
   @Input() numeroContrato: string | undefined;
   @Input() numeroDocumento: string | undefined;
-  public detalhamentoSelecionado: DetalhamentoModel | null = null;
+  public detalheDevedor: DetalhamentoModel | null = null;
   public loadingMin: boolean = false;
   public loading: boolean =false;
   public selecionarTodos: boolean = true;
@@ -104,10 +105,9 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   }
 
   public obterPrimeiroContratoSelecionado(): string | undefined {
-    const parcelaSelecionada = this.detalhamentoSelecionado?.parcelas.find(parcela => parcela.selecionado);
+    const parcelaSelecionada = this.detalheDevedor?.parcelas.find(parcela => parcela.selecionado);
     return parcelaSelecionada?.numero_contrato;
   }
-
 
   public atualizarDetalhamento(): void {
     this.obterDetalhamentoPorId(this.idCliente, this.idContratante);
@@ -115,39 +115,30 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   }
 
   public obterDetalhamentoPorId(id_cliente: number | undefined, id_contratante: number | undefined): void {
-    if (id_cliente == null || id_contratante == null) {
-      return;
-    }
+    if (!id_cliente || !id_contratante) return;
 
-    const requisicao = {
-      id_cliente: id_cliente,
-      id_empresa: this.idEmpresa,
-      id_contratante: id_contratante,
-    };
-
+    const requisicao = { id_cliente, id_empresa: this.idEmpresa, id_contratante };
 
     this.loadingMin = true;
-    this._dashboard.obterDevedorPorId(requisicao).subscribe(
-      (detalhamento) => {
-        this.loadingMin = false;
+    this._dashboard.obterDevedorPorId(requisicao).pipe(finalize(() => { this.loadingMin = false; })).subscribe({
+      next: (detalhamento) => {
         if (detalhamento && detalhamento.success) {
-          this.detalhamentoSelecionado = detalhamento;
-          this.titulosFiltrados = this.detalhamentoSelecionado?.parcelas || [];
+          this.detalheDevedor = detalhamento;
+          this.titulosFiltrados = this.detalheDevedor?.parcelas || [];
           this.numeroContrato = detalhamento.parcelas?.[0]?.numero_contrato;
-          if (this.detalhamentoSelecionado.parcelas) {
-            this.detalhamentoSelecionado.parcelas.forEach(parcela => {
+          if (this.detalheDevedor.parcelas) {
+            this.detalheDevedor.parcelas.forEach(parcela => {
               parcela.selecionado = true;
-              this.loading = false;
             });
           }
-          this.loadingMin = false;
+        } else {
+          this._alert.warning(detalhamento.msg);
         }
       },
-      (error) => {
-        this._alert.error('Não foi possível pesquisar o cliente!');
-        this.loadingMin = false;
+      error: (error) => {
+        this._alert.error("Erro ao obter os dados. Tente novamente.", error);
       }
-    );
+    });
   }
 
   public obterTipoTitulo() {
@@ -185,13 +176,13 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
 
   public filtrarTitulos() {
     if (this.filtroSelecionado === 'todos') {
-      this.titulosFiltrados = this.detalhamentoSelecionado.parcelas;
+      this.titulosFiltrados = this.detalheDevedor.parcelas;
       this.verificarSelecao();
     } else if (this.filtroSelecionado === 'acordo') {
-      this.titulosFiltrados = this.detalhamentoSelecionado.parcelas.filter(parcela => parcela.numero_contrato.startsWith('ACD'));
+      this.titulosFiltrados = this.detalheDevedor.parcelas.filter(parcela => parcela.numero_contrato.startsWith('ACD'));
       this.verificarSelecao();
     } else if (this.filtroSelecionado === 'semAcordo') {
-      this.titulosFiltrados = this.detalhamentoSelecionado.parcelas.filter(parcela => !parcela.numero_contrato.startsWith('ACD'));
+      this.titulosFiltrados = this.detalheDevedor.parcelas.filter(parcela => !parcela.numero_contrato.startsWith('ACD'));
       this.verificarSelecao();
     }
   }
@@ -226,7 +217,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
       return;
     }
 
-    if (!this.idCliente || !this.idContratante || !this.detalhamentoSelecionado) {
+    if (!this.idCliente || !this.idContratante || !this.detalheDevedor) {
       return;
     }
 
@@ -255,12 +246,12 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   }
 
   public retiradas(): void {
-    if (!this.detalhamentoSelecionado?.parcelas) {
+    if (!this.detalheDevedor?.parcelas) {
       this._alert.warning('Nenhum título selecionado para retirada.');
       return;
     }
 
-    const titulos = this.detalhamentoSelecionado.parcelas
+    const titulos = this.detalheDevedor.parcelas
       .filter(parcela => parcela.selecionado) // Apenas títulos selecionados
       .map(titulo => ({
         id_titulo: titulo.id_titulo,
@@ -273,7 +264,7 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
       }));
 
     if (titulos.length === 0) {
-      this._alert.error('Nenhum título selecionado para retirada.');
+      this._alert.warning('Nenhum título selecionado para retirada.');
       return;
     }
 
@@ -328,22 +319,20 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
     };
 
     this.loadingMin = true;
-
-    this._cliente.cadastrarTitulos(dadosTitulo).subscribe((res) => {
-      if (res.success) {
-        this._alert.success(res.msg);
-        this.atualizarDetalhamento();
-        this.fechar();
-      } else {
-        this.loadingMin = false;
-        this._alert.warning(res.msg);
+    this._cliente.cadastrarTitulos(dadosTitulo).pipe(finalize(() => { this.loadingMin = false; })).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this._alert.success(res.msg);
+          this.atualizarDetalhamento();
+          this.fechar();
+        } else {
+          this._alert.warning(res.msg);
+        }
+      },
+      error: (error) => {
+        this._alert.error("Atenção Título Já Existente, Verifique os Campos Chaves!!!", error);
       }
-    },
-      (error) => {
-        this.loadingMin = false;
-        this._alert.error('Atenção Título Já Existente, Verifique os Campos Chaves!!!');
-      }
-    );
+    });
   }
 
   public verificarValorNegativo(campo: string) {
