@@ -28,12 +28,20 @@
       </thead>
       <tbody *ngIf="processos.length > 0; else semProcessos">
         <tr *ngFor="let item of processos">
-          <td>{{ item.numero_processo | docJuridico }}</td>
+          <td>
+            <span style="cursor: pointer"
+            [ngbTooltip]="item.obs"
+            placement="top"
+            container="body"
+            (click)="copiarParaAreasTransferencia(item.obs)">
+              {{ item.numero_processo | docJuridico }}
+            </span>
+          </td>
           <td>{{ item.comarca }}</td>
           <td>{{ item.vara }}</td>
           <td>{{ item.data_entrada_processo | dataBr }}</td>
           <td>{{ item.tipo_acao }}</td>
-          <td>{{ item.data_audiencia | dataHoraBrasileira}}</td>
+          <td>{{ item.data_audiencia | dataHoraBrasileira }}</td>
           <td>{{ item.user_login }}</td>
           <td>{{ item.ultimo_andamento }}</td>
           <td>
@@ -41,9 +49,8 @@
               [ngbTooltip]="item.obs"
               placement="top"
               container="body"
-              (click)="copiarParaAreasTransferencia(item.obs)"
-            >
-              {{ mostraConteudoTruncado(item.obs, 10) }}
+              (click)="copiarParaAreasTransferencia(item.obs)">
+                {{ mostraConteudoTruncado(item.obs, 10) }}
             </span>
           </td>
           <td>
