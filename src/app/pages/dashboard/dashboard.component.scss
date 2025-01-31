@@ -51,3 +51,11 @@ pagination-controls {
 .card-texto {
   color: #454646 !important;
 }
+
+.card-custom {
+  height: 530px!important;  /* Defina a altura desejada */
+  min-height: 100px!important;
+  max-height: 530px!important;
+  overflow: hidden!important; /* Evita que o conteúdo faça o card crescer */
+  display: flex!important;
+}
