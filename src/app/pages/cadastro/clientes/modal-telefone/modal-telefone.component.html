@@ -1,0 +1,82 @@
+<div class="container-fluid mt-4">
+  <h6 class="mb-3">Cadastro de Telefones</h6>
+
+  <!-- Filtros e Botões -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex gap-3">
+      <input type="text" class="form-control" placeholder="Número..." style="max-width: 200px;">
+
+      <select class="form-select" style="max-width: 150px;">
+        <option>Tipo</option>
+        <option>Celular</option>
+        <option>Residencial</option>
+        <option>Comercial</option>
+      </select>
+      <select class="form-select" style="max-width: 150px;">
+        <option>Priorita</option>
+        <option>Celular</option>
+        <option>Residencial</option>
+        <option>Comercial</option>
+      </select>
+      <input type="text" class="form-control" placeholder="Pesquisar..." style="max-width: 200px;">
+      <input type="text" class="form-control" placeholder="Pesquisar..." style="max-width: 200px;">
+    </div>
+    <div>
+      <button class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Adicionar Telefone
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabela de Telefones -->
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="bg-light">
+            <tr>
+              <th class="text-muted">Nome</th>
+              <th class="text-muted">Número</th>
+              <th class="text-muted">Tipo</th>
+              <th class="text-muted">Observações</th>
+              <th class="text-muted">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let telefone of telefonesCadastrados; let i = index">
+              <td>{{ telefone.nome }}</td>
+              <td>{{ telefone.numero }}</td>
+              <td>{{ telefone.tipo }}</td>
+              <td>{{ telefone.observacoes }}</td>
+              <td>
+                <button class="btn btn-outline-danger btn-sm" (click)="removerTelefone(i)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé da Tabela -->
+  <div class="d-flex justify-content-between align-items-center mt-3">
+    <div class="text-muted">
+      Mostrando 1 - {{ telefonesCadastrados.length }} de {{ telefonesCadastrados.length }} registros
+    </div>
+    <div>
+      <nav aria-label="Navegação">
+        <ul class="pagination mb-0">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Próximo</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

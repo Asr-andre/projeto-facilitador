@@ -10,12 +10,14 @@ import { PipesModule } from "src/app/core/pipe/pipe.module";
 import { ClientesComponent } from "./clientes.component";
 import { CadastrarComponent } from "./cadastrar/cadastrar.component";
 import { EditarComponent } from "./editar/editar.component";
+import { ModalTelefoneComponent } from "./modal-telefone/modal-telefone.component";
 
 @NgModule({
   declarations: [
     ClientesComponent,
     CadastrarComponent,
-    EditarComponent
+    EditarComponent,
+    ModalTelefoneComponent
   ],
   imports: [
     DiretivasModule,

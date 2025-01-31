@@ -1,4 +1,3 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 export class RequisicaoTitulosLiquidados {
   id_empresa: number;
   id_contratante: number;
@@ -42,4 +41,21 @@ export class RetornoTitulosLiquidados {
   msg: string;
   id_empresa: string;
   titulos: TituloLiquidado[];
+}
+
+//requissição e retorno da prestação de contas
+export class RequisicaoPrestacaoContas {
+  id_empresa: number;
+  id_contratante: number;
+  data_inicio: string;
+  data_fim: string;
+  user_login: string;
+}
+
+export class RetornoPrestacaoContas {
+  success: string;
+  msg: string;
+  id_empresa: string;
+  id_contratante: string;
+  base64: string;
 }

@@ -88,8 +88,6 @@ export class AcordoComponent implements OnInit, OnChanges {
 
     this._alert.impressaoDocumento();
 
-        console.log("Dados para geração da confisão de divida", dadosSelecionado)
-
       this._acordo.imprimirConfissaoDivida(dadosSelecionado).subscribe(
         (res) => {
           var link = "data:application/pdf;base64, " + res.base64;

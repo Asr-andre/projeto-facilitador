@@ -54,26 +54,6 @@ export class PrestacaoContasComponent implements OnInit, OnChanges {
     }
   }
 
-  get nomeEmpresa() {
-    return this.dadosFiltrados[0]?.fantasia || '';
-  }
-
-  get totalPrincipal() {
-    return this.dadosFiltrados.reduce((total, dadosFiltrados) => total + dadosFiltrados.valor_original, 0);
-  }
-
-  get totalPago() {
-    return this.dadosFiltrados.reduce((total, dadosFiltrados) => total + dadosFiltrados.valor_pago, 0);
-  }
-
-  get totalComissao() {
-    return this.dadosFiltrados.reduce((total, dadosFiltrados) => total + dadosFiltrados.comissao, 0);
-  }
-
-  get totalRepasse() {
-    return this.dadosFiltrados.reduce((total, dadosFiltrados) => total + dadosFiltrados.repasse, 0);
-  }
-
   public gerarPDF(): void {
     // Seleciona o elemento HTML que você quer converter em PDF
     const elemento = document.getElementById('conteudoPDF');
@@ -93,6 +73,27 @@ export class PrestacaoContasComponent implements OnInit, OnChanges {
     } else {
       console.error('Elemento não encontrado!');
     }
+  }
+
+  public impressaoPrestacaoContas() {
+    if(this.filtros.id_contratante !== 0) {
+
+    }
+    const dadosParaEnvio = { ...this.filtros };
+
+    dadosParaEnvio.data_inicio = this._datePipe.transform(dadosParaEnvio.data_inicio, "dd/MM/yyyy") || "";
+    dadosParaEnvio.data_fim = this._datePipe.transform(dadosParaEnvio.data_fim, "dd/MM/yyyy") || "";
+
+    this._alert.impressaoDocumento();
+    this._financeiro.impressaoPrestacaoContas(dadosParaEnvio).subscribe((res) => {
+      var link = "data:application/pdf;base64, " + res.base64;
+      fetch(link).then(res => res.blob()).then(res => window.open(URL.createObjectURL(res), '_blank'));
+      this._alert.success(res.msg);
+    },
+      (error) => {
+        this._alert.error(`Erro ao gerar prestação de contas!!`, error);
+      }
+    );
   }
 
   public abrirModalRelatorio(content: TemplateRef<any>): void {
@@ -163,4 +164,24 @@ export class PrestacaoContasComponent implements OnInit, OnChanges {
   public fechar() {
     this._modal.dismissAll();
   }
+
+    //get nomeEmpresa() {
+  //  return this.dadosFiltrados[0]?.fantasia || '';
+  //}
+//
+  //get totalPrincipal() {
+  //  return this.dadosFiltrados.reduce((total, dadosFiltrados) => total + dadosFiltrados.valor_original, 0);
+  //}
+//
+  //get totalPago() {
+  //  return this.dadosFiltrados.reduce((total, dadosFiltrados) => total + dadosFiltrados.valor_pago, 0);
+  //}
+//
+  //get totalComissao() {
+  //  return this.dadosFiltrados.reduce((total, dadosFiltrados) => total + dadosFiltrados.comissao, 0);
+  //}
+//
+  //get totalRepasse() {
+  //  return this.dadosFiltrados.reduce((total, dadosFiltrados) => total + dadosFiltrados.repasse, 0);
+  //}
 }
