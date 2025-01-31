@@ -1,54 +1,8 @@
-/* Estilo do Modal */
-.modal-header-custom {
-  padding: 12px 16px;
-  border-bottom: 1px solid #1a252f;
-}
-
-.modal-padding {
-  padding: 20px;
-}
-
-/* Estilo do Editor de Texto */
-.custom-quill-editor {
-  height: 350px;
-  background: #fff;
-}
-
-.custom-quill-editor .ql-container {
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-
-/* Estilo dos Botões */
-.btn-primary {
-  background-color: #3498db;
-  border-color: #3498db;
-  font-weight: 500;
-}
-
-.btn-primary:hover {
-  background-color: #2980b9;
-  border-color: #2980b9;
-}
-
-.btn-light {
-  background-color: #ecf0f1;
-  border-color: #ecf0f1;
-  color: #34495e;
-  font-weight: 500;
-}
-
-.btn-light:hover {
-  background-color: #d0d3d4;
-  border-color: #d0d3d4;
-}
-
-/* Estilo específico para o Quill Editor */
 ::ng-deep quill-editor {
   .ql-toolbar.ql-snow,
   .ql-container.ql-snow {
-    border-color: #e2e8f0;
-    background: #f7fafc;
+    border-color: #e2e8f0; /* Substitua $gray-200 por um valor hexadecimal */
+    background: #f7fafc; /* Substitua $gray-100 por um valor hexadecimal */
   }
 
   .ql-container {
@@ -81,4 +35,68 @@
       border-bottom-right-radius: 20px;
     }
   }
+}
+
+.custom-quill-editor {
+  width: 100%; /* Ocupa 100% da largura do pai */
+  height: 200px; /* Ajuste o valor conforme a necessidade */
+}
+
+.form-control-sm {
+  background-color: #f7fafc;
+}
+
+
+/* Estilo do Modal */
+.modal-header-custom {
+  padding: 12px 16px;
+  border-bottom: 1px solid #1a252f;
+}
+
+.modal-padding {
+  padding: 20px;
+}
+
+/* Estilo do Editor de Texto */
+.custom-quill-editor {
+  height: 300px;
+  background: #fff;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+}
+
+.custom-quill-editor .ql-toolbar {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ced4da;
+}
+
+.custom-quill-editor .ql-container {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* Estilo dos Botões */
+.btn-primary {
+  background-color: #3498db;
+  border-color: #3498db;
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+  border-color: #2980b9;
+}
+
+.btn-light {
+  background-color: #ecf0f1;
+  border-color: #ecf0f1;
+  color: #34495e;
+  font-weight: 500;
+}
+
+.btn-light:hover {
+  background-color: #d0d3d4;
+  border-color: #d0d3d4;
 }
