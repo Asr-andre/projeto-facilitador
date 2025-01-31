@@ -30,10 +30,10 @@
         <tr *ngFor="let item of processos">
           <td>
             <span style="cursor: pointer"
-            [ngbTooltip]="item.obs"
+            [ngbTooltip]="'Copia número do processo'"
             placement="top"
             container="body"
-            (click)="copiarParaAreasTransferencia(item.obs)">
+            (click)="copiarParaAreasTransferencia(item.numero_processo)">
               {{ item.numero_processo | docJuridico }}
             </span>
           </td>
