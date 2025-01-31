@@ -1,43 +1,50 @@
 <ng-template #emailModal let-modal>
-  <div class="modal-header modal-header-custom" style="background: #545a59; margin: 0">
-    <h6 class="modal-title" style="color: #ffffff">
-      <i class="fas fa-at"></i> Envio de Email - {{ destinatarioEmail }}
+  <div class="modal-header modal-header-custom" style="background: #2c3e50; margin: 0; border-bottom: 1px solid #1a252f;">
+    <h6 class="modal-title" style="color: #ffffff; font-weight: 500;">
+      <i class="fas fa-at"></i> Enviar Email - {{ destinatarioEmail }}
     </h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
   </div>
 
   <div class="loading-overlay-card" *ngIf="loadingMin">
-    <div class="spinner-border text-primary m-1" role="status">
-    </div>
+    <div class="spinner-border text-primary m-1" role="status"></div>
   </div>
 
-  <div class="modal-body modal-padding">
+  <div class="modal-body modal-padding" style="background: #f8f9fa;">
     <form [formGroup]="formularioEnvioEmail">
-      <div class="col-md-12 form-group">
-        <label class="form-label">Asunto</label>
-        <select class="form-control form-control-sm" formControlName="assunto" (change)="capturarMsg($event)" style="margin-bottom: 10px;">
+      <!-- Campo de Assunto -->
+      <div class="mb-3">
+        <label class="form-label" style="font-weight: 600; color: #34495e;">Assunto</label>
+        <select class="form-control form-control-sm" formControlName="assunto" (change)="capturarMsg($event)" style="border-radius: 4px; border: 1px solid #ced4da;">
           <option value="">Selecionar Mensagens</option>
           <option *ngFor="let item of mensages" [value]="item.id_emailtexto">{{ item.descricao }}</option>
         </select>
       </div>
 
-      <div class="col-md-12 form-group">
+      <!-- Editor de Mensagem -->
+      <div class="mb-3">
+        <label class="form-label" style="font-weight: 500; color: #34495e;">Mensagem</label>
         <quill-editor
           class="custom-quill-editor"
-          placeholder="Digite sua mensagem"
+          placeholder="Digite sua mensagem..."
           formControlName="mensagem"
-          [modules]="{ toolbar: toolbarOptions }">
+          [modules]="{ toolbar: toolbarOptions }"
+          style="border-radius: 4px; border: 1px solid #ced4da; background: #fff;">
         </quill-editor>
       </div>
 
-      <div class="col-md-12 form-group">
-        <input type="file" class="form-control form-control-sm mb-2" (change)="aoSelecionarArquivo($event)">
+      <!-- Campo de Anexo -->
+      <div class="mb-4">
+        <label class="form-label" style="font-weight: 500; color: #34495e;">Anexar Arquivo</label>
+        <input type="file" class="form-control form-control-sm" (change)="aoSelecionarArquivo($event)" style="border-radius: 4px; border: 1px solid #ced4da;">
       </div>
-      <div class="d-flex justify-content-end align-items-center" style="margin-top: 5px;">
-        <button type="button" class="btn btn-success btn-sm me-1" (click)="enviarEmail()" [disabled]="formularioEnvioEmail.invalid">
+
+      <!-- Botões de Ação -->
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-primary btn-sm me-2" (click)="enviarEmail()" [disabled]="formularioEnvioEmail.invalid">
           <i class="fas fa-paper-plane"></i> Enviar
         </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+        <button type="button" class="btn btn-light btn-sm" (click)="fechar()">
           <i class="fas fa-times"></i> Cancelar
         </button>
       </div>

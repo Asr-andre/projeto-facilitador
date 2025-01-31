@@ -42,7 +42,7 @@ export class EnvioEmailComponent implements OnInit {
     //['blockquote', 'code-block'],                     // Bloco de citação e código
     //[{ 'script': 'sub' }, { 'script': 'super' }],     // Subscrito e Sobrescrito
     //[{ 'direction': 'rtl' }],                         // Direção do texto (direita para esquerda)
-    // ['link', 'image', 'video'],                    // Remover essas funcionalidades
+    //['link', 'image', 'video'],                    // Remover essas funcionalidades
     ['clean']                                         // Limpar formatação
   ];
 

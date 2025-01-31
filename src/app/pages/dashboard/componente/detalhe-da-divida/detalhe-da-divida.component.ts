@@ -108,8 +108,11 @@ export class DetalheDaDividaComponent implements OnInit, OnChanges {
   }
 
   public obterPrimeiroContratoSelecionado(): string | undefined {
-    const parcelaSelecionada = this.detalheDevedor?.parcelas.find(parcela => parcela.selecionado);
-    return parcelaSelecionada?.numero_contrato;
+    if (this.detalheDevedor && this.detalheDevedor.parcelas) {
+      const parcelaSelecionada = this.detalheDevedor.parcelas.find(parcela => parcela.selecionado);
+      return parcelaSelecionada?.numero_contrato;
+    }
+    return undefined;
   }
 
   public atualizarDetalhamento(): void {
