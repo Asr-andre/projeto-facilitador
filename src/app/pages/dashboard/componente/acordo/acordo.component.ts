@@ -72,22 +72,24 @@ export class AcordoComponent implements OnInit, OnChanges {
     }
   }
 
-  public gerarConfissaoDivida(): void {
-    if (this.idsSelecionados.length === 0) {
+  public gerarConfissaoDivida(acordo: any): void {
+    const dadosSelecionado = {
+      id_empresa: this.idEmpresa,
+      id_contratante: this.idContratante,
+      id_cliente: this.idCliente,
+      id_acordo: acordo.id_acordo,
+      user_login: this.login,
+    };
+
+    if (!dadosSelecionado) {
       this._alert.info(`Nenhum acordo selecionado!`);
       return;
     }
 
-    this.idsSelecionados.forEach((idAcordo) => {
-      const dadosSelecionado = {
-        id_empresa: this.idEmpresa,
-        id_contratante: this.idContratante,
-        id_cliente: this.idCliente,
-        id_acordo: idAcordo,
-        user_login: this.login,
-      };
+    this._alert.impressaoDocumento();
 
-      this._alert.impressaoDocumento();
+        console.log("Dados para geração da confisão de divida", dadosSelecionado)
+
       this._acordo.imprimirConfissaoDivida(dadosSelecionado).subscribe(
         (res) => {
           var link = "data:application/pdf;base64, " + res.base64;
@@ -95,10 +97,9 @@ export class AcordoComponent implements OnInit, OnChanges {
           this._alert.success(res.msg);
         },
         (error) => {
-          this._alert.error(`Erro ao gerar confissão de dívida para o acordo: ${idAcordo}`, error);
+          this._alert.error(`Erro ao gerar confissão de dívida para o acordo: ${acordo.id_acordo}`, error);
         }
       );
-    });
   }
 
   async quebraAcordo(acordo: any) {
