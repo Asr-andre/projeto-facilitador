@@ -25,6 +25,12 @@ export class PrestacaoContasComponent implements OnInit, OnChanges {
   public textoPesquisa: string = "";
   public loading: boolean = false;
 
+  public totalPagamentos: number = 0;
+  public valorTotalPago: number = 0;
+  public valorTotalOriginal: number = 0;
+  public valorComissao: number = 0;
+  public valorRepasse: number = 0;
+
   public direcaoOrdenacao: { [key: string]: string } = {};
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<TituloLiquidado>>;
 
@@ -111,6 +117,7 @@ export class PrestacaoContasComponent implements OnInit, OnChanges {
           if (res.success === 'true') {
             this.resultFiltros = res.titulos;
             this.dadosFiltrados = res.titulos;
+            this.calcularTotais();
           } else {
             this._alert.error('Nenhum resultado encontrado.');
           }
@@ -123,6 +130,15 @@ export class PrestacaoContasComponent implements OnInit, OnChanges {
     } else {
       this._alert.error('Formulário inválido. Por favor, preencha todos os campos obrigatórios.');
     }
+  }
+
+  public calcularTotais(): void {
+    this.totalPagamentos = this.dadosFiltrados.length;
+    this.valorTotalPago = this.dadosFiltrados.reduce((sum, item) => sum + (item.valor_pago || 0), 0);
+    this.valorTotalOriginal = this.dadosFiltrados.reduce((sum, item) => sum + (item.valor_original || 0), 0);
+    this.valorComissao = this.dadosFiltrados.reduce((sum, item) => sum + (item.comissao || 0), 0);
+    this.valorRepasse = this.dadosFiltrados.reduce((sum, item) => sum + (item.repasse || 0), 0);
+
   }
 
   public ordenar({ column, direction }: SortEvent<TituloLiquidado>) {

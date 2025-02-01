@@ -50,6 +50,7 @@
                         <th sortable="id_contratante" (sort)="ordenar($event)">Id</th>
                         <th sortable="fantasia" (sort)="ordenar($event)">Fantasia</th>
                         <th sortable="cnpj" (sort)="ordenar($event)">Cnpj</th>
+                        <th sortable="chavepix" (sort)="ordenar($event)">Chave Pix</th>
                         <th sortable="endereco" (sort)="ordenar($event)">Endereço</th>
                         <th sortable="numero" (sort)="ordenar($event)">Número</th>
                         <th sortable="bairro" (sort)="ordenar($event)">Bairro</th>
@@ -67,6 +68,7 @@
                         <td>{{ contratante.id_contratante }}</td>
                         <td>{{ contratante.fantasia }}</td>
                         <td>{{ mascararCpfCnpj(contratante.cnpj) }}</td>
+                        <td>{{ contratante.chavepix }}</td>
                         <td>{{ contratante.endereco }}</td>
                         <td>{{ mascararNResidencia(contratante.numero) }}</td>
                         <td>{{ contratante.bairro }}</td>
@@ -258,6 +260,7 @@
           <div class="col-md-6  detalhamento-texto">
             <p style="margin-bottom: 4px;"><strong>Id Contratante:</strong> {{ contratanteSelecionado.id_contratante }}</p>
             <p style="margin-bottom: 4px;"><strong>CNPJ:</strong> {{ mascararCpfCnpj(contratanteSelecionado.cnpj) }}</p>
+            <p style="margin-bottom: 4px;"><strong>Chave Pix:</strong> {{ contratanteSelecionado.cnpj }}</p>
             <p style="margin-bottom: 4px;"><strong>Razão Social:</strong> {{ contratanteSelecionado.razao_social }}</p>
             <p style="margin-bottom: 4px;"><strong>Fantasia:</strong> {{ contratanteSelecionado.fantasia }}</p>
             <p style="margin-bottom: 4px;"><strong>Endereço:</strong> {{ contratanteSelecionado.endereco }}, {{ contratanteSelecionado.numero }}</p>

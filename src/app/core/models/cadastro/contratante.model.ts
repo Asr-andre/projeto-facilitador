@@ -9,6 +9,7 @@ export class ContratanteModel {
   complemento: string;
   bairro: string;
   cidade: string;
+  chavepix: string;
   uf: string;
   cep: string;
   telefone: string;

@@ -67,6 +67,15 @@
                   <td>{{ item.comissao | currency: 'BRL':'symbol':'1.2-2' }}</td>
                   <td>{{ item.repasse | currency: 'BRL':'symbol':'1.2-2' }}</td>
                 </tr>
+                <tr class="tabela-custom">
+                  <td colspan="2"></td>
+                  <td style="text-align: center; font-weight: bold;">Total Pagamentos: {{ totalPagamentos }}</td>
+                  <td colspan="3"></td>
+                  <td style="font-weight: bold;">{{ valorTotalPago | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorTotalOriginal | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorComissao | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                  <td style="font-weight: bold;">{{ valorRepasse | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                </tr>
               </tbody>
           </table>
           <ng-template #semDado>
