@@ -147,7 +147,10 @@
               mask="00.000.000/0000-00" [ngClass]="{'is-invalid': formContratante.get('cnpj').invalid && formContratante.get('cnpj').touched}">
           </div>
           <div class="col-md-3 form-group">
-            <label for="Cep" class="form-label">Cep</label>
+            <label for="Cep" class="form-label">Cep<i class="fas fa-info-circle text-info ms-1" style="cursor: pointer;"
+              ngbTooltip="Preenchimento dos campos de endereço é automático ao informar o CEP valido"
+              placement="top">
+            </i></label>
             <input class="form-control form-control-sm mb-1" formControlName="cep" type="text" placeholder="Cep"
               mask="00000-000" (blur)="viaCep($event.target.value)">
           </div>
@@ -176,7 +179,7 @@
           <div class="col-md-1 form-group">
             <label for="uf" class="form-label">Uf</label>
             <select class="form-control form-control-sm mb-1" formControlName="uf" [value]="cep.uf" (input)="cep.uf = $event.target.value">
-              <option value="0">--</option>
+              <option value="">--</option>
               <option *ngFor="let estado of estados" [value]="estado.sigla"> {{ estado.sigla }} </option>
             </select>
           </div>

@@ -139,8 +139,7 @@ export class ContratantesComponent implements OnInit {
   }
 
   public carregarSequencialmente(): void {
-    this.carregarPerfilEmail()
-      .pipe(
+    this.carregarPerfilEmail().pipe(
         switchMap(() => this.carregarFormula()),
         switchMap(() => this.carregarSms()),
         switchMap(() => this.carregarWhatsApp()),
