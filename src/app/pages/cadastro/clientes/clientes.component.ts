@@ -1,9 +1,11 @@
-import { Component} from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { finalize } from 'rxjs';
 import { Cliente, Titulo } from 'src/app/core/models/cadastro/cliente.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
+import { ModalTelefoneComponent } from './modal-telefone/modal-telefone.component';
+import { ModalEmailComponent } from './modal-email/modal-email.component';
 
 @Component({
   selector: 'app-clientes',
@@ -11,6 +13,9 @@ import { ClienteService } from 'src/app/core/services/cadastro/cliente.service';
   styleUrl: './clientes.component.scss'
 })
 export class ClientesComponent {
+  @ViewChild(ModalTelefoneComponent) ModalTelefoneComponent: ModalTelefoneComponent;
+  @ViewChild(ModalEmailComponent) ModalEmailComponent: ModalEmailComponent;
+
   public clienteParaEdicao: Cliente | null = null;
   public listarCliente: Cliente[] = [];
   public clienteSelecionado: Cliente | null = null;
@@ -103,6 +108,23 @@ export class ClientesComponent {
 
   public atualizarQuantidadeExibida() {
     this.totalRegistrosExibidos = Math.min(this.paginaAtual * this.itensPorPagina, this.totalRegistros);
+  }
+
+  public modalTelefone(telefone: string): void {
+    if (this.ModalTelefoneComponent) {
+      this.ModalTelefoneComponent.abrirModalTelefone(telefone);
+    } else {
+      console.error('ModalTelefoneComponent ainda não foi inicializado.');
+    }
+  }
+
+  public modalEmail(email: string): void {
+    console.log('email', email);
+    if (this.ModalEmailComponent) {
+      this.ModalEmailComponent.abrirModalEmail(email);
+    } else {
+      console.error('ModalEmailComponent ainda não foi inicializado.');
+    }
   }
 
   public cadastrar() {

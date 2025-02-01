@@ -11,13 +11,15 @@ import { ClientesComponent } from "./clientes.component";
 import { CadastrarComponent } from "./cadastrar/cadastrar.component";
 import { EditarComponent } from "./editar/editar.component";
 import { ModalTelefoneComponent } from "./modal-telefone/modal-telefone.component";
+import { ModalEmailComponent } from "./modal-email/modal-email.component";
 
 @NgModule({
   declarations: [
     ClientesComponent,
     CadastrarComponent,
     EditarComponent,
-    ModalTelefoneComponent
+    ModalTelefoneComponent,
+    ModalEmailComponent
   ],
   imports: [
     DiretivasModule,

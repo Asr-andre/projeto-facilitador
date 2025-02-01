@@ -28,13 +28,6 @@ export class PrestacaoContasComponent implements OnInit, OnChanges {
   public direcaoOrdenacao: { [key: string]: string } = {};
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<TituloLiquidado>>;
 
-  public totalPagamentos: number = 0;
-  public valorTotalPago: number = 0;
-  public valorTotalOriginal: number = 0;
-  public valorTotalJuros: number = 0;
-  public valorTotalMulta: number = 0;
-  public valorTotalTaxa: number = 0;
-
   constructor(
     private _financeiro: FinanceiroService,
     private _auth: AuthenticationService,
@@ -76,9 +69,11 @@ export class PrestacaoContasComponent implements OnInit, OnChanges {
   }
 
   public impressaoPrestacaoContas() {
-    if(this.filtros.id_contratante !== 0) {
-
+    if (this.filtros.id_contratante <= 0) {
+      this._alert.warning('O relatório só pode ser gerado para um contratante. Selecione um contratante antes de continuar.');
+      return;
     }
+
     const dadosParaEnvio = { ...this.filtros };
 
     dadosParaEnvio.data_inicio = this._datePipe.transform(dadosParaEnvio.data_inicio, "dd/MM/yyyy") || "";
@@ -94,16 +89,6 @@ export class PrestacaoContasComponent implements OnInit, OnChanges {
         this._alert.error(`Erro ao gerar prestação de contas!!`, error);
       }
     );
-  }
-
-  public abrirModalRelatorio(content: TemplateRef<any>): void {
-    const fantasiasUnicas = new Set(this.dadosFiltrados.map(dado => dado.fantasia));
-
-    if (fantasiasUnicas.size === 1) {
-      this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
-    } else {
-      this._alert.warning('Não é possível abrir o relatório, pois existem múltiplos contratante selecionados.');
-    }
   }
 
   public async exportExcel(): Promise<void> {
@@ -164,6 +149,24 @@ export class PrestacaoContasComponent implements OnInit, OnChanges {
   public fechar() {
     this._modal.dismissAll();
   }
+
+  //public totalPagamentos: number = 0;
+  //public valorTotalPago: number = 0;
+  //public valorTotalOriginal: number = 0;
+ //public valorTotalJuros: number = 0;
+  //public valorTotalMulta: number = 0;
+  //public valorTotalTaxa: number = 0;
+
+   //public abrirModalRelatorio(content: TemplateRef<any>): void {
+  //  const fantasiasUnicas = new Set(this.dadosFiltrados.map(dado => dado.fantasia));
+//
+  //  if (fantasiasUnicas.size === 1) {
+  //    this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  //  } else {
+  //    this._alert.warning('Não é possível abrir o relatório, pois existem múltiplos contratante selecionados.');
+  //  }
+  //}
+
 
     //get nomeEmpresa() {
   //  return this.dadosFiltrados[0]?.fantasia || '';

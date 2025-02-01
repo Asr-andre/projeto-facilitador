@@ -1,0 +1,55 @@
+<ng-template #modalEmail let-modal>
+  <div class="modal-header modal-header-custom" style="background: #1cbb8c; color: white; padding: 10px;">
+    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-envelope"></i> Cadastrar Email </h6>
+    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+      (click)="fechar()"></button>
+  </div>
+
+  <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status">
+    </div>
+  </div>
+
+  <div class="modal-body modal-padding">
+    <form [formGroup]="formEmail">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="mb-1">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" formControlName="email" class="form-control form-control-pad form-control-sm" required
+            [ngClass]="{'is-invalid': formEmail.get('email').invalid && formEmail.get('email').touched}">
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="table-responsive" style="margin-top: 10px; max-height: 300px; overflow-y: auto;" *ngIf="emails && emails.emails && emails.emails.length > 0">
+      <table class="table table-sm table-hover font-size-12 tabelaOrdenada" style="white-space: nowrap;">
+        <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
+          <tr>
+            <th >Email</th>
+            <th>Situação</th>
+            <th>Origem</th>
+            <th>Prioritario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let email of emails?.emails">
+            <td>{{ email.email }}</td>
+            <td>{{ email.situacao === 'A' ? 'Ativo' : 'Inativo' }}</td>
+            <td>{{ email.origem }}  </td>
+            <td>{{ email.ativo | simNao}} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex justify-content-end" style="padding-top: 10px;">
+      <button type="submit" class="btn btn-sm btn-success me-1" (click)="cadastrarEmail()">
+        <i class="fas fa-save"></i> Salvar
+      </button>
+      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+        <i class="fas fa-times"></i> Cancelar
+      </button>
+    </div>
+  </div>
+</ng-template>

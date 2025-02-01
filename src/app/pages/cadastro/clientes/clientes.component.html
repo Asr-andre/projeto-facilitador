@@ -88,9 +88,11 @@
                         <td>{{ cliente.nome}}</td>
                         <td>{{ cliente.data_cadastro | dataHoraBrasileira }}</td>
                         <td class="text-end">
-                          <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i
-                              class="mdi mdi-pencil font-size-18"
-                              (click)="editar(cliente)"></i></a>
+                          <a href="javascript:void(0);" class="me-2 text-success" ngbTooltip="Cadastrar Telefone"><i class="fas fa-phone font-size-18" (click)="modalTelefone(cliente)"></i></a>
+
+                            <a href="javascript:void(0);" class="me-2 text-success" ngbTooltip="Cadastrar Email"><i class="fas fa-envelope font-size-18" (click)="modalEmail(cliente)"></i></a>
+
+                          <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar Cliente"><i class="fas fa-user-edit font-size-18" (click)="editar(cliente)"></i></a>
                         </td>
                       </tr>
                     </tbody>
@@ -191,5 +193,9 @@
       (clienteAtualizado)="pesquisaClientes($event)"
       (fecharEditar)="fecharEditar()">
   </app-editar>
+
+  <app-modal-telefone> </app-modal-telefone>
+  <app-modal-email></app-modal-email>
+
 
 

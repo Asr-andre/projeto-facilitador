@@ -31,14 +31,6 @@
                 <ng-template [ngTemplateOutlet]="tabTitulo"></ng-template>
               </ng-template>
             </li>
-            <!--<li [ngbNavItem]="3">
-              <a ngbNavLink class="nav-link custom-nav-link">
-                <span><i class="fas fa-file-invoice-dollar"></i> Telefone</span>
-              </a>
-              <ng-template ngbNavContent>
-                <ng-template [ngTemplateOutlet]="tabTelefone"></ng-template>
-              </ng-template>
-            </li>-->
           </ul>
           <div [ngbNavOutlet]="nav"></div>
         </div>
@@ -290,8 +282,3 @@
       </form>
   </ng-template>
 
-  <ng-template #tabTelefone>
-    <app-modal-telefone>
-
-    </app-modal-telefone>
-  </ng-template>

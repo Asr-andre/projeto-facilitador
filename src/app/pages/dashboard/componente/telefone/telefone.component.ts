@@ -29,7 +29,8 @@ export class TelefoneComponent implements OnInit, OnChanges {
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
   public login = this._auth.getLogin();
 
-  constructor(private _telefoneService: TelefoneService,
+  constructor(
+    private _telefoneService: TelefoneService,
     private _fb: FormBuilder,
     private _auth: AuthenticationService,
     private _alert: AlertService,
