@@ -13,7 +13,7 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { ContratanteService } from 'src/app/core/services/cadastro/contratante.service';
 import { EmailContaService } from 'src/app/core/services/cadastro/email.conta.service';
 import { ConsultaCepService } from 'src/app/core/services/consulta.cep.service';
-import { catchError, finalize, lastValueFrom, of } from 'rxjs';
+import { catchError, finalize, from, lastValueFrom, Observable, of, switchMap } from 'rxjs';
 import { SmsWhatsAppService } from 'src/app/core/services/cadastro/sms.whatsapp.service';
 import { PerfilWhatsappModel } from 'src/app/core/models/cadastro/sms.whatsapp.model';
 import { SmsService } from 'src/app/core/services/sms.service';
@@ -129,42 +129,55 @@ export class ContratantesComponent implements OnInit {
       celular: [dado?.celular || ''],
       ativo: [dado?.ativo || 'S'],
       codigo_credor: [dado?.codigo_credor || ''],
-      id_formula: [dado?.id_formula || 0],
-      id_perfilemail: [dado?.id_perfilemail || 0],
-      id_perfilsms: [dado?.id_perfilsms || 0],
-      id_perfilwhatsapp: [dado?.id_perfilwhatsapp || 0],
-      id_perfiltextoemail: [dado?.id_perfiltextoemail || 0],
+      id_formula: [dado?.id_formula || '0'],
+      id_perfilemail: [dado?.id_perfilemail || '0'],
+      id_perfilsms: [dado?.id_perfilsms || '0'],
+      id_perfilwhatsapp: [dado?.id_perfilwhatsapp || '0'],
+      id_perfiltextoemail: [dado?.id_perfiltextoemail || '0'],
       user_login: [dado?.user_login || this.login, Validators.required],
     });
   }
 
-  public carregarPerfilEmail(): void {
-    if (!this.perfilEmailCarregado) {
-      this.obterEmailConta();
-    }
+  public carregarSequencialmente(): void {
+    this.carregarPerfilEmail()
+      .pipe(
+        switchMap(() => this.carregarFormula()),
+        switchMap(() => this.carregarSms()),
+        switchMap(() => this.carregarWhatsApp()),
+        catchError((error) => {
+          console.error('Erro ao carregar:', error);
+          return of(null);
+        })
+      )
+      .subscribe(() => console.log('Todas as chamadas finalizadas!'));
   }
 
-  public carregarFormula(): void {
+  private carregarPerfilEmail(): Observable<void> {
+    if (!this.perfilEmailCarregado) {
+      return from(this.obterEmailConta()).pipe(finalize(() => (this.perfilEmailCarregado = true)));
+    }
+    return of();
+  }
+
+  private carregarFormula(): Observable<void> {
     if (!this.formulaCarregado) {
-      this.obterPerfilFormula();
+      return from(this.obterPerfilFormula()).pipe(finalize(() => (this.formulaCarregado = true)));
     }
+    return of();
   }
 
-  public carregarSms(): void {
+  private carregarSms(): Observable<void> {
     if (!this.smsCarregado) {
-      this.obterPerfilSms();
+      return from(this.obterPerfilSms()).pipe(finalize(() => (this.smsCarregado = true)));
     }
+    return of();
   }
 
-  public carregarWhatsApp(): void {
+  private carregarWhatsApp(): Observable<void> {
     if (!this.watsAppCarregado) {
-      this.obterMsgs();
+      return from(this.obterMsgs()).pipe(finalize(() => (this.watsAppCarregado = true)));
     }
-  }
-  public carregarEmail(): void {
-    if (!this.perfilEmailCarregado) {
-      this.obterEmailConta();
-    }
+    return of();
   }
 
   public viaCep(cep) {
@@ -331,6 +344,7 @@ export class ContratantesComponent implements OnInit {
   }
 
   public abriModalCadastro(content: TemplateRef<any>): void {
+    this.carregarSequencialmente();
     this.inicializarformContratante();
     this.editar = false;
     this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
@@ -373,6 +387,7 @@ export class ContratantesComponent implements OnInit {
 
   public abriModalEditar(content: TemplateRef<any>, dados: ContratanteModel): void {
     this.editar = true;
+    this.carregarSequencialmente();
     this.inicializarformContratante(dados);
     this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
