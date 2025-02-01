@@ -119,7 +119,7 @@
             <th class="text-end">Ações</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="retornoHistorico?.length > 0; else sem">
           <tr *ngFor="let item of retornoHistorico">
             <td> {{ item.data_local | dataHoraBrasileira }} </td>
             <td>{{ item.valor | currency: 'BRL' }}</td>
@@ -138,6 +138,13 @@
           </tr>
         </tbody>
       </table>
+      <ng-template #sem>
+        <tbody>
+          <tr>
+            <td colspan="4" class="text-center">Nenhum dado para exibir.</td>
+          </tr>
+        </tbody>
+      </ng-template>
     </div>
 
     <div class="d-flex justify-content-end">
