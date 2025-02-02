@@ -118,6 +118,7 @@ export class ContratantesComponent implements OnInit {
       cnpj: [dado?.cnpj || '', Validators.required],
       razao_social: [dado?.razao_social || '', Validators.required],
       fantasia: [dado?.fantasia || '', Validators.required],
+      chavepix: [dado?.chavepix || ''],
       cep: [dado?.cep || ''],
       endereco: [dado?.endereco || ''],
       numero: [dado?.numero || ''],
