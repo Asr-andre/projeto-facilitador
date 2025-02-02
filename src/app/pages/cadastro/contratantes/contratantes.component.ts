@@ -149,7 +149,7 @@ export class ContratantesComponent implements OnInit {
           return of(null);
         })
       )
-      .subscribe(() => console.log('Todas as chamadas finalizadas!'));
+      .subscribe();
   }
 
   private carregarPerfilEmail(): Observable<void> {
