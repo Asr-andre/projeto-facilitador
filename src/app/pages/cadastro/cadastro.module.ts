@@ -29,6 +29,7 @@ import { QuillModule } from "ngx-quill";
 import { DiretivasModule } from "src/app/core/directive/directive.module";
 import { PipesModule } from "src/app/core/pipe/pipe.module";
 import { ClientesModule } from "./clientes/clientes.module";
+import { ContaBancariaComponent } from "./conta-bancaria/conta-bancaria.component";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ClientesModule } from "./clientes/clientes.module";
     SmsComponent,
     ClienteComponent,
     IndiceComponent,
-    EmailPerfilComponent
+    EmailPerfilComponent,
+    ContaBancariaComponent
   ],
   imports: [
     DiretivasModule,

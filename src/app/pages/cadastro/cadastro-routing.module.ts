@@ -13,6 +13,7 @@ import { IndiceComponent } from './indice/indice.component';
 import { EmailPerfilComponent } from './email-perfil/email-perfil.component';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
 import { ClientesComponent } from './clientes/clientes.component';
+import { ContaBancariaComponent } from './conta-bancaria/conta-bancaria.component';
 
 
 const routes: Routes = [
@@ -51,6 +52,9 @@ const routes: Routes = [
     },
     {
       path: 'clientes', component: ClientesComponent, canActivate: [AuthGuard]
+    },
+    {
+      path: 'conta-bancaria', component: ContaBancariaComponent, canActivate: [AuthGuard]
     }
 ];
 

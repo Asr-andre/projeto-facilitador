@@ -1,0 +1,31 @@
+::ng-deep .ngx-pagination .pagination-previous a::before,
+::ng-deep .ngx-pagination .pagination-previous.disabled::before,
+::ng-deep .ngx-pagination .pagination-next a::after,
+::ng-deep .ngx-pagination .pagination-next.disabled::after {
+    font-size: 11px !important;
+}
+
+/* Aplica estilos diretamente ao pagination-controls */
+::ng-deep pagination-controls {
+  margin-bottom: 0px !important;
+}
+
+/* Verifica estilos internos relacionados a ngx-pagination */
+::ng-deep .ngx-pagination {
+  margin-bottom: 0px !important;
+}
+
+/* Aplica estilo global caso o encapsulamento seja o problema */
+pagination-controls {
+  margin-bottom: 0px !important;
+}
+
+.text-small {
+  font-size: 11px;
+}
+
+/* Estilo para campos somente leitura */
+input[readonly], textarea[readonly], select[readonly] {
+  background-color: #cccccc66 !important;  /* Cor de fundo */
+  border: 1px solid #ccc;  /* Borda opcional */
+}
