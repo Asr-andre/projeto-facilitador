@@ -2,17 +2,19 @@ import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subject, debounceTime } from 'rxjs';
+import { Observable, Subject, catchError, debounceTime, finalize, from, of, switchMap } from 'rxjs';
 import { Utils } from 'src/app/core/helpers/utils';
 import { AcionamentoModel, RequisicaoAcionamentoModel } from 'src/app/core/models/acionamento.model';
 import { AcaoCobrancaModel, RequisicaoAcaoCobrancaModel } from 'src/app/core/models/acoes.cobranca.model';
 import { DevedorModel, RespostaDevedorModel } from 'src/app/core/models/devedor.model';
+import { FilaModel, FilaRequisicaoModel } from 'src/app/core/models/fila.model';
 import { AcaoCobrancaService } from 'src/app/core/services/acao.cobranca.service';
 import { AcionamentoService } from 'src/app/core/services/acionamento.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { ExcelService } from 'src/app/core/services/excel.service';
+import { FilaService } from 'src/app/core/services/fila.service';
 import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
@@ -24,6 +26,7 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   @ViewChild("acaoDeCobrancaModal") modalEmailRef: TemplateRef<any>;
   @Input() idCliente: number | undefined;
   @Input() idContratante: number | undefined;
+  @Input() idFila: number | undefined;
   @Output() clienteAcionado = new EventEmitter<void>();
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
   public usuario: string = this._auth.getLogin();
@@ -37,6 +40,10 @@ export class AcionamentoComponent implements OnChanges, OnInit {
   public loadingAgenda: boolean = false;
   public loadinAcaoCobanca: boolean = false;
   public agenda: DevedorModel[] = [];
+  public filas: FilaModel[] = [];
+
+  public filaCarregado: boolean = false;
+  public acaoCobrancaCarregado: boolean = false;
 
   private updateSubject: Subject<void> = new Subject<void>();
 
@@ -50,7 +57,8 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     private _datePipe: DatePipe,
     private _excel: ExcelService,
     private _dashboard: DashboardService,
-    private _funcoes: FuncoesService
+    private _funcoes: FuncoesService,
+    private _fila: FilaService,
   ) { }
 
   ngOnInit(): void {
@@ -85,12 +93,70 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       id_contratante: [this.idContratante],
       id_cliente: [this.idCliente],
       id_acao: ['', Validators.required],
+      id_fila: [this.idFila],
       data_prox_acio: [{ value: null, disabled: true }], // Inicializa desabilitado
       id_usuario: [this.idUsuario],
       mensagem: ["", Validators.required],
       user_login: [this.usuario],
     });
   }
+
+  public carregarSequencialmente(): void {
+    this.carregaAcaoCobranca().pipe(
+      switchMap(() => this.carregaFila()),
+      catchError((error) => {
+        console.error('Erro ao carregar:', error);
+        return of(null);
+      })
+    )
+      .subscribe();
+  }
+
+  private carregaFila(): Observable<void> {
+    if (!this.filaCarregado) {
+      return from(this.obterFilas()).pipe(finalize(() => (this.filaCarregado = true)));
+    }
+    return of();
+  }
+
+  private carregaAcaoCobranca(): Observable<void> {
+    if (!this.acaoCobrancaCarregado) {
+      return from(this.listarAcoesCobranca()).pipe(finalize(() => (this.acaoCobrancaCarregado = true)));
+    }
+    return of();
+  }
+
+  public obterFilas(): Promise<void> {
+    const requisicao: FilaRequisicaoModel = {
+      id_empresa: this.idEmpresa,
+      user_login: this.usuario,
+      id_usuario: this.idUsuario,
+    };
+
+    this.loadinAcaoCobanca = true;
+    return new Promise((resolve, reject) => {
+      this._fila.obterFilas(requisicao).subscribe(
+        (res) => {
+          if (res.success) {
+            this.loadinAcaoCobanca = false;
+            this.filas = res.filas;
+            this.filaCarregado = true;
+            resolve();
+          } else {
+            this.loadinAcaoCobanca = false;
+            this._alert.error(res.msg);
+            reject(res.msg);
+          }
+        },
+        (error) => {
+          this.loadinAcaoCobanca = false;
+          this._alert.error("Ocorreu um erro.");
+          reject(error);
+        }
+      );
+    });
+  }
+
 
   public listarAcionamentos(): void {
     if (this.idCliente && this.idContratante) {
@@ -119,31 +185,34 @@ export class AcionamentoComponent implements OnChanges, OnInit {
     }
   }
 
-  public listarAcoesCobranca(): void {
-    if (!this.idEmpresa) return;
+  public listarAcoesCobranca(): Promise<void> {
+    if (!this.idEmpresa) return Promise.resolve();
 
-    if (this.idEmpresa) {
-      const requisicao: RequisicaoAcaoCobrancaModel = {
-        id_empresa: this.idEmpresa,
-      };
-
-      this.loadinAcaoCobanca = true;
-      this._acaoCobranca.listarAcoesCobranca(requisicao).subscribe((res) => {
-        this.loadinAcaoCobanca = false;
-        if (res.success) {
-          this.loadinAcaoCobanca = false;
-          this.acoesCobranca = res.contratantes;
-        } else {
-          this.loadinAcaoCobanca = false;
-          this._alert.error(res.msg);
-        }
-      },
+    const requisicao: RequisicaoAcaoCobrancaModel = {
+      id_empresa: this.idEmpresa,
+    };
+    this.loadinAcaoCobanca = true;
+    return new Promise((resolve, reject) => {
+      this._acaoCobranca.listarAcoesCobranca(requisicao).subscribe(
+        (res) => {
+          if (res.success) {
+            this.loadinAcaoCobanca = false;
+            this.acaoCobrancaCarregado = true;
+            this.acoesCobranca = res.contratantes;
+            resolve();
+          } else {
+            this.loadinAcaoCobanca = false;
+            this._alert.error(res.msg);
+            reject(res.msg);
+          }
+        },
         (error) => {
           this.loadinAcaoCobanca = false;
           this._alert.error("Erro ao listar ações de cobrança");
+          reject(error);
         }
       );
-    }
+    });
   }
 
   public obterAgenda(): void {
@@ -189,13 +258,13 @@ export class AcionamentoComponent implements OnChanges, OnInit {
       id_contratante: this.idContratante,
       id_empresa: this.idEmpresa,
       id_usuario: this.idUsuario,
+      id_fila: this.idFila,
       mensagem: "",
       user_login: this.usuario,
     });
 
-    this.listarAcoesCobranca();
-
-    this._modal.open(this.modalEmailRef, { size: "lg", ariaLabelledBy: "modal-basic-title",  backdrop: "static", keyboard: false,});
+    this.carregarSequencialmente();
+    this._modal.open(this.modalEmailRef, { size: "lg", ariaLabelledBy: "modal-basic-title", backdrop: "static", keyboard: false, });
   }
 
   public enviarAcionamento(): void {

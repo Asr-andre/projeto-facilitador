@@ -110,16 +110,25 @@
     <div class="modal-body modal-padding">
       <form [formGroup]="formAcionamento">
         <div class="row">
+          <div class="col-md-3 form-group">
+            <label for="id_acao" class="form-label">Direcionar para Fila</label>
+            <select class="form-control form-control-sm mb-1" formControlName="id_fila">
+              <option value="0">Selecione</option>
+              <option *ngFor="let fila of filas" [value]="fila.id_fila">{{ fila.descricao }}</option>
+            </select>
+          </div>
+
           <div class="col-md-6 form-group">
             <label for="id_acao" class="form-label">Selecione uma ação</label>
             <select class="form-control form-control-sm mb-1" formControlName="id_acao"
             [ngClass]="{'is-invalid': formAcionamento.get('id_acao').invalid && formAcionamento.get('id_acao').touched}">
+            <option value="">Selecione</option>
               <option *ngFor="let acao of acoesCobranca" [value]="acao.id_acao">{{ acao.descricao }}</option>
             </select>
 
           </div>
 
-          <div class="col-md-6 form-group">
+          <div class="col-md-3 form-group">
             <label for="dataHora" class="form-label">Agendar para:</label>
             <span style="font-size: 8px; color: green; text-align: justify;">
               {{ formAcionamento.value.data_prox_acio }}

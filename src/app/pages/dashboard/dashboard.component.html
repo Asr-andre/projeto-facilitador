@@ -236,8 +236,11 @@
     </div>
     <div class="col-lg-12">
       <div>
-        <app-acionamento [idCliente]="devedorSelecionado?.id_cliente"
-          [idContratante]="devedorSelecionado?.id_contratante" (clienteAcionado)="atualizar()">
+        <app-acionamento
+              [idCliente]="devedorSelecionado?.id_cliente"
+              [idContratante]="devedorSelecionado?.id_contratante"
+              (clienteAcionado)="atualizar()"
+              [idFila]="devedorSelecionado?.id_fila">
         </app-acionamento>
       </div>
     </div>
