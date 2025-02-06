@@ -82,7 +82,7 @@
                   <ng-template #semDado>
                     <tbody>
                       <tr>
-                        <td colspan="20" class="text-center">Nenhum dado para exibir</td>
+                        <td colspan="9" class="text-center">Nenhum dado para exibir</td>
                       </tr>
                     </tbody>
                   </ng-template>
@@ -97,7 +97,6 @@
                   </pagination-controls>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -241,11 +240,13 @@
                 <input type="text" id="client_key" class="form-control form-control-sm mb-1"
                   formControlName="client_key">
               </div>
+
               <div class="col-md-12">
                 <label for="caminho_certificado_crt" class="form-label">Caminho Certificado Crt</label>
                 <input type="text" id="caminho_certificado_crt" class="form-control form-control-sm mb-1"
                   formControlName="caminho_certificado_crt">
               </div>
+
               <div class="col-md-12">
                 <label for="caminho_certificado_key" class="form-label">Caminho Certificado Key</label>
                 <input type="text" id="caminho_certificado_key" class="form-control form-control-sm mb-1"
@@ -277,13 +278,13 @@
               </div>
 
               <div class="col-md-12">
-                <label for="instrucao_pix" class="form-label">Intrução Pix</label>
-                <textarea type="text" id="instrucao_pix" class="form-control form-control-sm mb-1" rows="4" formControlName="instrucao_pix"></textarea>
+                <label for="local_pgto_pix" class="form-label">Local Pagamento Pix</label>
+                <input type="text" id="local_pgto_pix" class="form-control form-control-sm mb-1" formControlName="local_pgto_pix">
               </div>
 
               <div class="col-md-12">
-                <label for="local_pgto_pix" class="form-label">Local Pagamento Pix</label>
-                <input type="text" id="local_pgto_pix" class="form-control form-control-sm mb-1" formControlName="local_pgto_pix">
+                <label for="instrucao_pix" class="form-label">Intrução Pix</label>
+                <textarea type="text" id="instrucao_pix" class="form-control form-control-sm mb-1" rows="4" formControlName="instrucao_pix"></textarea>
               </div>
 
               <div class="col-md-12">
@@ -297,7 +298,6 @@
               </div>
             </div>
           </ng-template>
-
         </div>
       </div>
     </form>
