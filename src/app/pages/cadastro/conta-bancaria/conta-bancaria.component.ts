@@ -171,6 +171,7 @@ export class ContaBancariaComponent implements OnInit {
         if (res.success === 'true') {
           this.idCadastrado = res.id_boletoperfil;
           this.editar = true;
+          this.obterContaBancaria();
           this._alert.success(res.msg);
         } else {
           this._alert.warning(res.msg);
@@ -188,6 +189,7 @@ export class ContaBancariaComponent implements OnInit {
       next: (res) => {
         if (res.success === 'true') {
           this.fechar();
+          this.obterContaBancaria();
           this._alert.success(res.msg);
         } else {
           this._alert.warning(res.msg);
