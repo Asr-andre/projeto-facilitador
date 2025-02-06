@@ -53,3 +53,8 @@ input[readonly], textarea[readonly], select[readonly] {
 p {
   margin-bottom: 5px;
 }
+
+input[readonly] {
+  background-color: #cccccc66 !important;  /* Cor de fundo */
+  border: 1px solid #ccc;  /* Borda opcional */
+}

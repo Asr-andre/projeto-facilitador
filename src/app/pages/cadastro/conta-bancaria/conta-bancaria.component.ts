@@ -28,6 +28,7 @@ export class ContaBancariaComponent implements OnInit {
   public contaSelecionada: DadosContaBancaria;
   public bancos: Bancos [] = [];
   public titulo: string = '';
+  public idCadastrado: number = 0;
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -54,19 +55,19 @@ export class ContaBancariaComponent implements OnInit {
     this.obterContaBancaria();
   }
 
-  public inicializarForm(dado?: any) {
+  public inicializarForm(dado?: DadosContaBancaria) {
     this.contaBancariaForm = this._fb.group({
       id_empresa: [this.idEmpresa, Validators.required],
-      id_boletoperfil: [dado?.id_boletoperfil || ''],
-      descricao: [dado?.descricao || ''],
-      banco: [dado?.banco || ''],
-      agencia: [dado?.agencia || ''],
+      id_boletoperfil: [dado?.id_boletoperfil ? dado.id_boletoperfil : this.idCadastrado],
+      descricao: [dado?.descricao || '', Validators.required],
+      banco: [dado?.banco || '', Validators.required],
+      agencia: [dado?.agencia || '', Validators.required],
       agencia_dg: [dado?.agencia_dg || ''],
-      conta: [dado?.conta || ''],
+      conta: [dado?.conta || '', Validators.required],
       conta_dg: [dado?.conta_dg || ''],
       carteira: [dado?.carteira || ''],
       variacao: [dado?.variacao || ''],
-      codigo_cedente: [dado?.codigo_cedente || ''],
+      codigo_cedente: [dado?.codigo_cedente || '', Validators.required],
       local_pgto: [dado?.local_pgto || ''],
       instrucoes: [dado?.instrucoes || ''],
       client_id: [dado?.client_id || ''],
@@ -140,8 +141,7 @@ export class ContaBancariaComponent implements OnInit {
       return;
     }
 
-    const metodo = this.editar ? this.editarconta() : this.cadastrarConta();
-
+    this.editar ? this.editarconta() : this.cadastrarConta();
   }
 
   public modalCadastrar(content: TemplateRef<any>): void {
@@ -152,7 +152,6 @@ export class ContaBancariaComponent implements OnInit {
   }
 
   public modalEditar(content: TemplateRef<any>, dado: any): void {
-    console.log(`Dados da grid ${dado}`)
     this.editar = true;
     this.obterBancos();
     this.inicializarForm(dado)
@@ -165,12 +164,39 @@ export class ContaBancariaComponent implements OnInit {
     this._modal.open(modalResumo, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
-  public cadastrarConta() {
-
+  public cadastrarConta(): void {
+    this.loadingMin = true;
+    this._contaBancaria.cadastrarContaBancaria(this.contaBancariaForm.value).pipe(finalize(() => { this.loadingMin = false; })).subscribe({
+      next: (res) => {
+        if (res.success === 'true') {
+          this.idCadastrado = res.id_boletoperfil;
+          this.editar = true;
+          this._alert.success(res.msg);
+        } else {
+          this._alert.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this._alert.error('Erro:', err);
+      }
+    });
   }
 
-  public editarconta() {
-
+  public editarconta(): void {
+    this.loadingMin = true;
+    this._contaBancaria.editarContaBancaria(this.contaBancariaForm.value).pipe(finalize(() => { this.loadingMin = false; })).subscribe({
+      next: (res) => {
+        if (res.success === 'true') {
+          this.fechar();
+          this._alert.success(res.msg);
+        } else {
+          this._alert.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this._alert.error('Erro:', err);
+      }
+    });
   }
 
   public filtrar(): void {
@@ -200,6 +226,7 @@ export class ContaBancariaComponent implements OnInit {
     }
 
   public fechar() {
+    this.contaBancariaForm.reset();
     this._modal.dismissAll();
   }
 }

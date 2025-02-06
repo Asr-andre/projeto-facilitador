@@ -7,6 +7,7 @@ export class RespostaContaBancaria {
   success: string;
   msg: string;
   id_empresa: number;
+  id_boletoperfil: number;
   dados: DadosContaBancaria[];
 }
 
@@ -40,5 +41,21 @@ export class DadosContaBancaria {
   host_api?: string;
   data_cadastro?: string;
   data_alteracao?: string;
+  user_login: string;
+}
+
+export class Cadastrar {
+  id_empresa: number;
+  descricao?: string;
+  banco?: string;
+  agencia?: string;
+  agencia_dg?: string;
+  conta?: string;
+  conta_dg?: string;
+  carteira?: string;
+  variacao?: string;
+  codigo_cedente?: string;
+  local_pgto?: string;
+  instrucoes?: string;
   user_login: string;
 }

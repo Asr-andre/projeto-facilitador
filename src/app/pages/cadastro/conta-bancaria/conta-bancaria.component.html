@@ -72,9 +72,10 @@
                         <td> {{ conta.variacao }} </td>
                         <td> {{ conta.codigo_cedente }} </td>
                         <td class="text-end">
-                          <a href="javascript:void(0);" class="me-2 text-secondary" ngbTooltip="Detalhamento" (click)="abriModalResumo(modalResumo, conta)"><i class="fas fa-landmark me-2"></i></a>
-                          <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar" (click)="modalEditar(modalGenerico, conta)"><i
-                              class="mdi mdi-pencil font-size-18"></i></a>
+                          <a href="javascript:void(0);" class="me-2 text-secondary" ngbTooltip="Detalhamento"
+                            (click)="abriModalResumo(modalResumo, conta)"><i class="fas fa-landmark me-2"></i></a>
+                          <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"
+                            (click)="modalEditar(modalGenerico, conta)"><i class="mdi mdi-pencil font-size-18"></i></a>
                         </td>
                       </tr>
                     </tbody>
@@ -154,12 +155,14 @@
             <div class="row">
               <div class="col-md-3">
                 <label for="descricao" class="form-label">Descrição</label>
-                <input type="text" id="descricao" class="form-control form-control-sm mb-1" formControlName="descricao">
+                <input type="text" id="descricao" class="form-control form-control-sm mb-1" formControlName="descricao" [appSomenteLeitura]="editar"
+                  [ngClass]="{'is-invalid': contaBancariaForm.get('descricao').invalid && contaBancariaForm.get('descricao').touched}">
               </div>
 
               <div class="col-md-3">
                 <label for="banco" class="form-label">Banco</label>
-                <select type="text" id="banco" class="form-control form-control-sm mb-1" formControlName="banco">
+                <select type="text" id="banco" class="form-control form-control-sm mb-1" formControlName="banco"
+                  [ngClass]="{'is-invalid': contaBancariaForm.get('banco').invalid && contaBancariaForm.get('banco').touched}">
                   <option value="">Seleciona</option>
                   <option *ngFor="let dado of bancos" [value]="dado.id_banco"> {{ dado.descricao }}</option>
                 </select>
@@ -167,39 +170,41 @@
 
               <div class="col-md-2">
                 <label for="agencia" class="form-label">Agência</label>
-                <input type="text" id="agencia" class="form-control form-control-sm mb-1" formControlName="agencia">
+                <input type="text" id="agencia" class="form-control form-control-sm mb-1" formControlName="agencia" limiteCaracteres="5" apenasNumeros
+                  [ngClass]="{'is-invalid': contaBancariaForm.get('agencia').invalid && contaBancariaForm.get('agencia').touched}">
               </div>
 
               <div class="col-md-1">
                 <label for="agencia_dg" class="form-label">Dígito</label>
-                <input type="text" id="agencia_dg" class="form-control form-control-sm mb-1"
-                  formControlName="agencia_dg">
+                <input type="text" id="agencia_dg" class="form-control form-control-sm mb-1" formControlName="agencia_dg" limiteCaracteres="1" apenasNumerosX>
               </div>
 
               <div class="col-md-2">
                 <label for="conta" class="form-label">Conta</label>
-                <input type="text" id="conta" class="form-control form-control-sm mb-1" formControlName="conta">
+                <input type="text" id="conta" class="form-control form-control-sm mb-1" formControlName="conta" limiteCaracteres="7" apenasNumeros
+                  [ngClass]="{'is-invalid': contaBancariaForm.get('conta').invalid && contaBancariaForm.get('conta').touched}">
               </div>
 
               <div class="col-md-1">
                 <label for="conta_dg" class="form-label">Dígito</label>
-                <input type="text" id="conta_dg" class="form-control form-control-sm mb-1" formControlName="conta_dg">
+                <input type="text" id="conta_dg" class="form-control form-control-sm mb-1" formControlName="conta_dg" limiteCaracteres="1" apenasNumerosX>
               </div>
 
               <div class="col-md-4">
                 <label for="carteira" class="form-label">Carteira</label>
-                <input type="text" id="carteira" class="form-control form-control-sm mb-1" formControlName="carteira">
+                <input type="text" id="carteira" class="form-control form-control-sm mb-1" formControlName="carteira" limiteCaracteres="5">
               </div>
 
               <div class="col-md-4">
                 <label for="variacao" class="form-label">Variação</label>
-                <input type="text" id="variacao" class="form-control form-control-sm mb-1" formControlName="variacao">
+                <input type="text" id="variacao" class="form-control form-control-sm mb-1" formControlName="variacao" limiteCaracteres="10">
               </div>
 
               <div class="col-md-4">
                 <label for="codigo_cedente" class="form-label">Código Cedente</label>
                 <input type="text" id="codigo_cedente" class="form-control form-control-sm mb-1"
-                  formControlName="codigo_cedente">
+                  formControlName="codigo_cedente" limiteCaracteres="10" apenasNumerosX
+                  [ngClass]="{'is-invalid': contaBancariaForm.get('codigo_cedente').invalid && contaBancariaForm.get('codigo_cedente').touched}">
               </div>
 
               <div class="col-md-12">
@@ -269,32 +274,38 @@
 
               <div class="col-md-6">
                 <label for="client_id_pix" class="form-label">Cliente Id Pix</label>
-                <input type="text" id="client_id_pix" class="form-control form-control-sm mb-1" formControlName="client_id_pix">
+                <input type="text" id="client_id_pix" class="form-control form-control-sm mb-1"
+                  formControlName="client_id_pix">
               </div>
 
               <div class="col-md-6">
                 <label for="client_secret_pix" class="form-label">Cliente Secret Pix</label>
-                <input type="text" id="client_secret_pix" class="form-control form-control-sm mb-1" formControlName="client_secret_pix">
+                <input type="text" id="client_secret_pix" class="form-control form-control-sm mb-1"
+                  formControlName="client_secret_pix">
               </div>
 
               <div class="col-md-12">
                 <label for="local_pgto_pix" class="form-label">Local Pagamento Pix</label>
-                <input type="text" id="local_pgto_pix" class="form-control form-control-sm mb-1" formControlName="local_pgto_pix">
+                <input type="text" id="local_pgto_pix" class="form-control form-control-sm mb-1"
+                  formControlName="local_pgto_pix">
               </div>
 
               <div class="col-md-12">
                 <label for="instrucao_pix" class="form-label">Intrução Pix</label>
-                <textarea type="text" id="instrucao_pix" class="form-control form-control-sm mb-1" rows="4" formControlName="instrucao_pix"></textarea>
+                <textarea type="text" id="instrucao_pix" class="form-control form-control-sm mb-1" rows="4"
+                  formControlName="instrucao_pix"></textarea>
               </div>
 
               <div class="col-md-12">
                 <label for="caminho_certificado_crt_pix" class="form-label">Caminho Certificado Crt Pix</label>
-                <input type="text" id="caminho_certificado_crt_pix" class="form-control form-control-sm mb-1" formControlName="caminho_certificado_crt_pix">
+                <input type="text" id="caminho_certificado_crt_pix" class="form-control form-control-sm mb-1"
+                  formControlName="caminho_certificado_crt_pix">
               </div>
 
               <div class="col-md-12">
                 <label for="caminho_certificado_key_pix" class="form-label">Caminho Certificado Key Pix</label>
-                <input type="text" id="caminho_certificado_key_pix" class="form-control form-control-sm mb-1" formControlName="caminho_certificado_key_pix">
+                <input type="text" id="caminho_certificado_key_pix" class="form-control form-control-sm mb-1"
+                  formControlName="caminho_certificado_key_pix">
               </div>
             </div>
           </ng-template>
