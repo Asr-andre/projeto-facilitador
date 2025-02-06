@@ -1,9 +1,15 @@
 import { Component, OnInit, QueryList, TemplateRef, ViewChildren } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { OrdenarPeloHeaderTabela } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
+import { finalize } from 'rxjs';
+import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
+import { Utils } from 'src/app/core/helpers/utils';
+import { Bancos } from 'src/app/core/models/bancos.model';
+import { DadosContaBancaria } from 'src/app/core/models/cadastro/conta.bancaria.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { BancoService } from 'src/app/core/services/bancos.service';
+import { ContaBancariaService } from 'src/app/core/services/cadastro/conta.bancaria.service';
 import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
@@ -18,6 +24,10 @@ export class ContaBancariaComponent implements OnInit {
   public loading: boolean = false;
   public loadingMin: boolean = false;
   public editar: boolean = false;
+  public contaBancaria: DadosContaBancaria[] = [];
+  public contaSelecionada: DadosContaBancaria;
+  public bancos: Bancos [] = [];
+  public titulo: string = '';
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -27,9 +37,11 @@ export class ContaBancariaComponent implements OnInit {
   public totalRegistrosExibidos: number = 0;
   public qtdRegistrosPorPagina = [10, 25, 50, 100];
   public direcaoOrdenacao: { [key: string]: string } = {};
-  @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<any>>;
+  @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<DadosContaBancaria>>;
 
   constructor(
+    private _contaBancaria: ContaBancariaService,
+    private _bancos: BancoService,
     private _auth: AuthenticationService,
     private _alert: AlertService,
     private _modal: NgbModal,
@@ -39,13 +51,85 @@ export class ContaBancariaComponent implements OnInit {
 
   ngOnInit(): void {
     this.inicializarForm();
+    this.obterContaBancaria();
   }
 
   public inicializarForm(dado?: any) {
     this.contaBancariaForm = this._fb.group({
       id_empresa: [this.idEmpresa, Validators.required],
-
+      id_boletoperfil: [dado?.id_boletoperfil || ''],
+      descricao: [dado?.descricao || ''],
+      banco: [dado?.banco || ''],
+      agencia: [dado?.agencia || ''],
+      agencia_dg: [dado?.agencia_dg || ''],
+      conta: [dado?.conta || ''],
+      conta_dg: [dado?.conta_dg || ''],
+      carteira: [dado?.carteira || ''],
+      variacao: [dado?.variacao || ''],
+      codigo_cedente: [dado?.codigo_cedente || ''],
+      local_pgto: [dado?.local_pgto || ''],
+      instrucoes: [dado?.instrucoes || ''],
+      client_id: [dado?.client_id || ''],
+      client_auth: [dado?.client_auth || ''],
+      client_secret: [dado?.client_secret || ''],
+      client_key: [dado?.client_key || ''],
+      caminho_certificado_crt: [dado?.caminho_certificado_crt || ''],
+      caminho_certificado_key: [dado?.caminho_certificado_key || ''],
+      local_pgto_pix: [dado?.local_pgto_pix || ''],
+      instrucao_pix: [dado?.instrucao_pix || ''],
+      chave_pix: [dado?.chave_pix || ''],
+      client_id_pix: [dado?.client_id_pix || ''],
+      client_secret_pix: [dado?.client_secret_pix || ''],
+      caminho_certificado_crt_pix: [dado?.caminho_certificado_crt_pix || ''],
+      caminho_certificado_key_pix: [dado?.caminho_certificado_key_pix || ''],
+      host_api: [dado?.host_api || ''],
+      data_cadastro: [dado?.data_cadastro || ''],
+      data_alteracao: [dado?.data_alteracao || ''],
       user_login: [this.login, Validators.required]
+    });
+  }
+
+  public obterContaBancaria(): void {
+    const dados = {
+      id_empresa: this.idEmpresa,
+      user_login: this.login,
+    };
+
+    this.loading = true;
+    this._contaBancaria.obterContaBancaria(dados).pipe(finalize(() => { this.loading = false; })).subscribe({
+      next: (res) => {
+        if (res.success === 'true' && res.dados && res.dados.length > 0) {
+          this.contaBancaria = res.dados;
+          this.filtrar();
+          this.atualizarQuantidadeExibida();
+        } else {
+          this._alert.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this._alert.error('Erro:', err);
+      }
+    });
+  }
+
+  public obterBancos(): void {
+    const dados = {
+      id_empresa: this.idEmpresa,
+      user_login: this.login,
+    };
+
+    this.loadingMin = true;
+    this._bancos.obterBancos(dados).pipe(finalize(() => { this.loadingMin = false; })).subscribe({
+      next: (res) => {
+        if (res.success === 'true' && res.bancos && res.bancos.length > 0) {
+          this.bancos = res.bancos;
+        } else {
+          this._alert.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this._alert.error('Erro:', err);
+      }
     });
   }
 
@@ -62,15 +146,23 @@ export class ContaBancariaComponent implements OnInit {
 
   public modalCadastrar(content: TemplateRef<any>): void {
     this.editar = false;
+    this.obterBancos();
     this.inicializarForm();
     this._modal.open(content, { size: 'xl', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
-
   public modalEditar(content: TemplateRef<any>, dado: any): void {
+    console.log(`Dados da grid ${dado}`)
     this.editar = true;
+    this.obterBancos();
     this.inicializarForm(dado)
     this._modal.open(content, { size: 'xl', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
+  public abriModalResumo(modalResumo: any, contaSelecionada: DadosContaBancaria): void {
+    this.titulo = 'Detalhes da conta bancaria';
+    this.contaSelecionada = contaSelecionada;
+    this._modal.open(modalResumo, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public cadastrarConta() {
@@ -80,6 +172,32 @@ export class ContaBancariaComponent implements OnInit {
   public editarconta() {
 
   }
+
+  public filtrar(): void {
+      this.dadosFiltrados = Utils.filtrar(this.contaBancaria, this.textoPesquisa);
+      this.totalRegistros = this.dadosFiltrados.length;
+    }
+
+    public atualizarQuantidadeExibida() {
+      this.totalRegistrosExibidos = Math.min(this.paginaAtual * this.itensPorPagina, this.totalRegistros);
+    }
+
+    public ordenar({ column, direction }: SortEvent<DadosContaBancaria>) {
+      this.headers.forEach(header => {
+        if (header.sortable !== column) {
+          header.direction = '';
+        }
+      });
+
+      if (direction === '' || column === '') {
+        this.dadosFiltrados = this.contaBancaria;
+      } else {
+        this.dadosFiltrados = [...this.dadosFiltrados].sort((a, b) => {
+          const res = compararParaOrdenar(a[column], b[column]);
+          return direction === 'asc' ? res : -res;
+        });
+      }
+    }
 
   public fechar() {
     this._modal.dismissAll();

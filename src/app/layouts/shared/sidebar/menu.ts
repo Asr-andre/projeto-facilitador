@@ -43,6 +43,12 @@ import { MenuItem } from "./menu.model";
         },
         {
           id: 2,
+          label: "MENUITEMS.CADASTRO.LIST.CONTA-BANCARIA",
+          link: "/cadastro/conta-bancaria",
+          parentId: 5,
+        },
+        {
+          id:3,
           label: "MENUITEMS.CADASTRO.LIST.CLIENTE",
           link: "/cadastro/clientes",
           parentId: 5,

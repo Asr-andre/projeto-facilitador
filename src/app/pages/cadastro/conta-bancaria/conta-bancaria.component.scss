@@ -29,3 +29,27 @@ input[readonly], textarea[readonly], select[readonly] {
   background-color: #cccccc66 !important;  /* Cor de fundo */
   border: 1px solid #ccc;  /* Borda opcional */
 }
+
+.modal-header {
+  background-color: #343a40;
+  color: white;
+}
+
+.table-bordered td {
+  padding: 8px;
+  vertical-align: middle;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+p {
+  margin-bottom: 5px;
+}

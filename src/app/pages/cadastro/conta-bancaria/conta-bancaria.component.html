@@ -17,30 +17,87 @@
                     <h5 class="mb-0"><i class="fas fa-landmark me-2"></i> Conta Bancaria </h5>
                   </div>
                   <div class="col-md-6 text-end">
-                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;" (click)="modalCadastrar(modalGenerico)">
+                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;"
+                      (click)="modalCadastrar(modalGenerico)">
                       <i class="mdi mdi-plus"></i>
                       Cadastrar
                     </button>
                   </div>
                 </div>
               </div>
-
-
-
-
-              <div class="d-flex justify-content-between align-items-center text-small">
-                <div>
-                  Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
-                  {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center" style="font-size: 11px;">
+                  <div style="font-size: 11px;">
+                    <select id="itensPorPagina" [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
+                      style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
+                      <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina" style="font-size: 10px;">{{ item
+                        }}</option>
+                    </select>
+                    <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
+                  </div>
+                  <div style="font-size: 10px;">
+                    <div class="dataTables_filter text-md-end">
+                      <label class="d-inline-flex align-items-center">
+                        <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;"
+                          placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
+                      </label>
+                    </div>
+                  </div>
                 </div>
-                <pagination-controls (pageChange)="paginaAtual = $event"
-                                      previousLabel="Anterior"
-                                      nextLabel="Próximo"
-                                      [maxSize]="5"
-                                      [autoHide]="false"
-                                      [responsive]="true">
-                </pagination-controls>
+                <div class="table-responsive">
+                  <table class="table table-sm table-hover font-size-12 tabelaOrdenada" style="margin-bottom: 8px;">
+                    <thead class="tabela-custom">
+                      <tr>
+                        <th sortable="id_boletoperfil" (sort)="ordenar($event)">Id</th>
+                        <th sortable="descricao" (sort)="ordenar($event)">Descrição</th>
+                        <th sortable="banco" (sort)="ordenar($event)">Banco</th>
+                        <th sortable="agencia" (sort)="ordenar($event)">Agencia</th>
+                        <th sortable="conta" (sort)="ordenar($event)">Conta</th>
+                        <th sortable="carteira" (sort)="ordenar($event)">Carteira</th>
+                        <th sortable="variacao" (sort)="ordenar($event)">Variação</th>
+                        <th sortable="codigo_cedente" (sort)="ordenar($event)">Codigo Cedente</th>
+
+                        <th class="text-end">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="dadosFiltrados.length > 0; else semDado">
+                      <tr
+                        *ngFor="let conta of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                        <td> {{ conta.id_boletoperfil }} </td>
+                        <td> {{ conta.descricao }} </td>
+                        <td> {{ conta.banco }} </td>
+                        <td> {{ conta.agencia }} - {{ conta.agencia_dg }} </td>
+                        <td> {{ conta.conta }} - {{ conta.conta_dg }} </td>
+                        <td> {{ conta.carteira }} </td>
+                        <td> {{ conta.variacao }} </td>
+                        <td> {{ conta.codigo_cedente }} </td>
+                        <td class="text-end">
+                          <a href="javascript:void(0);" class="me-2 text-secondary" ngbTooltip="Detalhamento" (click)="abriModalResumo(modalResumo, conta)"><i class="fas fa-landmark me-2"></i></a>
+                          <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar" (click)="modalEditar(modalGenerico, conta)"><i
+                              class="mdi mdi-pencil font-size-18"></i></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <ng-template #semDado>
+                    <tbody>
+                      <tr>
+                        <td colspan="20" class="text-center">Nenhum dado para exibir</td>
+                      </tr>
+                    </tbody>
+                  </ng-template>
+                </div>
+                <div class="d-flex justify-content-between align-items-center text-small">
+                  <div>
+                    Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+                    {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+                  </div>
+                  <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo"
+                    [maxSize]="5" [autoHide]="false" [responsive]="true">
+                  </pagination-controls>
+                </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -51,30 +108,304 @@
 
 <ng-template #modalGenerico let-modal>
   <div class="loading-overlay-card" *ngIf="loadingMin">
-    <div class="spinner-border text-primary m-1" role="status">
-    </div>
+    <div class="spinner-border text-primary m-1" role="status"></div>
   </div>
 
   <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
-    <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-landmark me-2"></i>  {{ editar ? 'Editar Conta Bancaria' : 'Cadastrar Conta Bancaria' }}
+    <h6 class="modal-title text-white">
+      <i class="fas fa-landmark me-2"></i>
+      {{ editar ? 'Editar Conta Bancária' : 'Cadastrar Conta Bancária' }}
     </h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
       (click)="fechar()"></button>
   </div>
-  <div class="modal-body modal-padding">
 
+  <div class="modal-body modal-padding" style="margin: 0px; padding-top: 4px;">
+    <form [formGroup]="contaBancariaForm">
+      <div class="row" style="padding-left: 16px; padding-right: 16px;">
+        <div class="card-body  font-size-13">
+          <ul ngbNav #nav="ngbNav" class="nav-tabs">
+            <li [ngbNavItem]="1">
+              <a ngbNavLink class="nav-link custom-nav-link">
+                <span><i class="fas fa-university"></i> Dados Bancario</span>
+              </a>
+              <ng-template ngbNavContent style="margin-top: 6px;">
+                <ng-template [ngTemplateOutlet]="tab1"></ng-template>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2" *ngIf="editar">
+              <a ngbNavLink class="nav-link custom-nav-link">
+                <span><i class="fas fa-file-invoice-dollar"></i> Api Boletos</span>
+              </a>
+              <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="tab2"></ng-template>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="3" *ngIf="editar">
+              <a ngbNavLink class="nav-link custom-nav-link">
+                <span><img src="assets/images/pix.svg" style="width: 16px; height: 16px;"> Geração Pix</span>
+              </a>
+              <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="tab3"></ng-template>
+              </ng-template>
+            </li>
+          </ul>
+          <div [ngbNavOutlet]="nav"></div>
+          <ng-template #tab1>
+            <div class="row">
+              <div class="col-md-3">
+                <label for="descricao" class="form-label">Descrição</label>
+                <input type="text" id="descricao" class="form-control form-control-sm mb-1" formControlName="descricao">
+              </div>
 
-      <div class="d-flex justify-content-end">
-        <button type="submit" class="btn btn-sm me-1" [ngClass]="{
-                  'btn-primary': editar,
-                  'btn-success': !editar
-                }" (click)="controleBotao()">
-        <i class="fas fa-save"></i> {{ editar ? 'Atualizar' : 'Salvar' }}
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
-          <i class="fas fa-times"></i> Cancelar
-        </button>
+              <div class="col-md-3">
+                <label for="banco" class="form-label">Banco</label>
+                <select type="text" id="banco" class="form-control form-control-sm mb-1" formControlName="banco">
+                  <option value="">Seleciona</option>
+                  <option *ngFor="let dado of bancos" [value]="dado.id_banco"> {{ dado.descricao }}</option>
+                </select>
+              </div>
+
+              <div class="col-md-2">
+                <label for="agencia" class="form-label">Agência</label>
+                <input type="text" id="agencia" class="form-control form-control-sm mb-1" formControlName="agencia">
+              </div>
+
+              <div class="col-md-1">
+                <label for="agencia_dg" class="form-label">Dígito</label>
+                <input type="text" id="agencia_dg" class="form-control form-control-sm mb-1"
+                  formControlName="agencia_dg">
+              </div>
+
+              <div class="col-md-2">
+                <label for="conta" class="form-label">Conta</label>
+                <input type="text" id="conta" class="form-control form-control-sm mb-1" formControlName="conta">
+              </div>
+
+              <div class="col-md-1">
+                <label for="conta_dg" class="form-label">Dígito</label>
+                <input type="text" id="conta_dg" class="form-control form-control-sm mb-1" formControlName="conta_dg">
+              </div>
+
+              <div class="col-md-4">
+                <label for="carteira" class="form-label">Carteira</label>
+                <input type="text" id="carteira" class="form-control form-control-sm mb-1" formControlName="carteira">
+              </div>
+
+              <div class="col-md-4">
+                <label for="variacao" class="form-label">Variação</label>
+                <input type="text" id="variacao" class="form-control form-control-sm mb-1" formControlName="variacao">
+              </div>
+
+              <div class="col-md-4">
+                <label for="codigo_cedente" class="form-label">Código Cedente</label>
+                <input type="text" id="codigo_cedente" class="form-control form-control-sm mb-1"
+                  formControlName="codigo_cedente">
+              </div>
+
+              <div class="col-md-12">
+                <label for="local_pgto" class="form-label">Local de Pagamento</label>
+                <input type="text" id="local_pgto" class="form-control form-control-sm mb-1"
+                  formControlName="local_pgto">
+              </div>
+
+              <div class="col-md-12">
+                <label for="instrucoes" class="form-label">Instruções</label>
+                <textarea id="instrucoes" class="form-control form-control-sm mb-1" rows="6"
+                  formControlName="instrucoes"></textarea>
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template #tab2>
+            <div class="row">
+              <div class="col-md-6">
+                <label for="client_id" class="form-label">Client ID</label>
+                <input type="text" id="client_id" class="form-control form-control-sm mb-1" formControlName="client_id">
+              </div>
+
+              <div class="col-md-6">
+                <label for="client_auth" class="form-label">Client Auth</label>
+                <input type="text" id="client_auth" class="form-control form-control-sm mb-1"
+                  formControlName="client_auth">
+              </div>
+
+              <div class="col-md-6">
+                <label for="client_secret" class="form-label">Client Secret</label>
+                <input type="text" id="client_secret" class="form-control form-control-sm mb-1"
+                  formControlName="client_secret">
+              </div>
+
+              <div class="col-md-6">
+                <label for="client_key" class="form-label">Client Key</label>
+                <input type="text" id="client_key" class="form-control form-control-sm mb-1"
+                  formControlName="client_key">
+              </div>
+              <div class="col-md-12">
+                <label for="caminho_certificado_crt" class="form-label">Caminho Certificado Crt</label>
+                <input type="text" id="caminho_certificado_crt" class="form-control form-control-sm mb-1"
+                  formControlName="caminho_certificado_crt">
+              </div>
+              <div class="col-md-12">
+                <label for="caminho_certificado_key" class="form-label">Caminho Certificado Key</label>
+                <input type="text" id="caminho_certificado_key" class="form-control form-control-sm mb-1"
+                  formControlName="caminho_certificado_key">
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template #tab3>
+            <div class="row">
+              <div class="col-md-6">
+                <label for="host_api" class="form-label">Host API</label>
+                <input type="text" id="host_api" class="form-control form-control-sm mb-1" formControlName="host_api">
+              </div>
+
+              <div class="col-md-6">
+                <label for="chave_pix" class="form-label">Chave Pix</label>
+                <input type="text" id="chave_pix" class="form-control form-control-sm mb-1" formControlName="chave_pix">
+              </div>
+
+              <div class="col-md-6">
+                <label for="client_id_pix" class="form-label">Cliente Id Pix</label>
+                <input type="text" id="client_id_pix" class="form-control form-control-sm mb-1" formControlName="client_id_pix">
+              </div>
+
+              <div class="col-md-6">
+                <label for="client_secret_pix" class="form-label">Cliente Secret Pix</label>
+                <input type="text" id="client_secret_pix" class="form-control form-control-sm mb-1" formControlName="client_secret_pix">
+              </div>
+
+              <div class="col-md-12">
+                <label for="instrucao_pix" class="form-label">Intrução Pix</label>
+                <textarea type="text" id="instrucao_pix" class="form-control form-control-sm mb-1" rows="4" formControlName="instrucao_pix"></textarea>
+              </div>
+
+              <div class="col-md-12">
+                <label for="local_pgto_pix" class="form-label">Local Pagamento Pix</label>
+                <input type="text" id="local_pgto_pix" class="form-control form-control-sm mb-1" formControlName="local_pgto_pix">
+              </div>
+
+              <div class="col-md-12">
+                <label for="caminho_certificado_crt_pix" class="form-label">Caminho Certificado Crt Pix</label>
+                <input type="text" id="caminho_certificado_crt_pix" class="form-control form-control-sm mb-1" formControlName="caminho_certificado_crt_pix">
+              </div>
+
+              <div class="col-md-12">
+                <label for="caminho_certificado_key_pix" class="form-label">Caminho Certificado Key Pix</label>
+                <input type="text" id="caminho_certificado_key_pix" class="form-control form-control-sm mb-1" formControlName="caminho_certificado_key_pix">
+              </div>
+            </div>
+          </ng-template>
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-sm me-1" [ngClass]="{
+                'btn-primary': editar,
+                'btn-success': !editar
+              }" (click)="controleBotao()">
+      <i class="fas fa-save"></i> {{ editar ? 'Atualizar' : 'Salvar' }}
+    </button>
+    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+      <i class="fas fa-times"></i> Cancelar
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #modalResumo let-modal>
+  <div class="modal-header modal-header-custom" style="background-color: rgb(124 124 124);">
+    <h6 class="modal-title" style="color: #ffffff">
+      <i class="fas fa-handshake"></i> {{ titulo }}
+    </h6>
+    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+      (click)="fechar()"></button>
+  </div>
+
+  <div class="modal-body p-4">
+    <div class="container">
+      <!-- Informações Bancárias -->
+      <h6 class="text-sencondary border-bottom pb-2 mb-3">
+        <i class="fas fa-info-circle"></i> Informações da Conta Bancária
+      </h6>
+      <div class="row">
+        <div class="col-md-6">
+          <p><strong>ID Perfil:</strong> {{ contaSelecionada.id_boletoperfil }}</p>
+          <p><strong>Descrição:</strong> {{ contaSelecionada.descricao }}</p>
+          <p><strong>Banco:</strong> {{ contaSelecionada.banco }}</p>
+          <p><strong>Agência:</strong> {{ contaSelecionada.agencia }} - {{ contaSelecionada.agencia_dg }}</p>
+          <p><strong>Conta:</strong> {{ contaSelecionada.conta }} - {{ contaSelecionada.conta_dg }}</p>
+          <p><strong>Carteira:</strong> {{ contaSelecionada.carteira }}</p>
+          <p><strong>Variação:</strong> {{ contaSelecionada.variacao || 'N/A' }}</p>
+        </div>
+        <div class="col-md-6">
+          <p><strong>Código Cedente:</strong> {{ contaSelecionada.codigo_cedente }}</p>
+          <p><strong>Local de Pagamento:</strong> {{ contaSelecionada.local_pgto }}</p>
+          <p><strong>Instruções:</strong> {{ contaSelecionada.instrucoes }}</p>
+          <p><strong>Chave Pix:</strong> {{ contaSelecionada.chave_pix || 'Não cadastrada' }}</p>
+          <p><strong>Local de Pagamento Pix:</strong> {{ contaSelecionada.local_pgto_pix || 'Não informado' }}</p>
+          <p><strong>Instrução Pix:</strong> {{ contaSelecionada.instrucao_pix || 'N/A' }}</p>
+        </div>
       </div>
 
+      <!-- Configurações de API -->
+      <h6 class="text-sencondary border-bottom pb-2 mb-3 mt-4">
+        <i class="fas fa-cogs"></i> Configurações de API e Certificados
+      </h6>
+      <table class="table table-bordered table-hover small">
+        <tbody>
+          <tr>
+            <td><strong>Client ID:</strong></td>
+            <td>{{ contaSelecionada.client_id || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <td><strong>Client Auth:</strong></td>
+            <td>{{ contaSelecionada.client_auth || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <td><strong>Client Secret:</strong></td>
+            <td>{{ contaSelecionada.client_secret || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <td><strong>Host API:</strong></td>
+            <td>{{ contaSelecionada.host_api || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <td><strong>Certificado CRT:</strong></td>
+            <td>{{ contaSelecionada.caminho_certificado_crt || 'Não informado' }}</td>
+          </tr>
+          <tr>
+            <td><strong>Certificado Key:</strong></td>
+            <td>{{ contaSelecionada.caminho_certificado_key || 'Não informado' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Auditoria -->
+      <h6 class="text-sencondary border-bottom pb-2 mb-3 mt-4">
+        <i class="fas fa-user-shield"></i> Auditoria
+      </h6>
+      <div class="row">
+        <div class="col-md-6">
+          <p><strong>Data Cadastro:</strong> {{ contaSelecionada.data_cadastro | dataHoraBrasileira }}</p>
+          <p><strong>Data Alteração:</strong> {{ contaSelecionada.data_alteracao | dataHoraBrasileira }}</p>
+        </div>
+        <div class="col-md-6">
+          <p><strong>Usuário Responsável:</strong> {{ contaSelecionada.user_login }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer d-flex justify-content-between">
+    <button type="button" class="btn btn-primary btn-sm">
+      <i class="fas fa-print"></i> Imprimir PDF
+    </button>
+    <button type="button" class="btn btn-secondary btn-sm" (click)="fechar()">
+      <i class="fas fa-times"></i> Fechar
+    </button>
   </div>
 </ng-template>

@@ -22,6 +22,7 @@
       "LIST": {
         "CONTRATANTES": "Contratantes",
         "CLIENTE": "Cliente",
+        "CONTA-BANCARIA": "Conta Bancária",
         "EMPRESA": "Empresa",
         "EMAIL-CONTA": "Email/ Conta",
         "EMAIL-PERFIL": "Email/ Perfil",
