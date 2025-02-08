@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { AppConfig } from './url.base.service';
+import { AppConfig } from '../config/url.base';
 import { CadastrarEmailModel, EmailRetornoModel, EnvioEmailModel, RetornoEnvioModel } from '../models/email.model';
 import { RetornoGenericoModel } from '../models/retorno.model';
 

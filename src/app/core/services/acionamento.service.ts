@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AppConfig } from './url.base.service';
+import { AppConfig } from '../config/url.base';
 import { AcionamentoResponseModel, InserirAcionamentoModel, RequisicaoAcionamentoModel, RetornoAcionamentoModel } from '../models/acionamento.model';
 
 

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HistoricoChat, HistoricoItem, MensagemRequestModel, MensagemResponseModel, RequisicaoChatModel } from '../models/chat.model';
-import { AppConfig } from './url.base.service';
+import { AppConfig } from '../config/url.base';
 
 @Injectable({
   providedIn: 'root'

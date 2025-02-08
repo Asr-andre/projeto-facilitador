@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RequisicaoDevedorModel, RespostaDevedorModel } from '../models/devedor.model';
 import { DetalhamentoModel, RequisicaoDetalhamentoModel } from '../models/detalhamento.model';
-import { AppConfig } from './url.base.service';
+import { AppConfig } from '../config/url.base';
 import { RequisicaoCardsModel, RespostaCardsModel } from '../models/cards.dashboard.model';
 
 @Injectable({

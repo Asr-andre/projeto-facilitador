@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RetornoModel } from '../../models/retorno.model';
-import { AppConfig } from '../url.base.service';
+import { AppConfig } from '../../config/url.base';
 import { ContratanteModel, ContratantesRetornoModel, RequisicaoContratanteModel, RespostaContratanteModel, RetornoGenerico } from '../../models/cadastro/contratante.model';
 import { catchError, map, Observable, of } from 'rxjs';
 import { AuthenticationService } from '../auth.service';

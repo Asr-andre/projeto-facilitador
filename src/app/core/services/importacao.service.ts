@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AppConfig } from './url.base.service';
+import { AppConfig } from '../config/url.base';
 import { ImportacaoRetornoModel } from '../models/importacao.model';
 import { Cadastro } from '../models/cadastro.model';
 

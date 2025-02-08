@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HistoricoRequest, HistoricoResponse, PixRequestModel, PixResponseModel } from '../models/solicitar.creditos.model';
-import { AppConfig } from './url.base.service';
+import { AppConfig } from '../config/url.base';
 
 
 @Injectable({

@@ -2,7 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AppConfig } from './url.base.service';
+import { AppConfig } from '../config/url.base';
 import { EnderecoModel, EnderecoRequestModel, EnderecoResponseModel } from '../models/endereco.model';
 import { RetornoModel } from '../models/retorno.model';
 

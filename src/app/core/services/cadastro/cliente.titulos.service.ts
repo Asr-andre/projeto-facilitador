@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RetornoModel } from '../../models/retorno.model';
-import { AppConfig } from '../url.base.service';
+import { AppConfig } from '../../config/url.base';
 import { ClienteTitulosModel } from '../../models/cadastro/cliente.titulos.model';
 
 

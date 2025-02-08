@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AppConfig } from './url.base.service';
+import { AppConfig } from '../config/url.base';
 import { CarteiraClienteRequisicao, CarteiraClientesResponse } from '../models/carteira.de.cliente.model';
 import { FilaAtualizadaResponse } from '../models/fila.model';
 

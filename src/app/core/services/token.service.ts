@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AppConfig } from './url.base.service';
+import { AppConfig } from '../config/url.base';
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {

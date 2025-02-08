@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AppConfig } from '../url.base.service';
+import { AppConfig } from '../../config/url.base';
 import { Observable } from 'rxjs';
 import { RequisicaoAcionamentoModel, RetornoAcionamentoModel, RetornoModel } from '../../models/relatorio/acionamento.model';
 

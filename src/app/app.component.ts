@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { AuthenticationService } from './core/services/auth.service';
-import { AppConfig } from './core/services/url.base.service';
+import { AppConfig } from './core/config/url.base';
 
 @Component({
   selector: 'app-root',

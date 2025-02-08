@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppConfig } from './url.base.service';
+import { AppConfig } from '../config/url.base';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IndiceModel, IndiceRequest, Retorno, RetornoIndice } from '../models/cadastro/indice.model';
