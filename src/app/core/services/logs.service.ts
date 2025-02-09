@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConfig } from '../config/url.base';
-import { LogoutModel, Retorno } from '../models/logout.model';
 import { LogsModel, LogsResponse } from '../models/logs.model';
 
 @Injectable({
