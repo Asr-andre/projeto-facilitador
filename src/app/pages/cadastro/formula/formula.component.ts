@@ -1,6 +1,7 @@
 import { Component, OnInit, QueryList, TemplateRef, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject, takeUntil } from 'rxjs';
 import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
 import { Formula, FormulaRequest } from 'src/app/core/models/formula.model';
@@ -22,6 +23,8 @@ export class FormulaComponent implements OnInit {
   public formFormula: FormGroup;
   public loading: boolean = false;
   public loadingMin: boolean = false;
+
+  private destruirObservaveis = new Subject<void>();
 
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
@@ -57,6 +60,7 @@ export class FormulaComponent implements OnInit {
       id_empresa: [dado?.id_empresa || this.idEmpresa],
       descricao: [dado?.descricao || '', Validators.required],
       usa_indice: [dado?.usa_indice || ''],
+      usa_comissao_entrada: [dado?.usa_comissao_entrada || ''],
       usa_adicional: [dado?.usa_adicional || ''],
       fator_adicional: [dado?.fator_adicional || 0],
       multa: [dado?.fator_multa || 0, [Validators.min(0)]],
@@ -74,6 +78,19 @@ export class FormulaComponent implements OnInit {
       receita_taxa: [dado?.receita_taxa || 0, [Validators.min(0)]],
       user_login: [dado?.user_login || this.login, Validators.required],
     });
+
+    // Observa mudanças no campo usa_comissao_entrada e reseta fator_adicional se for 'S'
+    this.formFormula.get('usa_comissao_entrada')?.valueChanges
+      .pipe(takeUntil(this.destruirObservaveis)).subscribe((valor) => {
+        if (valor === 'S') {
+          this.formFormula.get('fator_adicional')?.setValue(0);
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destruirObservaveis.next();
+    this.destruirObservaveis.complete();
   }
 
   public obterFormulas() {

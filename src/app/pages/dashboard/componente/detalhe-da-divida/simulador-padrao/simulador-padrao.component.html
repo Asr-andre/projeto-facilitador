@@ -118,7 +118,7 @@
         <div class="row mt-2">
           <div class="col-md-12">
             <div class="row align-items-center">
-              <div class="col-md-3" style="font-size: 12px;">
+              <div class="col-md-2" style="font-size: 12px;">
                 <small>Valor da entrada</small>
                 <input type="number" class="form-control form-control-sm" formControlName="valor_entrada"
                 [ngClass]="{'is-invalid': formAcordo.get('valor_entrada').invalid && formAcordo.get('valor_entrada').touched}">
@@ -141,7 +141,14 @@
                 </select>
               </div>
 
-              <div class="col-md-4" style="font-size: 12px;">
+              <div class="col-md-2" style="font-size: 12px;">
+                <small>Valor Comissão Entrada: {{ maxComissaoEntrada | currency:'BRL' }}</small>
+                <input type="number" class="form-control form-control-sm" formControlName="valor_comissao_entrada"
+                  [max]="maxComissaoEntrada" (input)="validarDesconto($event, 'valor_comissao_entrada')"
+                  [ngClass]="{'is-invalid': formAcordo.get('valor_comissao_entrada').invalid && formAcordo.get('valor_comissao_entrada').touched}">
+              </div>
+
+              <div class="col-md-3" style="font-size: 12px;">
                 <small>Data Vencimento</small>
                 <input type="date" class="form-control form-control-sm" id="dataNova" formControlName="vencimento" appDataMes="hoje"
                 [ngClass]="{'is-invalid': formAcordo.get('vencimento').invalid && formAcordo.get('vencimento').touched}">

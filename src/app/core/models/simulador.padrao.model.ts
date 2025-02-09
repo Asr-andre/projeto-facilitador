@@ -3,6 +3,7 @@ export class SimulacaoRequisicaoModel {
   id_contratante: number;
   id_cliente: number;
   user_login: string;
+  valor_comissao_entrada?: number;
   data_atualizacao: string;
   titulos: string;
 }
@@ -37,6 +38,7 @@ export class RecalculoRequisicaoModel {
   id_empresa: number;
   id_contratante: number;
   id_cliente: number;
+  valor_comissao_entrada?: number;
   desconto_principal: number;
   desconto_multa: number;
   desconto_juros: number;
@@ -72,6 +74,7 @@ export class RecalculoRetornoModel {
   desconto_multa: string;
   desconto_juros: string;
   desconto_taxa: string;
+  total_comissao:string;
   titulos: TituloRecalculoModel[];
 }
 

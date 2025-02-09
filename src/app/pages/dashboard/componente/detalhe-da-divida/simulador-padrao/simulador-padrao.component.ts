@@ -57,6 +57,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public originalIndice: number = 0;
   public originalJuros: number = 0;
   public originalTaxa: number = 0;
+  public maxComissaoEntrada: number = 0;
 
   //essa variavel e responsavel por armazenar o valor atualziado sera suada apenas par ao metodo gerar pix do titulo, solicitação do pedro
   public valor_atualizado_simulador = 0;
@@ -114,6 +115,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       valor_acordo: [this.totalGeral],
       qtde_parcelas: [1, Validators.required],
       periodicidade: ["M"],
+      valor_comissao_entrada: [0],
       valor_entrada: [0, Validators.required],
       vencimento: ["", Validators.required],
       titulos: [""],
@@ -209,6 +211,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     this.loadingMin = true;
     this._simulador.recalcularNegociacao(dadosParaEnvio).subscribe(
       (response: RecalculoRetornoModel) => {
+        this.maxComissaoEntrada = response.total_comissao ? Number(response.total_comissao.replace(',', '.')) : 0;
         this.data = response;
         this.loadingMin = false;
         this.calcularTotais();

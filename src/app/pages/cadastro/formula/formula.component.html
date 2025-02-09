@@ -53,6 +53,7 @@
                         <th sortable="descricao" (sort)="ordenar($event)">Descrição</th>
                         <th sortable="usa_indice" (sort)="ordenar($event)">Usa Indice</th>
                         <th sortable="usa_adicional" (sort)="ordenar($event)">Adicional</th>
+                        <th sortable="usa_comissao_entrada" (sort)="ordenar($event)">Comissão Entrada</th>
                         <th sortable="fator_adicional" (sort)="ordenar($event)">Fator Adicional</th>
                         <th sortable="fator_multa" (sort)="ordenar($event)">Multa</th>
                         <th sortable="fator_juros" (sort)="ordenar($event)">Juros</th>
@@ -80,6 +81,7 @@
                         <td> {{ formula.descricao }} </td>
                         <td> {{ formula.usa_indice | simNao }} </td>
                         <td> {{ formula.usa_adicional | simNao }} </td>
+                        <td> {{ formula.usa_comissao_entrada | simNao }} </td>
                         <td> {{ formula.fator_adicional / 100 | percent: '1.2-2' }} </td>
                         <td> {{ formula.fator_multa / 100 | percent: '1.2-2' }} </td>
                         <td> {{ formula.fator_juros / 100 | percent: '1.2-2' }} </td>
@@ -242,7 +244,7 @@
           </div>
 
           <div class="col-md-3">
-            <label for="desconto_taxa" class="form-label">Usa Adicional</label>
+            <label for="usa_adicional" class="form-label">Usa Adicional</label>
             <select class="form-control form-control-sm mb-1" formControlName="usa_adicional">
               <option value="">Selecione</option>
               <option value="S">Sim</option>
@@ -251,9 +253,18 @@
           </div>
 
           <div class="col-md-3">
-            <label for="receita_taxa" class="form-label">Comissão 1° Parcela</label>
+            <label for="fator_adicional" class="form-label">Comissão 1° Parcela</label>
             <input type="number" id="receita_taxa" class="form-control form-control-sm mb-1"
               formControlName="fator_adicional" min="0" (keypress)="validarEntrada($event)" />
+          </div>
+
+          <div class="col-md-3">
+            <label for="usa_comissao_entrada" class="form-label">Usa Comissão Entrada</label>
+            <select class="form-control form-control-sm mb-1" formControlName="usa_comissao_entrada">
+              <option value="">Selecione</option>
+              <option value="S">Sim</option>
+              <option value="N">Não</option>
+            </select>
           </div>
 
         </div>
