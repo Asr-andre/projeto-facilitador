@@ -206,8 +206,9 @@
           </div>
           <div class="col-md-3 form-group">
             <label for="id_formula" class="form-label">Formula</label>
-            <select class="form-control form-control-sm mb-1" formControlName="id_formula">
-              <option value="0">Selecione</option>
+            <select class="form-control form-control-sm mb-1" formControlName="id_formula"
+            [ngClass]="{'is-invalid': formContratante.get('id_formula').invalid && formContratante.get('id_formula').touched}">
+              <option value="">Selecione</option>
               <option *ngFor="let perfil of perfilFormula" [value]="perfil.id_formula">{{ perfil.descricao }}</option>
             </select>
           </div>
