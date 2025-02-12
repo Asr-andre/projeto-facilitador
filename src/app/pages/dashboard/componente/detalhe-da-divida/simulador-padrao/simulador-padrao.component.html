@@ -69,7 +69,7 @@
       </div>
       <div style="overflow: auto; height: 300px; margin-top: 5px;">
         <table class="table table-sm">
-          <thead class="tabela-custom table-td-scroll">
+          <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
             <tr>
               <th>Vencimento</th>
               <th>Atraso</th>
@@ -168,9 +168,9 @@
 
         <div *ngIf="simulaAcordo && data">
           <h4 style="text-align: center;">Detalhamento do Acordo</h4>
-          <div style="overflow: auto; margin-top: 5px;">
+          <div style="overflow: auto; height: 300px; margin-top: 5px;">
             <table class="table table-sm">
-              <thead class="tabela-custom table-td-scroll">
+              <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
                 <tr>
                   <th>Vencimento</th>
                   <th>Valor</th>
