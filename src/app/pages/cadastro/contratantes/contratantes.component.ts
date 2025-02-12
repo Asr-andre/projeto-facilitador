@@ -79,26 +79,23 @@ export class ContratantesComponent implements OnInit {
     private _funcoes: FuncoesService
   ) { }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
       this.carregarSequencialmente();
       this.inicializarformContratante();
   }
 
   gerarPDF(): void {
-    // Seleciona o elemento HTML que você quer converter em PDF
     const elemento = document.getElementById('conteudoPDF');
 
     if (elemento) {
       html2canvas(elemento).then((canvas) => {
         const imagemData = canvas.toDataURL('image/png');
         const pdf = new jsPDF('p', 'mm', 'a4');
-
-        // Ajusta a imagem ao tamanho do PDF
         const larguraPDF = pdf.internal.pageSize.getWidth();
         const alturaPDF = (canvas.height * larguraPDF) / canvas.width;
 
         pdf.addImage(imagemData, 'PNG', 0, 0, larguraPDF, alturaPDF);
-        pdf.save('detalhamento_contratante.pdf'); // Nome do arquivo gerado
+        pdf.save('detalhamento_contratante.pdf');
       });
     } else {
       console.error('Elemento não encontrado!');
@@ -365,10 +362,7 @@ export class ContratantesComponent implements OnInit {
   public cadastrarContratante() {
     if (this.formContratante.valid) {
       this.loadingMin = true;
-        console.log(this.formContratante.value)
-      this._contratante.cadastrarContratante(this.formContratante.value).pipe(
-        finalize(() => this.loadingMin = false),
-        catchError((error) => {
+      this._contratante.cadastrarContratante(this.formContratante.value).pipe(finalize(() => this.loadingMin = false), catchError((error) => {
           this._alert.error("Ocorreu um erro ao tentar cadastrar o contratante.");
           return of(null);
         })
@@ -389,7 +383,6 @@ export class ContratantesComponent implements OnInit {
   public abriModalEditar(content: TemplateRef<any>, dados: ContratanteModel): void {
     this.editar = true;
     this.inicializarformContratante(dados);
-    console.log(dados);
     this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
@@ -401,10 +394,7 @@ export class ContratantesComponent implements OnInit {
 
   public editarContratante() {
     this.loadingMin = true;
-
-    this._contratante.editarContratante(this.formContratante.value).pipe(
-      finalize(() => this.loadingMin = false),
-      catchError((error) => {
+    this._contratante.editarContratante(this.formContratante.value).pipe(finalize(() => this.loadingMin = false), catchError((error) => {
         this._alert.error("Ocorreu um erro ao tentar atualizar o contratante.");
         return of(null);
       })

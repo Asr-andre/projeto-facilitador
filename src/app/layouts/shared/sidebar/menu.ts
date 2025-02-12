@@ -1,6 +1,6 @@
 import { MenuItem } from "./menu.model";
 
-  const getIdUsuario = (): string | null => localStorage.getItem('id_usuario');
+  const getIdUsuario = (): string | null => sessionStorage.getItem('id_usuario');
 
   // Função para construir o menu com base no id_usuario
   const buildMenu = (): MenuItem[] => {
