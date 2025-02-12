@@ -59,6 +59,7 @@ export class ContratantesComponent implements OnInit {
   public direcaoOrdenacao: { [key: string]: string } = {};
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<ContratanteModel>>;
 
+  public contratanteCaregado = false;
   public perfilEmailCarregado = false;
   public formulaCarregado = false;
   public smsCarregado = false;
@@ -79,15 +80,8 @@ export class ContratantesComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.loading = true;
-    try {
-      await this.obterContratantes();
-      await this.inicializarformContratante();
-    } catch (error) {
-      this._alert.error("Ocorreu um erro ao carregar os dados.");
-    } finally {
-      this.loading = false;
-    }
+      this.carregarSequencialmente();
+      this.inicializarformContratante();
   }
 
   gerarPDF(): void {
@@ -141,6 +135,7 @@ export class ContratantesComponent implements OnInit {
 
   public carregarSequencialmente(): void {
     this.carregarPerfilEmail().pipe(
+        switchMap(() => this.carregarContratante()),
         switchMap(() => this.carregarFormula()),
         switchMap(() => this.carregarSms()),
         switchMap(() => this.carregarWhatsApp()),
@@ -152,6 +147,12 @@ export class ContratantesComponent implements OnInit {
       .subscribe();
   }
 
+  private carregarContratante(): Observable<void> {
+    if (!this.contratanteCaregado) {
+      return from(this.obterContratantes()).pipe(finalize(() => (this.contratanteCaregado = true)));
+    }
+    return of();
+  }
   private carregarPerfilEmail(): Observable<void> {
     if (!this.perfilEmailCarregado) {
       return from(this.obterEmailConta()).pipe(finalize(() => (this.perfilEmailCarregado = true)));
@@ -193,6 +194,7 @@ export class ContratantesComponent implements OnInit {
     try {
       const res = await lastValueFrom(this._contratante.obterContratantePorEmpresa(this.idEmpresa));
       this.contratantes = res.contratantes;
+      this.contratanteCaregado = true;
       this.filtrar();
       this.atualizarQuantidadeExibida();
     } catch (error) {
@@ -343,8 +345,7 @@ export class ContratantesComponent implements OnInit {
     }
   }
 
-  public abriModalCadastro(content: TemplateRef<any>): void {
-    this.carregarSequencialmente();
+  public abriModalCadastro(content: TemplateRef<ContratanteModel>): void {
     this.inicializarformContratante();
     this.editar = false;
     this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
@@ -387,8 +388,8 @@ export class ContratantesComponent implements OnInit {
 
   public abriModalEditar(content: TemplateRef<any>, dados: ContratanteModel): void {
     this.editar = true;
-    this.carregarSequencialmente();
     this.inicializarformContratante(dados);
+    console.log(dados);
     this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 

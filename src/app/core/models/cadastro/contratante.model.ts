@@ -16,7 +16,7 @@ export class ContratanteModel {
   celular: string;
   ativo: string;
   codigo_credor: string;
-  id_formula?: number;
+  id_formula: number;
   id_perfilemail?: number;
   id_perfilsms?: number;
   id_perfilwhatsapp?: number;
