@@ -127,6 +127,7 @@
               <div class="col-md-2" style="font-size: 12px;">
                 <small>Qtde Parcelas</small>
                 <input type="number" class="form-control form-control-sm" formControlName="qtde_parcelas"
+                appValidaNumeroMinimo
                 [ngClass]="{'is-invalid': formAcordo.get('qtde_parcelas').invalid && formAcordo.get('qtde_parcelas').touched}">
               </div>
 

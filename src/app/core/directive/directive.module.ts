@@ -22,6 +22,7 @@ import { SomenteLeituraDirective } from './somente.leitura.s.n.directive';
 import { LimitarCaracteresDirective } from './bloquear.td.directive';
 import { TelefoneMaskDirective } from './masacara.telefone.directive';
 import { ApenasNumerosXDirective } from './somente.numeros.exceto.x.directive';
+import { ValidaNumeroMinimoDirective } from './valida.numero.minimo.directive';
 
 const directive = [
   ClickCorDirective,
@@ -46,7 +47,8 @@ const directive = [
   SomenteLeituraDirective,
   LimitarCaracteresDirective,
   TelefoneMaskDirective,
-  ApenasNumerosXDirective
+  ApenasNumerosXDirective,
+  ValidaNumeroMinimoDirective
 ];
 
 @NgModule({
