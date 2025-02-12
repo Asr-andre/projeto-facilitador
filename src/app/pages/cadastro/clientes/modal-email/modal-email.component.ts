@@ -100,6 +100,14 @@ export class ModalEmailComponent {
     }
   }
 
+  public situacaoEmail(status: string): string {
+    switch (status) {
+      case 'A': return 'Ativo';
+      case 'I': return 'Inativo';
+      default: return status;
+    }
+  }
+
   public fechar() {
     this.formEmail.reset();
     this._modal.dismissAll();

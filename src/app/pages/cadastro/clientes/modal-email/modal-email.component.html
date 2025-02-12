@@ -1,5 +1,5 @@
 <ng-template #modalEmail let-modal>
-  <div class="modal-header modal-header-custom" style="background: #1cbb8c; color: white; padding: 10px;">
+  <div class="modal-header modal-header-custom" style="background: #1cbb8c; color: white;">
     <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-envelope"></i> Cadastrar Email </h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
       (click)="fechar()"></button>
@@ -16,7 +16,7 @@
         <div class="col-md-12">
           <div class="mb-1">
             <label for="email" class="form-label">Email</label>
-            <input type="email" id="email" formControlName="email" class="form-control form-control-pad form-control-sm" required
+            <input type="email" id="email" formControlName="email" placeholder="Digite um email valido" class="form-control form-control-pad form-control-sm" required
             [ngClass]="{'is-invalid': formEmail.get('email').invalid && formEmail.get('email').touched}">
           </div>
         </div>
@@ -36,7 +36,15 @@
         <tbody>
           <tr *ngFor="let email of emails?.emails">
             <td>{{ email.email }}</td>
-            <td>{{ email.situacao === 'A' ? 'Ativo' : 'Inativo' }}</td>
+            <td>
+              <div class="badge font-size-10"
+                      [ngClass]="{
+                         'bg-success-subtle text-success': email.situacao === 'A',
+                         'bg-danger-subtle text-danger': email.situacao === 'I'
+                       }">
+                {{ situacaoEmail(email.situacao) }}
+              </div>
+            </td>
             <td>{{ email.origem }}  </td>
             <td>{{ email.ativo | simNao}} </td>
           </tr>
