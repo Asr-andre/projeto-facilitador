@@ -37,7 +37,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public ocultaBotaoPix: boolean = true;
   public dadosSimulacao: any;
   public dadosPixGerado: GerarPixResponse;
-  public loadingMin: boolean =false;
+  public loadingMin: boolean = false;
   public permitirValorAdicional: string = '';
 
   @Output() clienteAtualizado = new EventEmitter<void>();
@@ -115,12 +115,31 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       valor_acordo: [this.totalGeral],
       qtde_parcelas: [1, Validators.required],
       periodicidade: ["M"],
-      valor_comissao_entrada: [0],
+      valor_comissao_entrada: [Number(this.maxComissaoEntrada.toFixed(2))],
       valor_entrada: [0, Validators.required],
       vencimento: ["", Validators.required],
       titulos: [""],
       user_login: [this.login],
     });
+
+    // Observa mudanças em 'qtde_parcelas' e recalcula 'valor_comissao_entrada'
+    this.formAcordo.get('qtde_parcelas')?.valueChanges.subscribe((qtdeParcelas) => {
+      this.atualizarValorComissao(qtdeParcelas);
+    });
+  }
+
+  private atualizarValorComissao(qtdeParcelas: number) {
+    const maxComissaoEntrada = this.maxComissaoEntrada || 0;
+
+    let novoValor = 0;
+
+    if (qtdeParcelas === 1) {
+      novoValor = Number(maxComissaoEntrada.toFixed(2));
+    } else if (qtdeParcelas > 1 && maxComissaoEntrada > 0) {
+      novoValor = Number((maxComissaoEntrada / qtdeParcelas).toFixed(2));
+    }
+
+    this.formAcordo.patchValue({ valor_comissao_entrada: novoValor }, { emitEvent: false });
   }
 
   public iniciarFormgerarPixBoleto() {
@@ -175,7 +194,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public abrirModalSimulado(data: any): void {
     this.permitirValorAdicional = data.usa_adicional?.trim() || '';
     this.data = data;
-    this.formSimulador();
+
     this.originalPrincipal = data.desconto_principal;
     this.originalMulta = data.desconto_multa;
     this.originalIndice = data.desconto_indice;
@@ -198,6 +217,8 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     this.formAcordo.patchValue({
       titulos: data.titulos.map((titulo) => titulo.id_titulo).join(","),
     });
+
+
 
     this.recalcular(); // Recalcula os valores ao abrir o modal
     this.calcularTotais();  // Calcula os totais para atualizar valor_atualizado_simulador
@@ -231,12 +252,13 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     this.totalMulta = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_multa, 0);
     this.totalTaxa = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_taxa, 0);
     this.totalAdicional = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_adicional, 0);
-    this.totalGeral = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_atualizado,0);
+    this.totalGeral = this.data.titulos.reduce((acc, titulo) => acc + titulo.valor_atualizado, 0);
 
     this.valor_atualizado_simulador = this.totalGeral !== 0 ? this.totalGeral : this.totalValor;
 
     this.formAcordo.patchValue({
       valor_acordo: this.totalGeral,
+      valor_comissao_entrada: Number(this.maxComissaoEntrada.toFixed(2))
     });
   }
 
@@ -313,6 +335,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     if (this.formAcordo.valid) {
       const dadosParaEnvio = { ...this.formAcordo.value };
       dadosParaEnvio.vencimento = this._datePipe.transform(dadosParaEnvio.vencimento, "dd/MM/yyyy");
+
       this.loadingMin = true;
       this._simulador.simularAcordo(dadosParaEnvio).subscribe(
         (response) => {
@@ -348,14 +371,14 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       dadosParaEnvio.vencimento = this._datePipe.transform(dadosParaEnvio.vencimento, "dd/MM/yyyy");
 
       this._simulador.fecharAcordo(dadosParaEnvio).subscribe((res) => {
-          if (res.success === 'true') {
-            this._alert.success(res.msg);
-            this.clienteAtualizado.emit();
-            this.fechaModal();
-          } else {
-            this._alert.error(res.msg);
-          }
-        },
+        if (res.success === 'true') {
+          this._alert.success(res.msg);
+          this.clienteAtualizado.emit();
+          this.fechaModal();
+        } else {
+          this._alert.error(res.msg);
+        }
+      },
         (error) => {
           this._alert.error("Ocorreu um erro ao fechar o acordo.", error);
         }
