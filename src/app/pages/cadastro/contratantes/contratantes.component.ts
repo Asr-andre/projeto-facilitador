@@ -364,7 +364,7 @@ export class ContratantesComponent implements OnInit {
   public cadastrarContratante() {
     if (this.formContratante.valid) {
       this.loadingMin = true;
-
+        console.log(this.formContratante.value)
       this._contratante.cadastrarContratante(this.formContratante.value).pipe(
         finalize(() => this.loadingMin = false),
         catchError((error) => {

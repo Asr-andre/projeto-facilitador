@@ -132,10 +132,10 @@ export class ImportacaoComponent implements OnInit {
   }
 
   public downloadModelo(): void {
-    const fileUrl = 'assets/modelo/Layout importação facilitador.xlsx';
+    const fileUrl = 'assets/modelo/PlanilhaPadrao.xlsx';
     const link = document.createElement('a');
     link.href = fileUrl;
-    link.download = 'Layout importação facilitador.xlsx';
+    link.download = 'PlanilhaPadrao.xlsx';
     link.click();
   }
 
