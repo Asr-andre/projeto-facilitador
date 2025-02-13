@@ -102,14 +102,14 @@ export class ContratantesComponent implements OnInit {
     }
   }
 
-  public async inicializarformContratante(dado?: ContratanteModel): Promise<void> {
+  public async inicializarformContratante(dado?: any): Promise<void> {
     this.formContratante = this._fb.group({
       id_contratante: [dado?.id_contratante || ''],
       id_empresa: [dado?.id_empresa || this.idEmpresa],
       cnpj: [dado?.cnpj || '', Validators.required],
       razao_social: [dado?.razao_social || '', Validators.required],
       fantasia: [dado?.fantasia || '', Validators.required],
-      chavepix: [dado?.chavepix || ''],
+      chave_pix: [dado?.chavepix || ''],
       cep: [dado?.cep || ''],
       endereco: [dado?.endereco || ''],
       numero: [dado?.numero || ''],
@@ -342,7 +342,7 @@ export class ContratantesComponent implements OnInit {
     }
   }
 
-  public abriModalCadastro(content: TemplateRef<ContratanteModel>): void {
+  public abriModalCadastro(content: TemplateRef<any>): void {
     this.inicializarformContratante();
     this.editar = false;
     this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
