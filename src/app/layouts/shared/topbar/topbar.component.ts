@@ -185,6 +185,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this._logoutService.logout(dados).subscribe((res) => {
       if(res.success === 'true') {
         localStorage.clear();
+        sessionStorage.clear();
         this.router.navigate(['/account/login']);
       }
     });
