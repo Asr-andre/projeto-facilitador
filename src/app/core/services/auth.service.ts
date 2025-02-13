@@ -3,68 +3,76 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { AppConfig } from '../config/url.base';
+import { AuthResponse } from '../models/auth.models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private apiUrl = AppConfig.apiUrl;
-  private id_usuario = 'id_usuario';
-  private sigla = 'sigla';
-  private loginUsuario = 'login';
-  private idEmpresa = 'id_empresa';
+  private idUsuarioKey = 'id_usuario';
+  private siglaKey = 'sigla';
+  private loginUsuarioKey = 'login';
+  private idEmpresaKey = 'id_empresa';
+  private tokenKey = 'token';
 
   constructor(private http: HttpClient) {}
 
-  public login(sigla: string, login: string, senha: string): Observable<any> {
+  public login(sigla: string, login: string, senha: string): Observable<AuthResponse> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
     const loginUrl = `${this.apiUrl}/autenticar`;
 
-    return this.http.post<any>(loginUrl, { sigla, login, senha }, { headers }).pipe(
+    return this.http.post<AuthResponse>(loginUrl, { sigla, login, senha }, { headers }).pipe(
       map(response => {
-        if (response['success'] === 'true') {
-          sessionStorage.setItem(this.id_usuario, JSON.stringify(response.id_usuario));
-          sessionStorage.setItem(this.sigla, sigla);
-          sessionStorage.setItem(this.loginUsuario, login);
-          sessionStorage.setItem(this.idEmpresa, response['id_empresa']);
+        if (response.success === 'true') {
+          sessionStorage.setItem(this.idUsuarioKey, response.id_usuario);
+          sessionStorage.setItem(this.siglaKey, sigla);
+          sessionStorage.setItem(this.loginUsuarioKey, login);
+          sessionStorage.setItem(this.idEmpresaKey, response.id_empresa);
+          sessionStorage.setItem(this.tokenKey, response.token); // Armazenando o token
+
           return response;
         } else {
-          throw new Error(response['msg: '] || 'Erro ao tentar autenticar.');
+          throw new Error(response.msg || 'Erro ao tentar autenticar.');
         }
       }),
       catchError(error => {
-        return throwError('Ocorreu um erro ao tentar autenticar. Por favor, tente novamente.');
+        return throwError(() => new Error('Ocorreu um erro ao tentar autenticar. Por favor, tente novamente.'));
       })
     );
   }
 
-  sair(): Observable<any> {
-    return this.http.post(this.apiUrl, {}); // Você pode enviar o ID do usuário ou outros dados, se necessário
-  }
-
   public logout(): void {
-    sessionStorage.removeItem(this.id_usuario);
-    sessionStorage.removeItem(this.sigla);
-    sessionStorage.removeItem(this.loginUsuario);
-    sessionStorage.removeItem(this.idEmpresa);
+    sessionStorage.removeItem(this.idUsuarioKey);
+    sessionStorage.removeItem(this.siglaKey);
+    sessionStorage.removeItem(this.loginUsuarioKey);
+    sessionStorage.removeItem(this.idEmpresaKey);
+    sessionStorage.removeItem(this.tokenKey);
     sessionStorage.removeItem('dadosCliente');
   }
 
-  public getIdUsuario(): any {
-    const user = sessionStorage.getItem(this.id_usuario);
-    return user ? JSON.parse(user) : null;
+  public getToken(): string | null {
+    return sessionStorage.getItem(this.tokenKey);
   }
 
-  public getSigla(): string {
-    return sessionStorage.getItem(this.sigla);
+  public getIdUsuario(): string | null {
+    return sessionStorage.getItem(this.idUsuarioKey);
   }
 
-  public getLogin(): string {
-    return sessionStorage.getItem(this.loginUsuario);
+  public getSigla(): string | null {
+    return sessionStorage.getItem(this.siglaKey);
   }
 
-  public getIdEmpresa(): string {
-    return sessionStorage.getItem(this.idEmpresa);
+  public getLogin(): string | null {
+    return sessionStorage.getItem(this.loginUsuarioKey);
+  }
+
+  public getIdEmpresa(): string | null {
+    return sessionStorage.getItem(this.idEmpresaKey);
+  }
+
+  public isAuthenticated(): boolean {
+    return this.getToken() !== null;
   }
 }

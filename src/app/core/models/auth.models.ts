@@ -1,9 +1,13 @@
-export class User {
-    id: number;
-    username: string;
-    password: string;
-    firstName?: string;
-    lastName?: string;
-    token?: string;
-    email: string;
+export class AuthModel {
+  sigla: string;
+  login: string;
+  senha: string;
+}
+
+export class AuthResponse {
+  success: string;
+  msg: string;
+  id_usuario: string;
+  id_empresa: string;
+  token: string;
 }

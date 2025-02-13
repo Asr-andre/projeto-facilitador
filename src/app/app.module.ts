@@ -21,6 +21,7 @@ import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { FakeBackendInterceptor } from './core/helpers/fake-backend';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { AuthInterceptor } from './core/config/auth.interceptor';
 
 if (environment.defaultauth === 'firebase') {
   initFirebaseBackend(environment.firebaseConfig);
@@ -51,9 +52,8 @@ registerLocaleData(localePt);
             }
         })], providers: [
         { provide: LOCALE_ID, useValue: 'pt-BR' },
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
         provideHttpClient(withInterceptorsFromDi()),
     ] })
 export class AppModule { }
