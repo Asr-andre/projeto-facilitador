@@ -15,7 +15,6 @@ export class CarteiraDeClienteService {
 
   constructor(
     private _http: HttpClient,
-
   ) { }
 
   public obterCarteiradeCliente(carteira: CarteiraClienteRequisicao): Observable<CarteiraClientesResponse> {

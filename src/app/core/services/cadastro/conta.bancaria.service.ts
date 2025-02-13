@@ -8,10 +8,11 @@ import { Cadastrar, DadosContaBancaria, RequisicaoContaBancaria, RespostaContaBa
   providedIn: 'root'
 })
 export class ContaBancariaService {
-
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient
+  ) { }
 
   public obterContaBancaria(dados: RequisicaoContaBancaria): Observable<RespostaContaBancaria> {
     return this._http.post<RespostaContaBancaria>(`${this.apiUrl}/listarboletoperfil`, dados);

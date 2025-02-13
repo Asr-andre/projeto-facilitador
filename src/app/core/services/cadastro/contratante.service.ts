@@ -9,10 +9,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ContratanteService {
-
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient
+  ) { }
 
   public obterContratantes(): Observable<ContratanteModel[]> {
     return this._http.get<ContratanteModel[]>(`${this.apiUrl}/contratante`);

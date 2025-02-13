@@ -12,11 +12,9 @@ export class PasswordResetService {
 
   constructor(
     private _http: HttpClient,
-
   ) { }
 
   public recuperarSenha(requisicao: RecuperacaoSenhaRequest): Observable<RecuperacaoSenhaResponse> {
     return this._http.post<RecuperacaoSenhaResponse>(`${this.apiUrl}/atualizasenha`, requisicao);
   }
-
 }

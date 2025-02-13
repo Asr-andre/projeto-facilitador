@@ -13,10 +13,11 @@ import { ClienteModel } from '../../models/cadastro/cliente.model';
   providedIn: 'root'
 })
 export class EmpresaService {
-
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient
+  ) { }
 
   public cadastrarEmpresa(empresa: EmpresaModel) {
     return this._http.post<RetornoModel>(`${this.apiUrl}/empresa`, empresa);

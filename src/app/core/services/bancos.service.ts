@@ -12,7 +12,9 @@ export class BancoService {
 
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient
+  ) { }
 
   public obterBancos(dados: RequisicaoBancos): Observable<RetornoBanco> {
     return this._http.post<RetornoBanco>(`${this.apiUrl}/listarbancos`, dados);

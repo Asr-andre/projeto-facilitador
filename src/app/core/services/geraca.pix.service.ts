@@ -14,7 +14,6 @@ export class GeracaoPixService {
 
   constructor(
     private _http: HttpClient,
-
   ) { }
 
   public gerarPixBoleto(request: GerarPixRequest): Observable<GerarPixResponse> {

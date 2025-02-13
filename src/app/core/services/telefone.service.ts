@@ -5,8 +5,6 @@ import { AppConfig } from '../config/url.base';
 import { TelefoneModel, TelefoneRetornoModel } from '../models/telefone.model';
 import { RetornoModel } from '../models/retorno.model';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +13,6 @@ export class TelefoneService {
 
   constructor(
     private _http: HttpClient,
-
   ) { }
 
   public obterTelefonesPorCliente(idCliente: number): Observable<TelefoneRetornoModel> {

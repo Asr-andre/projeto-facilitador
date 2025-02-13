@@ -12,7 +12,9 @@ import { RetornoModel } from '../models/retorno.model';
 export class EnderecoService {
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient
+  ) {}
 
   public obterEnderecos(request: EnderecoRequestModel): Observable<EnderecoResponseModel> {
     return this._http.post<EnderecoResponseModel>(`${this.apiUrl}/listarendereco`, request);

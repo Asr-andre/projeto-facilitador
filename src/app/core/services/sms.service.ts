@@ -12,7 +12,6 @@ export class SmsService {
 
   constructor(
     private _http: HttpClient,
-
   ) { }
 
   public envioSmsUnitario(sms: SmsModel): Observable<any> {

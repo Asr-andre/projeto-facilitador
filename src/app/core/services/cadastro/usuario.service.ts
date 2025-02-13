@@ -11,7 +11,9 @@ import { RetornoModel } from '../../models/retorno.model';
 export class UsuarioService {
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient
+  ) { }
 
   public obterUsuariosPorEmpresa(idEmpresa: number): Observable<UsuariosRetornoModel> {
     return this._http.post<UsuariosRetornoModel>(`${this.apiUrl}/usuario/listarporempresa`, { id_empresa: idEmpresa });

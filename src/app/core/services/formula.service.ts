@@ -10,7 +10,9 @@ import { RequisicaoFormula, FormulaResponse, FormulaRequest, RetornoFormula } fr
 export class FormulaService {
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient
+  ) {}
 
   public listarFormulas(request: RequisicaoFormula): Observable<FormulaResponse> {
     return this._http.post<FormulaResponse>(`${this.apiUrl}/listarformulas`, request);

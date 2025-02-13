@@ -12,7 +12,6 @@ export class LogoutService {
 
   constructor(
     private _http: HttpClient,
-
   ) { }
 
   public logout(dados: LogoutModel): Observable<Retorno> {

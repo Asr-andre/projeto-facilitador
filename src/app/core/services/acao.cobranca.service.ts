@@ -11,7 +11,9 @@ import { RequisicaoAcaoCobrancaModel, RespostaAcaoCobrancaModel } from '../model
 export class AcaoCobrancaService {
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient
+  ) { }
 
   public listarAcoesCobranca(requisicao: RequisicaoAcaoCobrancaModel): Observable<RespostaAcaoCobrancaModel> {
     return this._http.post<RespostaAcaoCobrancaModel>(`${this.apiUrl}/acoes`, requisicao);

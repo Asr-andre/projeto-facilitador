@@ -4,8 +4,6 @@ import { Observable } from 'rxjs';
 import { AppConfig } from '../config/url.base';
 import { TipoTituloModel } from '../models/tipo.titulo.model';
 
-
-
 @Injectable({
   providedIn: 'root'
 })

@@ -16,7 +16,9 @@ import {
 export class ReciboService {
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient
+  ) {}
 
   public obterRecibos(dados: RequisicaoReciboModel): Observable<RetornoReciboModel> {
     return this._http

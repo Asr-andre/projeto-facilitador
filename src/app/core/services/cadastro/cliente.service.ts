@@ -10,10 +10,11 @@ import { RetornoClienteModel } from '../../models/retorno.model';
   providedIn: 'root'
 })
 export class ClienteService {
-
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient
+  ) { }
 
   public pesquisarCliente(dados: PesquisarClienteModel): Observable<Retorno> {
       return this._http.post<Retorno>(`${this.apiUrl}/listarclientemanual`, dados);

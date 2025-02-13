@@ -12,7 +12,6 @@ export class BoletoPixService {
 
   constructor(
     private _http: HttpClient,
-
   ) { }
 
   public obterBoletoPix(boletoPix: RequisicaoBoletoPixModel): Observable<RespostaBoletoPixModel> {

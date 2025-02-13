@@ -13,7 +13,6 @@ export class EmailService {
 
   constructor(
     private _http: HttpClient,
-
   ) { }
 
   public obterEmailPorCliente(idCliente: number): Observable<EmailRetornoModel> {

@@ -12,7 +12,6 @@ export class TitulosPgRetService {
 
   constructor(
     private _http: HttpClient,
-
   ) { }
 
   public obterTitulosPagosRet(titulo: TitulosPgRetRequestModel): Observable<TitulosPgRetResponseModel> {

@@ -8,10 +8,11 @@ import { CadastroMensagemModel, SmsWhatsappRequestModel, SmsWhatsappResponseMode
   providedIn: 'root'
 })
 export class SmsWhatsAppService {
-
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient
+  ) { }
 
   public obterMsg(dados: SmsWhatsappRequestModel): Observable<SmsWhatsappResponseModel> {
     return this._http.post<SmsWhatsappResponseModel>(`${this.apiUrl}/listarperfilwhatsapp`, dados);

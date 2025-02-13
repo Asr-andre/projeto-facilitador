@@ -10,7 +10,9 @@ import { IndiceModel, IndiceRequest, Retorno, RetornoIndice } from '../models/ca
 export class IndiceService {
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient
+  ) {}
 
   public listarIndice(request: IndiceRequest): Observable<RetornoIndice> {
     return this._http.post<RetornoIndice>(`${this.apiUrl}/listarindices`, request);

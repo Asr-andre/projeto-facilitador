@@ -12,7 +12,6 @@ export class LogsService {
 
   constructor(
     private _http: HttpClient,
-
   ) { }
 
   public listarLogs(dados: LogsModel): Observable<LogsResponse> {

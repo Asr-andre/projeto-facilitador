@@ -12,7 +12,6 @@ export class SimuladorPadraoService {
 
   constructor(
     private _http: HttpClient,
-
   ) { }
 
   public simularNegociacao(requisicao: SimulacaoRequisicaoModel): Observable<SimulacaoRetornoModel> {

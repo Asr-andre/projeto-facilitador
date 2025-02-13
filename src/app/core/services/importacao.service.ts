@@ -11,7 +11,9 @@ import { Cadastro } from '../models/cadastro.model';
 export class ImportacaoService {
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient
+  ) { }
 
   public listarImportacoesRealizada(idEmpresa: number): Observable<ImportacaoRetornoModel> {
     return this._http.post<ImportacaoRetornoModel>(`${this.apiUrl}/listarimportacao`, { id_empresa: idEmpresa });

@@ -8,10 +8,11 @@ import { RequisicaoModel, RespostaModel } from '../models/sininho.model';
   providedIn: 'root'
 })
 export class SininhoService {
-
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   public monitorarMsg(requestBody: RequisicaoModel): Observable<RespostaModel> {
     return this.http.post<RespostaModel>(`${this.apiUrl}/enviomensagemalerta`, requestBody);

@@ -9,10 +9,11 @@ import { ClienteTitulosModel } from '../../models/cadastro/cliente.titulos.model
   providedIn: 'root'
 })
 export class ClienteTituloService {
-
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient
+  ) { }
 
   public cadastrarTitulos(titulos: ClienteTitulosModel[]) {
     return this._http.post<RetornoModel>(`${this.apiUrl}/titulo`, titulos);

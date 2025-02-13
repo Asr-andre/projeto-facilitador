@@ -8,7 +8,10 @@ import { CookieService } from 'ngx-cookie-service';
 export class LanguageService {
   public languages: string[] = ['br'];
 
-  constructor(public translate: TranslateService, private cookieService: CookieService) {
+  constructor(
+    public translate: TranslateService,
+    private cookieService: CookieService
+  ) {
     let browserLang;
     this.translate.addLangs(this.languages);
     if (this.cookieService.check('lang')) {

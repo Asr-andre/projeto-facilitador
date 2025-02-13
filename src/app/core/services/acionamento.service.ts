@@ -11,7 +11,9 @@ import { AcionamentoResponseModel, InserirAcionamentoModel, RequisicaoAcionament
 export class AcionamentoService {
   private apiUrl = AppConfig.apiUrl;
 
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient
+  ) {}
 
   public listarAcionamentos(dados: RequisicaoAcionamentoModel): Observable<RetornoAcionamentoModel> {
     return this._http.post<RetornoAcionamentoModel>(`${this.apiUrl}/acionamentos`, dados);

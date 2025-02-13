@@ -13,7 +13,6 @@ export class JuridicoService {
 
   constructor(
     private _http: HttpClient,
-
   ) { }
 
   public obterProcessos(dados: JuridicoRequestModel): Observable<JuridicoResponseModel> {

@@ -12,7 +12,6 @@ export class AcordoService {
 
   constructor(
     private _http: HttpClient,
-
   ) { }
 
   public listarAcordos(dados: AcordoRequisicaoModel): Observable<AcordoRespostaModel> {
