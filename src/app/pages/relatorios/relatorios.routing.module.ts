@@ -4,7 +4,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { FinanceiroComponent } from "./financeiro/financeiro.component";
 import { LogsComponent } from "./logs/logs.component";
 import { AcionamentosSinteticoComponent } from "./acionamentos/acionamentos-sintetico.component";
-import { AuthGuard } from "src/app/core/guards/auth.guard";
+import { AuthGuard } from "src/app/core/config/auth.guard";
 import { JuridicoComponent } from "./juridico/juridico.component";
 
 const routes: Routes = [

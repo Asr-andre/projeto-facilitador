@@ -11,7 +11,6 @@ import { RelatoriosRoutingModule } from './relatorios.routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JuridicoModule } from './juridico/juridico.module';
 
-
 @NgModule({
   declarations: [
 

@@ -4,7 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FilaComponent } from './fila/fila.component';
 import { CarteiraDeClientesComponent } from './carteira-de-clientes/carteira-de-clientes.component';
 import { ChatComponent } from './chat/chat.component';
-import { AuthGuard } from '../core/guards/auth.guard';
+import { AuthGuard } from '../core/config/auth.guard';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuard] },

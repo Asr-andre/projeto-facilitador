@@ -11,7 +11,7 @@ import { SmsComponent } from './sms/sms.component';
 import { ClienteComponent } from './cliente/cliente.component';
 import { IndiceComponent } from './indice/indice.component';
 import { EmailPerfilComponent } from './email-perfil/email-perfil.component';
-import { AuthGuard } from 'src/app/core/guards/auth.guard';
+import { AuthGuard } from 'src/app/core/config/auth.guard';
 import { ClientesComponent } from './clientes/clientes.component';
 import { ContaBancariaComponent } from './conta-bancaria/conta-bancaria.component';
 
