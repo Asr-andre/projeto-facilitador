@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CREDITO_OPCOES } from 'src/app/core/helpers/credito-options';
 import { Utils } from 'src/app/core/helpers/utils';
 import { HistoricoItem, PixDetails } from 'src/app/core/models/solicitar.creditos.model';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -28,6 +29,7 @@ export class SolicitarCreditosComponent implements OnInit {
   public historico: Boolean = false;
   public ocultarBotaoCredito: Boolean = true;
   public retornoHistorico: HistoricoItem [] = [];
+  public opcoesCredito: { value: string; label: string }[] = [];
 
   constructor(
     private _solicitarCreditos: SolicitarCreditosService,
@@ -52,6 +54,15 @@ export class SolicitarCreditosComponent implements OnInit {
       servico: ['', Validators.required],
       user_login: [this.login]
     });
+
+    this.formCreditos.get('servico')?.valueChanges.subscribe((tipo) => {
+      this.atualizarOpcoesValor(tipo);
+    });
+  }
+
+  atualizarOpcoesValor(tipo: string) {
+    this.opcoesCredito = CREDITO_OPCOES[tipo] || [];
+    this.formCreditos.get('valor')?.setValue('');
   }
 
   public iniciarFormHistorico() {
