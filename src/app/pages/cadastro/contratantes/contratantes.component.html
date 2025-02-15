@@ -58,6 +58,7 @@
                         <th sortable="cidade" (sort)="ordenar($event)">Cidade</th>
                         <th sortable="uf" (sort)="ordenar($event)">Uf</th>
                         <th sortable="id_formula" (sort)="ordenar($event)">Id Fórmula</th>
+                        <th sortable="id_perfilboleto" (sort)="ordenar($event)">Id Perfil Boleto</th>
                         <th sortable="data_cadastro" (sort)="ordenar($event)">Data Cadastro</th>
                         <th sortable="ativo" (sort)="ordenar($event)">Ativo</th>
                         <th class="text-end">Ações</th>
@@ -76,6 +77,7 @@
                         <td>{{ contratante.cidade }}</td>
                         <td>{{ contratante.uf }}</td>
                         <td>{{ contratante.id_formula }}</td>
+                        <td>{{ contratante.id_perfilboleto }}</td>
                         <td>{{ contratante.data_cadastro | dataHoraBrasileira }}</td>
                         <td>{{ contratante.ativo | simNao }}</td>
                         <td class="text-end">
@@ -245,14 +247,21 @@
               <option *ngFor="let perfil of perfilSms" [value]="perfil.id_perfilsms">{{ perfil.empresa }}</option>
             </select>
           </div>
-          <div class="col-md-3 form-group">
+          <div class="col-md-4 form-group">
+            <label for="id_perfilboleto" class="form-label">Perfil Boleto</label>
+            <select class="form-control form-control-sm mb-1" formControlName="id_perfilboleto">
+              <option value="0">Selecione</option>
+              <option *ngFor="let contaBancaria of contaBancaria" [value]="contaBancaria.id_boletoperfil">{{ contaBancaria.descricao }}</option>
+            </select>
+          </div>
+          <div class="col-md-4 form-group">
             <label for="id_perfilwhatsapp" class="form-label">Perfil Whatsapp</label>
             <select class="form-control form-control-sm mb-1" formControlName="id_perfilwhatsapp">
               <option value="0">Selecione</option>
               <option *ngFor="let sms of msg" [value]="sms.id_perfilwhatsapp">{{ sms.titulo }}</option>
             </select>
           </div>
-          <div class="col-md-3 form-group">
+          <div class="col-md-4 form-group">
             <label for="id_perfiltextoemailid_perfiltextoemail" class="form-label">Perfil Email Texto</label>
             <select class="form-control form-control-sm mb-1" formControlName="id_perfiltextoemail">
               <option value="0">Selecione</option>
@@ -316,6 +325,7 @@
         <div class="row">
           <div class="col-md-6 detalhamento-texto">
             <p style="margin-bottom: 4px;"><strong>Id Fórmula:</strong> {{ contratanteSelecionado.id_formula }}</p>
+            <p style="margin-bottom: 4px;"><strong>Id Perfil Boleto:</strong> {{ contratanteSelecionado.id_perfilboleto }}</p>
             <p style="margin-bottom: 4px;"><strong>Id Perfil Email:</strong> {{ contratanteSelecionado.id_perfilemail }}</p>
             <p style="margin-bottom: 4px;"><strong>Id Perfil SMS:</strong> {{ contratanteSelecionado.id_perfilsms }}</p>
             <p style="margin-bottom: 4px;"><strong>Id Perfil WhatsApp:</strong> {{ contratanteSelecionado.id_perfilwhatsapp }}</p>

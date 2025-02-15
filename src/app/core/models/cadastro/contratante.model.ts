@@ -19,6 +19,7 @@ export class ContratanteModel {
   id_formula: number;
   id_perfilemail?: number;
   id_perfilsms?: number;
+  id_perfilboleto?: number;
   id_perfilwhatsapp?: number;
   id_perfiltextoemail: number;
   data_cadastro: string;

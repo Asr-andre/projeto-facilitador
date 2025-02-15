@@ -23,6 +23,8 @@ import { Formula } from 'src/app/core/models/formula.model';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { FuncoesService } from 'src/app/core/services/funcoes.service';
+import { ContaBancariaService } from 'src/app/core/services/cadastro/conta.bancaria.service';
+import { DadosContaBancaria } from 'src/app/core/models/cadastro/conta.bancaria.model';
 
 @Component({
   selector: 'app-contratantes',
@@ -36,6 +38,7 @@ export class ContratantesComponent implements OnInit {
   public contratante: ContratanteModel[];
   public perfilSms: PerfilSms[] = [];
   public perfilFormula: Formula[] = [];
+  public contaBancaria: DadosContaBancaria[] = [];
   public idPerfilWhatsapp = 1;
   public idEmpresa = Number(this._auth.getIdEmpresa());
   public login = this._auth.getLogin();
@@ -64,6 +67,7 @@ export class ContratantesComponent implements OnInit {
   public formulaCarregado = false;
   public smsCarregado = false;
   public watsAppCarregado = false;
+  public contaBancariaCarregado = false;
 
   constructor(
     private _retornoCep: ConsultaCepService,
@@ -76,12 +80,13 @@ export class ContratantesComponent implements OnInit {
     private _modal: NgbModal,
     private _auth: AuthenticationService,
     private _alert: AlertService,
-    private _funcoes: FuncoesService
+    private _funcoes: FuncoesService,
+    private _contaBancaria: ContaBancariaService,
   ) { }
 
   ngOnInit(): void {
-      this.carregarSequencialmente();
-      this.inicializarformContratante();
+    this.carregarSequencialmente();
+    this.inicializarformContratante();
   }
 
   gerarPDF(): void {
@@ -122,6 +127,7 @@ export class ContratantesComponent implements OnInit {
       ativo: [dado?.ativo || 'S'],
       codigo_credor: [dado?.codigo_credor || ''],
       id_formula: [dado?.id_formula || '', Validators.required],
+      id_perfilboleto: [dado?.id_perfilboleto || '0'],
       id_perfilemail: [dado?.id_perfilemail || '0'],
       id_perfilsms: [dado?.id_perfilsms || '0'],
       id_perfilwhatsapp: [dado?.id_perfilwhatsapp || '0'],
@@ -132,15 +138,16 @@ export class ContratantesComponent implements OnInit {
 
   public carregarSequencialmente(): void {
     this.carregarPerfilEmail().pipe(
-        switchMap(() => this.carregarContratante()),
-        switchMap(() => this.carregarFormula()),
-        switchMap(() => this.carregarSms()),
-        switchMap(() => this.carregarWhatsApp()),
-        catchError((error) => {
-          console.error('Erro ao carregar:', error);
-          return of(null);
-        })
-      )
+      switchMap(() => this.carregarContratante()),
+      switchMap(() => this.carregarFormula()),
+      switchMap(() => this.carregarcontaBancaria()),
+      switchMap(() => this.carregarSms()),
+      switchMap(() => this.carregarWhatsApp()),
+      catchError((error) => {
+        console.error('Erro ao carregar:', error);
+        return of(null);
+      })
+    )
       .subscribe();
   }
 
@@ -174,6 +181,13 @@ export class ContratantesComponent implements OnInit {
   private carregarWhatsApp(): Observable<void> {
     if (!this.watsAppCarregado) {
       return from(this.obterMsgs()).pipe(finalize(() => (this.watsAppCarregado = true)));
+    }
+    return of();
+  }
+
+  private carregarcontaBancaria(): Observable<void> {
+    if (!this.contaBancariaCarregado) {
+      return from(this.obterContaBancaria()).pipe(finalize(() => (this.contaBancariaCarregado = true)));
     }
     return of();
   }
@@ -216,6 +230,33 @@ export class ContratantesComponent implements OnInit {
         if (res.success === "true") {
           this.emailConta = res.perfil;
           this.perfilEmailCarregado = true;
+          resolve();
+        } else {
+          this._alert.error(res.msg);
+          reject();
+        }
+      }, (error) => {
+        this.loadingMin = false;
+        this._alert.error("Ocorreu um erro.", error);
+        reject();
+      });
+    });
+  }
+
+  public obterContaBancaria(): Promise<void> {
+    const dados = {
+      id_empresa: this.idEmpresa,
+      user_login: this.login,
+    };
+
+    return new Promise((resolve, reject) => {
+      this.loadingMin = true;
+      this._contaBancaria.obterContaBancaria(dados).subscribe((res) => {
+        this.loadingMin = false;
+
+        if (res.success === "true") {
+          this.contaBancaria = res.dados;
+          this.contaBancariaCarregado = true;
           resolve();
         } else {
           this._alert.error(res.msg);
@@ -363,9 +404,9 @@ export class ContratantesComponent implements OnInit {
     if (this.formContratante.valid) {
       this.loadingMin = true;
       this._contratante.cadastrarContratante(this.formContratante.value).pipe(finalize(() => this.loadingMin = false), catchError((error) => {
-          this._alert.error("Ocorreu um erro ao tentar cadastrar o contratante.");
-          return of(null);
-        })
+        this._alert.error("Ocorreu um erro ao tentar cadastrar o contratante.");
+        return of(null);
+      })
       ).subscribe((res: RetornoModel) => {
         if (res?.success === "true") {
           this._alert.success(res.msg);
@@ -395,9 +436,9 @@ export class ContratantesComponent implements OnInit {
   public editarContratante() {
     this.loadingMin = true;
     this._contratante.editarContratante(this.formContratante.value).pipe(finalize(() => this.loadingMin = false), catchError((error) => {
-        this._alert.error("Ocorreu um erro ao tentar atualizar o contratante.");
-        return of(null);
-      })
+      this._alert.error("Ocorreu um erro ao tentar atualizar o contratante.");
+      return of(null);
+    })
     ).subscribe((res) => {
       if (res?.success) {
         this._alert.success(res.msg);
