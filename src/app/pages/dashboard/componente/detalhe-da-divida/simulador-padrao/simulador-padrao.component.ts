@@ -408,6 +408,30 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
     });
   }
 
+  public gerarBoleto() {
+    const valorBoleto = this.formGerarPixBoleto.get('valor_boleto')?.value;
+
+    this._alert.warningCustome(
+      `Você deseja gerar um boleto com o valor total atualizado de <br><strong>R$${valorBoleto}</strong>?`
+    ).then(confirmar => {
+      if (confirmar) {
+        this._pix.gerarboleto(this.formGerarPixBoleto.value).subscribe((res) => {
+          if (res.success === "true") {
+            this.dadosPixGerado = res;
+            const links = [
+              { texto: "Link Boleto", url: res.urlImagemQrCode },
+              { texto: "Link Copiar Código", url: res.pixCopiaECola }
+            ];
+            this._alert.infoComLinks("Boleto gerado com sucesso!", links);
+
+          } else {
+            this._alert.warning("Erro na resposta da API:", res.msg || "Mensagem não disponível");
+          }
+        });
+      }
+    });
+  }
+
   public copiarParaAreasTransferencia(valor) {
     Utils.CopyAreaTransfer(valor);
     this._alert.success('Código Pix copiado com sucesso!');

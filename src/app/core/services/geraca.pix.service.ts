@@ -19,4 +19,9 @@ export class GeracaoPixService {
   public gerarPixBoleto(request: GerarPixRequest): Observable<GerarPixResponse> {
     return this._http.post<GerarPixResponse>(`${this.apiUrl}/gerarboletopixpagseguro`, request);
   }
+
+  //intregração integração saad
+  public gerarboleto(request: GerarPixRequest): Observable<GerarPixResponse> {
+    return this._http.post<GerarPixResponse>(`${this.apiUrl}/gerarboleto`, request);
+  }
 }

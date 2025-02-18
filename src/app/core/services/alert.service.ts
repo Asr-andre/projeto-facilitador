@@ -219,4 +219,16 @@ export class AlertService {
     });
   }
 
+  infoComLinks(message: string, links: { texto: string, url: string }[], title: string = 'Info!') {
+    const linksHtml = links.map(link => `<a href="${link.url}" target="_blank" class="btn btn-link">${link.texto}</a>`).join('<br>');
+
+    this.swalWithBootstrapButtons.fire({
+      title: title,
+      html: `${message}<br><br>${linksHtml}`,
+      icon: 'info',
+      showConfirmButton: true
+    });
+  }
+
+
 }
