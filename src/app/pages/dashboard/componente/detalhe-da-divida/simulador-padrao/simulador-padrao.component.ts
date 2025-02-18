@@ -1,4 +1,3 @@
-import { Titulo } from './../../../../../core/models/geraca.pix.model';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from "@angular/core";
 import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";

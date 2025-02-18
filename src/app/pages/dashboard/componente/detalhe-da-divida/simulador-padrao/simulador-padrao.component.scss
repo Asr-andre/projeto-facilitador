@@ -40,3 +40,11 @@ input[readonly] {
   background-color: #cccccc66 !important;  /* Cor de fundo */
   border: 1px solid #ccc;  /* Borda opcional */
 }
+
+#qrCode {
+  border-radius: 15px; /* Valor pode ser ajustado conforme necessário */
+}
+
+.border {
+  border-radius: 15px; /* Ajuste o valor conforme preferir */
+}
