@@ -148,6 +148,7 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       id_cliente: [this.idCliente, Validators.required],
       id_usuario: [this._auth.getIdUsuario(), Validators.required], // ID do usuário logado
       user_login: [this.login, Validators.required],
+      data_vencimento: [''],
       valor_boleto: [this.valor_atualizado_simulador.toFixed(2), Validators.required],
       servico: ['Pagamento Titulos Via Pix', Validators.required],
       titulos: this._fb.array([], Validators.required) // Array de títulos
@@ -414,7 +415,12 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
       `Você deseja gerar um boleto com o valor total atualizado de <br><strong>R$${valorBoleto}</strong>?`
     ).then(confirmar => {
       if (confirmar) {
-        this._pix.gerarboleto(this.formGerarPixBoleto.value).subscribe((res) => {
+
+        let dataVencimento = this.formAcordo.value.data_acordo;
+        const dadosParaEnvio = { ...this.formGerarPixBoleto.value };
+        dadosParaEnvio.data_vencimento = dataVencimento;
+
+        this._pix.gerarboleto(dadosParaEnvio).subscribe((res) => {
           if (res.success === "true") {
             this.dadosPixGerado = res;
             const links = [

@@ -20,6 +20,7 @@ export class GerarPixRequest {
   id_cliente: number;
   id_usuario: number;
   user_login: string;
+  data_vencimento: string;
   valor_boleto: number;
   servico: string;
   titulos: Titulo[];
