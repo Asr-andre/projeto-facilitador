@@ -210,7 +210,14 @@ export class CadastrarComponent implements OnInit  {
     if (cep) {
       this._retornoCep.consultarCep(cep).then((cepResponse: CepModel | null) => {
         if (cepResponse) {
-          this.cep = cepResponse; // Atualiza o objeto CEP
+          this.cep = cepResponse;
+          this.formCliente.patchValue({
+            endereco: cepResponse.endereco,
+            bairro: cepResponse.bairro,
+            cidade: cepResponse.cidade,
+            uf: cepResponse.uf,
+            complemento: cepResponse.complemento,
+          });
         } else {
           this.cep = null;
         }
