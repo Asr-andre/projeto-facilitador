@@ -192,10 +192,23 @@ export class ContratantesComponent implements OnInit {
     return of();
   }
 
-  public viaCep(cep) {
+  public viaCep(cep: string): void {
     if (cep) {
-      this._retornoCep.consultarCep(cep).then((cep: CepModel) => {
-        this.cep = cep;
+      this._retornoCep.consultarCep(cep).then((cepResponse: CepModel | null) => {
+        if (cepResponse) {
+          this.cep = cepResponse;
+          this.formContratante.patchValue({
+            endereco: cepResponse.endereco,
+            bairro: cepResponse.bairro,
+            cidade: cepResponse.cidade,
+            uf: cepResponse.uf,
+            complemento: cepResponse.complemento,
+          });
+        } else {
+          this.cep = null;
+        }
+      }).catch(() => {
+        this.cep = null;
       });
     }
   }
