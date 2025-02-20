@@ -147,8 +147,7 @@
                   {{ maxComissaoEntrada | currency:'BRL' }} </strong>
                 </span>
                 <input type="number" class="form-control form-control-sm" formControlName="valor_comissao_entrada"
-                  [max]="maxComissaoEntrada" (input)="validarDesconto($event, 'valor_comissao_entrada')"
-                  [ngClass]="{'is-invalid': formAcordo.get('valor_comissao_entrada').invalid && formAcordo.get('valor_comissao_entrada').touched}">
+                  [max]="maxComissaoEntrada" (input)="validarDesconto($event, 'valor_comissao_entrada')">
               </div>
 
               <div class="col-md-3" style="font-size: 12px;">
