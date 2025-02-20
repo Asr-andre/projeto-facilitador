@@ -419,19 +419,22 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
         let dataVencimento = this.formAcordo.value.data_acordo;
         const dadosParaEnvio = { ...this.formGerarPixBoleto.value };
         dadosParaEnvio.data_vencimento = dataVencimento;
-
+        this.loadingMin = true;
         this._pix.gerarboleto(dadosParaEnvio).subscribe((res) => {
           if (res.success === "true") {
+            this.loadingMin = false;
             this.dadosPixGerado = res;
             const links = [
-              { texto: "Link Boleto", url: res.urlImagemQrCode },
-              { texto: "Link Copiar Código", url: res.pixCopiaECola }
-            ];
-            this._alert.infoComLinks("Boleto gerado com sucesso!", links);
+              { texto: "Link Boleto", url: res.urlImagemQrCode, icon: "fas fa-file-invoice" },
+              { texto: "Link Copiar Código", url: res.pixCopiaECola, icon: "fas fa-copy" }
+          ];
+          this._alert.infoComLinks(`<strong>Valor: R$ ${this.dadosPixGerado.valor}</strong>`, links);
 
           } else {
+            this.loadingMin = false;
             this._alert.warning("Erro na resposta da API:", res.msg || "Mensagem não disponível");
           }
+          this.loadingMin = false;
         });
       }
     });

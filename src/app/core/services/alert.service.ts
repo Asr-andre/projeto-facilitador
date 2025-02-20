@@ -219,16 +219,25 @@ export class AlertService {
     });
   }
 
-  infoComLinks(message: string, links: { texto: string, url: string }[], title: string = 'Info!') {
-    const linksHtml = links.map(link => `<a href="${link.url}" target="_blank" class="btn btn-link">${link.texto}</a>`).join('<br>');
+  infoComLinks(message: string, links: { texto: string, url: string, icon: string }[], title: string = 'Boleto gerado com sucesso!') {
+    const linksHtml = links.map(link => `
+        <a href="${link.url}" target="_blank" class="btn btn-light d-flex align-items-center p-2 rounded shadow-sm mb-2 w-100">
+            <i class="${link.icon} me-2"></i> ${link.texto}
+        </a>
+    `).join('');
 
     this.swalWithBootstrapButtons.fire({
-      title: title,
-      html: `${message}<br><br>${linksHtml}`,
-      icon: 'info',
-      showConfirmButton: true
+      title: `<h3 class="fw-bold">${title}</h3>`,
+      html: `<p class="fs-5 mb-3">${message}</p>${linksHtml}`,
+      width: '400px', // Aumenta o tamanho do modal
+      showConfirmButton: true,
+      confirmButtonText: 'Fechar',
+      customClass: {
+        popup: 'p-2',
+        confirmButton: 'btn btn-secondary btn-sm'
+      }
     });
-  }
+}
 
 
 }
