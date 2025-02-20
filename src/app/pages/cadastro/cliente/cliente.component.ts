@@ -133,6 +133,10 @@ export class ClienteComponent implements OnInit {
     this._modal.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
+  public abriModalTeste(content: TemplateRef<any>): void {
+    this._modal.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
   public selecionarcliente(cliente: Cliente): void {
     this.mostrarCardCliente = true;
     this.idCliente = String(cliente.id_cliente);
@@ -347,6 +351,12 @@ export class ClienteComponent implements OnInit {
         this.cep = null;
       });
     }
+  }
+
+  copiarLink() {
+    const link = "https://link.stone.com.br/t/chk_dzqw...";
+    navigator.clipboard.writeText(link);
+    alert("Link copiado para a área de transferência!");
   }
 
   public cancela() {

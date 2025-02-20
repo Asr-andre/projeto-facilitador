@@ -1,6 +1,6 @@
 <ng-template #emailModal let-modal>
   <div class="modal-header modal-header-custom" style="background: #2c3e50; margin: 0; border-bottom: 1px solid #1a252f;">
-    <h6 class="modal-title" style="color: #ffffff; font-weight: 500;">
+    <h6 class="modal-title" style="color: #ffffff;">
       <i class="fas fa-envelope"></i> Enviar Email - {{ destinatarioEmail }}
     </h6>
     <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close" (click)="fechar()"></button>
@@ -14,7 +14,7 @@
     <form [formGroup]="formularioEnvioEmail">
       <!-- Campo de Assunto -->
       <div class="mb-3">
-        <label class="form-label" style="font-weight: 500; color: #34495e;">Assunto</label>
+        <label class="form-label" style="color: #34495e;">Assunto</label>
         <select class="form-control form-control-sm" formControlName="assunto" (change)="capturarMsg($event)" style="border-radius: 4px; border: 1px solid #ced4da;">
           <option value="">Selecionar Mensagens</option>
           <option *ngFor="let item of mensages" [value]="item.id_emailtexto">{{ item.descricao }}</option>
@@ -23,7 +23,7 @@
 
       <!-- Editor de Mensagem -->
       <div class="mb-3">
-        <label class="form-label" style="font-weight: 500; color: #34495e;">Mensagem</label>
+        <label class="form-label" style="color: #34495e;">Mensagem</label>
         <quill-editor
           class="custom-quill-editor"
           placeholder="Digite sua mensagem..."
@@ -35,7 +35,7 @@
 
       <!-- Campo de Anexo -->
       <div class="mb-4">
-        <label class="form-label" style="font-weight: 500; color: #34495e;">Anexar Arquivo</label>
+        <label class="form-label" style="color: #34495e;">Anexar Arquivo</label>
         <input type="file" class="form-control form-control-sm" (change)="aoSelecionarArquivo($event)" style="border-radius: 4px; border: 1px solid #ced4da;">
       </div>
 

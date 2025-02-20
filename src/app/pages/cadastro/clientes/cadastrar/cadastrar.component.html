@@ -13,22 +13,22 @@
             </div>
           </div>
         </div>
-        <div class="card-body">
+        <div class="card-body font-size-13">
           <ul ngbNav #nav="ngbNav" [activeId]="ativaAba" class="nav-tabs">
             <li [ngbNavItem]="1" (click)="ativarAba()">
               <a ngbNavLink class="nav-link custom-nav-link">
                 <span><i class="fas fa-user-check"></i> Cliente</span>
               </a>
               <ng-template ngbNavContent style="margin-top: 6px;">
-                <ng-template [ngTemplateOutlet]="tabCliente"></ng-template>
+                <ng-template [ngTemplateOutlet]="tab1"></ng-template>
               </ng-template>
             </li>
-            <li [ngbNavItem]="2">
+            <li [ngbNavItem]="2" *ngIf="this.idContratante">
               <a ngbNavLink class="nav-link custom-nav-link">
                 <span><i class="fas fa-file-invoice-dollar"></i> Titulos</span>
               </a>
               <ng-template ngbNavContent>
-                <ng-template [ngTemplateOutlet]="tabTitulo"></ng-template>
+                <ng-template [ngTemplateOutlet]="tab2"></ng-template>
               </ng-template>
             </li>
           </ul>
@@ -38,7 +38,7 @@
     </div>
   </div>
 
-  <ng-template #tabCliente>
+  <ng-template #tab1>
     <form [formGroup]="formCliente">
       <div class="row">
         <div class="col-md-2 form-group">
@@ -212,7 +212,7 @@
     </form>
   </ng-template>
 
-  <ng-template #tabTitulo>
+  <ng-template #tab2>
       <form [formGroup]="formTitulo">
         <div class="row" style="margin-top: 6px;">
           <div class="col-md-3 form-group">
