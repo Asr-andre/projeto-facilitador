@@ -38,3 +38,75 @@ input[readonly] {
   background-color: #cccccc66 !important;  /* Cor de fundo */
   border: 1px solid #ccc;  /* Borda opcional */
 }
+
+
+
+/* Estilização do modal */
+.modal-header {
+  background: #f8f9fa;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* Estilização das abas */
+.nav-tabs .nav-link {
+  font-weight: bold;
+  color: #6c757d;
+  border: none;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-tabs .nav-link.active {
+  background: #e9ecef;
+  color: #000;
+  border-radius: 5px;
+}
+
+/* Estilização das credenciais */
+.credencial-box {
+  background: #f8f9fa;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+//modal teste1
+
+.modal-content {
+  border-radius: 10px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+.text-muted {
+  font-size: 14px;
+}
+
+.compartilhar-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.compartilhar-container .btn {
+  font-size: 12px;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.link-box input {
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-weight: bold;
+}
+
+.btn-copiar {
+  margin-top: 10px;
+  width: 100%;
+  font-weight: bold;
+}

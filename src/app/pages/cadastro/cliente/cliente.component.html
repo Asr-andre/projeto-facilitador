@@ -14,6 +14,16 @@
               <h5 class="mb-0"><i class="fas fa-search me-2"></i> Cadastrar cliente manual </h5>
             </div>
             <div class="col-md-6 text-end">
+              <button class="btn btn-outline-primary btn-sm me-2" (click)="abriModalTeste(modalTeste1)">
+                <i class="mdi mdi-plus"></i>
+                <strong> Modal de pagamento </strong>
+              </button>
+
+              <button class="btn btn-outline-primary btn-sm me-2" (click)="abriModalTeste(modalTeste)">
+                <i class="mdi mdi-plus"></i>
+                <strong> Abrir modal </strong>
+              </button>
+
               <button class="btn btn-success btn-sm" (click)="abilitarCadastro()" *ngIf="!mostrarTabela">
                 <i class="mdi mdi-plus"></i>
                 <strong> Cadastrar </strong>
@@ -351,4 +361,95 @@
     <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()"><i class="fas fa-times"></i>
       Cancelar</button>
   </div>
+</ng-template>
+
+<ng-template #modalTeste let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Credenciais</h5>
+    <button type="button" class="btn-close btn-close-small" (click)="fechar()"></button>
+  </div>
+
+  <div class="modal-body">
+    <p><strong>Aplicação:</strong> 542833570 - MercadoPago application (mp-app-542833570)</p>
+
+    <!-- Abas -->
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#customCheckout">Checkout personalizado</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#checkoutMP">Checkout de Mercado Pago</a>
+      </li>
+    </ul>
+
+    <div class="tab-content mt-3">
+      <!-- Aba Checkout Personalizado -->
+      <div class="tab-pane fade show active" id="customCheckout">
+        <h6>Modo Sandbox</h6>
+        <div class="credencial-box">
+          <p><strong>Public key:</strong> TEST-26225e4e-46c2-4608-9f46-92f78e17ce22</p>
+          <p><strong>Access token:</strong> TEST-6303223304445950-041119-26870b8649bd037479cc07f817283c2b5-542833570</p>
+        </div>
+
+        <h6>Modo Produção</h6>
+        <div class="credencial-box">
+          <p><strong>Public key:</strong> APP_USR-83b493b0-d700-4bab-916b-3b1cc3ee5747</p>
+          <p><strong>Access token:</strong> APP_USR-6303223304445950-041119-2258a73cb301ac1d1cab88b1eccf12c1-542833570</p>
+        </div>
+      </div>
+
+      <!-- Aba Checkout de Mercado Pago -->
+      <div class="tab-pane fade" id="checkoutMP">
+        <p>Conteúdo do Checkout de Mercado Pago...</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary btn-sm" >Fechar</button>
+    <button type="button" class="btn btn-primary btn-renovar btn-sm" >
+      <i class="fas fa-sync-alt"></i> Renovar credenciais
+    </button>
+  </div>
+
+
+</ng-template>
+
+<ng-template #modalTeste1 let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Retorno de pagamento</h5>
+    <button type="button" class="btn-close btn-close-small" (click)="fechar()"></button>
+  </div>
+
+  <div class="modal-content">
+    <div class="modal-body text-center">
+
+      <!-- Texto principal -->
+      <h5 class="fw-bold">Você criou um link de pagamento de R$ 72,00</h5>
+      <p class="text-muted">
+        O link expira em <strong>10 dez 2023</strong> às <strong>15:27</strong>.
+        Compartilhe como você quiser para receber o pagamento na sua Conta Stone.
+      </p>
+
+      <!-- Botões de compartilhamento -->
+      <div class="compartilhar-container">
+        <button class="btn btn-light"><i class="fas fa-envelope"></i> Email</button>
+        <button class="btn btn-light"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+        <button class="btn btn-light"><i class="fab fa-facebook-messenger"></i> Messenger</button>
+        <button class="btn btn-light"><i class="fas fa-ellipsis-h"></i> Outros</button>
+      </div>
+
+      <!-- Link de pagamento -->
+      <div class="link-box">
+        <input type="text" class="form-control" value="https://link.stone.com.br/t/chk_dzqw..." readonly />
+      </div>
+
+      <!-- Botão de copiar -->
+      <button class="btn btn-success btn-copiar" (click)="copiarLink()">
+        <i class="fas fa-copy"></i> Copiar link
+      </button>
+    </div>
+  </div>
+
+
 </ng-template>
