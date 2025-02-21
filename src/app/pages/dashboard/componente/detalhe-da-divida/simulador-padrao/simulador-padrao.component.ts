@@ -411,32 +411,30 @@ export class SimuladorPadraoComponent implements OnInit, OnChanges {
   public gerarBoleto() {
     const valorBoleto = this.formGerarPixBoleto.get('valor_boleto')?.value;
 
-    this._alert.warningCustome(
-      `Você deseja gerar um boleto com o valor total atualizado de <br><strong>R$${valorBoleto}</strong>?`
-    ).then(confirmar => {
-      if (confirmar) {
-
-        let dataVencimento = this.formAcordo.value.data_acordo;
-        const dadosParaEnvio = { ...this.formGerarPixBoleto.value };
-        dadosParaEnvio.data_vencimento = dataVencimento;
-        this.loadingMin = true;
-        this._pix.gerarboleto(dadosParaEnvio).subscribe((res) => {
-          if (res.success === "true") {
-            this.loadingMin = false;
-            this.dadosPixGerado = res;
-            const links = [
-              { texto: "Link Boleto", url: res.urlImagemQrCode, icon: "fas fa-file-invoice" },
-              { texto: "Link Copiar Código", url: res.pixCopiaECola, icon: "fas fa-copy" }
-          ];
-          this._alert.infoComLinks(`<strong>Valor: R$ ${this.dadosPixGerado.valor}</strong>`, links);
-
-          } else {
-            this.loadingMin = false;
-            this._alert.warning("Erro na resposta da API:", res.msg || "Mensagem não disponível");
-          }
-          this.loadingMin = false;
-        });
-      }
+    this._alert.warningCustome(`Você deseja gerar um boleto com o valor total atualizado de <br><strong>R$${valorBoleto}</strong>?`).then(confirmar => {
+        if (confirmar) {
+            let dataVencimento = this.formAcordo.value.data_acordo;
+            const dadosParaEnvio = { ...this.formGerarPixBoleto.value, data_vencimento: dataVencimento };
+            this.loadingMin = true;
+            this._pix.gerarboleto(dadosParaEnvio).subscribe({ next: (res) => {
+                    this.loadingMin = false;
+                    if (res.success === "true") {
+                        this.dadosPixGerado = res;
+                        const links = [
+                            { texto: "Link Boleto", url: res.urlImagemQrCode, icon: "fas fa-file-invoice" },
+                            { texto: "Link Copiar e Cola", url: res.pixCopiaECola, icon: "fas fa-copy" }
+                        ];
+                        this._alert.infoComLinks(`<strong>Valor: R$ ${this.dadosPixGerado.valor}</strong>`, links);
+                    } else {
+                        this._alert.warning("Erro na resposta da API", res.msg || "Mensagem não disponível");
+                    }
+                },
+                error: (err) => {
+                    this.loadingMin = false;
+                    this._alert.error("Ocorreu um erro ao gerar o boleto. Tente novamente.", err.message);
+                }
+            });
+        }
     });
   }
 

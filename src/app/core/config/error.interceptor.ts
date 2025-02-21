@@ -24,6 +24,20 @@ export class ErrorInterceptor implements HttpInterceptor {
                     return throwError('Sessão expirada. Você foi desconectado.');
                 }
 
+                // Tratamento para erro 404 (não encontrado)
+                if (err.status === 404) {
+                    const errorMessage = 'Recurso não encontrado. Por favor, verifique a URL.';
+                    this.alertService.error(errorMessage);  // Exibir mensagem de erro
+                    return throwError(errorMessage);
+                }
+
+                // Tratamento para erro 400 (bad request)
+                if (err.status === 400) {
+                    const errorMessage = 'A solicitação não foi bem-sucedida. Verifique os dados enviados.';
+                    this.alertService.error(errorMessage);  // Exibir mensagem de erro
+                    return throwError(errorMessage);
+                }
+
                 // Erros do lado do servidor (por exemplo, 500, 502, etc.)
                 if (err.status >= 500) {
                     const errorMessage = 'Erro interno no servidor. Tente novamente mais tarde.';
@@ -31,10 +45,10 @@ export class ErrorInterceptor implements HttpInterceptor {
                     return throwError(errorMessage);
                 }
 
-                // Erros de comunicação com a API ou outros erros
-                const error = err.error.message || err.statusText || 'Ocorreu um erro desconhecido.';
-                this.alertService.error(error);  // Exibir a mensagem de erro
-                return throwError(error);
+                // Outros erros de comunicação com a API ou erros não especificados
+                const errorMessage = err.error?.msg || err.error?.message || err.statusText || 'Ocorreu um erro desconhecido.';
+                this.alertService.error(errorMessage);  // Exibir a mensagem de erro
+                return throwError(errorMessage);
             })
         );
     }

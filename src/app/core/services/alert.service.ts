@@ -221,21 +221,47 @@ export class AlertService {
 
   infoComLinks(message: string, links: { texto: string, url: string, icon: string }[], title: string = 'Boleto gerado com sucesso!') {
     const linksHtml = links.map(link => `
-        <a href="${link.url}" target="_blank" class="btn btn-light d-flex align-items-center p-2 rounded shadow-sm mb-2 w-100">
-            <i class="${link.icon} me-2"></i> ${link.texto}
-        </a>
+        <div class="btn btn-light d-flex align-items-center justify-content-between p-2 rounded shadow-sm mb-2 w-100 link-container"
+             style="cursor: pointer;" data-url="${link.url}">
+            <div class="d-flex align-items-center">
+                <i class="${link.icon} me-2"></i> ${link.texto}
+            </div>
+            <i class="fas fa-clone text-primary copiar-link" data-copy="${link.url}" style="cursor: pointer;"></i>
+        </div>
     `).join('');
 
     this.swalWithBootstrapButtons.fire({
-      title: `<h3 class="fw-bold">${title}</h3>`,
-      html: `<p class="fs-5 mb-3">${message}</p>${linksHtml}`,
-      width: '400px', // Aumenta o tamanho do modal
-      showConfirmButton: true,
-      confirmButtonText: 'Fechar',
-      customClass: {
-        popup: 'p-2',
-        confirmButton: 'btn btn-secondary btn-sm'
-      }
+        title: `<h3 class="fw-bold">${title}</h3>`,
+        html: `<p class="fs-5 mb-3">${message}</p>${linksHtml}`,
+        width: '400px',
+        showConfirmButton: true,
+        confirmButtonText: 'Fechar',
+        customClass: {
+            popup: 'p-2',
+            confirmButton: 'btn btn-secondary btn-sm'
+        },
+        didOpen: () => {
+            // Adiciona evento para abrir o link ao clicar na div
+            document.querySelectorAll('.link-container').forEach((container: any) => {
+                container.addEventListener('click', () => {
+                    const url = container.getAttribute('data-url');
+                    window.open(url, '_blank');
+                });
+            });
+
+            // Adiciona evento para copiar sem fechar o alert
+            document.querySelectorAll('.copiar-link').forEach((icon: any) => {
+                icon.addEventListener('click', (event: Event) => {
+                    event.stopPropagation(); // Evita que o clique ative o link principal
+                    const url = icon.getAttribute('data-copy');
+                    navigator.clipboard.writeText(url).then(() => {
+                        alert('Link copiado para a área de transferência!');
+                    }).catch(() => {
+                      alert('Algo deu errado!');
+                    });
+                });
+            });
+        }
     });
 }
 
