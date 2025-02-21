@@ -41,7 +41,8 @@ export class EnvioEmailComponent implements OnInit {
     [{ 'color': [] }, { 'background': [] }],          // Cor do texto e fundo
     //['blockquote', 'code-block'],                     // Bloco de citação e código
     //[{ 'script': 'sub' }, { 'script': 'super' }],     // Subscrito e Sobrescrito
-    //[{ 'direction': 'rtl' }],                         // Direção do texto (direita para esquerda)
+    //[{ 'direction': 'rtl' }],
+    ['image'],                        // Direção do texto (direita para esquerda)
     //['link', 'image', 'video'],                    // Remover essas funcionalidades
     ['clean']                                         // Limpar formatação
   ];

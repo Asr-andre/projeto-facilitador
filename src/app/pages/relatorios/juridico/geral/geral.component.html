@@ -49,7 +49,6 @@
                 <th sortable="numero_processo" (sort)="ordenar($event)" scope="col">N° Processo</th>
                 <th sortable="data_entrada_processo" (sort)="ordenar($event)" scope="col">Data Entrada</th>
                 <th sortable="data_audiencia" (sort)="ordenar($event)" scope="col">Data Audiencia</th>
-                <th sortable="tipo_acao_1" (sort)="ordenar($event)" scope="col">Tipo</th>
                 <th sortable="comarca" (sort)="ordenar($event)" scope="col">Comarca</th>
                 <th sortable="ultimo_andamento" (sort)="ordenar($event)" scope="col">Ultimo Andamento</th>
                 <th sortable="obs" (sort)="ordenar($event)" scope="col">Obs</th>
@@ -63,7 +62,6 @@
                   <td>{{ item.numero_processo | docJuridico }}</td>
                   <td>{{ item.data_entrada_processo | dataBr }}</td>
                   <td>{{ item.data_audiencia | dataHoraBrasileira }}</td>
-                  <td>{{ item.tipo_acao_1 }}</td>
                   <td>{{ item.comarca }}</td>
                   <td>{{ item.ultimo_andamento }}</td>
                   <td>{{ item.obs }}</td>
