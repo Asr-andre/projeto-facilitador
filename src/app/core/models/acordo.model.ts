@@ -44,6 +44,7 @@ export class ResponseConfissaoDividaModel {
   id_empresa: string;
   id_contratante: string;
   id_cliente: string;
+  arquivo: string;
   base64: string;
 }
 

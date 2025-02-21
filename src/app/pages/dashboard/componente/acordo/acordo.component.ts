@@ -90,8 +90,26 @@ export class AcordoComponent implements OnInit, OnChanges {
 
       this._acordo.imprimirConfissaoDivida(dadosSelecionado).subscribe(
         (res) => {
-          var link = "data:application/pdf;base64, " + res.base64;
-          fetch(link).then(res => res.blob()).then(res => window.open(URL.createObjectURL(res), '_blank'));
+          if (!res.base64 || !res.arquivo) {
+            this._alert.error("Erro ao gerar o arquivo PDF.");
+            return;
+          }
+
+          const base64Data = res.base64;
+          const nomeArquivo = res.arquivo || "ConfissaoDivida";
+
+          const link = `data:application/pdf;base64,${base64Data}`;
+          fetch(link).then((res) => res.blob()).then((blob) => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = nomeArquivo;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          });
+
           this._alert.success(res.msg);
         },
         (error) => {
