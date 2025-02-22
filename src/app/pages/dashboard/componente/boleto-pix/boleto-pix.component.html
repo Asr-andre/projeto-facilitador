@@ -37,28 +37,28 @@
           <td>{{ item.user_login }}</td>
           <td>
             <div class="dropup float-end" ngbDropdown>
-              <a href="javascript: void(0);" 
-                 class="dropdown-toggle arrow-none card-drop" 
-                 ngbDropdownToggle 
-                 data-toggle="dropdown" 
+              <a href="javascript: void(0);"
+                 class="dropdown-toggle arrow-none card-drop"
+                 ngbDropdownToggle
+                 data-toggle="dropdown"
                  aria-expanded="false">
                 <i class="mdi mdi-dots-vertical"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
-                <a href="javascript:void(0);" 
-                   class="dropdown-item" 
+                <a href="javascript:void(0);"
+                   class="dropdown-item"
                    style="padding-left: 10px; padding-right: 10px; padding-top: 2px; padding-bottom: 2px; font-size: 12px;"
                    (click)="executarAcao(item.pixcopiacola)">
-                  <i [class.fas]="true" 
-                     [class.fa-file-pdf]="item.pixcopiacola.startsWith('https')" 
-                     [class.fa-file-excel]="!item.pixcopiacola.startsWith('https')">
+                  <i [class.fas]="true"
+                     [class.fa-external-link-alt]="item.pixcopiacola.startsWith('https')"
+                     [class.fa-copy]="!item.pixcopiacola.startsWith('https')">
                   </i>
                   {{ item.pixcopiacola.startsWith('https') ? 'Abrir link' : 'Copia Pix' }}
                 </a>
               </div>
             </div>
           </td>
-          
+
         </tr>
       </tbody>
       <ng-template #semBoletos>
