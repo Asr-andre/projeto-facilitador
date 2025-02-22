@@ -93,4 +93,20 @@ export class BoletoPixComponent implements OnInit, OnChanges {
         return situacao;
     }
   }
+
+  public executarAcao(pixcopiacola: string): void {
+    if (pixcopiacola.startsWith('https')) {
+      window.open(pixcopiacola, '_blank');
+    } else {
+      this.copiarParaAreaDeTransferencia(pixcopiacola);
+    }
+  }
+
+  private copiarParaAreaDeTransferencia(texto: string): void {
+    navigator.clipboard.writeText(texto).then(() => {
+      this._alert.copiado();
+    }).catch(err => {
+      this._alert.error('Erro ao copiar o código Pix.', err);
+    });
+  }
 }
