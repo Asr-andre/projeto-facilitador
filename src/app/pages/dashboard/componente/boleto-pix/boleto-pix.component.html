@@ -40,25 +40,26 @@
               <a href="javascript: void(0);"
                  class="dropdown-toggle arrow-none card-drop"
                  ngbDropdownToggle
-                 data-toggle="dropdown"
                  aria-expanded="false">
                 <i class="mdi mdi-dots-vertical"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                <a *ngIf="item.pixcopiacola.startsWith('https')"
+                   href="javascript:void(0);"
+                   class="dropdown-item"
+                   style="padding: 2px 10px; font-size: 12px;"
+                   (click)="executarAcao(item.pixcopiacola)">
+                  <i class="fas fa-external-link-alt"></i> Abrir link
+                </a>
                 <a href="javascript:void(0);"
                    class="dropdown-item"
-                   style="padding-left: 10px; padding-right: 10px; padding-top: 2px; padding-bottom: 2px; font-size: 12px;"
-                   (click)="executarAcao(item.pixcopiacola)">
-                  <i [class.fas]="true"
-                     [class.fa-external-link-alt]="item.pixcopiacola.startsWith('https')"
-                     [class.fa-copy]="!item.pixcopiacola.startsWith('https')">
-                  </i>
-                  {{ item.pixcopiacola.startsWith('https') ? 'Abrir link' : 'Copia Pix' }}
+                   style="padding: 2px 10px; font-size: 12px;"
+                   (click)="copiarParaAreaDeTransferencia(item?.pixcopiacola)">
+                  <i class="fas fa-copy"></i> Copiar Pix
                 </a>
               </div>
             </div>
           </td>
-
         </tr>
       </tbody>
       <ng-template #semBoletos>

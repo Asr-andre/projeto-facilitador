@@ -30,6 +30,7 @@ export class ContaBancariaComponent implements OnInit {
   public titulo: string = '';
   public idCadastrado: number = 0;
 
+  //#region Paginação
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
   public dadosFiltrados: any[] = [];
@@ -39,6 +40,17 @@ export class ContaBancariaComponent implements OnInit {
   public qtdRegistrosPorPagina = [10, 25, 50, 100];
   public direcaoOrdenacao: { [key: string]: string } = {};
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<DadosContaBancaria>>;
+  //#endregion
+
+  public mostrarDias = {
+    AposVencimento: false,
+    AntesVencimento: false
+  };
+
+  public quantidadeDias = {
+    AposVencimento: null,
+    AntesVencimento: null
+  };
 
   constructor(
     private _contaBancaria: ContaBancariaService,
@@ -86,8 +98,42 @@ export class ContaBancariaComponent implements OnInit {
       host_api: [dado?.host_api || ''],
       data_cadastro: [dado?.data_cadastro || ''],
       data_alteracao: [dado?.data_alteracao || ''],
-      user_login: [this.login, Validators.required]
+      user_login: [this.login, Validators.required],
+      fator_multa: [dado?.fator_multa || 0],
+      fator_juros: [dado?.fator_juros || 0],
+      envia_sms: [dado?.envia_sms || 'N'],
+      envia_email: [dado?.envia_email || 'N'],
+      envia_whatsapp: [dado?.envia_whatsapp || 'N'],
+      Aviso_Cobranca_Criada: [dado?.Aviso_Cobranca_Criada || 'N'],
+      Aviso_Dia_Vencimento: [dado?.Aviso_Dia_Vencimento || 'N'],
+      Aviso_Cobranca_Recebida: [dado?.Aviso_Cobranca_Recebida || 'N'],
+      Aviso_Linha_Digitavel: [dado?.Aviso_Linha_Digitavel || 'N'],
+      Aviso_Cobranca_Vencida: [dado?.Aviso_Cobranca_Vencida || 'N'],
+      Aviso_Cobranca_Atualizada: [dado?.Aviso_Cobranca_Atualizada || 'N'],
+      Aviso_Dias_Apos_Vencimento: [dado?.Aviso_Dias_Apos_Vencimento || 'N'],
+      Dias_Apos_Vencimento: [dado?.Dias_Apos_Vencimento || 0],
+      Aviso_Dias_Antes_Vencimento: [dado?.Aviso_Dias_Antes_Vencimento || 'N'],
+      Dias_Antes_Vencimento:  [dado?.Dias_Antes_Vencimento || 0],
+      Dias_Cancelar_Registro: [dado?.Dias_Cancelar_Registro || 0],
     });
+  }
+
+  public atualizarMostrarDias(campo: 'Aviso_Dias_Apos_Vencimento' | 'Aviso_Dias_Antes_Vencimento'): void {
+    const aviso = this.contaBancariaForm.get(campo)?.value;
+    if (campo === 'Aviso_Dias_Apos_Vencimento') {
+      this.mostrarDias.AposVencimento = aviso === 'S';
+    } else {
+      this.mostrarDias.AntesVencimento = aviso === 'S';
+    }
+  }
+
+  public atualizarQuantidadeDias(campo: 'Dias_Apos_Vencimento' | 'Dias_Antes_Vencimento'): void {
+    const valor = this.contaBancariaForm.get(campo)?.value;
+    if (campo === 'Dias_Apos_Vencimento') {
+      this.quantidadeDias.AposVencimento = valor;
+    } else {
+      this.quantidadeDias.AntesVencimento = valor;
+    }
   }
 
   public obterContaBancaria(): void {
@@ -228,6 +274,10 @@ export class ContaBancariaComponent implements OnInit {
     }
 
   public fechar() {
+    this.mostrarDias.AntesVencimento = false;
+    this.mostrarDias.AposVencimento = false;
+    this.quantidadeDias.AntesVencimento = null;
+    this.quantidadeDias.AposVencimento = null;
     this.contaBancariaForm.reset();
     this._modal.dismissAll();
   }
