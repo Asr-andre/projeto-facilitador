@@ -26,7 +26,7 @@ export class ContaBancariaComponent implements OnInit {
   public editar: boolean = false;
   public contaBancaria: DadosContaBancaria[] = [];
   public contaSelecionada: DadosContaBancaria;
-  public bancos: Bancos [] = [];
+  public bancos: Bancos[] = [];
   public titulo: string = '';
   public idCadastrado: number = 0;
 
@@ -113,7 +113,7 @@ export class ContaBancariaComponent implements OnInit {
       Aviso_Dias_Apos_Vencimento: [dado?.Aviso_Dias_Apos_Vencimento || 'N'],
       Dias_Apos_Vencimento: [dado?.Dias_Apos_Vencimento || 0],
       Aviso_Dias_Antes_Vencimento: [dado?.Aviso_Dias_Antes_Vencimento || 'N'],
-      Dias_Antes_Vencimento:  [dado?.Dias_Antes_Vencimento || 0],
+      Dias_Antes_Vencimento: [dado?.Dias_Antes_Vencimento || 0],
       Dias_Cancelar_Registro: [dado?.Dias_Cancelar_Registro || 0],
     });
   }
@@ -248,30 +248,30 @@ export class ContaBancariaComponent implements OnInit {
   }
 
   public filtrar(): void {
-      this.dadosFiltrados = Utils.filtrar(this.contaBancaria, this.textoPesquisa);
-      this.totalRegistros = this.dadosFiltrados.length;
-    }
+    this.dadosFiltrados = Utils.filtrar(this.contaBancaria, this.textoPesquisa);
+    this.totalRegistros = this.dadosFiltrados.length;
+  }
 
-    public atualizarQuantidadeExibida() {
-      this.totalRegistrosExibidos = Math.min(this.paginaAtual * this.itensPorPagina, this.totalRegistros);
-    }
+  public atualizarQuantidadeExibida() {
+    this.totalRegistrosExibidos = Math.min(this.paginaAtual * this.itensPorPagina, this.totalRegistros);
+  }
 
-    public ordenar({ column, direction }: SortEvent<DadosContaBancaria>) {
-      this.headers.forEach(header => {
-        if (header.sortable !== column) {
-          header.direction = '';
-        }
-      });
-
-      if (direction === '' || column === '') {
-        this.dadosFiltrados = this.contaBancaria;
-      } else {
-        this.dadosFiltrados = [...this.dadosFiltrados].sort((a, b) => {
-          const res = compararParaOrdenar(a[column], b[column]);
-          return direction === 'asc' ? res : -res;
-        });
+  public ordenar({ column, direction }: SortEvent<DadosContaBancaria>) {
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
       }
+    });
+
+    if (direction === '' || column === '') {
+      this.dadosFiltrados = this.contaBancaria;
+    } else {
+      this.dadosFiltrados = [...this.dadosFiltrados].sort((a, b) => {
+        const res = compararParaOrdenar(a[column], b[column]);
+        return direction === 'asc' ? res : -res;
+      });
     }
+  }
 
   public fechar() {
     this.mostrarDias.AntesVencimento = false;
