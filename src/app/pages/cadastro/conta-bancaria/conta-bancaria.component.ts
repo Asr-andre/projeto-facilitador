@@ -42,16 +42,6 @@ export class ContaBancariaComponent implements OnInit {
   @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<DadosContaBancaria>>;
   //#endregion
 
-  public mostrarDias = {
-    AposVencimento: false,
-    AntesVencimento: false
-  };
-
-  public quantidadeDias = {
-    AposVencimento: null,
-    AntesVencimento: null
-  };
-
   constructor(
     private _contaBancaria: ContaBancariaService,
     private _bancos: BancoService,
@@ -103,24 +93,6 @@ export class ContaBancariaComponent implements OnInit {
       fator_juros: [dado?.fator_juros || 0],
       Dias_Cancelar_Registro: [dado?.Dias_Cancelar_Registro || 0],
     });
-  }
-
-  public atualizarMostrarDias(campo: 'Aviso_Dias_Apos_Vencimento' | 'Aviso_Dias_Antes_Vencimento'): void {
-    const aviso = this.contaBancariaForm.get(campo)?.value;
-    if (campo === 'Aviso_Dias_Apos_Vencimento') {
-      this.mostrarDias.AposVencimento = aviso === 'S';
-    } else {
-      this.mostrarDias.AntesVencimento = aviso === 'S';
-    }
-  }
-
-  public atualizarQuantidadeDias(campo: 'Dias_Apos_Vencimento' | 'Dias_Antes_Vencimento'): void {
-    const valor = this.contaBancariaForm.get(campo)?.value;
-    if (campo === 'Dias_Apos_Vencimento') {
-      this.quantidadeDias.AposVencimento = valor;
-    } else {
-      this.quantidadeDias.AntesVencimento = valor;
-    }
   }
 
   public obterContaBancaria(): void {
@@ -261,10 +233,6 @@ export class ContaBancariaComponent implements OnInit {
   }
 
   public fechar() {
-    this.mostrarDias.AntesVencimento = false;
-    this.mostrarDias.AposVencimento = false;
-    this.quantidadeDias.AntesVencimento = null;
-    this.quantidadeDias.AposVencimento = null;
     this.contaBancariaForm.reset();
     this._modal.dismissAll();
   }
