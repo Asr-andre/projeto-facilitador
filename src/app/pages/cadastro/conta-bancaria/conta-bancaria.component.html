@@ -133,20 +133,12 @@
                 <ng-template [ngTemplateOutlet]="tab1"></ng-template>
               </ng-template>
             </li>
-            <li [ngbNavItem]="2" *ngIf="editar">
-              <a ngbNavLink class="nav-link custom-nav-link">
-                <span><img src="assets/images/asaas.png" style="width: 16px; height: 16px;"> Api Asaas</span>
-              </a>
-              <ng-template ngbNavContent>
-                <ng-template [ngTemplateOutlet]="tab2"></ng-template>
-              </ng-template>
-            </li>
             <li [ngbNavItem]="3" *ngIf="editar">
               <a ngbNavLink class="nav-link custom-nav-link">
                 <span><i class="fas fa-file-invoice-dollar"></i> Api Boletos</span>
               </a>
               <ng-template ngbNavContent>
-                <ng-template [ngTemplateOutlet]="tab3"></ng-template>
+                <ng-template [ngTemplateOutlet]="tab2"></ng-template>
               </ng-template>
             </li>
             <li [ngbNavItem]="4" *ngIf="editar">
@@ -154,7 +146,7 @@
                 <span><img src="assets/images/pix.svg" style="width: 16px; height: 16px;"> Geração Pix</span>
               </a>
               <ng-template ngbNavContent>
-                <ng-template [ngTemplateOutlet]="tab4"></ng-template>
+                <ng-template [ngTemplateOutlet]="tab3"></ng-template>
               </ng-template>
             </li>
           </ul>
@@ -215,6 +207,21 @@
                   [ngClass]="{'is-invalid': contaBancariaForm.get('codigo_cedente').invalid && contaBancariaForm.get('codigo_cedente').touched}">
               </div>
 
+              <div class="col-md-4" *ngIf="editar">
+                <label for="fator_multa" class="form-label">Multa</label>
+                <input type="number" id="fator_multa" class="form-control form-control-sm mb-1" formControlName="fator_multa" appVerificarValorNegativo>
+              </div>
+
+              <div class="col-md-4" *ngIf="editar">
+                <label for="fator_juros" class="form-label">Juros</label>
+                <input type="number" id="fator_juros" class="form-control form-control-sm mb-1" formControlName="fator_juros" appVerificarValorNegativo>
+              </div>
+
+              <div class="col-md-4" *ngIf="editar">
+                <label for="Dias_Cancelar_Registro" class="form-label">Dias após o vencimento para cancelamento do registro:</label>
+                <input type="number" class="form-control form-control-sm mb-1" formControlName="Dias_Cancelar_Registro" appVerificarValorNegativo>
+              </div>
+
               <div class="col-md-12">
                 <label for="local_pgto" class="form-label">Local de Pagamento</label>
                 <input type="text" id="local_pgto" class="form-control form-control-sm mb-1"
@@ -230,123 +237,6 @@
           </ng-template>
 
           <ng-template #tab2>
-            <div class="row">
-              <div class="col-md-2">
-                <label for="fator_multa" class="form-label">Multa</label>
-                <input type="number" id="fator_multa" class="form-control form-control-sm mb-1" formControlName="fator_multa" appVerificarValorNegativo>
-              </div>
-
-              <div class="col-md-2">
-                <label for="fator_juros" class="form-label">Juros</label>
-                <input type="number" id="fator_juros" class="form-control form-control-sm mb-1" formControlName="fator_juros" appVerificarValorNegativo>
-              </div>
-
-              <div class="col-md-2">
-                <label for="envia_sms" class="form-label">Enviar Sms</label>
-                <select class="form-control form-control-sm mb-1"  formControlName="envia_sms">
-                  <option value="N">Não</option>
-                  <option value="S">Sim</option>
-                </select>
-              </div>
-
-              <div class="col-md-3">
-                <label for="envia_sms" class="form-label">Enviar Email</label>
-                <select class="form-control form-control-sm mb-1"  formControlName="envia_email">
-                  <option value="N">Não</option>
-                  <option value="S">Sim</option>
-                </select>
-              </div>
-
-              <div class="col-md-3">
-                <label for="envia_whatsapp" class="form-label">Enviar WhatsApp</label>
-                <select class="form-control form-control-sm mb-1"  formControlName="envia_whatsapp">
-                  <option value="N">Não</option>
-                  <option value="S">Sim</option>
-                </select>
-              </div>
-
-              <div class="col-md-3">
-                <label for="Aviso_Cobranca_Criada" class="form-label">Aviso de cobrança criada</label>
-                <select class="form-control form-control-sm mb-1" formControlName="Aviso_Cobranca_Criada">
-                  <option value="N">Não</option>
-                  <option value="S">Sim</option>
-                </select>
-              </div>
-
-              <div class="col-md-3">
-                <label for="Aviso_Dia_Vencimento" class="form-label">Aviso no dia do vencimento</label>
-                <select class="form-control form-control-sm mb-1" formControlName="Aviso_Dia_Vencimento">
-                  <option value="N">Não</option>
-                  <option value="S">Sim</option>
-                </select>
-              </div>
-
-              <div class="col-md-3">
-                <label for="Aviso_Cobranca_Recebida" class="form-label">Aviso de cobrança recebida</label>
-                <select class="form-control form-control-sm mb-1" formControlName="Aviso_Cobranca_Recebida">
-                  <option value="N">Não</option>
-                  <option value="S">Sim</option>
-                </select>
-              </div>
-
-              <div class="col-md-3">
-                <label for="Aviso_Linha_Digitavel" class="form-label">Aviso Linha digitável no dia do vencimento</label>
-                <select class="form-control form-control-sm mb-1" formControlName="Aviso_Linha_Digitavel">
-                  <option value="N">Não</option>
-                  <option value="S">Sim</option>
-                </select>
-              </div>
-
-              <div class="col-md-3">
-                <label for="Aviso_Cobranca_Vencida" class="form-label">Aviso de cobrança vencida</label>
-                <select class="form-control form-control-sm mb-1" formControlName="Aviso_Cobranca_Vencida">
-                  <option value="N">Não</option>
-                  <option value="S">Sim</option>
-                </select>
-              </div>
-
-              <div class="col-md-3">
-                <label for="Aviso_Cobranca_Atualizada" class="form-label">Aviso de cobrança atualizada</label>
-                <select class="form-control form-control-sm mb-1" formControlName="Aviso_Cobranca_Atualizada">
-                  <option value="N">Não</option>
-                  <option value="S">Sim</option>
-                </select>
-              </div>
-
-              <div class="col-md-3">
-                <label for="Aviso_Dias_Apos_Vencimento" class="form-label">Aviso a cada <span style="color: #4a90e2;"><strong>{{ quantidadeDias.AposVencimento || "N" }}</strong></span> dias após vencimento</label>
-                <select class="form-control form-control-sm mb-1" formControlName="Aviso_Dias_Apos_Vencimento" (change)="atualizarMostrarDias('Aviso_Dias_Apos_Vencimento')">
-                  <option value="N">Não</option>
-                  <option value="S">Sim</option>
-                </select>
-              </div>
-
-              <div class="col-md-3" *ngIf="mostrarDias.AposVencimento">
-                <label for="Dias_Apos_Vencimento" class="form-label">Qtde dias após vencimento</label>
-                <input type="number" class="form-control form-control-sm mb-1" formControlName="Dias_Apos_Vencimento" (input)="atualizarQuantidadeDias('Dias_Apos_Vencimento')" appVerificarValorNegativo>
-              </div>
-
-              <div class="col-md-3">
-                <label for="Aviso_Dias_Antes_Vencimento" class="form-label">Aviso <span style="color: #4a90e2;"><strong>{{ quantidadeDias.AntesVencimento || "N" }}</strong></span> dias antes do vencimento</label>
-                <select class="form-control form-control-sm mb-1" formControlName="Aviso_Dias_Antes_Vencimento" (change)="atualizarMostrarDias('Aviso_Dias_Antes_Vencimento')">
-                  <option value="N">Não</option>
-                  <option value="S">Sim</option>
-                </select>
-              </div>
-
-              <div class="col-md-3" *ngIf="mostrarDias.AntesVencimento">
-                <label for="Dias_Antes_Vencimento" class="form-label">Qtde dias antes do vencimento</label>
-                <input type="number" class="form-control form-control-sm mb-1" formControlName="Dias_Antes_Vencimento" (input)="atualizarQuantidadeDias('Dias_Antes_Vencimento')" appVerificarValorNegativo>
-              </div>
-
-              <div class="col-md-4">
-                <label for="Dias_Cancelar_Registro" class="form-label">Dias após o vencimento para cancelamento do registro:</label>
-                <input type="number" class="form-control form-control-sm mb-1" formControlName="Dias_Cancelar_Registro" appVerificarValorNegativo>
-              </div>
-            </div>
-          </ng-template>
-
-          <ng-template #tab3>
             <div class="row">
               <div class="col-md-6">
                 <label for="client_id" class="form-label">Client ID</label>
@@ -385,7 +275,7 @@
             </div>
           </ng-template>
 
-          <ng-template #tab4>
+          <ng-template #tab3>
             <div class="row">
               <div class="col-md-6">
                 <label for="host_api" class="form-label">Host API</label>
