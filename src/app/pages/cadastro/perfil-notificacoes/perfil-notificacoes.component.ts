@@ -12,28 +12,28 @@ import { FuncoesService } from 'src/app/core/services/funcoes.service';
   templateUrl: './perfil-notificacoes.component.html',
   styleUrl: './perfil-notificacoes.component.scss'
 })
-export class PerfilNotificacoesComponent implements OnInit{
+export class PerfilNotificacoesComponent implements OnInit {
   public login = this._auth.getLogin();
   public sigla: string = "ASAAS"
   public loading: boolean = false;
-  public perfil: Dados [] = [];
+  public perfil: Dados[] = [];
 
-    public paginaAtual: number = 1;
-    public itensPorPagina: number = 10;
-    public dadosFiltrados: Dados[] = [];
-    public textoPesquisa: string = '';
-    public totalRegistros: number = 0;
-    public totalRegistrosExibidos: number = 0;
-    public qtdRegistrosPorPagina = [10, 25, 50, 100];
-    public direcaoOrdenacao: { [key: string]: string } = {};
-    @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<Dados>>;
+  public paginaAtual: number = 1;
+  public itensPorPagina: number = 10;
+  public dadosFiltrados: Dados[] = [];
+  public textoPesquisa: string = '';
+  public totalRegistros: number = 0;
+  public totalRegistrosExibidos: number = 0;
+  public qtdRegistrosPorPagina = [10, 25, 50, 100];
+  public direcaoOrdenacao: { [key: string]: string } = {};
+  @ViewChildren(OrdenarPeloHeaderTabela) headers: QueryList<OrdenarPeloHeaderTabela<Dados>>;
 
   constructor(
     private _perfilNotificacoes: PerfilNotificacoesService,
     private _auth: AuthenticationService,
     private _alert: AlertService,
     private _funcoes: FuncoesService
-  ) {  }
+  ) { }
 
   ngOnInit(): void {
     this.obterPerfilNotificacoes();
@@ -60,11 +60,11 @@ export class PerfilNotificacoesComponent implements OnInit{
   }
 
   public filtrar(): void {
-      this.dadosFiltrados = Utils.filtrar(this.perfil, this.textoPesquisa);
-      this.totalRegistros = this.dadosFiltrados.length;
-    }
+    this.dadosFiltrados = Utils.filtrar(this.perfil, this.textoPesquisa);
+    this.totalRegistros = this.dadosFiltrados.length;
+  }
 
-    public atualizarQuantidadeExibida() {
-      this.totalRegistrosExibidos = Math.min(this.paginaAtual * this.itensPorPagina, this.totalRegistros);
-    }
+  public atualizarQuantidadeExibida() {
+    this.totalRegistrosExibidos = Math.min(this.paginaAtual * this.itensPorPagina, this.totalRegistros);
+  }
 }
