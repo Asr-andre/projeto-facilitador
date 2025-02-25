@@ -1,1 +1,175 @@
-<p>perfil-notificacoes works!</p>
+<div class="loading-overlay-pagina" *ngIf="loading">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card-body" style="padding-bottom: 8px;">
+        <div class="d-flex">
+          <div class="flex-1 overflow-hidden">
+            <div class="card">
+
+              <div class="card-header pt-2 pb-2">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5 class="mb-0"><i class="mdi mdi-cog"></i> Configuração de Notificações </h5>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;" >
+                      <i class="mdi mdi-plus"></i>
+                      Cadastrar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center" style="font-size: 11px;">
+                  <div style="font-size: 11px;">
+                      <select id="itensPorPagina"
+                              [(ngModel)]="itensPorPagina" (change)="atualizarQuantidadeExibida()"
+                              style="border-radius: 0.25rem; width: 40px; height: 15px; font-size: 10px;">
+                          <option [value]="item" *ngFor="let item of qtdRegistrosPorPagina" style="font-size: 10px;" >{{ item }}</option>
+                      </select>
+                      <label for="itensPorPagina" style="padding-left: 2px;"> Resultados por página</label>
+                  </div>
+                  <div style="font-size: 10px;">
+                      <div class="dataTables_filter text-md-end">
+                          <label class="d-inline-flex align-items-center">
+                              <input type="text" class="form-control form-control-sm ms-2" style="margin-left: 2px;" placeholder="Pesquisar" [(ngModel)]="textoPesquisa" (input)="filtrar()" />
+                          </label>
+                      </div>
+                  </div>
+              </div>
+
+                <div class="table-responsive">
+                  <table class="table table-sm table-hover font-size-12 tabelaOrdenada" style="margin-bottom: 8px;">
+                    <thead class="tabela-custom">
+                      <tr>
+                        <th>Id</th>
+                        <th>Notificações de pagamento recebido</th>
+                        <th>Notificações de pagamento vencido</th>
+                        <th>Notificações de aviso de vencimento</th>
+                        <th>Segunda notificação de aviso de vencimento</th>
+                        <th>Notificações de pagamento criado</th>
+                        <th>Notificações de pagamento atualizado</th>
+                        <th>Notificações de envio de linha digitável</th>
+                        <th>Segunda notificação de pagamento vencido</th>
+                        <th class="text-end">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="dadosFiltrados.length > 0; else semDado">
+                      <tr
+                        *ngFor="let dados of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
+                        <td>{{ dados.id }}</td>
+                        <td>{{ dados.enabled_payment_received | simNao }}</td>
+                        <td>{{ dados.enabled_payment_overdue | simNao }}</td>
+                        <td>{{ dados.enabled_payment_duedate_warning | simNao }}</td>
+                        <td>{{ dados.enabled_payment_duedate_warning_2 | simNao }}</td>
+                        <td>{{ dados.enabled_payment_created | simNao }}</td>
+                        <td>{{ dados.enabled_payment_updated | simNao }}</td>
+                        <td>{{ dados.enabled_send_linha_digitavel | simNao }}</td>
+                        <td>{{ dados.enabled_payment_overdue_2 | simNao }}</td>
+                        <td  class="text-end">
+                          <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18" ></i></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <ng-template #semDado>
+                    <tbody>
+                      <tr>
+                        <td colspan="9" class="text-center">Nenhum dado para exibir.</td>
+                      </tr>
+                    </tbody>
+                  </ng-template>
+                </div>
+                <div class="d-flex justify-content-between align-items-center text-small">
+                  <div>
+                    Mostrando de {{ (paginaAtual - 1) * itensPorPagina + 1 }} até
+                    {{ totalRegistrosExibidos }} de {{ totalRegistros }} registros
+                  </div>
+                  <pagination-controls (pageChange)="paginaAtual = $event"
+                                        previousLabel="Anterior"
+                                        nextLabel="Próximo"
+                                        [maxSize]="5"
+                                        [autoHide]="false"
+                                        [responsive]="true">
+                  </pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--
+
+  <ng-template #modalGenerico let-modal>
+    <div class="loading-overlay-card" *ngIf="loadingMin">
+      <div class="spinner-border text-primary m-1" role="status"></div>
+    </div>
+
+    <div class="modal-header modal-header-custom" [ngStyle]="{'background': editar ? '#5664d2' : '#1cbb8c'}">
+      <h6 class="modal-title" style="color: #ffffff"><i class="fas fa-user-plus"></i> {{ editar ? 'Editar Usúario' : 'Cadastrar Usúario' }}</h6>
+      <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+      (click)="fechar()"></button>
+    </div>
+
+    <div class="modal-body modal-padding">
+      <form [formGroup]="formUsuario">
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label for="nome" class="form-label">Nome</label>
+            <input class="form-control form-control-sm mb-1" formControlName="nome" type="text" placeholder="Nome" appMaiuscula
+              [ngClass]="{'is-invalid': formUsuario.get('nome').invalid && formUsuario.get('nome').touched}">
+          </div>
+          <div class="col-md-3 form-group">
+            <label for="login" class="form-label">Login</label>
+            <input class="form-control form-control-sm mb-1" formControlName="login" type="text" placeholder="Login" appMaiuscula
+              [ngClass]="{'is-invalid': formUsuario.get('login').invalid && formUsuario.get('login').touched}">
+          </div>
+          <div class="col-md-3 form-group">
+            <label for="senha" class="form-label">Senha</label>
+            <input class="form-control form-control-sm mb-1" id="senha" formControlName="senha" type="password" placeholder="Senha"
+              [ngClass]="{'is-invalid': formUsuario.get('senha').invalid && formUsuario.get('senha').touched}">
+              <i class="fas fa-eye-slash" id="iconeOlhoIcon" (click)="mostrarSenha('senha', 'iconeOlhoIcon')" style="padding-right: 5px;"></i>
+          </div>
+          <div class="col-md-6 form-group">
+            <label for="cpf" class="form-label">Cpf</label>
+            <input class="form-control form-control-sm mb-1" formControlName="cpf" type="text" placeholder="CPF"
+              mask="000.000.000-00">
+          </div>
+          <div class="col-md-6 form-group">
+            <label for="email" class="form-label">Email</label>
+            <input class="form-control form-control-sm mb-1" formControlName="email" type="email" placeholder="Email" appMinuscula
+              [ngClass]="{'is-invalid': formUsuario.get('email').invalid && formUsuario.get('email').touched}">
+          </div>
+          <div class="col-md-4 form-group">
+            <label for="fone" class="form-label">Fone</label>
+            <input class="form-control form-control-sm mb-3" formControlName="fone" type="text" placeholder="Telefone"
+              mask="(00) 0000-0000" required>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end" style="padding-top: 10px;">
+          <button type="submit" class="btn btn-sm me-1" [ngClass]="{
+                  'btn-primary': editar,
+                  'btn-success': !editar
+                }" (click)="controleBotao()">
+                <i class="fas fa-save"></i> {{ editar ? 'Atualizar' : 'Salvar' }}
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+  -->
+

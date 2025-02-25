@@ -4,7 +4,10 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'simNao'
 })
 export class SimNaoPipe implements PipeTransform {
-  transform(value: string): string {
-    return value === 'S' ? 'Sim' : 'Não';
+  transform(value: string | boolean | null | undefined): string {
+    if (value === 'S' || value === true) {
+      return 'Sim';
+    }
+    return 'Não';
   }
 }
