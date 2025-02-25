@@ -14,6 +14,7 @@ import { EmailPerfilComponent } from './email-perfil/email-perfil.component';
 import { AuthGuard } from 'src/app/core/config/auth.guard';
 import { ClientesComponent } from './clientes/clientes.component';
 import { ContaBancariaComponent } from './conta-bancaria/conta-bancaria.component';
+import { PerfilNotificacoesComponent } from './perfil-notificacoes/perfil-notificacoes.component';
 
 
 const routes: Routes = [
@@ -55,6 +56,9 @@ const routes: Routes = [
     },
     {
       path: 'conta-bancaria', component: ContaBancariaComponent, canActivate: [AuthGuard]
+    },
+    {
+      path: 'perfil-notificacoes', component: PerfilNotificacoesComponent, canActivate: [AuthGuard]
     }
 ];
 

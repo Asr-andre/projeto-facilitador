@@ -86,12 +86,18 @@ import { MenuItem } from "./menu.model";
         },
         {
           id: 9,
+          label: "MENUITEMS.CADASTRO.LIST.PERFIL-NOTIFICACOES",
+          link: "/cadastro/perfil-notificacoes",
+          parentId: 5,
+        },
+        {
+          id: 10,
           label: "MENUITEMS.CADASTRO.LIST.SMS",
           link: "/cadastro/sms",
           parentId: 5,
         },
         {
-          id: 10,
+          id: 11,
           label: "MENUITEMS.CADASTRO.LIST.SMS-WHATSAPP",
           link: "/cadastro/sms-whatsapp",
           parentId: 5,

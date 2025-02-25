@@ -30,6 +30,7 @@ import { DiretivasModule } from "src/app/core/directive/directive.module";
 import { PipesModule } from "src/app/core/pipe/pipe.module";
 import { ClientesModule } from "./clientes/clientes.module";
 import { ContaBancariaComponent } from "./conta-bancaria/conta-bancaria.component";
+import { PerfilNotificacoesComponent } from "./perfil-notificacoes/perfil-notificacoes.component";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ContaBancariaComponent } from "./conta-bancaria/conta-bancaria.componen
     ClienteComponent,
     IndiceComponent,
     EmailPerfilComponent,
-    ContaBancariaComponent
+    ContaBancariaComponent,
+    PerfilNotificacoesComponent
   ],
   imports: [
     DiretivasModule,
