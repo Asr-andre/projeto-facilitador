@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
+import { ClipboardService } from './copia.para.transferencia.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,9 @@ import Swal from 'sweetalert2';
 export class AlertService {
   private timerInterval: any;
 
-  constructor() {}
+  constructor(
+    private _copia: ClipboardService
+  ) { }
 
   private swalWithBootstrapButtons = Swal.mixin({
     customClass: {
@@ -231,39 +234,36 @@ export class AlertService {
     `).join('');
 
     this.swalWithBootstrapButtons.fire({
-        title: `<h3 class="fw-bold">${title}</h3>`,
-        html: `<p class="fs-5 mb-3">${message}</p>${linksHtml}`,
-        width: '400px',
-        showConfirmButton: true,
-        confirmButtonText: 'Fechar',
-        customClass: {
-            popup: 'p-2',
-            confirmButton: 'btn btn-secondary btn-sm'
-        },
-        didOpen: () => {
-            // Adiciona evento para abrir o link ao clicar na div
-            document.querySelectorAll('.link-container').forEach((container: any) => {
-                container.addEventListener('click', () => {
-                    const url = container.getAttribute('data-url');
-                    window.open(url, '_blank');
-                });
-            });
+      title: `<h3 class="fw-bold">${title}</h3>`,
+      html: `<p class="fs-5 mb-3">${message}</p>${linksHtml}`,
+      width: '400px',
+      showConfirmButton: true,
+      confirmButtonText: 'Fechar',
+      customClass: {
+        popup: 'p-2',
+        confirmButton: 'btn btn-secondary btn-sm'
+      },
+      didOpen: () => {
+        // Adiciona evento para abrir o link ao clicar na div
+        document.querySelectorAll('.link-container').forEach((container: any) => {
+          container.addEventListener('click', () => {
+            const url = container.getAttribute('data-url');
+            window.open(url, '_blank');
+          });
+        });
 
-            // Adiciona evento para copiar sem fechar o alert
-            document.querySelectorAll('.copiar-link').forEach((icon: any) => {
-                icon.addEventListener('click', (event: Event) => {
-                    event.stopPropagation(); // Evita que o clique ative o link principal
-                    const url = icon.getAttribute('data-copy');
-                    navigator.clipboard.writeText(url).then(() => {
-                        alert('Link copiado para a área de transferência!');
-                    }).catch(() => {
-                      alert('Algo deu errado!');
-                    });
-                });
-            });
-        }
+        // Adiciona evento para copiar sem fechar o alert
+        document.querySelectorAll('.copiar-link').forEach((icon: any) => {
+          icon.addEventListener('click', (event: Event) => {
+            event.stopPropagation(); // Evita que o clique ative o link principal
+            const url = icon.getAttribute('data-copy');
+            const feedback = icon.nextElementSibling as HTMLElement;
+
+            // Chamar o serviço para copiar
+            this._copia.copyToClipboard(url!)
+          });
+        });
+      }
     });
-}
-
-
+  }
 }
