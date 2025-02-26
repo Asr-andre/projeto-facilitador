@@ -14,10 +14,10 @@
               <div class="card-header pt-2 pb-2">
                 <div class="row">
                   <div class="col-md-6">
-                    <h5 class="mb-0"><i class="mdi mdi-cog"></i> Configuração de Notificações </h5>
+                    <h5 class="mb-0"><i class="mdi mdi-bell"></i> Perfil de Notificações </h5>
                   </div>
                   <div class="col-md-6 text-end">
-                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;" (click)="cadastrar()">
+                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;" (click)="abrirModalCadastro(modalGenerico)">
                       <i class="mdi mdi-plus"></i>
                       Cadastrar
                     </button>
@@ -107,3 +107,41 @@
     </div>
   </div>
 </div>
+
+<ng-template #modalGenerico let-modal>
+  <div class="loading-overlay-card" *ngIf="loadingMin">
+    <div class="spinner-border text-primary m-1" role="status"></div>
+  </div>
+
+  <div class="modal-header modal-header-custom" style="background: #1cbb8c">
+    <h6 class="modal-title" style="color: #ffffff"><i class="mdi mdi-bell"></i> Cadastrar Perfil de Notificaçoes</h6>
+    <button type="button" class="btn-close btn-close-white btn-close-small" aria-label="Close"
+    (click)="fechar()"></button>
+  </div>
+
+  <div class="modal-body modal-padding">
+    <form [formGroup]="formPerfilNotificacoes">
+      <div class="row">
+        <div class="col-md-4 form-group">
+          <label for="nome" class="form-label">Sigla</label>
+          <input class="form-control form-control-sm mb-1" formControlName="nome" type="text" placeholder="Sigla" appMaiuscula
+            [ngClass]="{'is-invalid': formPerfilNotificacoes.get('nome').invalid && formPerfilNotificacoes.get('nome').touched}">
+        </div>
+        <div class="col-md-8 form-group">
+          <label for="login" class="form-label">Descrição</label>
+          <input class="form-control form-control-sm mb-1" formControlName="login" type="text" placeholder="Descrição" appMaiuscula
+            [ngClass]="{'is-invalid': formPerfilNotificacoes.get('login').invalid && formPerfilNotificacoes.get('login').touched}">
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end" style="padding-top: 10px;">
+        <button type="submit" class="btn btn-success btn-sm me-1">
+              <i class="fas fa-save"></i> Salvar
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

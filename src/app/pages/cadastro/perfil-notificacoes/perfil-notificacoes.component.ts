@@ -1,5 +1,7 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, TemplateRef, ViewChildren } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OrdenarPeloHeaderTabela } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
 import { Dados } from 'src/app/core/models/cadastro/perfil.notificacao.model';
@@ -16,9 +18,10 @@ import { FuncoesService } from 'src/app/core/services/funcoes.service';
 export class PerfilNotificacoesComponent implements OnInit {
   public login = this._auth.getLogin();
   public sigla: string = "ASAAS"
-  public loading: boolean = false;
+  public loading: boolean =false;
+  public loadingMin: boolean = false;
   public perfil: Dados[] = [];
-
+  public formPerfilNotificacoes: FormGroup;
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
   public dadosFiltrados: Dados[] = [];
@@ -31,6 +34,8 @@ export class PerfilNotificacoesComponent implements OnInit {
 
   constructor(
     private _perfilNotificacoes: PerfilNotificacoesService,
+    private _fb: FormBuilder,
+    private _modal: NgbModal,
     private _auth: AuthenticationService,
     private _alert: AlertService,
     private _funcoes: FuncoesService,
@@ -70,11 +75,17 @@ export class PerfilNotificacoesComponent implements OnInit {
     this.totalRegistrosExibidos = Math.min(this.paginaAtual * this.itensPorPagina, this.totalRegistros);
   }
 
-  public cadastrar() {
-    this._route.navigate(['/cadastro/perfil-notificacoes/cadastrar']);
+  public abrirModalCadastro(content: TemplateRef<any>): void {
+
+    this._modal.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   public editar() {
     this._route.navigate(['/cadastro/perfil-notificacoes/editar']);
+  }
+
+  public fechar() {
+
+    this._modal.dismissAll();
   }
 }

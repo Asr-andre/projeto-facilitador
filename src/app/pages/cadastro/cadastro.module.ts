@@ -30,7 +30,6 @@ import { PipesModule } from "src/app/core/pipe/pipe.module";
 import { ClientesModule } from "./clientes/clientes.module";
 import { ContaBancariaComponent } from "./conta-bancaria/conta-bancaria.component";
 import { PerfilNotificacoesComponent } from "./perfil-notificacoes/perfil-notificacoes.component";
-import { CadastrarNComponent } from "./perfil-notificacoes/cadastrar/cadastrar.component";
 
 @NgModule({
   declarations: [
@@ -46,8 +45,7 @@ import { CadastrarNComponent } from "./perfil-notificacoes/cadastrar/cadastrar.c
     IndiceComponent,
     EmailPerfilComponent,
     ContaBancariaComponent,
-    PerfilNotificacoesComponent,
-    CadastrarNComponent
+    PerfilNotificacoesComponent
   ],
   imports: [
     DiretivasModule,
