@@ -49,14 +49,16 @@
                     <thead class="tabela-custom">
                       <tr>
                         <th>Id</th>
-                        <th>Notificações de pagamento recebido</th>
-                        <th>Notificações de pagamento vencido</th>
-                        <th>Notificações de aviso de vencimento</th>
-                        <th>Segunda notificação de aviso de vencimento</th>
-                        <th>Notificações de pagamento criado</th>
-                        <th>Notificações de pagamento atualizado</th>
+                        <th>Sigla</th>
+                        <th>Descrição</th>
+                        <th>Aviso de cobrança criado</th>
+                        <th>Avisar alteração de valor ou vcto</th>
+                        <th>Aviso no dia do vencimento</th>
+                        <th>Enviar Linha digitavel no dia do vencimento</th>
+                        <th>Aviso de cobrança vencida</th>
+                        <th>Reenviar cobrança a cada X dias</th>
                         <th>Notificações de envio de linha digitável</th>
-                        <th>Segunda notificação de pagamento vencido</th>
+                        <th>Aviso de cobrança rebedida (Pagamento realizado)</th>
                         <th class="text-end">Ações</th>
                       </tr>
                     </thead>
@@ -64,14 +66,16 @@
                       <tr
                         *ngFor="let dados of dadosFiltrados | paginate: { itemsPerPage: itensPorPagina, currentPage: paginaAtual }">
                         <td>{{ dados.id }}</td>
-                        <td>{{ dados.enabled_payment_received | simNao }}</td>
-                        <td>{{ dados.enabled_payment_overdue | simNao }}</td>
-                        <td>{{ dados.enabled_payment_duedate_warning | simNao }}</td>
-                        <td>{{ dados.enabled_payment_duedate_warning_2 | simNao }}</td>
+                        <td>{{ dados.sigla }}</td>
+                        <td>{{ dados.descricao }}</td>
                         <td>{{ dados.enabled_payment_created | simNao }}</td>
                         <td>{{ dados.enabled_payment_updated | simNao }}</td>
+                        <td>{{ dados.enabled_payment_duedate_warning | simNao }}</td>
+                        <td>{{ dados.enabled_payment_duedate_warning_2 | simNao }}</td>
                         <td>{{ dados.enabled_send_linha_digitavel | simNao }}</td>
+                        <td>{{ dados.enabled_payment_overdue | simNao }}</td>
                         <td>{{ dados.enabled_payment_overdue_2 | simNao }}</td>
+                        <td>{{ dados.enabled_payment_received | simNao }}</td>
                         <td  class="text-end">
                           <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18" (click)="editar()"></i></a>
                         </td>

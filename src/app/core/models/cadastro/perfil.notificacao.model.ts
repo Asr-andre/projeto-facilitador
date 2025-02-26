@@ -13,6 +13,7 @@ export class RetornoNotificacao {
 export class Dados {
   id: number;
   sigla: string;
+  descricao: string;
   enabled_payment_received: boolean;
   emailenabledprovider_payment_received: boolean;
   smsenabledprovider_payment_received: boolean;
