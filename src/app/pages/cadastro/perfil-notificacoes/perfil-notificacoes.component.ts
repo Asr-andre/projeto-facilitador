@@ -18,11 +18,11 @@ import { FuncoesService } from 'src/app/core/services/funcoes.service';
 })
 export class PerfilNotificacoesComponent implements OnInit {
   public login = this._auth.getLogin();
-  public sigla: string = "ASAAS"
-  public loading: boolean =false;
+  public loading: boolean = false;
   public loadingMin: boolean = false;
   public perfil: Dados[] = [];
   public formPerfilNotificacoes: FormGroup;
+
   public paginaAtual: number = 1;
   public itensPorPagina: number = 10;
   public dadosFiltrados: Dados[] = [];

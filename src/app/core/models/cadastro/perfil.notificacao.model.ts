@@ -10,9 +10,9 @@ export class RetornoNotificacao {
 }
 
 export class Dados {
-  id: number;
+  id?: number;
   sigla: string;
-  descricao: string;
+  descricao?: string;
   enabled_payment_received: boolean;
   emailenabledprovider_payment_received: boolean;
   smsenabledprovider_payment_received: boolean;
@@ -76,5 +76,10 @@ export class Dados {
 export class CadastrarModel {
   siglas: string;
   descricao: string;
+  user_login: string
+}
+
+export class EditarModel {
+  sigla: string;
   user_login: string
 }
