@@ -1,7 +1,8 @@
 import { Component, OnInit, QueryList, TemplateRef, ViewChildren } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { finalize } from 'rxjs';
 import { OrdenarPeloHeaderTabela } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
 import { Dados } from 'src/app/core/models/cadastro/perfil.notificacao.model';
@@ -44,6 +45,15 @@ export class PerfilNotificacoesComponent implements OnInit {
 
   ngOnInit(): void {
     this.obterPerfilNotificacoes();
+    this.inicializarFom();
+  }
+
+  public inicializarFom() {
+    this.formPerfilNotificacoes = this._fb.group({
+      sigla: ["", Validators.required],
+      descricao: ["", Validators.required],
+      user_login: [this.login]
+    });
   }
 
   public obterPerfilNotificacoes() {
@@ -76,8 +86,32 @@ export class PerfilNotificacoesComponent implements OnInit {
   }
 
   public abrirModalCadastro(content: TemplateRef<any>): void {
-
+    this.inicializarFom();
     this._modal.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
+  public cadastrarPerfilNotificacao(): void {
+    if (this.formPerfilNotificacoes.invalid) {
+      this._funcoes.camposInvalidos(this.formPerfilNotificacoes);
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
+    this.loadingMin = true;
+    this._perfilNotificacoes.cadastrarPerfilNotificacao(this.formPerfilNotificacoes.value).pipe(finalize(() => { this.loadingMin = false; })).subscribe({
+      next: (res) => {
+        if (res.success === 'true') {
+          this.fechar();
+          this.obterPerfilNotificacoes();
+          this._alert.success(res.msg);
+        } else {
+          this._alert.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this._alert.error('Erro:', err);
+      }
+    });
   }
 
   public editar() {
@@ -85,7 +119,7 @@ export class PerfilNotificacoesComponent implements OnInit {
   }
 
   public fechar() {
-
+    this.formPerfilNotificacoes.reset();
     this._modal.dismissAll();
   }
 }

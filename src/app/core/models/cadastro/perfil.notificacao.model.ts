@@ -73,3 +73,9 @@ export class Dados {
   whatsappenabledcustomer_payment_overdue_2: boolean;
   scheduleoffset_payment_overdue_2: number;
 }
+
+export class CadastrarModel {
+  siglas: string;
+  descricao: string;
+  user_login: string
+}

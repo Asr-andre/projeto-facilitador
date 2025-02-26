@@ -2,7 +2,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 @Directive({
-  selector: '[appMaiuscula], [appMinuscula]'
+  selector: '[appMaiuscula], [appMinuscula], [appUpcase]'
 })
 export class ConverterTextoDirective {
 
@@ -14,11 +14,14 @@ export class ConverterTextoDirective {
     if (input && typeof input === 'string') {
       const novoValorMaiuscula = input.replace(/\b\w/g, (letra: string) => letra.toUpperCase());
       const novoValorMinuscula = input.toLowerCase();
+      const novoValorMaiusculo = input.toUpperCase();
 
       if (this.el.nativeElement.hasAttribute('appMaiuscula')) {
         this.control.control?.setValue(novoValorMaiuscula, { emitEvent: false });
       } else if (this.el.nativeElement.hasAttribute('appMinuscula')) {
         this.control.control?.setValue(novoValorMinuscula, { emitEvent: false });
+      } else if (this.el.nativeElement.hasAttribute('appUpcase')) {
+        this.control.control?.setValue(novoValorMaiusculo, { emitEvent: false });
       }
     }
   }

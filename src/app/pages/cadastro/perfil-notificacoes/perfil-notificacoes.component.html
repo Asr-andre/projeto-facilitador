@@ -128,18 +128,18 @@
       <div class="row">
         <div class="col-md-4 form-group">
           <label for="nome" class="form-label">Sigla</label>
-          <input class="form-control form-control-sm mb-1" formControlName="nome" type="text" placeholder="Sigla" appMaiuscula
-            [ngClass]="{'is-invalid': formPerfilNotificacoes.get('nome').invalid && formPerfilNotificacoes.get('nome').touched}">
+          <input class="form-control form-control-sm mb-1" formControlName="sigla" type="text" placeholder="Sigla" appUpcase
+            [ngClass]="{'is-invalid': formPerfilNotificacoes.get('sigla').invalid && formPerfilNotificacoes.get('sigla').touched}">
         </div>
         <div class="col-md-8 form-group">
           <label for="login" class="form-label">Descrição</label>
-          <input class="form-control form-control-sm mb-1" formControlName="login" type="text" placeholder="Descrição" appMaiuscula
-            [ngClass]="{'is-invalid': formPerfilNotificacoes.get('login').invalid && formPerfilNotificacoes.get('login').touched}">
+          <input class="form-control form-control-sm mb-1" formControlName="descricao" type="text" placeholder="Descrição" appMaiuscula
+            [ngClass]="{'is-invalid': formPerfilNotificacoes.get('descricao').invalid && formPerfilNotificacoes.get('descricao').touched}">
         </div>
       </div>
 
       <div class="d-flex justify-content-end" style="padding-top: 10px;">
-        <button type="submit" class="btn btn-success btn-sm me-1">
+        <button type="submit" class="btn btn-success btn-sm me-1" (click)="cadastrarPerfilNotificacao()">
               <i class="fas fa-save"></i> Salvar
         </button>
         <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fechar()">
