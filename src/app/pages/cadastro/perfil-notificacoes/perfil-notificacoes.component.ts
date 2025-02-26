@@ -57,10 +57,7 @@ export class PerfilNotificacoesComponent implements OnInit {
   }
 
   public obterPerfilNotificacoes() {
-    const dados = {
-      sigla: this.sigla,
-      user_login: this.login
-    }
+    const dados = { user_login: this.login }
 
     this.loading = true;
     this._perfilNotificacoes.obterPerfilNotificacoes(dados).subscribe((res) => {

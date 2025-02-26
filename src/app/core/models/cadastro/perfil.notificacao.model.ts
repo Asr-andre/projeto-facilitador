@@ -1,5 +1,4 @@
 export class RequisicaoNotificacao {
-  sigla: string;
   user_login: string;
 }
 
