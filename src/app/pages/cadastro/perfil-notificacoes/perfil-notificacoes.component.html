@@ -77,7 +77,7 @@
                         <td>{{ dados.enabled_payment_overdue_2 | simNao }}</td>
                         <td>{{ dados.enabled_payment_received | simNao }}</td>
                         <td  class="text-end">
-                          <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18" (click)="editar()"></i></a>
+                          <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18" (click)="editar(dados.sigla)"></i></a>
                         </td>
                       </tr>
                     </tbody>

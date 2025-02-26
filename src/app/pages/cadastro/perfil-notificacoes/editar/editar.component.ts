@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
@@ -10,13 +10,23 @@ import { FuncoesService } from 'src/app/core/services/funcoes.service';
   templateUrl: './editar.component.html',
   styleUrl: './editar.component.scss'
 })
-export class EditarNComponent {
+export class EditarNComponent implements OnInit {
+  public sigla: string = '';
 
   constructor(
     private _alert: AlertService,
     private _funcoes: FuncoesService,
-    private _route: Router
-  ) { }
+    private _route: Router,
+    private _sigla: ActivatedRoute
+  ) {
+    this._sigla.params.subscribe(params => {
+      this.sigla = params['sigla'];
+    });
+  }
+
+  ngOnInit(): void {
+
+  }
 
   public voltar() {
     this._route.navigate(['../cadastro/perfil-notificacoes']);

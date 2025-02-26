@@ -61,7 +61,7 @@ const routes: Routes = [
       path: 'perfil-notificacoes', component: PerfilNotificacoesComponent, canActivate: [AuthGuard]
     },
     {
-      path: 'perfil-notificacoes/editar', component: EditarNComponent, canActivate: [AuthGuard]
+      path: 'perfil-notificacoes/editar/:sigla', component: EditarNComponent, canActivate: [AuthGuard]
     }
 ];
 

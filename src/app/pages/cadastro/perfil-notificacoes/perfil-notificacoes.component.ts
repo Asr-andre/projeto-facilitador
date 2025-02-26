@@ -111,8 +111,9 @@ export class PerfilNotificacoesComponent implements OnInit {
     });
   }
 
-  public editar() {
-    this._route.navigate(['/cadastro/perfil-notificacoes/editar']);
+  public editar(sigla: string): void {
+    console.log(sigla)
+    this._route.navigate([`/cadastro/perfil-notificacoes/editar/${sigla}`]);
   }
 
   public fechar() {
