@@ -17,7 +17,7 @@
                     <h5 class="mb-0"><i class="mdi mdi-cog"></i> Configuração de Notificações </h5>
                   </div>
                   <div class="col-md-6 text-end">
-                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;" >
+                    <button class="btn btn-success btn-sm" style="padding-top: 2px; padding-bottom: 2px;" (click)="cadastrar()">
                       <i class="mdi mdi-plus"></i>
                       Cadastrar
                     </button>
@@ -73,7 +73,7 @@
                         <td>{{ dados.enabled_send_linha_digitavel | simNao }}</td>
                         <td>{{ dados.enabled_payment_overdue_2 | simNao }}</td>
                         <td  class="text-end">
-                          <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18" ></i></a>
+                          <a href="javascript:void(0);" class="me-2 text-primary" ngbTooltip="Editar"><i class="mdi mdi-pencil font-size-18" (click)="editar()"></i></a>
                         </td>
                       </tr>
                     </tbody>

@@ -15,6 +15,8 @@ import { AuthGuard } from 'src/app/core/config/auth.guard';
 import { ClientesComponent } from './clientes/clientes.component';
 import { ContaBancariaComponent } from './conta-bancaria/conta-bancaria.component';
 import { PerfilNotificacoesComponent } from './perfil-notificacoes/perfil-notificacoes.component';
+import { CadastrarNComponent } from './perfil-notificacoes/cadastrar/cadastrar.component';
+import { EditarNComponent } from './perfil-notificacoes/editar/editar.component';
 
 
 const routes: Routes = [
@@ -59,6 +61,12 @@ const routes: Routes = [
     },
     {
       path: 'perfil-notificacoes', component: PerfilNotificacoesComponent, canActivate: [AuthGuard]
+    },
+    {
+      path: 'perfil-notificacoes/cadastrar', component: CadastrarNComponent, canActivate: [AuthGuard]
+    },
+    {
+      path: 'perfil-notificacoes/editar', component: EditarNComponent, canActivate: [AuthGuard]
     }
 ];
 

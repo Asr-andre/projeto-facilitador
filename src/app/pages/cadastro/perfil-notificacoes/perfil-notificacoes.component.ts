@@ -1,5 +1,6 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { compararParaOrdenar, OrdenarPeloHeaderTabela, SortEvent } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
+import { Router } from '@angular/router';
+import { OrdenarPeloHeaderTabela } from 'src/app/core/helpers/conf-tabela/ordenacao-tabela';
 import { Utils } from 'src/app/core/helpers/utils';
 import { Dados } from 'src/app/core/models/cadastro/perfil.notificacao.model';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -32,7 +33,8 @@ export class PerfilNotificacoesComponent implements OnInit {
     private _perfilNotificacoes: PerfilNotificacoesService,
     private _auth: AuthenticationService,
     private _alert: AlertService,
-    private _funcoes: FuncoesService
+    private _funcoes: FuncoesService,
+    private _route: Router
   ) { }
 
   ngOnInit(): void {
@@ -66,5 +68,13 @@ export class PerfilNotificacoesComponent implements OnInit {
 
   public atualizarQuantidadeExibida() {
     this.totalRegistrosExibidos = Math.min(this.paginaAtual * this.itensPorPagina, this.totalRegistros);
+  }
+
+  public cadastrar() {
+    this._route.navigate(['/cadastro/perfil-notificacoes/cadastrar']);
+  }
+
+  public editar() {
+    this._route.navigate(['/cadastro/perfil-notificacoes/editar']);
   }
 }
