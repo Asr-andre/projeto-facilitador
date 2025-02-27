@@ -17,6 +17,7 @@ export class EditarNComponent implements OnInit {
   public sigla: string = '';
   public loading: boolean = false;
   public login = this._auth.getLogin();
+  public idEmpresa = this._auth.getIdEmpresa();
   public perfil: Dados;
   public formNotificacao: FormGroup;
   public qtdcDiasAntes: string = "";
@@ -43,6 +44,7 @@ export class EditarNComponent implements OnInit {
   public inicializarFormUsuario(dado: Dados = {} as Dados) {
     this.formNotificacao = this._fb.group({
       sigla: [this.sigla, Validators.required],
+      id_empresa: [this.idEmpresa, Validators.required],
       enabled_payment_created: [dado?.enabled_payment_created || false],
       emailenabledprovider_payment_created: [dado?.emailenabledprovider_payment_created || false],
       smsenabledprovider_payment_created: [dado?.smsenabledprovider_payment_created || false],
@@ -98,7 +100,7 @@ export class EditarNComponent implements OnInit {
       smsenabledcustomer_payment_overdue_2: [dado.smsenabledcustomer_payment_overdue_2 || false],
       phonecallenabledcustomer_payment_overdue_2: [dado.phonecallenabledcustomer_payment_overdue_2 || false],
       whatsappenabledcustomer_payment_overdue_2: [dado.whatsappenabledcustomer_payment_overdue_2 || false],
-      scheduleoffset_payment_overdue_2: [dado.scheduleoffset_payment_overdue_2 || ""],
+      scheduleoffset_payment_overdue_2: [dado.scheduleoffset_payment_overdue_2 || "1"],
 
       enabled_payment_received: [dado.enabled_payment_received || false],
       emailenabledprovider_payment_received: [dado.emailenabledprovider_payment_received || false],
@@ -195,6 +197,54 @@ export class EditarNComponent implements OnInit {
       smsenabledcustomer_payment_duedate_warning_2: false,
       phonecallenabledcustomer_payment_duedate_warning_2: false,
       whatsappenabledcustomer_payment_duedate_warning_2: false,
+    });
+  }
+
+  public desmarcarEnviarLinhaDigitavelVencimento() {
+    this.formNotificacao.patchValue({
+      enabled_send_linha_digitavel: false,
+      emailenabledprovider_send_linha_digitavel: false,
+      smsenabledprovider_send_linha_digitavel: false,
+      emailenabledcustomer_send_linha_digitavel: false,
+      smsenabledcustomer_send_linha_digitavel: false,
+      phonecallenabledcustomer_send_linha_digitavel: false,
+    });
+  }
+
+  public desmarcarAvisoCobrancaVencida() {
+    this.formNotificacao.patchValue({
+      enabled_payment_overdue: false,
+      emailenabledprovider_payment_overdue: false,
+      smsenabledprovider_payment_overdue: false,
+      emailenabledcustomer_payment_overdue: false,
+      smsenabledcustomer_payment_overdue: false,
+      phonecallenabledcustomer_payment_overdue: false,
+      whatsappenabledcustomer_payment_overdue: false,
+    });
+  }
+
+  public desmarcarReenviarCobranCaCadaXdias() {
+    this.formNotificacao.patchValue({
+      enabled_payment_overdue_2: false,
+      emailenabledprovider_payment_overdue_2: false,
+      smsenabledprovider_payment_overdue_2: false,
+      emailenabledcustomer_payment_overdue_2: false,
+      smsenabledcustomer_payment_overdue_2: false,
+      phonecallenabledcustomer_payment_overdue_2: false,
+      whatsappenabledcustomer_payment_overdue_2: false,
+      scheduleoffset_payment_overdue_2: "1",
+    });
+  }
+
+  public desmarcarAvisoDeCobrancaRebedida() {
+    this.formNotificacao.patchValue({
+      enabled_payment_received: false,
+      emailenabledprovider_payment_received: false,
+      smsenabledprovider_payment_received: false,
+      emailenabledcustomer_payment_received: false,
+      smsenabledcustomer_payment_received: false,
+      phonecallenabledcustomer_payment_received: false,
+      whatsappenabledcustomer_payment_received: false,
     });
   }
 

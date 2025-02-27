@@ -11,6 +11,7 @@ export class RetornoNotificacao {
 
 export class Dados {
   id?: number;
+  id_empresa?: number;
   sigla: string;
   descricao?: string;
   enabled_payment_received: boolean;

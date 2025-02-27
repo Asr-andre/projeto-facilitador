@@ -207,36 +207,34 @@
                       <div class="border-bottom py-3">
                         <div class="row">
                           <div class="col-md-8">
-                            <h6 class="fw-bold">Enviar Linha digitavel no dia do vencimento</h6>
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" formControlName="enabled_send_linha_digitavel">
+                              <label class="form-check-label" for="defaultCheck1" style="padding-left: 4px;">
+                                Enviar Linha digitavel no dia do vencimento
+                              </label>
                             <p class="text-muted">Esta mensagem será enviada na data de vencimento do boleto caso o seu
                               cliente não tenha pago.</p>
                             <div class="text-start mt-1">
-                              <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                              <button class="btn btn-secondary btn-sm" (click)="desmarcarEnviarLinhaDigitavelVencimento()">Desmarca todos</button>
                             </div>
                           </div>
 
                           <div class="col-md-2">Empresa:
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="21">
+                              <input class="form-check-input" type="checkbox" id="21" formControlName="emailenabledprovider_send_linha_digitavel">
                               <label class="form-check-label" for="21"><i class="fas fa-envelope"></i> Email</label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="22">
+                              <input class="form-check-input" type="checkbox" id="22" formControlName="smsenabledprovider_send_linha_digitavel">
                               <label class="form-check-label" for="22"><i class="fas fa-sms"></i> SMS</label>
                             </div>
                           </div>
                           <div class="col-md-2">Cliente:
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="23" checked>
-                              <label class="form-check-label" for="23"><i class="fab fa-whatsapp whatsapp-icon"></i>
-                                WhatsApp</label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="24">
+                              <input class="form-check-input" type="checkbox" id="24" formControlName="emailenabledcustomer_send_linha_digitavel">
                               <label class="form-check-label" for="24"><i class="fas fa-envelope"></i> Email</label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="25">
+                              <input class="form-check-input" type="checkbox" id="25" formControlName="smsenabledcustomer_send_linha_digitavel">
                               <label class="form-check-label" for="25"><i class="fas fa-sms"></i> SMS</label>
                             </div>
                           </div>
@@ -247,41 +245,44 @@
                       <div class="border-bottom py-3">
                         <div class="row">
                           <div class="col-md-8">
-                            <h6 class="fw-bold">Aviso de cobrança vencida</h6>
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" formControlName="enabled_payment_overdue">
+                              <label class="form-check-label" for="defaultCheck1" style="padding-left: 4px;">
+                                Aviso de cobrança vencida
+                              </label>
                             <p class="text-muted">Esta mensagem será enviada na data de vencimento da cobrança caso o
                               seu
                               cliente não tenha pago.</p>
                             <div class="text-start mt-1">
-                              <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                              <button class="btn btn-secondary btn-sm" (click)="desmarcarAvisoCobrancaVencida()">Desmarca todos</button>
                             </div>
                           </div>
 
                           <div class="col-md-2">Empresa:
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="26">
+                              <input class="form-check-input" type="checkbox" id="26" formControlName="emailenabledprovider_payment_overdue">
                               <label class="form-check-label" for="26"><i class="fas fa-envelope"></i> Email</label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="27">
+                              <input class="form-check-input" type="checkbox" id="27" formControlName="smsenabledprovider_payment_overdue">
                               <label class="form-check-label" for="27"><i class="fas fa-sms"></i> SMS</label>
                             </div>
                           </div>
                           <div class="col-md-2">Cliente:
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="28" checked>
+                              <input class="form-check-input" type="checkbox" id="28" formControlName="whatsappenabledcustomer_payment_overdue">
                               <label class="form-check-label" for="28"><i class="fab fa-whatsapp whatsapp-icon"></i>
                                 WhatsApp</label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="29">
+                              <input class="form-check-input" type="checkbox" id="29" formControlName="emailenabledcustomer_payment_overdue">
                               <label class="form-check-label" for="29"><i class="fas fa-envelope"></i> Email</label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="30">
+                              <input class="form-check-input" type="checkbox" id="30" formControlName="smsenabledcustomer_payment_overdue">
                               <label class="form-check-label" for="30"><i class="fas fa-sms"></i> SMS</label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="31">
+                              <input class="form-check-input" type="checkbox" id="31" formControlName="phonecallenabledcustomer_payment_overdue">
                               <label class="form-check-label" for="31"><i class="fas fa-phone"></i> Ligação</label>
                             </div>
                           </div>
@@ -293,49 +294,50 @@
                         <div class="row">
                           <div class="col-md-8">
                             <h6 class="fw-bold">Reenviar cobrança a cada
-                              <select class="form-select d-inline w-auto ms-2"
-                                style="padding-top: 4px; padding-bottom: 4px;">
-                                <option selected>1 dia</option>
-                                <option>3 dias</option>
-                                <option>7 dias</option>
-                                <option>15 dias</option>
-                                <option>30 dias</option>
+                              <select class="form-select d-inline w-auto ms-2" style="padding-top: 4px; padding-bottom: 4px;"
+                              formControlName="scheduleoffset_payment_overdue_2">
+                                <option [value]="1">1 dia</option>
+                                <option [value]="3">3 dias</option>
+                                <option [value]="7">7 dias</option>
+                                <option [value]="15">15 dias</option>
+                                <option [value]="30">30 dias</option>
                               </select>
                               dias
                             </h6>
-                            <p class="text-muted">Esta mensagem será enviada a cada 1 dias enquanto a cobrança não for
+                            <p class="text-muted">Esta mensagem será enviada a cada
+                              <strong>{{ formNotificacao.get('scheduleoffset_payment_overdue_2').value }} dias</strong> enquanto a cobrança não for
                               paga (até 3 notificações).</p>
                             <div class="text-start mt-1">
-                              <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                              <button class="btn btn-secondary btn-sm" (click)="desmarcarReenviarCobranCaCadaXdias()">Desmarca todos</button>
                             </div>
                           </div>
 
                           <div class="col-md-2">Empresa:
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="32">
+                              <input class="form-check-input" type="checkbox" id="32" formControlName="emailenabledprovider_payment_overdue_2">
                               <label class="form-check-label" for="32"><i class="fas fa-envelope"></i> Email</label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="33">
+                              <input class="form-check-input" type="checkbox" id="33" formControlName="smsenabledprovider_payment_overdue_2">
                               <label class="form-check-label" for="33"><i class="fas fa-sms"></i> SMS</label>
                             </div>
                           </div>
                           <div class="col-md-2">Cliente:
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="34" checked>
+                              <input class="form-check-input" type="checkbox" id="34" formControlName="whatsappenabledcustomer_payment_overdue_2">
                               <label class="form-check-label" for="34"><i class="fab fa-whatsapp whatsapp-icon"></i>
                                 WhatsApp</label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="35">
+                              <input class="form-check-input" type="checkbox" id="35" formControlName="emailenabledcustomer_payment_overdue_2">
                               <label class="form-check-label" for="35"><i class="fas fa-envelope"></i> Email</label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="36">
+                              <input class="form-check-input" type="checkbox" id="36" formControlName="smsenabledcustomer_payment_overdue_2">
                               <label class="form-check-label" for="36"><i class="fas fa-sms"></i> SMS</label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="37">
+                              <input class="form-check-input" type="checkbox" id="37" formControlName="phonecallenabledcustomer_payment_overdue_2">
                               <label class="form-check-label" for="37"><i class="fas fa-phone"></i> Ligação</label>
                             </div>
                           </div>
@@ -346,36 +348,39 @@
                       <div class="border-bottom py-3">
                         <div class="row">
                           <div class="col-md-8">
-                            <h6 class="fw-bold">Aviso de cobrança rebedida (Pagamento realizado)</h6>
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" formControlName="enabled_payment_received">
+                              <label class="form-check-label" for="defaultCheck1" style="padding-left: 4px;">
+                                Aviso de cobrança rebedida (Pagamento realizado)
+                              </label>
                             <p class="text-muted">Esta mensagem será enviada quando os pagamentos das cobranças forem
                               confirmados.</p>
                             <div class="text-start mt-1">
-                              <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                              <button class="btn btn-secondary btn-sm" (click)="desmarcarAvisoDeCobrancaRebedida()">Desmarca todos</button>
                             </div>
                           </div>
 
                           <div class="col-md-2">Empresa:
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="38">
+                              <input class="form-check-input" type="checkbox" id="38" formControlName="emailenabledprovider_payment_received">
                               <label class="form-check-label" for="38"><i class="fas fa-envelope"></i> Email</label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="39">
+                              <input class="form-check-input" type="checkbox" id="39" formControlName="smsenabledprovider_payment_received">
                               <label class="form-check-label" for="39"><i class="fas fa-sms"></i> SMS</label>
                             </div>
                           </div>
                           <div class="col-md-2">Cliente:
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="40" checked>
+                              <input class="form-check-input" type="checkbox" id="40" formControlName="whatsappenabledcustomer_payment_received">
                               <label class="form-check-label" for="40"><i class="fab fa-whatsapp whatsapp-icon"></i>
                                 WhatsApp</label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="41">
+                              <input class="form-check-input" type="checkbox" id="41" formControlName="emailenabledcustomer_payment_received">
                               <label class="form-check-label" for="41"><i class="fas fa-envelope"></i> Email</label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="42">
+                              <input class="form-check-input" type="checkbox" id="42" formControlName="smsenabledcustomer_payment_received">
                               <label class="form-check-label" for="42"><i class="fas fa-sms"></i> SMS</label>
                             </div>
                           </div>
