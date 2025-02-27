@@ -30,6 +30,7 @@ import { PipesModule } from "src/app/core/pipe/pipe.module";
 import { ClientesModule } from "./clientes/clientes.module";
 import { ContaBancariaComponent } from "./conta-bancaria/conta-bancaria.component";
 import { PerfilNotificacoesComponent } from "./perfil-notificacoes/perfil-notificacoes.component";
+import { EditarNComponent } from "./perfil-notificacoes/editar/editar.component";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { PerfilNotificacoesComponent } from "./perfil-notificacoes/perfil-notifi
     IndiceComponent,
     EmailPerfilComponent,
     ContaBancariaComponent,
-    PerfilNotificacoesComponent
+    PerfilNotificacoesComponent,
+    EditarNComponent
   ],
   imports: [
     DiretivasModule,

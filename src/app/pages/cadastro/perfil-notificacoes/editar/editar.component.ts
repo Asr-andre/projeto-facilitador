@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { finalize } from 'rxjs';
 import { Dados } from 'src/app/core/models/cadastro/perfil.notificacao.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
@@ -9,8 +10,6 @@ import { FuncoesService } from 'src/app/core/services/funcoes.service';
 
 @Component({
   selector: 'app-editar',
-  standalone: true,
-  imports: [],
   templateUrl: './editar.component.html',
   styleUrl: './editar.component.scss'
 })
@@ -20,6 +19,7 @@ export class EditarNComponent implements OnInit {
   public login = this._auth.getLogin();
   public perfil: Dados;
   public formNotificacao: FormGroup;
+  public qtdcDiasAntes: string = "";
 
   constructor(
     private _perfilNotificacoes: PerfilNotificacoesService,
@@ -36,19 +36,20 @@ export class EditarNComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.inicializarFormUsuario();
     this.obterNotificacao();
-    this.inicializarFormUsuario(this.perfil);
   }
 
-  public inicializarFormUsuario(dado: Dados) {
+  public inicializarFormUsuario(dado: Dados = {} as Dados) {
     this.formNotificacao = this._fb.group({
-      enabled_payment_created: [dado.enabled_payment_created || false],
-      emailenabledprovider_payment_created: [dado.emailenabledprovider_payment_created || false],
-      smsenabledprovider_payment_created: [dado.smsenabledprovider_payment_created || false],
-      emailenabledcustomer_payment_created: [dado.emailenabledcustomer_payment_created || false],
-      smsenabledcustomer_payment_created: [dado.smsenabledcustomer_payment_created || false],
-      phonecallenabledcustomer_payment_created: [dado.phonecallenabledcustomer_payment_created || false],
-      whatsappenabledcustomer_payment_created: [dado.whatsappenabledcustomer_payment_created || false],
+      sigla: [this.sigla, Validators.required],
+      enabled_payment_created: [dado?.enabled_payment_created || false],
+      emailenabledprovider_payment_created: [dado?.emailenabledprovider_payment_created || false],
+      smsenabledprovider_payment_created: [dado?.smsenabledprovider_payment_created || false],
+      emailenabledcustomer_payment_created: [dado?.emailenabledcustomer_payment_created || false],
+      smsenabledcustomer_payment_created: [dado?.smsenabledcustomer_payment_created || false],
+      phonecallenabledcustomer_payment_created: [dado?.phonecallenabledcustomer_payment_created || false],
+      whatsappenabledcustomer_payment_created: [dado?.whatsappenabledcustomer_payment_created || false],
 
       enabled_payment_updated: [dado.enabled_payment_updated || false],
       emailenabledprovider_payment_updated: [dado.emailenabledprovider_payment_updated || false],
@@ -65,7 +66,7 @@ export class EditarNComponent implements OnInit {
       smsenabledcustomer_payment_duedate_warning: [dado.smsenabledcustomer_payment_duedate_warning || false],
       phonecallenabledcustomer_payment_duedate_warning: [dado.phonecallenabledcustomer_payment_duedate_warning || false],
       whatsappenabledcustomer_payment_duedate_warning: [dado.whatsappenabledcustomer_payment_duedate_warning || false],
-      scheduleoffset_payment_duedate_warning: [dado.scheduleoffset_payment_duedate_warning || ""],
+      scheduleoffset_payment_duedate_warning: [dado.scheduleoffset_payment_duedate_warning || "5"],
 
       enabled_payment_duedate_warning_2: [dado.enabled_payment_duedate_warning_2 || false],
       emailenabledprovider_payment_duedate_warning_2: [dado.emailenabledprovider_payment_duedate_warning_2 || false],
@@ -106,7 +107,7 @@ export class EditarNComponent implements OnInit {
       smsenabledcustomer_payment_received: [dado.smsenabledcustomer_payment_received || false],
       phonecallenabledcustomer_payment_received: [dado.phonecallenabledcustomer_payment_received || false],
       whatsappenabledcustomer_payment_received: [dado.whatsappenabledcustomer_payment_received || false],
-      user_login: [this.login],
+      user_login: [this.login, Validators.required],
     });
   }
 
@@ -116,6 +117,7 @@ export class EditarNComponent implements OnInit {
     this.loading = true;
     this._perfilNotificacoes.obterPerfilNotificacaoPorSigla(dados).subscribe((res) => {
       this.perfil = res.dados[0];
+      this.inicializarFormUsuario(this.perfil);
       this.loading = false;
     },
       (error) => {
@@ -123,6 +125,77 @@ export class EditarNComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  public editarPerfilNotificacao(): void {
+    if (this.formNotificacao.invalid) {
+      this._funcoes.camposInvalidos(this.formNotificacao);
+      this._alert.warning('Por favor, corrija os erros no formulário antes de continuar.');
+      return;
+    }
+
+    this.loading = true;
+    this._perfilNotificacoes.editarPerfilNotificacao(this.formNotificacao.value).pipe(finalize(() => { this.loading = false; })).subscribe({
+      next: (res) => {
+        if (res.success === 'true') {
+          this._alert.success(res.msg);
+        } else {
+          this._alert.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this._alert.error('Erro:', err);
+      }
+    });
+  }
+
+  public desmarcarCriacao() {
+    this.formNotificacao.patchValue({
+      enabled_payment_created: false,
+      emailenabledprovider_payment_created: false,
+      smsenabledprovider_payment_created: false,
+      emailenabledcustomer_payment_created: false,
+      smsenabledcustomer_payment_created: false,
+      phonecallenabledcustomer_payment_created: false,
+      whatsappenabledcustomer_payment_created: false,
+    });
+  }
+
+  public desmarcarAvisarAlteracaoValorVcto() {
+    this.formNotificacao.patchValue({
+      enabled_payment_updated: false,
+      emailenabledprovider_payment_updated: false,
+      smsenabledprovider_payment_updated: false,
+      emailenabledcustomer_payment_updated: false,
+      smsenabledcustomer_payment_updated: false,
+      phonecallenabledcustomer_payment_updated: false,
+      whatsappenabledcustomer_payment_updated: false,
+    });
+  }
+
+  public desmarcarAvisoDiaVencimento() {
+    this.formNotificacao.patchValue({
+      enabled_payment_duedate_warning: false,
+      emailenabledprovider_payment_duedate_warning: false,
+      smsenabledprovider_payment_duedate_warning: false,
+      emailenabledcustomer_payment_duedate_warning: false,
+      smsenabledcustomer_payment_duedate_warning: false,
+      phonecallenabledcustomer_payment_duedate_warning: false,
+      whatsappenabledcustomer_payment_duedate_warning: false,
+      scheduleoffset_payment_duedate_warning: "5",
+    });
+  }
+
+  public desmarcarAvisoNoDiaVencimento() {
+    this.formNotificacao.patchValue({
+      enabled_payment_duedate_warning_2: false,
+      emailenabledprovider_payment_duedate_warning_2: false,
+      smsenabledprovider_payment_duedate_warning_2: false,
+      emailenabledcustomer_payment_duedate_warning_2: false,
+      smsenabledcustomer_payment_duedate_warning_2: false,
+      phonecallenabledcustomer_payment_duedate_warning_2: false,
+      whatsappenabledcustomer_payment_duedate_warning_2: false,
+    });
   }
 
   public voltar() {

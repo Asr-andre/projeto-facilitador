@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConfig } from '../../config/url.base';
 import { Observable } from 'rxjs';
-import { CadastrarModel, EditarModel, RequisicaoNotificacao, RetornoNotificacao } from '../../models/cadastro/perfil.notificacao.model';
+import { CadastrarModel, Dados, EditarModel, RequisicaoNotificacao, RetornoNotificacao } from '../../models/cadastro/perfil.notificacao.model';
 
 
 @Injectable({
@@ -25,5 +25,9 @@ export class PerfilNotificacoesService {
 
   public cadastrarPerfilNotificacao(dados: CadastrarModel): Observable<RetornoNotificacao> {
     return this._http.post<RetornoNotificacao>(`${this.apiUrl}/inserirnotificacaoperfil`, dados);
+  }
+
+  public editarPerfilNotificacao(dados: Dados): Observable<RetornoNotificacao> {
+    return this._http.put<RetornoNotificacao>(`${this.apiUrl}/editarnotificacaoperfil`, dados);
   }
 }

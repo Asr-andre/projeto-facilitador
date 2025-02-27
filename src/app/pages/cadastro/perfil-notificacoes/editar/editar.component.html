@@ -1,3 +1,8 @@
+<div class="loading-overlay-pagina" *ngIf="loading">
+  <div class="spinner-border text-primary m-1" role="status">
+  </div>
+</div>
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
@@ -8,7 +13,8 @@
               <div class="card-header pt-2 pb-2">
                 <div class="row">
                   <div class="col-md-6">
-                    <h5 class="mb-0"><i class="mdi mdi-bell"></i> Atualizar Perfil de Notificação - <strong>{{ sigla }}</strong> </h5>
+                    <h5 class="mb-0"><i class="mdi mdi-bell"></i> Atualizar Perfil de Notificação - <strong>{{ sigla
+                        }}</strong> </h5>
                   </div>
                 </div>
               </div>
@@ -16,358 +22,372 @@
               <div class="card-body">
                 <div class="row">
                   <div class="container" style="font-family: 'Wolsen Pro', sans-serif;">
+                    <form [formGroup]="formNotificacao">
 
-                    <!-- Notificação 1 -->
-                    <div class="border-bottom py-3">
-                      <div class="row">
-                        <div class="col-md-8">
-                          <h6 class="fw-bold">Avisar criação de novas cobranças</h6>
-                          <p class="text-muted">Esta mensagem será enviada quando você gerar novas cobranças.</p>
-                          <div class="text-start mt-1">
-                            <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                      <!-- Notificação 1 -->
+                      <div class="border-bottom py-3">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" formControlName="enabled_payment_created">
+                              <label class="form-check-label" for="defaultCheck1" style="padding-left: 4px;">
+                                Avisar criação de novas cobranças
+                              </label>
+                            <p class="text-muted">Esta mensagem será enviada quando você gerar novas cobranças.</p>
+                            <div class="text-start mt-1">
+                              <button class="btn btn-secondary btn-sm" (click)="desmarcarCriacao()">Desmarca todos</button>
+                            </div>
                           </div>
-                        </div>
 
-                        <div class="col-md-2">Empresa:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="1">
-                            <label class="form-check-label" for="1"><i class="fas fa-envelope"></i> Email</label>
+                          <div class="col-md-2">Empresa:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="1" formControlName="emailenabledprovider_payment_created">
+                              <label class="form-check-label" for="1"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="2" formControlName="smsenabledprovider_payment_created">
+                              <label class="form-check-label" for="2"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
                           </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="2">
-                            <label class="form-check-label" for="2"><i class="fas fa-sms"></i> SMS</label>
-                          </div>
-                        </div>
-                        <div class="col-md-2">Cliente:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="3" checked>
-                            <label class="form-check-label" for="3"><i class="fab fa-whatsapp whatsapp-icon"></i>
-                              WhatsApp</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="4">
-                            <label class="form-check-label" for="4"><i class="fas fa-envelope"></i> Email</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="5">
-                            <label class="form-check-label" for="5"><i class="fas fa-sms"></i> SMS</label>
+                          <div class="col-md-2">Cliente:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="3" formControlName="whatsappenabledcustomer_payment_created">
+                              <label class="form-check-label" for="3"><i class="fab fa-whatsapp whatsapp-icon"></i>
+                                WhatsApp</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="4" formControlName="emailenabledcustomer_payment_created">
+                              <label class="form-check-label" for="4"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="5" formControlName="smsenabledcustomer_payment_created">
+                              <label class="form-check-label" for="5"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <!-- Notificação 2 -->
-                    <div class="border-bottom py-3">
-                      <div class="row">
-                        <div class="col-md-8">
-                          <h6 class="fw-bold">Avisar alteração de valor ou vencimento</h6>
-                          <p class="text-muted">Esta mensagem será enviada quando você alterar a data de vencimento ou
-                            valor das cobranças.</p>
-                          <div class="text-start mt-1">
-                            <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                      <!-- Notificação 2 -->
+                      <div class="border-bottom py-3">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" formControlName="enabled_payment_updated">
+                              <label class="form-check-label" for="defaultCheck1" style="padding-left: 4px;">
+                                Avisar alteração de valor ou vencimento
+                              </label>
+                            <p class="text-muted">Esta mensagem será enviada quando você alterar a data de vencimento ou
+                              valor das cobranças.</p>
+                            <div class="text-start mt-1">
+                              <button class="btn btn-secondary btn-sm" id="toggleButton" (click)="desmarcarAvisarAlteracaoValorVcto()">Desmarca todos</button>
+                            </div>
                           </div>
-                        </div>
 
-                        <div class="col-md-2">Empresa:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="6">
-                            <label class="form-check-label" for="6"><i class="fas fa-envelope"></i> Email</label>
+                          <div class="col-md-2">Empresa:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="6" formControlName="emailenabledprovider_payment_updated">
+                              <label class="form-check-label" for="6"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="7" formControlName="smsenabledprovider_payment_updated">
+                              <label class="form-check-label" for="7"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
                           </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="7">
-                            <label class="form-check-label" for="7"><i class="fas fa-sms"></i> SMS</label>
-                          </div>
-                        </div>
-                        <div class="col-md-2">Cliente:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="8" checked>
-                            <label class="form-check-label" for="8"><i class="fab fa-whatsapp whatsapp-icon"></i>
-                              WhatsApp</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="9">
-                            <label class="form-check-label" for="9"><i class="fas fa-envelope"></i> Email</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="10">
-                            <label class="form-check-label" for="10"><i class="fas fa-sms"></i> SMS</label>
+                          <div class="col-md-2">Cliente:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="8" checked formControlName="whatsappenabledcustomer_payment_updated">
+                              <label class="form-check-label" for="8"><i class="fab fa-whatsapp whatsapp-icon"></i>
+                                WhatsApp</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="9" formControlName="emailenabledcustomer_payment_updated">
+                              <label class="form-check-label" for="9"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="10" formControlName="smsenabledcustomer_payment_updated">
+                              <label class="form-check-label" for="10"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <!-- Notificação 3 -->
-                    <div class="border-bottom py-3">
-                      <div class="row">
-                        <div class="col-md-8">
-                          <h6 class="fw-bold">Enviar cobranças
-                            <select class="form-select d-inline w-auto ms-2"
-                              style="padding-top: 4px; padding-bottom: 4px;">
-                              <option selected>5 dia</option>
-                              <option>10 dias</option>
-                              <option>15 dias</option>
-                              <option>30 dias</option>
-                            </select>
-                            antes do vencimento
-                          </h6>
-                          <p class="text-muted">Esta mensagem será enviada quando faltar 5 dias para o vencimento
-                            das cobranças.</p>
-                          <div class="text-start mt-1">
-                            <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                      <!-- Notificação 3 -->
+                      <div class="border-bottom py-3">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <h6 class="fw-bold">Enviar cobranças
+                              <select class="form-select d-inline w-auto ms-2" style="padding-top: 4px; padding-bottom: 4px;"
+                                formControlName="scheduleoffset_payment_duedate_warning">
+                                <option [value]="5" selected>5 dia</option>
+                                <option [value]="10">10 dias</option>
+                                <option [value]="15">15 dias</option>
+                                <option [value]="30">30 dias</option>
+                              </select>
+                              antes do vencimento
+                            </h6>
+                            <p class="text-muted">Esta mensagem será enviada quando faltar
+                              <strong>{{ formNotificacao.get('scheduleoffset_payment_duedate_warning').value }} dias</strong>
+                               para o vencimento das cobranças.</p>
+                            <div class="text-start mt-1">
+                              <button class="btn btn-secondary btn-sm" (click)="desmarcarAvisoDiaVencimento()">Desmarca todos</button>
+                            </div>
                           </div>
-                        </div>
 
-                        <div class="col-md-2">Empresa:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="11">
-                            <label class="form-check-label" for="11"><i class="fas fa-envelope"></i> Email</label>
+                          <div class="col-md-2">Empresa:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="11" formControlName="emailenabledprovider_payment_duedate_warning">
+                              <label class="form-check-label" for="11"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="12" formControlName="smsenabledprovider_payment_duedate_warning">
+                              <label class="form-check-label" for="12"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
                           </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="12">
-                            <label class="form-check-label" for="12"><i class="fas fa-sms"></i> SMS</label>
-                          </div>
-                        </div>
-                        <div class="col-md-2">Cliente:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="13" checked>
-                            <label class="form-check-label" for="13"><i class="fab fa-whatsapp whatsapp-icon"></i>
-                              WhatsApp</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="14">
-                            <label class="form-check-label" for="14"><i class="fas fa-envelope"></i> Email</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="15">
-                            <label class="form-check-label" for="15"><i class="fas fa-sms"></i> SMS</label>
+                          <div class="col-md-2">Cliente:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="13" formControlName="whatsappenabledcustomer_payment_duedate_warning">
+                              <label class="form-check-label" for="13"><i class="fab fa-whatsapp whatsapp-icon"></i>
+                                WhatsApp</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="14" formControlName="emailenabledcustomer_payment_duedate_warning">
+                              <label class="form-check-label" for="14"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="15" formControlName="smsenabledcustomer_payment_duedate_warning">
+                              <label class="form-check-label" for="15"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <!-- Notificação 4 -->
-                    <div class="border-bottom py-3">
-                      <div class="row">
-                        <div class="col-md-8">
-                          <h6 class="fw-bold">Aviso no dia do vencimento</h6>
-                          <p class="text-muted">Esta mensagem será enviada na data de vencimento da cobrança caso o seu
-                            cliente não tenha pago.</p>
-                          <div class="text-start mt-1">
-                            <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                      <!-- Notificação 4 -->
+                      <div class="border-bottom py-3">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" formControlName="enabled_payment_duedate_warning_2">
+                              <label class="form-check-label" for="defaultCheck1" style="padding-left: 4px;">
+                                Aviso no dia do vencimento
+                              </label>
+                            <p class="text-muted">Esta mensagem será enviada na data de vencimento da cobrança caso o
+                              seu
+                              cliente não tenha pago.</p>
+                            <div class="text-start mt-1">
+                              <button class="btn btn-secondary btn-sm" (click)="desmarcarAvisoNoDiaVencimento()">Desmarca todos</button>
+                            </div>
                           </div>
-                        </div>
 
-                        <div class="col-md-2">Empresa:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="16">
-                            <label class="form-check-label" for="16"><i class="fas fa-envelope"></i> Email</label>
+                          <div class="col-md-2">Empresa:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="16" formControlName="emailenabledprovider_payment_duedate_warning_2">
+                              <label class="form-check-label" for="16"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="17" formControlName="smsenabledprovider_payment_duedate_warning_2">
+                              <label class="form-check-label" for="17"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
                           </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="17">
-                            <label class="form-check-label" for="17"><i class="fas fa-sms"></i> SMS</label>
-                          </div>
-                        </div>
-                        <div class="col-md-2">Cliente:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="18" checked>
-                            <label class="form-check-label" for="18"><i class="fab fa-whatsapp whatsapp-icon"></i>
-                              WhatsApp</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="19">
-                            <label class="form-check-label" for="19"><i class="fas fa-envelope"></i> Email</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="20">
-                            <label class="form-check-label" for="20"><i class="fas fa-sms"></i> SMS</label>
+                          <div class="col-md-2">Cliente:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="18" formControlName="whatsappenabledcustomer_payment_duedate_warning_2">
+                              <label class="form-check-label" for="18"><i class="fab fa-whatsapp whatsapp-icon"></i>
+                                WhatsApp</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="19" formControlName="emailenabledcustomer_payment_duedate_warning_2">
+                              <label class="form-check-label" for="19"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="20" formControlName="smsenabledcustomer_payment_duedate_warning_2">
+                              <label class="form-check-label" for="20"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <!-- Notificação 5 -->
-                    <div class="border-bottom py-3">
-                      <div class="row">
-                        <div class="col-md-8">
-                          <h6 class="fw-bold">Enviar Linha digitavel no dia do vencimento</h6>
-                          <p class="text-muted">Esta mensagem será enviada na data de vencimento do boleto caso o seu
-                            cliente não tenha pago.</p>
-                          <div class="text-start mt-1">
-                            <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                      <!-- Notificação 5 -->
+                      <div class="border-bottom py-3">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <h6 class="fw-bold">Enviar Linha digitavel no dia do vencimento</h6>
+                            <p class="text-muted">Esta mensagem será enviada na data de vencimento do boleto caso o seu
+                              cliente não tenha pago.</p>
+                            <div class="text-start mt-1">
+                              <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                            </div>
                           </div>
-                        </div>
 
-                        <div class="col-md-2">Empresa:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="21">
-                            <label class="form-check-label" for="21"><i class="fas fa-envelope"></i> Email</label>
+                          <div class="col-md-2">Empresa:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="21">
+                              <label class="form-check-label" for="21"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="22">
+                              <label class="form-check-label" for="22"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
                           </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="22">
-                            <label class="form-check-label" for="22"><i class="fas fa-sms"></i> SMS</label>
-                          </div>
-                        </div>
-                        <div class="col-md-2">Cliente:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="23" checked>
-                            <label class="form-check-label" for="23"><i class="fab fa-whatsapp whatsapp-icon"></i>
-                              WhatsApp</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="24">
-                            <label class="form-check-label" for="24"><i class="fas fa-envelope"></i> Email</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="25">
-                            <label class="form-check-label" for="25"><i class="fas fa-sms"></i> SMS</label>
+                          <div class="col-md-2">Cliente:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="23" checked>
+                              <label class="form-check-label" for="23"><i class="fab fa-whatsapp whatsapp-icon"></i>
+                                WhatsApp</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="24">
+                              <label class="form-check-label" for="24"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="25">
+                              <label class="form-check-label" for="25"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <!-- Notificação 6 -->
-                    <div class="border-bottom py-3">
-                      <div class="row">
-                        <div class="col-md-8">
-                          <h6 class="fw-bold">Aviso de cobrança vencida</h6>
-                          <p class="text-muted">Esta mensagem será enviada na data de vencimento da cobrança caso o seu
-                            cliente não tenha pago.</p>
-                          <div class="text-start mt-1">
-                            <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                      <!-- Notificação 6 -->
+                      <div class="border-bottom py-3">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <h6 class="fw-bold">Aviso de cobrança vencida</h6>
+                            <p class="text-muted">Esta mensagem será enviada na data de vencimento da cobrança caso o
+                              seu
+                              cliente não tenha pago.</p>
+                            <div class="text-start mt-1">
+                              <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                            </div>
                           </div>
-                        </div>
 
-                        <div class="col-md-2">Empresa:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="26">
-                            <label class="form-check-label" for="26"><i class="fas fa-envelope"></i> Email</label>
+                          <div class="col-md-2">Empresa:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="26">
+                              <label class="form-check-label" for="26"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="27">
+                              <label class="form-check-label" for="27"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
                           </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="27">
-                            <label class="form-check-label" for="27"><i class="fas fa-sms"></i> SMS</label>
-                          </div>
-                        </div>
-                        <div class="col-md-2">Cliente:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="28" checked>
-                            <label class="form-check-label" for="28"><i class="fab fa-whatsapp whatsapp-icon"></i>
-                              WhatsApp</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="29">
-                            <label class="form-check-label" for="29"><i class="fas fa-envelope"></i> Email</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="30">
-                            <label class="form-check-label" for="30"><i class="fas fa-sms"></i> SMS</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="31">
-                            <label class="form-check-label" for="31"><i class="fas fa-phone"></i> Ligação</label>
+                          <div class="col-md-2">Cliente:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="28" checked>
+                              <label class="form-check-label" for="28"><i class="fab fa-whatsapp whatsapp-icon"></i>
+                                WhatsApp</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="29">
+                              <label class="form-check-label" for="29"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="30">
+                              <label class="form-check-label" for="30"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="31">
+                              <label class="form-check-label" for="31"><i class="fas fa-phone"></i> Ligação</label>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <!-- Notificação 7 -->
-                    <div class="border-bottom py-3">
-                      <div class="row">
-                        <div class="col-md-8">
-                          <h6 class="fw-bold">Reenviar cobrança a cada
-                            <select class="form-select d-inline w-auto ms-2"
-                              style="padding-top: 4px; padding-bottom: 4px;">
-                              <option selected>1 dia</option>
-                              <option>3 dias</option>
-                              <option>7 dias</option>
-                              <option>15 dias</option>
-                              <option>30 dias</option>
-                            </select>
-                            dias
-                          </h6>
-                          <p class="text-muted">Esta mensagem será enviada a cada 1 dias enquanto a cobrança não for
-                            paga (até 3 notificações).</p>
-                          <div class="text-start mt-1">
-                            <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                      <!-- Notificação 7 -->
+                      <div class="border-bottom py-3">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <h6 class="fw-bold">Reenviar cobrança a cada
+                              <select class="form-select d-inline w-auto ms-2"
+                                style="padding-top: 4px; padding-bottom: 4px;">
+                                <option selected>1 dia</option>
+                                <option>3 dias</option>
+                                <option>7 dias</option>
+                                <option>15 dias</option>
+                                <option>30 dias</option>
+                              </select>
+                              dias
+                            </h6>
+                            <p class="text-muted">Esta mensagem será enviada a cada 1 dias enquanto a cobrança não for
+                              paga (até 3 notificações).</p>
+                            <div class="text-start mt-1">
+                              <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                            </div>
                           </div>
-                        </div>
 
-                        <div class="col-md-2">Empresa:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="32">
-                            <label class="form-check-label" for="32"><i class="fas fa-envelope"></i> Email</label>
+                          <div class="col-md-2">Empresa:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="32">
+                              <label class="form-check-label" for="32"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="33">
+                              <label class="form-check-label" for="33"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
                           </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="33">
-                            <label class="form-check-label" for="33"><i class="fas fa-sms"></i> SMS</label>
-                          </div>
-                        </div>
-                        <div class="col-md-2">Cliente:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="34" checked>
-                            <label class="form-check-label" for="34"><i class="fab fa-whatsapp whatsapp-icon"></i>
-                              WhatsApp</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="35">
-                            <label class="form-check-label" for="35"><i class="fas fa-envelope"></i> Email</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="36">
-                            <label class="form-check-label" for="36"><i class="fas fa-sms"></i> SMS</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="37">
-                            <label class="form-check-label" for="37"><i class="fas fa-phone"></i> Ligação</label>
+                          <div class="col-md-2">Cliente:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="34" checked>
+                              <label class="form-check-label" for="34"><i class="fab fa-whatsapp whatsapp-icon"></i>
+                                WhatsApp</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="35">
+                              <label class="form-check-label" for="35"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="36">
+                              <label class="form-check-label" for="36"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="37">
+                              <label class="form-check-label" for="37"><i class="fas fa-phone"></i> Ligação</label>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <!-- Notificação 8 -->
-                    <div class="border-bottom py-3">
-                      <div class="row">
-                        <div class="col-md-8">
-                          <h6 class="fw-bold">Aviso de cobrança rebedida (Pagamento realizado)</h6>
-                          <p class="text-muted">Esta mensagem será enviada quando os pagamentos das cobranças forem
-                            confirmados.</p>
-                          <div class="text-start mt-1">
-                            <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                      <!-- Notificação 8 -->
+                      <div class="border-bottom py-3">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <h6 class="fw-bold">Aviso de cobrança rebedida (Pagamento realizado)</h6>
+                            <p class="text-muted">Esta mensagem será enviada quando os pagamentos das cobranças forem
+                              confirmados.</p>
+                            <div class="text-start mt-1">
+                              <button class="btn btn-outline-warning btn-sm" id="toggleButton">Desmarca todos</button>
+                            </div>
                           </div>
-                        </div>
 
-                        <div class="col-md-2">Empresa:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="38">
-                            <label class="form-check-label" for="38"><i class="fas fa-envelope"></i> Email</label>
+                          <div class="col-md-2">Empresa:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="38">
+                              <label class="form-check-label" for="38"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="39">
+                              <label class="form-check-label" for="39"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
                           </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="39">
-                            <label class="form-check-label" for="39"><i class="fas fa-sms"></i> SMS</label>
-                          </div>
-                        </div>
-                        <div class="col-md-2">Cliente:
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="40" checked>
-                            <label class="form-check-label" for="40"><i class="fab fa-whatsapp whatsapp-icon"></i>
-                              WhatsApp</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="41">
-                            <label class="form-check-label" for="41"><i class="fas fa-envelope"></i> Email</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="42">
-                            <label class="form-check-label" for="42"><i class="fas fa-sms"></i> SMS</label>
+                          <div class="col-md-2">Cliente:
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="40" checked>
+                              <label class="form-check-label" for="40"><i class="fab fa-whatsapp whatsapp-icon"></i>
+                                WhatsApp</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="41">
+                              <label class="form-check-label" for="41"><i class="fas fa-envelope"></i> Email</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="42">
+                              <label class="form-check-label" for="42"><i class="fas fa-sms"></i> SMS</label>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </form>
                     <div class="d-flex justify-content-end" style="padding-top: 15px;">
-                      <button type="button" class="btn btn-primary btn-sm me-1">
-                            <i class="fas fa-save"></i> Atualizar
+                      <button type="button" class="btn btn-primary btn-sm me-1" (click)="editarPerfilNotificacao()">
+                        <i class="fas fa-save"></i> Atualizar
                       </button>
                       <button type="button" class="btn btn-outline-secondary btn-sm" (click)="voltar()">
-                        <i class="fas fa-times"></i> Cancelar
+                        <i class="fas fa-times"></i> Fechar
                       </button>
                     </div>
                   </div>
