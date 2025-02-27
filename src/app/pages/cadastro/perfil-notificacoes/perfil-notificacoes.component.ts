@@ -18,6 +18,7 @@ import { FuncoesService } from 'src/app/core/services/funcoes.service';
 })
 export class PerfilNotificacoesComponent implements OnInit {
   public login = this._auth.getLogin();
+  public idEmpresa = this._auth.getIdEmpresa();
   public loading: boolean = false;
   public loadingMin: boolean = false;
   public perfil: Dados[] = [];
@@ -57,7 +58,7 @@ export class PerfilNotificacoesComponent implements OnInit {
   }
 
   public obterPerfilNotificacoes() {
-    const dados = { user_login: this.login }
+    const dados = { id_empresa: this.idEmpresa, user_login: this.login }
 
     this.loading = true;
     this._perfilNotificacoes.obterPerfilNotificacoes(dados).subscribe((res) => {

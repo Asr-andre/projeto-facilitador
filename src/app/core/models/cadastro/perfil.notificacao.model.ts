@@ -1,4 +1,5 @@
 export class RequisicaoNotificacao {
+  id_empresa: string;
   user_login: string;
 }
 
@@ -81,6 +82,7 @@ export class CadastrarModel {
 }
 
 export class EditarModel {
+  id_empresa: string;
   sigla: string;
   user_login: string
 }

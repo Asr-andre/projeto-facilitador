@@ -114,7 +114,7 @@ export class EditarNComponent implements OnInit {
   }
 
   public obterNotificacao() {
-    const dados = { sigla: this.sigla, user_login: this.login }
+    const dados = { id_empresa: this.idEmpresa, sigla: this.sigla, user_login: this.login }
 
     this.loading = true;
     this._perfilNotificacoes.obterPerfilNotificacaoPorSigla(dados).subscribe((res) => {
