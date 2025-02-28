@@ -177,10 +177,13 @@ export class WhatsappComponent implements OnInit {
       this._whatsapp.enviarMensagem(this.whatsappForm.value).subscribe((res) => {
         if (res.success === "true") {
           this.loadingMin = false;
-          const retornoObj = JSON.parse(res.retorno);
-          const mensagemCorrigida = decodeURIComponent(escape(retornoObj.err));
+          //#region  esse trexo de codigo serve para formata o json recebido
+          //const retornoObj = JSON.parse(res.retorno);
+          //const mensagemCorrigida = decodeURIComponent(escape(retornoObj.err));
+          //this._alert.success(`${res.msg} ${mensagemCorrigida}`);
+          //#endregion
 
-          this._alert.success(`${res.msg} ${mensagemCorrigida}`);
+          this._alert.success(res.msg);
           this.dadosEnviado.emit();
           this.fechaModal();
 
