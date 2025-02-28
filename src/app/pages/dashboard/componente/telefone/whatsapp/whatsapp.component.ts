@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PerfilWhatsappModel } from 'src/app/core/models/cadastro/sms.whatsapp.model';
@@ -16,6 +16,7 @@ import { Versao } from 'src/app/core/config/app.config';
 })
 export class WhatsappComponent implements OnInit {
   @ViewChild('whatsappModal') whatsappModal: TemplateRef<any>;
+  @Output() dadosEnviado = new EventEmitter<void>();
   public abrirModal = false;
   public telefoneCliente: string;
   public whatsappForm: FormGroup;
@@ -31,7 +32,8 @@ export class WhatsappComponent implements OnInit {
 
   public idEmpresa: number = Number(this._auth.getIdEmpresa() || 0);
   public login = this._auth.getLogin();
-  public centrocusto = '66bba84b2e0f90a2984941c6';
+  public idContratante: number = sessionStorage.getItem('id_contratante') ? Number(sessionStorage.getItem('id_contratante')) : 0;
+  //public centrocusto = '66bba84b2e0f90a2984941c6';
   public callbackRetorno = 'http://portal.facilitadorsistemas.com.br:3000/retornobestmessage';
 
   constructor(
@@ -50,7 +52,7 @@ export class WhatsappComponent implements OnInit {
   public inicializarwhatsappForm() {
     this.whatsappForm = this._fb.group({
       id_empresa: [this.idEmpresa, Validators.required],
-      centrocusto: [this.centrocusto, Validators.required],
+      id_contratante: [this.idContratante, Validators.required],
       user_login: [this.login, Validators.required],
       whats: this._fb.array([
         this._fb.group({
@@ -172,13 +174,22 @@ export class WhatsappComponent implements OnInit {
     if (this.whatsappForm.valid) {
       this.substituirVariaveisNaMensagem();
       this.loadingMin = true;
-      this._whatsapp.enviarMensagem(this.whatsappForm.value).subscribe(() => {
+      this._whatsapp.enviarMensagem(this.whatsappForm.value).subscribe((res) => {
+        if (res.success === "true") {
+          this.loadingMin = false;
+          const retornoObj = JSON.parse(res.retorno);
+          const mensagemCorrigida = decodeURIComponent(escape(retornoObj.err));
+
+          this._alert.success(`${res.msg} ${mensagemCorrigida}`);
+          this.dadosEnviado.emit();
+          this.fechaModal();
+
+        }
+        else {
         this.loadingMin = false;
         this._alert.success('Mensagem enviada com sucesso!');
         this.fechaModal();
-      }, () => {
-        this.loadingMin = false;
-        this._alert.error('Erro ao enviar mensagem.');
+        }
       });
     } else {
       this.loadingMin = false;

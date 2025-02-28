@@ -49,6 +49,12 @@ export class TelefoneComponent implements OnInit, OnChanges {
         this.dadosEnviado.emit();
       });
     }
+
+    if (this.whatsappComponent) {
+      this.whatsappComponent.dadosEnviado.subscribe(() => {
+        this.dadosEnviado.emit();
+      });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

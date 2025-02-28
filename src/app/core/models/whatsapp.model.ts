@@ -1,6 +1,6 @@
 export class WhatsappMensagemModel {
   id_empresa: number;
-  centrocusto: string;
+  id_contratante:number;
   user_login: string;
   whats: WhatsDetalhe[];
 }
@@ -31,3 +31,9 @@ export class WhatsAppLoteResponseModel{
   saldo_empresa: number;
 }
 
+export class RetornoWathsappModel{
+  id_empresa: number;
+  msg: string;
+  retorno: string;
+  success: string;
+}
