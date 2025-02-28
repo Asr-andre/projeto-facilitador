@@ -7,3 +7,17 @@ input[type="checkbox"]:focus {
   background-color: #25d366;
   border-color: #25d366;
 }
+
+.form-check-label {
+  font-size: 12px; /* Tamanho da fonte */
+  font-weight: bold; /* Texto em negrito */
+}
+
+/* Estilo para o text-muted com tamanho de fonte 12px */
+.text-muted {
+  font-size: 12px; /* Tamanho da fonte */
+}
+
+.fw-bold {
+  font-size: 12px;
+}

@@ -21,7 +21,7 @@
 
               <div class="card-body">
                 <div class="row">
-                  <div class="container" style="font-family: 'Wolsen Pro', sans-serif;">
+                  <div class="container">
                     <form [formGroup]="formNotificacao">
 
                       <!-- Notificação 1 -->
@@ -113,7 +113,7 @@
                       <div class="border-bottom py-3">
                         <div class="row">
                           <div class="col-md-8">
-                            <h6 class="fw-bold">Enviar cobranças
+                            <h6 class="form-check-label">Enviar cobranças
                               <select class="form-select d-inline w-auto ms-2" style="padding-top: 4px; padding-bottom: 4px;"
                                 formControlName="scheduleoffset_payment_duedate_warning">
                                 <option [value]="5" selected>5 dia</option>
@@ -293,7 +293,7 @@
                       <div class="border-bottom py-3">
                         <div class="row">
                           <div class="col-md-8">
-                            <h6 class="fw-bold">Reenviar cobrança a cada
+                            <h6 class="form-check-label">Reenviar cobrança a cada
                               <select class="form-select d-inline w-auto ms-2" style="padding-top: 4px; padding-bottom: 4px;"
                               formControlName="scheduleoffset_payment_overdue_2">
                                 <option [value]="1">1 dia</option>

@@ -94,17 +94,19 @@
               <td scope="col" class="text-right">{{ titulo.valor_adicional | currency:'BRL' }}</td>
               <td scope="col" class="text-right">{{ titulo.valor_atualizado | currency:'BRL' }}</td>
             </tr>
+          </tbody>
+          <tfoot class="sticky-footer">
             <tr *ngIf="data.titulos.length > 0" class="tabela-custom">
               <td colspan="2" style="text-align: center;"><strong>Total:</strong></td>
-              <td scope="col" class="text-right">{{ totalValor | currency:'BRL' }}</td>
-              <td scope="col" class="text-right">{{ totalJuros | currency:'BRL' }}</td>
-              <td scope="col" class="text-right">{{ totalMulta | currency:'BRL' }}</td>
-              <td scope="col" class="text-right">{{ totalIndice | currency:'BRL' }}</td>
-              <td scope="col" class="text-right">{{ totalTaxa | currency:'BRL' }}</td>
-              <td scope="col" class="text-right">{{ totalAdicional | currency:'BRL' }}</td>
-              <td scope="col" class="text-right">{{ totalGeral | currency:'BRL' }}</td>
+              <td scope="col" class="text-right"><strong>{{ totalValor | currency:'BRL' }}</strong></td>
+              <td scope="col" class="text-right"><strong>{{ totalJuros | currency:'BRL' }}</strong></td>
+              <td scope="col" class="text-right"><strong>{{ totalMulta | currency:'BRL' }}</strong></td>
+              <td scope="col" class="text-right"><strong>{{ totalIndice | currency:'BRL' }}</strong></td>
+              <td scope="col" class="text-right"><strong>{{ totalTaxa | currency:'BRL' }}</strong></td>
+              <td scope="col" class="text-right"><strong>{{ totalAdicional | currency:'BRL' }}</strong></td>
+              <td scope="col" class="text-right"><strong>{{ totalGeral | currency:'BRL' }}</strong></td>
             </tr>
-          </tbody>
+          </tfoot>
         </table>
       </div>
       <!-- Campo oculto para IDs dos títulos -->
@@ -167,7 +169,7 @@
 
         <div *ngIf="simulaAcordo && data">
           <h4 style="text-align: center;">Detalhamento do Acordo</h4>
-          <div style="overflow: auto; height: 300px; margin-top: 5px;">
+          <div style="overflow: auto; height: 200px; margin-top: 5px;">
             <table class="table table-sm">
               <thead class="tabela-custom table-td-scroll" style="position: sticky; top: 0; z-index: 1;">
                 <tr>
@@ -184,12 +186,14 @@
                   <td>{{ titulo.parcela }}</td>
                   <td>{{ titulo.plano }}</td>
                 </tr>
+              </tbody>
+              <tfoot class="sticky-footer">
                 <tr class="tabela-custom">
                   <td colspan="1" style="text-align: center;"><strong>Total:</strong></td>
-                  <td>{{ totalAcordo | currency:'BRL':'symbol':'1.2-2' }}</td>
+                  <td><strong>{{ totalAcordo | currency:'BRL':'symbol':'1.2-2' }}</strong></td>
                   <td colspan="2" style="text-align: right;"></td>
                 </tr>
-              </tbody>
+              </tfoot>
             </table>
           </div>
           <hr style="margin-top: 5px; margin-bottom: 5px;">

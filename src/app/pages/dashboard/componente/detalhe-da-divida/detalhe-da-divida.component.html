@@ -115,6 +115,8 @@
         <td>{{ prestacao.valor_taxa | currency:'BRL' }}</td>
         <td>{{ prestacao.saldo_devedor | currency:'BRL' }}</td>
         <!-- <td>{{ calcularTotalAtualizado(prestacao) | currency:'BRL' }}</td> -->
+    </tbody>
+    <tfoot class="sticky-footer">
       <tr class="tabela-custom">
         <td colspan="3" style="text-align: end;"><strong>Qtde Títulos:</strong> {{ calcularQuantidadeTitulos() }}</td>
         <td colspan="4" style="text-align: end;"><strong>Total:</strong></td>
@@ -126,7 +128,7 @@
         <td><strong>{{ calcularTotal('saldo_devedor') | currency:'BRL' }}</strong></td>
         <!-- <td><strong>{{ calcularTotal('valorTotalAtualizado') | currency:'BRL' }}</strong></td> -->
       </tr>
-    </tbody>
+     </tfoot>
   </table>
   <ng-template #semDado>
     <tbody>
