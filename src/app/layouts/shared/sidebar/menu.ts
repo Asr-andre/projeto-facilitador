@@ -1,6 +1,9 @@
 import { MenuItem } from "./menu.model";
 
-  const getIdUsuario = (): string | null => sessionStorage.getItem('id_usuario');
+const getIdUsuario = (): number | null => {
+  const idUsuario = sessionStorage.getItem('id_usuario');
+  return idUsuario ? parseInt(idUsuario.replace(/"/g, ''), 10) : null;
+};
 
   // Função para construir o menu com base no id_usuario
   const buildMenu = (): MenuItem[] => {
@@ -58,7 +61,7 @@ import { MenuItem } from "./menu.model";
           label: "MENUITEMS.CADASTRO.LIST.EMPRESA",
           link: "/cadastro/empresa",
           parentId: 5,
-          show: idUsuario === '"1"'
+          show: idUsuario === 1
         },
         {
           id: 5,
