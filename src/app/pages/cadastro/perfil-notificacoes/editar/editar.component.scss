@@ -1,0 +1,9 @@
+input[type="checkbox"]:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.form-check-input:checked {
+  background-color: #25d366;
+  border-color: #25d366;
+}
